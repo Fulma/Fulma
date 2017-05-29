@@ -3,12 +3,20 @@
     <TargetFramework>netstandard1.6</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <!-- Libs -->
+    <Compile Include="src/Libs/Fable.Import.Marked.fs" />
+    <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <!-- Global to the app -->
     <Compile Include="src/Global.fs" />
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />
     <Compile Include="src/Home/View.fs" />
+    <!-- Elements -->
+      <!-- Elements/Button -->
+      <Compile Include="src/Elements/Button/Types.fs" />
+      <Compile Include="src/Elements/Button/State.fs" />
+      <Compile Include="src/Elements/Button/View.fs" />
     <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
     <!-- App -->
@@ -23,6 +31,5 @@
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
     <DotNetCliToolReference Include="dotnet-fable" Version="1.0.4" />
   </ItemGroup>
-  <Import Project=".\..\.paket/Paket.Restore.targets" />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

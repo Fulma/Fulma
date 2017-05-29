@@ -12,12 +12,26 @@ open App.State
 open Global
 open Elmish.Bulma
 
+// Bulma + Docs site css
 importAll "../sass/main.sass"
+// Prism css
+importAll "../css/prism.min.css"
+
+[<Emit("Prism.languages.fsharp")>]
+let prismFSharp = ""
+
+// Configure markdown parser
+let options =
+  createObj [
+    "highlight" ==> fun code -> PrismJS.Globals.Prism.highlight(code, unbox prismFSharp)
+    "langPrefix" ==> "language-"
+  ]
+
+Marked.Globals.marked.setOptions(unbox options)
+|> ignore
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-
-module Bulma = open Elmish.Bulma
 
 let menuItem label page currentPage =
     li
@@ -42,6 +56,9 @@ let root model dispatch =
   let pageHtml =
     function
     | Home -> Home.View.root model.home (HomeMsg >> dispatch)
+    | Element element ->
+        match element with
+        | Button -> Elements.Button.View.root model.elements.button
 
   div
     []
@@ -57,24 +74,11 @@ let root model dispatch =
             [ div
                 [ ClassName "columns" ]
                 [ div
-                    [ ClassName "column is-3" ]
+                    [ ClassName "column is-2" ]
                     [ menu model.currentPage ]
                   div
                     [ ClassName "column" ]
-                    [ pageHtml model.currentPage
-                      a
-                        [ ClassName "button"
-                          OnClick (fun _ -> SendNotification |> dispatch) ]
-                        [ str "Test notif" ]
-                      Bulma.Notification.view
-                        [ ]
-                        [ str "test"
-                          a
-                            [ ClassName "button"
-                              OnClick (fun _ -> Test |> dispatch) ]
-                            [ str "Click me" ]
-                        ]
-                    ] ] ] ] ]
+                    [ pageHtml model.currentPage ] ] ] ] ]
 
 open Elmish.React
 open Elmish.Bulma.Notification
@@ -82,6 +86,6 @@ open Elmish.Bulma.Notification
 // App
 Program.mkProgram init update root
 |> Program.toNavigable (parseHash pageParser) urlUpdate
-|> Program.toNotifiable
+|> Program.toNotifiable Bulma.Notification.defaultNotificationArea
 |> Program.withReact "elmish-app"
 |> Program.run

@@ -68,6 +68,16 @@ module Notification =
       [ ClassName ("notification " + !!opts.level) ]
       ( closeArea @ children )
 
+  let defaultNotificationArea notifications =
+    div
+      [ Style
+          [ Position "fixed"
+            CSSProp.Width (U2.Case1 500)
+            Top 55
+            Right 25
+            ZIndex 100. ] ]
+      (List.map (fun x -> x.view) notifications)
+
   let internal onNotificationEvent = new Event<NotificationProgramEvent>()
 
   [<RequireQualifiedAccess>]
@@ -82,7 +92,7 @@ module Notification =
   [<RequireQualifiedAccess>]
   module Program =
 
-    let toNotifiable (program : Program<'a,'model,'msg,'view>)  =
+    let toNotifiable notificationArea (program : Program<'a,'model,'msg,'view>)  =
       let map (model, cmd) =
           model, cmd |> Cmd.map UserMsg
 
@@ -98,17 +108,6 @@ module Notification =
                 view = view }
             { model with
                 notifications = notification :: model.notifications }, []
-
-
-      let notificationArea notifications =
-        div
-          [ Style
-              [ Position "fixed"
-                CSSProp.Width (U2.Case1 500)
-                Top 55
-                Right 25
-                ZIndex 100. ] ]
-          (List.map (fun x -> x.view) notifications)
 
       let view model dispatch =
         div
@@ -126,8 +125,8 @@ module Notification =
           [ [ newNotificationRecieved ]
             program.subscribe model.userModel |> Cmd.map UserMsg ]
 
-      let init () =
-        let (userModel, userCmd) = program.init ()
+      let init args =
+        let (userModel, userCmd) = program.init args
         { notifications = []
           userModel = userModel}
           , Cmd.batch [ Cmd.map UserMsg userCmd ]

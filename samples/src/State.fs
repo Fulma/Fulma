@@ -10,6 +10,7 @@ open Types
 let pageParser: Parser<Page->Page,Page> =
   oneOf [
     map Home (s "home")
+    map (Element Button) (s "elements" </> s "button")
     map Home top
   ]
 
@@ -23,10 +24,15 @@ let urlUpdate (result: Option<Page>) model =
 
 let init result =
   let (home, homeCmd) = Home.State.init()
+
+  let elements =
+    { button = Elements.Button.State.init () }
+
   let (model, cmd) =
     urlUpdate result
       { currentPage = Home
-        home = home }
+        home = home
+        elements = elements }
   model, Cmd.batch [ cmd
                      Cmd.map HomeMsg homeCmd ]
 
