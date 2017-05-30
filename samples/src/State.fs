@@ -45,7 +45,7 @@ let update msg model =
       let (home, homeCmd) = Home.State.update msg model.home
       { model with home = home }, Cmd.map HomeMsg homeCmd
   | SendNotification ->
-      model, Elmish.Bulma.Notification.Cmd.newNotification (Elmish.Bulma.Notification.view [ Elmish.Bulma.Notification.Level Elmish.Bulma.Modifiers.IsSuccess ] [ str "coucou" ])
+      model, Elmish.Bulma.Notification.Cmd.newNotification (Elmish.Bulma.Notification.view [ Elmish.Bulma.Notification.Level Elmish.Bulma.Modifiers.IsSuccess ] [ ] [ str "coucou" ])
   | Test ->
       Browser.console.log "couocuo"
       model, []

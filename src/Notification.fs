@@ -28,20 +28,17 @@ module Notification =
     | Level of Level
     | Closable
     // | AutoCloseDelay of float
-    | Props of (IHTMLProp list)
 
   type Options =
     { level: Level
-      hasDeleteButton: bool
+      hasDeleteButton: bool }
       // AutoCloseDelay: float option
-      properties: IHTMLProp list }
 
     static member Empty =
       { level = None
-        hasDeleteButton = false
-        properties = [] }
+        hasDeleteButton = false }
 
-  let view (options: Option list) children =
+  let view (options: Option list) (properties: IHTMLProp list)children =
     let rec parseOptions options result =
       match options with
       | x::xs ->
@@ -50,8 +47,6 @@ module Notification =
               { result with level = level }
           | Closable ->
               { result with hasDeleteButton = true }
-          | Props properties ->
-              { result with properties = properties }
           |> parseOptions xs
       | [] -> result
 
@@ -64,8 +59,10 @@ module Notification =
                   [ ]
       ]
 
+    let className = ClassName ("notification " + !!opts.level)
+
     div
-      [ ClassName ("notification " + !!opts.level) ]
+      ((className :> IHTMLProp) :: properties)
       ( closeArea @ children )
 
   let defaultNotificationArea notifications =
