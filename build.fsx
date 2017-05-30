@@ -14,7 +14,6 @@ open Fake.Git
 let projects  =
       !! "src/**.fsproj"
 
-
 let dotnetcliVersion = "1.0.1"
 let mutable dotnetExePath = "./dotnetsdk/dotnet"
 
@@ -96,6 +95,13 @@ Target "Build" (fun _ ->
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
+)
+
+Target "Clean" (fun _ ->
+  seq [
+    "src/bin"
+    "src/obj"
+  ] |> CleanDirs
 )
 
 Target "QuickBuild" (fun _ ->
@@ -269,6 +275,7 @@ Target "Publish" DoNothing
 // Build order
 "Meta"
   ==> "InstallDotNetCore"
+  ==> "Clean"
   ==> "Install"
   ==> "Build"
   ==> "Package"
