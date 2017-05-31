@@ -7,6 +7,8 @@ nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
 nuget Fable.PowerPack
 nuget Fable.React
+nuget Fable.Elmish.Bulma
+
 
 group Build
 framework: net46

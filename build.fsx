@@ -117,10 +117,10 @@ Target "Meta" (fun _ ->
     [ "<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">"
       "<PropertyGroup>"
       "<Description>Helpers around Bulma for Elmish apps</Description>"
-      "<PackageProjectUrl></PackageProjectUrl>"
-      "<PackageLicenseUrl></PackageLicenseUrl>"
+      "<PackageProjectUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</PackageProjectUrl>"
+      "<PackageLicenseUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma/blob/master/LICENSE.md</PackageLicenseUrl>"
       "<PackageIconUrl></PackageIconUrl>"
-      "<RepositoryUrl></RepositoryUrl>"
+      "<RepositoryUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</RepositoryUrl>"
       "<PackageTags>fable;elm;fsharp;bulma</PackageTags>"
       "<Authors>Maxime Mangel</Authors>"
       sprintf "<Version>%s</Version>" (string release.SemVer)
