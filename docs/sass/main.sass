@@ -1,18 +1,19 @@
 // Colors
-$purple: #7a325d
-$primary: $purple
-$black: #202020
+$dark-blue: #2D3947
+$grey: #333333
+$blue: #028FCC
+$primary: $dark-blue
 
 @import '../node_modules/bulma/bulma'
 @import "./callout"
 @import "./prism"
 
 .navbar-bg
-  background-color: $black
+  background-color: $dark-blue
   .nav
-    background-color: $black
+    background-color: $dark-blue
   .title
-    color: #686868
+    color: white
     font-weight: 600
 
 .twitter
@@ -21,7 +22,10 @@ $black: #202020
 
 .github
   color: $black !important // Override bulma
-  border-color: $black
+  border-color: black
+
+html
+  font-size: 14px
 
 .block > *
   margin: 0 5px
@@ -31,6 +35,14 @@ html,
 body
   overflow-y: auto
   overflow-x: hidden
+
+.hero-body
+  padding: 1rem
+
+h2.subtitle
+  font: 400 30px/0.8 'Cookie', Helvetica, sans-serif
+  color: #fff
+  text-shadow: 4px 4px 3px rgba(0,0,0,0.4)
 
 // Override bulma .number class for prismjs classes
 // .number

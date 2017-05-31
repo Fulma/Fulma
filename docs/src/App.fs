@@ -52,6 +52,18 @@ let menu currentPage =
         [ menuItem "Home" Home currentPage
           menuItem "Button" (Element Button) currentPage ] ]
 
+
+let header =
+    div
+      [ ClassName "hero is-primary" ]
+      [ div
+          [ ClassName "hero-body" ]
+          [ div
+              [ ClassName "column has-text-centered" ]
+              [  h2
+                  [ ClassName "subtitle" ]
+                  [ str "Binding for Elmish using Bulma CSS framework" ] ] ] ]
+
 let root model dispatch =
 
   let pageHtml =
@@ -68,6 +80,7 @@ let root model dispatch =
         [ div
             [ ClassName "container" ]
             [ Navbar.View.root ] ]
+      header
       div
         [ ClassName "section" ]
         [ div
