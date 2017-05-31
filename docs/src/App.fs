@@ -49,7 +49,8 @@ let menu currentPage =
         [ str "General" ]
       ul
         [ ClassName "menu-list" ]
-        [ menuItem "Home" Home currentPage ] ]
+        [ menuItem "Home" Home currentPage
+          menuItem "Button" (Element Button) currentPage ] ]
 
 let root model dispatch =
 

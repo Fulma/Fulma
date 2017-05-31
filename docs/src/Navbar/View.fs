@@ -18,9 +18,9 @@ let navButton classy href faClass txt =
 
 let navButtons =
   span
-    [ ClassName "nav-item" ]
+    [ ClassName "nav-item block" ]
     [ navButton "twitter" "https://twitter.com/FableCompiler" "fa-twitter" "Twitter"
-      navButton "github" "https://github.com/fable-compiler/fable-elmish" "fa-github" "Fork me"
+      navButton "github" "https://github.com/MangelMaxime/Fable.Elmish.Bulma/" "fa-github" "Github"
       navButton "github" "https://gitter.im/fable-compiler/Fable" "fa-comments" "Gitter" ]
 
 let root =
