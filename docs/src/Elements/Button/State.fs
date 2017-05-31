@@ -57,14 +57,29 @@ btn [ Size Large ] [ ] [ str "Large" ]
     textStyle =
       "
 # Styles
-#### *Outlined && Inverted*
-
+The button can be **outlined** and/or **inverted**.
 "
-    codeStyle =
+    codeStyleOutlined =
+      """
+```fsharp
+// Examples
+btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
+btn [ Level IsPrimary; IsOutlined ] [ ] [str "Outlined" ]
+```
+      """
+    codeStyleInverted =
       """
 ```fsharp
 // Examples
 btn [ IsOutlined ] [ ] [str "Outlined" ]
-btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
+btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
 ```
-      """ }
+      """
+    codeStyleInvertOutlined =
+      """
+```fsharp
+// Examples
+btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
+btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
+```
+      """}

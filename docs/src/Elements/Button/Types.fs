@@ -6,6 +6,8 @@ type Model =
     textSize: string
     codeSize: string
     textStyle: string
-    codeStyle: string }
+    codeStyleOutlined: string
+    codeStyleInverted: string
+    codeStyleInvertOutlined: string }
 
 type Msg = unit

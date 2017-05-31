@@ -69,21 +69,21 @@ let sectionStyle model =
         btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
         btn [ Level IsPrimary; IsOutlined ] [ ] [str "Outlined" ]
         btn [ Level IsInfo; IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsDark; IsOutlined ] [ ] [str "Outlined" ] ], model.codeStyle
+        btn [ Level IsDark; IsOutlined ] [ ] [str "Outlined" ] ], model.codeStyleOutlined
     div
       [ ClassName "block callout is-primary" ]
       [ btn [ IsOutlined ] [ ] [str "Outlined" ]
         btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
         btn [ Level IsPrimary; IsInverted ] [ ] [str "Inverted" ]
         btn [ Level IsInfo; IsInverted ] [ ] [str "Inverted" ]
-        btn [ Level IsDark; IsInverted ] [ ] [str "Inverted" ] ], model.codeStyle
+        btn [ Level IsDark; IsInverted ] [ ] [str "Inverted" ] ], model.codeStyleInverted
     div
       [ ]
       [ div
           [ ClassName "block callout is-success" ]
           [ btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
             btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
-            btn [ Level IsPrimary; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ] ] ], model.codeStyle ]
+            btn [ Level IsPrimary; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ] ] ], model.codeStyleInvertOutlined ]
   |> List.map (fun (children, code) -> docBlock code children )
   |> sectionBase model.textStyle
 
