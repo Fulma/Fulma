@@ -28,3 +28,7 @@ Meta.props
 temp
 
 dotnetsdk/
+
+docs/public/bundle\.js
+
+docs/public/bundle\.js\.map

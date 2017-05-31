@@ -140,7 +140,6 @@ Target "PublishNuget" (fun _ ->
     runDotnet "src" "push"
 )
 
-
 // --------------------------------------------------------------------------------------
 // Generate the documentation
 let gitName = "elmish"
