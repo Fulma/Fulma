@@ -1,7 +1,11 @@
 module Elements.Button.Types
 
 type Model =
-  { textSection1: string
-    codeSection1: string }
+  { textColor: string
+    codeColor: string
+    textSize: string
+    codeSize: string
+    textStyle: string
+    codeStyle: string }
 
 type Msg = unit

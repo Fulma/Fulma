@@ -11,46 +11,89 @@ open Elmish.Bulma.Modifiers
 open Elmish.Bulma.Button
 open Global
 
-let section1 model =
+let sectionBase title docBlocks =
+  div
+    [ ]
+    ((div
+        [ ClassName "content" ]
+        [ renderMarkdown title ]) :: docBlocks)
+
+
+let docBlock code children =
   div
     [ ClassName "columns" ]
-    [
+    [ div
+        [ ClassName "column" ]
+        [ children ]
       div
         [ ClassName "column" ]
-        [ div
-            [ ClassName "block" ]
-            [ Bulma.Button.view [] [] [ str "Button" ]
-              Bulma.Button.view [ Level IsWhite ] [] [ str "White" ]
-              Bulma.Button.view [ Level IsLight ] [] [ str "Light" ]
-              Bulma.Button.view [ Level IsDark ] [] [ str "Dark" ]
-              Bulma.Button.view [ Level IsBlack ] [] [ str "Black" ]
-              Bulma.Button.view [ Level IsLink ] [] [ str "Link" ] ]
-          div
-            [ ClassName "block" ]
-            [ Bulma.Button.view [ Level IsPrimary ] [] [ str "Primary" ]
-              Bulma.Button.view [ Level IsInfo ] [] [ str "Info" ]
-              Bulma.Button.view [ Level IsSuccess ] [] [ str "Success" ]
-              Bulma.Button.view [ Level IsWarning ] [] [ str "Warning" ]
-              Bulma.Button.view [ Level IsDanger ] [] [ str "Danger" ] ] ]
+        [ renderMarkdown code ] ]
+
+let sectionColor model =
+  div
+    [ ]
+    [ div
+        [ ClassName "block" ]
+        [ btn [] [] [ str "Button" ]
+          btn [ Level IsWhite ] [] [ str "White" ]
+          btn [ Level IsLight ] [] [ str "Light" ]
+          btn [ Level IsDark ] [] [ str "Dark" ]
+          btn [ Level IsBlack ] [] [ str "Black" ]
+          btn [ Level IsLink ] [] [ str "Link" ] ]
       div
-        [ ClassName "column" ]
-        [ renderMarkdown model.codeSection1 ]
-    ]
+        [ ClassName "block" ]
+        [ btn [ Level IsPrimary ] [] [ str "Primary" ]
+          btn [ Level IsInfo ] [] [ str "Info" ]
+          btn [ Level IsSuccess ] [] [ str "Success" ]
+          btn [ Level IsWarning ] [] [ str "Warning" ]
+          btn [ Level IsDanger ] [] [ str "Danger" ] ] ]
+  |> docBlock model.codeColor
+  |> toList
+  |> sectionBase model.textColor
+
+let sectionSize model =
+  div
+    [ ClassName "block" ]
+    [ btn [ Size Small ] [ ] [ str "Small" ]
+      btn [ ] [ ] [ str "Normal" ]
+      btn [ Size Medium ] [ ] [ str "Medium" ]
+      btn [ Size Large ] [ ] [ str "Large" ] ]
+  |> docBlock model.codeSize
+  |> toList
+  |> sectionBase model.textSize
+
+let sectionStyle model =
+  [ div
+      [ ClassName "block" ]
+      [ btn [ IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level IsPrimary; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level IsInfo; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level IsDark; IsOutlined ] [ ] [str "Outlined" ] ], model.codeStyle
+    div
+      [ ClassName "block callout is-primary" ]
+      [ btn [ IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level IsPrimary; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level IsInfo; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level IsDark; IsInverted ] [ ] [str "Inverted" ] ], model.codeStyle
+    div
+      [ ]
+      [ div
+          [ ClassName "block callout is-success" ]
+          [ btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
+            btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
+            btn [ Level IsPrimary; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ] ] ], model.codeStyle ]
+  |> List.map (fun (children, code) -> docBlock code children )
+  |> sectionBase model.textStyle
 
 let root model =
   div
     [ ]
     [
-      div
-        [ ClassName "content" ]
-        [ renderMarkdown model.textSection1 ]
-      section1 model
+      sectionColor model
       hr []
-      div
-        [ ClassName "block" ]
-        [ Bulma.Button.view [ Size Small ] [ ] [ str "Small" ]
-          Bulma.Button.view [ ] [ ] [ str "Normal" ]
-          Bulma.Button.view [ Size Medium ] [ ] [ str "Medium" ]
-          Bulma.Button.view [ Size Large ] [ ] [ str "Large" ]
-        ]
+      sectionSize model
+      hr []
+      sectionStyle model
     ]

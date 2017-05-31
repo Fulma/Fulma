@@ -35,10 +35,10 @@ module Notification =
       // AutoCloseDelay: float option
 
     static member Empty =
-      { level = None
+      { level = NoLevel
         hasDeleteButton = false }
 
-  let view (options: Option list) (properties: IHTMLProp list)children =
+  let notification (options: Option list) (properties: IHTMLProp list)children =
     let rec parseOptions options result =
       match options with
       | x::xs ->

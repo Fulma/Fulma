@@ -8,7 +8,7 @@ module Modifiers =
 
   [<StringEnum>]
   type Level =
-    | [<CompiledName("")>] None
+    | [<CompiledName("")>] NoLevel
     | [<CompiledName("is-primary")>] IsPrimary
     | [<CompiledName("is-info")>] IsInfo
     | [<CompiledName("is-success")>] IsSuccess

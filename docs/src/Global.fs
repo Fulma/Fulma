@@ -30,3 +30,5 @@ let renderMarkdown str =
           __html = Marked.Globals.marked.parse(str)
     } ]
     [ ]
+
+let toList = (fun x -> [ x ])

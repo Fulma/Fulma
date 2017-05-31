@@ -42,13 +42,13 @@ module Button =
       state: ButtonState }
 
     static member Empty =
-      { level = None
+      { level = NoLevel
         size = Size.Normal
         isOutlined = false
         isInverted = false
         state = Normal }
 
-  let view (options: Option list) (properties: IHTMLProp list) children =
+  let btn (options: Option list) (properties: IHTMLProp list) children =
     let rec parseOptions options result =
       match options with
       | x::xs ->
@@ -70,7 +70,7 @@ module Button =
 
     let className =
       classBaseList
-        (sprintf "button %s %s %s" !!opts.level !!opts.size !!opts.state)
+        (sprintf "button %s %s %s" (unbox<string>opts.level) (unbox<string>opts.size) (unbox<string>opts.state))
         [ "is-outlined", opts.isOutlined
           "is-inverted", opts.isInverted ]
 

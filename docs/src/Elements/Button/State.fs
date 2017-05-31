@@ -4,28 +4,67 @@ open Elmish
 open Types
 
 let init () : Model =
-  { textSection1 =
+  { textColor =
       "
 # Buttons
 The **button** can have different colors, sizes and states.
       "
-    codeSection1 =
+    codeColor =
       """
 ```fsharp
-  div
-    [ ClassName "block" ]
-    [ Bulma.Button.view [] [] [ str "Button" ]
-      Bulma.Button.view [ Level IsWhite ] [] [ str "White" ]
-      Bulma.Button.view [ Level IsLight ] [] [ str "Light" ]
-      Bulma.Button.view [ Level IsDark ] [] [ str "Dark" ]
-      Bulma.Button.view [ Level IsBlack ] [] [ str "Black" ]
-      Bulma.Button.view [ Level IsLink ] [] [ str "Link" ] ]
-  div
-    [ ClassName "block" ]
-    [ Bulma.Button.view [ Level IsPrimary ] [] [ str "Primary" ]
-      Bulma.Button.view [ Level IsInfo ] [] [ str "Info" ]
-      Bulma.Button.view [ Level IsSuccess ] [] [ str "Success" ]
-      Bulma.Button.view [ Level IsWarning ] [] [ str "Warning" ]
-      Bulma.Button.view [ Level IsDanger ] [] [ str "Danger" ] ]
+// Possible values
+[<StringEnum>]
+type Level =
+  | [<CompiledName("")>] NoLevel
+  | [<CompiledName("is-primary")>] IsPrimary
+  | [<CompiledName("is-info")>] IsInfo
+  | [<CompiledName("is-success")>] IsSuccess
+  | [<CompiledName("is-warning")>] IsWarning
+  | [<CompiledName("is-danger")>] IsDanger
+  interface ILevel
+
+[<StringEnum>]
+type ButtonColor =
+  | [<CompiledName("is-white")>] IsWhite
+  | [<CompiledName("is-light")>] IsLight
+  | [<CompiledName("is-dark")>] IsDark
+  | [<CompiledName("is-black")>] IsBlack
+  | [<CompiledName("is-link")>] IsLink
+  interface ILevel
+
+// Examples
+btn [ Level IsDark ] [] [ str "Dark" ]
+btn [ Level IsSuccess ] [] [ str "Success" ]
+```
+      """
+    textSize =
+      "# Sizes"
+    codeSize =
+      """
+```fsharp
+// Possible values
+[<StringEnum>]
+type Size =
+  | [<CompiledName("is-small")>] Small
+  | [<CompiledName("")>] Normal
+  | [<CompiledName("is-medium")>] Medium
+  | [<CompiledName("is-large")>] Large
+
+// Example
+btn [ Size Large ] [ ] [ str "Large" ]
+```
+      """
+    textStyle =
+      "
+# Styles
+#### *Outlined && Inverted*
+
+"
+    codeStyle =
+      """
+```fsharp
+// Examples
+btn [ IsOutlined ] [ ] [str "Outlined" ]
+btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
 ```
       """ }
