@@ -15,14 +15,14 @@ console.log("Bundling for " + (isProduction ? "production" : "development") + ".
 
 module.exports = {
   devtool: "source-map",
-  entry: resolve('./samples.fsproj'),
+  entry: resolve('./docs.fsproj'),
   output: {
     filename: 'bundle.js',
     path: resolve('./public'),
   },
   resolve: {
     modules: [
-      "node_modules", resolve("./node_modules/")
+      "node_modules", resolve("./../node_modules/")
     ]
   },
   devServer: {
