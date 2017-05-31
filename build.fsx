@@ -170,73 +170,8 @@ let executeFAKEWithOutput workingDirectory script fsiargs envArgs =
     System.Threading.Thread.Sleep 1000
     exitCode
 
-let copyFiles() =
-    let header =
-        splitStr "\n" """(*** hide ***)
-#I "../../src/bin/Debug/netstandard1.6"
-#r "Fable.Core.dll"
-#r "Fable.PowerPack.dll"
-#r "Fable.Elmish.dll"
-
-(**
-*)"""
-
-    !!"src/*.fs"
-    |> Seq.map (fun fn -> ReadFile fn |> Seq.append header, fn)
-    |> Seq.iter (fun (lines,fn) ->
-        let fsx = Path.Combine("docs/content",Path.ChangeExtension(fn |> Path.GetFileName, "fsx"))
-        lines |> WriteFile fsx)
-
-// Documentation
-let buildDocumentationTarget fsiargs target =
-    trace (sprintf "Building documentation (%s), this could take some time, please wait..." target)
-    let exit = executeFAKEWithOutput "docs/tools" "generate.fsx" fsiargs ["target", target]
-    if exit <> 0 then
-        failwith "generating reference documentation failed"
-    ()
-
-let generateHelp fail debug =
-    copyFiles()
-    CleanDir "docs/tools/.fake"
-    let args =
-        if debug then "--define:HELP"
-        else "--define:RELEASE --define:HELP"
-    try
-        buildDocumentationTarget args "Default"
-        traceImportant "Help generated"
-    with
-    | e when not fail ->
-        traceImportant "generating help documentation failed"
-
-Target "GenerateDocs" (fun _ ->
-    generateHelp true false
-)
-
-Target "WatchDocs" (fun _ ->
-    use watcher = !! "docs/content/**/*.*" |> WatchChanges (fun changes ->
-         generateHelp true true
-    )
-
-    traceImportant "Waiting for help edits. Press any key to stop."
-
-    System.Console.ReadKey() |> ignore
-
-    watcher.Dispose()
-)
-
 // --------------------------------------------------------------------------------------
 // Release Scripts
-
-Target "ReleaseDocs" (fun _ ->
-    let tempDocsDir = "temp/gh-pages"
-    CleanDir tempDocsDir
-    Repository.cloneSingleBranch "" (gitHome + "/" + gitName + ".git") "gh-pages" tempDocsDir
-
-    CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
-    StageAll tempDocsDir
-    Git.Commit.Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
-    Branches.push tempDocsDir
-)
 
 #load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
@@ -280,14 +215,9 @@ Target "Publish" DoNothing
   ==> "Build"
   ==> "Package"
 
-"Build"
-  ==> "GenerateDocs"
-  ==> "ReleaseDocs"
-
 "Publish"
   <== [ "Build"
-        "PublishNuget"
-        "ReleaseDocs" ]
+        "PublishNuget" ]
 
 
 // start build
