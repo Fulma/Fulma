@@ -16,10 +16,18 @@ let section model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ iconSmall [ i [ ClassName "fa fa-home" ] [ ] ]
-          iconNormal [ i [ ClassName "fa fa-home" ] [ ] ]
-          iconMedium [ i [ ClassName "fa fa-home" ] [ ] ]
-          iconLarge [ i [ ClassName "fa fa-home" ] [ ] ] ] ]
+        [ icon
+            [ Size Small ]
+            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+          icon
+            [  ]
+            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+          icon
+            [ Size Medium ]
+            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+          icon
+            [ Size Large ]
+            [ ] [ i [ ClassName "fa fa-home" ] [ ] ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text

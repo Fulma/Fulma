@@ -44,7 +44,7 @@ Components
  - [X] Button
  - [ ] Content
  - [ ] Form
- - [ ] Icon
+ - [X] Icon
  - [ ] Image
  - [ ] Notification
  - [ ] Progress

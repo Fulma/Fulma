@@ -6,8 +6,7 @@ open Types
 let init () : Model =
   { text =
       "
-# Buttons
-The **button** can have different colors, sizes and states.
+# Icons
       "
     code =
       """
@@ -21,9 +20,17 @@ type Size =
   | [<CompiledName("is-large")>] Large
 
 // Example
-icon [ Small ] [ ] [ str "Small" ]
-icon [ Normal ] [ ] [ str "Normal" ]
-icon [ Medium ] [ ] [ str "Medium" ]
-icon [ Large ] [ ] [ str "Large" ]
+icon
+  [ Size Small ]
+  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+icon
+  [  ]
+  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+icon
+  [ Size Medium ]
+  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+icon
+  [ Size Large ]
+  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
 ```
       """ }

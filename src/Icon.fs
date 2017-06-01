@@ -10,17 +10,28 @@ open Fable.Helpers.React.Props
 
 module Icon =
 
-  let icon (size: Size) children =
-    let className = ClassName (sprintf "icon %s" (unbox<string>size))
+  type Option =
+    | Size of Size
+
+  type Options =
+    { size: Size }
+
+    static member Empty =
+      { size = Normal }
+
+  let icon (options: Option list) (properties: IHTMLProp list) children =
+    let rec parseOptions options result =
+      match options with
+      | x::xs ->
+          match x with
+          | Size size -> { result with size = size}
+      | [] -> result
+
+    let opts = parseOptions options Options.Empty
+
+    let className =
+      ClassName (sprintf "icon %s" (unbox<string>opts.size))
 
     span
-      [ className ]
+      ((className :> IHTMLProp) :: properties)
       children
-
-  let iconSmall = icon Small
-
-  let iconNormal = icon Normal
-
-  let iconMedium = icon Medium
-
-  let iconLarge = icon Large
