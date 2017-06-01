@@ -36,38 +36,38 @@ Just run fake:
 Components
 ------
 ### Grid
- - [] Columns
- - [] Tile
+ - [ ] Columns
+ - [ ] Tile
 
 ### Elements
- - [] Box
+ - [ ] Box
  - [X] Button
- - [] Content
- - [] Form
- - [] Icon
- - [] Image
- - [] Notification
- - [] Progress
- - [] Table
- - [] Tag
- - [] Titles
+ - [ ] Content
+ - [ ] Form
+ - [ ] Icon
+ - [ ] Image
+ - [ ] Notification
+ - [ ] Progress
+ - [ ] Table
+ - [ ] Tag
+ - [ ] Titles
 
 ### Components
- - [] Card
- - [] Level
- - [] Media object
- - [] Menu
- - [] Message
- - [] Modal
- - [] Nav
- - [] Pagination
- - [] Panel
- - [] Tabs
+ - [ ] Card
+ - [ ] Level
+ - [ ] Media object
+ - [ ] Menu
+ - [ ] Message
+ - [ ] Modal
+ - [ ] Nav
+ - [ ] Pagination
+ - [ ] Panel
+ - [ ] Tabs
 ### Layout
- - [] Container
- - [] Hero
- - [] Section
- - [] Footer
+ - [ ] Container
+ - [ ] Hero
+ - [ ] Section
+ - [ ] Footer
 
 
 Contributing
