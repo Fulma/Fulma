@@ -9,11 +9,11 @@ module Modifiers =
   [<StringEnum>]
   type Level =
     | [<CompiledName("")>] NoLevel
-    | [<CompiledName("is-primary")>] IsPrimary
-    | [<CompiledName("is-info")>] IsInfo
-    | [<CompiledName("is-success")>] IsSuccess
-    | [<CompiledName("is-warning")>] IsWarning
-    | [<CompiledName("is-danger")>] IsDanger
+    | [<CompiledName("is-primary")>] Primary
+    | [<CompiledName("is-info")>] Info
+    | [<CompiledName("is-success")>] Success
+    | [<CompiledName("is-warning")>] Warning
+    | [<CompiledName("is-danger")>] Danger
     interface ILevel
 
   [<StringEnum>]

@@ -13,18 +13,18 @@ module Button =
   [<StringEnum>]
   type ButtonState =
     | [<CompiledName("")>] Normal
-    | [<CompiledName("is-hovered")>] IsHovered
-    | [<CompiledName("is-focus")>] IsFocus
-    | [<CompiledName("is-active")>] IsActive
-    | [<CompiledName("is-loading")>] IsLoading
+    | [<CompiledName("is-hovered")>] Hovered
+    | [<CompiledName("is-focus")>] Focus
+    | [<CompiledName("is-active")>] Active
+    | [<CompiledName("is-loading")>] Loading
 
   [<StringEnum>]
   type ButtonColor =
-    | [<CompiledName("is-white")>] IsWhite
-    | [<CompiledName("is-light")>] IsLight
-    | [<CompiledName("is-dark")>] IsDark
-    | [<CompiledName("is-black")>] IsBlack
-    | [<CompiledName("is-link")>] IsLink
+    | [<CompiledName("is-white")>] White
+    | [<CompiledName("is-light")>] Light
+    | [<CompiledName("is-dark")>] Dark
+    | [<CompiledName("is-black")>] Black
+    | [<CompiledName("is-link")>] Link
     interface ILevel
 
   type Option =

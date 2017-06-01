@@ -1,5 +1,6 @@
 var path = require("path");
 var webpack = require("webpack");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 function resolve(filePath) {
   return path.join(__dirname, filePath)
@@ -58,12 +59,24 @@ module.exports = {
       },
       {
         test: /\.sass$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
-        ]
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: "style-loader",
+          loader: "css-loader!sass-loader",
+        }),
+      },
+      {
+        test: /\.(jpe|jpg|woff|woff2|eot|ttf|svg)(\?.*$|$)/,
+        use: {
+          loader: 'file-loader',
+          query: {
+            name: "dist/fonts/[name].[ext]",
+            publicPath: "../"
+          }
+        },
       }
     ]
-  }
+  },
+  plugins: [
+    new ExtractTextPlugin("dist/styles.css")
+  ]
 };

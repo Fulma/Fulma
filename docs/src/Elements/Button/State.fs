@@ -58,7 +58,7 @@ btn [ Size Large ] [ ] [ str "Large" ]
       "
 # Styles
 The button can be **outlined** and/or **inverted**.
-"
+      "
     codeStyleOutlined =
       """
 ```fsharp
@@ -82,4 +82,21 @@ btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
 btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
 btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
 ```
-      """}
+      """
+    textState =
+      "
+# State
+You can control the state of the buttons.
+      "
+    codeState =
+      """
+```fsharp
+div
+  [ ClassName "block" ]
+  [ btn [ Level Success ] [ ] [str "Normal" ]
+    btn [ State Hovered; Level Success ] [ ] [str "Hover" ]
+    btn [ State Focus; Level Success ] [ ] [str "Hover" ]
+    btn [ State Active; Level Success ] [ ] [str "Hover" ]
+    btn [ State Loading; Level Success ] [ ] [str "Hover" ] ]
+```
+      """ }

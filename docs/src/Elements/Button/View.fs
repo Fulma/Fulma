@@ -35,18 +35,18 @@ let sectionColor model =
     [ div
         [ ClassName "block" ]
         [ btn [] [] [ str "Button" ]
-          btn [ Level IsWhite ] [] [ str "White" ]
-          btn [ Level IsLight ] [] [ str "Light" ]
-          btn [ Level IsDark ] [] [ str "Dark" ]
-          btn [ Level IsBlack ] [] [ str "Black" ]
-          btn [ Level IsLink ] [] [ str "Link" ] ]
+          btn [ Level White ] [] [ str "White" ]
+          btn [ Level Light ] [] [ str "Light" ]
+          btn [ Level Dark ] [] [ str "Dark" ]
+          btn [ Level Black ] [] [ str "Black" ]
+          btn [ Level Link ] [] [ str "Link" ] ]
       div
         [ ClassName "block" ]
-        [ btn [ Level IsPrimary ] [] [ str "Primary" ]
-          btn [ Level IsInfo ] [] [ str "Info" ]
-          btn [ Level IsSuccess ] [] [ str "Success" ]
-          btn [ Level IsWarning ] [] [ str "Warning" ]
-          btn [ Level IsDanger ] [] [ str "Danger" ] ] ]
+        [ btn [ Level Primary ] [] [ str "Primary" ]
+          btn [ Level Info ] [] [ str "Info" ]
+          btn [ Level Success ] [] [ str "Success" ]
+          btn [ Level Warning ] [] [ str "Warning" ]
+          btn [ Level Danger ] [] [ str "Danger" ] ] ]
   |> docBlock model.codeColor
   |> toList
   |> sectionBase model.textColor
@@ -66,26 +66,38 @@ let sectionStyle model =
   [ div
       [ ClassName "block" ]
       [ btn [ IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsPrimary; IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsInfo; IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsDark; IsOutlined ] [ ] [str "Outlined" ] ], model.codeStyleOutlined
+        btn [ Level Success; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level Primary; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level Info; IsOutlined ] [ ] [str "Outlined" ]
+        btn [ Level Dark; IsOutlined ] [ ] [str "Outlined" ] ], model.codeStyleOutlined
     div
       [ ClassName "block callout is-primary" ]
       [ btn [ IsOutlined ] [ ] [str "Outlined" ]
-        btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
-        btn [ Level IsPrimary; IsInverted ] [ ] [str "Inverted" ]
-        btn [ Level IsInfo; IsInverted ] [ ] [str "Inverted" ]
-        btn [ Level IsDark; IsInverted ] [ ] [str "Inverted" ] ], model.codeStyleInverted
+        btn [ Level Success; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level Primary; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level Info; IsInverted ] [ ] [str "Inverted" ]
+        btn [ Level Dark; IsInverted ] [ ] [str "Inverted" ] ], model.codeStyleInverted
     div
       [ ]
       [ div
           [ ClassName "block callout is-success" ]
           [ btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
-            btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
-            btn [ Level IsPrimary; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ] ] ], model.codeStyleInvertOutlined ]
+            btn [ Level Success; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
+            btn [ Level Primary; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ] ] ], model.codeStyleInvertOutlined ]
   |> List.map (fun (children, code) -> docBlock code children )
   |> sectionBase model.textStyle
+
+let sectionState model =
+  div
+    [ ClassName "block" ]
+    [ btn [ Level Success ] [ ] [str "Normal" ]
+      btn [ State Hovered; Level Success ] [ ] [str "Hover" ]
+      btn [ State Focus; Level Success ] [ ] [str "Hover" ]
+      btn [ State Active; Level Success ] [ ] [str "Hover" ]
+      btn [ State Loading; Level Success ] [ ] [str "Hover" ] ]
+  |> docBlock model.codeState
+  |> toList
+  |> sectionBase model.textState
 
 let root model =
   div
@@ -96,4 +108,6 @@ let root model =
       sectionSize model
       hr []
       sectionStyle model
+      hr []
+      sectionState model
     ]

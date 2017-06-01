@@ -1,2 +1,3 @@
-start /b dotnet fable start
-start /b ..\node_modules\.bin\webpack-dev-server.cmd
+start dotnet fable start
+start ..\node_modules\.bin\webpack-dev-server.cmd
+exit

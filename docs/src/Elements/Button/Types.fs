@@ -8,6 +8,8 @@ type Model =
     textStyle: string
     codeStyleOutlined: string
     codeStyleInverted: string
-    codeStyleInvertOutlined: string }
+    codeStyleInvertOutlined: string
+    textState: string
+    codeState: string }
 
 type Msg = unit
