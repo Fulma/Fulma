@@ -33,6 +33,43 @@ Just run fake:
 > `./build.sh` or `build`
 
 
+Components
+------
+### Grid
+ - [ ] Columns
+ - [ ] Tile
+
+### Elements
+ - [ ] Box
+ - [X] Button
+ - [ ] Content
+ - [ ] Form
+ - [ ] Icon
+ - [ ] Image
+ - [ ] Notification
+ - [ ] Progress
+ - [ ] Table
+ - [ ] Tag
+ - [ ] Titles
+
+### Components
+ - [ ] Card
+ - [ ] Level
+ - [ ] Media object
+ - [ ] Menu
+ - [ ] Message
+ - [ ] Modal
+ - [ ] Nav
+ - [ ] Pagination
+ - [ ] Panel
+ - [ ] Tabs
+### Layout
+ - [ ] Container
+ - [ ] Hero
+ - [ ] Section
+ - [ ] Footer
+
+
 Contributing
 ------
 Please have a look at the [guidelines](https://github.com/fable-elmish/elmish/blob/master/.github/CONTRIBUTING.md).
