@@ -8,7 +8,8 @@ type Msg =
   | Test
 
 type ElementsModel =
-  { button: Elements.Button.Types.Model }
+  { button: Elements.Button.Types.Model
+    icon: Elements.Icon.Types.Model }
 
 type Model = {
     currentPage: Page

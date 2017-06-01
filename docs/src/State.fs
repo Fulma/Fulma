@@ -13,6 +13,7 @@ let pageParser: Parser<Page->Page,Page> =
   oneOf [
     map Home (s "home")
     map (Element Button) (s "elements" </> s "button")
+    map (Element Icon) (s "elements" </> s "icon")
     map Home top
   ]
 
@@ -28,7 +29,8 @@ let init result =
   let (home, homeCmd) = Home.State.init()
 
   let elements =
-    { button = Elements.Button.State.init () }
+    { button = Elements.Button.State.init ()
+      icon = Elements.Icon.State.init () }
 
   let (model, cmd) =
     urlUpdate result

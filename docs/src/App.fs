@@ -50,7 +50,8 @@ let menu currentPage =
       ul
         [ ClassName "menu-list" ]
         [ menuItem "Home" Home currentPage
-          menuItem "Button" (Element Button) currentPage ] ]
+          menuItem "Button" (Element Button) currentPage
+          menuItem "Icon" (Element Elements.Icon) currentPage ] ]
 
 
 let header =
@@ -72,6 +73,7 @@ let root model dispatch =
     | Element element ->
         match element with
         | Button -> Elements.Button.View.root model.elements.button
+        | Elements.Icon -> Elements.Icon.View.root model.elements.icon
 
   div
     []

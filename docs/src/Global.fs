@@ -4,6 +4,7 @@ open Fable.Core
 
 type Elements =
   | Button
+  | Icon
 
 type Page =
   | Home
@@ -15,6 +16,7 @@ let toHash page =
   | Element element ->
     match element with
     | Button -> "#elements/button"
+    | Icon -> "#elements/icon"
 
 [<Pojo>]
 type DangerousInnerHtml =
@@ -32,3 +34,20 @@ let renderMarkdown str =
     [ ]
 
 let toList = (fun x -> [ x ])
+
+let sectionBase title docBlocks =
+  div
+    [ ]
+    ((div
+        [ ClassName "content" ]
+        [ renderMarkdown title ]) :: docBlocks)
+
+let docBlock code children =
+  div
+    [ ClassName "columns" ]
+    [ div
+        [ ClassName "column" ]
+        [ children ]
+      div
+        [ ClassName "column" ]
+        [ renderMarkdown code ] ]

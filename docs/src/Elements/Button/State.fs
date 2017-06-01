@@ -91,12 +91,10 @@ You can control the state of the buttons.
     codeState =
       """
 ```fsharp
-div
-  [ ClassName "block" ]
-  [ btn [ Level Success ] [ ] [str "Normal" ]
-    btn [ State Hovered; Level Success ] [ ] [str "Hover" ]
-    btn [ State Focus; Level Success ] [ ] [str "Hover" ]
-    btn [ State Active; Level Success ] [ ] [str "Hover" ]
-    btn [ State Loading; Level Success ] [ ] [str "Hover" ] ]
+btn [ Level Success ] [ ] [str "Normal" ]
+btn [ State Hovered; Level Success ] [ ] [str "Hover" ]
+btn [ State Focus; Level Success ] [ ] [str "Hover" ]
+btn [ State Active; Level Success ] [ ] [str "Hover" ]
+btn [ State Loading; Level Success ] [ ] [str "Hover" ]
 ```
       """ }

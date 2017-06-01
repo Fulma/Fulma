@@ -11,24 +11,6 @@ open Elmish.Bulma.Modifiers
 open Elmish.Bulma.Button
 open Global
 
-let sectionBase title docBlocks =
-  div
-    [ ]
-    ((div
-        [ ClassName "content" ]
-        [ renderMarkdown title ]) :: docBlocks)
-
-
-let docBlock code children =
-  div
-    [ ClassName "columns" ]
-    [ div
-        [ ClassName "column" ]
-        [ children ]
-      div
-        [ ClassName "column" ]
-        [ renderMarkdown code ] ]
-
 let sectionColor model =
   div
     [ ]
