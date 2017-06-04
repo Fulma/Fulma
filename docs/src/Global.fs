@@ -5,6 +5,11 @@ open Fable.Core
 type Elements =
   | Button
   | Icon
+  | Title
+  | Delete
+  | Box
+  | Content 
+  | Tag 
 
 type Page =
   | Home
@@ -17,6 +22,11 @@ let toHash page =
     match element with
     | Button -> "#elements/button"
     | Icon -> "#elements/icon"
+    | Title -> "#elements/title"
+    | Delete -> "#elements/delete"
+    | Box -> "#elements/box"
+    | Content -> "#elements/content"
+    | Tag -> "#elements/tag"
 
 [<Pojo>]
 type DangerousInnerHtml =
