@@ -17,28 +17,27 @@ A single class to handle WYSIWYG generated content, where only **HTML tags** are
     sizeCode =
     """
 ```fsharp
-  // Possibles values
-  [<StringEnum>]
-  type Level =
-    | [<CompiledName("")>] NoLevel
-    | [<CompiledName("is-primary")>] Primary
-    | [<CompiledName("is-info")>] Info
-    | [<CompiledName("is-success")>] Success
-    | [<CompiledName("is-warning")>] Warning
-    | [<CompiledName("is-danger")>] Danger
-    interface ILevel
-
-  // Examples
-
   // Normal size
-  content
+  Content.content
     [] []
     [ h1 [] [str "Hello World"]
       ..... ]
 
-  // For small size
-  content
-    [ Size Small ] []
+  // Small size
+  Content.content
+    [ Content.isSmall ] []
+    [ h1 [] [str "Hello World"]
+      ..... ]
+
+  // Medium size
+  Content.content
+    [ Content.isMedium ] []
+    [ h1 [] [str "Hello World"]
+      ..... ]
+
+  // Large size
+  Content.content
+    [ Content.isLarge ] []
     [ h1 [] [str "Hello World"]
       ..... ]
 ```

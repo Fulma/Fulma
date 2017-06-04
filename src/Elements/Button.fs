@@ -64,12 +64,11 @@ module Button =
 
     let opts = parseOptions options Options.Empty
 
-    let className =
-      classBaseList
-        (sprintf "button %s %s %s" (unbox<string>opts.level) (unbox<string>opts.size) (unbox<string>opts.state))
-        [ "is-outlined", opts.isOutlined
-          "is-inverted", opts.isInverted ]
-
     a
-      ((className :> IHTMLProp) :: properties)
+      ( classBaseList
+          (sprintf "button %s %s %s" (unbox<string>opts.level) (unbox<string>opts.size) (unbox<string>opts.state))
+          [ "is-outlined", opts.isOutlined
+            "is-inverted", opts.isInverted ]
+        :> IHTMLProp
+      :: properties)
       children

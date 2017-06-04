@@ -1,7 +1,7 @@
 namespace Elmish.Bulma.Elements
 
 open Elmish
-open Elmish.Bulma.Modifiers
+open Elmish.Bulma.BulmaClasses
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -11,25 +11,27 @@ open Fable.Helpers.React.Props
 module Content =
 
   type Option =
-    | Size of Size
+    | Size of string
 
   type Options =
-    { size: Size }
+    { size: string }
 
     static member Empty =
-      { size = Normal }
+      { size = "" }
 
-  let content (options: Option list) (properties: IHTMLProp list) children =
-    let parseOption result opt =
-        match opt with
-        | Size s ->
-            {result with size = s}
+  // Sizes
+  let isSmall = Size bulma.content.size.isSmall
+  let isMedium = Size bulma.content.size.isMedium
+  let isLarge = Size bulma.content.size.isLarge
+
+  let content (options: Option list) children =
+    let parseOption (result: Options) opt =
+      match opt with
+      | Size s ->
+          { result with size = s }
 
     let opts = options |> List.fold parseOption Options.Empty
 
-    let className =
-      ClassName (sprintf "content %s" (unbox<string>opts.size))
-
     div
-      ((className :> IHTMLProp) :: properties)
+      [ ClassName (bulma.content.container ++ opts.size) ]
       children

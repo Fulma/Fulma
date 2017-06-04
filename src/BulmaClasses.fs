@@ -18,13 +18,20 @@ module BulmaClasses =
       isWarning: string
       isDanger: string }
 
-  and Icon =
+  and Box =
+    { container: string }
+
+  and Content =
     { container: string
-      size: StandardSize}
+      size: StandardSize }
 
   and Delete =
     { container: string
       size: StandardSize }
+
+  and Icon =
+    { container: string
+      size: StandardSize}
 
   and Heading =
     { title: string
@@ -53,7 +60,9 @@ module BulmaClasses =
       isLarge: string }
 
   and Bulma =
-    { delete: Delete
+    { box: Box
+      content: Content
+      delete: Delete
       heading: Heading
       icon: Icon
       tag: Tag }
@@ -74,12 +83,19 @@ module BulmaClasses =
       isWarning = "is-warning"
       isDanger = "is-danger" }
 
-  let icon : Icon =
-    { container = "icon"
+  let box =
+    { container = "box" }
+
+  let content : Content =
+    { container = "content"
       size = standardSize }
 
   let delete : Delete =
     { container = "delete"
+      size = standardSize }
+
+  let icon : Icon =
+    { container = "icon"
       size = standardSize }
 
   let heading : Heading =
@@ -105,7 +121,9 @@ module BulmaClasses =
       color = levelAndColor }
 
   let bulma =
-    { delete = delete
+    { box = box
+      content = content
+      delete = delete
       icon = icon
       heading = heading
       tag = tag }

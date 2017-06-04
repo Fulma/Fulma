@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Elements.Content
+open Elmish.Bulma.Elements
 open Global
 
 let section model =
@@ -17,8 +17,8 @@ let section model =
     [
       div
         [ ClassName "block" ]
-        [ content
-            [ ] []
+        [ Content.content
+            [ ]
             [ h1 [] [str "Hello World"]
               p
                 []
@@ -46,8 +46,8 @@ let section model =
                 Maecenas vestibulum interdum commodo." ] ] ]
       div
         [ ClassName "block" ]
-        [ content
-            [ Size Small ] []
+        [ Content.content
+            [ Content.isSmall ]
             [ h1 [] [str "Hello World"]
               p
                 []
@@ -80,6 +80,6 @@ let section model =
 let root model =
   div
     [ ]
-    [ content [ ] [ ] [ renderMarkdown model.text ]
+    [ Content.content [ ] [ renderMarkdown model.text ]
       hr []
       section model ]

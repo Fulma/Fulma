@@ -32,9 +32,6 @@ module Icon =
 
     let opts = options |> List.fold parseOptions Options.Empty
 
-    let className =
-      ClassName (bulma.icon.container ++ opts.size)
-
     span
-      [ className ]
+      [ ClassName (bulma.icon.container ++ opts.size) ]
       children
