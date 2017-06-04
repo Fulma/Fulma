@@ -22,9 +22,7 @@ let sectionHeading model =
         ]
     ]
   ]
-  // |> docBlock model.typeText
-  // |> toList
-  // |> sectionBase model.typeCode
+
 let sectionType model =
   div
     [ ]
@@ -42,7 +40,8 @@ let sectionSize model =
   div
     [ ]
     [ div
-        [ ClassName "block" ][
+        [ ClassName "block" ]
+        [
           title h1 [TitleSize Is1; TitleType TitleType.SubTitle] [] [str "Title 1"]
           title h1 [TitleSize Is2] [] [str "Title 2"]
           title h1 [TitleSize Is3] [] [str "Title 3 (Default size)"]
@@ -65,19 +64,19 @@ let sectionExtra model =
   div
     [ ]
     [ div
-        [ ClassName "block" ][
-          title p [TitleType TitleType.Title; TitleSize Is1; TitleExtra IsSpaced] [] [str "Title 1"]
-          title p [TitleType SubTitle; TitleSize Is3] [] [str "Subtitle 3"]
+        [ ClassName "block" ]
+        [
+          str "Default behavior"
+          title p [ TitleType TitleType.Title; TitleSize Is1 ] [] [ str "Title 1" ]
+          title p [ TitleType SubTitle; TitleSize Is3 ] [] [ str "Subtitle 3" ]
           br []
-          title p [TitleType TitleType.Title; TitleSize Is2; TitleExtra IsSpaced] [] [str "Title 2"]
-          title p [TitleType SubTitle; TitleSize Is4] [] [str "Subtitle 4"]
-          br []
-          title p [TitleType TitleType.Title; TitleSize Is3; TitleExtra IsSpaced] [] [str "Title 3"]
-          title p [TitleType SubTitle; TitleSize Is5] [] [str "Subtitle 5"]
+          str "Behavior when using IsSpaced"
+          title p [ TitleType TitleType.Title; TitleSize Is1; IsSpaced ] [] [ str "Title 1" ]
+          title p [ TitleType SubTitle; TitleSize Is3 ] [] [ str "Subtitle 3" ]
         ] ]
-  |> docBlock model.extraCode
+  |> docBlock model.spacedCode
   |> toList
-  |> sectionBase model.extraText
+  |> sectionBase model.spacedText
 
 let root model =
   div
@@ -91,4 +90,3 @@ let root model =
       hr []
       sectionExtra model
       ]
-    // [str "title"]

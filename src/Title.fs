@@ -10,7 +10,7 @@ open Fable.Helpers.React.Props
 
 module Title =
 
-    //posible sizes
+    // Possible sizes
     [<StringEnum>]
     type TitleSize =
     | [<CompiledName("is-1")>] Is1
@@ -21,60 +21,42 @@ module Title =
     | [<CompiledName("is-6")>] Is6
     | [<CompiledName("")>] None
 
-    //posible types
+    // Possible types
     [<StringEnum>]
     type TitleType =
     | [<CompiledName("title")>] Title
     | [<CompiledName("subtitle")>] SubTitle
 
-    //Title may have extra attributes like this in future
-    [<StringEnum>]
-    type TitleExtra =
-    | [<CompiledName("is-spaced")>] IsSpaced
-    | [<CompiledName("")>] None
-
     type Option =
     | TitleSize of TitleSize
     | TitleType of TitleType
-    | TitleExtra of TitleExtra
+    | IsSpaced
 
-    type Options = {
-        TitleSize : TitleSize
+    type Options =
+      { TitleSize : TitleSize
         TitleType : TitleType
-        TitleExtra : TitleExtra
-    } with
-        static member Empty = {
-            TitleSize = TitleSize.None
-            TitleType = TitleType.Title
-            TitleExtra = TitleExtra.None
-        }
+        IsSpaced : bool }
+      static member Empty =
+        { TitleSize = TitleSize.None
+          TitleType = TitleType.Title
+          IsSpaced = false }
 
     let title (element:IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options: Option list) (properties: IHTMLProp list) (children) =
         let parseOption result opt=
-            match opt with
-            | TitleSize ts ->
-                {result with TitleSize = ts }
-            | TitleType tt ->
-                {result with TitleType = tt }
-            | TitleExtra te ->
-                {result with TitleExtra = te }
-        // let rec parseOptions options result =
-        //   match options with
-        //   | x::xs ->
-        //     match x with
-        //     | TitleSize titlesize ->
-        //         {result with TitleSize = titlesize }
-        //     | TitleType titletype ->
-        //         {result with TitleType = titletype }
-        //     | TitleExtra titleextra ->
-        //         {result with TitleExtra = titleextra }
-        //     |> parseOptions xs
-        //   | [] -> result
+          match opt with
+          | TitleSize ts ->
+              { result with TitleSize = ts }
+          | TitleType tt ->
+              { result with TitleType = tt }
+          | IsSpaced ->
+              { result with IsSpaced = true }
 
         let opts = options |> List.fold parseOption Options.Empty
 
         let className =
-            ClassName (sprintf "%s %s %s" (unbox<string>opts.TitleSize) (unbox<string>opts.TitleType) (unbox<string>opts.TitleExtra))
+          classBaseList
+            (sprintf "%s %s" (unbox<string>opts.TitleSize) (unbox<string>opts.TitleType))
+            [ "is-spaced", opts.IsSpaced ]
 
         element
           ((className :> IHTMLProp) :: properties)

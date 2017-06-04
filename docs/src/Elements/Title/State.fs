@@ -13,7 +13,7 @@ let init() : Model =
         typeCode =
             """
 ```fsharp
-//posible types
+// Possible types
 [<StringEnum>]
 type TitleType =
 | [<CompiledName("title")>] Title
@@ -26,13 +26,13 @@ title h3 [TitleType SubTitle] [] [str "Subtitle"]
             """
         sizeText =
             "
-#Sizes
+# Sizes
 There can be **six** different sizes for title
             "
         sizeCode =
             """
 ```fsharp
-//posible sizes
+// Possible sizes
 [<StringEnum>]
 type TitleSize =
 | [<CompiledName("is-1")>] Is1
@@ -43,45 +43,25 @@ type TitleSize =
 | [<CompiledName("is-6")>] Is6
 | [<CompiledName("")>] None
 
-//Examples
+// Examples
+// Title
 title h1 [TitleSize Is1; TitleType TitleType.SubTitle] [] [str "Title 1"]
-title h1 [TitleSize Is2] [] [str "Title 2"]
-title h1 [TitleSize Is3] [] [str "Title 3"]
-title h1 [TitleSize Is4] [] [str "Title 4"]
-title h1 [TitleSize Is5] [] [str "Title 5"]
-title h1 [TitleSize Is6] [] [str "Title 6"]
-br []
-title h1 [TitleType SubTitle; TitleSize Is1] [] [str "Subtitle 1"]
-title h1 [TitleType SubTitle; TitleSize Is2] [] [str "Subtitle 2"]
-title h1 [TitleType SubTitle; TitleSize Is3] [] [str "Subtitle 3"]
-title h1 [TitleType SubTitle; TitleSize Is4] [] [str "Subtitle 4"]
-title h1 [TitleType SubTitle; TitleSize Is5] [] [str "Subtitle 5"]
+// Subtitle
 title h1 [TitleType SubTitle; TitleSize Is6] [] [str "Subtitle 6"]
-
 ```
             """
-        extraText =
-            "
-#Extra
-            "
-        extraCode =
+        spacedText =
+          "
+When **conbining** a title and a subtile, they move closer together.
+
+You can prevent this behavior by adding `IsSpaced` on the first element.
+          "
+        spacedCode =
         """
 ```fsharp
-//Title may have extra attributes like this in future
-[<StringEnum>]
-type TitleExtra =
-| [<CompiledName("is-spaced")>] IsSpaced
-| [<CompiledName("")>] None
-
-//Examples
-title p [TitleType TitleType.Title; TitleSize Is1; TitleExtra IsSpaced] [] [str "Title 1"]
-title p [TitleType SubTitle; TitleSize Is3] [] [str "Subtitle 3"]
-br []
-title p [TitleType TitleType.Title; TitleSize Is2; TitleExtra IsSpaced] [] [str "Title 2"]
-title p [TitleType SubTitle; TitleSize Is4] [] [str "Subtitle 4"]
-br []
-title p [TitleType TitleType.Title; TitleSize Is3; TitleExtra IsSpaced] [] [str "Title 3"]
-title p [TitleType SubTitle; TitleSize Is5] [] [str "Subtitle 5"]
+// Examples
+title p [ TitleType TitleType.Title; TitleSize Is1; IsSpaced ] [] [ str "Title 1" ]
+title p [ TitleType SubTitle; TitleSize Is3 ] [] [ str "Subtitle 3" ]
 ```
         """
     }
