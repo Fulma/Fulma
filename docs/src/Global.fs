@@ -9,6 +9,7 @@ type Elements =
   | Delete
   | Box
   | Content 
+  | Tag 
 
 type Page =
   | Home
@@ -25,6 +26,7 @@ let toHash page =
     | Delete -> "#elements/delete"
     | Box -> "#elements/box"
     | Content -> "#elements/content"
+    | Tag -> "#elements/tag"
 
 [<Pojo>]
 type DangerousInnerHtml =

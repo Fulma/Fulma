@@ -13,7 +13,8 @@ type ElementsModel =
     title : Elements.Title.Types.Model
     delete : Elements.Delete.Types.Model
     box : Elements.Box.Types.Model
-    content : Elements.Content.Types.Model}
+    content : Elements.Content.Types.Model
+    tag : Elements.Tag.Types.Model}
 
 type Model = {
     currentPage: Page
