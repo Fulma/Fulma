@@ -2,7 +2,7 @@ module App.State
 
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Notification
+open Elmish.Bulma.Elements.Notification
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
 open Fable.Import
@@ -59,7 +59,7 @@ let update msg model =
       let (home, homeCmd) = Home.State.update msg model.home
       { model with home = home }, Cmd.map HomeMsg homeCmd
   | SendNotification ->
-      model, Elmish.Bulma.Notification.Cmd.newNotification (notification [ Level Success ] [ ] [ str "coucou" ])
+      model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [ Level Success ] [ ] [ str "coucou" ])
   | Test ->
       Browser.console.log "couocuo"
       model, []

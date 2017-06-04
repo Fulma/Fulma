@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Box
+open Elmish.Bulma.Elements.Box
 open Global
 
 let section model =

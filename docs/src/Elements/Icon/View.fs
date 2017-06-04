@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Icon
+open Elmish.Bulma.Elements
 open Global
 
 let section model =
@@ -16,18 +16,18 @@ let section model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ icon
-            [ Size Small ]
-            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-          icon
+        [ Icon.icon
+            [ Icon.iconSmall ]
+            [ i [ ClassName "fa fa-home" ] [ ] ]
+          Icon.icon
             [  ]
-            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-          icon
-            [ Size Medium ]
-            [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-          icon
-            [ Size Large ]
-            [ ] [ i [ ClassName "fa fa-home" ] [ ] ] ] ]
+            [ i [ ClassName "fa fa-home" ] [ ] ]
+          Icon.icon
+            [ Icon.iconMedium ]
+            [ i [ ClassName "fa fa-home" ] [ ] ]
+          Icon.icon
+            [ Icon.iconLarge ]
+            [ i [ ClassName "fa fa-home" ] [ ] ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text

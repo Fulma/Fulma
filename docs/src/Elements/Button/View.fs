@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Button
+open Elmish.Bulma.Elements.Button
 open Global
 
 let sectionColor model =

@@ -1,4 +1,4 @@
-namespace Elmish.Bulma
+namespace Elmish.Bulma.Elements
 
 open Elmish
 open Elmish.Bulma.Modifiers

@@ -1,4 +1,4 @@
-namespace Elmish.Bulma
+namespace Elmish.Bulma.Elements
 
 open Elmish
 open Elmish.Bulma.Modifiers
@@ -19,7 +19,7 @@ module Icon =
     static member Empty =
       { size = Normal }
 
-  let icon (options: Option list) (properties: IHTMLProp list) children =
+  let internal builder (options: Option list) children =
     let rec parseOptions options result =
       match options with
       | x::xs ->
@@ -33,5 +33,15 @@ module Icon =
       ClassName (sprintf "icon %s" (unbox<string>opts.size))
 
     span
-      ((className :> IHTMLProp) :: properties)
+      [ className ]
       children
+
+  let iconSmall = Size Small
+
+  let iconNormal = Size Normal
+
+  let iconMedium = Size Medium
+
+  let iconLarge = Size Large
+
+  let icon options children = builder options children

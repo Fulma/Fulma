@@ -107,11 +107,11 @@ let root model dispatch =
                     [ pageHtml model.currentPage ] ] ] ] ]
 
 open Elmish.React
-open Elmish.Bulma.Notification
+open Elmish.Bulma.Elements.Notification
 
 // App
 Program.mkProgram init update root
 |> Program.toNavigable (parseHash pageParser) urlUpdate
-|> Program.toNotifiable Bulma.Notification.defaultNotificationArea
+|> Program.toNotifiable defaultNotificationArea
 |> Program.withReact "elmish-app"
 |> Program.run
