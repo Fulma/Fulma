@@ -31,12 +31,11 @@ let sectionColor model =
           Tag.tag [ Tag.isDark ] [ str "Dark" ]
           Tag.tag [ Tag.isLight ] [ str "Light" ]
           Tag.tag [ Tag.isWhite ] [ str "White" ]
-          Tag.tag [ Tag.isPrimary ] [ str "Primary"]  ]
+          Tag.tag [ Tag.isPrimary ] [ str "Primary"] ]
       br [ ]
       div
         [ ClassName "block" ]
-        [
-          Tag.tag [ Tag.isInfo ] [ str "Info" ]
+        [ Tag.tag [ Tag.isInfo ] [ str "Info" ]
           Tag.tag [ Tag.isSuccess ] [ str "Success" ]
           Tag.tag [ Tag.isWarning ] [ str "Warning" ]
           Tag.tag [ Tag.isDanger ] [ str "Danger" ] ] ]

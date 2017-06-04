@@ -54,7 +54,7 @@ module Tag =
     let opts = options |> List.fold parseOption Options.Empty
 
     let className =
-      ClassName (bulma.tag.container + opts.size + opts.color)
+      ClassName (bulma.tag.container ++ opts.size ++ opts.color)
 
     span
       (className :> IHTMLProp :: opts.props)

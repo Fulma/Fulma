@@ -12,12 +12,12 @@ let init () : Model =
       """
 ```fsharp
 Delete.delete
-  [ Delete.small ] [ ]
+  [ Delete.isSmall ] [ ]
 Delete.delete
   [ ] [ ]
 Delete.delete
-  [ Delete.medium ] [ ]
+  [ Delete.isMedium ] [ ]
 Delete.delete
-  [ Delete.large ] [ ]
+  [ Delete.isLarge ] [ ]
 ```
       """ }

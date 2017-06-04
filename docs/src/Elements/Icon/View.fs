@@ -17,16 +17,16 @@ let section model =
     [ div
         [ ClassName "block" ]
         [ Icon.icon
-            [ Icon.isSmal ]
+            [ Icon.isSmall ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
           Icon.icon
             [  ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
           Icon.icon
-            [ Icon.medium ]
+            [ Icon.isMedium ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
           Icon.icon
-            [ Icon.large ]
+            [ Icon.isLarge ]
             [ i [ ClassName "fa fa-home" ] [ ] ] ] ]
   |> docBlock model.code
   |> toList

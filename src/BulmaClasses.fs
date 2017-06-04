@@ -77,3 +77,5 @@ module BulmaClasses =
     { delete = delete
       icon = icon
       tag = tag }
+
+  let (++) str1 str2 = str1 + " " + str2

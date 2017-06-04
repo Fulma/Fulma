@@ -19,7 +19,7 @@ module Icon =
     static member Empty =
       { size = "" }
 
-  let isSmal = Size bulma.icon.size.isSmall
+  let isSmall = Size bulma.icon.size.isSmall
 
   let isMedium = Size bulma.icon.size.isMedium
 
@@ -33,7 +33,7 @@ module Icon =
     let opts = options |> List.fold parseOptions Options.Empty
 
     let className =
-      ClassName (bulma.icon.container + opts.size)
+      ClassName (bulma.icon.container ++ opts.size)
 
     span
       [ className ]

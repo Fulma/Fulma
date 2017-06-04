@@ -12,16 +12,16 @@ let init () : Model =
       """
 ```fsharp
 Icon.icon
-  [ Icon.small ]
+  [ Icon.isSmall ]
   [ i [ ClassName "fa fa-home" ] [ ] ]
 Icon.icon
   [  ]
   [ i [ ClassName "fa fa-home" ] [ ] ]
 Icon.icon
-  [ Icon.medium ]
+  [ Icon.isMedium ]
   [ i [ ClassName "fa fa-home" ] [ ] ]
 Icon.icon
-  [ Icon.large ]
+  [ Icon.isLarge ]
   [ i [ ClassName "fa fa-home" ] [ ] ]
 ```
       """ }

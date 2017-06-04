@@ -23,25 +23,15 @@ tag [] [] [str "Tag label"]
       colorCode =
             """
 ```fsharp
-[<StringEnum>]
-type TagColor =
-| [<CompiledName("is-black")>] Black
-| [<CompiledName("is-dark")>] Dark
-| [<CompiledName("is-light")>] Light
-| [<CompiledName("is-white")>] White
-| [<CompiledName("is-primary")>] Primary
-| [<CompiledName("is-info")>] Info
-| [<CompiledName("is-success")>] Success
-| [<CompiledName("is-warning")>] Warning
-| [<CompiledName("is-danger")>] Danger
-| [<CompiledName("")>] None
-
-//Examples
-tag [Color Black] [] [str "Black"]
-tag [Color Dark] [] [str "Dark"]
-tag [Color Light] [] [str "Light"]
-tag [Color Info] [] [str "Info"]
-tag [Color Success] [] [str "Success"]
+Tag.tag [ Tag.isBlack ] [ str "Black" ]
+Tag.tag [ Tag.isDark ] [ str "Dark" ]
+Tag.tag [ Tag.isLight ] [ str "Light" ]
+Tag.tag [ Tag.isWhite ] [ str "White" ]
+Tag.tag [ Tag.isPrimary ] [ str "Primary"]
+Tag.tag [ Tag.isInfo ] [ str "Info" ]
+Tag.tag [ Tag.isSuccess ] [ str "Success" ]
+Tag.tag [ Tag.isWarning ] [ str "Warning" ]
+Tag.tag [ Tag.isDanger ] [ str "Danger" ]
 ```
             """
       sizeText =
@@ -51,14 +41,8 @@ tag [Color Success] [] [str "Success"]
       sizeCode =
             """
 ```fsharp
-[<StringEnum>]
-type TagSize =
-| [<CompiledName("is-medium")>] Medium
-| [<CompiledName("is-large")>]Large
-| [<CompiledName("")>] Normal
-
-tag [Color Success; Size Medium] [] [str "Medium"]
-tag [Color Info; Size Large] [] [str "Large"]
+Tag.tag [ Tag.isSuccess; Tag.isMedium ] [ str "Medium" ]
+Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str "Large" ]
 ```
             """
       }

@@ -41,7 +41,7 @@ module Delete =
     let opts = options |> List.fold parseOption Options.Empty
 
     let className =
-      ClassName (bulma.delete.container + opts.size)
+      ClassName (bulma.delete.container ++ opts.size)
 
     a
       (className :> IHTMLProp :: opts.props)
