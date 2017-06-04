@@ -22,11 +22,11 @@ module Delete =
       { size = ""
         props = [] }
 
-  let small = Size bulma.delete.size.isSmall
+  let isSmall = Size bulma.delete.size.isSmall
 
-  let medium = Size bulma.delete.size.isMedium
+  let isMedium = Size bulma.delete.size.isMedium
 
-  let large = Size bulma.delete.size.isLarge
+  let isLarge = Size bulma.delete.size.isLarge
 
   let props props = Props props
 

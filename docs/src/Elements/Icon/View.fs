@@ -17,7 +17,7 @@ let section model =
     [ div
         [ ClassName "block" ]
         [ Icon.icon
-            [ Icon.small ]
+            [ Icon.isSmal ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
           Icon.icon
             [  ]

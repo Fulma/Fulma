@@ -19,14 +19,14 @@ let section model =
       div
         [ ClassName "block" ]
         [ Delete.delete
-            [ Delete.small ]
+            [ Delete.isSmall ]
             [ ]
           Delete.delete
             [ ] [ ]
           Delete.delete
-            [ Delete.medium ] [ ]
+            [ Delete.isMedium ] [ ]
           Delete.delete
-            [ Delete.large ] [ ] ] ]
+            [ Delete.isLarge ] [ ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text

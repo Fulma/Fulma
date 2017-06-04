@@ -19,7 +19,13 @@ module Icon =
     static member Empty =
       { size = "" }
 
-  let internal builder (options: Option list) children =
+  let isSmal = Size bulma.icon.size.isSmall
+
+  let isMedium = Size bulma.icon.size.isMedium
+
+  let isLarge = Size bulma.icon.size.isLarge
+
+  let icon options children =
     let parseOptions (result: Options) option =
       match option with
       | Size size -> { result with size = size}
@@ -32,11 +38,3 @@ module Icon =
     span
       [ className ]
       children
-
-  let small = Size bulma.icon.size.isSmall
-
-  let medium = Size bulma.icon.size.isMedium
-
-  let large = Size bulma.icon.size.isLarge
-
-  let icon options children = builder options children

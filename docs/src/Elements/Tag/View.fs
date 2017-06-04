@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Elements.Tag
+open Elmish.Bulma.Elements
 open Global
 
 let section model =
@@ -16,7 +16,7 @@ let section model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ tag [] [] [str "Tag label"] ] ]
+        [ Tag.tag [] [ str "Tag label" ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text
@@ -27,19 +27,19 @@ let sectionColor model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ tag [Color Black] [] [str "Black"]
-          tag [Color Dark] [] [str "Dark"]
-          tag [Color Light] [] [str "Light"]
-          tag [Color White] [] [str "White"]
-          tag [Color Primary] [] [str "Primary"] ]
+        [ Tag.tag [ Tag.isBlack ] [ str "Black" ]
+          Tag.tag [ Tag.isDark ] [ str "Dark" ]
+          Tag.tag [ Tag.isLight ] [ str "Light" ]
+          Tag.tag [ Tag.isWhite ] [ str "White" ]
+          Tag.tag [ Tag.isPrimary ] [ str "Primary"]  ]
       br [ ]
       div
         [ ClassName "block" ]
         [
-          tag [Color Info] [] [str "Info"]
-          tag [Color Success] [] [str "Success"]
-          tag [Color Warning] [] [str "Warning"]
-          tag [Color Danger] [] [str "Danger"] ] ]
+          Tag.tag [ Tag.isInfo ] [ str "Info" ]
+          Tag.tag [ Tag.isSuccess ] [ str "Success" ]
+          Tag.tag [ Tag.isWarning ] [ str "Warning" ]
+          Tag.tag [ Tag.isDanger ] [ str "Danger" ] ] ]
   |> docBlock model.colorCode
   |> toList
   |> sectionBase model.colorText
@@ -49,8 +49,8 @@ let sectionSize model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ tag [Color Success; Size Medium] [] [str "Medium"]
-          tag [Color Info; Size Large] [] [str "Large"] ] ]
+        [ Tag.tag [ Tag.isSuccess; Tag.isMedium ] [ str "Medium" ]
+          Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str "Large" ] ] ]
   |> docBlock model.sizeCode
   |> toList
   |> sectionBase model.sizeText
