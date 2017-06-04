@@ -16,30 +16,17 @@ module Tag =
     | [<CompiledName("is-large")>]Large
     | [<CompiledName("")>] Normal
 
-  [<StringEnum>]
-  type TagColor =
-    | [<CompiledName("is-black")>] Black
-    | [<CompiledName("is-dark")>] Dark
-    | [<CompiledName("is-light")>] Light
-    | [<CompiledName("is-white")>] White
-    | [<CompiledName("is-primary")>] Primary
-    | [<CompiledName("is-info")>] Info
-    | [<CompiledName("is-success")>] Success
-    | [<CompiledName("is-warning")>] Warning
-    | [<CompiledName("is-danger")>] Danger
-    | [<CompiledName("")>] None
-
   type Option =
   | Size of TagSize
-  | Color of TagColor
+  | Color of ILevel
 
   type Options =
     { size: TagSize
-      color : TagColor }
+      color : ILevel }
 
     static member Empty =
       { size = TagSize.Normal
-        color = TagColor.None }
+        color = NoLevel }
 
   let tag (options: Option list) (properties: IHTMLProp list) children =
     let parseOption result opt =

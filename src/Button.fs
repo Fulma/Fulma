@@ -11,21 +11,17 @@ open Fable.Helpers.React.Props
 module Button =
 
   [<StringEnum>]
+  type ButtonLevel =
+    | [<CompiledName("is-link")>] Link
+    interface ILevel
+
+  [<StringEnum>]
   type ButtonState =
     | [<CompiledName("")>] Normal
     | [<CompiledName("is-hovered")>] Hovered
     | [<CompiledName("is-focus")>] Focus
     | [<CompiledName("is-active")>] Active
     | [<CompiledName("is-loading")>] Loading
-
-  [<StringEnum>]
-  type ButtonColor =
-    | [<CompiledName("is-white")>] White
-    | [<CompiledName("is-light")>] Light
-    | [<CompiledName("is-dark")>] Dark
-    | [<CompiledName("is-black")>] Black
-    | [<CompiledName("is-link")>] Link
-    interface ILevel
 
   type Option =
     | Level of ILevel

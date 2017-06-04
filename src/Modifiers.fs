@@ -17,6 +17,14 @@ module Modifiers =
     interface ILevel
 
   [<StringEnum>]
+  type Color =
+    | [<CompiledName("is-white")>] White
+    | [<CompiledName("is-light")>] Light
+    | [<CompiledName("is-dark")>] Dark
+    | [<CompiledName("is-black")>] Black
+    interface ILevel
+
+  [<StringEnum>]
   type Size =
     | [<CompiledName("is-small")>] Small
     | [<CompiledName("")>] Normal

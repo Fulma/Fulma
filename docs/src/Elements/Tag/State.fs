@@ -40,12 +40,8 @@ type TagColor =
 tag [Color Black] [] [str "Black"]
 tag [Color Dark] [] [str "Dark"]
 tag [Color Light] [] [str "Light"]
-tag [Color White] [] [str "White"]
-tag [Color Primary] [] [str "Primary"]
 tag [Color Info] [] [str "Info"]
 tag [Color Success] [] [str "Success"]
-tag [Color Warning] [] [str "Warning"]
-tag [Color Danger] [] [str "Danger"]
 ```
             """
       sizeText =
@@ -59,7 +55,7 @@ tag [Color Danger] [] [str "Danger"]
 type TagSize =
 | [<CompiledName("is-medium")>] Medium
 | [<CompiledName("is-large")>]Large
-| [<CompiledName("")>] None
+| [<CompiledName("")>] Normal
 
 tag [Color Success; Size Medium] [] [str "Medium"]
 tag [Color Info; Size Large] [] [str "Large"]
