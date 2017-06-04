@@ -8,7 +8,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish
 open Elmish.Bulma.Modifiers
-open Elmish.Bulma.Elements.Delete
+open Elmish.Bulma.Elements
 open Global
 
 let section model =
@@ -18,34 +18,15 @@ let section model =
       br [ ]
       div
         [ ClassName "block" ]
-        [ delete a
-            [ Size Small ]
+        [ Delete.delete
+            [ Delete.small ]
+            [ ]
+          Delete.delete
             [ ] [ ]
-          delete a
-            [  ]
-            [ ] [ ]
-          delete a
-            [ Size Medium ]
-            [ ] [ ]
-          delete a
-            [ Size Large ]
-            [ ] [ ] ]
-      renderMarkdown "Using `button` elements"
-      br [ ]
-      div
-        [ ClassName "block" ]
-        [ delete button
-            [ Size Small ]
-            [ ] [ ]
-          delete button
-            [  ]
-            [ ] [ ]
-          delete button
-            [ Size Medium ]
-            [ ] [ ]
-          delete button
-            [ Size Large ]
-            [ ] [ ] ] ]
+          Delete.delete
+            [ Delete.medium ] [ ]
+          Delete.delete
+            [ Delete.large ] [ ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text

@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Modifiers.fs" />
+    <Compile Include="BulmaClasses.fs" />
     <!-- Elements -->
     <!-- Elements/Internam -->
     <Compile Include="Elements/Notification.fs" />

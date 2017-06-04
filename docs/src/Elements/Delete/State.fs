@@ -11,28 +11,13 @@ let init () : Model =
     code =
       """
 ```fsharp
-// Possible values
-[<StringEnum>]
-type Size =
-  | [<CompiledName("is-small")>] Small
-  | [<CompiledName("")>] Normal
-  | [<CompiledName("is-medium")>] Medium
-  | [<CompiledName("is-large")>] Large
-
-// Example
-delete a
-    [ Size Small ]
-    [ ] [ ]
-delete a
-    [  ]
-    [ ] [ ]
-
-//or with buttons
-delete button
-    [ Size Medium ]
-    [ ] [ ]
-delete button
-    [ Size Large ]
-    [ ] [ ]
+Delete.delete
+  [ Delete.small ] [ ]
+Delete.delete
+  [ ] [ ]
+Delete.delete
+  [ Delete.medium ] [ ]
+Delete.delete
+  [ Delete.large ] [ ]
 ```
       """ }

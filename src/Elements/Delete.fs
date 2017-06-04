@@ -1,7 +1,7 @@
 namespace Elmish.Bulma.Elements
 
 open Elmish
-open Elmish.Bulma.Modifiers
+open Elmish.Bulma.BulmaClasses
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -11,25 +11,38 @@ open Fable.Helpers.React.Props
 module Delete =
 
   type Option =
-    | Size of Size
+    | Size of string
+    | Props of IHTMLProp list
 
   type Options =
-    { size: Size }
+    { size: string
+      props: IHTMLProp list }
 
     static member Empty =
-      { size = Normal }
+      { size = ""
+        props = [] }
 
-  let delete (element:IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options: Option list) (properties: IHTMLProp list) children =
-    let parseOption result opt =
+  let small = Size bulma.delete.size.isSmall
+
+  let medium = Size bulma.delete.size.isMedium
+
+  let large = Size bulma.delete.size.isLarge
+
+  let props props = Props props
+
+  let delete (options: Option list) children =
+    let parseOption (result: Options) opt =
         match opt with
         | Size s ->
-            {result with size = s}
+            { result with size = s }
+        | Props props ->
+            { result with props = props }
 
     let opts = options |> List.fold parseOption Options.Empty
 
     let className =
-      ClassName (sprintf "delete %s" (unbox<string>opts.size))
+      ClassName (bulma.delete.container + opts.size)
 
-    element
-      ((className :> IHTMLProp) :: properties)
+    a
+      (className :> IHTMLProp :: opts.props)
       children
