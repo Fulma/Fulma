@@ -14,144 +14,72 @@ open Global
 let section model =
   div
     [ ]
-    [ div
+    [
+      div
         [ ClassName "block" ]
-        [ content [] [] [
-            h1 [] [str "Hello World"]
-            p [] [
-                str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
-                , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
-                , sollicitudin vel erat vel, interdum mattis neque."
-            ]
-            h2 [] [str "Second level"]
-            p [] [
-                str "Curabitur accumsan turpis pharetra "
-                strong [] [str "augue tincidunt"]
-                str "blandit. Quisque condimentum maximus mi
-                , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
-                 Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
-                  Donec at dignissim dui. Ut et neque nisl."
-            ]
-            ul [] [
-                li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
-                li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
-                li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
-                li [] [str "Ut non enim metus."]
-            ]
-            p [] [str "Sed sagittis enim ac tortor maximus rutrum. 
-            Nulla facilisi. Donec mattis vulputate risus in luctus.
-             Maecenas vestibulum interdum commodo."]
-        ]
-
-        ] ]
-  |> docBlock model.code
-  |> toList
-  |> sectionBase model.text
-
-
-let sizeSection model =
-  div
-    [ ]
-    [ div
+        [ content
+            [ ] []
+            [ h1 [] [str "Hello World"]
+              p
+                []
+                [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
+                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
+                  , sollicitudin vel erat vel, interdum mattis neque." ]
+              h2 [] [str "Second level"]
+              p
+                []
+                [ str "Curabitur accumsan turpis pharetra "
+                  strong [] [str "augue tincidunt"]
+                  str "blandit. Quisque condimentum maximus mi
+                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
+                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
+                  Donec at dignissim dui. Ut et neque nisl." ]
+              ul
+                []
+                [ li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
+                  li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
+                  li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
+                  li [] [str "Ut non enim metus."] ]
+              p [] [str "Sed sagittis enim ac tortor maximus rutrum.
+              Nulla facilisi. Donec mattis vulputate risus in luctus.
+                Maecenas vestibulum interdum commodo." ] ] ]
+      div
         [ ClassName "block" ]
-        [
-            content [Size Small] [] [
-                h1 [] [str "Hello World"]
-                p [] [
-                    str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
-                    , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
-                    , sollicitudin vel erat vel, interdum mattis neque."
-                ]
-                h2 [] [str "Second level"]
-                p [] [
-                    str "Curabitur accumsan turpis pharetra "
-                    strong [] [str "augue tincidunt"]
-                    str "blandit. Quisque condimentum maximus mi
-                    , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
-                     Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
-                      Donec at dignissim dui. Ut et neque nisl."
-                ]
-                ul [] [
-                    li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
-                    li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
-                    li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
-                    li [] [str "Ut non enim metus."]
-                ]
-                p [] [str "Sed sagittis enim ac tortor maximus rutrum. 
-                Nulla facilisi. Donec mattis vulputate risus in luctus.
-                 Maecenas vestibulum interdum commodo."]
-            ]
-            hr []
-            content [Size Medium] [] [
-                h1 [] [str "Hello World"]
-                p [] [
-                    str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
-                    , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
-                    , sollicitudin vel erat vel, interdum mattis neque."
-                ]
-                h2 [] [str "Second level"]
-                p [] [
-                    str "Curabitur accumsan turpis pharetra "
-                    strong [] [str "augue tincidunt"]
-                    str "blandit. Quisque condimentum maximus mi
-                    , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
-                     Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
-                      Donec at dignissim dui. Ut et neque nisl."
-                ]
-                ul [] [
-                    li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
-                    li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
-                    li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
-                    li [] [str "Ut non enim metus."]
-                ]
-                p [] [str "Sed sagittis enim ac tortor maximus rutrum. 
-                Nulla facilisi. Donec mattis vulputate risus in luctus.
-                 Maecenas vestibulum interdum commodo."]
-            ]
-            hr []
-            content [Size Large] [] [
-                h1 [] [str "Hello World"]
-                p [] [
-                    str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                    Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
-                    , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
-                    , sollicitudin vel erat vel, interdum mattis neque."
-                ]
-                h2 [] [str "Second level"]
-                p [] [
-                    str "Curabitur accumsan turpis pharetra "
-                    strong [] [str "augue tincidunt"]
-                    str "blandit. Quisque condimentum maximus mi
-                    , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
-                     Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
-                      Donec at dignissim dui. Ut et neque nisl."
-                ]
-                ul [] [
-                    li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
-                    li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
-                    li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
-                    li [] [str "Ut non enim metus."]
-                ]
-                p [] [str "Sed sagittis enim ac tortor maximus rutrum. 
-                Nulla facilisi. Donec mattis vulputate risus in luctus.
-                 Maecenas vestibulum interdum commodo."]
-            ]
-        ] ]
+        [ content
+            [ Size Small ] []
+            [ h1 [] [str "Hello World"]
+              p
+                []
+                [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus
+                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio
+                  , sollicitudin vel erat vel, interdum mattis neque." ]
+              h2 [] [str "Second level"]
+              p
+                []
+                [ str "Curabitur accumsan turpis pharetra "
+                  strong [] [str "augue tincidunt"]
+                  str "blandit. Quisque condimentum maximus mi
+                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.
+                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.
+                  Donec at dignissim dui. Ut et neque nisl." ]
+              ul
+                []
+                [ li [] [str "In fermentum leo eu lectus mollis, quis dictum mi aliquet."]
+                  li [] [str "Morbi eu nulla lobortis, lobortis est in, fringilla felis."]
+                  li [] [str "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."]
+                  li [] [str "Ut non enim metus."] ]
+              p [] [str "Sed sagittis enim ac tortor maximus rutrum.
+              Nulla facilisi. Donec mattis vulputate risus in luctus.
+                Maecenas vestibulum interdum commodo." ] ] ] ]
   |> docBlock model.sizeCode
   |> toList
   |> sectionBase model.sizeText
 
-
-
-
 let root model =
   div
     [ ]
-    [
-        section model
-        hr []
-        sizeSection model
-    ]
+    [ content [ ] [ ] [ renderMarkdown model.text ]
+      hr []
+      section model ]
