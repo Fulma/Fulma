@@ -20,14 +20,11 @@ module Icon =
       { size = Normal }
 
   let internal builder (options: Option list) children =
-    let rec parseOptions options result =
-      match options with
-      | x::xs ->
-          match x with
-          | Size size -> { result with size = size}
-      | [] -> result
+    let parseOptions result option =
+      match option with
+      | Size size -> { result with size = size}
 
-    let opts = parseOptions options Options.Empty
+    let opts = options |> List.fold parseOptions Options.Empty
 
     let className =
       ClassName (sprintf "icon %s" (unbox<string>opts.size))
