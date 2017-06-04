@@ -11,26 +11,17 @@ let init () : Model =
     code =
       """
 ```fsharp
-// Possible values
-[<StringEnum>]
-type Size =
-  | [<CompiledName("is-small")>] Small
-  | [<CompiledName("")>] Normal
-  | [<CompiledName("is-medium")>] Medium
-  | [<CompiledName("is-large")>] Large
-
-// Example
-icon
-  [ Size Small ]
-  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-icon
+Icon.icon
+  [ Icon.iconSmall ]
+  [ i [ ClassName "fa fa-home" ] [ ] ]
+Icon.icon
   [  ]
-  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-icon
-  [ Size Medium ]
-  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
-icon
-  [ Size Large ]
-  [ ] [ i [ ClassName "fa fa-home" ] [ ] ]
+  [ i [ ClassName "fa fa-home" ] [ ] ]
+Icon.icon
+  [ Icon.iconMedium ]
+  [ i [ ClassName "fa fa-home" ] [ ] ]
+Icon.icon
+  [ Icon.iconLarge ]
+  [ i [ ClassName "fa fa-home" ] [ ] ]
 ```
       """ }
