@@ -43,6 +43,7 @@ Components
  - [ ] Box
  - [X] Button
  - [ ] Content
+ - [X] Delete
  - [ ] Form
  - [X] Icon
  - [ ] Image
@@ -50,7 +51,7 @@ Components
  - [ ] Progress
  - [ ] Table
  - [ ] Tag
- - [ ] Titles
+ - [X] Titles
 
 ### Components
  - [ ] Card

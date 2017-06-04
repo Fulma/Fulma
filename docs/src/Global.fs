@@ -6,6 +6,7 @@ type Elements =
   | Button
   | Icon
   | Title
+  | Delete
 
 type Page =
   | Home
@@ -19,6 +20,7 @@ let toHash page =
     | Button -> "#elements/button"
     | Icon -> "#elements/icon"
     | Title -> "#elements/title"
+    | Delete -> "#elements/delete"
 
 [<Pojo>]
 type DangerousInnerHtml =
