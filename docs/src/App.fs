@@ -54,7 +54,8 @@ let menu currentPage =
           menuItem "Icon" (Element Elements.Icon) currentPage
           menuItem "Title" (Element Elements.Title) currentPage
           menuItem "Delete" (Element Elements.Delete) currentPage
-          menuItem "Box" (Element Elements.Box) currentPage] ]
+          menuItem "Box" (Element Elements.Box) currentPage
+          menuItem "Content" (Element Elements.Content) currentPage] ]
 
 
 let header =
@@ -80,6 +81,7 @@ let root model dispatch =
         | Elements.Title -> Elements.Title.View.root model.elements.title
         | Elements.Delete -> Elements.Delete.View.root model.elements.delete
         | Elements.Box -> Elements.Box.View.root model.elements.box
+        | Elements.Content -> Elements.Content.View.root model.elements.content
 
   div
     []

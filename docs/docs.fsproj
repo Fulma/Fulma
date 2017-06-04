@@ -33,6 +33,10 @@
       <Compile Include="src/Elements/Box/Types.fs" />
       <Compile Include="src/Elements/Box/State.fs" />
       <Compile Include="src/Elements/Box/View.fs" />
+      <!-- Elements/Content -->
+      <Compile Include="src/Elements/Content/Types.fs" />
+      <Compile Include="src/Elements/Content/State.fs" />
+      <Compile Include="src/Elements/Content/View.fs" />
     <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
     <!-- App -->

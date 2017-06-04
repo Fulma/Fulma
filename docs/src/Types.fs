@@ -12,7 +12,8 @@ type ElementsModel =
     icon: Elements.Icon.Types.Model
     title : Elements.Title.Types.Model
     delete : Elements.Delete.Types.Model
-    box : Elements.Box.Types.Model}
+    box : Elements.Box.Types.Model
+    content : Elements.Content.Types.Model}
 
 type Model = {
     currentPage: Page

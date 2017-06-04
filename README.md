@@ -42,7 +42,7 @@ Components
 ### Elements
  - [X] Box
  - [X] Button
- - [ ] Content
+ - [X] Content
  - [X] Delete
  - [ ] Form
  - [X] Icon
