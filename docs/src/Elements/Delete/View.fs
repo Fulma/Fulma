@@ -14,7 +14,9 @@ open Global
 let section model =
   div
     [ ]
-    [ div
+    [ renderMarkdown "Using `a` elements"
+      br [ ]
+      div
         [ ClassName "block" ]
         [ delete a
             [ Size Small ]
@@ -27,8 +29,23 @@ let section model =
             [ ] [ ]
           delete a
             [ Size Large ]
+            [ ] [ ] ]
+      renderMarkdown "Using `button` elements"
+      br [ ]
+      div
+        [ ClassName "block" ]
+        [ delete button
+            [ Size Small ]
             [ ] [ ]
-        ] ]
+          delete button
+            [  ]
+            [ ] [ ]
+          delete button
+            [ Size Medium ]
+            [ ] [ ]
+          delete button
+            [ Size Large ]
+            [ ] [ ] ] ]
   |> docBlock model.code
   |> toList
   |> sectionBase model.text

@@ -6,7 +6,7 @@ open Types
 let init () : Model =
   { text =
       "
-# Icons
+# Delete
       "
     code =
       """
@@ -26,20 +26,8 @@ delete a
 delete a
     [  ]
     [ ] [ ]
-delete a
-    [ Size Medium ]
-    [ ] [ ]
-delete a
-    [ Size Large ]
-    [ ] [ ]
 
 //or with buttons
-delete button
-    [ Size Small ]
-    [ ] [ ]
-delete button
-    [  ]
-    [ ] [ ]
 delete button
     [ Size Medium ]
     [ ] [ ]
