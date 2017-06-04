@@ -27,7 +27,7 @@ let section model =
             [ ] [ ]
           delete a
             [ Size Large ]
-            [ ] [ ] 
+            [ ] [ ]
         ] ]
   |> docBlock model.code
   |> toList

@@ -32,5 +32,19 @@ delete a
 delete a
     [ Size Large ]
     [ ] [ ]
+
+//or with buttons
+delete button
+    [ Size Small ]
+    [ ] [ ]
+delete button
+    [  ]
+    [ ] [ ]
+delete button
+    [ Size Medium ]
+    [ ] [ ]
+delete button
+    [ Size Large ]
+    [ ] [ ]
 ```
       """ }
