@@ -50,7 +50,7 @@ Components
  - [ ] Notification
  - [ ] Progress
  - [ ] Table
- - [ ] Tag
+ - [X] Tag
  - [X] Titles
 
 ### Components
