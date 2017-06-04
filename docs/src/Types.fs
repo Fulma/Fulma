@@ -9,7 +9,8 @@ type Msg =
 
 type ElementsModel =
   { button: Elements.Button.Types.Model
-    icon: Elements.Icon.Types.Model }
+    icon: Elements.Icon.Types.Model
+    title : Elements.Title.Types.Model}
 
 type Model = {
     currentPage: Page
