@@ -13,15 +13,9 @@ let init() : Model =
         typeCode =
             """
 ```fsharp
-// Possible types
-[<StringEnum>]
-type TitleType =
-| [<CompiledName("title")>] Title
-| [<CompiledName("subtitle")>] SubTitle
-
-// Examples
-title h1 [] [] [str "Title"]
-title h3 [TitleType SubTitle] [] [str "Subtitle"]
+Heading.h1 [ ] [str "Title"]
+br []
+Heading.h3 [ Heading.isSubtitle ] [str "Subtitle"]
 ```
             """
         sizeText =
@@ -32,22 +26,19 @@ There can be **six** different sizes for title
         sizeCode =
             """
 ```fsharp
-// Possible sizes
-[<StringEnum>]
-type TitleSize =
-| [<CompiledName("is-1")>] Is1
-| [<CompiledName("is-2")>] Is2
-| [<CompiledName("is-3")>] Is3
-| [<CompiledName("is-4")>] Is4
-| [<CompiledName("is-5")>] Is5
-| [<CompiledName("is-6")>] Is6
-| [<CompiledName("")>] None
-
-// Examples
-// Title
-title h1 [TitleSize Is1; TitleType TitleType.SubTitle] [] [str "Title 1"]
-// Subtitle
-title h1 [TitleType SubTitle; TitleSize Is6] [] [str "Subtitle 6"]
+Heading.h1 [ Heading.is1 ] [str "Title 1"]
+Heading.h1 [ Heading.is2 ] [str "Title 2"]
+Heading.h1 [ Heading.is3 ] [str "Title 3 (Default size)"]
+Heading.h1 [ Heading.is4 ] [str "Title 4"]
+Heading.h1 [ Heading.is5 ] [str "Title 5"]
+Heading.h1 [ Heading.is6 ] [str "Title 6"]
+br []
+Heading.h1 [ Heading.isSubtitle; Heading.is1 ] [str "Subtitle 1"]
+Heading.h1 [ Heading.isSubtitle; Heading.is2 ] [str "Subtitle 2"]
+Heading.h1 [ Heading.isSubtitle; Heading.is3 ] [str "Subtitle 3"]
+Heading.h1 [ Heading.isSubtitle; Heading.is4 ] [str "Subtitle 4"]
+Heading.h1 [ Heading.isSubtitle; Heading.is5 ] [str "Subtitle 5 (Default size)"]
+Heading.h1 [ Heading.isSubtitle; Heading.is6 ] [str "Subtitle 6"]
 ```
             """
         spacedText =
@@ -59,9 +50,8 @@ You can prevent this behavior by adding `IsSpaced` on the first element.
         spacedCode =
         """
 ```fsharp
-// Examples
-title p [ TitleType TitleType.Title; TitleSize Is1; IsSpaced ] [] [ str "Title 1" ]
-title p [ TitleType SubTitle; TitleSize Is3 ] [] [ str "Subtitle 3" ]
+Heading.p [ Heading.isTitle; Heading.is1; Heading.isSpaced ] [ str "Title 1" ]
+Heading.p [ Heading.isSubtitle; Heading.is3 ] [ str "Subtitle 3" ]
 ```
         """
     }
