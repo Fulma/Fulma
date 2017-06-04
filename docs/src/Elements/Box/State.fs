@@ -6,7 +6,7 @@ open Types
 let init () : Model =
   { text =
       "
-# Icons
+# Box
       "
     code =
       """

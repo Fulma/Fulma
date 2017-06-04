@@ -40,7 +40,7 @@ Components
  - [ ] Tile
 
 ### Elements
- - [ ] Box
+ - [X] Box
  - [X] Button
  - [ ] Content
  - [X] Delete
