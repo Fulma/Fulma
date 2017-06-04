@@ -11,6 +11,7 @@
     <Compile Include="Icon.fs" />
     <Compile Include="Title.fs" />
     <Compile Include="Delete.fs" />
+    <Compile Include="Box.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />

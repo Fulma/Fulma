@@ -29,6 +29,10 @@
       <Compile Include="src/Elements/Delete/Types.fs" />
       <Compile Include="src/Elements/Delete/State.fs" />
       <Compile Include="src/Elements/Delete/View.fs" />
+      <!-- Elements/Box -->
+      <Compile Include="src/Elements/Box/Types.fs" />
+      <Compile Include="src/Elements/Box/State.fs" />
+      <Compile Include="src/Elements/Box/View.fs" />
     <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
     <!-- App -->
