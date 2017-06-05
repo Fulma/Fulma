@@ -49,6 +49,10 @@
       <Compile Include="src/Elements/Tag/Types.fs" />
       <Compile Include="src/Elements/Tag/State.fs" />
       <Compile Include="src/Elements/Tag/View.fs" />
+      <!-- Elements/Table -->
+      <Compile Include="src/Elements/Table/Types.fs" />
+      <Compile Include="src/Elements/Table/State.fs" />
+      <Compile Include="src/Elements/Table/View.fs" />
     <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
     <!-- App -->

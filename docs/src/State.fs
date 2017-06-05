@@ -20,6 +20,7 @@ let pageParser: Parser<Page->Page,Page> =
     map (Element Tag) (s "elements" </> s "tag")
     map (Element Image) (s "elements" </> s "image")
     map (Element Progress) (s "elements" </> s "progress")
+    map (Element Table) (s "elements" </> s "table")
     map Home top
   ]
 
@@ -32,18 +33,19 @@ let urlUpdate (result: Option<Page>) model =
       { model with currentPage = page }, []
 
 let init result =
-  let (home, homeCmd) = Home.State.init()
+  let (home, homeCmd) = Home.State.init ()
 
   let elements =
     { button = Elements.Button.State.init ()
       icon = Elements.Icon.State.init ()
       image = Elements.Image.State.init ()
       progress = Elements.Progress.State.init ()
-      title = Elements.Title.State.init()
-      delete = Elements.Delete.State.init()
-      box = Elements.Box.State.init()
-      content = Elements.Content.State.init()
-      tag = Elements.Tag.State.init() }
+      table = Elements.Table.State.init ()
+      title = Elements.Title.State.init ()
+      delete = Elements.Delete.State.init ()
+      box = Elements.Box.State.init ()
+      content = Elements.Content.State.init ()
+      tag = Elements.Tag.State.init () }
 
   let (model, cmd) =
     urlUpdate result

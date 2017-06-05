@@ -16,6 +16,7 @@
     <Compile Include="Elements/Heading.fs" />
     <Compile Include="Elements/Progress.fs" />
     <Compile Include="Elements/Delete.fs" />
+    <Compile Include="Elements/Table.fs" />
     <Compile Include="Elements/Box.fs" />
     <Compile Include="Elements/Content.fs" />
     <Compile Include="Elements/Tag.fs" />

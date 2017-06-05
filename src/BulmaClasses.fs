@@ -95,6 +95,25 @@ module BulmaClasses =
       size: StandardSize
       color: LevelAndColor }
 
+  and Table =
+    { container: string
+      row: TableRow
+      style: TableStyle
+      spacing: TableSpacing }
+
+  and TableRow =
+    { state: TableRowState }
+
+  and TableRowState =
+    { isSelected: string }
+
+  and TableStyle =
+    { isBordered: string
+      isStripped: string }
+
+  and TableSpacing =
+    { isNarrow: string }
+
   and Tag =
     { container: string
       size: TagSize
@@ -118,6 +137,7 @@ module BulmaClasses =
       progress: Progress
       icon: Icon
       image: Image
+      table: Table
       tag: Tag }
 
   let standardSize =
@@ -201,6 +221,17 @@ module BulmaClasses =
       size = standardSize
       color = levelAndColor }
 
+  let table : Table =
+    { container = "table"
+      row =
+        { state =
+            { isSelected = "is-selected" } }
+      style =
+        { isBordered = "is-bordered"
+          isStripped = "is-stripped " }
+      spacing =
+        { isNarrow = "is-narrow" } }
+
   let tagSize : TagSize =
     { isMedium = "is-medium"
       isLarge = "is-large" }
@@ -222,6 +253,7 @@ module BulmaClasses =
       image = image
       progress = progress
       heading = heading
+      table = table
       tag = tag }
 
   let (++) str1 str2 = str1 + " " + str2
