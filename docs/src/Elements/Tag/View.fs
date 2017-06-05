@@ -7,7 +7,6 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open Elmish
-open Elmish.Bulma.Modifiers
 open Elmish.Bulma.Elements
 open Global
 

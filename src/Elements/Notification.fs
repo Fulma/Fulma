@@ -1,7 +1,7 @@
 namespace Elmish.Bulma.Elements
 
 open Elmish
-open Elmish.Bulma.Modifiers
+open Elmish.Bulma.Common
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -25,17 +25,17 @@ module Notification =
       userModel: 'model }
 
   type Option =
-    | Level of Level
+    | Level of ILevelAndColor
     | Closable
     // | AutoCloseDelay of float
 
   type Options =
-    { level: Level
+    { level: ILevelAndColor
       hasDeleteButton: bool }
       // AutoCloseDelay: float option
 
     static member Empty =
-      { level = NoLevel
+      { level = ILevelAndColor.Nothing
         hasDeleteButton = false }
 
   let notification (options: Option list) (properties: IHTMLProp list)children =

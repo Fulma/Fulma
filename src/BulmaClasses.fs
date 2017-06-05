@@ -21,6 +21,24 @@ module BulmaClasses =
   and Box =
     { container: string }
 
+  and Button =
+    { container: string
+      size: StandardSize
+      color: LevelAndColor
+      state: ButtonState
+      styles: ButtonStyles }
+
+  and ButtonState =
+    { isHovered: string
+      isFocused: string
+      isActive: string
+      isLoading: string }
+
+  and ButtonStyles =
+    { isLink: string
+      isOutlined: string
+      isInverted: string }
+
   and Content =
     { container: string
       size: StandardSize }
@@ -61,6 +79,7 @@ module BulmaClasses =
 
   and Bulma =
     { box: Box
+      button: Button
       content: Content
       delete: Delete
       heading: Heading
@@ -85,6 +104,20 @@ module BulmaClasses =
 
   let box =
     { container = "box" }
+
+  let button : Button =
+    { container = "button"
+      size = standardSize
+      color = levelAndColor
+      state =
+        { isHovered = "is-hovered"
+          isFocused = "is-focus"
+          isActive = "is-active"
+          isLoading = "is-loading" }
+      styles =
+        { isLink = "is-link"
+          isOutlined = "is-outlined"
+          isInverted = "is-inverted" } }
 
   let content : Content =
     { container = "content"
@@ -122,6 +155,7 @@ module BulmaClasses =
 
   let bulma =
     { box = box
+      button = button
       content = content
       delete = delete
       icon = icon

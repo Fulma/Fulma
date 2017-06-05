@@ -7,7 +7,6 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open Elmish
-open Elmish.Bulma.Modifiers
 open Elmish.Bulma.Elements
 open Global
 
@@ -40,12 +39,12 @@ let sectionSize model =
     [ ]
     [ div
         [ ClassName "block" ]
-        [ Heading.h1 [ Heading.is1 ] [str "Title 1"]
-          Heading.h1 [ Heading.is2 ] [str "Title 2"]
-          Heading.h1 [ Heading.is3 ] [str "Title 3 (Default size)"]
-          Heading.h1 [ Heading.is4 ] [str "Title 4"]
-          Heading.h1 [ Heading.is5 ] [str "Title 5"]
-          Heading.h1 [ Heading.is6 ] [str "Title 6"]
+        [ Heading.h1 [ Heading.isTitle; Heading.is1 ] [str "Title 1"]
+          Heading.h1 [ Heading.isTitle; Heading.is2 ] [str "Title 2"]
+          Heading.h1 [ Heading.isTitle; Heading.is3 ] [str "Title 3 (Default size)"]
+          Heading.h1 [ Heading.isTitle; Heading.is4 ] [str "Title 4"]
+          Heading.h1 [ Heading.isTitle; Heading.is5 ] [str "Title 5"]
+          Heading.h1 [ Heading.isTitle; Heading.is6 ] [str "Title 6"]
           br []
           Heading.h1 [ Heading.isSubtitle; Heading.is1 ] [str "Subtitle 1"]
           Heading.h1 [ Heading.isSubtitle; Heading.is2 ] [str "Subtitle 2"]

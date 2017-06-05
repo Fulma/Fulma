@@ -1,7 +1,6 @@
 module App.State
 
 open Elmish
-open Elmish.Bulma.Modifiers
 open Elmish.Bulma.Elements.Notification
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
@@ -59,7 +58,7 @@ let update msg model =
       let (home, homeCmd) = Home.State.update msg model.home
       { model with home = home }, Cmd.map HomeMsg homeCmd
   | SendNotification ->
-      model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [ Level Success ] [ ] [ str "coucou" ])
+      model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [ (*Level Success*) ] [ ] [ str "coucou" ])
   | Test ->
       Browser.console.log "couocuo"
       model, []

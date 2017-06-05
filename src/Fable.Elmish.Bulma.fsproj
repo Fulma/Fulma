@@ -5,8 +5,8 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Modifiers.fs" />
     <Compile Include="BulmaClasses.fs" />
+    <Compile Include="Common.fs" />
     <!-- Elements -->
     <!-- Elements/Internam -->
     <Compile Include="Elements/Notification.fs" />
