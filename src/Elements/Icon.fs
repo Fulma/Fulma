@@ -19,10 +19,9 @@ module Icon =
     static member Empty =
       { size = "" }
 
+  // Sizes
   let isSmall = Size bulma.icon.size.isSmall
-
   let isMedium = Size bulma.icon.size.isMedium
-
   let isLarge = Size bulma.icon.size.isLarge
 
   let icon options children =

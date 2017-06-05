@@ -1,7 +1,7 @@
 namespace Elmish.Bulma.Elements
 
 open Elmish
-open Elmish.Bulma.Modifiers
+open Elmish.Bulma.BulmaClasses
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -10,10 +10,8 @@ open Fable.Helpers.React.Props
 
 module Box =
 
-  let box' (properties: IHTMLProp list) children =
-    let className =
-      ClassName (sprintf "box")
+  let box' children =
 
     div
-      ((className :> IHTMLProp) :: properties)
+      [ ClassName bulma.box.container ]
       children
