@@ -77,8 +77,13 @@ module BulmaClasses =
     { isMedium: string
       isLarge: string }
 
+  and Modifiers =
+    { size: StandardSize
+      color: LevelAndColor }
+
   and Bulma =
-    { box: Box
+    { modifiers: Modifiers
+      box: Box
       button: Button
       content: Content
       delete: Delete
@@ -154,7 +159,10 @@ module BulmaClasses =
       color = levelAndColor }
 
   let bulma =
-    { box = box
+    { modifiers =
+        { size = standardSize
+          color = levelAndColor }
+      box = box
       button = button
       content = content
       delete = delete

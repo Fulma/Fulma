@@ -43,6 +43,7 @@ let section model =
               p [] [str "Sed sagittis enim ac tortor maximus rutrum.
               Nulla facilisi. Donec mattis vulputate risus in luctus.
                 Maecenas vestibulum interdum commodo." ] ] ]
+      hr []
       div
         [ ClassName "block" ]
         [ Content.content

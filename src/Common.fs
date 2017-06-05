@@ -23,22 +23,22 @@ module Common =
     | IsDanger
     | Nothing
 
-  let ofLevel level =
+  let ofLevelAndColor level =
     match level with
-    | IsBlack -> bulma.button.color.isBlack
-    | IsDark -> bulma.button.color.isDark
-    | IsLight -> bulma.button.color.isLight
-    | IsWhite -> bulma.button.color.isWhite
-    | IsPrimary -> bulma.button.color.isPrimary
-    | IsInfo -> bulma.button.color.isInfo
-    | IsSuccess -> bulma.button.color.isSuccess
-    | IsWarning -> bulma.button.color.isWarning
-    | IsDanger -> bulma.button.color.isDanger
+    | IsBlack -> bulma.modifiers.color.isBlack
+    | IsDark -> bulma.modifiers.color.isDark
+    | IsLight -> bulma.modifiers.color.isLight
+    | IsWhite -> bulma.modifiers.color.isWhite
+    | IsPrimary -> bulma.modifiers.color.isPrimary
+    | IsInfo -> bulma.modifiers.color.isInfo
+    | IsSuccess -> bulma.modifiers.color.isSuccess
+    | IsWarning -> bulma.modifiers.color.isWarning
+    | IsDanger -> bulma.modifiers.color.isDanger
     | ILevelAndColor.Nothing -> ""
 
   let ofSize size =
     match size with
-    | IsSmall -> bulma.button.size.isSmall
-    | IsMedium -> bulma.button.size.isMedium
-    | IsLarge -> bulma.button.size.isLarge
+    | IsSmall -> bulma.modifiers.size.isSmall
+    | IsMedium -> bulma.modifiers.size.isMedium
+    | IsLarge -> bulma.modifiers.size.isLarge
     | ISize.Nothing -> ""

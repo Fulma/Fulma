@@ -11,7 +11,7 @@ open Fable.Helpers.React.Props
 
 module Button =
 
-  module ButtonTypes =
+  module Types =
 
     type IState =
       | IsHovered
@@ -62,7 +62,7 @@ module Button =
           state = ""
           props = [] }
 
-  open ButtonTypes
+  open Types
 
   // Sizes
   let isSmall = Size IsSmall
@@ -96,7 +96,7 @@ module Button =
       | x::xs ->
           match x with
           | Level level ->
-              { result with level = ofLevel level }
+              { result with level = ofLevelAndColor level }
           | Size size ->
               { result with size = ofSize size }
           | IsOutlined ->

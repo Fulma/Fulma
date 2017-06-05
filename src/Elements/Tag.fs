@@ -2,6 +2,7 @@ namespace Elmish.Bulma.Elements
 
 open Elmish
 open Elmish.Bulma.BulmaClasses
+open Elmish.Bulma.Common
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -10,44 +11,57 @@ open Fable.Helpers.React.Props
 
 module Tag =
 
-  type Option =
-  | Size of string
-  | Color of string
-  | Props of IHTMLProp list
+  module Types =
 
-  type Options =
-    { size: string
-      color: string
-      props: IHTMLProp list }
+    type ITagSize =
+      | IsMedium
+      | IsLarge
 
-    static member Empty =
-      { size = ""
-        color = ""
-        props = [] }
+    type Option =
+      | Size of ITagSize
+      | Color of ILevelAndColor
+      | Props of IHTMLProp list
+
+    let ofTagSize size =
+      match size with
+      | IsMedium -> bulma.tag.size.isMedium
+      | IsLarge -> bulma.tag.size.isLarge
+
+    type Options =
+      { size: string
+        color: string
+        props: IHTMLProp list }
+
+      static member Empty =
+        { size = ""
+          color = ""
+          props = [] }
+
+  open Types
 
   // Size
-  let isMedium = Size bulma.tag.size.isMedium
-  let isLarge = Size bulma.tag.size.isLarge
+  let isMedium = Size IsMedium
+  let isLarge = Size IsLarge
 
   // Colors
-  let isBlack = Color bulma.tag.color.isBlack
-  let isDark = Color bulma.tag.color.isDark
-  let isLight = Color bulma.tag.color.isLight
-  let isWhite = Color bulma.tag.color.isWhite
-  let isPrimary = Color bulma.tag.color.isPrimary
-  let isInfo = Color bulma.tag.color.isInfo
-  let isSuccess = Color bulma.tag.color.isSuccess
-  let isWarning = Color bulma.tag.color.isWarning
-  let isDanger = Color bulma.tag.color.isDanger
+  let isBlack = Color IsBlack
+  let isDark = Color IsDark
+  let isLight = Color IsLight
+  let isWhite = Color IsWhite
+  let isPrimary = Color IsPrimary
+  let isInfo = Color IsInfo
+  let isSuccess = Color IsSuccess
+  let isWarning = Color IsWarning
+  let isDanger = Color IsDanger
   let props props = Props props
 
   let tag (options: Option list) children =
     let parseOption (result: Options) opt =
       match opt with
-      | Size s ->
-          { result with size = s }
-      | Color c ->
-          { result with color = c }
+      | Size size ->
+          { result with size = ofTagSize size }
+      | Color color ->
+          { result with color = ofLevelAndColor color }
       | Props props ->
           { result with props = props }
 
