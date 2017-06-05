@@ -14,6 +14,7 @@
     <Compile Include="Elements/Icon.fs" />
     <Compile Include="Elements/Image.fs" />
     <Compile Include="Elements/Heading.fs" />
+    <Compile Include="Elements/Progress.fs" />
     <Compile Include="Elements/Delete.fs" />
     <Compile Include="Elements/Box.fs" />
     <Compile Include="Elements/Content.fs" />

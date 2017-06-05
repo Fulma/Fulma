@@ -55,6 +55,7 @@ let menu currentPage =
           menuItem "Image" (Element Elements.Image) currentPage
           menuItem "Title" (Element Elements.Title) currentPage
           menuItem "Delete" (Element Elements.Delete) currentPage
+          menuItem "Progress" (Element Elements.Progress) currentPage
           menuItem "Box" (Element Elements.Box) currentPage
           menuItem "Content" (Element Elements.Content) currentPage
           menuItem "Tag" (Element Elements.Tag) currentPage ] ]
@@ -86,6 +87,7 @@ let root model dispatch =
         | Elements.Content -> Elements.Content.View.root model.elements.content
         | Elements.Tag -> Elements.Tag.View.root model.elements.tag
         | Elements.Image -> Elements.Image.View.root model.elements.image
+        | Elements.Progress -> Elements.Progress.View.root model.elements.progress
 
   div
     []

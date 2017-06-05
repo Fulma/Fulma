@@ -25,6 +25,10 @@
       <Compile Include="src/Elements/Image/Types.fs" />
       <Compile Include="src/Elements/Image/State.fs" />
       <Compile Include="src/Elements/Image/View.fs" />
+      <!-- Elements/Progress -->
+      <Compile Include="src/Elements/Progress/Types.fs" />
+      <Compile Include="src/Elements/Progress/State.fs" />
+      <Compile Include="src/Elements/Progress/View.fs" />
       <!-- Elements/Title -->
       <Compile Include="src/Elements/Title/Types.fs" />
       <Compile Include="src/Elements/Title/State.fs" />

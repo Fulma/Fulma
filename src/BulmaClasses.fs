@@ -90,6 +90,11 @@ module BulmaClasses =
   and HeadingSpacing =
     { isNormal: string }
 
+  and Progress =
+    { container: string
+      size: StandardSize
+      color: LevelAndColor }
+
   and Tag =
     { container: string
       size: TagSize
@@ -110,6 +115,7 @@ module BulmaClasses =
       content: Content
       delete: Delete
       heading: Heading
+      progress: Progress
       icon: Icon
       image: Image
       tag: Tag }
@@ -190,6 +196,11 @@ module BulmaClasses =
       spacing =
         { isNormal = "is-spaced" } }
 
+  let progress : Progress =
+    { container = "progress"
+      size = standardSize
+      color = levelAndColor }
+
   let tagSize : TagSize =
     { isMedium = "is-medium"
       isLarge = "is-large" }
@@ -209,6 +220,7 @@ module BulmaClasses =
       delete = delete
       icon = icon
       image = image
+      progress = progress
       heading = heading
       tag = tag }
 
