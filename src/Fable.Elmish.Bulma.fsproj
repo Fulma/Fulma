@@ -12,6 +12,7 @@
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />
     <Compile Include="Elements/Icon.fs" />
+    <Compile Include="Elements/Image.fs" />
     <Compile Include="Elements/Heading.fs" />
     <Compile Include="Elements/Delete.fs" />
     <Compile Include="Elements/Box.fs" />

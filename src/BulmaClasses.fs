@@ -51,6 +51,28 @@ module BulmaClasses =
     { container: string
       size: StandardSize}
 
+  and Image =
+    { container: string
+      size: ImageSize
+      ratio: ImageRatio }
+
+  and ImageSize =
+    { is16x16: string
+      is24x24: string
+      is32x32: string
+      is48x48: string
+      is64x64: string
+      is96x96: string
+      is128x128: string }
+
+  and ImageRatio =
+    { isSquare: string
+      is1by1: string
+      is4by3: string
+      is3by2: string
+      is16by9: string
+      is2by1: string }
+
   and Heading =
     { title: string
       subtitle: string
@@ -89,6 +111,7 @@ module BulmaClasses =
       delete: Delete
       heading: Heading
       icon: Icon
+      image: Image
       tag: Tag }
 
   let standardSize =
@@ -136,6 +159,24 @@ module BulmaClasses =
     { container = "icon"
       size = standardSize }
 
+  let image : Image =
+    { container = "image"
+      size =
+        { is16x16 = "is-16x16"
+          is24x24 = "is-24x24"
+          is32x32 = "is-32x32"
+          is48x48 = "is-48x48"
+          is64x64 = "is-64x64"
+          is96x96 = "is-96x96"
+          is128x128 = "is-128x128" }
+      ratio =
+        { isSquare = "is-square"
+          is1by1 = "is-1by1"
+          is4by3 = "is-4by3"
+          is3by2 = "is-3by2"
+          is16by9 = "is-16by9"
+          is2by1 = "is-2by1" } }
+
   let heading : Heading =
     { title = "title"
       subtitle = "subtitle"
@@ -167,6 +208,7 @@ module BulmaClasses =
       content = content
       delete = delete
       icon = icon
+      image = image
       heading = heading
       tag = tag }
 

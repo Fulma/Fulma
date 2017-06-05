@@ -10,18 +10,6 @@ open Elmish
 open Elmish.Bulma.Elements
 open Global
 
-let sectionHeading model =
-  div [] [
-    div [ClassName "block"] [
-      Heading.h1 [ Heading.isTitle ] [str "Titles"]
-      Heading.h3 [ Heading.isSubtitle ] [
-        str "Simple "
-        strong [] [str "headings "]
-        str "to add depth to your page"
-        ]
-    ]
-  ]
-
 let sectionType model =
   div
     [ ]
@@ -75,7 +63,7 @@ let sectionExtra model =
 let root model =
   div
     [ ]
-    [ sectionHeading model
+    [ Content.content [ ] [ renderMarkdown model.text ]
       hr []
       sectionType model
       hr []

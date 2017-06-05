@@ -18,7 +18,7 @@ tag [] [] [str "Tag label"]
             """
       colorText =
             "
-# Colors
+## Colors
             "
       colorCode =
             """
@@ -36,7 +36,7 @@ Tag.tag [ Tag.isDanger ] [ str "Danger" ]
             """
       sizeText =
             "
-# Sizes
+## Sizes
             "
       sizeCode =
             """

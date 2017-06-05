@@ -5,9 +5,14 @@ open Types
 
 let init() : Model =
     {
+        text =
+          "
+# Titles
+Simple **headings** to add depth to your page
+          "
         typeText =
             "
-# Types
+## Types
 **Title** can be of two types *Title* and *Subtitle*.
             "
         typeCode =
@@ -20,7 +25,7 @@ Heading.h3 [ Heading.isSubtitle ] [str "Subtitle"]
             """
         sizeText =
             "
-# Sizes
+## Sizes
 There can be **six** different sizes for title
             "
         sizeCode =

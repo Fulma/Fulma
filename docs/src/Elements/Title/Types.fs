@@ -2,7 +2,8 @@ module Elements.Title.Types
 
 
 type Model =
-  { typeText: string
+  { text: string
+    typeText: string
     typeCode: string
     sizeText : string
     sizeCode : string

@@ -38,7 +38,7 @@ btn [ Level IsSuccess ] [] [ str "Success" ]
 ```
       """
     textSize =
-      "# Sizes"
+      "## Sizes"
     codeSize =
       """
 ```fsharp
@@ -56,7 +56,7 @@ btn [ Size Large ] [ ] [ str "Large" ]
       """
     textStyle =
       "
-# Styles
+## Styles
 The button can be **outlined** and/or **inverted**.
       "
     codeStyleOutlined =
@@ -85,7 +85,7 @@ btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
       """
     textState =
       "
-# State
+## State
 You can control the state of the buttons.
       "
     codeState =
