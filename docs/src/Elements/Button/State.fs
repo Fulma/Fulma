@@ -12,29 +12,10 @@ The **button** can have different colors, sizes and states.
     codeColor =
       """
 ```fsharp
-// Possible values
-[<StringEnum>]
-type Level =
-  | [<CompiledName("")>] NoLevel
-  | [<CompiledName("is-primary")>] IsPrimary
-  | [<CompiledName("is-info")>] IsInfo
-  | [<CompiledName("is-success")>] IsSuccess
-  | [<CompiledName("is-warning")>] IsWarning
-  | [<CompiledName("is-danger")>] IsDanger
-  interface ILevel
-
-[<StringEnum>]
-type ButtonColor =
-  | [<CompiledName("is-white")>] IsWhite
-  | [<CompiledName("is-light")>] IsLight
-  | [<CompiledName("is-dark")>] IsDark
-  | [<CompiledName("is-black")>] IsBlack
-  | [<CompiledName("is-link")>] IsLink
-  interface ILevel
-
-// Examples
-btn [ Level IsDark ] [] [ str "Dark" ]
-btn [ Level IsSuccess ] [] [ str "Success" ]
+Button.button [ Button.isWhite ] [ str "White" ]
+Button.button [ Button.isDark ] [ str "Dark" ]
+Button.button [ Button.isInfo ] [ str "Info" ]
+Button.button [ Button.isSuccess ] [ str "Success" ]
 ```
       """
     textSize =
@@ -42,16 +23,8 @@ btn [ Level IsSuccess ] [] [ str "Success" ]
     codeSize =
       """
 ```fsharp
-// Possible values
-[<StringEnum>]
-type Size =
-  | [<CompiledName("is-small")>] Small
-  | [<CompiledName("")>] Normal
-  | [<CompiledName("is-medium")>] Medium
-  | [<CompiledName("is-large")>] Large
-
-// Example
-btn [ Size Large ] [ ] [ str "Large" ]
+Button.button [ ] [ str "Normal" ]
+Button.button [ Button.isMedium ] [ str "Medium" ]
 ```
       """
     textStyle =
@@ -62,25 +35,21 @@ The button can be **outlined** and/or **inverted**.
     codeStyleOutlined =
       """
 ```fsharp
-// Examples
-btn [ Level IsSuccess; IsOutlined ] [ ] [str "Outlined" ]
-btn [ Level IsPrimary; IsOutlined ] [ ] [str "Outlined" ]
+Button.button [ Button.isSuccess; Button.isOutlined ] [str "Outlined" ]
+Button.button [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
 ```
       """
     codeStyleInverted =
       """
 ```fsharp
-// Examples
-btn [ IsOutlined ] [ ] [str "Outlined" ]
-btn [ Level IsSuccess; IsInverted ] [ ] [str "Inverted" ]
+Button.button [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
+Button.button [ Button.isPrimary; Button.isInverted ] [ str "Inverted" ]
 ```
       """
     codeStyleInvertOutlined =
       """
 ```fsharp
-// Examples
-btn [ IsOutlined; IsInverted ] [ ] [str "Invert Outlined" ]
-btn [ Level IsSuccess; IsOutlined; IsInverted ] [ ] [str "Invert outlined" ]
+Button.button [ Button.isSuccess; Button.isOutlined; Button.isInverted ] [ str "Invert outlined" ]
 ```
       """
     textState =
@@ -91,10 +60,10 @@ You can control the state of the buttons.
     codeState =
       """
 ```fsharp
-btn [ Level Success ] [ ] [str "Normal" ]
-btn [ State Hovered; Level Success ] [ ] [str "Hover" ]
-btn [ State Focus; Level Success ] [ ] [str "Hover" ]
-btn [ State Active; Level Success ] [ ] [str "Hover" ]
-btn [ State Loading; Level Success ] [ ] [str "Hover" ]
+Button.button [ Button.isSuccess ] [ str "Normal" ]
+Button.button [ Button.isHovered; Button.isSuccess ] [ str "Hover" ]
+Button.button [ Button.isFocused; Button.isSuccess ] [ str "Hover" ]
+Button.button [ Button.isActive; Button.isSuccess ] [ str "Hover" ]
+Button.button [ Button.isLoading; Button.isSuccess ] [ str "Hover" ]
 ```
       """ }
