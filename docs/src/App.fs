@@ -51,7 +51,12 @@ let menu currentPage =
         [ ClassName "menu-list" ]
         [ menuItem "Home" Home currentPage
           menuItem "Button" (Element Button) currentPage
-          menuItem "Icon" (Element Elements.Icon) currentPage ] ]
+          menuItem "Icon" (Element Elements.Icon) currentPage
+          menuItem "Title" (Element Elements.Title) currentPage
+          menuItem "Delete" (Element Elements.Delete) currentPage
+          menuItem "Box" (Element Elements.Box) currentPage
+          menuItem "Content" (Element Elements.Content) currentPage
+          menuItem "Tag" (Element Elements.Tag) currentPage] ]
 
 
 let header =
@@ -74,6 +79,11 @@ let root model dispatch =
         match element with
         | Button -> Elements.Button.View.root model.elements.button
         | Elements.Icon -> Elements.Icon.View.root model.elements.icon
+        | Elements.Title -> Elements.Title.View.root model.elements.title
+        | Elements.Delete -> Elements.Delete.View.root model.elements.delete
+        | Elements.Box -> Elements.Box.View.root model.elements.box
+        | Elements.Content -> Elements.Content.View.root model.elements.content
+        | Elements.Tag -> Elements.Tag.View.root model.elements.tag
 
   div
     []
@@ -97,11 +107,11 @@ let root model dispatch =
                     [ pageHtml model.currentPage ] ] ] ] ]
 
 open Elmish.React
-open Elmish.Bulma.Notification
+open Elmish.Bulma.Elements.Notification
 
 // App
 Program.mkProgram init update root
 |> Program.toNavigable (parseHash pageParser) urlUpdate
-|> Program.toNotifiable Bulma.Notification.defaultNotificationArea
+|> Program.toNotifiable defaultNotificationArea
 |> Program.withReact "elmish-app"
 |> Program.run

@@ -40,17 +40,18 @@ Components
  - [ ] Tile
 
 ### Elements
- - [ ] Box
+ - [X] Box
  - [X] Button
- - [ ] Content
+ - [X] Content
+ - [X] Delete
  - [ ] Form
  - [X] Icon
  - [ ] Image
  - [ ] Notification
  - [ ] Progress
  - [ ] Table
- - [ ] Tag
- - [ ] Titles
+ - [X] Tag
+ - [X] Titles
 
 ### Components
  - [ ] Card
