@@ -28,13 +28,13 @@ module Tag =
       | IsLarge -> bulma.tag.size.isLarge
 
     type Options =
-      { size: string
-        color: string
+      { size: string option
+        color: string option
         props: IHTMLProp list }
 
       static member Empty =
-        { size = ""
-          color = ""
+        { size = None
+          color = None
           props = [] }
 
   open Types
@@ -59,16 +59,20 @@ module Tag =
     let parseOption (result: Options) opt =
       match opt with
       | Size size ->
-          { result with size = ofTagSize size }
+          { result with size = ofTagSize size |> Some }
       | Color color ->
-          { result with color = ofLevelAndColor color }
+          { result with color = ofLevelAndColor color |> Some }
       | Props props ->
           { result with props = props }
 
     let opts = options |> List.fold parseOption Options.Empty
 
     let className =
-      ClassName (bulma.tag.container ++ opts.size ++ opts.color)
+      ClassName
+        ( Helpers.generateClassName
+            bulma.tag.container
+            [ opts.size
+              opts.color ] )
 
     span
       (className :> IHTMLProp :: opts.props)

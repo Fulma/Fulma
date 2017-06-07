@@ -217,11 +217,6 @@ module Form =
 
       let opts = options |> List.fold parseOptions Options.Empty
 
-      let applySize =
-        Option.map
-          (fun s -> ClassName (bulma.input.container ++ s))
-          opts.size
-
       let className =
         Helpers.generateClassName
           bulma.input.container

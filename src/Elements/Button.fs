@@ -45,21 +45,21 @@ module Button =
       | IsLoading -> bulma.button.state.isLoading
 
     type Options =
-      { level: string
-        size: string
+      { level: string option
+        size: string option
         isOutlined: bool
         isInverted: bool
         isLink: bool
-        state: string
+        state: string option
         props: IHTMLProp list }
 
       static member Empty =
-        { level = ""
-          size = ""
+        { level = None
+          size = None
           isOutlined = false
           isInverted = false
           isLink = false
-          state = ""
+          state = None
           props = [] }
 
   open Types
@@ -96,9 +96,9 @@ module Button =
       | x::xs ->
           match x with
           | Level level ->
-              { result with level = ofLevelAndColor level }
+              { result with level = ofLevelAndColor level |> Some }
           | Size size ->
-              { result with size = ofSize size }
+              { result with size = ofSize size |> Some }
           | IsOutlined ->
               { result with isOutlined = true }
           | IsInverted ->
@@ -106,7 +106,7 @@ module Button =
           | IsLink ->
               { result with isLink = true }
           | State state ->
-              { result with state = ofState state }
+              { result with state = ofState state |> Some }
           | Props props ->
               { result with props = props }
           |> parseOptions xs
@@ -116,7 +116,11 @@ module Button =
 
     a
       ( classBaseList
-          (bulma.button.container ++ opts.level ++ opts.size ++ opts.state)
+          (Helpers.generateClassName
+            bulma.button.container
+            [ opts.level
+              opts.size
+              opts.state ])
           [ bulma.button.styles.isOutlined, opts.isOutlined
             bulma.button.styles.isInverted, opts.isInverted
             bulma.button.styles.isLink, opts.isLink ]

@@ -17,10 +17,10 @@ module Icon =
       | Size of ISize
 
     type Options =
-      { size: string }
+      { size: string option }
 
       static member Empty =
-        { size = "" }
+        { size = None }
 
   open Types
 
@@ -32,10 +32,10 @@ module Icon =
   let icon options children =
     let parseOptions (result: Options) option =
       match option with
-      | Size size -> { result with size = ofSize size}
+      | Size size -> { result with size = ofSize size |> Some }
 
     let opts = options |> List.fold parseOptions Options.Empty
 
     span
-      [ ClassName (bulma.icon.container ++ opts.size) ]
+      [ ClassName (Helpers.generateClassName bulma.icon.container [ opts.size ]) ]
       children
