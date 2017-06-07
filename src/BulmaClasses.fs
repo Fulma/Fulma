@@ -43,13 +43,67 @@ module BulmaClasses =
     { container: string
       size: StandardSize }
 
+  and Control =
+    { container: string
+      hasIcon: ControlHasIcon
+      state: ControlState }
+
+  and ControlHasIcon =
+    { left: string
+      right: string }
+
+  and ControlState =
+    { isLoading: string }
+
   and Delete =
     { container: string
       size: StandardSize }
 
+  and Field =
+    { container: string
+      label: string
+      body: string
+      hasAddons: FieldHasAddons
+      isGrouped: FieldIsGrouped
+      layout: FieldLayout }
+
+  and FieldHasAddons =
+    { left: string
+      centered: string
+      right: string
+      fullWidh: string }
+
+  and FieldIsGrouped =
+    { left: string
+      centered: string
+      right: string }
+
+  and FieldLayout =
+    { isHorizontal: string }
+
   and Icon =
     { container: string
       size: StandardSize}
+
+  and Input =
+    { container: string
+      display: InputDisplay
+      size: StandardSize
+      state: InputState
+      color: LevelAndColor
+      addon: InputAddon }
+
+  and InputDisplay =
+    { isInline: string }
+
+  and InputState =
+    { isHovered: string
+      isFocused: string
+      isActive: string
+      isLoading: string }
+
+  and InputAddon =
+    { isExpanded: string }
 
   and Image =
     { container: string
@@ -89,6 +143,10 @@ module BulmaClasses =
 
   and HeadingSpacing =
     { isNormal: string }
+
+  and Label =
+    { container: string
+      size: StandardSize }
 
   and Progress =
     { container: string
@@ -132,11 +190,15 @@ module BulmaClasses =
       box: Box
       button: Button
       content: Content
+      control: Control
       delete: Delete
+      field: Field
       heading: Heading
+      label: Label
       progress: Progress
       icon: Icon
       image: Image
+      input: Input
       table: Table
       tag: Tag }
 
@@ -177,13 +239,51 @@ module BulmaClasses =
     { container = "content"
       size = standardSize }
 
+  let control : Control =
+    { container = "control"
+      hasIcon =
+        { left = "has-icon-left"
+          right = "has-icon-right" }
+      state =
+        { isLoading = "is-loading" } }
+
   let delete : Delete =
     { container = "delete"
       size = standardSize }
 
+  let field : Field =
+    { container = "field"
+      label = "field-label"
+      body = "field-body"
+      hasAddons =
+        { left = "has-addons"
+          centered = "has-addons-centered"
+          right = "has-addons-right"
+          fullWidh = "has-addons-fullwidth" }
+      isGrouped =
+        { left = "is-grouped"
+          centered = "is-grouped-centered"
+          right = "is-grouped-right" }
+      layout =
+        { isHorizontal = "is-horizontal" } }
+
   let icon : Icon =
     { container = "icon"
       size = standardSize }
+
+  let input : Input =
+    { container = "input"
+      display =
+        { isInline = "is-inline" }
+      size = standardSize
+      state =
+        { isHovered = "is-hovered"
+          isFocused = "is-focus"
+          isActive = "is-active"
+          isLoading = "is-loading" }
+      color = levelAndColor
+      addon =
+        { isExpanded = "is-expanded" } }
 
   let image : Image =
     { container = "image"
@@ -215,6 +315,10 @@ module BulmaClasses =
           is6 = "is-6" }
       spacing =
         { isNormal = "is-spaced" } }
+
+  let label : Label =
+    { container = "label"
+      size = standardSize }
 
   let progress : Progress =
     { container = "progress"
@@ -248,9 +352,13 @@ module BulmaClasses =
       box = box
       button = button
       content = content
+      control = control
       delete = delete
+      field = field
       icon = icon
       image = image
+      input = input
+      label = label
       progress = progress
       heading = heading
       table = table

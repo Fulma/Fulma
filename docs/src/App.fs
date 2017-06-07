@@ -59,8 +59,8 @@ let menu currentPage =
           menuItem "Box" (Element Elements.Box) currentPage
           menuItem "Content" (Element Elements.Content) currentPage
           menuItem "Table" (Element Elements.Table) currentPage
+          menuItem "Form" (Element Elements.Form) currentPage
           menuItem "Tag" (Element Elements.Tag) currentPage ] ]
-
 
 let header =
     div
@@ -90,6 +90,7 @@ let root model dispatch =
         | Elements.Image -> Elements.Image.View.root model.elements.image
         | Elements.Progress -> Elements.Progress.View.root model.elements.progress
         | Elements.Table -> Elements.Table.View.root model.elements.table
+        | Elements.Form -> Elements.Form.View.root model.elements.form
 
   div
     []

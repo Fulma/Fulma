@@ -13,6 +13,7 @@ type ElementsModel =
     image: Elements.Image.Types.Model
     progress: Elements.Progress.Types.Model
     table: Elements.Table.Types.Model
+    form: Elements.Form.Types.Model
     title : Elements.Title.Types.Model
     delete : Elements.Delete.Types.Model
     box : Elements.Box.Types.Model

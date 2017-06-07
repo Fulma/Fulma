@@ -13,6 +13,7 @@ type Elements =
   | Image
   | Progress
   | Table
+  | Form
 
 type Page =
   | Home
@@ -33,6 +34,7 @@ let toHash page =
     | Image -> "#elements/image"
     | Progress -> "#elements/progress"
     | Table -> "#elements/table"
+    | Form -> "#elements/form"
 
 [<Pojo>]
 type DangerousInnerHtml =

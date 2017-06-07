@@ -42,3 +42,14 @@ module Common =
     | IsMedium -> bulma.modifiers.size.isMedium
     | IsLarge -> bulma.modifiers.size.isLarge
     | ISize.Nothing -> ""
+
+  module Helpers =
+
+    let inline generateClassName baseClass (values: (string option) list) =
+      baseClass
+      :: (
+        values
+        |> List.filter (fun x -> x.IsSome)
+        |> List.map (fun x -> x.Value)
+      )
+      |> String.concat " "
