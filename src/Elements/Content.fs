@@ -15,8 +15,8 @@ module Content =
             | Size of ISize
 
         type Options =
-            { size : string option }
-            static member Empty = { size = None }
+            { Size : string option }
+            static member Empty = { Size = None }
 
     open Types
 
@@ -28,7 +28,9 @@ module Content =
     let content (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with
-            | Size size -> { result with size = ofSize size |> Some }
+            | Size size -> { result with Size = ofSize size |> Some }
 
         let opts = options |> List.fold parseOption Options.Empty
-        div [ ClassName(Helpers.generateClassName bulma.content.container [ opts.size ]) ] children
+        div
+            [ ClassName(Helpers.generateClassName bulma.content.container [ opts.Size ]) ]
+            children

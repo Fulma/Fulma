@@ -20,11 +20,11 @@ module Icon =
             | Position of IPosition
 
         type Options =
-            { size : string option
-              position : string option }
+            { Size : string option
+              Position : string option }
             static member Empty =
-                { size = None
-                  position = None }
+                { Size = None
+                  Position = None }
 
         let ofPosition =
             function
@@ -44,8 +44,10 @@ module Icon =
     let icon options children =
         let parseOptions (result : Options) option =
             match option with
-            | Size size -> { result with size = ofSize size |> Some }
-            | Position position -> { result with position = ofPosition position |> Some }
+            | Size size -> { result with Size = ofSize size |> Some }
+            | Position position -> { result with Position = ofPosition position |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        span [ ClassName(Helpers.generateClassName bulma.icon.container [ opts.size; opts.position ]) ] children
+        span
+            [ ClassName(Helpers.generateClassName bulma.icon.container [ opts.Size; opts.Position ]) ]
+            children

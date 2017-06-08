@@ -43,13 +43,13 @@ module Heading =
             | IsSpaced
 
         type Options =
-            { titleSize : string option
-              titleType : string
-              isSpaced : bool }
+            { TitleSize : string option
+              TitleType : string
+              IsSpaced : bool }
             static member Empty =
-                { titleSize = None
-                  titleType = ""
-                  isSpaced = false }
+                { TitleSize = None
+                  TitleType = ""
+                  IsSpaced = false }
 
     open Types
 
@@ -70,15 +70,17 @@ module Heading =
         (children) =
         let parseOption result opt =
             match opt with
-            | Size ts -> { result with titleSize = ofTitleSize ts |> Some }
-            | Type tt -> { result with titleType = ofTitleType tt }
-            | IsSpaced -> { result with isSpaced = true }
+            | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
+            | Type tt -> { result with TitleType = ofTitleType tt }
+            | IsSpaced -> { result with IsSpaced = true }
 
         let opts = options |> List.fold parseOption Options.Empty
         let className =
-            classBaseList (Helpers.generateClassName opts.titleType [ opts.titleSize ])
-                [ bulma.heading.spacing.isNormal, opts.isSpaced ]
-        element [ className ] children
+            classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize ])
+                [ bulma.heading.spacing.isNormal, opts.IsSpaced ]
+        element
+            [ className ]
+            children
 
     // Alias
     let h1 = title h1

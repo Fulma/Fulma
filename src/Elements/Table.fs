@@ -17,13 +17,13 @@ module Table =
             | IsNarrow
 
         type TableOptions =
-            { isBordered : bool
-              isStripped : bool
-              isNarrow : bool }
+            { IsBordered : bool
+              IsStripped : bool
+              IsNarrow : bool }
             static member Empty =
-                { isBordered = false
-                  isStripped = false
-                  isNarrow = false }
+                { IsBordered = false
+                  IsStripped = false
+                  IsNarrow = false }
 
     open Types
 
@@ -36,14 +36,16 @@ module Table =
     let table options children =
         let parseOptions (result : TableOptions) =
             function
-            | IsBordered -> { result with isBordered = true }
-            | IsStripped -> { result with isStripped = true }
-            | IsNarrow -> { result with isNarrow = true }
+            | IsBordered -> { result with IsBordered = true }
+            | IsStripped -> { result with IsStripped = true }
+            | IsNarrow -> { result with IsNarrow = true }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
-        table [ classBaseList bulma.table.container [ bulma.table.style.isBordered, opts.isBordered
-                                                      bulma.table.style.isStripped, opts.isStripped
-                                                      bulma.table.spacing.isNarrow, opts.isNarrow ] ] children
+        table
+            [ classBaseList bulma.table.container [ bulma.table.style.isBordered, opts.IsBordered
+                                                    bulma.table.style.isStripped, opts.IsStripped
+                                                    bulma.table.spacing.isNarrow, opts.IsNarrow ] ]
+            children
 
     module Row =
         // Row

@@ -17,13 +17,13 @@ module Progress =
             | Props of IHTMLProp list
 
         type Options =
-            { size : string option
-              color : string option
-              props : IHTMLProp list }
+            { Size : string option
+              Color : string option
+              Props : IHTMLProp list }
             static member Empty =
-                { size = None
-                  color = None
-                  props = [] }
+                { Size = None
+                  Color = None
+                  Props = [] }
 
     open Types
 
@@ -47,11 +47,12 @@ module Progress =
     let progress options children =
         let parseOptions (result : Options) =
             function
-            | Size size -> { result with size = ofSize size |> Some }
-            | Color color -> { result with color = ofLevelAndColor color |> Some }
-            | Props props -> { result with props = props }
+            | Size size -> { result with Size = ofSize size |> Some }
+            | Color color -> { result with Color = ofLevelAndColor color |> Some }
+            | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
         progress
-            (ClassName(Helpers.generateClassName bulma.progress.container [ opts.size; opts.color ]) :> IHTMLProp
-             :: opts.props) children
+            (ClassName(Helpers.generateClassName bulma.progress.container [ opts.Size; opts.Color ]) :> IHTMLProp
+             :: opts.Props)
+            children

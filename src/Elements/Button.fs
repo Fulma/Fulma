@@ -43,21 +43,21 @@ module Button =
             | IsLoading -> bulma.button.state.isLoading
 
         type Options =
-            { level : string option
-              size : string option
-              isOutlined : bool
-              isInverted : bool
-              isLink : bool
-              state : string option
-              props : IHTMLProp list }
+            { Level : string option
+              Size : string option
+              IsOutlined : bool
+              IsInverted : bool
+              IsLink : bool
+              State : string option
+              Props : IHTMLProp list }
             static member Empty =
-                { level = None
-                  size = None
-                  isOutlined = false
-                  isInverted = false
-                  isLink = false
-                  state = None
-                  props = [] }
+                { Level = None
+                  Size = None
+                  IsOutlined = false
+                  IsInverted = false
+                  IsLink = false
+                  State = None
+                  Props = [] }
 
     open Types
 
@@ -92,19 +92,21 @@ module Button =
             match options with
             | x :: xs ->
                 match x with
-                | Level level -> { result with level = ofLevelAndColor level |> Some }
-                | Size size -> { result with size = ofSize size |> Some }
-                | IsOutlined -> { result with isOutlined = true }
-                | IsInverted -> { result with isInverted = true }
-                | IsLink -> { result with isLink = true }
-                | State state -> { result with state = ofState state |> Some }
-                | Props props -> { result with props = props }
+                | Level level -> { result with Level = ofLevelAndColor level |> Some }
+                | Size size -> { result with Size = ofSize size |> Some }
+                | IsOutlined -> { result with IsOutlined = true }
+                | IsInverted -> { result with IsInverted = true }
+                | IsLink -> { result with IsLink = true }
+                | State state -> { result with State = ofState state |> Some }
+                | Props props -> { result with Props = props }
                 |> parseOptions xs
             | [] -> result
 
         let opts = parseOptions options Options.Empty
         a
-            (classBaseList (Helpers.generateClassName bulma.button.container [ opts.level; opts.size; opts.state ])
-                 [ bulma.button.styles.isOutlined, opts.isOutlined
-                   bulma.button.styles.isInverted, opts.isInverted
-                   bulma.button.styles.isLink, opts.isLink ] :> IHTMLProp :: opts.props) children
+            (classBaseList
+                (Helpers.generateClassName bulma.button.container [ opts.Level; opts.Size; opts.State ])
+                 [ bulma.button.styles.isOutlined, opts.IsOutlined
+                   bulma.button.styles.isInverted, opts.IsInverted
+                   bulma.button.styles.isLink, opts.IsLink ] :> IHTMLProp :: opts.Props)
+            children

@@ -16,11 +16,11 @@ module Delete =
             | Props of IHTMLProp list
 
         type Options =
-            { size : string option
-              props : IHTMLProp list }
+            { Size : string option
+              Props : IHTMLProp list }
             static member Empty =
-                { size = None
-                  props = [] }
+                { Size = None
+                  Props = [] }
 
     open Types
 
@@ -34,9 +34,9 @@ module Delete =
     let delete (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with
-            | Size size -> { result with size = ofSize size |> Some }
-            | Props props -> { result with props = props }
+            | Size size -> { result with Size = ofSize size |> Some }
+            | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
-        a (ClassName(Helpers.generateClassName bulma.delete.container [ opts.size ]) :> IHTMLProp :: opts.props)
+        a (ClassName(Helpers.generateClassName bulma.delete.container [ opts.Size ]) :> IHTMLProp :: opts.Props)
             children

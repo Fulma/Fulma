@@ -21,13 +21,13 @@ module Form =
                 | IsLoading
 
             type Options =
-                { hasIconLeft : string option
-                  hasIconRight : string option
-                  isLoading : bool }
+                { HasIconLeft : string option
+                  HasIconRight : string option
+                  IsLoading : bool }
                 static member Empty =
-                    { hasIconLeft = None
-                      hasIconRight = None
-                      isLoading = false }
+                    { HasIconLeft = None
+                      HasIconRight = None
+                      IsLoading = false }
 
             let ofHasIcon =
                 function
@@ -45,15 +45,16 @@ module Form =
         let control options children =
             let parseOptions (result : Options) =
                 function
-                | HasIcon Left -> { result with hasIconLeft = bulma.control.hasIcon.left |> Some }
-                | HasIcon Right -> { result with hasIconRight = bulma.control.hasIcon.right |> Some }
-                | IsLoading -> { result with isLoading = true }
+                | HasIcon Left -> { result with HasIconLeft = bulma.control.hasIcon.left |> Some }
+                | HasIcon Right -> { result with HasIconRight = bulma.control.hasIcon.right |> Some }
+                | IsLoading -> { result with IsLoading = true }
 
             let opts = options |> List.fold parseOptions Options.Empty
             p
                 [ classBaseList
-                      (Helpers.generateClassName bulma.control.container [ opts.hasIconLeft; opts.hasIconRight ])
-                      [ bulma.control.state.isLoading, opts.isLoading ] ] children
+                      (Helpers.generateClassName bulma.control.container [ opts.HasIconLeft; opts.HasIconRight ])
+                      [ bulma.control.state.isLoading, opts.IsLoading ] ]
+                children
 
     module Label =
         module Types =
@@ -62,11 +63,11 @@ module Form =
                 | For of string
 
             type Options =
-                { size : string option
-                  htmlFor : string option }
+                { Size : string option
+                  HtmlFor : string option }
                 static member Empty =
-                    { size = None
-                      htmlFor = None }
+                    { Size = None
+                      HtmlFor = None }
 
         open Types
 
@@ -80,12 +81,14 @@ module Form =
         let label options children =
             let parseOptions (result : Options) =
                 function
-                | Size size -> { result with size = ofSize size |> Some }
-                | For htmlFor -> { result with htmlFor = htmlFor |> Some }
+                | Size size -> { result with Size = ofSize size |> Some }
+                | For htmlFor -> { result with HtmlFor = htmlFor |> Some }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            label [ yield ClassName(Helpers.generateClassName bulma.label.container [ opts.size ]) :> IHTMLProp
-                    if opts.htmlFor.IsSome then yield HtmlFor opts.htmlFor.Value :> IHTMLProp ] children
+            label
+                [ yield ClassName(Helpers.generateClassName bulma.label.container [ opts.Size ]) :> IHTMLProp
+                  if opts.HtmlFor.IsSome then yield HtmlFor opts.HtmlFor.Value :> IHTMLProp ]
+                children
 
     module Select =
         module Types =
@@ -100,23 +103,23 @@ module Form =
                 | Props of IHTMLProp list
 
             type Options =
-                { size : string option
-                  color : string option
-                  id : string option
-                  disabled : bool
-                  value : string option
-                  defaultValue : string option
-                  placeholder : string option
-                  props : IHTMLProp list }
+                { Size : string option
+                  Color : string option
+                  Id : string option
+                  Disabled : bool
+                  Value : string option
+                  DefaultValue : string option
+                  Placeholder : string option
+                  Props : IHTMLProp list }
                 static member Empty =
-                    { size = None
-                      color = None
-                      id = None
-                      disabled = false
-                      value = None
-                      defaultValue = None
-                      placeholder = None
-                      props = [] }
+                    { Size = None
+                      Color = None
+                      Id = None
+                      Disabled = false
+                      Value = None
+                      DefaultValue = None
+                      Placeholder = None
+                      Props = [] }
 
     module Input =
         module Types =
@@ -147,25 +150,25 @@ module Form =
                 | Props of IHTMLProp list
 
             type Options =
-                { size : string option
-                  type' : string
-                  color : string option
-                  id : string option
-                  disabled : bool
-                  value : string option
-                  defaultValue : string option
-                  placeholder : string option
-                  props : IHTMLProp list }
+                { Size : string option
+                  Type : string
+                  Color : string option
+                  Id : string option
+                  Disabled : bool
+                  Value : string option
+                  DefaultValue : string option
+                  Placeholder : string option
+                  Props : IHTMLProp list }
                 static member Empty =
-                    { size = None
-                      type' = ""
-                      color = None
-                      id = None
-                      disabled = false
-                      value = None
-                      defaultValue = None
-                      placeholder = None
-                      props = [] }
+                    { Size = None
+                      Type = ""
+                      Color = None
+                      Id = None
+                      Disabled = false
+                      Value = None
+                      DefaultValue = None
+                      Placeholder = None
+                      Props = [] }
 
             let ofType =
                 function
@@ -224,29 +227,29 @@ module Form =
         let input options =
             let parseOptions (result : Options) option =
                 match option with
-                | Size size -> { result with size = ofSize size |> Some }
-                | Type type' -> { result with type' = ofType type' }
-                | Color color -> { result with color = ofLevelAndColor color |> Some }
-                | Id id -> { result with id = Some id }
-                | Disabled disabled -> { result with disabled = disabled }
-                | Value value -> { result with value = Some value }
-                | DefaultValue defaultValue -> { result with defaultValue = Some defaultValue }
-                | Placeholder placeholder -> { result with placeholder = Some placeholder }
-                | Props props -> { result with props = props }
+                | Size size -> { result with Size = ofSize size |> Some }
+                | Type type' -> { result with Type = ofType type' }
+                | Color color -> { result with Color = ofLevelAndColor color |> Some }
+                | Id id -> { result with Id = Some id }
+                | Disabled disabled -> { result with Disabled = disabled }
+                | Value value -> { result with Value = Some value }
+                | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
+                | Placeholder placeholder -> { result with Placeholder = Some placeholder }
+                | Props props -> { result with Props = props }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let className = Helpers.generateClassName bulma.input.container [ opts.size; opts.color ]
+            let className = Helpers.generateClassName bulma.input.container [ opts.Size; opts.Color ]
             input
                 ([ yield ClassName className :> IHTMLProp
-                   yield Props.Disabled opts.disabled :> IHTMLProp
-                   yield Props.Type opts.type' :> IHTMLProp
-                   if opts.id.IsSome then yield Props.Id opts.id.Value :> IHTMLProp
-                   if opts.value.IsSome then yield Props.Value(U2.Case1 opts.value.Value) :> IHTMLProp
+                   yield Props.Disabled opts.Disabled :> IHTMLProp
+                   yield Props.Type opts.Type :> IHTMLProp
+                   if opts.Id.IsSome then yield Props.Id opts.Id.Value :> IHTMLProp
+                   if opts.Value.IsSome then yield Props.Value(U2.Case1 opts.Value.Value) :> IHTMLProp
 
-                   if opts.defaultValue.IsSome then
-                       yield Props.DefaultValue(U2.Case1 opts.defaultValue.Value) :> IHTMLProp
-                   if opts.placeholder.IsSome then yield Props.Placeholder opts.placeholder.Value :> IHTMLProp ]
-                 @ opts.props)
+                   if opts.DefaultValue.IsSome then
+                       yield Props.DefaultValue(U2.Case1 opts.DefaultValue.Value) :> IHTMLProp
+                   if opts.Placeholder.IsSome then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]
+                 @ opts.Props)
 
         // Alias to create input already typed
         let text options = input (Type Text :: options)
@@ -285,13 +288,13 @@ module Form =
                 | Layout of ILayout
 
             type Options =
-                { hasAddons : string option
-                  isGrouped : string option
-                  layout : string option }
+                { HasAddons : string option
+                  IsGrouped : string option
+                  Layout : string option }
                 static member Empty =
-                    { hasAddons = None
-                      isGrouped = None
-                      layout = None }
+                    { HasAddons = None
+                      IsGrouped = None
+                      Layout = None }
 
             let ofHasAddons =
                 function
@@ -313,8 +316,8 @@ module Form =
                 | Size of ISize
 
             type FieldLabelOptions =
-                { size : string option }
-                static member Empty = { size = None }
+                { Size : string option }
+                static member Empty = { Size = None }
 
         open Types
 
@@ -333,14 +336,16 @@ module Form =
         let field options children =
             let parseOptions (result : Options) =
                 function
-                | HasAddons hasAddons -> { result with hasAddons = ofHasAddons hasAddons |> Some }
-                | IsGrouped isGrouped -> { result with isGrouped = ofIsGrouped isGrouped |> Some }
-                | Layout layout -> { result with layout = ofLayout layout |> Some }
+                | HasAddons hasAddons -> { result with HasAddons = ofHasAddons hasAddons |> Some }
+                | IsGrouped isGrouped -> { result with IsGrouped = ofIsGrouped isGrouped |> Some }
+                | Layout layout -> { result with Layout = ofLayout layout |> Some }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let className =
-                Helpers.generateClassName bulma.field.container [ opts.hasAddons; opts.isGrouped; opts.layout ]
-            div [ ClassName className ] children
+                Helpers.generateClassName bulma.field.container [ opts.HasAddons; opts.IsGrouped; opts.Layout ]
+            div
+                [ ClassName className ]
+                children
 
         let isSmall = Size IsSmall
         let isMedium = Size IsMedium
@@ -348,8 +353,13 @@ module Form =
 
         let label options children =
             let parseOptions (result : FieldLabelOptions) = function
-                | Size size -> { result with size = ofSize size |> Some }
+                | Size size -> { result with Size = ofSize size |> Some }
             let opts = options |> List.fold parseOptions FieldLabelOptions.Empty
-            div [ ClassName(Helpers.generateClassName bulma.field.label [ opts.size ]) ] children
+            div
+                [ ClassName(Helpers.generateClassName bulma.field.label [ opts.Size ]) ]
+                children
 
-        let body (options : unit list) children = div [ ClassName bulma.field.body ] children
+        let body (options : unit list) children =
+            div
+                [ ClassName bulma.field.body ]
+                children

@@ -52,11 +52,11 @@ module Image =
             | Ratio of IImageRatio
 
         type Options =
-            { size : string option
-              ratio : string option }
+            { Size : string option
+              Ratio : string option }
             static member Empty =
-                { size = None
-                  ratio = None }
+                { Size = None
+                  Ratio = None }
 
     open Types
 
@@ -79,8 +79,10 @@ module Image =
     let image options children =
         let parseOptions (result : Options) =
             function
-            | Size size -> { result with size = ofImageSize size |> Some }
-            | Ratio ratio -> { result with ratio = ofImageRatio ratio |> Some }
+            | Size size -> { result with Size = ofImageSize size |> Some }
+            | Ratio ratio -> { result with Ratio = ofImageRatio ratio |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        figure [ ClassName(Helpers.generateClassName bulma.image.container [ opts.size; opts.ratio ]) ] children
+        figure
+            [ ClassName(Helpers.generateClassName bulma.image.container [ opts.Size; opts.Ratio ]) ]
+            children
