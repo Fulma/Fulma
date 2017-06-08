@@ -12,18 +12,79 @@ open Elmish.Bulma.Elements.Form
 open Global
 
 let sectionColor model =
-  Field.field
+  div
     [ ]
-    [ Label.label
+    [ Field.field
         [ ]
-        [ str "Name" ]
-      Control.control
+        [ Label.label
+            [ ]
+            [ str "Name" ]
+          Control.control
+            [ ]
+            [ Input.text
+                [ Input.placeholder "Text input" ] ] ]
+      Field.field
         [ ]
-        [ Input.input
-            [ ] ] ]
+        [ Label.label
+            [ ]
+            [ str "Username" ]
+          Control.control
+            [ Control.hasIconLeft
+              Control.hasIconRight ]
+            [ Input.text
+                [ Input.isSuccess
+                  Input.placeholder "Text input"
+                  Input.value "bulma" ]
+              Icon.icon
+                [ Icon.isSmall
+                  Icon.isLeft]
+                [ i [ ClassName "fa fa-user" ] [ ] ]
+              Icon.icon
+                [ Icon.isSmall
+                  Icon.isRight]
+                [ i [ ClassName "fa fa-check" ] [ ] ]
+              p
+                [ ClassName "help is-success" ]
+                [ str "This username is available" ] ] ]
+
+      Field.field
+        [ ]
+        [ Label.label
+            [ ]
+            [ str "Email" ]
+          Control.control
+            [ Control.hasIconLeft
+              Control.hasIconRight ]
+            [ Input.email
+                [ Input.isDanger
+                  Input.placeholder "Email input"
+                  Input.value "hello@" ]
+              Icon.icon
+                [ Icon.isSmall
+                  Icon.isLeft ]
+                [ i [ ClassName "fa fa-envelope" ] [ ] ]
+              Icon.icon
+                [ Icon.isSmall
+                  Icon.isRight ]
+                [ i [ ClassName "fa fa-warning" ] [ ] ]
+              p
+                [ ClassName "help is-danger" ]
+                [ str "This email is invalid" ] ] ] ]
   |> docBlock model.codeColor
   |> toList
   |> sectionBase model.textColor
+
+<div class="field">
+  <label class="label">Subject</label>
+  <p class="control">
+    <span class="select">
+      <select>
+        <option>Select dropdown</option>
+        <option>With options</option>
+      </select>
+    </span>
+  </p>
+</div>
 
 let sectionSize model =
   div

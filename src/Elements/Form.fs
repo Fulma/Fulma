@@ -24,11 +24,13 @@ module Form =
         | IsLoading
 
       type Options =
-        { hasIcon: string option
+        { hasIconLeft: string option
+          hasIconRight: string option
           isLoading: bool }
 
         static member Empty =
-          { hasIcon = None
+          { hasIconLeft = None
+            hasIconRight = None
             isLoading = false }
 
       let ofHasIcon =
@@ -47,14 +49,15 @@ module Form =
     let control options children =
       let parseOptions (result: Options) =
         function
-        | HasIcon hasIcon -> { result with hasIcon = ofHasIcon hasIcon |> Some }
+        | HasIcon Left -> { result with hasIconLeft = bulma.control.hasIcon.left |> Some }
+        | HasIcon Right -> { result with hasIconRight = bulma.control.hasIcon.right |> Some }
         | IsLoading -> { result with isLoading = true }
 
       let opts = options |> List.fold parseOptions Options.Empty
 
       p
         [ classBaseList
-            (Helpers.generateClassName bulma.content.container [ opts.hasIcon ] )
+            (Helpers.generateClassName bulma.control.container [ opts.hasIconLeft; opts.hasIconRight ] )
             [ bulma.control.state.isLoading, opts.isLoading ] ]
         children
 
@@ -95,6 +98,43 @@ module Form =
         [ yield ClassName (Helpers.generateClassName bulma.label.container [ opts.size ]) :> IHTMLProp
           if opts.htmlFor.IsSome then yield HtmlFor opts.htmlFor.Value :> IHTMLProp ]
         children
+
+
+  module Select =
+
+    module Types =
+
+      type Option =
+        | Size of ISize
+        | Color of ILevelAndColor
+        | Id of string
+        | Disabled of bool
+        | Value of string
+        | DefaultValue of string
+        | Placeholder of string
+        | Props of IHTMLProp list
+
+      type Options =
+        { size: string option
+          color: string option
+          id: string option
+          disabled: bool
+          value: string option
+          defaultValue: string option
+          placeholder: string option
+          props: IHTMLProp list }
+
+        static member Empty =
+          { size = None
+            color = None
+            id = None
+            disabled = false
+            value = None
+            defaultValue = None
+            placeholder = None
+            props = [] }
+
+
 
   module Input =
 
@@ -181,19 +221,19 @@ module Form =
     let isWarning = Color IsWarning
     let isDanger = Color IsDanger
     // Types
-    let text = Type Text
-    let password = Type Password
-    let datetimeLocal = Type DatetimeLocal
-    let date = Type Date
-    let month = Type Month
-    let time = Type Time
-    let week = Type Week
-    let number = Type Number
-    let email = Type Email
-    let url = Type Url
-    let search = Type Search
-    let tel = Type Tel
-    let color = Type IInputType.Color
+    let typeIsText = Type Text
+    let typeIsSassword = Type Password
+    let typeIsDatetimeLocal = Type DatetimeLocal
+    let typeIsDate = Type Date
+    let typeIsMonth = Type Month
+    let typeIsTime = Type Time
+    let typeIsWeek = Type Week
+    let typeIsNumber = Type Number
+    let typeIsEmail = Type Email
+    let typeIsUrl = Type Url
+    let typeIsSearch = Type Search
+    let typeIsTel = Type Tel
+    let typeIsColor = Type IInputType.Color
     // Extra
     let id str = Id str
     let disabled value = Disabled value
@@ -232,6 +272,21 @@ module Form =
             if opts.defaultValue.IsSome then yield Props.DefaultValue (U2.Case1 opts.defaultValue.Value) :> IHTMLProp
             if opts.placeholder.IsSome then yield Props.Placeholder opts.placeholder.Value :> IHTMLProp
           ] @ opts.props)
+
+    // Alias to create input already typed
+    let text options = input (Type Text :: options)
+    let password options = input (Type Password :: options)
+    let datetimeLocal options = input (Type DatetimeLocal :: options)
+    let date options = input (Type Date :: options)
+    let month options = input (Type Month :: options)
+    let time options = input (Type Time :: options)
+    let week options = input (Type Week :: options)
+    let number options = input (Type Number :: options)
+    let email options = input (Type Email :: options)
+    let url options = input (Type Url :: options)
+    let search options = input (Type Search :: options)
+    let tel options = input (Type Tel :: options)
+    let color options = input (Type IInputType.Color :: options)
 
 
   module Field =
