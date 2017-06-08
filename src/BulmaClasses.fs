@@ -83,7 +83,12 @@ module BulmaClasses =
 
   and Icon =
     { container: string
-      size: StandardSize}
+      position: IconPosition
+      size: StandardSize }
+
+  and IconPosition =
+    { left: string
+      right: string }
 
   and Input =
     { container: string
@@ -269,6 +274,9 @@ module BulmaClasses =
 
   let icon : Icon =
     { container = "icon"
+      position =
+        { left = "is-left"
+          right = "is-right" }
       size = standardSize }
 
   let input : Input =
