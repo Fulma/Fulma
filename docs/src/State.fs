@@ -22,7 +22,7 @@ let pageParser: Parser<Page->Page,Page> =
     map (Element Progress) (s "elements" </> s "progress")
     map (Element Table) (s "elements" </> s "table")
     map (Element Form) (s "elements" </> s "form")
-    //map Home top
+    map Home top
   ]
 
 let urlUpdate (result: Option<Page>) model =
