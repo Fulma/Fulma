@@ -12,10 +12,10 @@ open App.State
 open Global
 open Elmish.Bulma
 
-// // Bulma + Docs site css
-// importAll "../sass/main.sass"
-// // Prism css
-// importAll "../css/prism.min.css"
+// Bulma + Docs site css
+importAll "../sass/main.sass"
+// Prism css
+importSideEffects "../css/prism.min.css"
 
 [<Emit("Prism.languages.fsharp")>]
 let prismFSharp = ""
