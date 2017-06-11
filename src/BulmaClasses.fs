@@ -245,8 +245,8 @@ module BulmaClasses =
     let control : Control =
         { container = "control"
           hasIcon =
-              { left = "has-icon-left"
-                right = "has-icon-right" }
+              { left = "has-icons-left"
+                right = "has-icons-right" }
           state = { isLoading = "is-loading" } }
 
     let delete : Delete =
