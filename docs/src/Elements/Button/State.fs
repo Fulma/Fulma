@@ -49,7 +49,10 @@ Button.button [ Button.isPrimary; Button.isInverted ] [ str "Inverted" ]
     codeStyleInvertOutlined =
       """
 ```fsharp
-Button.button [ Button.isSuccess; Button.isOutlined; Button.isInverted ] [ str "Invert outlined" ]
+Button.button
+  [ Button.isSuccess;
+    Button.isOutlined;
+    Button.isInverted ] [ str "Invert outlined" ]
 ```
       """
     textState =
