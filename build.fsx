@@ -82,6 +82,10 @@ Target "InstallDocs" (fun _ ->
         runDotnet dir "restore")
 )
 
+Target "WatchDocs" (fun _ ->
+    runDotnet "docs" """fable shell-run "..\node_modules\.bin\rollup -c rollup-config.js -w" """
+)
+
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
@@ -171,6 +175,8 @@ Target "Publish" DoNothing
   <== [ "Build"
         "PublishNuget" ]
 
+"InstallDocs"
+ ==> "WatchDocs"
 
 // start build
 RunTargetOrDefault "Build"
