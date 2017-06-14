@@ -13,7 +13,7 @@ open Global
 open Elmish.Bulma
 
 // Bulma + Docs site css
-importAll "../sass/main.sass"
+importSideEffects "../sass/main.sass"
 // Prism css
 importSideEffects "../css/prism.min.css"
 
