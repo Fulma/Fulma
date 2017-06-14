@@ -1,6 +1,6 @@
 NUGET
   remote: https://www.nuget.org/api/v2
-    Fable.Core (1.0.8)
+    Fable.Core (1.0.12)
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard16
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard16
     Fable.Elmish (0.9.0-beta-008) - restriction: >= netstandard16
@@ -602,5 +602,5 @@ NUGET
     Octokit (0.24)
 GITHUB
   remote: fsharp/FAKE
-    modules/Octokit/Octokit.fsx (223c4127470255dc144c2fe95bb5a577d0a1ad82)
+    modules/Octokit/Octokit.fsx (574f6259c4abec2ae45b8c888aa1bdc9b5d4e842)
       Octokit (>= 0.20)
