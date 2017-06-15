@@ -25,17 +25,17 @@ module Heading =
 
         let ofTitleSize titleSize =
             match titleSize with
-            | Is1 -> bulma.heading.size.is1
-            | Is2 -> bulma.heading.size.is2
-            | Is3 -> bulma.heading.size.is3
-            | Is4 -> bulma.heading.size.is4
-            | Is5 -> bulma.heading.size.is5
-            | Is6 -> bulma.heading.size.is6
+            | Is1 -> bulma.Heading.Size.is1
+            | Is2 -> bulma.Heading.Size.Is2
+            | Is3 -> bulma.Heading.Size.Is3
+            | Is4 -> bulma.Heading.Size.Is4
+            | Is5 -> bulma.Heading.Size.Is5
+            | Is6 -> bulma.Heading.Size.Is6
 
         let ofTitleType titleType =
             match titleType with
-            | Title -> bulma.heading.title
-            | Subtitle -> bulma.heading.subtitle
+            | Title -> bulma.Heading.Title
+            | Subtitle -> bulma.Heading.Subtitle
 
         type Option =
             | Size of ITitleSize
@@ -77,7 +77,7 @@ module Heading =
         let opts = options |> List.fold parseOption Options.Empty
         let className =
             classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize ])
-                [ bulma.heading.spacing.isNormal, opts.IsSpaced ]
+                [ bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
         element
             [ className ]
             children

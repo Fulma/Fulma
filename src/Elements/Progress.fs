@@ -53,6 +53,6 @@ module Progress =
 
         let opts = options |> List.fold parseOptions Options.Empty
         progress
-            (ClassName(Helpers.generateClassName bulma.progress.container [ opts.Size; opts.Color ]) :> IHTMLProp
+            (ClassName(Helpers.generateClassName bulma.Progress.Container [ opts.Size; opts.Color ]) :> IHTMLProp
              :: opts.Props)
             children

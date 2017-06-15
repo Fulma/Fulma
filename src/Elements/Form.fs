@@ -31,8 +31,8 @@ module Form =
 
             let ofHasIcon =
                 function
-                | Left -> bulma.control.hasIcon.left
-                | Right -> bulma.control.hasIcon.right
+                | Left -> bulma.Control.HasIcon.Left
+                | Right -> bulma.Control.HasIcon.Right
 
         open Types
 
@@ -45,15 +45,15 @@ module Form =
         let control options children =
             let parseOptions (result : Options) =
                 function
-                | HasIcon Left -> { result with HasIconLeft = bulma.control.hasIcon.left |> Some }
-                | HasIcon Right -> { result with HasIconRight = bulma.control.hasIcon.right |> Some }
+                | HasIcon Left -> { result with HasIconLeft = bulma.Control.HasIcon.Left |> Some }
+                | HasIcon Right -> { result with HasIconRight = bulma.Control.HasIcon.Right |> Some }
                 | IsLoading -> { result with IsLoading = true }
 
             let opts = options |> List.fold parseOptions Options.Empty
             p
                 [ classBaseList
-                      (Helpers.generateClassName bulma.control.container [ opts.HasIconLeft; opts.HasIconRight ])
-                      [ bulma.control.state.isLoading, opts.IsLoading ] ]
+                      (Helpers.generateClassName bulma.Control.Container [ opts.HasIconLeft; opts.HasIconRight ])
+                      [ bulma.Control.State.IsLoading, opts.IsLoading ] ]
                 children
 
     module Label =
@@ -86,7 +86,7 @@ module Form =
 
             let opts = options |> List.fold parseOptions Options.Empty
             label
-                [ yield ClassName(Helpers.generateClassName bulma.label.container [ opts.Size ]) :> IHTMLProp
+                [ yield ClassName(Helpers.generateClassName bulma.Label.Container [ opts.Size ]) :> IHTMLProp
                   if opts.HtmlFor.IsSome then yield HtmlFor opts.HtmlFor.Value :> IHTMLProp ]
                 children
 
@@ -238,7 +238,7 @@ module Form =
                 | Props props -> { result with Props = props }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let className = Helpers.generateClassName bulma.input.container [ opts.Size; opts.Color ]
+            let className = Helpers.generateClassName bulma.Input.Container [ opts.Size; opts.Color ]
             input
                 ([ yield ClassName className :> IHTMLProp
                    yield Props.Disabled opts.Disabled :> IHTMLProp
@@ -298,19 +298,19 @@ module Form =
 
             let ofHasAddons =
                 function
-                | IHasAddons.Left -> bulma.field.hasAddons.left
-                | IHasAddons.Centered -> bulma.field.hasAddons.left ++ bulma.field.hasAddons.centered
-                | IHasAddons.Right -> bulma.field.hasAddons.left ++ bulma.field.hasAddons.right
-                | IHasAddons.FullWidth -> bulma.field.hasAddons.left ++ bulma.field.hasAddons.fullWidh
+                | IHasAddons.Left -> bulma.Field.HasAddons.Left
+                | IHasAddons.Centered -> bulma.Field.HasAddons.Left ++ bulma.Field.HasAddons.Centered
+                | IHasAddons.Right -> bulma.Field.HasAddons.Left ++ bulma.Field.HasAddons.Right
+                | IHasAddons.FullWidth -> bulma.Field.HasAddons.Left ++ bulma.Field.HasAddons.FullWidh
 
             let ofIsGrouped =
                 function
-                | IIsGrouped.Left -> bulma.field.isGrouped.left
-                | IIsGrouped.Centered -> bulma.field.isGrouped.left ++ bulma.field.isGrouped.centered
-                | IIsGrouped.Right -> bulma.field.isGrouped.left ++ bulma.field.isGrouped.right
+                | IIsGrouped.Left -> bulma.Field.IsGrouped.Left
+                | IIsGrouped.Centered -> bulma.Field.IsGrouped.Left ++ bulma.Field.IsGrouped.Centered
+                | IIsGrouped.Right -> bulma.Field.IsGrouped.Left ++ bulma.Field.IsGrouped.Right
 
             let ofLayout = function
-                | Horizontal -> bulma.field.layout.isHorizontal
+                | Horizontal -> bulma.Field.Layout.IsHorizontal
 
             type FieldLabelOption =
                 | Size of ISize
@@ -342,7 +342,7 @@ module Form =
 
             let opts = options |> List.fold parseOptions Options.Empty
             let className =
-                Helpers.generateClassName bulma.field.container [ opts.HasAddons; opts.IsGrouped; opts.Layout ]
+                Helpers.generateClassName bulma.Field.Container [ opts.HasAddons; opts.IsGrouped; opts.Layout ]
             div
                 [ ClassName className ]
                 children
@@ -356,10 +356,10 @@ module Form =
                 | Size size -> { result with Size = ofSize size |> Some }
             let opts = options |> List.fold parseOptions FieldLabelOptions.Empty
             div
-                [ ClassName(Helpers.generateClassName bulma.field.label [ opts.Size ]) ]
+                [ ClassName(Helpers.generateClassName bulma.Field.Label [ opts.Size ]) ]
                 children
 
         let body (options : unit list) children =
             div
-                [ ClassName bulma.field.body ]
+                [ ClassName bulma.Field.Body ]
                 children

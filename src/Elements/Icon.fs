@@ -28,8 +28,8 @@ module Icon =
 
         let ofPosition =
             function
-            | Left -> bulma.icon.position.left
-            | Right -> bulma.icon.position.right
+            | Left -> bulma.Icon.Position.Left
+            | Right -> bulma.Icon.Position.Right
 
     open Types
 
@@ -49,5 +49,5 @@ module Icon =
 
         let opts = options |> List.fold parseOptions Options.Empty
         span
-            [ ClassName(Helpers.generateClassName bulma.icon.container [ opts.Size; opts.Position ]) ]
+            [ ClassName(Helpers.generateClassName bulma.Icon.Container [ opts.Size; opts.Position ]) ]
             children

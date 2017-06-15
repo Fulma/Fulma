@@ -42,11 +42,11 @@ module Table =
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
         table
-            [ classBaseList bulma.table.container [ bulma.table.style.isBordered, opts.IsBordered
-                                                    bulma.table.style.isStripped, opts.IsStripped
-                                                    bulma.table.spacing.isNarrow, opts.IsNarrow ] ]
+            [ classBaseList bulma.Table.Container [ bulma.Table.Style.IsBordered, opts.IsBordered
+                                                    bulma.Table.Style.IsStripped, opts.IsStripped
+                                                    bulma.Table.Spacing.IsNarrow, opts.IsNarrow ] ]
             children
 
     module Row =
         // Row
-        let isSelected = ClassName bulma.table.row.state.isSelected
+        let isSelected = ClassName bulma.Table.Row.state.isSelected

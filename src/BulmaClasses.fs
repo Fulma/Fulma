@@ -2,364 +2,364 @@ namespace Elmish.Bulma
 
 module BulmaClasses =
     type StandardSize =
-        { isSmall : string
-          isMedium : string
-          isLarge : string }
+        { IsSmall : string
+          IsMedium : string
+          IsLarge : string }
 
     and LevelAndColor =
-        { isBlack : string
-          isDark : string
-          isLight : string
-          isWhite : string
-          isPrimary : string
-          isInfo : string
-          isSuccess : string
-          isWarning : string
-          isDanger : string }
+        { IsBlack : string
+          IsDark : string
+          IsLight : string
+          IsWhite : string
+          IsPrimary : string
+          IsInfo : string
+          IsSuccess : string
+          IsWarning : string
+          IsDanger : string }
 
     and Box =
-        { container : string }
+        { Container : string }
 
     and Button =
-        { container : string
-          size : StandardSize
-          color : LevelAndColor
-          state : ButtonState
-          styles : ButtonStyles }
+        { Container : string
+          Size : StandardSize
+          Color : LevelAndColor
+          State : ButtonState
+          Styles : ButtonStyles }
 
     and ButtonState =
-        { isHovered : string
-          isFocused : string
-          isActive : string
-          isLoading : string }
+        { IsHovered : string
+          IsFocused : string
+          IsActive : string
+          IsLoading : string }
 
     and ButtonStyles =
-        { isLink : string
-          isOutlined : string
-          isInverted : string }
+        { IsLink : string
+          IsOutlined : string
+          IsInverted : string }
 
     and Content =
-        { container : string
-          size : StandardSize }
+        { Container : string
+          Size : StandardSize }
 
     and Control =
-        { container : string
-          hasIcon : ControlHasIcon
-          state : ControlState }
+        { Container : string
+          HasIcon : ControlHasIcon
+          State : ControlState }
 
     and ControlHasIcon =
-        { left : string
-          right : string }
+        { Left : string
+          Right : string }
 
     and ControlState =
-        { isLoading : string }
+        { IsLoading : string }
 
     and Delete =
-        { container : string
-          size : StandardSize }
+        { Container : string
+          Size : StandardSize }
 
     and Field =
-        { container : string
-          label : string
-          body : string
-          hasAddons : FieldHasAddons
-          isGrouped : FieldIsGrouped
-          layout : FieldLayout }
+        { Container : string
+          Label : string
+          Body : string
+          HasAddons : FieldHasAddons
+          IsGrouped : FieldIsGrouped
+          Layout : FieldLayout }
 
     and FieldHasAddons =
-        { left : string
-          centered : string
-          right : string
-          fullWidh : string }
+        { Left : string
+          Centered : string
+          Right : string
+          FullWidh : string }
 
     and FieldIsGrouped =
-        { left : string
-          centered : string
-          right : string }
+        { Left : string
+          Centered : string
+          Right : string }
 
     and FieldLayout =
-        { isHorizontal : string }
+        { IsHorizontal : string }
 
     and Icon =
-        { container : string
-          position : IconPosition
-          size : StandardSize }
+        { Container : string
+          Position : IconPosition
+          Size : StandardSize }
 
     and IconPosition =
-        { left : string
-          right : string }
+        { Left : string
+          Right : string }
 
     and Input =
-        { container : string
-          display : InputDisplay
-          size : StandardSize
-          state : InputState
-          color : LevelAndColor
-          addon : InputAddon }
+        { Container : string
+          Display : InputDisplay
+          Size : StandardSize
+          State : InputState
+          Color : LevelAndColor
+          Addon : InputAddon }
 
     and InputDisplay =
-        { isInline : string }
+        { IsInline : string }
 
     and InputState =
-        { isHovered : string
-          isFocused : string
-          isActive : string
-          isLoading : string }
+        { IsHovered : string
+          IsFocused : string
+          IsActive : string
+          IsLoading : string }
 
     and InputAddon =
-        { isExpanded : string }
+        { IsExpanded : string }
 
     and Image =
-        { container : string
-          size : ImageSize
-          ratio : ImageRatio }
+        { Container : string
+          Size : ImageSize
+          Ratio : ImageRatio }
 
     and ImageSize =
-        { is16x16 : string
-          is24x24 : string
-          is32x32 : string
-          is48x48 : string
-          is64x64 : string
-          is96x96 : string
-          is128x128 : string }
+        { Is16x16 : string
+          Is24x24 : string
+          Is32x32 : string
+          Is48x48 : string
+          Is64x64 : string
+          Is96x96 : string
+          Is128x128 : string }
 
     and ImageRatio =
-        { isSquare : string
-          is1by1 : string
-          is4by3 : string
-          is3by2 : string
-          is16by9 : string
-          is2by1 : string }
+        { IsSquare : string
+          Is1by1 : string
+          Is4by3 : string
+          Is3by2 : string
+          Is16by9 : string
+          Is2by1 : string }
 
     and Heading =
-        { title : string
-          subtitle : string
-          size : HeadingSize
-          spacing : HeadingSpacing }
+        { Title : string
+          Subtitle : string
+          Size : HeadingSize
+          Spacing : HeadingSpacing }
 
     and HeadingSize =
-        { is1 : string
-          is2 : string
-          is3 : string
-          is4 : string
-          is5 : string
-          is6 : string }
+        { Is1 : string
+          Is2 : string
+          Is3 : string
+          Is4 : string
+          Is5 : string
+          Is6 : string }
 
     and HeadingSpacing =
-        { isNormal : string }
+        { IsNormal : string }
 
     and Label =
-        { container : string
-          size : StandardSize }
+        { Container : string
+          Size : StandardSize }
 
     and Progress =
-        { container : string
-          size : StandardSize
-          color : LevelAndColor }
+        { Container : string
+          Size : StandardSize
+          Color : LevelAndColor }
 
     and Table =
-        { container : string
-          row : TableRow
-          style : TableStyle
-          spacing : TableSpacing }
+        { Container : string
+          Row : TableRow
+          Style : TableStyle
+          Spacing : TableSpacing }
 
     and TableRow =
-        { state : TableRowState }
+        { State : TableRowState }
 
     and TableRowState =
-        { isSelected : string }
+        { IsSelected : string }
 
     and TableStyle =
-        { isBordered : string
-          isStripped : string }
+        { IsBordered : string
+          IsStripped : string }
 
     and TableSpacing =
-        { isNarrow : string }
+        { IsNarrow : string }
 
     and Tag =
-        { container : string
-          size : TagSize
-          color : LevelAndColor }
+        { Container : string
+          Size : TagSize
+          Color : LevelAndColor }
 
     and TagSize =
-        { isMedium : string
-          isLarge : string }
+        { IsMedium : string
+          IsLarge : string }
 
     and Modifiers =
-        { size : StandardSize
-          color : LevelAndColor }
+        { Size : StandardSize
+          Color : LevelAndColor }
 
     and Bulma =
-        { modifiers : Modifiers
-          box : Box
-          button : Button
-          content : Content
-          control : Control
-          delete : Delete
-          field : Field
-          heading : Heading
-          label : Label
-          progress : Progress
-          icon : Icon
-          image : Image
-          input : Input
-          table : Table
-          tag : Tag }
+        { Modifiers : Modifiers
+          Box : Box
+          Button : Button
+          Content : Content
+          Control : Control
+          Delete : Delete
+          Field : Field
+          Heading : Heading
+          Label : Label
+          Progress : Progress
+          Icon : Icon
+          Image : Image
+          Input : Input
+          Table : Table
+          Tag : Tag }
 
     let standardSize =
-        { isSmall = "is-small"
-          isMedium = "is-medium"
-          isLarge = "is-large " }
+        { IsSmall = "is-small"
+          IsMedium = "is-medium"
+          IsLarge = "is-large " }
 
     let levelAndColor =
-        { isBlack = "is-black"
-          isDark = "is-dark"
-          isLight = "is-light"
-          isWhite = "is-white"
-          isPrimary = "is-primary"
-          isInfo = "is-info"
-          isSuccess = "is-success"
-          isWarning = "is-warning"
-          isDanger = "is-danger" }
+        { IsBlack = "is-black"
+          IsDark = "is-dark"
+          IsLight = "is-light"
+          IsWhite = "is-white"
+          IsPrimary = "is-primary"
+          IsInfo = "is-info"
+          IsSuccess = "is-success"
+          IsWarning = "is-warning"
+          IsDanger = "is-danger" }
 
-    let box = { container = "box" }
+    let box = { Container = "box" }
 
     let button : Button =
-        { container = "button"
-          size = standardSize
-          color = levelAndColor
-          state =
-              { isHovered = "is-hovered"
-                isFocused = "is-focus"
-                isActive = "is-active"
-                isLoading = "is-loading" }
-          styles =
-              { isLink = "is-link"
-                isOutlined = "is-outlined"
-                isInverted = "is-inverted" } }
+        { Container = "button"
+          Size = standardSize
+          Color = levelAndColor
+          State =
+              { IsHovered = "is-hovered"
+                IsFocused = "is-focus"
+                IsActive = "is-active"
+                IsLoading = "is-loading" }
+          Styles =
+              { IsLink = "is-link"
+                IsOutlined = "is-outlined"
+                IsInverted = "is-inverted" } }
 
     let content : Content =
-        { container = "content"
-          size = standardSize }
+        { Container = "content"
+          Size = standardSize }
 
     let control : Control =
-        { container = "control"
-          hasIcon =
-              { left = "has-icons-left"
-                right = "has-icons-right" }
-          state = { isLoading = "is-loading" } }
+        { Container = "control"
+          HasIcon =
+              { Left = "has-icons-left"
+                Right = "has-icons-right" }
+          State = { IsLoading = "is-loading" } }
 
     let delete : Delete =
-        { container = "delete"
-          size = standardSize }
+        { Container = "delete"
+          Size = standardSize }
 
     let field : Field =
-        { container = "field"
-          label = "field-label"
-          body = "field-body"
-          hasAddons =
-              { left = "has-addons"
-                centered = "has-addons-centered"
-                right = "has-addons-right"
-                fullWidh = "has-addons-fullwidth" }
-          isGrouped =
-              { left = "is-grouped"
-                centered = "is-grouped-centered"
-                right = "is-grouped-right" }
-          layout = { isHorizontal = "is-horizontal" } }
+        { Container = "field"
+          Label = "field-label"
+          Body = "field-body"
+          HasAddons =
+              { Left = "has-addons"
+                Centered = "has-addons-centered"
+                Right = "has-addons-right"
+                FullWidh = "has-addons-fullwidth" }
+          IsGrouped =
+              { Left = "is-grouped"
+                Centered = "is-grouped-centered"
+                Right = "is-grouped-right" }
+          Layout = { IsHorizontal = "is-horizontal" } }
 
     let icon : Icon =
-        { container = "icon"
-          position =
-              { left = "is-left"
-                right = "is-right" }
-          size = standardSize }
+        { Container = "icon"
+          Position =
+              { Left = "is-left"
+                Right = "is-right" }
+          Size = standardSize }
 
     let input : Input =
-        { container = "input"
-          display = { isInline = "is-inline" }
-          size = standardSize
-          state =
-              { isHovered = "is-hovered"
-                isFocused = "is-focus"
-                isActive = "is-active"
-                isLoading = "is-loading" }
-          color = levelAndColor
-          addon = { isExpanded = "is-expanded" } }
+        { Container = "input"
+          Display = { IsInline = "is-inline" }
+          Size = standardSize
+          State =
+              { IsHovered = "is-hovered"
+                IsFocused = "is-focus"
+                IsActive = "is-active"
+                IsLoading = "is-loading" }
+          Color = levelAndColor
+          Addon = { IsExpanded = "is-expanded" } }
 
     let image : Image =
-        { container = "image"
-          size =
-              { is16x16 = "is-16x16"
-                is24x24 = "is-24x24"
-                is32x32 = "is-32x32"
-                is48x48 = "is-48x48"
-                is64x64 = "is-64x64"
-                is96x96 = "is-96x96"
-                is128x128 = "is-128x128" }
-          ratio =
-              { isSquare = "is-square"
-                is1by1 = "is-1by1"
-                is4by3 = "is-4by3"
-                is3by2 = "is-3by2"
-                is16by9 = "is-16by9"
-                is2by1 = "is-2by1" } }
+        { Container = "image"
+          Size =
+              { Is16x16 = "is-16x16"
+                Is24x24 = "is-24x24"
+                Is32x32 = "is-32x32"
+                Is48x48 = "is-48x48"
+                Is64x64 = "is-64x64"
+                Is96x96 = "is-96x96"
+                Is128x128 = "is-128x128" }
+          Ratio =
+              { IsSquare = "is-square"
+                Is1by1 = "is-1by1"
+                Is4by3 = "is-4by3"
+                Is3by2 = "is-3by2"
+                Is16by9 = "is-16by9"
+                Is2by1 = "is-2by1" } }
 
     let heading : Heading =
-        { title = "title"
-          subtitle = "subtitle"
-          size =
-              { is1 = "is-1"
-                is2 = "is-2"
-                is3 = "is-3"
-                is4 = "is-4"
-                is5 = "is-5"
-                is6 = "is-6" }
-          spacing = { isNormal = "is-spaced" } }
+        { Title = "title"
+          Subtitle = "subtitle"
+          Size =
+              { Is1 = "is-1"
+                Is2 = "is-2"
+                Is3 = "is-3"
+                Is4 = "is-4"
+                Is5 = "is-5"
+                Is6 = "is-6" }
+          Spacing = { IsNormal = "is-spaced" } }
 
     let label : Label =
-        { container = "label"
-          size = standardSize }
+        { Container = "label"
+          Size = standardSize }
 
     let progress : Progress =
-        { container = "progress"
-          size = standardSize
-          color = levelAndColor }
+        { Container = "progress"
+          Size = standardSize
+          Color = levelAndColor }
 
     let table : Table =
-        { container = "table"
-          row = { state = { isSelected = "is-selected" } }
-          style =
-              { isBordered = "is-bordered"
-                isStripped = "is-stripped " }
-          spacing = { isNarrow = "is-narrow" } }
+        { Container = "table"
+          Row = { State = { IsSelected = "is-selected" } }
+          Style =
+              { IsBordered = "is-bordered"
+                IsStripped = "is-stripped " }
+          Spacing = { IsNarrow = "is-narrow" } }
 
     let tagSize : TagSize =
-        { isMedium = "is-medium"
-          isLarge = "is-large" }
+        { IsMedium = "is-medium"
+          IsLarge = "is-large" }
 
     let tag : Tag =
-        { container = "tag"
-          size = tagSize
-          color = levelAndColor }
+        { Container = "tag"
+          Size = tagSize
+          Color = levelAndColor }
 
     let bulma =
-        { modifiers =
-              { size = standardSize
-                color = levelAndColor }
-          box = box
-          button = button
-          content = content
-          control = control
-          delete = delete
-          field = field
-          icon = icon
-          image = image
-          input = input
-          label = label
-          progress = progress
-          heading = heading
-          table = table
-          tag = tag }
+        { Modifiers =
+              { Size = standardSize
+                Color = levelAndColor }
+          Box = box
+          Button = button
+          Content = content
+          Control = control
+          Delete = delete
+          Field = field
+          Icon = icon
+          Image = image
+          Input = input
+          Label = label
+          Progress = progress
+          Heading = heading
+          Table = table
+          Tag = tag }
 
     let (++) str1 str2 = str1 + " " + str2

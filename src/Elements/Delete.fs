@@ -38,5 +38,5 @@ module Delete =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
-        a (ClassName(Helpers.generateClassName bulma.delete.container [ opts.Size ]) :> IHTMLProp :: opts.Props)
+        a (ClassName(Helpers.generateClassName bulma.Delete.Container [ opts.Size ]) :> IHTMLProp :: opts.Props)
             children

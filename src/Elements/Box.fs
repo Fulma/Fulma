@@ -9,7 +9,7 @@ open Fable.Helpers.React.Props
 open Fable.Import
 
 module Box =
-    let box' children =
+    let box' (dummy: unit list) children =
         div
-            [ ClassName bulma.box.container ]
+            [ ClassName bulma.Box.Container ]
             children

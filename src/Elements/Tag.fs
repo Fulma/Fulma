@@ -22,8 +22,8 @@ module Tag =
 
         let ofTagSize size =
             match size with
-            | IsMedium -> bulma.tag.size.isMedium
-            | IsLarge -> bulma.tag.size.isLarge
+            | IsMedium -> bulma.Tag.Size.IsMedium
+            | IsLarge -> bulma.Tag.Size.IsLarge
 
         type Options =
             { Size : string option
@@ -59,7 +59,7 @@ module Tag =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
-        let className = ClassName(Helpers.generateClassName bulma.tag.container [ opts.Size; opts.Color ])
+        let className = ClassName(Helpers.generateClassName bulma.Tag.Container [ opts.Size; opts.Color ])
         span
             (className :> IHTMLProp :: opts.Props)
             children

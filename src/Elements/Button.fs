@@ -29,18 +29,18 @@ module Button =
 
         let ofStyles style =
             match style with
-            | IsOutlined -> bulma.button.styles.isOutlined
-            | IsInverted -> bulma.button.styles.isInverted
-            | IsLink -> bulma.button.styles.isLink
+            | IsOutlined -> bulma.Button.Styles.IsOutlined
+            | IsInverted -> bulma.Button.Styles.IsInverted
+            | IsLink -> bulma.Button.Styles.IsLink
             | value -> failwithf "%A isn't a valid style value" value
 
         let ofState state =
             match state with
             | IState.Nothing -> ""
-            | IsHovered -> bulma.button.state.isHovered
-            | IsFocused -> bulma.button.state.isFocused
-            | IsActive -> bulma.button.state.isActive
-            | IsLoading -> bulma.button.state.isLoading
+            | IsHovered -> bulma.Button.State.IsHovered
+            | IsFocused -> bulma.Button.State.IsFocused
+            | IsActive -> bulma.Button.State.IsActive
+            | IsLoading -> bulma.Button.State.IsLoading
 
         type Options =
             { Level : string option
@@ -105,8 +105,8 @@ module Button =
         let opts = parseOptions options Options.Empty
         a
             (classBaseList
-                (Helpers.generateClassName bulma.button.container [ opts.Level; opts.Size; opts.State ])
-                 [ bulma.button.styles.isOutlined, opts.IsOutlined
-                   bulma.button.styles.isInverted, opts.IsInverted
-                   bulma.button.styles.isLink, opts.IsLink ] :> IHTMLProp :: opts.Props)
+                (Helpers.generateClassName bulma.Button.Container [ opts.Level; opts.Size; opts.State ])
+                 [ bulma.Button.Styles.IsOutlined, opts.IsOutlined
+                   bulma.Button.Styles.IsInverted, opts.IsInverted
+                   bulma.Button.Styles.IsLink, opts.IsLink ] :> IHTMLProp :: opts.Props)
             children

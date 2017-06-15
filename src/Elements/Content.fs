@@ -32,5 +32,5 @@ module Content =
 
         let opts = options |> List.fold parseOption Options.Empty
         div
-            [ ClassName(Helpers.generateClassName bulma.content.container [ opts.Size ]) ]
+            [ ClassName(Helpers.generateClassName bulma.Content.Container [ opts.Size ]) ]
             children

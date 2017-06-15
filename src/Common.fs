@@ -24,22 +24,22 @@ module Common =
 
     let ofLevelAndColor level =
         match level with
-        | IsBlack -> bulma.modifiers.color.isBlack
-        | IsDark -> bulma.modifiers.color.isDark
-        | IsLight -> bulma.modifiers.color.isLight
-        | IsWhite -> bulma.modifiers.color.isWhite
-        | IsPrimary -> bulma.modifiers.color.isPrimary
-        | IsInfo -> bulma.modifiers.color.isInfo
-        | IsSuccess -> bulma.modifiers.color.isSuccess
-        | IsWarning -> bulma.modifiers.color.isWarning
-        | IsDanger -> bulma.modifiers.color.isDanger
+        | IsBlack -> bulma.Modifiers.Color.IsBlack
+        | IsDark -> bulma.Modifiers.Color.IsDark
+        | IsLight -> bulma.Modifiers.Color.IsLight
+        | IsWhite -> bulma.Modifiers.Color.IsWhite
+        | IsPrimary -> bulma.Modifiers.Color.IsPrimary
+        | IsInfo -> bulma.Modifiers.Color.IsInfo
+        | IsSuccess -> bulma.Modifiers.Color.IsSuccess
+        | IsWarning -> bulma.Modifiers.Color.IsWarning
+        | IsDanger -> bulma.Modifiers.Color.IsDanger
         | ILevelAndColor.Nothing -> ""
 
     let ofSize size =
         match size with
-        | IsSmall -> bulma.modifiers.size.isSmall
-        | IsMedium -> bulma.modifiers.size.isMedium
-        | IsLarge -> bulma.modifiers.size.isLarge
+        | IsSmall -> bulma.Modifiers.Size.IsSmall
+        | IsMedium -> bulma.Modifiers.Size.IsMedium
+        | IsLarge -> bulma.Modifiers.Size.IsLarge
         | ISize.Nothing -> ""
 
     module Helpers =
