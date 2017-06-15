@@ -49,4 +49,4 @@ module Table =
 
     module Row =
         // Row
-        let isSelected = ClassName bulma.Table.Row.state.isSelected
+        let isSelected = ClassName bulma.Table.Row.State.IsSelected

@@ -30,7 +30,7 @@ module Image =
 
         let ofImageSize =
             function
-            | Is16x16 -> bulma.Image.Size.is16x16
+            | Is16x16 -> bulma.Image.Size.Is16x16
             | Is24x24 -> bulma.Image.Size.Is24x24
             | Is32x32 -> bulma.Image.Size.Is32x32
             | Is48x48 -> bulma.Image.Size.Is48x48

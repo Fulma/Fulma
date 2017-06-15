@@ -25,7 +25,7 @@ module Heading =
 
         let ofTitleSize titleSize =
             match titleSize with
-            | Is1 -> bulma.Heading.Size.is1
+            | Is1 -> bulma.Heading.Size.Is1
             | Is2 -> bulma.Heading.Size.Is2
             | Is3 -> bulma.Heading.Size.Is3
             | Is4 -> bulma.Heading.Size.Is4
