@@ -76,7 +76,7 @@ Target "Meta" (fun _ ->
 // Docs targets
 
 Target "InstallDocs" (fun _ ->
-    !! "src/**.fsproj"
+    !! "docs/**.fsproj"
     |> Seq.iter(fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "restore")
@@ -170,18 +170,18 @@ Target "Publish" DoNothing
 
 // Build order
 "Meta"
-  ==> "InstallDotNetCore"
-  ==> "Clean"
-  ==> "Install"
-  ==> "Build"
-  ==> "Package"
+    ==> "InstallDotNetCore"
+    ==> "Clean"
+    ==> "Install"
+    ==> "Build"
+    ==> "Package"
 
 "Publish"
-  <== [ "Build"
-        "PublishNuget" ]
-
-"InstallDocs"
- ==> "WatchDocs"
+    <== [ "Build"
+          "PublishNuget" ]
+"Build"
+    ==>"InstallDocs"
+    ==> "WatchDocs"
 
 // start build
 RunTargetOrDefault "Build"
