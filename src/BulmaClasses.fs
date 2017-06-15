@@ -80,6 +80,69 @@ module BulmaClasses =
     and FieldLayout =
         { IsHorizontal : string }
 
+    and Columns =
+        { Container : string
+          Column : Column
+          Alignment : ColumnsAlignment
+          Spacing : ColumnsSpacing
+          Display : ColumnsDisplay }
+
+    and Column =
+        { Container : string
+          Width : ColumnWidth
+          Offset : ColumnOffset }
+
+    and ColumnWidth =
+        { IsOneQuarter : string
+          IsOneThird : string
+          IsHalf : string
+          IsTwoThirds : string
+          IsThreeQuarters : string
+          Is1 : string
+          Is2 : string
+          Is3 : string
+          Is4 : string
+          Is5 : string
+          Is6 : string
+          Is7 : string
+          Is8 : string
+          Is9 : string
+          Is10 : string
+          Is11 : string
+          IsNarrow : string }
+
+    and ColumnOffset =
+        { IsOneQuarter : string
+          IsOneThird : string
+          IsHalf : string
+          IsTwoThirds : string
+          IsThreeQuarters : string
+          Is1 : string
+          Is2 : string
+          Is3 : string
+          Is4 : string
+          Is5 : string
+          Is6 : string
+          Is7 : string
+          Is8 : string
+          Is9 : string
+          Is10 : string
+          Is11 : string
+          IsNarrow : string }
+
+    and ColumnsAlignment =
+        { IsCentered : string
+          IsVCentered : string }
+
+    and ColumnsSpacing =
+        { IsMultiline : string
+          IsGapless : string
+          IsGrid : string }
+
+    and ColumnsDisplay =
+        { OnMobile : string
+          OnlyDesktop : string }
+
     and Icon =
         { Container : string
           Position : IconPosition
@@ -152,6 +215,10 @@ module BulmaClasses =
         { Container : string
           Size : StandardSize }
 
+    and Modifiers =
+        { Size : StandardSize
+          Color : LevelAndColor }
+
     and Progress =
         { Container : string
           Size : StandardSize
@@ -185,14 +252,11 @@ module BulmaClasses =
         { IsMedium : string
           IsLarge : string }
 
-    and Modifiers =
-        { Size : StandardSize
-          Color : LevelAndColor }
-
     and Bulma =
         { Modifiers : Modifiers
           Box : Box
           Button : Button
+          Columns : Columns
           Content : Content
           Control : Control
           Delete : Delete
@@ -248,6 +312,59 @@ module BulmaClasses =
               { Left = "has-icons-left"
                 Right = "has-icons-right" }
           State = { IsLoading = "is-loading" } }
+
+    let columns : Columns =
+        { Container = "columns"
+          Column =
+            { Container = "column"
+              Width =
+                { IsOneQuarter = "is-one-quarter"
+                  IsOneThird = "is-one-third"
+                  IsHalf = "is-harl"
+                  IsTwoThirds = "is-two-thirds"
+                  IsThreeQuarters = "is-three-quarters"
+                  Is1 = "is-1"
+                  Is2 = "is-2"
+                  Is3 = "is-3"
+                  Is4 = "is-4"
+                  Is5 = "is-5"
+                  Is6 = "is-6"
+                  Is7 = "is-7"
+                  Is8 = "is-8"
+                  Is9 = "is-9"
+                  Is10 = "is-10"
+                  Is11 = "is-11"
+                  IsNarrow = "is-narrow" }
+              Offset =
+                { IsOneQuarter = "is-offset-one-quarter"
+                  IsOneThird = "is-offset-one-third"
+                  IsHalf = "is-offset-harl"
+                  IsTwoThirds = "is-offset-two-thirds"
+                  IsThreeQuarters = "is-offset-three-quarters"
+                  Is1 = "is-offset-1"
+                  Is2 = "is-offset-2"
+                  Is3 = "is-offset-3"
+                  Is4 = "is-offset-4"
+                  Is5 = "is-offset-5"
+                  Is6 = "is-offset-6"
+                  Is7 = "is-offset-7"
+                  Is8 = "is-offset-8"
+                  Is9 = "is-offset-9"
+                  Is10 = "is-offset-10"
+                  Is11 = "is-offset-11"
+                  IsNarrow = "is-offset-narrow" }
+
+              }
+          Alignment =
+            { IsCentered = "is-centered"
+              IsVCentered = "is-vcentered" }
+          Spacing =
+            { IsMultiline = "is-multiline"
+              IsGapless = "is-gapless"
+              IsGrid = "is-grid" }
+          Display =
+            { OnMobile = "on-mobile"
+              OnlyDesktop = "only-desktop" } }
 
     let delete : Delete =
         { Container = "delete"
@@ -349,6 +466,7 @@ module BulmaClasses =
                 Color = levelAndColor }
           Box = box
           Button = button
+          Columns = columns
           Content = content
           Control = control
           Delete = delete
