@@ -1,58 +1,63 @@
 namespace Fable.Import
 
-open System
 open Fable.Core
 open Fable.Import.JS
+open System
 
 module Marked =
+    [<AllowNullLiteral>]
+    type MarkedStatic =
+        abstract Renderer : obj with get, set
+        abstract Parser : obj with get, set
 
-  type [<AllowNullLiteral>] MarkedStatic =
-    abstract Renderer: obj with get, set
-    abstract Parser: obj with get, set
-    [<Emit("$0($1...)")>] abstract Invoke: src: string * callback: Function -> string
-    [<Emit("$0($1...)")>] abstract Invoke: src: string * ?options: MarkedOptions * ?callback: Function -> string
-    abstract lexer: src: string * ?options: MarkedOptions -> ResizeArray<obj>
-    abstract parse: src: string * callback: Function -> string
-    abstract parse: src: string * ?options: MarkedOptions * ?callback: Function -> string
-    abstract parser: src: ResizeArray<obj> * ?options: MarkedOptions -> string
-    abstract setOptions: options: MarkedOptions -> MarkedStatic
+        [<Emit("$0($1...)")>] abstract Invoke : string * Function -> string
 
-  and [<AllowNullLiteral>] MarkedRenderer =
-    abstract code: code: string * language: string -> string
-    abstract blockquote: quote: string -> string
-    abstract html: html: string -> string
-    abstract heading: text: string * level: float -> string
-    abstract hr: unit -> string
-    abstract list: body: string * ordered: bool -> string
-    abstract listitem: text: string -> string
-    abstract paragraph: text: string -> string
-    abstract table: header: string * body: string -> string
-    abstract tablerow: content: string -> string
-    abstract tablecell: content: string * flags: obj -> string
-    abstract strong: text: string -> string
-    abstract em: text: string -> string
-    abstract codespan: code: string -> string
-    abstract br: unit -> string
-    abstract del: text: string -> string
-    abstract link: href: string * title: string * text: string -> string
-    abstract image: href: string * title: string * text: string -> string
-    abstract text: text: string -> string
+        [<Emit("$0($1...)")>] abstract Invoke : string * MarkedOptions * Function -> string
 
-  and [<AllowNullLiteral>] MarkedParser =
-    abstract parse: source: ResizeArray<obj> -> string
+        abstract lexer : string * MarkedOptions -> ResizeArray<obj>
+        abstract parse : string * Function -> string
+        abstract parse : string * ?options: MarkedOptions * ?callback: Function -> string
+        abstract parser : ResizeArray<obj> * MarkedOptions -> string
+        abstract setOptions : MarkedOptions -> MarkedStatic
 
-  and [<AllowNullLiteral>] MarkedOptions =
-    abstract renderer: MarkedRenderer option with get, set
-    abstract gfm: bool option with get, set
-    abstract tables: bool option with get, set
-    abstract breaks: bool option with get, set
-    abstract pedantic: bool option with get, set
-    abstract sanitize: bool option with get, set
-    abstract smartLists: bool option with get, set
-    abstract silent: bool option with get, set
-    abstract langPrefix: string option with get, set
-    abstract smartypants: bool option with get, set
-    abstract highlight: code: string * ?lang: string * ?callback: Function -> string
+    and [<AllowNullLiteral>] MarkedRenderer =
+        abstract code : string * string -> string
+        abstract blockquote : string -> string
+        abstract html : string -> string
+        abstract heading : string * float -> string
+        abstract hr : unit -> string
+        abstract list : string * bool -> string
+        abstract listitem : string -> string
+        abstract paragraph : string -> string
+        abstract table : string * string -> string
+        abstract tablerow : string -> string
+        abstract tablecell : string * obj -> string
+        abstract strong : string -> string
+        abstract em : string -> string
+        abstract codespan : string -> string
+        abstract br : unit -> string
+        abstract del : string -> string
+        abstract link : string * string * string -> string
+        abstract image : string * string * string -> string
+        abstract text : string -> string
 
-  type [<Erase>]Globals =
-    [<Global>] static member marked : MarkedStatic = jsNative
+    and [<AllowNullLiteral>] MarkedParser =
+        abstract parse : ResizeArray<obj> -> string
+
+    and [<AllowNullLiteral>] MarkedOptions =
+        abstract renderer : MarkedRenderer option with get, set
+        abstract gfm : bool option with get, set
+        abstract tables : bool option with get, set
+        abstract breaks : bool option with get, set
+        abstract pedantic : bool option with get, set
+        abstract sanitize : bool option with get, set
+        abstract smartLists : bool option with get, set
+        abstract silent : bool option with get, set
+        abstract langPrefix : string option with get, set
+        abstract smartypants : bool option with get, set
+        abstract highlight : string * string * Function -> string
+
+    [<Erase>]
+    type Globals =
+        [<Global>]
+        static member marked : MarkedStatic = jsNative
