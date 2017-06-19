@@ -7,8 +7,10 @@
   <ItemGroup>
     <Compile Include="BulmaClasses.fs" />
     <Compile Include="Common.fs" />
+    <!-- Components -->
+    <Compile Include="Components/Grid/Column.fs" />
+    <Compile Include="Components/Grid/Columns.fs" />
     <!-- Elements -->
-    <!-- Elements/Internam -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />
     <Compile Include="Elements/Icon.fs" />

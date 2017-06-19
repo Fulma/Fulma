@@ -64,10 +64,12 @@ let header =
 let root model dispatch =
     let pageHtml =
         function
-        | Home -> Home.View.root model.home (HomeMsg >> dispatch)
+        | Home -> Home.View.root model.home
         | Element element ->
             match element with
+            | Elements.Button -> Elements.Button.View.root model.elements.button
             | _ -> div [] []
+
     div []
         [ div [ ClassName "navbar-bg" ]
               [ div [ ClassName "container" ] [ Navbar.View.root ] ]

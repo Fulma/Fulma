@@ -32,28 +32,21 @@ let urlUpdate (result : Option<Page>) model =
     | Some page -> { model with currentPage = page }, []
 
 let init result =
-    let (home, homeCmd) = Home.State.init()
-
     let elements =
         { button = Elements.Button.State.init() }
 
     let (model, cmd) =
         urlUpdate result { currentPage = Home
-                           home = home
+                           home = Home.State.init()
                            elements = elements }
 
-    model, Cmd.batch [ cmd
-                       Cmd.map HomeMsg homeCmd ]
+    model, Cmd.batch [ cmd ]
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 let update msg model =
     match msg with
-    | HomeMsg msg ->
-        let (home, homeCmd) = Home.State.update msg model.home
-        { model with home = home }, Cmd.map HomeMsg homeCmd
-
     | SendNotification ->
         model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [] [] [ (*Level Success*) str "coucou" ])
 

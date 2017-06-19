@@ -88,21 +88,17 @@ module Button =
     let props props = Props props
 
     let button (options : Option list) children =
-        let rec parseOptions options result =
-            match options with
-            | x :: xs ->
-                match x with
-                | Level level -> { result with Level = ofLevelAndColor level |> Some }
-                | Size size -> { result with Size = ofSize size |> Some }
-                | IsOutlined -> { result with IsOutlined = true }
-                | IsInverted -> { result with IsInverted = true }
-                | IsLink -> { result with IsLink = true }
-                | State state -> { result with State = ofState state |> Some }
-                | Props props -> { result with Props = props }
-                |> parseOptions xs
-            | [] -> result
+        let parseOptions result opt =
+            match opt with
+            | Level level -> { result with Level = ofLevelAndColor level |> Some }
+            | Size size -> { result with Size = ofSize size |> Some }
+            | IsOutlined -> { result with IsOutlined = true }
+            | IsInverted -> { result with IsInverted = true }
+            | IsLink -> { result with IsLink = true }
+            | State state -> { result with State = ofState state |> Some }
+            | Props props -> { result with Props = props }
 
-        let opts = parseOptions options Options.Empty
+        let opts = options |> List.fold parseOptions Options.Empty
         a
             (classBaseList
                 (Helpers.generateClassName bulma.Button.Container [ opts.Level; opts.Size; opts.State ])

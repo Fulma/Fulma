@@ -8,6 +8,12 @@
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <!-- Global to the app -->
     <Compile Include="src/Global.fs" />
+    <Compile Include="src/Render.fs" />
+    <!-- Elements -->
+        <Compile Include="src/Elements/Button/Types.fs" />
+        <Compile Include="src/Elements/Button/State.fs" />
+        <Compile Include="src/Elements/Button/View.fs" />
+    <!-- End Elements -->
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />

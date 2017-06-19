@@ -3,8 +3,19 @@ module Home.State
 open Elmish
 open Types
 
-let init() : Model * Cmd<Msg> = "", []
+let init() : Model =
+    { intro =
+        """
+# Fable.Elmish.Bulma
 
-let update msg model : Model * Cmd<Msg> =
-    match msg with
-    | ChangeStr str -> str, []
+Bring Bulma power into Elmish.
+
+---
+    test
+---
+
+
+        """}
+
+let update msg model : Model =
+    model

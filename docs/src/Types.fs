@@ -3,7 +3,6 @@ module App.Types
 open Global
 
 type Msg =
-    | HomeMsg of Home.Types.Msg
     | SendNotification
     | Test
 

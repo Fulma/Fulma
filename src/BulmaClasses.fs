@@ -80,19 +80,30 @@ module BulmaClasses =
     and FieldLayout =
         { IsHorizontal : string }
 
+    and Grid =
+        { Columns : Columns
+          Column : Column }
+
     and Columns =
         { Container : string
-          Column : Column
           Alignment : ColumnsAlignment
           Spacing : ColumnsSpacing
           Display : ColumnsDisplay }
 
     and Column =
         { Container : string
-          Width : ColumnWidth
-          Offset : ColumnOffset }
+          Width : GenericColumnSize
+          Offset : GenericColumnSize
+          Desktop : ColunScreenTypeSize
+          Tablet : ColunScreenTypeSize
+          Mobile : ColunScreenTypeSize
+          WideScreen : ColunScreenTypeSize }
 
-    and ColumnWidth =
+    and ColunScreenTypeSize =
+        { Width : GenericColumnSize
+          Offset : GenericColumnSize }
+
+    and GenericColumnSize =
         { IsOneQuarter : string
           IsOneThird : string
           IsHalf : string
@@ -109,26 +120,8 @@ module BulmaClasses =
           Is9 : string
           Is10 : string
           Is11 : string
-          IsNarrow : string }
-
-    and ColumnOffset =
-        { IsOneQuarter : string
-          IsOneThird : string
-          IsHalf : string
-          IsTwoThirds : string
-          IsThreeQuarters : string
-          Is1 : string
-          Is2 : string
-          Is3 : string
-          Is4 : string
-          Is5 : string
-          Is6 : string
-          Is7 : string
-          Is8 : string
-          Is9 : string
-          Is10 : string
-          Is11 : string
-          IsNarrow : string }
+          IsNarrow : string
+          IsFull : string }
 
     and ColumnsAlignment =
         { IsCentered : string
@@ -256,7 +249,7 @@ module BulmaClasses =
         { Modifiers : Modifiers
           Box : Box
           Button : Button
-          Columns : Columns
+          Grid : Grid
           Content : Content
           Control : Control
           Delete : Delete
@@ -315,46 +308,6 @@ module BulmaClasses =
 
     let columns : Columns =
         { Container = "columns"
-          Column =
-            { Container = "column"
-              Width =
-                { IsOneQuarter = "is-one-quarter"
-                  IsOneThird = "is-one-third"
-                  IsHalf = "is-harl"
-                  IsTwoThirds = "is-two-thirds"
-                  IsThreeQuarters = "is-three-quarters"
-                  Is1 = "is-1"
-                  Is2 = "is-2"
-                  Is3 = "is-3"
-                  Is4 = "is-4"
-                  Is5 = "is-5"
-                  Is6 = "is-6"
-                  Is7 = "is-7"
-                  Is8 = "is-8"
-                  Is9 = "is-9"
-                  Is10 = "is-10"
-                  Is11 = "is-11"
-                  IsNarrow = "is-narrow" }
-              Offset =
-                { IsOneQuarter = "is-offset-one-quarter"
-                  IsOneThird = "is-offset-one-third"
-                  IsHalf = "is-offset-harl"
-                  IsTwoThirds = "is-offset-two-thirds"
-                  IsThreeQuarters = "is-offset-three-quarters"
-                  Is1 = "is-offset-1"
-                  Is2 = "is-offset-2"
-                  Is3 = "is-offset-3"
-                  Is4 = "is-offset-4"
-                  Is5 = "is-offset-5"
-                  Is6 = "is-offset-6"
-                  Is7 = "is-offset-7"
-                  Is8 = "is-offset-8"
-                  Is9 = "is-offset-9"
-                  Is10 = "is-offset-10"
-                  Is11 = "is-offset-11"
-                  IsNarrow = "is-offset-narrow" }
-
-              }
           Alignment =
             { IsCentered = "is-centered"
               IsVCentered = "is-vcentered" }
@@ -365,6 +318,63 @@ module BulmaClasses =
           Display =
             { OnMobile = "on-mobile"
               OnlyDesktop = "only-desktop" } }
+
+    let generateColumnSize suffix =
+        { IsOneQuarter = "is-one-quarter" + suffix
+          IsOneThird = "is-one-third" + suffix
+          IsHalf = "is-harl" + suffix
+          IsTwoThirds = "is-two-third + suffixs"
+          IsThreeQuarters = "is-three + suffix-quarters"
+          Is1 = "is-1" + suffix
+          Is2 = "is-2" + suffix
+          Is3 = "is-3" + suffix
+          Is4 = "is-4" + suffix
+          Is5 = "is-5" + suffix
+          Is6 = "is-6" + suffix
+          Is7 = "is-7" + suffix
+          Is8 = "is-8" + suffix
+          Is9 = "is-9" + suffix
+          Is10 = "is-10" + suffix
+          Is11 = "is-11" + suffix
+          IsNarrow = "is-narrow" + suffix
+          IsFull = "is-full" + suffix }
+
+    let generateColumnOffset suffix =
+        { IsOneQuarter = "is-offset-one-quarter" + suffix
+          IsOneThird = "is-offset-one-third" + suffix
+          IsHalf = "is-offset-harl" + suffix
+          IsTwoThirds = "is-offset-two-thirds" + suffix
+          IsThreeQuarters = "is-offset-three-qua + suffixrters"
+          Is1 = "is-offset-1" + suffix
+          Is2 = "is-offset-2" + suffix
+          Is3 = "is-offset-3" + suffix
+          Is4 = "is-offset-4" + suffix
+          Is5 = "is-offset-5" + suffix
+          Is6 = "is-offset-6" + suffix
+          Is7 = "is-offset-7" + suffix
+          Is8 = "is-offset-8" + suffix
+          Is9 = "is-offset-9" + suffix
+          Is10 = "is-offset-10" + suffix
+          Is11 = "is-offset-11" + suffix
+          IsNarrow = "is-offset-narrow" + suffix
+          IsFull = "is-full" + suffix }
+
+    let column : Column =
+        { Container = "column"
+          Width = generateColumnSize ""
+          Offset = generateColumnOffset ""
+          Desktop =
+            { Width = generateColumnSize "-desktop"
+              Offset = generateColumnOffset "-desktop" }
+          Mobile =
+            { Width = generateColumnSize "-mobile"
+              Offset = generateColumnOffset "-mobule" }
+          Tablet =
+            { Width = generateColumnSize "-tablet"
+              Offset = generateColumnOffset "-tablet" }
+          WideScreen =
+            { Width = generateColumnSize "-widescreen"
+              Offset = generateColumnOffset "-widescreen" } }
 
     let delete : Delete =
         { Container = "delete"
@@ -466,7 +476,8 @@ module BulmaClasses =
                 Color = levelAndColor }
           Box = box
           Button = button
-          Columns = columns
+          Grid = { Columns = columns
+                   Column = column }
           Content = content
           Control = control
           Delete = delete
