@@ -8,36 +8,22 @@ open Fake
 open Fake.NpmHelper
 open Fake.ReleaseNotesHelper
 open Fake.Git
+open Fake.YarnHelper
 
-
-// Filesets
-let projects  =
-      !! "src/**.fsproj"
 
 let dotnetcliVersion = "1.0.1"
 let mutable dotnetExePath = "dotnet"
 
-let runDotnet workingDir =
+
+let runDotnet dir =
     DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
-                                            WorkingDir = workingDir } )
+                                            WorkingDir = dir
+                                            TimeOut =  TimeSpan.FromHours 12. } )
+                                            // Extra timeout allow us to run watch mode
+                                            // Otherwise, the process is stopped every 30 minutes by default
 
 Target "InstallDotNetCore" (fun _ ->
    dotnetExePath <- DotNetCli.InstallDotNetSDK dotnetcliVersion
-)
-
-Target "Install" (fun _ ->
-    projects
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "restore"
-    )
-)
-
-Target "Build" (fun _ ->
-    projects
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "build")
 )
 
 Target "Clean" (fun _ ->
@@ -47,11 +33,32 @@ Target "Clean" (fun _ ->
   ] |> CleanDirs
 )
 
-Target "QuickBuild" (fun _ ->
-    projects
+Target "Install" (fun _ ->
+    !! "src/**.fsproj"
+    |> Seq.iter (fun s ->
+        let dir = IO.Path.GetDirectoryName s
+        runDotnet dir "restore")
+)
+
+Target "Build" (fun _ ->
+    !! "src/**.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
+)
+
+Target "QuickBuild" (fun _ ->
+    !! "src/**.fsproj"
+    |> Seq.iter (fun s ->
+        let dir = IO.Path.GetDirectoryName s
+        runDotnet dir "build")
+)
+
+Target "YarnInstall" (fun _ ->
+    Yarn (fun p ->
+    { p with
+        Command = Install Standard
+    })
 )
 
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
@@ -108,29 +115,6 @@ let gitName = "elmish"
 let gitOwner = "fable-elmish"
 let gitHome = sprintf "https://github.com/%s" gitOwner
 
-let fakePath = "packages" </> "build" </> "FAKE" </> "tools" </> "FAKE.exe"
-let fakeStartInfo script workingDirectory args fsiargs environmentVars =
-    (fun (info: System.Diagnostics.ProcessStartInfo) ->
-        info.FileName <- System.IO.Path.GetFullPath fakePath
-        info.Arguments <- sprintf "%s --fsiargs -d:FAKE %s \"%s\"" args fsiargs script
-        info.WorkingDirectory <- workingDirectory
-        let setVar k v =
-            info.EnvironmentVariables.[k] <- v
-        for (k, v) in environmentVars do
-            setVar k v
-        setVar "MSBuild" msBuildExe
-        setVar "GIT" Git.CommandHelper.gitPath
-        setVar "FSI" fsiPath)
-
-/// Run the given buildscript with FAKE.exe
-let executeFAKEWithOutput workingDirectory script fsiargs envArgs =
-    let exitCode =
-        ExecProcessWithLambdas
-            (fakeStartInfo script workingDirectory "" fsiargs envArgs)
-            TimeSpan.MaxValue false ignore ignore
-    System.Threading.Thread.Sleep 1000
-    exitCode
-
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
@@ -170,7 +154,7 @@ Target "Publish" DoNothing
 
 // Build order
 "Meta"
-    //==> "InstallDotNetCore"
+    // ==> "InstallDotNetCore"
     ==> "Clean"
     ==> "Install"
     ==> "Build"
@@ -180,7 +164,8 @@ Target "Publish" DoNothing
     <== [ "Build"
           "PublishNuget" ]
 "Build"
-    ==>"InstallDocs"
+    ==> "YarnInstall"
+    ==> "InstallDocs"
     ==> "WatchDocs"
 
 // start build
