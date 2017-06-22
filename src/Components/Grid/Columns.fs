@@ -58,6 +58,17 @@ module Columns =
 
     open Types
 
+    // Alignment
+    let isCentered = Alignment IsCentered
+    let isVCentered = Alignment IsVCentered
+    // Display
+    let onMobile = Display Mobile
+    let onDesktopOnly = Display DesktopOnly
+    // Spacing
+    let isMultiline = Spacing IsMultiline
+    let isGapless = Spacing IsGapless
+    let isGrid = Spacing IsGrid
+
     let columns (options: Option list) children =
         let parseOptions (result: Options) =
             function
@@ -76,4 +87,4 @@ module Columns =
                                                     [ opts.Alignment
                                                       opts.Display
                                                       opts.Spacing ] ) ]
-            [ children ]
+            children

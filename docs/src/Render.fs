@@ -4,6 +4,7 @@ open Fable.Core
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
+open Elmish.Bulma.Components
 open Elmish.Bulma.Elements
 
 [<Pojo>]
@@ -24,9 +25,19 @@ let docSection title docPreviews =
               [ htmlFromMarkdown title ]) :: docPreviews)
 
 let docPreview code children =
-    Box.box' [ ]
-             [ children ]
-
+    Card.card [ ]
+        [ Card.content [ ] [ children ]
+          Card.footer
+            [ ]
+            [ Card.Footer.item [ ]
+                [ Icon.icon [ ]
+                    [ i [ ClassName "fa fa-angle-up" ] [ ] ] ]
+              Card.Footer.item [ ] [ str "View code" ]
+              Card.Footer.item [ ]
+                [ Icon.icon [ ]
+                    [ i [ ClassName "fa fa-angle-up" ] [ ] ] ] ]
+          Box.box' [ ] [ htmlFromMarkdown code ]
+        ]
 
 let docPage children =
     div [ ]

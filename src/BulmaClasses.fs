@@ -38,6 +38,22 @@ module BulmaClasses =
           IsOutlined : string
           IsInverted : string }
 
+    and Card =
+        { Container : string
+          Header : CardHeader
+          Image : string
+          Content : string
+          Footer : CardFooter }
+
+    and CardHeader =
+        { Container : string
+          Title : string
+          Icon : string }
+
+    and CardFooter =
+        { Container : string
+          Item : string }
+
     and Content =
         { Container : string
           Size : StandardSize }
@@ -249,11 +265,12 @@ module BulmaClasses =
         { Modifiers : Modifiers
           Box : Box
           Button : Button
-          Grid : Grid
+          Card : Card
           Content : Content
           Control : Control
           Delete : Delete
           Field : Field
+          Grid : Grid
           Heading : Heading
           Label : Label
           Progress : Progress
@@ -295,6 +312,17 @@ module BulmaClasses =
                 IsOutlined = "is-outlined"
                 IsInverted = "is-inverted" } }
 
+    let card : Card =
+        { Container = "card"
+          Header =
+            { Container = "card-header"
+              Title = "card-header-title"
+              Icon ="card-header-icon" }
+          Image = "card-image"
+          Content = "card-content"
+          Footer =
+            { Container = "card-footer"
+              Item = "card-footer-item" } }
     let content : Content =
         { Container = "content"
           Size = standardSize }
@@ -322,7 +350,7 @@ module BulmaClasses =
     let generateColumnSize suffix =
         { IsOneQuarter = "is-one-quarter" + suffix
           IsOneThird = "is-one-third" + suffix
-          IsHalf = "is-harl" + suffix
+          IsHalf = "is-half" + suffix
           IsTwoThirds = "is-two-third + suffixs"
           IsThreeQuarters = "is-three + suffix-quarters"
           Is1 = "is-1" + suffix
@@ -342,7 +370,7 @@ module BulmaClasses =
     let generateColumnOffset suffix =
         { IsOneQuarter = "is-offset-one-quarter" + suffix
           IsOneThird = "is-offset-one-third" + suffix
-          IsHalf = "is-offset-harl" + suffix
+          IsHalf = "is-offset-half" + suffix
           IsTwoThirds = "is-offset-two-thirds" + suffix
           IsThreeQuarters = "is-offset-three-qua + suffixrters"
           Is1 = "is-offset-1" + suffix
@@ -476,12 +504,13 @@ module BulmaClasses =
                 Color = levelAndColor }
           Box = box
           Button = button
-          Grid = { Columns = columns
-                   Column = column }
+          Card = card
           Content = content
           Control = control
           Delete = delete
           Field = field
+          Grid = { Columns = columns
+                   Column = column }
           Icon = icon
           Image = image
           Input = input

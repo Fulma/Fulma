@@ -10,6 +10,7 @@
     <!-- Components -->
     <Compile Include="Components/Grid/Column.fs" />
     <Compile Include="Components/Grid/Columns.fs" />
+    <Compile Include="Components/Card.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />

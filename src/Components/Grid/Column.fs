@@ -275,6 +275,210 @@ module Column =
 
     open Types
 
+
+    module Width =
+
+        module Dekstop =
+            let isOneQuarter = Width (Desktop, IsOneQuarter)
+            let isOneThird = Width (Desktop, IsOneThird)
+            let isHalf = Width (Desktop, IsHalf)
+            let isTwoThirds = Width (Desktop, IsTwoThirds)
+            let isThreeQuarters = Width (Desktop, IsThreeQuarters)
+            let is1 = Width (Desktop, Is1)
+            let is2 = Width (Desktop, Is2)
+            let is3 = Width (Desktop, Is3)
+            let is4 = Width (Desktop, Is4)
+            let is5 = Width (Desktop, Is5)
+            let is6 = Width (Desktop, Is6)
+            let is7 = Width (Desktop, Is7)
+            let is8 = Width (Desktop, Is8)
+            let is9 = Width (Desktop, Is9)
+            let is10 = Width (Desktop, Is10)
+            let is11 = Width (Desktop, Is11)
+            let isNarrow = Width (Desktop, IsNarrow)
+            let isFull = Width (Desktop, IsFull)
+
+        module WideScreen =
+            let isOneQuarter = Width (WideScreen, IsOneQuarter)
+            let isOneThird = Width (WideScreen, IsOneThird)
+            let isHalf = Width (WideScreen, IsHalf)
+            let isTwoThirds = Width (WideScreen, IsTwoThirds)
+            let isThreeQuarters = Width (WideScreen, IsThreeQuarters)
+            let is1 = Width (WideScreen, Is1)
+            let is2 = Width (WideScreen, Is2)
+            let is3 = Width (WideScreen, Is3)
+            let is4 = Width (WideScreen, Is4)
+            let is5 = Width (WideScreen, Is5)
+            let is6 = Width (WideScreen, Is6)
+            let is7 = Width (WideScreen, Is7)
+            let is8 = Width (WideScreen, Is8)
+            let is9 = Width (WideScreen, Is9)
+            let is10 = Width (WideScreen, Is10)
+            let is11 = Width (WideScreen, Is11)
+            let isNarrow = Width (WideScreen, IsNarrow)
+            let isFull = Width (WideScreen, IsFull)
+
+        module Mobile =
+            let isOneQuarter = Width (Mobile, IsOneQuarter)
+            let isOneThird = Width (Mobile, IsOneThird)
+            let isHalf = Width (Mobile, IsHalf)
+            let isTwoThirds = Width (Mobile, IsTwoThirds)
+            let isThreeQuarters = Width (Mobile, IsThreeQuarters)
+            let is1 = Width (Mobile, Is1)
+            let is2 = Width (Mobile, Is2)
+            let is3 = Width (Mobile, Is3)
+            let is4 = Width (Mobile, Is4)
+            let is5 = Width (Mobile, Is5)
+            let is6 = Width (Mobile, Is6)
+            let is7 = Width (Mobile, Is7)
+            let is8 = Width (Mobile, Is8)
+            let is9 = Width (Mobile, Is9)
+            let is10 = Width (Mobile, Is10)
+            let is11 = Width (Mobile, Is11)
+            let isNarrow = Width (Mobile, IsNarrow)
+            let isFull = Width (Mobile, IsFull)
+
+        module Tablet =
+            let isOneQuarter = Width (Tablet, IsOneQuarter)
+            let isOneThird = Width (Tablet, IsOneThird)
+            let isHalf = Width (Tablet, IsHalf)
+            let isTwoThirds = Width (Tablet, IsTwoThirds)
+            let isThreeQuarters = Width (Tablet, IsThreeQuarters)
+            let is1 = Width (Tablet, Is1)
+            let is2 = Width (Tablet, Is2)
+            let is3 = Width (Tablet, Is3)
+            let is4 = Width (Tablet, Is4)
+            let is5 = Width (Tablet, Is5)
+            let is6 = Width (Tablet, Is6)
+            let is7 = Width (Tablet, Is7)
+            let is8 = Width (Tablet, Is8)
+            let is9 = Width (Tablet, Is9)
+            let is10 = Width (Tablet, Is10)
+            let is11 = Width (Tablet, Is11)
+            let isNarrow = Width (Tablet, IsNarrow)
+            let isFull = Width (Tablet, IsFull)
+
+        let isOneQuarter = Width (All, IsOneQuarter)
+        let isOneThird = Width (All, IsOneThird)
+        let isHalf = Width (All, IsHalf)
+        let isTwoThirds = Width (All, IsTwoThirds)
+        let isThreeQuarters = Width (All, IsThreeQuarters)
+        let is1 = Width (All, Is1)
+        let is2 = Width (All, Is2)
+        let is3 = Width (All, Is3)
+        let is4 = Width (All, Is4)
+        let is5 = Width (All, Is5)
+        let is6 = Width (All, Is6)
+        let is7 = Width (All, Is7)
+        let is8 = Width (All, Is8)
+        let is9 = Width (All, Is9)
+        let is10 = Width (All, Is10)
+        let is11 = Width (All, Is11)
+        let isNarrow = Width (All, IsNarrow)
+        let isFull = Width (All, IsFull)
+
+    module Offset =
+
+        module Dekstop =
+            let isOneQuarter = Offset (Desktop, IsOneQuarter)
+            let isOneThird = Offset (Desktop, IsOneThird)
+            let isHalf = Offset (Desktop, IsHalf)
+            let isTwoThirds = Offset (Desktop, IsTwoThirds)
+            let isThreeQuarters = Offset (Desktop, IsThreeQuarters)
+            let is1 = Offset (Desktop, Is1)
+            let is2 = Offset (Desktop, Is2)
+            let is3 = Offset (Desktop, Is3)
+            let is4 = Offset (Desktop, Is4)
+            let is5 = Offset (Desktop, Is5)
+            let is6 = Offset (Desktop, Is6)
+            let is7 = Offset (Desktop, Is7)
+            let is8 = Offset (Desktop, Is8)
+            let is9 = Offset (Desktop, Is9)
+            let is10 = Offset (Desktop, Is10)
+            let is11 = Offset (Desktop, Is11)
+            let isNarrow = Offset (Desktop, IsNarrow)
+            let isFull = Offset (Desktop, IsFull)
+
+        module WideScreen =
+            let isOneQuarter = Offset (WideScreen, IsOneQuarter)
+            let isOneThird = Offset (WideScreen, IsOneThird)
+            let isHalf = Offset (WideScreen, IsHalf)
+            let isTwoThirds = Offset (WideScreen, IsTwoThirds)
+            let isThreeQuarters = Offset (WideScreen, IsThreeQuarters)
+            let is1 = Offset (WideScreen, Is1)
+            let is2 = Offset (WideScreen, Is2)
+            let is3 = Offset (WideScreen, Is3)
+            let is4 = Offset (WideScreen, Is4)
+            let is5 = Offset (WideScreen, Is5)
+            let is6 = Offset (WideScreen, Is6)
+            let is7 = Offset (WideScreen, Is7)
+            let is8 = Offset (WideScreen, Is8)
+            let is9 = Offset (WideScreen, Is9)
+            let is10 = Offset (WideScreen, Is10)
+            let is11 = Offset (WideScreen, Is11)
+            let isNarrow = Offset (WideScreen, IsNarrow)
+            let isFull = Offset (WideScreen, IsFull)
+
+        module Mobile =
+            let isOneQuarter = Offset (Mobile, IsOneQuarter)
+            let isOneThird = Offset (Mobile, IsOneThird)
+            let isHalf = Offset (Mobile, IsHalf)
+            let isTwoThirds = Offset (Mobile, IsTwoThirds)
+            let isThreeQuarters = Offset (Mobile, IsThreeQuarters)
+            let is1 = Offset (Mobile, Is1)
+            let is2 = Offset (Mobile, Is2)
+            let is3 = Offset (Mobile, Is3)
+            let is4 = Offset (Mobile, Is4)
+            let is5 = Offset (Mobile, Is5)
+            let is6 = Offset (Mobile, Is6)
+            let is7 = Offset (Mobile, Is7)
+            let is8 = Offset (Mobile, Is8)
+            let is9 = Offset (Mobile, Is9)
+            let is10 = Offset (Mobile, Is10)
+            let is11 = Offset (Mobile, Is11)
+            let isNarrow = Offset (Mobile, IsNarrow)
+            let isFull = Offset (Mobile, IsFull)
+
+        module Tablet =
+            let isOneQuarter = Offset (Tablet, IsOneQuarter)
+            let isOneThird = Offset (Tablet, IsOneThird)
+            let isHalf = Offset (Tablet, IsHalf)
+            let isTwoThirds = Offset (Tablet, IsTwoThirds)
+            let isThreeQuarters = Offset (Tablet, IsThreeQuarters)
+            let is1 = Offset (Tablet, Is1)
+            let is2 = Offset (Tablet, Is2)
+            let is3 = Offset (Tablet, Is3)
+            let is4 = Offset (Tablet, Is4)
+            let is5 = Offset (Tablet, Is5)
+            let is6 = Offset (Tablet, Is6)
+            let is7 = Offset (Tablet, Is7)
+            let is8 = Offset (Tablet, Is8)
+            let is9 = Offset (Tablet, Is9)
+            let is10 = Offset (Tablet, Is10)
+            let is11 = Offset (Tablet, Is11)
+            let isNarrow = Offset (Tablet, IsNarrow)
+            let isFull = Offset (Tablet, IsFull)
+
+        let isOneQuarter = Offset (All, IsOneQuarter)
+        let isOneThird = Offset (All, IsOneThird)
+        let isHalf = Offset (All, IsHalf)
+        let isTwoThirds = Offset (All, IsTwoThirds)
+        let isThreeQuarters = Offset (All, IsThreeQuarters)
+        let is1 = Offset (All, Is1)
+        let is2 = Offset (All, Is2)
+        let is3 = Offset (All, Is3)
+        let is4 = Offset (All, Is4)
+        let is5 = Offset (All, Is5)
+        let is6 = Offset (All, Is6)
+        let is7 = Offset (All, Is7)
+        let is8 = Offset (All, Is8)
+        let is9 = Offset (All, Is9)
+        let is10 = Offset (All, Is10)
+        let is11 = Offset (All, Is11)
+        let isNarrow = Offset (All, IsNarrow)
+        let isFull = Offset (All, IsFull)
+
+
     let column (options : Option list) children =
         let parseOptions (result: Options) =
             function
@@ -303,7 +507,7 @@ module Column =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        div [ ClassName ( Helpers.generateClassName bulma.Grid.Columns.Container
+        div [ ClassName ( Helpers.generateClassName bulma.Grid.Column.Container
                                                     [ opts.Width
                                                       opts.Offset
                                                       opts.DesktopWidth
@@ -314,4 +518,4 @@ module Column =
                                                       opts.TabletpOffset
                                                       opts.WideScreenpWidth
                                                       opts.WideScreenpOffset ] ) ]
-            [ children ]
+            children
