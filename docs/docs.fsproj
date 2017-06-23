@@ -9,6 +9,10 @@
     <!-- Global to the app -->
     <Compile Include="src/Global.fs" />
     <Compile Include="src/Render.fs" />
+    <!-- Viewer -->
+    <Compile Include="src/Viewer/Types.fs" />
+    <Compile Include="src/Viewer/State.fs" />
+    <Compile Include="src/Viewer/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Button/Types.fs" />
         <Compile Include="src/Elements/Button/State.fs" />

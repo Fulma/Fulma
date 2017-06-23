@@ -5,11 +5,12 @@ open Global
 type Msg =
     | SendNotification
     | Test
+    | ButtonMsg of Elements.Button.Types.Msg
 
 type ElementsModel =
-    { button : Elements.Button.Types.Model }
+    { Button : Elements.Button.Types.Model }
 
 type Model =
-    { currentPage : Page
-      home : Home.Types.Model
-      elements : ElementsModel }
+    { CurrentPage : Page
+      Home : Home.Types.Model
+      Elements : ElementsModel }

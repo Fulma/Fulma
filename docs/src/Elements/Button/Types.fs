@@ -1,6 +1,8 @@
 module Elements.Button.Types
 
 type Model =
-    { intro : string
-      colorIntro : string
-      colorCode : string }
+    { Intro : string
+      ColorViewer : Viewer.Types.Model }
+
+type Msg =
+    | ColorViewer of Viewer.Types.Msg

@@ -9,7 +9,7 @@ open Elmish.Bulma.Elements
 open Elmish.Bulma.Components.Grids
 
 
-let colorSection model =
+let colorInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -27,12 +27,8 @@ let colorSection model =
                     Button.button [ Button.isSuccess ] [ str "Success" ]
                     Button.button [ Button.isWarning ] [ str "Warning" ]
                     Button.button [ Button.isDanger ] [ str "Danger" ] ] ] ]
-    |> Render.docPreview model.colorCode
-    |> Render.toList
-    |> Render.docSection model.colorIntro
 
-let root model =
-    Render.docPage [ Render.contentFromMarkdown model.intro
-                     colorSection model
-                     div [ ClassName "maxime"; ClassName "second" ] [ ]
+let root model dispatch =
+    Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Viewer.View.root colorInteractive model.ColorViewer (ColorViewer >> dispatch)
                      ]

@@ -7,4 +7,4 @@ open Fable.Helpers.React.Props
 open Types
 
 let root model =
-    Render.contentFromMarkdown model.intro
+    Render.contentFromMarkdown model.Intro

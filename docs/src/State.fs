@@ -27,18 +27,18 @@ let urlUpdate (result : Option<Page>) model =
     match result with
     | None ->
         Browser.console.error ("Error parsing url")
-        model, Navigation.modifyUrl (toHash model.currentPage)
+        model, Navigation.modifyUrl (toHash model.CurrentPage)
 
-    | Some page -> { model with currentPage = page }, []
+    | Some page -> { model with CurrentPage = page }, []
 
 let init result =
     let elements =
-        { button = Elements.Button.State.init() }
+        { Button = Elements.Button.State.init() }
 
     let (model, cmd) =
-        urlUpdate result { currentPage = Home
-                           home = Home.State.init()
-                           elements = elements }
+        urlUpdate result { CurrentPage = Home
+                           Home = Home.State.init()
+                           Elements = elements }
 
     model, Cmd.batch [ cmd ]
 
@@ -51,4 +51,9 @@ let update msg model =
         model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [] [] [ (*Level Success*) str "coucou" ])
 
     | Test ->
-        model, []
+        model, Cmd.none
+
+    | ButtonMsg msg ->
+        let (button, buttonMsg) = Elements.Button.State.update msg model.Elements.Button
+        { model with Elements =
+                        { model.Elements with Button = button } }, Cmd.map ButtonMsg buttonMsg

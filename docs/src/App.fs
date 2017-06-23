@@ -64,10 +64,10 @@ let header =
 let root model dispatch =
     let pageHtml =
         function
-        | Home -> Home.View.root model.home
+        | Home -> Home.View.root model.Home
         | Element element ->
             match element with
-            | Elements.Button -> Elements.Button.View.root model.elements.button
+            | Elements.Button -> Elements.Button.View.root model.Elements.Button (ButtonMsg >> dispatch)
             | _ -> div [] []
 
     div []
@@ -78,8 +78,8 @@ let root model dispatch =
               [ div [ ClassName "container" ]
                     [ div [ ClassName "columns" ]
                           [ div [ ClassName "column is-2" ]
-                                [ menu model.currentPage ]
-                            div [ ClassName "column" ] [ pageHtml model.currentPage ] ] ] ] ]
+                                [ menu model.CurrentPage ]
+                            div [ ClassName "column" ] [ pageHtml model.CurrentPage ] ] ] ] ]
 
 open Elmish.Bulma.Elements.Notification
 open Elmish.React

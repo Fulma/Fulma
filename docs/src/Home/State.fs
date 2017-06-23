@@ -4,7 +4,7 @@ open Elmish
 open Types
 
 let init() : Model =
-    { intro =
+    { Intro =
         """
 # Fable.Elmish.Bulma
 
