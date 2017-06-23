@@ -89,14 +89,17 @@ Target "InstallDocs" (fun _ ->
         runDotnet dir "restore")
 )
 
-Target "WatchDocs" (fun _ ->
+let watchDocs _ =
     let runDotnetNoTimeout workingDir =
         DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
                                                 WorkingDir = workingDir
                                                 TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
 
     runDotnetNoTimeout "docs" """fable shell-run "..\node_modules\.bin\rollup -c rollup-config.js -w" """
-)
+
+Target "WatchDocs" watchDocs
+
+Target "QuickWatchDocs" watchDocs
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
