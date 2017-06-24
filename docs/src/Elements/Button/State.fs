@@ -85,7 +85,7 @@ let init() =
         """
 # Buttons
 
-The **button** can have different colors, sizes and states.
+The **buttons** can have different colors, sizes and states.
         """
       ColorViewer = Viewer.State.init colorCode
       SizeViewer = Viewer.State.init sizeCode

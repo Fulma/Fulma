@@ -33,7 +33,8 @@ let urlUpdate (result : Option<Page>) model =
 
 let init result =
     let elements =
-        { Button = Elements.Button.State.init() }
+        { Button = Elements.Button.State.init()
+          Icon = Elements.Icon.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
@@ -57,3 +58,8 @@ let update msg model =
         let (button, buttonMsg) = Elements.Button.State.update msg model.Elements.Button
         { model with Elements =
                         { model.Elements with Button = button } }, Cmd.map ButtonMsg buttonMsg
+
+    | IconMsg msg ->
+        let (icon, iconMsg) = Elements.Icon.State.update msg model.Elements.Icon
+        { model with Elements =
+                        { model.Elements with Icon = icon } }, Cmd.map IconMsg iconMsg

@@ -68,6 +68,7 @@ let root model dispatch =
         | Element element ->
             match element with
             | Elements.Button -> Elements.Button.View.root model.Elements.Button (ButtonMsg >> dispatch)
+            | Elements.Icon -> Elements.Icon.View.root model.Elements.Icon (IconMsg >> dispatch)
             | _ -> div [] []
 
     div []

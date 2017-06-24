@@ -17,6 +17,9 @@
         <Compile Include="src/Elements/Button/Types.fs" />
         <Compile Include="src/Elements/Button/State.fs" />
         <Compile Include="src/Elements/Button/View.fs" />
+        <Compile Include="src/Elements/Icon/Types.fs" />
+        <Compile Include="src/Elements/Icon/State.fs" />
+        <Compile Include="src/Elements/Icon/View.fs" />
     <!-- End Elements -->
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
