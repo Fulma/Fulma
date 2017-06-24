@@ -33,13 +33,14 @@ let urlUpdate (result : Option<Page>) model =
 
 let init result =
     let elements =
-        { Button = Elements.Button.State.init()
+        { Button = Elements.Button.State.init ()
+          Delete = Elements.Delete.State.init ()
           Icon = Elements.Icon.State.init ()
           Image = Elements.Image.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
-                           Home = Home.State.init()
+                           Home = Home.State.init ()
                            Elements = elements }
 
     model, Cmd.batch [ cmd ]
@@ -69,3 +70,8 @@ let update msg model =
         let (image, imageMsg) = Elements.Image.State.update msg model.Elements.Image
         { model with Elements =
                         { model.Elements with Image = image } }, Cmd.map ImageMsg imageMsg
+
+    | DeleteMsg msg ->
+        let (delete, deleteMsg) = Elements.Delete.State.update msg model.Elements.Delete
+        { model with Elements =
+                        { model.Elements with Delete = delete } }, Cmd.map DeleteMsg deleteMsg
