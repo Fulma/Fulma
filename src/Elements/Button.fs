@@ -26,6 +26,7 @@ module Button =
             | IsLink
             | State of IState
             | Props of IHTMLProp list
+            | OnClick of (React.MouseEvent -> unit)
 
         let ofStyles style =
             match style with
@@ -49,7 +50,8 @@ module Button =
               IsInverted : bool
               IsLink : bool
               State : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              OnClick : (React.MouseEvent -> unit) option }
             static member Empty =
                 { Level = None
                   Size = None
@@ -57,7 +59,8 @@ module Button =
                   IsInverted = false
                   IsLink = false
                   State = None
-                  Props = [] }
+                  Props = []
+                  OnClick = None }
 
     open Types
 
@@ -86,6 +89,7 @@ module Button =
     let isDanger = Level IsDanger
     // Extra
     let props props = Props props
+    let onClick cb = OnClick cb
 
     let button (options : Option list) children =
         let parseOptions result opt =
@@ -97,12 +101,19 @@ module Button =
             | IsLink -> { result with IsLink = true }
             | State state -> { result with State = ofState state |> Some }
             | Props props -> { result with Props = props }
+            | OnClick cb -> { result with OnClick = cb |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
+
+        printfn "%A" opts
+
         a
-            (classBaseList
+            [ yield classBaseList
                 (Helpers.generateClassName bulma.Button.Container [ opts.Level; opts.Size; opts.State ])
                  [ bulma.Button.Styles.IsOutlined, opts.IsOutlined
                    bulma.Button.Styles.IsInverted, opts.IsInverted
-                   bulma.Button.Styles.IsLink, opts.IsLink ] :> IHTMLProp :: opts.Props)
+                   bulma.Button.Styles.IsLink, opts.IsLink ] :> IHTMLProp
+              if opts.OnClick.IsSome then
+                yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
+              yield! opts.Props ]
             children

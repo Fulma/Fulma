@@ -17,27 +17,10 @@ let contentFromMarkdown str =
     Content.content [ ]
                     [ htmlFromMarkdown str ]
 
-let toList = (fun x -> [ x ])
-
-let docSection title docPreviews =
-    div []
-        ((div [ ClassName "content" ]
-              [ htmlFromMarkdown title ]) :: docPreviews)
-
-let docPreview code children =
-    Card.card [ ]
-        [ Card.content [ ] [ children ]
-          Card.footer
-            [ ]
-            [ Card.Footer.item [ ]
-                [ Icon.icon [ ]
-                    [ i [ ClassName "fa fa-angle-up" ] [ ] ] ]
-              Card.Footer.item [ ] [ str "View code" ]
-              Card.Footer.item [ ]
-                [ Icon.icon [ ]
-                    [ i [ ClassName "fa fa-angle-up" ] [ ] ] ] ]
-          Box.box' [ ] [ htmlFromMarkdown code ]
-        ]
+let docSection title viewer =
+    div [ ]
+        [ yield contentFromMarkdown title
+          yield viewer ]
 
 let docPage children =
     div [ ]
