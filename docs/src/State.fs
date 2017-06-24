@@ -33,7 +33,8 @@ let urlUpdate (result : Option<Page>) model =
 
 let init result =
     let elements =
-        { Button = Elements.Button.State.init ()
+        { Box = Elements.Box.State.init ()
+          Button = Elements.Button.State.init ()
           Delete = Elements.Delete.State.init ()
           Icon = Elements.Icon.State.init ()
           Image = Elements.Image.State.init ()
@@ -56,6 +57,11 @@ let update msg model =
 
     | Test ->
         model, Cmd.none
+
+    | BoxMsg msg ->
+        let (box, boxMsg) = Elements.Box.State.update msg model.Elements.Box
+        { model with Elements =
+                        { model.Elements with Box = box } }, Cmd.map BoxMsg boxMsg
 
     | ButtonMsg msg ->
         let (button, buttonMsg) = Elements.Button.State.update msg model.Elements.Button

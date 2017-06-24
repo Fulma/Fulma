@@ -5,6 +5,7 @@ open Global
 type Msg =
     | SendNotification
     | Test
+    | BoxMsg of Elements.Box.Types.Msg
     | ButtonMsg of Elements.Button.Types.Msg
     | DeleteMsg of Elements.Delete.Types.Msg
     | IconMsg of Elements.Icon.Types.Msg
@@ -12,7 +13,8 @@ type Msg =
     | ProgressMsg of Elements.Progress.Types.Msg
 
 type ElementsModel =
-    { Button : Elements.Button.Types.Model
+    { Box : Elements.Box.Types.Model
+      Button : Elements.Button.Types.Model
       Delete : Elements.Delete.Types.Model
       Icon : Elements.Icon.Types.Model
       Image : Elements.Image.Types.Model
