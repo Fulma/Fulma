@@ -34,7 +34,8 @@ let urlUpdate (result : Option<Page>) model =
 let init result =
     let elements =
         { Button = Elements.Button.State.init()
-          Icon = Elements.Icon.State.init () }
+          Icon = Elements.Icon.State.init ()
+          Image = Elements.Image.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
@@ -63,3 +64,8 @@ let update msg model =
         let (icon, iconMsg) = Elements.Icon.State.update msg model.Elements.Icon
         { model with Elements =
                         { model.Elements with Icon = icon } }, Cmd.map IconMsg iconMsg
+
+    | ImageMsg msg ->
+        let (image, imageMsg) = Elements.Image.State.update msg model.Elements.Image
+        { model with Elements =
+                        { model.Elements with Image = image } }, Cmd.map ImageMsg imageMsg

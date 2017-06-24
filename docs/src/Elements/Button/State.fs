@@ -86,6 +86,8 @@ let init() =
 # Buttons
 
 The **buttons** can have different colors, sizes and states.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/button/)*
         """
       ColorViewer = Viewer.State.init colorCode
       SizeViewer = Viewer.State.init sizeCode

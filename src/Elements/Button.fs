@@ -105,8 +105,6 @@ module Button =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        printfn "%A" opts
-
         a
             [ yield classBaseList
                 (Helpers.generateClassName bulma.Button.Container [ opts.Level; opts.Size; opts.State ])

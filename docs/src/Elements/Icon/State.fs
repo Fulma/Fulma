@@ -22,7 +22,9 @@ let init() =
         """
 # Icons
 
-The **icons** can have different size and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.
+The **icons** can have different sizes and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/icon/)*
         """
       IconViewer = Viewer.State.init iconCode }
 
