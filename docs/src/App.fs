@@ -75,6 +75,7 @@ let root model dispatch =
             | Elements.Image -> Elements.Image.View.root model.Elements.Image (ImageMsg >> dispatch)
             | Elements.Progress -> Elements.Progress.View.root model.Elements.Progress (ProgressMsg >> dispatch)
             | Elements.Table -> Elements.Table.View.root model.Elements.Table (TableMsg >> dispatch)
+            | Elements.Tag -> Elements.Tag.View.root model.Elements.Tag (TagMsg >> dispatch)
             | _ -> div [] []
 
     div []

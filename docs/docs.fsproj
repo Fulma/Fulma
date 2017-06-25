@@ -38,6 +38,9 @@
         <Compile Include="src/Elements/Table/Types.fs" />
         <Compile Include="src/Elements/Table/State.fs" />
         <Compile Include="src/Elements/Table/View.fs" />
+        <Compile Include="src/Elements/Tag/Types.fs" />
+        <Compile Include="src/Elements/Tag/State.fs" />
+        <Compile Include="src/Elements/Tag/View.fs" />
     <!-- End Elements -->
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
