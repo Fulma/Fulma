@@ -41,7 +41,8 @@ let init result =
           Image = Elements.Image.State.init ()
           Progress = Elements.Progress.State.init ()
           Table = Elements.Table.State.init ()
-          Tag = Elements.Tag.State.init () }
+          Tag = Elements.Tag.State.init ()
+          Title = Elements.Title.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
@@ -105,3 +106,8 @@ let update msg model =
         let (tag, tagMsg) = Elements.Tag.State.update msg model.Elements.Tag
         { model with Elements =
                         { model.Elements with Tag = tag } }, Cmd.map TagMsg tagMsg
+
+    | TitleMsg msg ->
+        let (title, titleMsg) = Elements.Title.State.update msg model.Elements.Title
+        { model with Elements =
+                        { model.Elements with Title = title } }, Cmd.map TitleMsg titleMsg

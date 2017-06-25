@@ -58,7 +58,7 @@ let header =
     div [ ClassName "hero is-primary" ]
         [ div [ ClassName "hero-body" ]
               [ div [ ClassName "column has-text-centered" ]
-                    [ h2 [ ClassName "subtitle" ]
+                    [ h2 [ ClassName "subtitle cookieregular" ]
                          [ str "Binding for Elmish using Bulma CSS framework" ] ] ] ]
 
 let root model dispatch =
@@ -76,6 +76,7 @@ let root model dispatch =
             | Elements.Progress -> Elements.Progress.View.root model.Elements.Progress (ProgressMsg >> dispatch)
             | Elements.Table -> Elements.Table.View.root model.Elements.Table (TableMsg >> dispatch)
             | Elements.Tag -> Elements.Tag.View.root model.Elements.Tag (TagMsg >> dispatch)
+            | Elements.Title -> Elements.Title.View.root model.Elements.Title (TitleMsg >> dispatch)
             | _ -> div [] []
 
     div []

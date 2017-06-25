@@ -83,10 +83,10 @@ module Heading =
             children
 
     // Alias
-    let h1 = title h1
-    let h2 = title h2
-    let h3 = title h3
-    let h4 = title h4
-    let h5 = title h5
-    let h6 = title h6
+    let h1 (options : Option list) = title h1 (is1 :: options)
+    let h2 (options : Option list) = title h2 (is2 :: options)
+    let h3 (options : Option list) = title h3 (is3 :: options)
+    let h4 (options : Option list) = title h4 (is4 :: options)
+    let h5 (options : Option list) = title h5 (is5 :: options)
+    let h6 (options : Option list) = title h6 (is6 :: options)
     let p = title p
