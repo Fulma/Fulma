@@ -34,14 +34,6 @@ let contentCode =
 
 let sizeCode =
     """
-Supported size:
-
-* Content.isSmall
-* Content.isMedium
-* Content.isLarge
-
-When you do not set the size, it's consider *normal*.
-
 ```fsharp
     Content.content [ Content.isSmall ]
         [ h1 [ ] [str "Hello World"]

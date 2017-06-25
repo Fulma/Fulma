@@ -65,5 +65,15 @@ let root model dispatch =
                         "### Demo"
                         (Viewer.View.root contentInteractive model.ContentViewer (ContentViewerMsg >> dispatch))
                      Render.docSection
-                        "### Size"
+                        """
+### Size
+
+Supported size:
+
+* `Content.isSmall`
+* `Content.isMedium`
+* `Content.isLarge`
+
+When you do not set the size, it's consider *normal*.
+                        """
                         (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch)) ]
