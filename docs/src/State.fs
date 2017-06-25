@@ -39,7 +39,8 @@ let init result =
           Delete = Elements.Delete.State.init ()
           Icon = Elements.Icon.State.init ()
           Image = Elements.Image.State.init ()
-          Progress = Elements.Progress.State.init () }
+          Progress = Elements.Progress.State.init ()
+          Table = Elements.Table.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
@@ -93,3 +94,8 @@ let update msg model =
         let (progress, progressMsg) = Elements.Progress.State.update msg model.Elements.Progress
         { model with Elements =
                         { model.Elements with Progress = progress } }, Cmd.map ProgressMsg progressMsg
+
+    | TableMsg msg ->
+        let (table, tableMsg) = Elements.Table.State.update msg model.Elements.Table
+        { model with Elements =
+                        { model.Elements with Table = table } }, Cmd.map TableMsg tableMsg

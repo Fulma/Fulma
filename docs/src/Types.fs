@@ -12,6 +12,7 @@ type Msg =
     | IconMsg of Elements.Icon.Types.Msg
     | ImageMsg of Elements.Image.Types.Msg
     | ProgressMsg of Elements.Progress.Types.Msg
+    | TableMsg of Elements.Table.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -20,7 +21,8 @@ type ElementsModel =
       Delete : Elements.Delete.Types.Model
       Icon : Elements.Icon.Types.Model
       Image : Elements.Image.Types.Model
-      Progress : Elements.Progress.Types.Model }
+      Progress : Elements.Progress.Types.Model
+      Table : Elements.Table.Types.Model }
 
 type Model =
     { CurrentPage : Page
