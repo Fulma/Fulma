@@ -66,7 +66,7 @@ module Heading =
     // Spacing
     let isSpaced = IsSpaced
 
-    let title (element : IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options : Option list)
+    let internal title (element : IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options : Option list)
         (children) =
         let parseOption result opt =
             match opt with
