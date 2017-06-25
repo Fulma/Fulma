@@ -59,11 +59,9 @@ let modifierCode =
 let init() =
     { Intro =
         """
-# Content
+# Table
 
-A single class to handle WYSIWYG generated content, where only **HTML tags** are available. Content also support size attributes.
-
-*[Bulma documentation](http://bulma.io/documentation/elements/content/)*
+*[Bulma documentation](http://bulma.io/documentation/elements/table/)*
         """
       SimpleViewer = Viewer.State.init simpleCode
       ModifierViewer = Viewer.State.init modifierCode }
