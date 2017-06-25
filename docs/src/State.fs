@@ -35,6 +35,7 @@ let init result =
     let elements =
         { Box = Elements.Box.State.init ()
           Button = Elements.Button.State.init ()
+          Content = Elements.Content.State.init ()
           Delete = Elements.Delete.State.init ()
           Icon = Elements.Icon.State.init ()
           Image = Elements.Image.State.init ()
@@ -68,6 +69,16 @@ let update msg model =
         { model with Elements =
                         { model.Elements with Button = button } }, Cmd.map ButtonMsg buttonMsg
 
+    | ContentMsg msg ->
+        let (content, contentMsg) = Elements.Content.State.update msg model.Elements.Content
+        { model with Elements =
+                        { model.Elements with Content = content } }, Cmd.map ContentMsg contentMsg
+
+    | DeleteMsg msg ->
+        let (delete, deleteMsg) = Elements.Delete.State.update msg model.Elements.Delete
+        { model with Elements =
+                        { model.Elements with Delete = delete } }, Cmd.map DeleteMsg deleteMsg
+
     | IconMsg msg ->
         let (icon, iconMsg) = Elements.Icon.State.update msg model.Elements.Icon
         { model with Elements =
@@ -77,11 +88,6 @@ let update msg model =
         let (image, imageMsg) = Elements.Image.State.update msg model.Elements.Image
         { model with Elements =
                         { model.Elements with Image = image } }, Cmd.map ImageMsg imageMsg
-
-    | DeleteMsg msg ->
-        let (delete, deleteMsg) = Elements.Delete.State.update msg model.Elements.Delete
-        { model with Elements =
-                        { model.Elements with Delete = delete } }, Cmd.map DeleteMsg deleteMsg
 
     | ProgressMsg msg ->
         let (progress, progressMsg) = Elements.Progress.State.update msg model.Elements.Progress

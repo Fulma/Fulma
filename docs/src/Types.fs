@@ -7,6 +7,7 @@ type Msg =
     | Test
     | BoxMsg of Elements.Box.Types.Msg
     | ButtonMsg of Elements.Button.Types.Msg
+    | ContentMsg of Elements.Content.Types.Msg
     | DeleteMsg of Elements.Delete.Types.Msg
     | IconMsg of Elements.Icon.Types.Msg
     | ImageMsg of Elements.Image.Types.Msg
@@ -15,6 +16,7 @@ type Msg =
 type ElementsModel =
     { Box : Elements.Box.Types.Model
       Button : Elements.Button.Types.Model
+      Content : Elements.Content.Types.Model
       Delete : Elements.Delete.Types.Model
       Icon : Elements.Icon.Types.Model
       Image : Elements.Image.Types.Model

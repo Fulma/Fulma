@@ -69,6 +69,7 @@ let root model dispatch =
             match element with
             | Elements.Box -> Elements.Box.View.root model.Elements.Box (BoxMsg >> dispatch)
             | Elements.Button -> Elements.Button.View.root model.Elements.Button (ButtonMsg >> dispatch)
+            | Elements.Content -> Elements.Content.View.root model.Elements.Content (ContentMsg >> dispatch)
             | Elements.Delete -> Elements.Delete.View.root model.Elements.Delete (DeleteMsg >> dispatch)
             | Elements.Icon -> Elements.Icon.View.root model.Elements.Icon (IconMsg >> dispatch)
             | Elements.Image -> Elements.Image.View.root model.Elements.Image (ImageMsg >> dispatch)

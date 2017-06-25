@@ -37,6 +37,6 @@ let root interactiveView model dispatch =
               footerItemText
               footerItemIcon ]
           if model.IsExpanded then
-            yield Box.box' [ ] [ Render.htmlFromMarkdown model.Code ]
+            yield Box.box' [ ] [ Render.contentFromMarkdown model.Code ]
         ]
 

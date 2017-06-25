@@ -20,6 +20,9 @@
         <Compile Include="src/Elements/Button/Types.fs" />
         <Compile Include="src/Elements/Button/State.fs" />
         <Compile Include="src/Elements/Button/View.fs" />
+        <Compile Include="src/Elements/Content/Types.fs" />
+        <Compile Include="src/Elements/Content/State.fs" />
+        <Compile Include="src/Elements/Content/View.fs" />
         <Compile Include="src/Elements/Delete/Types.fs" />
         <Compile Include="src/Elements/Delete/State.fs" />
         <Compile Include="src/Elements/Delete/View.fs" />
