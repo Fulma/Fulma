@@ -43,6 +43,8 @@ module Level =
 
     open Types
 
+    let isMobile = Level.IsMobile
+
     let level (options : Level.Option list) children =
         let parseOptions (result: Level.Options ) opt =
             match opt with
@@ -66,6 +68,8 @@ module Level =
         div [ yield ClassName bulma.Level.Right :> IHTMLProp
               yield! props ]
             children
+
+    let hasTextCentered = Item.HasTextCentered
 
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
