@@ -5,6 +5,7 @@ open Elmish
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
 open Elmish.Bulma
+open Elmish.Bulma.Components
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
@@ -37,22 +38,21 @@ let menuItem label page currentPage =
            [ str label ] ]
 
 let menu currentPage =
-    aside [ ClassName "menu" ]
-          [ p [ ClassName "menu-label" ]
-              [ str "General" ]
-            ul [ ClassName "menu-list" ]
-               [ menuItem "Home" Home currentPage
-                 menuItem "Button" (Element Button) currentPage
-                 menuItem "Icon" (Element Elements.Icon) currentPage
-                 menuItem "Image" (Element Elements.Image) currentPage
-                 menuItem "Title" (Element Elements.Title) currentPage
-                 menuItem "Delete" (Element Elements.Delete) currentPage
-                 menuItem "Progress" (Element Elements.Progress)  currentPage
-                 menuItem "Box" (Element Elements.Box) currentPage
-                 menuItem "Content" (Element Elements.Content)  currentPage
-                 menuItem "Table" (Element Elements.Table) currentPage
-                 //menuItem "Form" (Element Elements.Form) currentPage
-                 menuItem "Tag" (Element Elements.Tag) currentPage ] ]
+    Menu.menu
+        [ Menu.label "General"
+          Menu.list
+            [ menuItem "Home" Home currentPage
+              menuItem "Button" (Element Button) currentPage
+              menuItem "Icon" (Element Elements.Icon) currentPage
+              menuItem "Image" (Element Elements.Image) currentPage
+              menuItem "Title" (Element Elements.Title) currentPage
+              menuItem "Delete" (Element Elements.Delete) currentPage
+              menuItem "Progress" (Element Elements.Progress)  currentPage
+              menuItem "Box" (Element Elements.Box) currentPage
+              menuItem "Content" (Element Elements.Content)  currentPage
+              menuItem "Table" (Element Elements.Table) currentPage
+              //menuItem "Form" (Element Elements.Form) currentPage
+              menuItem "Tag" (Element Elements.Tag) currentPage ] ]
 
 let header =
     div [ ClassName "hero is-primary" ]

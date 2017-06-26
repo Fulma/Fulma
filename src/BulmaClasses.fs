@@ -224,6 +224,11 @@ module BulmaClasses =
         { Container : string
           Size : StandardSize }
 
+    and Menu =
+        { Container : string
+          Label : string
+          List : string }
+
     and Modifiers =
         { Size : StandardSize
           Color : LevelAndColor }
@@ -320,6 +325,7 @@ module BulmaClasses =
           Grid : Grid
           Heading : Heading
           Label : Label
+          Menu : Menu
           Properties : Properties
           Progress : Progress
           Icon : Icon
@@ -526,6 +532,11 @@ module BulmaClasses =
         { Container = "label"
           Size = standardSize }
 
+    let menu : Menu =
+        { Container = "menu"
+          Label = "menu-label"
+          List = "menu-list" }
+
     let generateDisplayType prefix =
         { Always = "is-" + prefix + "-touch" ++ "is-" + prefix + "-desktop"
           Mobile = "is-" + prefix + "-mobile"
@@ -601,6 +612,7 @@ module BulmaClasses =
           Image = image
           Input = input
           Label = label
+          Menu = menu
           Properties = properties
           Progress = progress
           Heading = heading
