@@ -228,6 +228,53 @@ module BulmaClasses =
         { Size : StandardSize
           Color : LevelAndColor }
 
+    and Properties =
+        { Float : PropertiesFloat
+          Alignment : PropertiesAlignment
+          Sizing : PropertiesSizing
+          Display : PropertiesDisplay
+          Visibility : PropertiesVisibility
+          Interaction : PropertiesInteraction }
+
+    and PropertiesFloat =
+        { IsClearfix : string
+          IsPulledLeft : string
+          IsPulledRight : string }
+
+    and PropertiesAlignment =
+        { HasTextCentered : string
+          HasTextLeft : string
+          HasTextRight : string }
+
+    and PropertiesSizing =
+        { IsOverlay : string
+          IsFullwidth : string
+          IsMarginless : string
+          IsPaddingless : string }
+
+    and PropertiesDisplay =
+        { IsBlock : DisplayType
+          IsFlex : DisplayType
+          IsInline : DisplayType
+          IsInlineBox : DisplayType
+          IsInlineFlex : DisplayType }
+
+    and DisplayType =
+        { Always : string
+          Mobile : string
+          Tablet : string
+          TabletOnly : string
+          Touch : string
+          Desktop : string
+          DesktopOnly : string
+          Widescreen : string }
+
+    and PropertiesVisibility =
+        { IsHidden : DisplayType }
+
+    and PropertiesInteraction =
+        { IsUnselectable : string }
+
     and Progress =
         { Container : string
           Size : StandardSize
@@ -273,12 +320,15 @@ module BulmaClasses =
           Grid : Grid
           Heading : Heading
           Label : Label
+          Properties : Properties
           Progress : Progress
           Icon : Icon
           Image : Image
           Input : Input
           Table : Table
           Tag : Tag }
+
+    let (++) str1 str2 = str1 + " " + str2
 
     let standardSize =
         { IsSmall = "is-small"
@@ -476,6 +526,42 @@ module BulmaClasses =
         { Container = "label"
           Size = standardSize }
 
+    let generateDisplayType prefix =
+        { Always = "is-" + prefix + "-touch" ++ "is-" + prefix + "-desktop"
+          Mobile = "is-" + prefix + "-mobile"
+          Tablet = "is-" + prefix + "-tablet"
+          TabletOnly = "is-" + prefix + "-tablet-only"
+          Touch = "is-" + prefix + "-touch"
+          Desktop = "is-" + prefix + "-desktop"
+          DesktopOnly = "is-" + prefix + "-desktop-only"
+          Widescreen = "is-" + prefix + "-widescreen" }
+
+    let properties : Properties =
+        { Float =
+            { IsClearfix = "is-clearfix"
+              IsPulledLeft = "is-pulled-left"
+              IsPulledRight = "is-pulled-right" }
+          Alignment =
+            { HasTextCentered = "has-text-centered"
+              HasTextLeft = "has-text-left"
+              HasTextRight = "has-text-right" }
+          Sizing =
+            { IsOverlay = "is-overlay"
+              IsFullwidth = "is-fullwidth"
+              IsMarginless = "is-marginless"
+              IsPaddingless = "is-paddingless" }
+          Display =
+            { IsBlock = generateDisplayType "block"
+              IsFlex = generateDisplayType "flex"
+              IsInline = generateDisplayType "inline"
+              IsInlineBox = generateDisplayType "inline-block"
+              IsInlineFlex = generateDisplayType "inline-flex" }
+          Visibility =
+            { IsHidden = generateDisplayType "hidden" }
+          Interaction =
+            { IsUnselectable = "is-unselectable" }
+          }
+
     let progress : Progress =
         { Container = "progress"
           Size = standardSize
@@ -515,9 +601,8 @@ module BulmaClasses =
           Image = image
           Input = input
           Label = label
+          Properties = properties
           Progress = progress
           Heading = heading
           Table = table
           Tag = tag }
-
-    let (++) str1 str2 = str1 + " " + str2
