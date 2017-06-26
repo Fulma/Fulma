@@ -224,6 +224,21 @@ module BulmaClasses =
         { Container : string
           Size : StandardSize }
 
+    and Level =
+        { Container : string
+          Left : string
+          Right : string
+          Item : LevelItem
+          Mobile : LevelMobile }
+
+
+    and LevelItem =
+        { Container : string
+          HasTextCentered : string }
+
+    and LevelMobile =
+        { IsHorizontal : string }
+
     and Menu =
         { Container : string
           Label : string
@@ -325,6 +340,7 @@ module BulmaClasses =
           Grid : Grid
           Heading : Heading
           Label : Label
+          Level : Level
           Menu : Menu
           Properties : Properties
           Progress : Progress
@@ -532,6 +548,16 @@ module BulmaClasses =
         { Container = "label"
           Size = standardSize }
 
+    let level : Level =
+        { Container = "level"
+          Left = "level-left"
+          Right = "level-right"
+          Item =
+            { Container = "level-item"
+              HasTextCentered = "has-text-centered" }
+          Mobile =
+            { IsHorizontal = "is-mobile" } }
+
     let menu : Menu =
         { Container = "menu"
           Label = "menu-label"
@@ -612,6 +638,7 @@ module BulmaClasses =
           Image = image
           Input = input
           Label = label
+          Level = level
           Menu = menu
           Properties = properties
           Progress = progress

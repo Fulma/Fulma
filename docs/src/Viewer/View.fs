@@ -39,4 +39,3 @@ let root interactiveView model dispatch =
           if model.IsExpanded then
             yield Box.box' [ ] [ Render.contentFromMarkdown model.Code ]
         ]
-

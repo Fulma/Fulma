@@ -92,9 +92,9 @@ module Button =
     let onClick cb = OnClick cb
 
     let button (options : Option list) children =
-        let parseOptions result opt =
+        let parseOptions (result: Options) opt =
             match opt with
-            | Level level -> { result with Level = ofLevelAndColor level |> Some }
+            | Option.Level level -> { result with Level = ofLevelAndColor level |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }

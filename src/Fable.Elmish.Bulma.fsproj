@@ -11,6 +11,7 @@
     <Compile Include="Components/Grid/Column.fs" />
     <Compile Include="Components/Grid/Columns.fs" />
     <Compile Include="Components/Card.fs" />
+    <Compile Include="Components/Level.fs" />
     <Compile Include="Components/Menu.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
