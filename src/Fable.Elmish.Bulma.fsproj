@@ -13,6 +13,7 @@
     <Compile Include="Components/Card.fs" />
     <Compile Include="Components/Level.fs" />
     <Compile Include="Components/Menu.fs" />
+    <Compile Include="Components/Media.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />

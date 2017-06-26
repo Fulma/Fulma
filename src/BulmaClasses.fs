@@ -244,6 +244,16 @@ module BulmaClasses =
           Label : string
           List : string }
 
+    and Media =
+        { Container : string
+          Left : string
+          Right : string
+          Content : string
+          Size : MediaSize }
+
+    and MediaSize =
+        { isLarge : string }
+
     and Modifiers =
         { Size : StandardSize
           Color : LevelAndColor }
@@ -342,6 +352,7 @@ module BulmaClasses =
           Label : Label
           Level : Level
           Menu : Menu
+          Media : Media
           Properties : Properties
           Progress : Progress
           Icon : Icon
@@ -563,6 +574,14 @@ module BulmaClasses =
           Label = "menu-label"
           List = "menu-list" }
 
+    let media : Media =
+        { Container = "media"
+          Left = "media-left"
+          Right = "media-right"
+          Content = "media-content"
+          Size =
+              { isLarge = "is-large" } }
+
     let generateDisplayType prefix =
         { Always = "is-" + prefix + "-touch" ++ "is-" + prefix + "-desktop"
           Mobile = "is-" + prefix + "-mobile"
@@ -640,6 +659,7 @@ module BulmaClasses =
           Label = label
           Level = level
           Menu = menu
+          Media = media
           Properties = properties
           Progress = progress
           Heading = heading
