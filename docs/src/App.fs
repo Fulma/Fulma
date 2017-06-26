@@ -51,7 +51,7 @@ let menu currentPage =
                  menuItem "Box" (Element Elements.Box) currentPage
                  menuItem "Content" (Element Elements.Content)  currentPage
                  menuItem "Table" (Element Elements.Table) currentPage
-                 menuItem "Form" (Element Elements.Form) currentPage
+                 //menuItem "Form" (Element Elements.Form) currentPage
                  menuItem "Tag" (Element Elements.Tag) currentPage ] ]
 
 let header =
