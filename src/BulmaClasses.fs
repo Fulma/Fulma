@@ -22,10 +22,16 @@ module BulmaClasses =
 
     and Button =
         { Container : string
-          Size : StandardSize
+          Size : ButtonSize
           Color : LevelAndColor
           State : ButtonState
           Styles : ButtonStyles }
+
+    and ButtonSize =
+        { IsSmall : string
+          IsMedium : string
+          IsLarge : string
+          IsFullwidth : string }
 
     and ButtonState =
         { IsHovered : string
@@ -254,9 +260,43 @@ module BulmaClasses =
     and MediaSize =
         { isLarge : string }
 
+    and Message =
+        { Container : string
+          Header : string
+          Body : string
+          Color : LevelAndColor }
+
     and Modifiers =
         { Size : StandardSize
           Color : LevelAndColor }
+
+    and Panel =
+        { Container : string
+          Heading : string
+          Tabs : PanelTabs
+          Block : PanelBlock }
+
+    and PanelTabs =
+        { Container : string
+          Tab : PanelTabsTab }
+
+    and PanelTabsTab =
+        { State : PanelTabsTabState }
+
+    and PanelTabsTabState =
+        { IsActive : string }
+
+    and PanelTabsState =
+        { IsActive : string }
+
+    and PanelBlock =
+        { Container : string
+          Icon : string
+          List : string
+          State : PanelBlockState }
+
+    and PanelBlockState =
+        { IsActive : string }
 
     and Properties =
         { Float : PropertiesFloat
@@ -353,6 +393,8 @@ module BulmaClasses =
           Level : Level
           Menu : Menu
           Media : Media
+          Message : Message
+          Panel : Panel
           Properties : Properties
           Progress : Progress
           Icon : Icon
@@ -383,7 +425,11 @@ module BulmaClasses =
 
     let button : Button =
         { Container = "button"
-          Size = standardSize
+          Size =
+            { IsSmall = "is-small"
+              IsMedium = "is-medium"
+              IsLarge = "is-large "
+              IsFullwidth = "is-fullwidth" }
           Color = levelAndColor
           State =
               { IsHovered = "is-hovered"
@@ -582,6 +628,27 @@ module BulmaClasses =
           Size =
               { isLarge = "is-large" } }
 
+    let message : Message =
+        { Container = "message"
+          Header = "message-header"
+          Body = "message-body"
+          Color = levelAndColor }
+
+    let panel : Panel =
+        { Container = "panel"
+          Heading = "panel-heading"
+          Tabs =
+            { Container = "panel-tabs"
+              Tab =
+                { State =
+                    { IsActive = "is-active" } } }
+          Block =
+            { Container = "panel-block"
+              Icon = "panel-icon"
+              List = "panel-list"
+              State =
+                { IsActive = "is-active" } } }
+
     let generateDisplayType prefix =
         { Always = "is-" + prefix + "-touch" ++ "is-" + prefix + "-desktop"
           Mobile = "is-" + prefix + "-mobile"
@@ -660,6 +727,8 @@ module BulmaClasses =
           Level = level
           Menu = menu
           Media = media
+          Message = message
+          Panel = panel
           Properties = properties
           Progress = progress
           Heading = heading

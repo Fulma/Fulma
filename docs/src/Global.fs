@@ -15,9 +15,13 @@ type Elements =
     | Table
     | Form
 
+type Components =
+    | Panel
+
 type Page =
     | Home
     | Element of Elements
+    | Component of Components
 
 let toHash page =
     match page with
@@ -35,3 +39,6 @@ let toHash page =
         | Progress -> "#elements/progress"
         | Table -> "#elements/table"
         | Form -> "#elements/form"
+    | Component ``component`` ->
+        match ``component`` with
+        | Panel -> "#components/panel"

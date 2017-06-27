@@ -13,6 +13,10 @@
     <Compile Include="src/Viewer/Types.fs" />
     <Compile Include="src/Viewer/State.fs" />
     <Compile Include="src/Viewer/View.fs" />
+    <!-- Components -->
+        <Compile Include="src/Components/Panel/Types.fs" />
+        <Compile Include="src/Components/Panel/State.fs" />
+        <Compile Include="src/Components/Panel/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

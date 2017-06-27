@@ -39,9 +39,9 @@ let menuItem label page currentPage =
 
 let menu currentPage =
     Menu.menu
-        [ Menu.label "General"
+        [ Menu.label "Elements"
           Menu.list
-            [ menuItem "Home" Home currentPage
+            [ //menuItem "Home" Home currentPage
               menuItem "Button" (Element Button) currentPage
               menuItem "Icon" (Element Elements.Icon) currentPage
               menuItem "Image" (Element Elements.Image) currentPage
@@ -52,7 +52,10 @@ let menu currentPage =
               menuItem "Content" (Element Elements.Content)  currentPage
               menuItem "Table" (Element Elements.Table) currentPage
               //menuItem "Form" (Element Elements.Form) currentPage
-              menuItem "Tag" (Element Elements.Tag) currentPage ] ]
+              menuItem "Tag" (Element Elements.Tag) currentPage ]
+          Menu.label "Components"
+          Menu.list
+            [ menuItem "Panel" (Component Panel) currentPage ] ]
 
 let header =
     div [ ClassName "hero is-primary" ]
@@ -78,6 +81,9 @@ let root model dispatch =
             | Elements.Tag -> Elements.Tag.View.root model.Elements.Tag (TagMsg >> dispatch)
             | Elements.Title -> Elements.Title.View.root model.Elements.Title (TitleMsg >> dispatch)
             | _ -> div [] []
+        | Component ``component`` ->
+            match ``component`` with
+            | Panel -> Components.Panel.View.root model.Components.Panel (PanelMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

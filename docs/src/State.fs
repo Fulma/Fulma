@@ -21,6 +21,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Element Progress) (s "elements" </> s "progress")
             map (Element Table) (s "elements" </> s "table")
             map (Element Form) (s "elements" </> s "form")
+            map (Component Panel) (s "components" </> s "panel")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -44,10 +45,14 @@ let init result =
           Tag = Elements.Tag.State.init ()
           Title = Elements.Title.State.init () }
 
+    let ``components`` =
+        { Panel = Components.Panel.State.init () }
+
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
                            Home = Home.State.init ()
-                           Elements = elements }
+                           Elements = elements
+                           Components = ``components`` }
 
     model, Cmd.batch [ cmd ]
 
@@ -111,3 +116,8 @@ let update msg model =
         let (title, titleMsg) = Elements.Title.State.update msg model.Elements.Title
         { model with Elements =
                         { model.Elements with Title = title } }, Cmd.map TitleMsg titleMsg
+
+    | PanelMsg msg ->
+        let (panel, panelMsg) = Components.Panel.State.update msg model.Components.Panel
+        { model with Components =
+                        { model.Components with Panel = panel } }, Cmd.map PanelMsg panelMsg

@@ -15,6 +15,7 @@ type Msg =
     | TableMsg of Elements.Table.Types.Msg
     | TagMsg of Elements.Tag.Types.Msg
     | TitleMsg of Elements.Title.Types.Msg
+    | PanelMsg of Components.Panel.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -28,7 +29,11 @@ type ElementsModel =
       Tag : Elements.Tag.Types.Model
       Title : Elements.Title.Types.Model }
 
+type ComponentsModel =
+    { Panel : Components.Panel.Types.Model }
+
 type Model =
     { CurrentPage : Page
       Home : Home.Types.Model
-      Elements : ElementsModel }
+      Elements : ElementsModel
+      Components : ComponentsModel }

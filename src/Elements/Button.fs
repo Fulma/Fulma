@@ -11,6 +11,13 @@ open Fable.Import
 
 module Button =
     module Types =
+        type ISize =
+            | IsSmall
+            | IsMedium
+            | IsLarge
+            | IsFullWidth
+            | Nothing
+
         type IState =
             | IsHovered
             | IsFocused
@@ -27,6 +34,14 @@ module Button =
             | State of IState
             | Props of IHTMLProp list
             | OnClick of (React.MouseEvent -> unit)
+
+        let ofSize size =
+            match size with
+            | IsSmall -> bulma.Button.Size.IsSmall
+            | IsMedium -> bulma.Button.Size.IsMedium
+            | IsLarge -> bulma.Button.Size.IsLarge
+            | IsFullWidth -> bulma.Button.Size.IsFullwidth
+            | ISize.Nothing -> ""
 
         let ofStyles style =
             match style with
@@ -68,6 +83,7 @@ module Button =
     let isSmall = Size IsSmall
     let isMedium = Size IsMedium
     let isLarge = Size IsLarge
+    let isFullWidth = Size IsFullWidth
     // States
     let isHovered = State IsHovered
     let isFocused = State IsFocused
