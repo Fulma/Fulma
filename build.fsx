@@ -101,6 +101,10 @@ Target "WatchDocs" watchDocs
 
 Target "QuickWatchDocs" watchDocs
 
+Target "BuildDocs" (fun _ ->
+    runDotnet "docs" """fable shell-run "..\node_modules\.bin\rollup -c rollup-config.js" """
+)
+
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 
@@ -170,6 +174,11 @@ Target "Publish" DoNothing
     ==> "YarnInstall"
     ==> "InstallDocs"
     ==> "WatchDocs"
+
+"Build"
+    ==> "YarnInstall"
+    ==> "InstallDocs"
+    ==> "BuildDocs"
 
 // start build
 RunTargetOrDefault "Build"
