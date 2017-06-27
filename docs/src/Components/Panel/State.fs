@@ -47,10 +47,10 @@ A composable **panel**, for compact controls
 
 *[Bulma documentation](http://bulma.io/documentation/components/panel/)*
         """
-      BoxViewer = Viewer.State.init iconCode }
+      PanelViewer = Viewer.State.init iconCode }
 
 let update msg model =
     match msg with
-    | BoxViewerMsg msg ->
-        let (viewer, viewerMsg) = Viewer.State.update msg model.BoxViewer
-        { model with BoxViewer = viewer }, Cmd.map BoxViewerMsg viewerMsg
+    | PanelViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.PanelViewer
+        { model with PanelViewer = viewer }, Cmd.map PanelViewerMsg viewerMsg

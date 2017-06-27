@@ -50,4 +50,4 @@ let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]
+                        (Viewer.View.root iconInteractive model.PanelViewer (PanelViewerMsg >> dispatch)) ]

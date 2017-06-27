@@ -55,7 +55,8 @@ let menu currentPage =
               menuItem "Tag" (Element Elements.Tag) currentPage ]
           Menu.label "Components"
           Menu.list
-            [ menuItem "Panel" (Component Panel) currentPage ] ]
+            [ menuItem "Panel" (Component Panel) currentPage
+              menuItem "Level" (Component Level) currentPage ] ]
 
 let header =
     div [ ClassName "hero is-primary" ]
@@ -84,6 +85,7 @@ let root model dispatch =
         | Component ``component`` ->
             match ``component`` with
             | Panel -> Components.Panel.View.root model.Components.Panel (PanelMsg >> dispatch)
+            | Level -> Components.Level.View.root model.Components.Level (LevelMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

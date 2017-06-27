@@ -16,6 +16,7 @@ type Msg =
     | TagMsg of Elements.Tag.Types.Msg
     | TitleMsg of Elements.Title.Types.Msg
     | PanelMsg of Components.Panel.Types.Msg
+    | LevelMsg of Components.Level.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -30,7 +31,8 @@ type ElementsModel =
       Title : Elements.Title.Types.Model }
 
 type ComponentsModel =
-    { Panel : Components.Panel.Types.Model }
+    { Panel : Components.Panel.Types.Model
+      Level : Components.Level.Types.Model }
 
 type Model =
     { CurrentPage : Page

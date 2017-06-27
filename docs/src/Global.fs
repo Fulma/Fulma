@@ -17,6 +17,7 @@ type Elements =
 
 type Components =
     | Panel
+    | Level
 
 type Page =
     | Home
@@ -42,3 +43,4 @@ let toHash page =
     | Component ``component`` ->
         match ``component`` with
         | Panel -> "#components/panel"
+        | Level -> "#components/level"

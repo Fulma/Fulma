@@ -2,7 +2,7 @@ module Components.Panel.Types
 
 type Model =
     { Intro : string
-      BoxViewer : Viewer.Types.Model }
+      PanelViewer : Viewer.Types.Model }
 
 type Msg =
-    | BoxViewerMsg of Viewer.Types.Msg
+    | PanelViewerMsg of Viewer.Types.Msg
