@@ -2,32 +2,21 @@ module Elements.Box.View
 
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish
-open Elmish.Bulma.Elements.Box
-open Global
+open Elmish.Bulma.Elements
+open Elmish.Bulma.Components.Grids
 
-let section model =
-  div
-    [ ]
-    [ div
-        [ ClassName "block" ]
-        [ box' [
-            str
-                "Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                , sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
-                "
-            ]
-        ] ]
-  |> docBlock model.code
-  |> toList
-  |> sectionBase model.text
 
-let root model =
-  div
-    [ ]
-    [ section model ]
+let iconInteractive =
+    div [ ClassName "block" ]
+        [ Box.box' [ ]
+            [ str "Lorem ipsum dolor sit amet, consectetur adipisicing elit
+                   , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."] ]
+
+let root model dispatch =
+    Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Render.docSection
+                        ""
+                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]

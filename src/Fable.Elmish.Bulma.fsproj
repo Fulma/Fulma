@@ -7,20 +7,31 @@
   <ItemGroup>
     <Compile Include="BulmaClasses.fs" />
     <Compile Include="Common.fs" />
+    <!-- Components -->
+    <Compile Include="Components/Grid/Column.fs" />
+    <Compile Include="Components/Grid/Columns.fs" />
+    <Compile Include="Components/Card.fs" />
+    <Compile Include="Components/Level.fs" />
+    <Compile Include="Components/Menu.fs" />
+    <Compile Include="Components/Media.fs" />
+    <Compile Include="Components/Message.fs" />
+    <Compile Include="Components/Panel.fs" />
     <!-- Elements -->
-    <!-- Elements/Internam -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />
     <Compile Include="Elements/Icon.fs" />
+    <Compile Include="Elements/Image.fs" />
     <Compile Include="Elements/Heading.fs" />
+    <Compile Include="Elements/Progress.fs" />
     <Compile Include="Elements/Delete.fs" />
+    <Compile Include="Elements/Table.fs" />
     <Compile Include="Elements/Box.fs" />
     <Compile Include="Elements/Content.fs" />
     <Compile Include="Elements/Tag.fs" />
+    <Compile Include="Elements/Form.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
-    <DotNetCliToolReference Include="dotnet-fable" Version="1.0.4" />
   </ItemGroup>
   <!-- Add source files to "fable" folder in Nuget package -->
   <ItemGroup>

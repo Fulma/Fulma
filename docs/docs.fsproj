@@ -8,39 +8,54 @@
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <!-- Global to the app -->
     <Compile Include="src/Global.fs" />
+    <Compile Include="src/Render.fs" />
+    <!-- Viewer -->
+    <Compile Include="src/Viewer/Types.fs" />
+    <Compile Include="src/Viewer/State.fs" />
+    <Compile Include="src/Viewer/View.fs" />
+    <!-- Components -->
+        <Compile Include="src/Components/Panel/Types.fs" />
+        <Compile Include="src/Components/Panel/State.fs" />
+        <Compile Include="src/Components/Panel/View.fs" />
+        <Compile Include="src/Components/Level/Types.fs" />
+        <Compile Include="src/Components/Level/State.fs" />
+        <Compile Include="src/Components/Level/View.fs" />
+    <!-- Elements -->
+        <Compile Include="src/Elements/Box/Types.fs" />
+        <Compile Include="src/Elements/Box/State.fs" />
+        <Compile Include="src/Elements/Box/View.fs" />
+        <Compile Include="src/Elements/Button/Types.fs" />
+        <Compile Include="src/Elements/Button/State.fs" />
+        <Compile Include="src/Elements/Button/View.fs" />
+        <Compile Include="src/Elements/Content/Types.fs" />
+        <Compile Include="src/Elements/Content/State.fs" />
+        <Compile Include="src/Elements/Content/View.fs" />
+        <Compile Include="src/Elements/Delete/Types.fs" />
+        <Compile Include="src/Elements/Delete/State.fs" />
+        <Compile Include="src/Elements/Delete/View.fs" />
+        <Compile Include="src/Elements/Icon/Types.fs" />
+        <Compile Include="src/Elements/Icon/State.fs" />
+        <Compile Include="src/Elements/Icon/View.fs" />
+        <Compile Include="src/Elements/Image/Types.fs" />
+        <Compile Include="src/Elements/Image/State.fs" />
+        <Compile Include="src/Elements/Image/View.fs" />
+        <Compile Include="src/Elements/Progress/Types.fs" />
+        <Compile Include="src/Elements/Progress/State.fs" />
+        <Compile Include="src/Elements/Progress/View.fs" />
+        <Compile Include="src/Elements/Table/Types.fs" />
+        <Compile Include="src/Elements/Table/State.fs" />
+        <Compile Include="src/Elements/Table/View.fs" />
+        <Compile Include="src/Elements/Tag/Types.fs" />
+        <Compile Include="src/Elements/Tag/State.fs" />
+        <Compile Include="src/Elements/Tag/View.fs" />
+        <Compile Include="src/Elements/Title/Types.fs" />
+        <Compile Include="src/Elements/Title/State.fs" />
+        <Compile Include="src/Elements/Title/View.fs" />
+    <!-- End Elements -->
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />
     <Compile Include="src/Home/View.fs" />
-    <!-- Elements -->
-      <!-- Elements/Button -->
-      <Compile Include="src/Elements/Button/Types.fs" />
-      <Compile Include="src/Elements/Button/State.fs" />
-      <Compile Include="src/Elements/Button/View.fs" />
-      <!-- Elements/Icon -->
-      <Compile Include="src/Elements/Icon/Types.fs" />
-      <Compile Include="src/Elements/Icon/State.fs" />
-      <Compile Include="src/Elements/Icon/View.fs" />
-      <!-- Elements/Title -->
-      <Compile Include="src/Elements/Title/Types.fs" />
-      <Compile Include="src/Elements/Title/State.fs" />
-      <Compile Include="src/Elements/Title/View.fs" />
-      <!-- Elements/Delete -->
-      <Compile Include="src/Elements/Delete/Types.fs" />
-      <Compile Include="src/Elements/Delete/State.fs" />
-      <Compile Include="src/Elements/Delete/View.fs" />
-      <!-- Elements/Box -->
-      <Compile Include="src/Elements/Box/Types.fs" />
-      <Compile Include="src/Elements/Box/State.fs" />
-      <Compile Include="src/Elements/Box/View.fs" />
-      <!-- Elements/Content -->
-      <Compile Include="src/Elements/Content/Types.fs" />
-      <Compile Include="src/Elements/Content/State.fs" />
-      <Compile Include="src/Elements/Content/View.fs" />
-      <!-- Elements/Tag -->
-      <Compile Include="src/Elements/Tag/Types.fs" />
-      <Compile Include="src/Elements/Tag/State.fs" />
-      <Compile Include="src/Elements/Tag/View.fs" />
     <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
     <!-- App -->
@@ -53,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
-    <DotNetCliToolReference Include="dotnet-fable" Version="1.0.7" />
+    <DotNetCliToolReference Include="dotnet-fable" Version="1.1.3" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

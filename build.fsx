@@ -8,93 +8,22 @@ open Fake
 open Fake.NpmHelper
 open Fake.ReleaseNotesHelper
 open Fake.Git
+open Fake.YarnHelper
 
-
-// Filesets
-let projects  =
-      !! "src/**.fsproj"
 
 let dotnetcliVersion = "1.0.1"
-let mutable dotnetExePath = "./dotnetsdk/dotnet"
+let mutable dotnetExePath = "dotnet"
 
-let runDotnet workingDir args =
-    printfn "CWD: %s" workingDir
-    // printfn "dotnet %s" args
-    let result =
-        ExecProcess (fun info ->
-            info.FileName <- dotnetExePath
-            info.WorkingDirectory <- workingDir
-            info.Arguments <- args) TimeSpan.MaxValue
-    if result <> 0 then failwithf "Command failed: dotnet %s" args
 
+let runDotnet dir =
+    DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
+                                            WorkingDir = dir
+                                            TimeOut =  TimeSpan.FromHours 12. } )
+                                            // Extra timeout allow us to run watch mode
+                                            // Otherwise, the process is stopped every 30 minutes by default
 
 Target "InstallDotNetCore" (fun _ ->
-    let dotnetSDKPath = FullName "./dotnetsdk"
-    let correctVersionInstalled =
-        try
-            let processResult =
-                ExecProcessAndReturnMessages (fun info ->
-                info.FileName <- dotnetExePath
-                info.WorkingDirectory <- Environment.CurrentDirectory
-                info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
-
-            processResult.Messages |> separated "" = dotnetcliVersion
-        with
-        | _ -> false
-
-    if correctVersionInstalled then
-        tracefn "dotnetcli %s already installed" dotnetcliVersion
-    else
-        CleanDir dotnetSDKPath
-        let archiveFileName =
-            if isWindows then
-                sprintf "dotnet-dev-win-x64.%s.zip" dotnetcliVersion
-            elif isLinux then
-                sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" dotnetcliVersion
-            else
-                sprintf "dotnet-dev-osx-x64.%s.tar.gz" dotnetcliVersion
-        let downloadPath =
-                sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" dotnetcliVersion archiveFileName
-        let localPath = Path.Combine(dotnetSDKPath, archiveFileName)
-
-        tracefn "Installing '%s' to '%s'" downloadPath localPath
-
-        use webclient = new Net.WebClient()
-        webclient.DownloadFile(downloadPath, localPath)
-
-        if not isWindows then
-            let assertExitCodeZero x =
-                if x = 0 then () else
-                failwithf "Command failed with exit code %i" x
-
-            Shell.Exec("tar", sprintf """-xvf "%s" -C "%s" """ localPath dotnetSDKPath)
-            |> assertExitCodeZero
-        else
-            Compression.ZipFile.ExtractToDirectory(localPath, dotnetSDKPath)
-
-        tracefn "dotnet cli path - %s" dotnetSDKPath
-        System.IO.Directory.EnumerateFiles dotnetSDKPath
-        |> Seq.iter (fun path -> tracefn " - %s" path)
-        System.IO.Directory.EnumerateDirectories dotnetSDKPath
-        |> Seq.iter (fun path -> tracefn " - %s%c" path System.IO.Path.DirectorySeparatorChar)
-
-        dotnetExePath <- dotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
-)
-
-
-Target "Install" (fun _ ->
-    projects
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "restore"
-    )
-)
-
-Target "Build" (fun _ ->
-    projects
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "build")
+   dotnetExePath <- DotNetCli.InstallDotNetSDK dotnetcliVersion
 )
 
 Target "Clean" (fun _ ->
@@ -104,11 +33,32 @@ Target "Clean" (fun _ ->
   ] |> CleanDirs
 )
 
-Target "QuickBuild" (fun _ ->
-    projects
+Target "Install" (fun _ ->
+    !! "src/**.fsproj"
+    |> Seq.iter (fun s ->
+        let dir = IO.Path.GetDirectoryName s
+        runDotnet dir "restore")
+)
+
+Target "Build" (fun _ ->
+    !! "src/**.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
+)
+
+Target "QuickBuild" (fun _ ->
+    !! "src/**.fsproj"
+    |> Seq.iter (fun s ->
+        let dir = IO.Path.GetDirectoryName s
+        runDotnet dir "build")
+)
+
+Target "YarnInstall" (fun _ ->
+    Yarn (fun p ->
+    { p with
+        Command = Install Standard
+    })
 )
 
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
@@ -130,6 +80,32 @@ Target "Meta" (fun _ ->
 )
 
 // --------------------------------------------------------------------------------------
+// Docs targets
+
+Target "InstallDocs" (fun _ ->
+    !! "docs/**.fsproj"
+    |> Seq.iter(fun s ->
+        let dir = IO.Path.GetDirectoryName s
+        runDotnet dir "restore")
+)
+
+let watchDocs _ =
+    let runDotnetNoTimeout workingDir =
+        DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
+                                                WorkingDir = workingDir
+                                                TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
+
+    runDotnetNoTimeout "docs" """fable shell-run "..\node_modules\.bin\rollup -c rollup-config.js -w" """
+
+Target "WatchDocs" watchDocs
+
+Target "QuickWatchDocs" watchDocs
+
+Target "BuildDocs" (fun _ ->
+    runDotnet "docs" """fable shell-run "..\node_modules\.bin\rollup -c rollup-config.js" """
+)
+
+// --------------------------------------------------------------------------------------
 // Build a NuGet package
 
 Target "Package" (fun _ ->
@@ -145,29 +121,6 @@ Target "PublishNuget" (fun _ ->
 let gitName = "elmish"
 let gitOwner = "fable-elmish"
 let gitHome = sprintf "https://github.com/%s" gitOwner
-
-let fakePath = "packages" </> "build" </> "FAKE" </> "tools" </> "FAKE.exe"
-let fakeStartInfo script workingDirectory args fsiargs environmentVars =
-    (fun (info: System.Diagnostics.ProcessStartInfo) ->
-        info.FileName <- System.IO.Path.GetFullPath fakePath
-        info.Arguments <- sprintf "%s --fsiargs -d:FAKE %s \"%s\"" args fsiargs script
-        info.WorkingDirectory <- workingDirectory
-        let setVar k v =
-            info.EnvironmentVariables.[k] <- v
-        for (k, v) in environmentVars do
-            setVar k v
-        setVar "MSBuild" msBuildExe
-        setVar "GIT" Git.CommandHelper.gitPath
-        setVar "FSI" fsiPath)
-
-/// Run the given buildscript with FAKE.exe
-let executeFAKEWithOutput workingDirectory script fsiargs envArgs =
-    let exitCode =
-        ExecProcessWithLambdas
-            (fakeStartInfo script workingDirectory "" fsiargs envArgs)
-            TimeSpan.MaxValue false ignore ignore
-    System.Threading.Thread.Sleep 1000
-    exitCode
 
 // --------------------------------------------------------------------------------------
 // Release Scripts
@@ -208,16 +161,24 @@ Target "Publish" DoNothing
 
 // Build order
 "Meta"
-  ==> "InstallDotNetCore"
-  ==> "Clean"
-  ==> "Install"
-  ==> "Build"
-  ==> "Package"
+    // ==> "InstallDotNetCore"
+    ==> "Clean"
+    ==> "Install"
+    ==> "Build"
+    ==> "Package"
 
 "Publish"
-  <== [ "Build"
-        "PublishNuget" ]
+    <== [ "Build"
+          "PublishNuget" ]
+"Build"
+    ==> "YarnInstall"
+    ==> "InstallDocs"
+    ==> "WatchDocs"
 
+"Build"
+    ==> "YarnInstall"
+    ==> "InstallDocs"
+    ==> "BuildDocs"
 
 // start build
 RunTargetOrDefault "Build"

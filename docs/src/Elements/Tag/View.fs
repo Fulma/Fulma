@@ -2,61 +2,53 @@ module Elements.Tag.View
 
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish
 open Elmish.Bulma.Elements
-open Global
-
-let section model =
-  div
-    [ ]
-    [ div
-        [ ClassName "block" ]
-        [ Tag.tag [] [ str "Tag label" ] ] ]
-  |> docBlock model.code
-  |> toList
-  |> sectionBase model.text
+open Elmish.Bulma.Components.Grids
 
 
-let sectionColor model =
-  div
-    [ ]
-    [ div
-        [ ClassName "block" ]
-        [ Tag.tag [ Tag.isBlack ] [ str "Black" ]
-          Tag.tag [ Tag.isDark ] [ str "Dark" ]
-          Tag.tag [ Tag.isLight ] [ str "Light" ]
+let colorInteractive =
+    div [ ClassName "block" ]
+        [ Tag.tag [ ] [ str "Default" ]
           Tag.tag [ Tag.isWhite ] [ str "White" ]
-          Tag.tag [ Tag.isPrimary ] [ str "Primary"] ]
-      br [ ]
-      div
-        [ ClassName "block" ]
-        [ Tag.tag [ Tag.isInfo ] [ str "Info" ]
+          Tag.tag [ Tag.isLight ] [ str "Light" ]
+          Tag.tag [ Tag.isDark ] [ str "Dark" ]
+          Tag.tag [ Tag.isBlack ] [ str "Black" ]
+          Tag.tag [ Tag.isPrimary ] [ str "Primary" ]
+          Tag.tag [ Tag.isInfo ] [ str "Info" ]
           Tag.tag [ Tag.isSuccess ] [ str "Success" ]
           Tag.tag [ Tag.isWarning ] [ str "Warning" ]
-          Tag.tag [ Tag.isDanger ] [ str "Danger" ] ] ]
-  |> docBlock model.colorCode
-  |> toList
-  |> sectionBase model.colorText
+          Tag.tag [ Tag.isDanger ] [ str "Danger" ] ]
 
-let sectionSize model =
-  div
-    [ ]
-    [ div
-        [ ClassName "block" ]
-        [ Tag.tag [ Tag.isSuccess; Tag.isMedium ] [ str "Medium" ]
-          Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str "Large" ] ] ]
-  |> docBlock model.sizeCode
-  |> toList
-  |> sectionBase model.sizeText
-let root model =
-  div
-    [ ]
-    [ section model
-      hr []
-      sectionColor model
-      hr []
-      sectionSize model ]
+let sizeInteractive =
+    div [ ClassName "block" ]
+        [ Tag.tag [ ] [ str "Normal" ]
+          Tag.tag [ Tag.isPrimary; Tag.isMedium ] [ str "Medium" ]
+          Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str "Large" ] ]
+
+let nestedDeleteStyleInteractive =
+    div [ ClassName "block" ]
+        [ Tag.tag [ Tag.isDark ]
+            [ str "With delete"
+              Delete.delete [ Delete.isSmall ] [ ] ]
+          Tag.tag [ Tag.isMedium ]
+            [ str "With delete"
+              Delete.delete [ ] [ ] ]
+          Tag.tag [ Tag.isWarning; Tag.isLarge ]
+            [ str "With delete"
+              Delete.delete [ Delete.isLarge ] [ ] ] ]
+
+let root model dispatch =
+    Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Render.docSection
+                        "### Colors"
+                        (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Sizes"
+                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Nested delete"
+                        (Viewer.View.root nestedDeleteStyleInteractive model.NestedDeleteViewer (NestedDeleteViewerMsg >> dispatch))
+                               ]

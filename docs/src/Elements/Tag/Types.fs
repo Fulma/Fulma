@@ -1,11 +1,12 @@
 module Elements.Tag.Types
 
 type Model =
-  { text: string
-    code: string
-    colorText : string 
-    colorCode : string
-    sizeText : string
-    sizeCode : string}
+    { Intro : string
+      ColorViewer : Viewer.Types.Model
+      SizeViewer : Viewer.Types.Model
+      NestedDeleteViewer : Viewer.Types.Model }
 
-type Msg = unit
+type Msg =
+    | ColorViewerMsg of Viewer.Types.Msg
+    | SizeViewerMsg of Viewer.Types.Msg
+    | NestedDeleteViewerMsg of Viewer.Types.Msg

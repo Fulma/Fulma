@@ -5,96 +5,88 @@ open Elmish.Bulma.BulmaClasses
 open Elmish.Bulma.Common
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fable.Import
 
 module Heading =
+    module Types =
+        type ITitleSize =
+            | Is1
+            | Is2
+            | Is3
+            | Is4
+            | Is5
+            | Is6
 
-  module Types =
+        type ITitleType =
+            | Title
+            | Subtitle
 
-    type ITitleSize =
-      | Is1
-      | Is2
-      | Is3
-      | Is4
-      | Is5
-      | Is6
+        let ofTitleSize titleSize =
+            match titleSize with
+            | Is1 -> bulma.Heading.Size.Is1
+            | Is2 -> bulma.Heading.Size.Is2
+            | Is3 -> bulma.Heading.Size.Is3
+            | Is4 -> bulma.Heading.Size.Is4
+            | Is5 -> bulma.Heading.Size.Is5
+            | Is6 -> bulma.Heading.Size.Is6
 
-    type ITitleType =
-      | Title
-      | Subtitle
+        let ofTitleType titleType =
+            match titleType with
+            | Title -> bulma.Heading.Title
+            | Subtitle -> bulma.Heading.Subtitle
 
-    let ofTitleSize titleSize =
-      match titleSize with
-      | Is1 -> bulma.heading.size.is1
-      | Is2 -> bulma.heading.size.is2
-      | Is3 -> bulma.heading.size.is3
-      | Is4 -> bulma.heading.size.is4
-      | Is5 -> bulma.heading.size.is5
-      | Is6 -> bulma.heading.size.is6
+        type Option =
+            | Size of ITitleSize
+            | Type of ITitleType
+            | IsSpaced
 
-    let ofTitleType titleType =
-      match titleType with
-      | Title -> bulma.heading.title
-      | Subtitle -> bulma.heading.subtitle
+        type Options =
+            { TitleSize : string option
+              TitleType : string
+              IsSpaced : bool }
+            static member Empty =
+                { TitleSize = None
+                  TitleType = ""
+                  IsSpaced = false }
 
-    type Option =
-      | Size of ITitleSize
-      | Type of ITitleType
-      | IsSpaced
+    open Types
 
-    type Options =
-      { titleSize: string
-        titleType: string
-        isSpaced: bool }
+    //Types
+    let isTitle = Type Title
+    let isSubtitle = Type Subtitle
+    // Sizes
+    let is1 = Size Is1
+    let is2 = Size Is2
+    let is3 = Size Is3
+    let is4 = Size Is4
+    let is5 = Size Is5
+    let is6 = Size Is6
+    // Spacing
+    let isSpaced = IsSpaced
 
-      static member Empty =
-        { titleSize = ""
-          titleType = ""
-          isSpaced = false }
+    let internal title (element : IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options : Option list)
+        (children) =
+        let parseOption result opt =
+            match opt with
+            | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
+            | Type tt -> { result with TitleType = ofTitleType tt }
+            | IsSpaced -> { result with IsSpaced = true }
 
-  open Types
+        let opts = options |> List.fold parseOption Options.Empty
+        let className =
+            classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize ])
+                [ bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
+        element
+            [ className ]
+            children
 
-  //Types
-  let isTitle = Type Title
-  let isSubtitle = Type Subtitle
-  // Sizes
-  let is1 = Size Is1
-  let is2 = Size Is2
-  let is3 = Size Is3
-  let is4 = Size Is4
-  let is5 = Size Is5
-  let is6 = Size Is6
-  // Spacing
-  let isSpaced = IsSpaced
-
-  let title (element:IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options: Option list) (children) =
-      let parseOption result opt=
-        match opt with
-        | Size ts ->
-            { result with titleSize = ofTitleSize ts }
-        | Type tt ->
-            { result with titleType = ofTitleType tt }
-        | IsSpaced ->
-            { result with isSpaced = true }
-
-      let opts = options |> List.fold parseOption Options.Empty
-
-      let className =
-        classBaseList
-          (opts.titleType ++ opts.titleSize)
-          [ bulma.heading.spacing.isNormal, opts.isSpaced ]
-
-      element
-        [ className ]
-        children
-
-  // Alias
-  let h1 = title h1
-  let h2 = title h2
-  let h3 = title h3
-  let h4 = title h4
-  let h5 = title h5
-  let h6 = title h6
-  let p = title p
+    // Alias
+    let h1 (options : Option list) = title h1 (is1 :: options)
+    let h2 (options : Option list) = title h2 (is2 :: options)
+    let h3 (options : Option list) = title h3 (is3 :: options)
+    let h4 (options : Option list) = title h4 (is4 :: options)
+    let h5 (options : Option list) = title h5 (is5 :: options)
+    let h6 (options : Option list) = title h6 (is6 :: options)
+    let p = title p

@@ -2,93 +2,95 @@ module Elements.Button.View
 
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish
 open Elmish.Bulma.Elements
-open Global
+open Elmish.Bulma.Components.Grids
 
-let sectionColor model =
-  div
-    [ ]
-    [ div
-        [ ClassName "block" ]
-        [ Button.button [ ] [ str "Button" ]
-          Button.button [ Button.isWhite ] [ str "White" ]
-          Button.button [ Button.isLight ] [ str "Light" ]
-          Button.button [ Button.isDark ] [ str "Dark" ]
-          Button.button [ Button.isBlack ] [ str "Black" ]
-          Button.button [ Button.isLink ] [ str "Link" ] ]
-      div
-        [ ClassName "block" ]
-        [ Button.button [ Button.isPrimary ] [ str "Primary" ]
-          Button.button [ Button.isInfo ] [ str "Info" ]
-          Button.button [ Button.isSuccess ] [ str "Success" ]
-          Button.button [ Button.isWarning ] [ str "Warning" ]
-          Button.button [ Button.isDanger ] [ str "Danger" ] ] ]
-  |> docBlock model.codeColor
-  |> toList
-  |> sectionBase model.textColor
 
-let sectionSize model =
-  div
-    [ ClassName "block" ]
-    [ Button.button [ Button.isSmall ] [ str "Small" ]
-      Button.button [ ] [ str "Normal" ]
-      Button.button [ Button.isMedium ] [ str "Medium" ]
-      Button.button [ Button.isLarge ] [ str "Large" ] ]
-  |> docBlock model.codeSize
-  |> toList
-  |> sectionBase model.textSize
+let colorInteractive =
+    Columns.columns [ ]
+        [ Column.column [ ]
+            [ div [ ClassName "block" ]
+                  [ Button.button [ ] [ str "Button" ]
+                    Button.button [ Button.isWhite ] [ str "White" ]
+                    Button.button [ Button.isLight ] [ str "Light" ]
+                    Button.button [ Button.isDark ] [ str "Dark" ]
+                    Button.button [ Button.isBlack ] [ str "Black" ] ] ]
+          Column.column [ ]
+            [ div [ ClassName "block" ]
+                  [ Button.button [ Button.isLink ] [ str "Link" ]
+                    Button.button [ Button.isPrimary ] [ str "Primary" ]
+                    Button.button [ Button.isInfo ] [ str "Info" ]
+                    Button.button [ Button.isSuccess ] [ str "Success" ]
+                    Button.button [ Button.isWarning ] [ str "Warning" ]
+                    Button.button [ Button.isDanger ] [ str "Danger" ] ] ] ]
 
-let sectionStyle model =
-  [ div
-      [ ClassName "block" ]
-      [ Button.button [ Button.isOutlined ] [str "Outlined" ]
-        Button.button [ Button.isSuccess; Button.isOutlined ] [str "Outlined" ]
-        Button.button [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
-        Button.button [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
-        Button.button [ Button.isDark; Button.isOutlined ] [ str "Outlined" ] ], model.codeStyleOutlined
-    div
-      [ ClassName "block callout is-primary" ]
-      [ Button.button [ Button.isOutlined ] [ str "Outlined" ]
-        Button.button [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
-        Button.button [ Button.isPrimary; Button.isInverted ] [ str "Inverted" ]
-        Button.button [ Button.isInfo; Button.isInverted ] [ str "Inverted" ]
-        Button.button [ Button.isDark; Button.isInverted ] [ str "Inverted" ] ], model.codeStyleInverted
-    div
-      [ ]
-      [ div
-          [ ClassName "block callout is-success" ]
-          [ Button.button [ Button.isOutlined; Button.isInverted ] [ str "Invert Outlined" ]
-            Button.button [ Button.isSuccess; Button.isOutlined; Button.isInverted ] [ str "Invert outlined" ]
-            Button.button [ Button.isPrimary; Button.isOutlined; Button.isInverted ] [ str "Invert outlined" ] ] ], model.codeStyleInvertOutlined ]
-  |> List.map (fun (children, code) -> docBlock code children )
-  |> sectionBase model.textStyle
+let sizeInteractive =
+    div [ ClassName "block" ]
+        [ Button.button [ Button.isSmall ] [ str "Small" ]
+          Button.button [ ] [ str "Normal" ]
+          Button.button [ Button.isMedium ] [ str "Medium" ]
+          Button.button [ Button.isLarge ] [ str "Large" ] ]
 
-let sectionState model =
-  div
-    [ ClassName "block" ]
-    [ Button.button [ Button.isSuccess ] [ str "Normal" ]
-      Button.button [ Button.isHovered; Button.isSuccess ] [ str "Hover" ]
-      Button.button [ Button.isFocused; Button.isSuccess ] [ str "Hover" ]
-      Button.button [ Button.isActive; Button.isSuccess ] [ str "Hover" ]
-      Button.button [ Button.isLoading; Button.isSuccess ] [ str "Hover" ] ]
-  |> docBlock model.codeState
-  |> toList
-  |> sectionBase model.textState
+let outlinedInteractive =
+    div [ ClassName "block" ]
+        [ Button.button [ Button.isOutlined ] [ str "Outlined" ]
+          Button.button [ Button.isSuccess; Button.isOutlined ] [ str "Outlined" ]
+          Button.button [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
+          Button.button [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
+          Button.button [ Button.isDanger;  Button.isOutlined ] [ str "Outlined" ] ]
 
-let root model =
-  div
-    [ ]
-    [
-      sectionColor model
-      hr []
-      sectionSize model
-      hr []
-      sectionStyle model
-      hr []
-      sectionState model
-    ]
+let mixedStyleInteractive =
+    div [ ClassName "callout is-primary block" ]
+        [ Button.button [ Button.isInverted ] [ str "Inverted" ]
+          Button.button [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
+          Button.button [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
+          Button.button [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ] ]
+
+let stateInteractive =
+    div [ ClassName "block" ]
+        [ Button.button [ ] [ str "Normal" ]
+          Button.button [ Button.isSuccess; Button.isHovered ] [ str "Hover" ]
+          Button.button [ Button.isWarning; Button.isFocused ] [ str "Focus" ]
+          Button.button [ Button.isInfo; Button.isActive ] [ str "Active" ]
+          Button.button [ Button.isBlack; Button.isLoading ] [ str "Loading" ] ]
+
+let extraInteractive model dispatch =
+    let buttonTxt =
+        if model.ClickCount = 0 then
+            "Click me !"
+        else
+            sprintf "Clicked: %i times." model.ClickCount
+
+    div [ ClassName "block" ]
+        [ Button.button [ Button.onClick (fun _ -> dispatch Click) ]
+                        [ str buttonTxt ]
+          Button.button [ Button.props [ Disabled true ] ]
+                        [ str "Disabled via props" ] ]
+
+let root model dispatch =
+    Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Render.docSection
+                        "### Colors"
+                        (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Sizes"
+                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
+                     Render.docSection
+                        """
+### Styles
+The button can be **outlined** and/or **inverted**.
+                        """
+                        (div [ ]
+                            [ Viewer.View.root outlinedInteractive model.OutlinedViewer (OutlinedViewerMsg >> dispatch)
+                              br []
+                              Viewer.View.root mixedStyleInteractive model.MixedStyleViewer (MixedStyleViewerMsg >> dispatch) ])
+                     Render.docSection
+                        "### States"
+                        (Viewer.View.root stateInteractive model.StateViewer (StateViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Extra"
+                        (Viewer.View.root (extraInteractive model dispatch) model.ExtraViewer (ExtraViewerMsg >> dispatch))
+                               ]

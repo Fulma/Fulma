@@ -1,6 +1,23 @@
-#### 0.1.0-alpha-next
+#### 0.1.0-alpha-3
 
-*
+* Add box
+* Add button
+* Add content
+* Add delete
+* Add form
+* Add headings
+* Add icon
+* Add image
+* Add progress
+* Add table
+* Add tag
+* Add grid (columns + column)
+* Add card
+* Add level
+* Add media
+* Add menu
+* Add message
+* Add panel
 
 ### 0.1.0-alpha-2
 * Add icons support

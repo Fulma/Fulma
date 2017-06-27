@@ -1,7 +1,8 @@
 module Elements.Icon.Types
 
 type Model =
-  { text: string
-    code: string }
+    { Intro : string
+      IconViewer : Viewer.Types.Model }
 
-type Msg = unit
+type Msg =
+    | IconViewerMsg of Viewer.Types.Msg

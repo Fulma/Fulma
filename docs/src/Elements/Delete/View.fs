@@ -2,35 +2,40 @@ module Elements.Delete.View
 
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish
 open Elmish.Bulma.Elements
-open Global
+open Elmish.Bulma.Components.Grids
 
-let section model =
-  div
-    [ ]
-    [ renderMarkdown "Using `a` elements"
-      br [ ]
-      div
-        [ ClassName "block" ]
+let demoInteractive =
+    div [ ClassName "block" ]
         [ Delete.delete
-            [ Delete.isSmall ]
-            [ ]
+            [ Delete.isSmall ] [ ]
           Delete.delete
             [ ] [ ]
           Delete.delete
             [ Delete.isMedium ] [ ]
           Delete.delete
-            [ Delete.isLarge ] [ ] ] ]
-  |> docBlock model.code
-  |> toList
-  |> sectionBase model.text
+            [ Delete.isLarge ] [ ] ]
 
-let root model =
-  div
-    [ ]
-    [ section model ]
+let extraInteractive model dispatch =
+    div [ ClassName "block" ]
+        [ yield Delete.delete
+                    [ Delete.onClick (fun _ -> Click |> dispatch) ] [ ]
+          if model.Clicked then
+            yield br []
+            yield str "You clicked the delete button" ]
+
+let root model dispatch =
+    Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Render.docSection
+                        "### Sizes"
+                        (Viewer.View.root demoInteractive model.DemoViewer (DemoViewerMsg >> dispatch))
+                     Render.docSection
+                        """
+### Extra
+
+You can also attach any props to delete elements. Try clicking on the next button.
+                        """
+                        (Viewer.View.root (extraInteractive model dispatch) model.ExtraViewer (ExtraViewerMsg >> dispatch)) ]

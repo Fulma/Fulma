@@ -1,7 +1,8 @@
 module Elements.Box.Types
 
 type Model =
-  { text: string
-    code: string }
+    { Intro : string
+      BoxViewer : Viewer.Types.Model }
 
-type Msg = unit
+type Msg =
+    | BoxViewerMsg of Viewer.Types.Msg

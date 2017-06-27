@@ -1,12 +1,10 @@
 module Elements.Title.Types
 
-
 type Model =
-  { typeText: string
-    typeCode: string
-    sizeText : string
-    sizeCode : string
-    spacedText : string
-    spacedCode : string }
+    { Intro : string
+      TypeViewer : Viewer.Types.Model
+      SizeViewer : Viewer.Types.Model }
 
-type Msg = unit
+type Msg =
+    | TypeViewerMsg of Viewer.Types.Msg
+    | SizeViewerMsg of Viewer.Types.Msg

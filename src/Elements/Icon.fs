@@ -5,37 +5,49 @@ open Elmish.Bulma.BulmaClasses
 open Elmish.Bulma.Common
 open Fable.Core
 open Fable.Core.JsInterop
-open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fable.Import
 
 module Icon =
+    module Types =
+        type IPosition =
+            | Left
+            | Right
 
-  module Types =
+        type Option =
+            | Size of ISize
+            | Position of IPosition
 
-    type Option =
-      | Size of ISize
+        type Options =
+            { Size : string option
+              Position : string option }
+            static member Empty =
+                { Size = None
+                  Position = None }
 
-    type Options =
-      { size: string }
+        let ofPosition =
+            function
+            | Left -> bulma.Icon.Position.Left
+            | Right -> bulma.Icon.Position.Right
 
-      static member Empty =
-        { size = "" }
+    open Types
 
-  open Types
+    // Sizes
+    let isSmall = Size IsSmall
+    let isMedium = Size IsMedium
+    let isLarge = Size IsLarge
+    // Position
+    let isLeft = Position Left
+    let isRight = Position Right
 
-  // Sizes
-  let isSmall = Size IsSmall
-  let isMedium = Size IsMedium
-  let isLarge = Size IsLarge
+    let icon options children =
+        let parseOptions (result : Options) option =
+            match option with
+            | Size size -> { result with Size = ofSize size |> Some }
+            | Position position -> { result with Position = ofPosition position |> Some }
 
-  let icon options children =
-    let parseOptions (result: Options) option =
-      match option with
-      | Size size -> { result with size = ofSize size}
-
-    let opts = options |> List.fold parseOptions Options.Empty
-
-    span
-      [ ClassName (bulma.icon.container ++ opts.size) ]
-      children
+        let opts = options |> List.fold parseOptions Options.Empty
+        span
+            [ ClassName(Helpers.generateClassName bulma.Icon.Container [ opts.Size; opts.Position ]) ]
+            children
