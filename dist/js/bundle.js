@@ -8,6 +8,7 @@ object-assign
 @license MIT
 */
 
+/* eslint-disable no-unused-vars */
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 var propIsEnumerable = Object.prototype.propertyIsEnumerable;
@@ -110,6 +111,230 @@ var index = shouldUseNative() ? Object.assign : function (target, source) {
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+var emptyFunction_1 = emptyFunction;
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var warning = emptyFunction_1;
+
+{
+  (function () {
+    var printWarning = function printWarning(format) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      if (typeof console !== 'undefined') {
+        console.error(message);
+      }
+      try {
+        // --- Welcome to debugging React ---
+        // This error was thrown as a convenience so that you can use this stack
+        // to find the callsite that caused this warning to fire.
+        throw new Error(message);
+      } catch (x) {}
+    };
+
+    warning = function warning(condition, format) {
+      if (format === undefined) {
+        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+      }
+
+      if (format.indexOf('Failed Composite propType: ') === 0) {
+        return; // Ignore CompositeComponent proptype check.
+      }
+
+      if (!condition) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+          args[_key2 - 2] = arguments[_key2];
+        }
+
+        printWarning.apply(undefined, [format].concat(args));
+      }
+    };
+  })();
+}
+
+var warning_1 = warning;
+
+function warnNoop(publicInstance, callerName) {
+  {
+    var constructor = publicInstance.constructor;
+    warning_1(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass');
+  }
+}
+
+/**
+ * This is the abstract API for an update queue.
+ */
+var ReactNoopUpdateQueue = {
+  /**
+   * Checks whether or not this composite component is mounted.
+   * @param {ReactClass} publicInstance The instance we want to test.
+   * @return {boolean} True if mounted, false otherwise.
+   * @protected
+   * @final
+   */
+  isMounted: function (publicInstance) {
+    return false;
+  },
+
+  /**
+   * Enqueue a callback that will be executed after all the pending updates
+   * have processed.
+   *
+   * @param {ReactClass} publicInstance The instance to use as `this` context.
+   * @param {?function} callback Called after state is updated.
+   * @internal
+   */
+  enqueueCallback: function (publicInstance, callback) {},
+
+  /**
+   * Forces an update. This should only be invoked when it is known with
+   * certainty that we are **not** in a DOM transaction.
+   *
+   * You may want to call this when you know that some deeper aspect of the
+   * component's state has changed but `setState` was not called.
+   *
+   * This will not invoke `shouldComponentUpdate`, but it will invoke
+   * `componentWillUpdate` and `componentDidUpdate`.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @internal
+   */
+  enqueueForceUpdate: function (publicInstance) {
+    warnNoop(publicInstance, 'forceUpdate');
+  },
+
+  /**
+   * Replaces all of the state. Always use this or `setState` to mutate state.
+   * You should treat `this.state` as immutable.
+   *
+   * There is no guarantee that `this.state` will be immediately updated, so
+   * accessing `this.state` after calling this method may return the old value.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} completeState Next state.
+   * @internal
+   */
+  enqueueReplaceState: function (publicInstance, completeState) {
+    warnNoop(publicInstance, 'replaceState');
+  },
+
+  /**
+   * Sets a subset of the state. This only exists because _pendingState is
+   * internal. This provides a merging strategy that is not available to deep
+   * properties which is confusing. TODO: Expose pendingState or don't use it
+   * during the merge.
+   *
+   * @param {ReactClass} publicInstance The instance that should rerender.
+   * @param {object} partialState Next partial state to be merged with state.
+   * @internal
+   */
+  enqueueSetState: function (publicInstance, partialState) {
+    warnNoop(publicInstance, 'setState');
+  }
+};
+
+var ReactNoopUpdateQueue_1 = ReactNoopUpdateQueue;
+
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+var canDefineProperty$1 = false;
+{
+  try {
+    // $FlowFixMe https://github.com/facebook/flow/issues/285
+    Object.defineProperty({}, 'x', { get: function () {} });
+    canDefineProperty$1 = true;
+  } catch (x) {
+    // IE will fail on defineProperty
+  }
+}
+
+var canDefineProperty_1 = canDefineProperty$1;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+var emptyObject = {};
+
+{
+  Object.freeze(emptyObject);
+}
+
+var emptyObject_1 = emptyObject;
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/**
+ * Use invariant() to assert state which your program assumes to be true.
+ *
+ * Provide sprintf-style format (only %s is supported) and arguments
+ * to provide information about what broke and what you were
+ * expecting.
+ *
+ * The invariant message will be stripped in production, but the invariant
+ * will remain to ensure logic does not differ in production.
  */
 
 var validateFormat = function validateFormat(format) {};
@@ -145,6 +370,197 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 var invariant_1 = invariant;
 
+/**
+ * Copyright 2014-2015, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/**
+ * Forked from fbjs/warning:
+ * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+ *
+ * Only change is we use console.warn instead of console.error,
+ * and do nothing when 'console' is not supported.
+ * This really simplifies the code.
+ * ---
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var lowPriorityWarning$1 = function () {};
+
+{
+  var printWarning = function (format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.warn(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  lowPriorityWarning$1 = function (condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+var lowPriorityWarning_1 = lowPriorityWarning$1;
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function ReactComponent(props, context, updater) {
+  this.props = props;
+  this.context = context;
+  this.refs = emptyObject_1;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue_1;
+}
+
+ReactComponent.prototype.isReactComponent = {};
+
+/**
+ * Sets a subset of the state. Always use this to mutate
+ * state. You should treat `this.state` as immutable.
+ *
+ * There is no guarantee that `this.state` will be immediately updated, so
+ * accessing `this.state` after calling this method may return the old value.
+ *
+ * There is no guarantee that calls to `setState` will run synchronously,
+ * as they may eventually be batched together.  You can provide an optional
+ * callback that will be executed when the call to setState is actually
+ * completed.
+ *
+ * When a function is provided to setState, it will be called at some point in
+ * the future (not synchronously). It will be called with the up to date
+ * component arguments (state, props, context). These values can be different
+ * from this.* because your function may be called after receiveProps but before
+ * shouldComponentUpdate, and this new state, props, and context will not yet be
+ * assigned to this.
+ *
+ * @param {object|function} partialState Next partial state or function to
+ *        produce next partial state to be merged with current state.
+ * @param {?function} callback Called after state is updated.
+ * @final
+ * @protected
+ */
+ReactComponent.prototype.setState = function (partialState, callback) {
+  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? invariant_1(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
+  this.updater.enqueueSetState(this, partialState);
+  if (callback) {
+    this.updater.enqueueCallback(this, callback, 'setState');
+  }
+};
+
+/**
+ * Forces an update. This should only be invoked when it is known with
+ * certainty that we are **not** in a DOM transaction.
+ *
+ * You may want to call this when you know that some deeper aspect of the
+ * component's state has changed but `setState` was not called.
+ *
+ * This will not invoke `shouldComponentUpdate`, but it will invoke
+ * `componentWillUpdate` and `componentDidUpdate`.
+ *
+ * @param {?function} callback Called after update is complete.
+ * @final
+ * @protected
+ */
+ReactComponent.prototype.forceUpdate = function (callback) {
+  this.updater.enqueueForceUpdate(this);
+  if (callback) {
+    this.updater.enqueueCallback(this, callback, 'forceUpdate');
+  }
+};
+
+/**
+ * Deprecated APIs. These APIs used to exist on classic React classes but since
+ * we would like to deprecate them, we're not going to move them over to this
+ * modern base class. Instead, we define a getter that warns if it's accessed.
+ */
+{
+  var deprecatedAPIs = {
+    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+  };
+  var defineDeprecationWarning = function (methodName, info) {
+    if (canDefineProperty_1) {
+      Object.defineProperty(ReactComponent.prototype, methodName, {
+        get: function () {
+          lowPriorityWarning_1(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]);
+          return undefined;
+        }
+      });
+    }
+  };
+  for (var fnName in deprecatedAPIs) {
+    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+    }
+  }
+}
+
+/**
+ * Base class helpers for the updating state of a component.
+ */
+function ReactPureComponent(props, context, updater) {
+  // Duplicated from ReactComponent.
+  this.props = props;
+  this.context = context;
+  this.refs = emptyObject_1;
+  // We initialize the default updater but the real one gets injected by the
+  // renderer.
+  this.updater = updater || ReactNoopUpdateQueue_1;
+}
+
+function ComponentDummy() {}
+ComponentDummy.prototype = ReactComponent.prototype;
+ReactPureComponent.prototype = new ComponentDummy();
+ReactPureComponent.prototype.constructor = ReactPureComponent;
+// Avoid an extra prototype jump for these methods.
+index(ReactPureComponent.prototype, ReactComponent.prototype);
+ReactPureComponent.prototype.isPureReactComponent = true;
+
+var ReactBaseClasses = {
+  Component: ReactComponent,
+  PureComponent: ReactPureComponent
+};
+
+/**
+ * Static poolers. Several custom versions for each potential number of
+ * arguments. A completely generic pooler is easy to implement, but would
+ * require accessing the `arguments` object. In each of these, `this` refers to
+ * the Class itself, not an instance. If any others are needed, simply add them
+ * here, or in their own files.
+ */
 var oneArgumentPooler = function (copyFieldsFrom) {
   var Klass = this;
   if (Klass.instancePool.length) {
@@ -244,113 +660,21 @@ var PooledClass_1 = PooledClass;
  * 
  */
 
+/**
+ * Keeps track of the current owner.
+ *
+ * The current owner is the component who should own any components that are
+ * currently being constructed.
+ */
 var ReactCurrentOwner = {
-
   /**
    * @internal
    * @type {ReactComponent}
    */
   current: null
-
 };
 
 var ReactCurrentOwner_1 = ReactCurrentOwner;
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-var emptyFunction_1 = emptyFunction;
-
-var warning = emptyFunction_1;
-
-{
-  (function () {
-    var printWarning = function printWarning(format) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      var argIndex = 0;
-      var message = 'Warning: ' + format.replace(/%s/g, function () {
-        return args[argIndex++];
-      });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning = function warning(condition, format) {
-      if (format === undefined) {
-        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
-      }
-
-      if (format.indexOf('Failed Composite propType: ') === 0) {
-        return; // Ignore CompositeComponent proptype check.
-      }
-
-      if (!condition) {
-        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
-          args[_key2 - 2] = arguments[_key2];
-        }
-
-        printWarning.apply(undefined, [format].concat(args));
-      }
-    };
-  })();
-}
-
-var warning_1 = warning;
-
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-var canDefineProperty$1 = false;
-{
-  try {
-    // $FlowFixMe https://github.com/facebook/flow/issues/285
-    Object.defineProperty({}, 'x', { get: function () {} });
-    canDefineProperty$1 = true;
-  } catch (x) {
-    // IE will fail on defineProperty
-  }
-}
-
-var canDefineProperty_1 = canDefineProperty$1;
 
 /**
  * Copyright 2014-present, Facebook, Inc.
@@ -362,6 +686,9 @@ var canDefineProperty_1 = canDefineProperty$1;
  *
  * 
  */
+
+// The Symbol used to tag the ReactElement type. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
 
 var REACT_ELEMENT_TYPE = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
 
@@ -702,6 +1029,8 @@ var ReactElement_1 = ReactElement;
  * 
  */
 
+/* global Symbol */
+
 var ITERATOR_SYMBOL = typeof Symbol === 'function' && Symbol.iterator;
 var FAUX_ITERATOR_SYMBOL = '@@iterator'; // Before Symbol spec.
 
@@ -737,6 +1066,13 @@ var getIteratorFn_1 = getIteratorFn;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  * 
+ */
+
+/**
+ * Escape and wrap key so it is safe to use as a reactid
+ *
+ * @param {string} key to be escaped.
+ * @return {string} the escaped key.
  */
 
 function escape(key) {
@@ -889,7 +1225,7 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
       {
         addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
         if (children._isReactElement) {
-          addendum = ' It looks like you\'re using an element created by a different ' + 'version of React. Make sure to use only one copy of React.';
+          addendum = " It looks like you're using an element created by a different " + 'version of React. Make sure to use only one copy of React.';
         }
         if (ReactCurrentOwner_1.current) {
           var name = ReactCurrentOwner_1.current.getName();
@@ -1105,953 +1441,17 @@ var ReactChildren = {
 
 var ReactChildren_1 = ReactChildren;
 
-function warnNoop(publicInstance, callerName) {
-  {
-    var constructor = publicInstance.constructor;
-    warning_1(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass');
-  }
-}
-
-/**
- * This is the abstract API for an update queue.
- */
-var ReactNoopUpdateQueue = {
-
-  /**
-   * Checks whether or not this composite component is mounted.
-   * @param {ReactClass} publicInstance The instance we want to test.
-   * @return {boolean} True if mounted, false otherwise.
-   * @protected
-   * @final
-   */
-  isMounted: function (publicInstance) {
-    return false;
-  },
-
-  /**
-   * Enqueue a callback that will be executed after all the pending updates
-   * have processed.
-   *
-   * @param {ReactClass} publicInstance The instance to use as `this` context.
-   * @param {?function} callback Called after state is updated.
-   * @internal
-   */
-  enqueueCallback: function (publicInstance, callback) {},
-
-  /**
-   * Forces an update. This should only be invoked when it is known with
-   * certainty that we are **not** in a DOM transaction.
-   *
-   * You may want to call this when you know that some deeper aspect of the
-   * component's state has changed but `setState` was not called.
-   *
-   * This will not invoke `shouldComponentUpdate`, but it will invoke
-   * `componentWillUpdate` and `componentDidUpdate`.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @internal
-   */
-  enqueueForceUpdate: function (publicInstance) {
-    warnNoop(publicInstance, 'forceUpdate');
-  },
-
-  /**
-   * Replaces all of the state. Always use this or `setState` to mutate state.
-   * You should treat `this.state` as immutable.
-   *
-   * There is no guarantee that `this.state` will be immediately updated, so
-   * accessing `this.state` after calling this method may return the old value.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @param {object} completeState Next state.
-   * @internal
-   */
-  enqueueReplaceState: function (publicInstance, completeState) {
-    warnNoop(publicInstance, 'replaceState');
-  },
-
-  /**
-   * Sets a subset of the state. This only exists because _pendingState is
-   * internal. This provides a merging strategy that is not available to deep
-   * properties which is confusing. TODO: Expose pendingState or don't use it
-   * during the merge.
-   *
-   * @param {ReactClass} publicInstance The instance that should rerender.
-   * @param {object} partialState Next partial state to be merged with state.
-   * @internal
-   */
-  enqueueSetState: function (publicInstance, partialState) {
-    warnNoop(publicInstance, 'setState');
-  }
-};
-
-var ReactNoopUpdateQueue_1 = ReactNoopUpdateQueue;
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-var emptyObject = {};
-
-{
-  Object.freeze(emptyObject);
-}
-
-var emptyObject_1 = emptyObject;
-
-function ReactComponent(props, context, updater) {
-  this.props = props;
-  this.context = context;
-  this.refs = emptyObject_1;
-  // We initialize the default updater but the real one gets injected by the
-  // renderer.
-  this.updater = updater || ReactNoopUpdateQueue_1;
-}
-
-ReactComponent.prototype.isReactComponent = {};
-
-/**
- * Sets a subset of the state. Always use this to mutate
- * state. You should treat `this.state` as immutable.
- *
- * There is no guarantee that `this.state` will be immediately updated, so
- * accessing `this.state` after calling this method may return the old value.
- *
- * There is no guarantee that calls to `setState` will run synchronously,
- * as they may eventually be batched together.  You can provide an optional
- * callback that will be executed when the call to setState is actually
- * completed.
- *
- * When a function is provided to setState, it will be called at some point in
- * the future (not synchronously). It will be called with the up to date
- * component arguments (state, props, context). These values can be different
- * from this.* because your function may be called after receiveProps but before
- * shouldComponentUpdate, and this new state, props, and context will not yet be
- * assigned to this.
- *
- * @param {object|function} partialState Next partial state or function to
- *        produce next partial state to be merged with current state.
- * @param {?function} callback Called after state is updated.
- * @final
- * @protected
- */
-ReactComponent.prototype.setState = function (partialState, callback) {
-  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? invariant_1(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
-  this.updater.enqueueSetState(this, partialState);
-  if (callback) {
-    this.updater.enqueueCallback(this, callback, 'setState');
-  }
-};
-
-/**
- * Forces an update. This should only be invoked when it is known with
- * certainty that we are **not** in a DOM transaction.
- *
- * You may want to call this when you know that some deeper aspect of the
- * component's state has changed but `setState` was not called.
- *
- * This will not invoke `shouldComponentUpdate`, but it will invoke
- * `componentWillUpdate` and `componentDidUpdate`.
- *
- * @param {?function} callback Called after update is complete.
- * @final
- * @protected
- */
-ReactComponent.prototype.forceUpdate = function (callback) {
-  this.updater.enqueueForceUpdate(this);
-  if (callback) {
-    this.updater.enqueueCallback(this, callback, 'forceUpdate');
-  }
-};
-
-/**
- * Deprecated APIs. These APIs used to exist on classic React classes but since
- * we would like to deprecate them, we're not going to move them over to this
- * modern base class. Instead, we define a getter that warns if it's accessed.
- */
-{
-  var deprecatedAPIs = {
-    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
-    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
-  };
-  var defineDeprecationWarning = function (methodName, info) {
-    if (canDefineProperty_1) {
-      Object.defineProperty(ReactComponent.prototype, methodName, {
-        get: function () {
-          warning_1(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]);
-          return undefined;
-        }
-      });
-    }
-  };
-  for (var fnName in deprecatedAPIs) {
-    if (deprecatedAPIs.hasOwnProperty(fnName)) {
-      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
-    }
-  }
-}
-
-var ReactComponent_1 = ReactComponent;
-
-function ReactPureComponent(props, context, updater) {
-  // Duplicated from ReactComponent.
-  this.props = props;
-  this.context = context;
-  this.refs = emptyObject_1;
-  // We initialize the default updater but the real one gets injected by the
-  // renderer.
-  this.updater = updater || ReactNoopUpdateQueue_1;
-}
-
-function ComponentDummy() {}
-ComponentDummy.prototype = ReactComponent_1.prototype;
-ReactPureComponent.prototype = new ComponentDummy();
-ReactPureComponent.prototype.constructor = ReactPureComponent;
-// Avoid an extra prototype jump for these methods.
-index(ReactPureComponent.prototype, ReactComponent_1.prototype);
-ReactPureComponent.prototype.isPureReactComponent = true;
-
-var ReactPureComponent_1 = ReactPureComponent;
-
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * 
- */
-
-var ReactPropTypeLocationNames = {};
-
-{
-  ReactPropTypeLocationNames = {
-    prop: 'prop',
-    context: 'context',
-    childContext: 'child context'
-  };
-}
-
-var ReactPropTypeLocationNames_1 = ReactPropTypeLocationNames;
-
-var MIXINS_KEY = 'mixins';
-
-// Helper function to allow the creation of anonymous functions which do not
-// have .name set to the name of the variable being assigned to.
-function identity(fn) {
-  return fn;
-}
-
-/**
- * Policies that describe methods in `ReactClassInterface`.
- */
-
-
-var injectedMixins = [];
-
-/**
- * Composite components are higher-level components that compose other composite
- * or host components.
- *
- * To create a new type of `ReactClass`, pass a specification of
- * your new class to `React.createClass`. The only requirement of your class
- * specification is that you implement a `render` method.
- *
- *   var MyComponent = React.createClass({
- *     render: function() {
- *       return <div>Hello World</div>;
- *     }
- *   });
- *
- * The class specification supports a specific protocol of methods that have
- * special meaning (e.g. `render`). See `ReactClassInterface` for
- * more the comprehensive protocol. Any other properties and methods in the
- * class specification will be available on the prototype.
- *
- * @interface ReactClassInterface
- * @internal
- */
-var ReactClassInterface = {
-
-  /**
-   * An array of Mixin objects to include when defining your component.
-   *
-   * @type {array}
-   * @optional
-   */
-  mixins: 'DEFINE_MANY',
-
-  /**
-   * An object containing properties and methods that should be defined on
-   * the component's constructor instead of its prototype (static methods).
-   *
-   * @type {object}
-   * @optional
-   */
-  statics: 'DEFINE_MANY',
-
-  /**
-   * Definition of prop types for this component.
-   *
-   * @type {object}
-   * @optional
-   */
-  propTypes: 'DEFINE_MANY',
-
-  /**
-   * Definition of context types for this component.
-   *
-   * @type {object}
-   * @optional
-   */
-  contextTypes: 'DEFINE_MANY',
-
-  /**
-   * Definition of context types this component sets for its children.
-   *
-   * @type {object}
-   * @optional
-   */
-  childContextTypes: 'DEFINE_MANY',
-
-  // ==== Definition methods ====
-
-  /**
-   * Invoked when the component is mounted. Values in the mapping will be set on
-   * `this.props` if that prop is not specified (i.e. using an `in` check).
-   *
-   * This method is invoked before `getInitialState` and therefore cannot rely
-   * on `this.state` or use `this.setState`.
-   *
-   * @return {object}
-   * @optional
-   */
-  getDefaultProps: 'DEFINE_MANY_MERGED',
-
-  /**
-   * Invoked once before the component is mounted. The return value will be used
-   * as the initial value of `this.state`.
-   *
-   *   getInitialState: function() {
-   *     return {
-   *       isOn: false,
-   *       fooBaz: new BazFoo()
-   *     }
-   *   }
-   *
-   * @return {object}
-   * @optional
-   */
-  getInitialState: 'DEFINE_MANY_MERGED',
-
-  /**
-   * @return {object}
-   * @optional
-   */
-  getChildContext: 'DEFINE_MANY_MERGED',
-
-  /**
-   * Uses props from `this.props` and state from `this.state` to render the
-   * structure of the component.
-   *
-   * No guarantees are made about when or how often this method is invoked, so
-   * it must not have side effects.
-   *
-   *   render: function() {
-   *     var name = this.props.name;
-   *     return <div>Hello, {name}!</div>;
-   *   }
-   *
-   * @return {ReactComponent}
-   * @required
-   */
-  render: 'DEFINE_ONCE',
-
-  // ==== Delegate methods ====
-
-  /**
-   * Invoked when the component is initially created and about to be mounted.
-   * This may have side effects, but any external subscriptions or data created
-   * by this method must be cleaned up in `componentWillUnmount`.
-   *
-   * @optional
-   */
-  componentWillMount: 'DEFINE_MANY',
-
-  /**
-   * Invoked when the component has been mounted and has a DOM representation.
-   * However, there is no guarantee that the DOM node is in the document.
-   *
-   * Use this as an opportunity to operate on the DOM when the component has
-   * been mounted (initialized and rendered) for the first time.
-   *
-   * @param {DOMElement} rootNode DOM element representing the component.
-   * @optional
-   */
-  componentDidMount: 'DEFINE_MANY',
-
-  /**
-   * Invoked before the component receives new props.
-   *
-   * Use this as an opportunity to react to a prop transition by updating the
-   * state using `this.setState`. Current props are accessed via `this.props`.
-   *
-   *   componentWillReceiveProps: function(nextProps, nextContext) {
-   *     this.setState({
-   *       likesIncreasing: nextProps.likeCount > this.props.likeCount
-   *     });
-   *   }
-   *
-   * NOTE: There is no equivalent `componentWillReceiveState`. An incoming prop
-   * transition may cause a state change, but the opposite is not true. If you
-   * need it, you are probably looking for `componentWillUpdate`.
-   *
-   * @param {object} nextProps
-   * @optional
-   */
-  componentWillReceiveProps: 'DEFINE_MANY',
-
-  /**
-   * Invoked while deciding if the component should be updated as a result of
-   * receiving new props, state and/or context.
-   *
-   * Use this as an opportunity to `return false` when you're certain that the
-   * transition to the new props/state/context will not require a component
-   * update.
-   *
-   *   shouldComponentUpdate: function(nextProps, nextState, nextContext) {
-   *     return !equal(nextProps, this.props) ||
-   *       !equal(nextState, this.state) ||
-   *       !equal(nextContext, this.context);
-   *   }
-   *
-   * @param {object} nextProps
-   * @param {?object} nextState
-   * @param {?object} nextContext
-   * @return {boolean} True if the component should update.
-   * @optional
-   */
-  shouldComponentUpdate: 'DEFINE_ONCE',
-
-  /**
-   * Invoked when the component is about to update due to a transition from
-   * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
-   * and `nextContext`.
-   *
-   * Use this as an opportunity to perform preparation before an update occurs.
-   *
-   * NOTE: You **cannot** use `this.setState()` in this method.
-   *
-   * @param {object} nextProps
-   * @param {?object} nextState
-   * @param {?object} nextContext
-   * @param {ReactReconcileTransaction} transaction
-   * @optional
-   */
-  componentWillUpdate: 'DEFINE_MANY',
-
-  /**
-   * Invoked when the component's DOM representation has been updated.
-   *
-   * Use this as an opportunity to operate on the DOM when the component has
-   * been updated.
-   *
-   * @param {object} prevProps
-   * @param {?object} prevState
-   * @param {?object} prevContext
-   * @param {DOMElement} rootNode DOM element representing the component.
-   * @optional
-   */
-  componentDidUpdate: 'DEFINE_MANY',
-
-  /**
-   * Invoked when the component is about to be removed from its parent and have
-   * its DOM representation destroyed.
-   *
-   * Use this as an opportunity to deallocate any external resources.
-   *
-   * NOTE: There is no `componentDidUnmount` since your component will have been
-   * destroyed by that point.
-   *
-   * @optional
-   */
-  componentWillUnmount: 'DEFINE_MANY',
-
-  // ==== Advanced methods ====
-
-  /**
-   * Updates the component's currently mounted DOM representation.
-   *
-   * By default, this implements React's rendering and reconciliation algorithm.
-   * Sophisticated clients may wish to override this.
-   *
-   * @param {ReactReconcileTransaction} transaction
-   * @internal
-   * @overridable
-   */
-  updateComponent: 'OVERRIDE_BASE'
-
-};
-
-/**
- * Mapping from class specification keys to special processing functions.
- *
- * Although these are declared like instance properties in the specification
- * when defining classes using `React.createClass`, they are actually static
- * and are accessible on the constructor instead of the prototype. Despite
- * being static, they must be defined outside of the "statics" key under
- * which all other static methods are defined.
- */
-var RESERVED_SPEC_KEYS = {
-  displayName: function (Constructor, displayName) {
-    Constructor.displayName = displayName;
-  },
-  mixins: function (Constructor, mixins) {
-    if (mixins) {
-      for (var i = 0; i < mixins.length; i++) {
-        mixSpecIntoComponent(Constructor, mixins[i]);
-      }
-    }
-  },
-  childContextTypes: function (Constructor, childContextTypes) {
-    {
-      validateTypeDef(Constructor, childContextTypes, 'childContext');
-    }
-    Constructor.childContextTypes = index({}, Constructor.childContextTypes, childContextTypes);
-  },
-  contextTypes: function (Constructor, contextTypes) {
-    {
-      validateTypeDef(Constructor, contextTypes, 'context');
-    }
-    Constructor.contextTypes = index({}, Constructor.contextTypes, contextTypes);
-  },
-  /**
-   * Special case getDefaultProps which should move into statics but requires
-   * automatic merging.
-   */
-  getDefaultProps: function (Constructor, getDefaultProps) {
-    if (Constructor.getDefaultProps) {
-      Constructor.getDefaultProps = createMergedResultFunction(Constructor.getDefaultProps, getDefaultProps);
-    } else {
-      Constructor.getDefaultProps = getDefaultProps;
-    }
-  },
-  propTypes: function (Constructor, propTypes) {
-    {
-      validateTypeDef(Constructor, propTypes, 'prop');
-    }
-    Constructor.propTypes = index({}, Constructor.propTypes, propTypes);
-  },
-  statics: function (Constructor, statics) {
-    mixStaticSpecIntoComponent(Constructor, statics);
-  },
-  autobind: function () {} };
-
-function validateTypeDef(Constructor, typeDef, location) {
-  for (var propName in typeDef) {
-    if (typeDef.hasOwnProperty(propName)) {
-      // use a warning instead of an invariant so components
-      // don't show up in prod but only in __DEV__
-      warning_1(typeof typeDef[propName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', Constructor.displayName || 'ReactClass', ReactPropTypeLocationNames_1[location], propName);
-    }
-  }
-}
-
-function validateMethodOverride(isAlreadyDefined, name) {
-  var specPolicy = ReactClassInterface.hasOwnProperty(name) ? ReactClassInterface[name] : null;
-
-  // Disallow overriding of base class methods unless explicitly allowed.
-  if (ReactClassMixin.hasOwnProperty(name)) {
-    !(specPolicy === 'OVERRIDE_BASE') ? invariant_1(false, 'ReactClassInterface: You are attempting to override `%s` from your class specification. Ensure that your method names do not overlap with React methods.', name) : void 0;
-  }
-
-  // Disallow defining methods more than once unless explicitly allowed.
-  if (isAlreadyDefined) {
-    !(specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED') ? invariant_1(false, 'ReactClassInterface: You are attempting to define `%s` on your component more than once. This conflict may be due to a mixin.', name) : void 0;
-  }
-}
-
-/**
- * Mixin helper which handles policy validation and reserved
- * specification keys when building React classes.
- */
-function mixSpecIntoComponent(Constructor, spec) {
-  if (!spec) {
-    {
-      var typeofSpec = typeof spec;
-      var isMixinValid = typeofSpec === 'object' && spec !== null;
-
-      warning_1(isMixinValid, '%s: You\'re attempting to include a mixin that is either null ' + 'or not an object. Check the mixins included by the component, ' + 'as well as any mixins they include themselves. ' + 'Expected object but got %s.', Constructor.displayName || 'ReactClass', spec === null ? null : typeofSpec);
-    }
-
-    return;
-  }
-
-  !(typeof spec !== 'function') ? invariant_1(false, 'ReactClass: You\'re attempting to use a component class or function as a mixin. Instead, just use a regular object.') : void 0;
-  !!ReactElement_1.isValidElement(spec) ? invariant_1(false, 'ReactClass: You\'re attempting to use a component as a mixin. Instead, just use a regular object.') : void 0;
-
-  var proto = Constructor.prototype;
-  var autoBindPairs = proto.__reactAutoBindPairs;
-
-  // By handling mixins before any other properties, we ensure the same
-  // chaining order is applied to methods with DEFINE_MANY policy, whether
-  // mixins are listed before or after these methods in the spec.
-  if (spec.hasOwnProperty(MIXINS_KEY)) {
-    RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
-  }
-
-  for (var name in spec) {
-    if (!spec.hasOwnProperty(name)) {
-      continue;
-    }
-
-    if (name === MIXINS_KEY) {
-      // We have already handled mixins in a special case above.
-      continue;
-    }
-
-    var property = spec[name];
-    var isAlreadyDefined = proto.hasOwnProperty(name);
-    validateMethodOverride(isAlreadyDefined, name);
-
-    if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
-      RESERVED_SPEC_KEYS[name](Constructor, property);
-    } else {
-      // Setup methods on prototype:
-      // The following member methods should not be automatically bound:
-      // 1. Expected ReactClass methods (in the "interface").
-      // 2. Overridden methods (that were mixed in).
-      var isReactClassMethod = ReactClassInterface.hasOwnProperty(name);
-      var isFunction = typeof property === 'function';
-      var shouldAutoBind = isFunction && !isReactClassMethod && !isAlreadyDefined && spec.autobind !== false;
-
-      if (shouldAutoBind) {
-        autoBindPairs.push(name, property);
-        proto[name] = property;
-      } else {
-        if (isAlreadyDefined) {
-          var specPolicy = ReactClassInterface[name];
-
-          // These cases should already be caught by validateMethodOverride.
-          !(isReactClassMethod && (specPolicy === 'DEFINE_MANY_MERGED' || specPolicy === 'DEFINE_MANY')) ? invariant_1(false, 'ReactClass: Unexpected spec policy %s for key %s when mixing in component specs.', specPolicy, name) : void 0;
-
-          // For methods which are defined more than once, call the existing
-          // methods before calling the new property, merging if appropriate.
-          if (specPolicy === 'DEFINE_MANY_MERGED') {
-            proto[name] = createMergedResultFunction(proto[name], property);
-          } else if (specPolicy === 'DEFINE_MANY') {
-            proto[name] = createChainedFunction(proto[name], property);
-          }
-        } else {
-          proto[name] = property;
-          {
-            // Add verbose displayName to the function, which helps when looking
-            // at profiling tools.
-            if (typeof property === 'function' && spec.displayName) {
-              proto[name].displayName = spec.displayName + '_' + name;
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-function mixStaticSpecIntoComponent(Constructor, statics) {
-  if (!statics) {
-    return;
-  }
-  for (var name in statics) {
-    var property = statics[name];
-    if (!statics.hasOwnProperty(name)) {
-      continue;
-    }
-
-    var isReserved = name in RESERVED_SPEC_KEYS;
-    !!isReserved ? invariant_1(false, 'ReactClass: You are attempting to define a reserved property, `%s`, that shouldn\'t be on the "statics" key. Define it as an instance property instead; it will still be accessible on the constructor.', name) : void 0;
-
-    var isInherited = name in Constructor;
-    !!isInherited ? invariant_1(false, 'ReactClass: You are attempting to define `%s` on your component more than once. This conflict may be due to a mixin.', name) : void 0;
-    Constructor[name] = property;
-  }
-}
-
-/**
- * Merge two objects, but throw if both contain the same key.
- *
- * @param {object} one The first object, which is mutated.
- * @param {object} two The second object
- * @return {object} one after it has been mutated to contain everything in two.
- */
-function mergeIntoWithNoDuplicateKeys(one, two) {
-  !(one && two && typeof one === 'object' && typeof two === 'object') ? invariant_1(false, 'mergeIntoWithNoDuplicateKeys(): Cannot merge non-objects.') : void 0;
-
-  for (var key in two) {
-    if (two.hasOwnProperty(key)) {
-      !(one[key] === undefined) ? invariant_1(false, 'mergeIntoWithNoDuplicateKeys(): Tried to merge two objects with the same key: `%s`. This conflict may be due to a mixin; in particular, this may be caused by two getInitialState() or getDefaultProps() methods returning objects with clashing keys.', key) : void 0;
-      one[key] = two[key];
-    }
-  }
-  return one;
-}
-
-/**
- * Creates a function that invokes two functions and merges their return values.
- *
- * @param {function} one Function to invoke first.
- * @param {function} two Function to invoke second.
- * @return {function} Function that invokes the two argument functions.
- * @private
- */
-function createMergedResultFunction(one, two) {
-  return function mergedResult() {
-    var a = one.apply(this, arguments);
-    var b = two.apply(this, arguments);
-    if (a == null) {
-      return b;
-    } else if (b == null) {
-      return a;
-    }
-    var c = {};
-    mergeIntoWithNoDuplicateKeys(c, a);
-    mergeIntoWithNoDuplicateKeys(c, b);
-    return c;
-  };
-}
-
-/**
- * Creates a function that invokes two functions and ignores their return vales.
- *
- * @param {function} one Function to invoke first.
- * @param {function} two Function to invoke second.
- * @return {function} Function that invokes the two argument functions.
- * @private
- */
-function createChainedFunction(one, two) {
-  return function chainedFunction() {
-    one.apply(this, arguments);
-    two.apply(this, arguments);
-  };
-}
-
-/**
- * Binds a method to the component.
- *
- * @param {object} component Component whose method is going to be bound.
- * @param {function} method Method to be bound.
- * @return {function} The bound method.
- */
-function bindAutoBindMethod(component, method) {
-  var boundMethod = method.bind(component);
-  {
-    boundMethod.__reactBoundContext = component;
-    boundMethod.__reactBoundMethod = method;
-    boundMethod.__reactBoundArguments = null;
-    var componentName = component.constructor.displayName;
-    var _bind = boundMethod.bind;
-    boundMethod.bind = function (newThis) {
-      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-
-      // User is trying to bind() an autobound method; we effectively will
-      // ignore the value of "this" that the user is trying to use, so
-      // let's warn.
-      if (newThis !== component && newThis !== null) {
-        warning_1(false, 'bind(): React component methods may only be bound to the ' + 'component instance. See %s', componentName);
-      } else if (!args.length) {
-        warning_1(false, 'bind(): You are binding a component method to the component. ' + 'React does this for you automatically in a high-performance ' + 'way, so you can safely remove this call. See %s', componentName);
-        return boundMethod;
-      }
-      var reboundMethod = _bind.apply(boundMethod, arguments);
-      reboundMethod.__reactBoundContext = component;
-      reboundMethod.__reactBoundMethod = method;
-      reboundMethod.__reactBoundArguments = args;
-      return reboundMethod;
-    };
-  }
-  return boundMethod;
-}
-
-/**
- * Binds all auto-bound methods in a component.
- *
- * @param {object} component Component whose method is going to be bound.
- */
-function bindAutoBindMethods(component) {
-  var pairs = component.__reactAutoBindPairs;
-  for (var i = 0; i < pairs.length; i += 2) {
-    var autoBindKey = pairs[i];
-    var method = pairs[i + 1];
-    component[autoBindKey] = bindAutoBindMethod(component, method);
-  }
-}
-
-/**
- * Add more to the ReactClass base class. These are all legacy features and
- * therefore not already part of the modern ReactComponent.
- */
-var ReactClassMixin = {
-
-  /**
-   * TODO: This will be deprecated because state should always keep a consistent
-   * type signature and the only use case for this, is to avoid that.
-   */
-  replaceState: function (newState, callback) {
-    this.updater.enqueueReplaceState(this, newState);
-    if (callback) {
-      this.updater.enqueueCallback(this, callback, 'replaceState');
-    }
-  },
-
-  /**
-   * Checks whether or not this composite component is mounted.
-   * @return {boolean} True if mounted, false otherwise.
-   * @protected
-   * @final
-   */
-  isMounted: function () {
-    return this.updater.isMounted(this);
-  }
-};
-
-var ReactClassComponent = function () {};
-index(ReactClassComponent.prototype, ReactComponent_1.prototype, ReactClassMixin);
-
-var didWarnDeprecated = false;
-
-/**
- * Module for creating composite components.
- *
- * @class ReactClass
- */
-var ReactClass = {
-
-  /**
-   * Creates a composite component class given a class specification.
-   * See https://facebook.github.io/react/docs/top-level-api.html#react.createclass
-   *
-   * @param {object} spec Class specification (which must define `render`).
-   * @return {function} Component constructor function.
-   * @public
-   */
-  createClass: function (spec) {
-    {
-      warning_1(didWarnDeprecated, '%s: React.createClass is deprecated and will be removed in version 16. ' + 'Use plain JavaScript classes instead. If you\'re not yet ready to ' + 'migrate, create-react-class is available on npm as a ' + 'drop-in replacement.', spec && spec.displayName || 'A Component');
-      didWarnDeprecated = true;
-    }
-
-    // To keep our warnings more understandable, we'll use a little hack here to
-    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
-    // unnecessarily identify a class without displayName as 'Constructor'.
-    var Constructor = identity(function (props, context, updater) {
-      // This constructor gets overridden by mocks. The argument is used
-      // by mocks to assert on what gets mounted.
-
-      {
-        warning_1(this instanceof Constructor, 'Something is calling a React component directly. Use a factory or ' + 'JSX instead. See: https://fb.me/react-legacyfactory');
-      }
-
-      // Wire up auto-binding
-      if (this.__reactAutoBindPairs.length) {
-        bindAutoBindMethods(this);
-      }
-
-      this.props = props;
-      this.context = context;
-      this.refs = emptyObject_1;
-      this.updater = updater || ReactNoopUpdateQueue_1;
-
-      this.state = null;
-
-      // ReactClasses doesn't have constructors. Instead, they use the
-      // getInitialState and componentWillMount methods for initialization.
-
-      var initialState = this.getInitialState ? this.getInitialState() : null;
-      {
-        // We allow auto-mocks to proceed as if they're returning null.
-        if (initialState === undefined && this.getInitialState._isMockFunction) {
-          // This is probably bad practice. Consider warning here and
-          // deprecating this convenience.
-          initialState = null;
-        }
-      }
-      !(typeof initialState === 'object' && !Array.isArray(initialState)) ? invariant_1(false, '%s.getInitialState(): must return an object or null', Constructor.displayName || 'ReactCompositeComponent') : void 0;
-
-      this.state = initialState;
-    });
-    Constructor.prototype = new ReactClassComponent();
-    Constructor.prototype.constructor = Constructor;
-    Constructor.prototype.__reactAutoBindPairs = [];
-
-    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
-
-    mixSpecIntoComponent(Constructor, spec);
-
-    // Initialize the defaultProps property after all mixins have been merged.
-    if (Constructor.getDefaultProps) {
-      Constructor.defaultProps = Constructor.getDefaultProps();
-    }
-
-    {
-      // This is a tag to indicate that the use of these method names is ok,
-      // since it's used with createClass. If it's not, then it's likely a
-      // mistake so we'll warn you to use the static property, property
-      // initializer or constructor respectively.
-      if (Constructor.getDefaultProps) {
-        Constructor.getDefaultProps.isReactClassApproved = {};
-      }
-      if (Constructor.prototype.getInitialState) {
-        Constructor.prototype.getInitialState.isReactClassApproved = {};
-      }
-    }
-
-    !Constructor.prototype.render ? invariant_1(false, 'createClass(...): Class specification must implement a `render` method.') : void 0;
-
-    {
-      warning_1(!Constructor.prototype.componentShouldUpdate, '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', spec.displayName || 'A component');
-      warning_1(!Constructor.prototype.componentWillRecieveProps, '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', spec.displayName || 'A component');
-    }
-
-    // Reduce time spent doing lookups by setting these on the prototype.
-    for (var methodName in ReactClassInterface) {
-      if (!Constructor.prototype[methodName]) {
-        Constructor.prototype[methodName] = null;
-      }
-    }
-
-    return Constructor;
-  },
-
-  injection: {
-    injectMixin: function (mixin) {
-      injectedMixins.push(mixin);
-    }
-  }
-
-};
-
-var ReactClass_1 = ReactClass;
-
 function isNative(fn) {
   // Based on isNative() from Lodash
   var funcToString = Function.prototype.toString;
   var hasOwnProperty = Object.prototype.hasOwnProperty;
   var reIsNative = RegExp('^' + funcToString
   // Take an example native function source for comparison
-  .call(hasOwnProperty)
+  .call(hasOwnProperty
   // Strip regex characters so we can use it for regex
-  .replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
+  ).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&'
   // Remove hasOwnProperty from the template to make it generic
-  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
+  ).replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$');
   try {
     var source = funcToString.call(fn);
     return reIsNative.test(source);
@@ -2350,10 +1750,78 @@ var ReactComponentTreeHook = {
 
 
   getRootIDs: getRootIDs,
-  getRegisteredIDs: getItemIDs
+  getRegisteredIDs: getItemIDs,
+
+  pushNonStandardWarningStack: function (isCreatingElement, currentSource) {
+    if (typeof console.reactStack !== 'function') {
+      return;
+    }
+
+    var stack = [];
+    var currentOwner = ReactCurrentOwner_1.current;
+    var id = currentOwner && currentOwner._debugID;
+
+    try {
+      if (isCreatingElement) {
+        stack.push({
+          name: id ? ReactComponentTreeHook.getDisplayName(id) : null,
+          fileName: currentSource ? currentSource.fileName : null,
+          lineNumber: currentSource ? currentSource.lineNumber : null
+        });
+      }
+
+      while (id) {
+        var element = ReactComponentTreeHook.getElement(id);
+        var parentID = ReactComponentTreeHook.getParentID(id);
+        var ownerID = ReactComponentTreeHook.getOwnerID(id);
+        var ownerName = ownerID ? ReactComponentTreeHook.getDisplayName(ownerID) : null;
+        var source = element && element._source;
+        stack.push({
+          name: ownerName,
+          fileName: source ? source.fileName : null,
+          lineNumber: source ? source.lineNumber : null
+        });
+        id = parentID;
+      }
+    } catch (err) {
+      // Internal state is messed up.
+      // Stop building the stack (it's just a nice to have).
+    }
+
+    console.reactStack(stack);
+  },
+  popNonStandardWarningStack: function () {
+    if (typeof console.reactStackEnd !== 'function') {
+      return;
+    }
+    console.reactStackEnd();
+  }
 };
 
 var ReactComponentTreeHook_1 = ReactComponentTreeHook;
+
+/**
+ * Copyright 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+var ReactPropTypeLocationNames = {};
+
+{
+  ReactPropTypeLocationNames = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
+}
+
+var ReactPropTypeLocationNames_1 = ReactPropTypeLocationNames;
 
 /**
  * Copyright 2013-present, Facebook, Inc.
@@ -2576,7 +2044,6 @@ function validatePropTypes(element) {
 }
 
 var ReactElementValidator$2 = {
-
   createElement: function (type, props, children) {
     var validType = typeof type === 'string' || typeof type === 'function';
     // We warn in this case but don't throw. We expect the element creation to
@@ -2585,7 +2052,7 @@ var ReactElementValidator$2 = {
       if (typeof type !== 'function' && typeof type !== 'string') {
         var info = '';
         if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
-          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+          info += ' You likely forgot to export your component from the file ' + "it's defined in.";
         }
 
         var sourceInfo = getSourceInfoErrorAddendum(props);
@@ -2597,7 +2064,10 @@ var ReactElementValidator$2 = {
 
         info += ReactComponentTreeHook_1.getCurrentStackAddendum();
 
+        var currentSource = props !== null && props !== undefined && props.__source !== undefined ? props.__source : null;
+        ReactComponentTreeHook_1.pushNonStandardWarningStack(true, currentSource);
         warning_1(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', type == null ? type : typeof type, info);
+        ReactComponentTreeHook_1.popNonStandardWarningStack();
       }
     }
 
@@ -2635,7 +2105,7 @@ var ReactElementValidator$2 = {
         Object.defineProperty(validatedFactory, 'type', {
           enumerable: false,
           get: function () {
-            warning_1(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.');
+            lowPriorityWarning_1(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.');
             Object.defineProperty(this, 'type', {
               value: type
             });
@@ -2656,11 +2126,15 @@ var ReactElementValidator$2 = {
     validatePropTypes(newElement);
     return newElement;
   }
-
 };
 
 var ReactElementValidator_1 = ReactElementValidator$2;
 
+/**
+ * Create a factory that creates HTML tag elements.
+ *
+ * @private
+ */
 var createDOMFactory = ReactElement_1.createFactory;
 {
   var ReactElementValidator$1 = ReactElementValidator_1;
@@ -2669,7 +2143,6 @@ var createDOMFactory = ReactElement_1.createFactory;
 
 /**
  * Creates a mapping from supported HTML tags to `ReactDOMComponent` classes.
- * This is also accessible via `React.DOM`.
  *
  * @public
  */
@@ -3371,6 +2844,11 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
+// React 15.5 references this module, and assumes PropTypes are still callable in production.
+// Therefore we re-export development-only version with all the PropTypes checks here.
+// However if one is migrating to the `prop-types` npm library, they will go through the
+// `index.js` entry point, and it will branch depending on the environment.
+
 var factory_1 = function(isValidElement) {
   // It is still allowed in 15.5.
   var throwOnDirectAccess = false;
@@ -3393,8 +2871,885 @@ var ReactPropTypes = factory_1(isValidElement);
  *
  */
 
-var ReactVersion = '15.5.4';
+var ReactVersion = '15.6.0';
 
+{
+  var warning$3 = warning_1;
+}
+
+var MIXINS_KEY = 'mixins';
+
+// Helper function to allow the creation of anonymous functions which do not
+// have .name set to the name of the variable being assigned to.
+function identity(fn) {
+  return fn;
+}
+
+var ReactPropTypeLocationNames$2;
+{
+  ReactPropTypeLocationNames$2 = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
+}
+
+function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
+  /**
+   * Policies that describe methods in `ReactClassInterface`.
+   */
+
+  var injectedMixins = [];
+
+  /**
+   * Composite components are higher-level components that compose other composite
+   * or host components.
+   *
+   * To create a new type of `ReactClass`, pass a specification of
+   * your new class to `React.createClass`. The only requirement of your class
+   * specification is that you implement a `render` method.
+   *
+   *   var MyComponent = React.createClass({
+   *     render: function() {
+   *       return <div>Hello World</div>;
+   *     }
+   *   });
+   *
+   * The class specification supports a specific protocol of methods that have
+   * special meaning (e.g. `render`). See `ReactClassInterface` for
+   * more the comprehensive protocol. Any other properties and methods in the
+   * class specification will be available on the prototype.
+   *
+   * @interface ReactClassInterface
+   * @internal
+   */
+  var ReactClassInterface = {
+    /**
+     * An array of Mixin objects to include when defining your component.
+     *
+     * @type {array}
+     * @optional
+     */
+    mixins: 'DEFINE_MANY',
+
+    /**
+     * An object containing properties and methods that should be defined on
+     * the component's constructor instead of its prototype (static methods).
+     *
+     * @type {object}
+     * @optional
+     */
+    statics: 'DEFINE_MANY',
+
+    /**
+     * Definition of prop types for this component.
+     *
+     * @type {object}
+     * @optional
+     */
+    propTypes: 'DEFINE_MANY',
+
+    /**
+     * Definition of context types for this component.
+     *
+     * @type {object}
+     * @optional
+     */
+    contextTypes: 'DEFINE_MANY',
+
+    /**
+     * Definition of context types this component sets for its children.
+     *
+     * @type {object}
+     * @optional
+     */
+    childContextTypes: 'DEFINE_MANY',
+
+    // ==== Definition methods ====
+
+    /**
+     * Invoked when the component is mounted. Values in the mapping will be set on
+     * `this.props` if that prop is not specified (i.e. using an `in` check).
+     *
+     * This method is invoked before `getInitialState` and therefore cannot rely
+     * on `this.state` or use `this.setState`.
+     *
+     * @return {object}
+     * @optional
+     */
+    getDefaultProps: 'DEFINE_MANY_MERGED',
+
+    /**
+     * Invoked once before the component is mounted. The return value will be used
+     * as the initial value of `this.state`.
+     *
+     *   getInitialState: function() {
+     *     return {
+     *       isOn: false,
+     *       fooBaz: new BazFoo()
+     *     }
+     *   }
+     *
+     * @return {object}
+     * @optional
+     */
+    getInitialState: 'DEFINE_MANY_MERGED',
+
+    /**
+     * @return {object}
+     * @optional
+     */
+    getChildContext: 'DEFINE_MANY_MERGED',
+
+    /**
+     * Uses props from `this.props` and state from `this.state` to render the
+     * structure of the component.
+     *
+     * No guarantees are made about when or how often this method is invoked, so
+     * it must not have side effects.
+     *
+     *   render: function() {
+     *     var name = this.props.name;
+     *     return <div>Hello, {name}!</div>;
+     *   }
+     *
+     * @return {ReactComponent}
+     * @required
+     */
+    render: 'DEFINE_ONCE',
+
+    // ==== Delegate methods ====
+
+    /**
+     * Invoked when the component is initially created and about to be mounted.
+     * This may have side effects, but any external subscriptions or data created
+     * by this method must be cleaned up in `componentWillUnmount`.
+     *
+     * @optional
+     */
+    componentWillMount: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component has been mounted and has a DOM representation.
+     * However, there is no guarantee that the DOM node is in the document.
+     *
+     * Use this as an opportunity to operate on the DOM when the component has
+     * been mounted (initialized and rendered) for the first time.
+     *
+     * @param {DOMElement} rootNode DOM element representing the component.
+     * @optional
+     */
+    componentDidMount: 'DEFINE_MANY',
+
+    /**
+     * Invoked before the component receives new props.
+     *
+     * Use this as an opportunity to react to a prop transition by updating the
+     * state using `this.setState`. Current props are accessed via `this.props`.
+     *
+     *   componentWillReceiveProps: function(nextProps, nextContext) {
+     *     this.setState({
+     *       likesIncreasing: nextProps.likeCount > this.props.likeCount
+     *     });
+     *   }
+     *
+     * NOTE: There is no equivalent `componentWillReceiveState`. An incoming prop
+     * transition may cause a state change, but the opposite is not true. If you
+     * need it, you are probably looking for `componentWillUpdate`.
+     *
+     * @param {object} nextProps
+     * @optional
+     */
+    componentWillReceiveProps: 'DEFINE_MANY',
+
+    /**
+     * Invoked while deciding if the component should be updated as a result of
+     * receiving new props, state and/or context.
+     *
+     * Use this as an opportunity to `return false` when you're certain that the
+     * transition to the new props/state/context will not require a component
+     * update.
+     *
+     *   shouldComponentUpdate: function(nextProps, nextState, nextContext) {
+     *     return !equal(nextProps, this.props) ||
+     *       !equal(nextState, this.state) ||
+     *       !equal(nextContext, this.context);
+     *   }
+     *
+     * @param {object} nextProps
+     * @param {?object} nextState
+     * @param {?object} nextContext
+     * @return {boolean} True if the component should update.
+     * @optional
+     */
+    shouldComponentUpdate: 'DEFINE_ONCE',
+
+    /**
+     * Invoked when the component is about to update due to a transition from
+     * `this.props`, `this.state` and `this.context` to `nextProps`, `nextState`
+     * and `nextContext`.
+     *
+     * Use this as an opportunity to perform preparation before an update occurs.
+     *
+     * NOTE: You **cannot** use `this.setState()` in this method.
+     *
+     * @param {object} nextProps
+     * @param {?object} nextState
+     * @param {?object} nextContext
+     * @param {ReactReconcileTransaction} transaction
+     * @optional
+     */
+    componentWillUpdate: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component's DOM representation has been updated.
+     *
+     * Use this as an opportunity to operate on the DOM when the component has
+     * been updated.
+     *
+     * @param {object} prevProps
+     * @param {?object} prevState
+     * @param {?object} prevContext
+     * @param {DOMElement} rootNode DOM element representing the component.
+     * @optional
+     */
+    componentDidUpdate: 'DEFINE_MANY',
+
+    /**
+     * Invoked when the component is about to be removed from its parent and have
+     * its DOM representation destroyed.
+     *
+     * Use this as an opportunity to deallocate any external resources.
+     *
+     * NOTE: There is no `componentDidUnmount` since your component will have been
+     * destroyed by that point.
+     *
+     * @optional
+     */
+    componentWillUnmount: 'DEFINE_MANY',
+
+    // ==== Advanced methods ====
+
+    /**
+     * Updates the component's currently mounted DOM representation.
+     *
+     * By default, this implements React's rendering and reconciliation algorithm.
+     * Sophisticated clients may wish to override this.
+     *
+     * @param {ReactReconcileTransaction} transaction
+     * @internal
+     * @overridable
+     */
+    updateComponent: 'OVERRIDE_BASE'
+  };
+
+  /**
+   * Mapping from class specification keys to special processing functions.
+   *
+   * Although these are declared like instance properties in the specification
+   * when defining classes using `React.createClass`, they are actually static
+   * and are accessible on the constructor instead of the prototype. Despite
+   * being static, they must be defined outside of the "statics" key under
+   * which all other static methods are defined.
+   */
+  var RESERVED_SPEC_KEYS = {
+    displayName: function(Constructor, displayName) {
+      Constructor.displayName = displayName;
+    },
+    mixins: function(Constructor, mixins) {
+      if (mixins) {
+        for (var i = 0; i < mixins.length; i++) {
+          mixSpecIntoComponent(Constructor, mixins[i]);
+        }
+      }
+    },
+    childContextTypes: function(Constructor, childContextTypes) {
+      {
+        validateTypeDef(Constructor, childContextTypes, 'childContext');
+      }
+      Constructor.childContextTypes = index(
+        {},
+        Constructor.childContextTypes,
+        childContextTypes
+      );
+    },
+    contextTypes: function(Constructor, contextTypes) {
+      {
+        validateTypeDef(Constructor, contextTypes, 'context');
+      }
+      Constructor.contextTypes = index(
+        {},
+        Constructor.contextTypes,
+        contextTypes
+      );
+    },
+    /**
+     * Special case getDefaultProps which should move into statics but requires
+     * automatic merging.
+     */
+    getDefaultProps: function(Constructor, getDefaultProps) {
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps = createMergedResultFunction(
+          Constructor.getDefaultProps,
+          getDefaultProps
+        );
+      } else {
+        Constructor.getDefaultProps = getDefaultProps;
+      }
+    },
+    propTypes: function(Constructor, propTypes) {
+      {
+        validateTypeDef(Constructor, propTypes, 'prop');
+      }
+      Constructor.propTypes = index({}, Constructor.propTypes, propTypes);
+    },
+    statics: function(Constructor, statics) {
+      mixStaticSpecIntoComponent(Constructor, statics);
+    },
+    autobind: function() {}
+  };
+
+  function validateTypeDef(Constructor, typeDef, location) {
+    for (var propName in typeDef) {
+      if (typeDef.hasOwnProperty(propName)) {
+        // use a warning instead of an _invariant so components
+        // don't show up in prod but only in __DEV__
+        {
+          warning$3(
+            typeof typeDef[propName] === 'function',
+            '%s: %s type `%s` is invalid; it must be a function, usually from ' +
+              'React.PropTypes.',
+            Constructor.displayName || 'ReactClass',
+            ReactPropTypeLocationNames$2[location],
+            propName
+          );
+        }
+      }
+    }
+  }
+
+  function validateMethodOverride(isAlreadyDefined, name) {
+    var specPolicy = ReactClassInterface.hasOwnProperty(name)
+      ? ReactClassInterface[name]
+      : null;
+
+    // Disallow overriding of base class methods unless explicitly allowed.
+    if (ReactClassMixin.hasOwnProperty(name)) {
+      invariant_1(
+        specPolicy === 'OVERRIDE_BASE',
+        'ReactClassInterface: You are attempting to override ' +
+          '`%s` from your class specification. Ensure that your method names ' +
+          'do not overlap with React methods.',
+        name
+      );
+    }
+
+    // Disallow defining methods more than once unless explicitly allowed.
+    if (isAlreadyDefined) {
+      invariant_1(
+        specPolicy === 'DEFINE_MANY' || specPolicy === 'DEFINE_MANY_MERGED',
+        'ReactClassInterface: You are attempting to define ' +
+          '`%s` on your component more than once. This conflict may be due ' +
+          'to a mixin.',
+        name
+      );
+    }
+  }
+
+  /**
+   * Mixin helper which handles policy validation and reserved
+   * specification keys when building React classes.
+   */
+  function mixSpecIntoComponent(Constructor, spec) {
+    if (!spec) {
+      {
+        var typeofSpec = typeof spec;
+        var isMixinValid = typeofSpec === 'object' && spec !== null;
+
+        {
+          warning$3(
+            isMixinValid,
+            "%s: You're attempting to include a mixin that is either null " +
+              'or not an object. Check the mixins included by the component, ' +
+              'as well as any mixins they include themselves. ' +
+              'Expected object but got %s.',
+            Constructor.displayName || 'ReactClass',
+            spec === null ? null : typeofSpec
+          );
+        }
+      }
+
+      return;
+    }
+
+    invariant_1(
+      typeof spec !== 'function',
+      "ReactClass: You're attempting to " +
+        'use a component class or function as a mixin. Instead, just use a ' +
+        'regular object.'
+    );
+    invariant_1(
+      !isValidElement(spec),
+      "ReactClass: You're attempting to " +
+        'use a component as a mixin. Instead, just use a regular object.'
+    );
+
+    var proto = Constructor.prototype;
+    var autoBindPairs = proto.__reactAutoBindPairs;
+
+    // By handling mixins before any other properties, we ensure the same
+    // chaining order is applied to methods with DEFINE_MANY policy, whether
+    // mixins are listed before or after these methods in the spec.
+    if (spec.hasOwnProperty(MIXINS_KEY)) {
+      RESERVED_SPEC_KEYS.mixins(Constructor, spec.mixins);
+    }
+
+    for (var name in spec) {
+      if (!spec.hasOwnProperty(name)) {
+        continue;
+      }
+
+      if (name === MIXINS_KEY) {
+        // We have already handled mixins in a special case above.
+        continue;
+      }
+
+      var property = spec[name];
+      var isAlreadyDefined = proto.hasOwnProperty(name);
+      validateMethodOverride(isAlreadyDefined, name);
+
+      if (RESERVED_SPEC_KEYS.hasOwnProperty(name)) {
+        RESERVED_SPEC_KEYS[name](Constructor, property);
+      } else {
+        // Setup methods on prototype:
+        // The following member methods should not be automatically bound:
+        // 1. Expected ReactClass methods (in the "interface").
+        // 2. Overridden methods (that were mixed in).
+        var isReactClassMethod = ReactClassInterface.hasOwnProperty(name);
+        var isFunction = typeof property === 'function';
+        var shouldAutoBind =
+          isFunction &&
+          !isReactClassMethod &&
+          !isAlreadyDefined &&
+          spec.autobind !== false;
+
+        if (shouldAutoBind) {
+          autoBindPairs.push(name, property);
+          proto[name] = property;
+        } else {
+          if (isAlreadyDefined) {
+            var specPolicy = ReactClassInterface[name];
+
+            // These cases should already be caught by validateMethodOverride.
+            invariant_1(
+              isReactClassMethod &&
+                (specPolicy === 'DEFINE_MANY_MERGED' ||
+                  specPolicy === 'DEFINE_MANY'),
+              'ReactClass: Unexpected spec policy %s for key %s ' +
+                'when mixing in component specs.',
+              specPolicy,
+              name
+            );
+
+            // For methods which are defined more than once, call the existing
+            // methods before calling the new property, merging if appropriate.
+            if (specPolicy === 'DEFINE_MANY_MERGED') {
+              proto[name] = createMergedResultFunction(proto[name], property);
+            } else if (specPolicy === 'DEFINE_MANY') {
+              proto[name] = createChainedFunction(proto[name], property);
+            }
+          } else {
+            proto[name] = property;
+            {
+              // Add verbose displayName to the function, which helps when looking
+              // at profiling tools.
+              if (typeof property === 'function' && spec.displayName) {
+                proto[name].displayName = spec.displayName + '_' + name;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function mixStaticSpecIntoComponent(Constructor, statics) {
+    if (!statics) {
+      return;
+    }
+    for (var name in statics) {
+      var property = statics[name];
+      if (!statics.hasOwnProperty(name)) {
+        continue;
+      }
+
+      var isReserved = name in RESERVED_SPEC_KEYS;
+      invariant_1(
+        !isReserved,
+        'ReactClass: You are attempting to define a reserved ' +
+          'property, `%s`, that shouldn\'t be on the "statics" key. Define it ' +
+          'as an instance property instead; it will still be accessible on the ' +
+          'constructor.',
+        name
+      );
+
+      var isInherited = name in Constructor;
+      invariant_1(
+        !isInherited,
+        'ReactClass: You are attempting to define ' +
+          '`%s` on your component more than once. This conflict may be ' +
+          'due to a mixin.',
+        name
+      );
+      Constructor[name] = property;
+    }
+  }
+
+  /**
+   * Merge two objects, but throw if both contain the same key.
+   *
+   * @param {object} one The first object, which is mutated.
+   * @param {object} two The second object
+   * @return {object} one after it has been mutated to contain everything in two.
+   */
+  function mergeIntoWithNoDuplicateKeys(one, two) {
+    invariant_1(
+      one && two && typeof one === 'object' && typeof two === 'object',
+      'mergeIntoWithNoDuplicateKeys(): Cannot merge non-objects.'
+    );
+
+    for (var key in two) {
+      if (two.hasOwnProperty(key)) {
+        invariant_1(
+          one[key] === undefined,
+          'mergeIntoWithNoDuplicateKeys(): ' +
+            'Tried to merge two objects with the same key: `%s`. This conflict ' +
+            'may be due to a mixin; in particular, this may be caused by two ' +
+            'getInitialState() or getDefaultProps() methods returning objects ' +
+            'with clashing keys.',
+          key
+        );
+        one[key] = two[key];
+      }
+    }
+    return one;
+  }
+
+  /**
+   * Creates a function that invokes two functions and merges their return values.
+   *
+   * @param {function} one Function to invoke first.
+   * @param {function} two Function to invoke second.
+   * @return {function} Function that invokes the two argument functions.
+   * @private
+   */
+  function createMergedResultFunction(one, two) {
+    return function mergedResult() {
+      var a = one.apply(this, arguments);
+      var b = two.apply(this, arguments);
+      if (a == null) {
+        return b;
+      } else if (b == null) {
+        return a;
+      }
+      var c = {};
+      mergeIntoWithNoDuplicateKeys(c, a);
+      mergeIntoWithNoDuplicateKeys(c, b);
+      return c;
+    };
+  }
+
+  /**
+   * Creates a function that invokes two functions and ignores their return vales.
+   *
+   * @param {function} one Function to invoke first.
+   * @param {function} two Function to invoke second.
+   * @return {function} Function that invokes the two argument functions.
+   * @private
+   */
+  function createChainedFunction(one, two) {
+    return function chainedFunction() {
+      one.apply(this, arguments);
+      two.apply(this, arguments);
+    };
+  }
+
+  /**
+   * Binds a method to the component.
+   *
+   * @param {object} component Component whose method is going to be bound.
+   * @param {function} method Method to be bound.
+   * @return {function} The bound method.
+   */
+  function bindAutoBindMethod(component, method) {
+    var boundMethod = method.bind(component);
+    {
+      boundMethod.__reactBoundContext = component;
+      boundMethod.__reactBoundMethod = method;
+      boundMethod.__reactBoundArguments = null;
+      var componentName = component.constructor.displayName;
+      var _bind = boundMethod.bind;
+      boundMethod.bind = function(newThis) {
+        for (
+          var _len = arguments.length,
+            args = Array(_len > 1 ? _len - 1 : 0),
+            _key = 1;
+          _key < _len;
+          _key++
+        ) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        // User is trying to bind() an autobound method; we effectively will
+        // ignore the value of "this" that the user is trying to use, so
+        // let's warn.
+        if (newThis !== component && newThis !== null) {
+          {
+            warning$3(
+              false,
+              'bind(): React component methods may only be bound to the ' +
+                'component instance. See %s',
+              componentName
+            );
+          }
+        } else if (!args.length) {
+          {
+            warning$3(
+              false,
+              'bind(): You are binding a component method to the component. ' +
+                'React does this for you automatically in a high-performance ' +
+                'way, so you can safely remove this call. See %s',
+              componentName
+            );
+          }
+          return boundMethod;
+        }
+        var reboundMethod = _bind.apply(boundMethod, arguments);
+        reboundMethod.__reactBoundContext = component;
+        reboundMethod.__reactBoundMethod = method;
+        reboundMethod.__reactBoundArguments = args;
+        return reboundMethod;
+      };
+    }
+    return boundMethod;
+  }
+
+  /**
+   * Binds all auto-bound methods in a component.
+   *
+   * @param {object} component Component whose method is going to be bound.
+   */
+  function bindAutoBindMethods(component) {
+    var pairs = component.__reactAutoBindPairs;
+    for (var i = 0; i < pairs.length; i += 2) {
+      var autoBindKey = pairs[i];
+      var method = pairs[i + 1];
+      component[autoBindKey] = bindAutoBindMethod(component, method);
+    }
+  }
+
+  var IsMountedPreMixin = {
+    componentDidMount: function() {
+      this.__isMounted = true;
+    }
+  };
+
+  var IsMountedPostMixin = {
+    componentWillUnmount: function() {
+      this.__isMounted = false;
+    }
+  };
+
+  /**
+   * Add more to the ReactClass base class. These are all legacy features and
+   * therefore not already part of the modern ReactComponent.
+   */
+  var ReactClassMixin = {
+    /**
+     * TODO: This will be deprecated because state should always keep a consistent
+     * type signature and the only use case for this, is to avoid that.
+     */
+    replaceState: function(newState, callback) {
+      this.updater.enqueueReplaceState(this, newState, callback);
+    },
+
+    /**
+     * Checks whether or not this composite component is mounted.
+     * @return {boolean} True if mounted, false otherwise.
+     * @protected
+     * @final
+     */
+    isMounted: function() {
+      {
+        warning$3(
+          this.__didWarnIsMounted,
+          '%s: isMounted is deprecated. Instead, make sure to clean up ' +
+            'subscriptions and pending requests in componentWillUnmount to ' +
+            'prevent memory leaks.',
+          (this.constructor && this.constructor.displayName) ||
+            this.name ||
+            'Component'
+        );
+        this.__didWarnIsMounted = true;
+      }
+      return !!this.__isMounted;
+    }
+  };
+
+  var ReactClassComponent = function() {};
+  index(
+    ReactClassComponent.prototype,
+    ReactComponent.prototype,
+    ReactClassMixin
+  );
+
+  /**
+   * Creates a composite component class given a class specification.
+   * See https://facebook.github.io/react/docs/top-level-api.html#react.createclass
+   *
+   * @param {object} spec Class specification (which must define `render`).
+   * @return {function} Component constructor function.
+   * @public
+   */
+  function createClass(spec) {
+    // To keep our warnings more understandable, we'll use a little hack here to
+    // ensure that Constructor.name !== 'Constructor'. This makes sure we don't
+    // unnecessarily identify a class without displayName as 'Constructor'.
+    var Constructor = identity(function(props, context, updater) {
+      // This constructor gets overridden by mocks. The argument is used
+      // by mocks to assert on what gets mounted.
+
+      {
+        warning$3(
+          this instanceof Constructor,
+          'Something is calling a React component directly. Use a factory or ' +
+            'JSX instead. See: https://fb.me/react-legacyfactory'
+        );
+      }
+
+      // Wire up auto-binding
+      if (this.__reactAutoBindPairs.length) {
+        bindAutoBindMethods(this);
+      }
+
+      this.props = props;
+      this.context = context;
+      this.refs = emptyObject_1;
+      this.updater = updater || ReactNoopUpdateQueue;
+
+      this.state = null;
+
+      // ReactClasses doesn't have constructors. Instead, they use the
+      // getInitialState and componentWillMount methods for initialization.
+
+      var initialState = this.getInitialState ? this.getInitialState() : null;
+      {
+        // We allow auto-mocks to proceed as if they're returning null.
+        if (
+          initialState === undefined &&
+          this.getInitialState._isMockFunction
+        ) {
+          // This is probably bad practice. Consider warning here and
+          // deprecating this convenience.
+          initialState = null;
+        }
+      }
+      invariant_1(
+        typeof initialState === 'object' && !Array.isArray(initialState),
+        '%s.getInitialState(): must return an object or null',
+        Constructor.displayName || 'ReactCompositeComponent'
+      );
+
+      this.state = initialState;
+    });
+    Constructor.prototype = new ReactClassComponent();
+    Constructor.prototype.constructor = Constructor;
+    Constructor.prototype.__reactAutoBindPairs = [];
+
+    injectedMixins.forEach(mixSpecIntoComponent.bind(null, Constructor));
+
+    mixSpecIntoComponent(Constructor, IsMountedPreMixin);
+    mixSpecIntoComponent(Constructor, spec);
+    mixSpecIntoComponent(Constructor, IsMountedPostMixin);
+
+    // Initialize the defaultProps property after all mixins have been merged.
+    if (Constructor.getDefaultProps) {
+      Constructor.defaultProps = Constructor.getDefaultProps();
+    }
+
+    {
+      // This is a tag to indicate that the use of these method names is ok,
+      // since it's used with createClass. If it's not, then it's likely a
+      // mistake so we'll warn you to use the static property, property
+      // initializer or constructor respectively.
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps.isReactClassApproved = {};
+      }
+      if (Constructor.prototype.getInitialState) {
+        Constructor.prototype.getInitialState.isReactClassApproved = {};
+      }
+    }
+
+    invariant_1(
+      Constructor.prototype.render,
+      'createClass(...): Class specification must implement a `render` method.'
+    );
+
+    {
+      warning$3(
+        !Constructor.prototype.componentShouldUpdate,
+        '%s has a method called ' +
+          'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' +
+          'The name is phrased as a question because the function is ' +
+          'expected to return a value.',
+        spec.displayName || 'A component'
+      );
+      warning$3(
+        !Constructor.prototype.componentWillRecieveProps,
+        '%s has a method called ' +
+          'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?',
+        spec.displayName || 'A component'
+      );
+    }
+
+    // Reduce time spent doing lookups by setting these on the prototype.
+    for (var methodName in ReactClassInterface) {
+      if (!Constructor.prototype[methodName]) {
+        Constructor.prototype[methodName] = null;
+      }
+    }
+
+    return Constructor;
+  }
+
+  return createClass;
+}
+
+var factory_1$2 = factory$1;
+
+var Component = ReactBaseClasses.Component;
+
+var isValidElement$1 = ReactElement_1.isValidElement;
+
+
+
+
+var createClass = factory_1$2(Component, isValidElement$1, ReactNoopUpdateQueue_1);
+
+/**
+ * Returns the first child in a collection of children and verifies that there
+ * is only one child in the collection.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#react.children.only
+ *
+ * The current implementation of this function assumes that a single child gets
+ * passed without a wrapper, but the purpose of this helper function is to
+ * abstract away the particular structure of children.
+ *
+ * @param {?object} children Child collection structure.
+ * @return {ReactElement} The first and only `ReactElement` contained in the
+ * structure.
+ */
 function onlyChild(children) {
   !ReactElement_1.isValidElement(children) ? invariant_1(false, 'React.Children.only expected to receive a single React element child.') : void 0;
   return children;
@@ -3407,6 +3762,7 @@ var createFactory = ReactElement_1.createFactory;
 var cloneElement = ReactElement_1.cloneElement;
 
 {
+  var lowPriorityWarning = lowPriorityWarning_1;
   var canDefineProperty = canDefineProperty_1;
   var ReactElementValidator = ReactElementValidator_1;
   var didWarnPropTypesDeprecated = false;
@@ -3416,18 +3772,27 @@ var cloneElement = ReactElement_1.cloneElement;
 }
 
 var __spread = index;
+var createMixin = function (mixin) {
+  return mixin;
+};
 
 {
-  var warned = false;
+  var warnedForSpread = false;
+  var warnedForCreateMixin = false;
   __spread = function () {
-    warning_1(warned, 'React.__spread is deprecated and should not be used. Use ' + 'Object.assign directly or another helper function with similar ' + 'semantics. You may be seeing this warning due to your compiler. ' + 'See https://fb.me/react-spread-deprecation for more details.');
-    warned = true;
+    lowPriorityWarning(warnedForSpread, 'React.__spread is deprecated and should not be used. Use ' + 'Object.assign directly or another helper function with similar ' + 'semantics. You may be seeing this warning due to your compiler. ' + 'See https://fb.me/react-spread-deprecation for more details.');
+    warnedForSpread = true;
     return index.apply(null, arguments);
+  };
+
+  createMixin = function (mixin) {
+    lowPriorityWarning(warnedForCreateMixin, 'React.createMixin is deprecated and should not be used. ' + 'In React v16.0, it will be removed. ' + 'You can use this mixin directly instead. ' + 'See https://fb.me/createmixin-was-never-implemented for more info.');
+    warnedForCreateMixin = true;
+    return mixin;
   };
 }
 
 var React = {
-
   // Modern
 
   Children: {
@@ -3438,8 +3803,8 @@ var React = {
     only: onlyChild_1
   },
 
-  Component: ReactComponent_1,
-  PureComponent: ReactPureComponent_1,
+  Component: ReactBaseClasses.Component,
+  PureComponent: ReactBaseClasses.PureComponent,
 
   createElement: createElement,
   cloneElement: cloneElement,
@@ -3448,12 +3813,9 @@ var React = {
   // Classic
 
   PropTypes: ReactPropTypes,
-  createClass: ReactClass_1.createClass,
+  createClass: createClass,
   createFactory: createFactory,
-  createMixin: function (mixin) {
-    // Currently a noop. Will be used to validate and trace mixins.
-    return mixin;
-  },
+  createMixin: createMixin,
 
   // This looks DOM specific but these are actually isomorphic helpers
   // since they are just generating DOM strings.
@@ -3465,17 +3827,40 @@ var React = {
   __spread: __spread
 };
 
-// TODO: Fix tests so that this deprecation warning doesn't cause failures.
 {
+  var warnedForCreateClass = false;
   if (canDefineProperty) {
     Object.defineProperty(React, 'PropTypes', {
       get: function () {
-        warning_1(didWarnPropTypesDeprecated, 'Accessing PropTypes via the main React package is deprecated. Use ' + 'the prop-types package from npm instead.');
+        lowPriorityWarning(didWarnPropTypesDeprecated, 'Accessing PropTypes via the main React package is deprecated,' + ' and will be removed in  React v16.0.' + ' Use the latest available v15.* prop-types package from npm instead.' + ' For info on usage, compatibility, migration and more, see ' + 'https://fb.me/prop-types-docs');
         didWarnPropTypesDeprecated = true;
         return ReactPropTypes;
       }
     });
+
+    Object.defineProperty(React, 'createClass', {
+      get: function () {
+        lowPriorityWarning(warnedForCreateClass, 'Accessing createClass via the main React package is deprecated,' + ' and will be removed in React v16.0.' + " Use a plain JavaScript class instead. If you're not yet " + 'ready to migrate, create-react-class v15.* is available ' + 'on npm as a temporary, drop-in replacement. ' + 'For more info see https://fb.me/react-create-class');
+        warnedForCreateClass = true;
+        return createClass;
+      }
+    });
   }
+
+  // React.DOM factories are deprecated. Wrap these methods so that
+  // invocations of the React.DOM namespace and alert users to switch
+  // to the `react-dom-factories` package.
+  React.DOM = {};
+  var warnedForFactories = false;
+  Object.keys(ReactDOMFactories_1).forEach(function (factory) {
+    React.DOM[factory] = function () {
+      if (!warnedForFactories) {
+        lowPriorityWarning(false, 'Accessing factories like React.DOM.%s has been deprecated ' + 'and will be removed in v16.0+. Use the ' + 'react-dom-factories package instead. ' + ' Version 1.0 provides a drop-in replacement.' + ' For more info, see https://fb.me/react-dom-factories', factory);
+        warnedForFactories = true;
+      }
+      return ReactDOMFactories_1[factory].apply(ReactDOMFactories_1, arguments);
+    };
+  });
 }
 
 var React_1 = React;
@@ -3801,15 +4186,27 @@ function createDisposable(f) {
         [FSymbol.reflection]() { return { interfaces: ["System.IDisposable"] }; },
     };
 }
+// tslint forbids non-arrow functions, but it's
+// necessary here to use the arguments object
+/* tslint:disable */
+
+/* tslint:enable */
 const CaseRules = {
     None: 0,
     LowerFirst: 1,
 };
-function createObj(fields, caseRule = CaseRules.None) {
+function isList(o) {
+    if (o != null) {
+        if (typeof o[FSymbol.reflection] === "function") {
+            return o[FSymbol.reflection]().type === "Microsoft.FSharp.Collections.FSharpList";
+        }
+    }
+    return false;
+}
+function createObj(fields, caseRule = CaseRules.None, casesCache) {
     const iter = fields[Symbol.iterator]();
     let cur = iter.next();
     const o = {};
-    let casesCache = null;
     while (!cur.done) {
         const value = cur.value;
         if (Array.isArray(value)) {
@@ -3826,12 +4223,14 @@ function createObj(fields, caseRule = CaseRules.None) {
                 }
             }
             const caseInfo = (cases != null) ? cases[value.tag] : null;
-            if (cases != null && Array.isArray(caseInfo)) {
+            if (Array.isArray(caseInfo)) {
                 let key = caseInfo[0];
                 if (caseRule === CaseRules.LowerFirst) {
                     key = key[0].toLowerCase() + key.substr(1);
                 }
-                o[key] = caseInfo.length === 1 ? true : value.data;
+                o[key] = caseInfo.length === 1
+                    ? true
+                    : (isList(value.data) ? createObj(value.data, caseRule, casesCache) : value.data);
             }
             else {
                 throw new Error("Cannot infer key and value of " + value);
@@ -3842,6 +4241,7 @@ function createObj(fields, caseRule = CaseRules.None) {
     return o;
 }
 
+// This module is split from List.ts to prevent cyclic dependencies
 function ofArray(args, base) {
     let acc = base || new List$1();
     for (let i = args.length - 1; i >= 0; i--) {
@@ -4002,8 +4402,40 @@ function append$1(xs, ys) {
 }
 
 
-
-
+function concat$1(xs) {
+    return delay(() => {
+        const iter = xs[Symbol.iterator]();
+        let output = { value: null };
+        return unfold((innerIter) => {
+            let hasFinished = false;
+            while (!hasFinished) {
+                if (innerIter == null) {
+                    const cur = iter.next();
+                    if (!cur.done) {
+                        innerIter = cur.value[Symbol.iterator]();
+                    }
+                    else {
+                        hasFinished = true;
+                    }
+                }
+                else {
+                    const cur = innerIter.next();
+                    if (!cur.done) {
+                        output = { value: cur.value };
+                        hasFinished = true;
+                    }
+                    else {
+                        innerIter = null;
+                    }
+                }
+            }
+            return innerIter != null && output != null ? [output.value, innerIter] : null;
+        }, null);
+    });
+}
+function collect$1(f, xs) {
+    return concat$1(map$2(f, xs));
+}
 function choose$1(f, xs) {
     const trySkipToNext = (iter) => {
         const cur = iter.next();
@@ -4171,6 +4603,11 @@ function unfold(f, acc) {
         },
     };
 }
+
+// ----------------------------------------------
+// These functions belong to Seq.ts but are
+// implemented here to prevent cyclic dependencies
+
 
 class MapTree {
     constructor(tag, data) {
@@ -4404,6 +4841,47 @@ function tree_mem(comparer, k, m) {
         }
     }
 }
+// function tree_foldFromTo(
+//     comparer: IComparer<any>, lo: any, hi: any,
+//     f: (k:any, v: any, acc: any) => any, m: MapTree, x: any): any {
+//   if (m.tag === 1) {
+//     var cLoKey = comparer.Compare(lo, m.data[0]);
+//     var cKeyHi = comparer.Compare(m.data[0], hi);
+//     var x_1 = (cLoKey <= 0 ? cKeyHi <= 0 : false) ? f(m.data[0], m.data[1], x) : x;
+//     return x_1;
+//   } else if (m.tag === 2) {
+//     var cLoKey = comparer.Compare(lo, m.data[0]);
+//     var cKeyHi = comparer.Compare(m.data[0], hi);
+//     var x_1 = cLoKey < 0 ? tree_foldFromTo(comparer, lo, hi, f, m.data[2], x) : x;
+//     var x_2 = (cLoKey <= 0 ? cKeyHi <= 0 : false) ? f(m.data[0], m.data[1], x_1) : x_1;
+//     var x_3 = cKeyHi < 0 ? tree_foldFromTo(comparer, lo, hi, f, m.data[3], x_2) : x_2;
+//     return x_3;
+//   }
+//   return x;
+// }
+// function tree_foldSection(
+//     comparer: IComparer<any>, lo: any, hi: any,
+//     f: (k: any, v: any, acc: any) => any, m: MapTree, x: any) {
+//   return comparer.Compare(lo, hi) === 1 ? x : tree_foldFromTo(comparer, lo, hi, f, m, x);
+// }
+// function tree_loop(m: MapTree, acc: any): List<[any,any]> {
+//   return m.tag === 1
+//     ? new List([m.data[0], m.data[1]], acc)
+//     : m.tag === 2
+//       ? tree_loop(m.data[2], new List([m.data[0], m.data[1]], tree_loop(m.data[3], acc)))
+//       : acc;
+// }
+// function tree_toList(m: MapTree) {
+//   return tree_loop(m, new List());
+// }
+// function tree_toArray(m: MapTree) {
+//   return Array.from(tree_toList(m));
+// }
+// function tree_ofList(comparer: IComparer<any>, l: List<[any,any]>) {
+//   return Seq.fold((acc: MapTree, tupledArg: [any, any]) => {
+//     return tree_add(comparer, tupledArg[0], tupledArg[1], acc);
+//   }, tree_empty(), l);
+// }
 function tree_mkFromEnumerator(comparer, acc, e) {
     let cur = e.next();
     while (!cur.done) {
@@ -4739,6 +5217,30 @@ class Elements {
 
 }
 setType("Global.Elements", Elements);
+class Components {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Global.Components",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["Panel"], ["Level"]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Global.Components", Components);
 class Page {
   constructor(tag, data) {
     this.tag = tag;
@@ -4749,7 +5251,7 @@ class Page {
     return {
       type: "Global.Page",
       interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-      cases: [["Home"], ["Element", Elements]]
+      cases: [["Home"], ["Element", Elements], ["Component", Components]]
     };
   }
 
@@ -4788,40 +5290,22 @@ function toHash(page) {
     } else {
       return "#elements/button";
     }
+  } else if (page.tag === 2) {
+    if (page.data.tag === 1) {
+      return "#components/level";
+    } else {
+      return "#components/panel";
+    }
   } else {
     return "#home";
   }
 }
-function renderMarkdown(str) {
-  return react_1("div", {
-    dangerouslySetInnerHTML: {
-      __html: marked.parse(str)
-    }
-  });
-}
-function toList$1(x) {
-  return ofArray([x]);
-}
-function sectionBase(title, docBlocks) {
-  return react_1("div", {}, ...new List$1(react_1("div", {
-    className: "content"
-  }, renderMarkdown(title)), docBlocks));
-}
-function docBlock(code, children) {
-  return react_1("div", {
-    className: "columns"
-  }, react_1("div", {
-    className: "column"
-  }, children), react_1("div", {
-    className: "column"
-  }, renderMarkdown(code)));
-}
 
 class StandardSize {
   constructor(isSmall, isMedium, isLarge) {
-    this.isSmall = isSmall;
-    this.isMedium = isMedium;
-    this.isLarge = isLarge;
+    this.IsSmall = isSmall;
+    this.IsMedium = isMedium;
+    this.IsLarge = isLarge;
   }
 
   [FSymbol.reflection]() {
@@ -4829,9 +5313,9 @@ class StandardSize {
       type: "Elmish.Bulma.BulmaClasses.StandardSize",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isSmall: "string",
-        isMedium: "string",
-        isLarge: "string"
+        IsSmall: "string",
+        IsMedium: "string",
+        IsLarge: "string"
       }
     };
   }
@@ -4848,15 +5332,15 @@ class StandardSize {
 setType("Elmish.Bulma.BulmaClasses.StandardSize", StandardSize);
 class LevelAndColor {
   constructor(isBlack, isDark, isLight, isWhite, isPrimary, isInfo, isSuccess, isWarning, isDanger) {
-    this.isBlack = isBlack;
-    this.isDark = isDark;
-    this.isLight = isLight;
-    this.isWhite = isWhite;
-    this.isPrimary = isPrimary;
-    this.isInfo = isInfo;
-    this.isSuccess = isSuccess;
-    this.isWarning = isWarning;
-    this.isDanger = isDanger;
+    this.IsBlack = isBlack;
+    this.IsDark = isDark;
+    this.IsLight = isLight;
+    this.IsWhite = isWhite;
+    this.IsPrimary = isPrimary;
+    this.IsInfo = isInfo;
+    this.IsSuccess = isSuccess;
+    this.IsWarning = isWarning;
+    this.IsDanger = isDanger;
   }
 
   [FSymbol.reflection]() {
@@ -4864,15 +5348,15 @@ class LevelAndColor {
       type: "Elmish.Bulma.BulmaClasses.LevelAndColor",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isBlack: "string",
-        isDark: "string",
-        isLight: "string",
-        isWhite: "string",
-        isPrimary: "string",
-        isInfo: "string",
-        isSuccess: "string",
-        isWarning: "string",
-        isDanger: "string"
+        IsBlack: "string",
+        IsDark: "string",
+        IsLight: "string",
+        IsWhite: "string",
+        IsPrimary: "string",
+        IsInfo: "string",
+        IsSuccess: "string",
+        IsWarning: "string",
+        IsDanger: "string"
       }
     };
   }
@@ -4889,7 +5373,7 @@ class LevelAndColor {
 setType("Elmish.Bulma.BulmaClasses.LevelAndColor", LevelAndColor);
 class Box {
   constructor(container) {
-    this.container = container;
+    this.Container = container;
   }
 
   [FSymbol.reflection]() {
@@ -4897,7 +5381,7 @@ class Box {
       type: "Elmish.Bulma.BulmaClasses.Box",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string"
+        Container: "string"
       }
     };
   }
@@ -4914,11 +5398,11 @@ class Box {
 setType("Elmish.Bulma.BulmaClasses.Box", Box);
 class Button {
   constructor(container, size, color, state, styles) {
-    this.container = container;
-    this.size = size;
-    this.color = color;
-    this.state = state;
-    this.styles = styles;
+    this.Container = container;
+    this.Size = size;
+    this.Color = color;
+    this.State = state;
+    this.Styles = styles;
   }
 
   [FSymbol.reflection]() {
@@ -4926,11 +5410,11 @@ class Button {
       type: "Elmish.Bulma.BulmaClasses.Button",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: StandardSize,
-        color: LevelAndColor,
-        state: ButtonState,
-        styles: ButtonStyles
+        Container: "string",
+        Size: ButtonSize,
+        Color: LevelAndColor,
+        State: ButtonState,
+        Styles: ButtonStyles
       }
     };
   }
@@ -4945,12 +5429,43 @@ class Button {
 
 }
 setType("Elmish.Bulma.BulmaClasses.Button", Button);
+class ButtonSize {
+  constructor(isSmall, isMedium, isLarge, isFullwidth) {
+    this.IsSmall = isSmall;
+    this.IsMedium = isMedium;
+    this.IsLarge = isLarge;
+    this.IsFullwidth = isFullwidth;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.ButtonSize",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsSmall: "string",
+        IsMedium: "string",
+        IsLarge: "string",
+        IsFullwidth: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.ButtonSize", ButtonSize);
 class ButtonState {
   constructor(isHovered, isFocused, isActive, isLoading) {
-    this.isHovered = isHovered;
-    this.isFocused = isFocused;
-    this.isActive = isActive;
-    this.isLoading = isLoading;
+    this.IsHovered = isHovered;
+    this.IsFocused = isFocused;
+    this.IsActive = isActive;
+    this.IsLoading = isLoading;
   }
 
   [FSymbol.reflection]() {
@@ -4958,10 +5473,10 @@ class ButtonState {
       type: "Elmish.Bulma.BulmaClasses.ButtonState",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isHovered: "string",
-        isFocused: "string",
-        isActive: "string",
-        isLoading: "string"
+        IsHovered: "string",
+        IsFocused: "string",
+        IsActive: "string",
+        IsLoading: "string"
       }
     };
   }
@@ -4978,9 +5493,9 @@ class ButtonState {
 setType("Elmish.Bulma.BulmaClasses.ButtonState", ButtonState);
 class ButtonStyles {
   constructor(isLink, isOutlined, isInverted) {
-    this.isLink = isLink;
-    this.isOutlined = isOutlined;
-    this.isInverted = isInverted;
+    this.IsLink = isLink;
+    this.IsOutlined = isOutlined;
+    this.IsInverted = isInverted;
   }
 
   [FSymbol.reflection]() {
@@ -4988,9 +5503,9 @@ class ButtonStyles {
       type: "Elmish.Bulma.BulmaClasses.ButtonStyles",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isLink: "string",
-        isOutlined: "string",
-        isInverted: "string"
+        IsLink: "string",
+        IsOutlined: "string",
+        IsInverted: "string"
       }
     };
   }
@@ -5005,10 +5520,99 @@ class ButtonStyles {
 
 }
 setType("Elmish.Bulma.BulmaClasses.ButtonStyles", ButtonStyles);
+class Card {
+  constructor(container, header, image, content, footer) {
+    this.Container = container;
+    this.Header = header;
+    this.Image = image;
+    this.Content = content;
+    this.Footer = footer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Card",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Header: CardHeader,
+        Image: "string",
+        Content: "string",
+        Footer: CardFooter
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Card", Card);
+class CardHeader {
+  constructor(container, title, icon) {
+    this.Container = container;
+    this.Title = title;
+    this.Icon = icon;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.CardHeader",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Title: "string",
+        Icon: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.CardHeader", CardHeader);
+class CardFooter {
+  constructor(container, item) {
+    this.Container = container;
+    this.Item = item;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.CardFooter",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Item: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.CardFooter", CardFooter);
 class Content {
   constructor(container, size) {
-    this.container = container;
-    this.size = size;
+    this.Container = container;
+    this.Size = size;
   }
 
   [FSymbol.reflection]() {
@@ -5016,8 +5620,8 @@ class Content {
       type: "Elmish.Bulma.BulmaClasses.Content",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: StandardSize
+        Container: "string",
+        Size: StandardSize
       }
     };
   }
@@ -5034,9 +5638,9 @@ class Content {
 setType("Elmish.Bulma.BulmaClasses.Content", Content);
 class Control {
   constructor(container, hasIcon, state) {
-    this.container = container;
-    this.hasIcon = hasIcon;
-    this.state = state;
+    this.Container = container;
+    this.HasIcon = hasIcon;
+    this.State = state;
   }
 
   [FSymbol.reflection]() {
@@ -5044,9 +5648,9 @@ class Control {
       type: "Elmish.Bulma.BulmaClasses.Control",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        hasIcon: ControlHasIcon,
-        state: ControlState
+        Container: "string",
+        HasIcon: ControlHasIcon,
+        State: ControlState
       }
     };
   }
@@ -5063,8 +5667,8 @@ class Control {
 setType("Elmish.Bulma.BulmaClasses.Control", Control);
 class ControlHasIcon {
   constructor(left, right) {
-    this.left = left;
-    this.right = right;
+    this.Left = left;
+    this.Right = right;
   }
 
   [FSymbol.reflection]() {
@@ -5072,8 +5676,8 @@ class ControlHasIcon {
       type: "Elmish.Bulma.BulmaClasses.ControlHasIcon",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        left: "string",
-        right: "string"
+        Left: "string",
+        Right: "string"
       }
     };
   }
@@ -5090,7 +5694,7 @@ class ControlHasIcon {
 setType("Elmish.Bulma.BulmaClasses.ControlHasIcon", ControlHasIcon);
 class ControlState {
   constructor(isLoading) {
-    this.isLoading = isLoading;
+    this.IsLoading = isLoading;
   }
 
   [FSymbol.reflection]() {
@@ -5098,7 +5702,7 @@ class ControlState {
       type: "Elmish.Bulma.BulmaClasses.ControlState",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isLoading: "string"
+        IsLoading: "string"
       }
     };
   }
@@ -5115,8 +5719,8 @@ class ControlState {
 setType("Elmish.Bulma.BulmaClasses.ControlState", ControlState);
 class Delete {
   constructor(container, size) {
-    this.container = container;
-    this.size = size;
+    this.Container = container;
+    this.Size = size;
   }
 
   [FSymbol.reflection]() {
@@ -5124,8 +5728,8 @@ class Delete {
       type: "Elmish.Bulma.BulmaClasses.Delete",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: StandardSize
+        Container: "string",
+        Size: StandardSize
       }
     };
   }
@@ -5142,12 +5746,12 @@ class Delete {
 setType("Elmish.Bulma.BulmaClasses.Delete", Delete);
 class Field {
   constructor(container, label, body, hasAddons, isGrouped, layout) {
-    this.container = container;
-    this.label = label;
-    this.body = body;
-    this.hasAddons = hasAddons;
-    this.isGrouped = isGrouped;
-    this.layout = layout;
+    this.Container = container;
+    this.Label = label;
+    this.Body = body;
+    this.HasAddons = hasAddons;
+    this.IsGrouped = isGrouped;
+    this.Layout = layout;
   }
 
   [FSymbol.reflection]() {
@@ -5155,12 +5759,12 @@ class Field {
       type: "Elmish.Bulma.BulmaClasses.Field",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        label: "string",
-        body: "string",
-        hasAddons: FieldHasAddons,
-        isGrouped: FieldIsGrouped,
-        layout: FieldLayout
+        Container: "string",
+        Label: "string",
+        Body: "string",
+        HasAddons: FieldHasAddons,
+        IsGrouped: FieldIsGrouped,
+        Layout: FieldLayout
       }
     };
   }
@@ -5177,10 +5781,10 @@ class Field {
 setType("Elmish.Bulma.BulmaClasses.Field", Field);
 class FieldHasAddons {
   constructor(left, centered, right, fullWidh) {
-    this.left = left;
-    this.centered = centered;
-    this.right = right;
-    this.fullWidh = fullWidh;
+    this.Left = left;
+    this.Centered = centered;
+    this.Right = right;
+    this.FullWidh = fullWidh;
   }
 
   [FSymbol.reflection]() {
@@ -5188,10 +5792,10 @@ class FieldHasAddons {
       type: "Elmish.Bulma.BulmaClasses.FieldHasAddons",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        left: "string",
-        centered: "string",
-        right: "string",
-        fullWidh: "string"
+        Left: "string",
+        Centered: "string",
+        Right: "string",
+        FullWidh: "string"
       }
     };
   }
@@ -5208,9 +5812,9 @@ class FieldHasAddons {
 setType("Elmish.Bulma.BulmaClasses.FieldHasAddons", FieldHasAddons);
 class FieldIsGrouped {
   constructor(left, centered, right) {
-    this.left = left;
-    this.centered = centered;
-    this.right = right;
+    this.Left = left;
+    this.Centered = centered;
+    this.Right = right;
   }
 
   [FSymbol.reflection]() {
@@ -5218,9 +5822,9 @@ class FieldIsGrouped {
       type: "Elmish.Bulma.BulmaClasses.FieldIsGrouped",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        left: "string",
-        centered: "string",
-        right: "string"
+        Left: "string",
+        Centered: "string",
+        Right: "string"
       }
     };
   }
@@ -5237,7 +5841,7 @@ class FieldIsGrouped {
 setType("Elmish.Bulma.BulmaClasses.FieldIsGrouped", FieldIsGrouped);
 class FieldLayout {
   constructor(isHorizontal) {
-    this.isHorizontal = isHorizontal;
+    this.IsHorizontal = isHorizontal;
   }
 
   [FSymbol.reflection]() {
@@ -5245,7 +5849,7 @@ class FieldLayout {
       type: "Elmish.Bulma.BulmaClasses.FieldLayout",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isHorizontal: "string"
+        IsHorizontal: "string"
       }
     };
   }
@@ -5260,11 +5864,275 @@ class FieldLayout {
 
 }
 setType("Elmish.Bulma.BulmaClasses.FieldLayout", FieldLayout);
+class Grid {
+  constructor(columns, column) {
+    this.Columns = columns;
+    this.Column = column;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Grid",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Columns: Columns,
+        Column: Column
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Grid", Grid);
+class Columns {
+  constructor(container, alignment, spacing, display) {
+    this.Container = container;
+    this.Alignment = alignment;
+    this.Spacing = spacing;
+    this.Display = display;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Columns",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Alignment: ColumnsAlignment,
+        Spacing: ColumnsSpacing,
+        Display: ColumnsDisplay
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Columns", Columns);
+class Column {
+  constructor(container, width, offset, desktop, tablet, mobile, wideScreen) {
+    this.Container = container;
+    this.Width = width;
+    this.Offset = offset;
+    this.Desktop = desktop;
+    this.Tablet = tablet;
+    this.Mobile = mobile;
+    this.WideScreen = wideScreen;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Column",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Width: GenericColumnSize,
+        Offset: GenericColumnSize,
+        Desktop: ColunScreenTypeSize,
+        Tablet: ColunScreenTypeSize,
+        Mobile: ColunScreenTypeSize,
+        WideScreen: ColunScreenTypeSize
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Column", Column);
+class ColunScreenTypeSize {
+  constructor(width, offset) {
+    this.Width = width;
+    this.Offset = offset;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.ColunScreenTypeSize",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Width: GenericColumnSize,
+        Offset: GenericColumnSize
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.ColunScreenTypeSize", ColunScreenTypeSize);
+class GenericColumnSize {
+  constructor(isOneQuarter, isOneThird, isHalf, isTwoThirds, isThreeQuarters, is1, is2, is3, is4, is5, is6, is7, is8, is9, is10, is11, isNarrow, isFull) {
+    this.IsOneQuarter = isOneQuarter;
+    this.IsOneThird = isOneThird;
+    this.IsHalf = isHalf;
+    this.IsTwoThirds = isTwoThirds;
+    this.IsThreeQuarters = isThreeQuarters;
+    this.Is1 = is1;
+    this.Is2 = is2;
+    this.Is3 = is3;
+    this.Is4 = is4;
+    this.Is5 = is5;
+    this.Is6 = is6;
+    this.Is7 = is7;
+    this.Is8 = is8;
+    this.Is9 = is9;
+    this.Is10 = is10;
+    this.Is11 = is11;
+    this.IsNarrow = isNarrow;
+    this.IsFull = isFull;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.GenericColumnSize",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsOneQuarter: "string",
+        IsOneThird: "string",
+        IsHalf: "string",
+        IsTwoThirds: "string",
+        IsThreeQuarters: "string",
+        Is1: "string",
+        Is2: "string",
+        Is3: "string",
+        Is4: "string",
+        Is5: "string",
+        Is6: "string",
+        Is7: "string",
+        Is8: "string",
+        Is9: "string",
+        Is10: "string",
+        Is11: "string",
+        IsNarrow: "string",
+        IsFull: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.GenericColumnSize", GenericColumnSize);
+class ColumnsAlignment {
+  constructor(isCentered, isVCentered) {
+    this.IsCentered = isCentered;
+    this.IsVCentered = isVCentered;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.ColumnsAlignment",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsCentered: "string",
+        IsVCentered: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.ColumnsAlignment", ColumnsAlignment);
+class ColumnsSpacing {
+  constructor(isMultiline, isGapless, isGrid) {
+    this.IsMultiline = isMultiline;
+    this.IsGapless = isGapless;
+    this.IsGrid = isGrid;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.ColumnsSpacing",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsMultiline: "string",
+        IsGapless: "string",
+        IsGrid: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.ColumnsSpacing", ColumnsSpacing);
+class ColumnsDisplay {
+  constructor(onMobile, onlyDesktop) {
+    this.OnMobile = onMobile;
+    this.OnlyDesktop = onlyDesktop;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.ColumnsDisplay",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        OnMobile: "string",
+        OnlyDesktop: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.ColumnsDisplay", ColumnsDisplay);
 class Icon {
   constructor(container, position, size) {
-    this.container = container;
-    this.position = position;
-    this.size = size;
+    this.Container = container;
+    this.Position = position;
+    this.Size = size;
   }
 
   [FSymbol.reflection]() {
@@ -5272,9 +6140,9 @@ class Icon {
       type: "Elmish.Bulma.BulmaClasses.Icon",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        position: IconPosition,
-        size: StandardSize
+        Container: "string",
+        Position: IconPosition,
+        Size: StandardSize
       }
     };
   }
@@ -5291,8 +6159,8 @@ class Icon {
 setType("Elmish.Bulma.BulmaClasses.Icon", Icon);
 class IconPosition {
   constructor(left, right) {
-    this.left = left;
-    this.right = right;
+    this.Left = left;
+    this.Right = right;
   }
 
   [FSymbol.reflection]() {
@@ -5300,8 +6168,8 @@ class IconPosition {
       type: "Elmish.Bulma.BulmaClasses.IconPosition",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        left: "string",
-        right: "string"
+        Left: "string",
+        Right: "string"
       }
     };
   }
@@ -5318,12 +6186,12 @@ class IconPosition {
 setType("Elmish.Bulma.BulmaClasses.IconPosition", IconPosition);
 class Input {
   constructor(container, display, size, state, color, addon) {
-    this.container = container;
-    this.display = display;
-    this.size = size;
-    this.state = state;
-    this.color = color;
-    this.addon = addon;
+    this.Container = container;
+    this.Display = display;
+    this.Size = size;
+    this.State = state;
+    this.Color = color;
+    this.Addon = addon;
   }
 
   [FSymbol.reflection]() {
@@ -5331,12 +6199,12 @@ class Input {
       type: "Elmish.Bulma.BulmaClasses.Input",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        display: InputDisplay,
-        size: StandardSize,
-        state: InputState,
-        color: LevelAndColor,
-        addon: InputAddon
+        Container: "string",
+        Display: InputDisplay,
+        Size: StandardSize,
+        State: InputState,
+        Color: LevelAndColor,
+        Addon: InputAddon
       }
     };
   }
@@ -5353,7 +6221,7 @@ class Input {
 setType("Elmish.Bulma.BulmaClasses.Input", Input);
 class InputDisplay {
   constructor(isInline) {
-    this.isInline = isInline;
+    this.IsInline = isInline;
   }
 
   [FSymbol.reflection]() {
@@ -5361,7 +6229,7 @@ class InputDisplay {
       type: "Elmish.Bulma.BulmaClasses.InputDisplay",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isInline: "string"
+        IsInline: "string"
       }
     };
   }
@@ -5378,10 +6246,10 @@ class InputDisplay {
 setType("Elmish.Bulma.BulmaClasses.InputDisplay", InputDisplay);
 class InputState {
   constructor(isHovered, isFocused, isActive, isLoading) {
-    this.isHovered = isHovered;
-    this.isFocused = isFocused;
-    this.isActive = isActive;
-    this.isLoading = isLoading;
+    this.IsHovered = isHovered;
+    this.IsFocused = isFocused;
+    this.IsActive = isActive;
+    this.IsLoading = isLoading;
   }
 
   [FSymbol.reflection]() {
@@ -5389,10 +6257,10 @@ class InputState {
       type: "Elmish.Bulma.BulmaClasses.InputState",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isHovered: "string",
-        isFocused: "string",
-        isActive: "string",
-        isLoading: "string"
+        IsHovered: "string",
+        IsFocused: "string",
+        IsActive: "string",
+        IsLoading: "string"
       }
     };
   }
@@ -5409,7 +6277,7 @@ class InputState {
 setType("Elmish.Bulma.BulmaClasses.InputState", InputState);
 class InputAddon {
   constructor(isExpanded) {
-    this.isExpanded = isExpanded;
+    this.IsExpanded = isExpanded;
   }
 
   [FSymbol.reflection]() {
@@ -5417,7 +6285,7 @@ class InputAddon {
       type: "Elmish.Bulma.BulmaClasses.InputAddon",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isExpanded: "string"
+        IsExpanded: "string"
       }
     };
   }
@@ -5434,9 +6302,9 @@ class InputAddon {
 setType("Elmish.Bulma.BulmaClasses.InputAddon", InputAddon);
 class Image {
   constructor(container, size, ratio) {
-    this.container = container;
-    this.size = size;
-    this.ratio = ratio;
+    this.Container = container;
+    this.Size = size;
+    this.Ratio = ratio;
   }
 
   [FSymbol.reflection]() {
@@ -5444,9 +6312,9 @@ class Image {
       type: "Elmish.Bulma.BulmaClasses.Image",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: ImageSize,
-        ratio: ImageRatio
+        Container: "string",
+        Size: ImageSize,
+        Ratio: ImageRatio
       }
     };
   }
@@ -5463,13 +6331,13 @@ class Image {
 setType("Elmish.Bulma.BulmaClasses.Image", Image);
 class ImageSize {
   constructor(is16x16, is24x24, is32x32, is48x48, is64x64, is96x96, is128x128) {
-    this.is16x16 = is16x16;
-    this.is24x24 = is24x24;
-    this.is32x32 = is32x32;
-    this.is48x48 = is48x48;
-    this.is64x64 = is64x64;
-    this.is96x96 = is96x96;
-    this.is128x128 = is128x128;
+    this.Is16x16 = is16x16;
+    this.Is24x24 = is24x24;
+    this.Is32x32 = is32x32;
+    this.Is48x48 = is48x48;
+    this.Is64x64 = is64x64;
+    this.Is96x96 = is96x96;
+    this.Is128x128 = is128x128;
   }
 
   [FSymbol.reflection]() {
@@ -5477,13 +6345,13 @@ class ImageSize {
       type: "Elmish.Bulma.BulmaClasses.ImageSize",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        is16x16: "string",
-        is24x24: "string",
-        is32x32: "string",
-        is48x48: "string",
-        is64x64: "string",
-        is96x96: "string",
-        is128x128: "string"
+        Is16x16: "string",
+        Is24x24: "string",
+        Is32x32: "string",
+        Is48x48: "string",
+        Is64x64: "string",
+        Is96x96: "string",
+        Is128x128: "string"
       }
     };
   }
@@ -5500,12 +6368,12 @@ class ImageSize {
 setType("Elmish.Bulma.BulmaClasses.ImageSize", ImageSize);
 class ImageRatio {
   constructor(isSquare, is1by1, is4by3, is3by2, is16by9, is2by1) {
-    this.isSquare = isSquare;
-    this.is1by1 = is1by1;
-    this.is4by3 = is4by3;
-    this.is3by2 = is3by2;
-    this.is16by9 = is16by9;
-    this.is2by1 = is2by1;
+    this.IsSquare = isSquare;
+    this.Is1by1 = is1by1;
+    this.Is4by3 = is4by3;
+    this.Is3by2 = is3by2;
+    this.Is16by9 = is16by9;
+    this.Is2by1 = is2by1;
   }
 
   [FSymbol.reflection]() {
@@ -5513,12 +6381,12 @@ class ImageRatio {
       type: "Elmish.Bulma.BulmaClasses.ImageRatio",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isSquare: "string",
-        is1by1: "string",
-        is4by3: "string",
-        is3by2: "string",
-        is16by9: "string",
-        is2by1: "string"
+        IsSquare: "string",
+        Is1by1: "string",
+        Is4by3: "string",
+        Is3by2: "string",
+        Is16by9: "string",
+        Is2by1: "string"
       }
     };
   }
@@ -5535,10 +6403,10 @@ class ImageRatio {
 setType("Elmish.Bulma.BulmaClasses.ImageRatio", ImageRatio);
 class Heading {
   constructor(title, subtitle, size, spacing) {
-    this.title = title;
-    this.subtitle = subtitle;
-    this.size = size;
-    this.spacing = spacing;
+    this.Title = title;
+    this.Subtitle = subtitle;
+    this.Size = size;
+    this.Spacing = spacing;
   }
 
   [FSymbol.reflection]() {
@@ -5546,10 +6414,10 @@ class Heading {
       type: "Elmish.Bulma.BulmaClasses.Heading",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        title: "string",
-        subtitle: "string",
-        size: HeadingSize,
-        spacing: HeadingSpacing
+        Title: "string",
+        Subtitle: "string",
+        Size: HeadingSize,
+        Spacing: HeadingSpacing
       }
     };
   }
@@ -5566,12 +6434,12 @@ class Heading {
 setType("Elmish.Bulma.BulmaClasses.Heading", Heading);
 class HeadingSize {
   constructor(is1, is2, is3, is4, is5, is6) {
-    this.is1 = is1;
-    this.is2 = is2;
-    this.is3 = is3;
-    this.is4 = is4;
-    this.is5 = is5;
-    this.is6 = is6;
+    this.Is1 = is1;
+    this.Is2 = is2;
+    this.Is3 = is3;
+    this.Is4 = is4;
+    this.Is5 = is5;
+    this.Is6 = is6;
   }
 
   [FSymbol.reflection]() {
@@ -5579,12 +6447,12 @@ class HeadingSize {
       type: "Elmish.Bulma.BulmaClasses.HeadingSize",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        is1: "string",
-        is2: "string",
-        is3: "string",
-        is4: "string",
-        is5: "string",
-        is6: "string"
+        Is1: "string",
+        Is2: "string",
+        Is3: "string",
+        Is4: "string",
+        Is5: "string",
+        Is6: "string"
       }
     };
   }
@@ -5601,7 +6469,7 @@ class HeadingSize {
 setType("Elmish.Bulma.BulmaClasses.HeadingSize", HeadingSize);
 class HeadingSpacing {
   constructor(isNormal) {
-    this.isNormal = isNormal;
+    this.IsNormal = isNormal;
   }
 
   [FSymbol.reflection]() {
@@ -5609,7 +6477,7 @@ class HeadingSpacing {
       type: "Elmish.Bulma.BulmaClasses.HeadingSpacing",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isNormal: "string"
+        IsNormal: "string"
       }
     };
   }
@@ -5626,8 +6494,8 @@ class HeadingSpacing {
 setType("Elmish.Bulma.BulmaClasses.HeadingSpacing", HeadingSpacing);
 class Label {
   constructor(container, size) {
-    this.container = container;
-    this.size = size;
+    this.Container = container;
+    this.Size = size;
   }
 
   [FSymbol.reflection]() {
@@ -5635,8 +6503,8 @@ class Label {
       type: "Elmish.Bulma.BulmaClasses.Label",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: StandardSize
+        Container: "string",
+        Size: StandardSize
       }
     };
   }
@@ -5651,11 +6519,676 @@ class Label {
 
 }
 setType("Elmish.Bulma.BulmaClasses.Label", Label);
+class Level {
+  constructor(container, left, right, item, mobile) {
+    this.Container = container;
+    this.Left = left;
+    this.Right = right;
+    this.Item = item;
+    this.Mobile = mobile;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Level",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Left: "string",
+        Right: "string",
+        Item: LevelItem,
+        Mobile: LevelMobile
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Level", Level);
+class LevelItem {
+  constructor(container, hasTextCentered) {
+    this.Container = container;
+    this.HasTextCentered = hasTextCentered;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.LevelItem",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        HasTextCentered: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.LevelItem", LevelItem);
+class LevelMobile {
+  constructor(isHorizontal) {
+    this.IsHorizontal = isHorizontal;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.LevelMobile",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsHorizontal: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.LevelMobile", LevelMobile);
+class Menu {
+  constructor(container, label, list) {
+    this.Container = container;
+    this.Label = label;
+    this.List = list;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Menu",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Label: "string",
+        List: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Menu", Menu);
+class Media {
+  constructor(container, left, right, content, size) {
+    this.Container = container;
+    this.Left = left;
+    this.Right = right;
+    this.Content = content;
+    this.Size = size;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Media",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Left: "string",
+        Right: "string",
+        Content: "string",
+        Size: MediaSize
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Media", Media);
+class MediaSize {
+  constructor(isLarge) {
+    this.isLarge = isLarge;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.MediaSize",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        isLarge: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.MediaSize", MediaSize);
+class Message {
+  constructor(container, header, body, color) {
+    this.Container = container;
+    this.Header = header;
+    this.Body = body;
+    this.Color = color;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Message",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Header: "string",
+        Body: "string",
+        Color: LevelAndColor
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Message", Message);
+class Modifiers {
+  constructor(size, color) {
+    this.Size = size;
+    this.Color = color;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Modifiers",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Size: StandardSize,
+        Color: LevelAndColor
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Modifiers", Modifiers);
+class Panel {
+  constructor(container, heading, tabs, block) {
+    this.Container = container;
+    this.Heading = heading;
+    this.Tabs = tabs;
+    this.Block = block;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Panel",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Heading: "string",
+        Tabs: PanelTabs,
+        Block: PanelBlock
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Panel", Panel);
+class PanelTabs {
+  constructor(container, tab) {
+    this.Container = container;
+    this.Tab = tab;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelTabs",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Tab: PanelTabsTab
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelTabs", PanelTabs);
+class PanelTabsTab {
+  constructor(state) {
+    this.State = state;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelTabsTab",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        State: PanelTabsTabState
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelTabsTab", PanelTabsTab);
+class PanelTabsTabState {
+  constructor(isActive) {
+    this.IsActive = isActive;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelTabsTabState",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsActive: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelTabsTabState", PanelTabsTabState);
+class PanelTabsState {
+  constructor(isActive) {
+    this.IsActive = isActive;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelTabsState",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsActive: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelTabsState", PanelTabsState);
+class PanelBlock {
+  constructor(container, icon, list, state) {
+    this.Container = container;
+    this.Icon = icon;
+    this.List = list;
+    this.State = state;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelBlock",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Container: "string",
+        Icon: "string",
+        List: "string",
+        State: PanelBlockState
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelBlock", PanelBlock);
+class PanelBlockState {
+  constructor(isActive) {
+    this.IsActive = isActive;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PanelBlockState",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsActive: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PanelBlockState", PanelBlockState);
+class Properties {
+  constructor(_float, alignment, sizing, display, visibility, interaction) {
+    this.Float = _float;
+    this.Alignment = alignment;
+    this.Sizing = sizing;
+    this.Display = display;
+    this.Visibility = visibility;
+    this.Interaction = interaction;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.Properties",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Float: PropertiesFloat,
+        Alignment: PropertiesAlignment,
+        Sizing: PropertiesSizing,
+        Display: PropertiesDisplay,
+        Visibility: PropertiesVisibility,
+        Interaction: PropertiesInteraction
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.Properties", Properties);
+class PropertiesFloat {
+  constructor(isClearfix, isPulledLeft, isPulledRight) {
+    this.IsClearfix = isClearfix;
+    this.IsPulledLeft = isPulledLeft;
+    this.IsPulledRight = isPulledRight;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesFloat",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsClearfix: "string",
+        IsPulledLeft: "string",
+        IsPulledRight: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesFloat", PropertiesFloat);
+class PropertiesAlignment {
+  constructor(hasTextCentered, hasTextLeft, hasTextRight) {
+    this.HasTextCentered = hasTextCentered;
+    this.HasTextLeft = hasTextLeft;
+    this.HasTextRight = hasTextRight;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesAlignment",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        HasTextCentered: "string",
+        HasTextLeft: "string",
+        HasTextRight: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesAlignment", PropertiesAlignment);
+class PropertiesSizing {
+  constructor(isOverlay, isFullwidth, isMarginless, isPaddingless) {
+    this.IsOverlay = isOverlay;
+    this.IsFullwidth = isFullwidth;
+    this.IsMarginless = isMarginless;
+    this.IsPaddingless = isPaddingless;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesSizing",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsOverlay: "string",
+        IsFullwidth: "string",
+        IsMarginless: "string",
+        IsPaddingless: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesSizing", PropertiesSizing);
+class PropertiesDisplay {
+  constructor(isBlock, isFlex, isInline, isInlineBox, isInlineFlex) {
+    this.IsBlock = isBlock;
+    this.IsFlex = isFlex;
+    this.IsInline = isInline;
+    this.IsInlineBox = isInlineBox;
+    this.IsInlineFlex = isInlineFlex;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesDisplay",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsBlock: DisplayType,
+        IsFlex: DisplayType,
+        IsInline: DisplayType,
+        IsInlineBox: DisplayType,
+        IsInlineFlex: DisplayType
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesDisplay", PropertiesDisplay);
+class DisplayType {
+  constructor(always, mobile, tablet, tabletOnly, touch, desktop, desktopOnly, widescreen) {
+    this.Always = always;
+    this.Mobile = mobile;
+    this.Tablet = tablet;
+    this.TabletOnly = tabletOnly;
+    this.Touch = touch;
+    this.Desktop = desktop;
+    this.DesktopOnly = desktopOnly;
+    this.Widescreen = widescreen;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.DisplayType",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Always: "string",
+        Mobile: "string",
+        Tablet: "string",
+        TabletOnly: "string",
+        Touch: "string",
+        Desktop: "string",
+        DesktopOnly: "string",
+        Widescreen: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.DisplayType", DisplayType);
+class PropertiesVisibility {
+  constructor(isHidden) {
+    this.IsHidden = isHidden;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesVisibility",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsHidden: DisplayType
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesVisibility", PropertiesVisibility);
+class PropertiesInteraction {
+  constructor(isUnselectable) {
+    this.IsUnselectable = isUnselectable;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elmish.Bulma.BulmaClasses.PropertiesInteraction",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsUnselectable: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elmish.Bulma.BulmaClasses.PropertiesInteraction", PropertiesInteraction);
 class Progress {
   constructor(container, size, color) {
-    this.container = container;
-    this.size = size;
-    this.color = color;
+    this.Container = container;
+    this.Size = size;
+    this.Color = color;
   }
 
   [FSymbol.reflection]() {
@@ -5663,9 +7196,9 @@ class Progress {
       type: "Elmish.Bulma.BulmaClasses.Progress",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: StandardSize,
-        color: LevelAndColor
+        Container: "string",
+        Size: StandardSize,
+        Color: LevelAndColor
       }
     };
   }
@@ -5682,10 +7215,10 @@ class Progress {
 setType("Elmish.Bulma.BulmaClasses.Progress", Progress);
 class Table {
   constructor(container, row, style, spacing) {
-    this.container = container;
-    this.row = row;
-    this.style = style;
-    this.spacing = spacing;
+    this.Container = container;
+    this.Row = row;
+    this.Style = style;
+    this.Spacing = spacing;
   }
 
   [FSymbol.reflection]() {
@@ -5693,10 +7226,10 @@ class Table {
       type: "Elmish.Bulma.BulmaClasses.Table",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        row: TableRow,
-        style: TableStyle,
-        spacing: TableSpacing
+        Container: "string",
+        Row: TableRow,
+        Style: TableStyle,
+        Spacing: TableSpacing
       }
     };
   }
@@ -5713,7 +7246,7 @@ class Table {
 setType("Elmish.Bulma.BulmaClasses.Table", Table);
 class TableRow {
   constructor(state) {
-    this.state = state;
+    this.State = state;
   }
 
   [FSymbol.reflection]() {
@@ -5721,7 +7254,7 @@ class TableRow {
       type: "Elmish.Bulma.BulmaClasses.TableRow",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        state: TableRowState
+        State: TableRowState
       }
     };
   }
@@ -5738,7 +7271,7 @@ class TableRow {
 setType("Elmish.Bulma.BulmaClasses.TableRow", TableRow);
 class TableRowState {
   constructor(isSelected) {
-    this.isSelected = isSelected;
+    this.IsSelected = isSelected;
   }
 
   [FSymbol.reflection]() {
@@ -5746,7 +7279,7 @@ class TableRowState {
       type: "Elmish.Bulma.BulmaClasses.TableRowState",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isSelected: "string"
+        IsSelected: "string"
       }
     };
   }
@@ -5763,8 +7296,8 @@ class TableRowState {
 setType("Elmish.Bulma.BulmaClasses.TableRowState", TableRowState);
 class TableStyle {
   constructor(isBordered, isStripped) {
-    this.isBordered = isBordered;
-    this.isStripped = isStripped;
+    this.IsBordered = isBordered;
+    this.IsStripped = isStripped;
   }
 
   [FSymbol.reflection]() {
@@ -5772,8 +7305,8 @@ class TableStyle {
       type: "Elmish.Bulma.BulmaClasses.TableStyle",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isBordered: "string",
-        isStripped: "string"
+        IsBordered: "string",
+        IsStripped: "string"
       }
     };
   }
@@ -5790,7 +7323,7 @@ class TableStyle {
 setType("Elmish.Bulma.BulmaClasses.TableStyle", TableStyle);
 class TableSpacing {
   constructor(isNarrow) {
-    this.isNarrow = isNarrow;
+    this.IsNarrow = isNarrow;
   }
 
   [FSymbol.reflection]() {
@@ -5798,7 +7331,7 @@ class TableSpacing {
       type: "Elmish.Bulma.BulmaClasses.TableSpacing",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isNarrow: "string"
+        IsNarrow: "string"
       }
     };
   }
@@ -5815,9 +7348,9 @@ class TableSpacing {
 setType("Elmish.Bulma.BulmaClasses.TableSpacing", TableSpacing);
 class Tag {
   constructor(container, size, color) {
-    this.container = container;
-    this.size = size;
-    this.color = color;
+    this.Container = container;
+    this.Size = size;
+    this.Color = color;
   }
 
   [FSymbol.reflection]() {
@@ -5825,9 +7358,9 @@ class Tag {
       type: "Elmish.Bulma.BulmaClasses.Tag",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        container: "string",
-        size: TagSize,
-        color: LevelAndColor
+        Container: "string",
+        Size: TagSize,
+        Color: LevelAndColor
       }
     };
   }
@@ -5844,8 +7377,8 @@ class Tag {
 setType("Elmish.Bulma.BulmaClasses.Tag", Tag);
 class TagSize {
   constructor(isMedium, isLarge) {
-    this.isMedium = isMedium;
-    this.isLarge = isLarge;
+    this.IsMedium = isMedium;
+    this.IsLarge = isLarge;
   }
 
   [FSymbol.reflection]() {
@@ -5853,8 +7386,8 @@ class TagSize {
       type: "Elmish.Bulma.BulmaClasses.TagSize",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        isMedium: "string",
-        isLarge: "string"
+        IsMedium: "string",
+        IsLarge: "string"
       }
     };
   }
@@ -5869,50 +7402,31 @@ class TagSize {
 
 }
 setType("Elmish.Bulma.BulmaClasses.TagSize", TagSize);
-class Modifiers {
-  constructor(size, color) {
-    this.size = size;
-    this.color = color;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elmish.Bulma.BulmaClasses.Modifiers",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        size: StandardSize,
-        color: LevelAndColor
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elmish.Bulma.BulmaClasses.Modifiers", Modifiers);
 class Bulma {
-  constructor(modifiers, box, button, content, control, _delete, field, heading, label, progress, icon, image, input, table, tag) {
-    this.modifiers = modifiers;
-    this.box = box;
-    this.button = button;
-    this.content = content;
-    this.control = control;
-    this.delete = _delete;
-    this.field = field;
-    this.heading = heading;
-    this.label = label;
-    this.progress = progress;
-    this.icon = icon;
-    this.image = image;
-    this.input = input;
-    this.table = table;
-    this.tag = tag;
+  constructor(modifiers, box, button, card, content, control, _delete, field, grid, heading, label, level, menu, media, message, panel, properties, progress, icon, image, input, table, tag) {
+    this.Modifiers = modifiers;
+    this.Box = box;
+    this.Button = button;
+    this.Card = card;
+    this.Content = content;
+    this.Control = control;
+    this.Delete = _delete;
+    this.Field = field;
+    this.Grid = grid;
+    this.Heading = heading;
+    this.Label = label;
+    this.Level = level;
+    this.Menu = menu;
+    this.Media = media;
+    this.Message = message;
+    this.Panel = panel;
+    this.Properties = properties;
+    this.Progress = progress;
+    this.Icon = icon;
+    this.Image = image;
+    this.Input = input;
+    this.Table = table;
+    this.Tag = tag;
   }
 
   [FSymbol.reflection]() {
@@ -5920,21 +7434,29 @@ class Bulma {
       type: "Elmish.Bulma.BulmaClasses.Bulma",
       interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
       properties: {
-        modifiers: Modifiers,
-        box: Box,
-        button: Button,
-        content: Content,
-        control: Control,
-        delete: Delete,
-        field: Field,
-        heading: Heading,
-        label: Label,
-        progress: Progress,
-        icon: Icon,
-        image: Image,
-        input: Input,
-        table: Table,
-        tag: Tag
+        Modifiers: Modifiers,
+        Box: Box,
+        Button: Button,
+        Card: Card,
+        Content: Content,
+        Control: Control,
+        Delete: Delete,
+        Field: Field,
+        Grid: Grid,
+        Heading: Heading,
+        Label: Label,
+        Level: Level,
+        Menu: Menu,
+        Media: Media,
+        Message: Message,
+        Panel: Panel,
+        Properties: Properties,
+        Progress: Progress,
+        Icon: Icon,
+        Image: Image,
+        Input: Input,
+        Table: Table,
+        Tag: Tag
       }
     };
   }
@@ -5949,31 +7471,80 @@ class Bulma {
 
 }
 setType("Elmish.Bulma.BulmaClasses.Bulma", Bulma);
+function op_PlusPlus(str1, str2) {
+  return str1 + " " + str2;
+}
 const standardSize = new StandardSize("is-small", "is-medium", "is-large ");
 const levelAndColor = new LevelAndColor("is-black", "is-dark", "is-light", "is-white", "is-primary", "is-info", "is-success", "is-warning", "is-danger");
 const box = new Box("box");
-const button = new Button("button", standardSize, levelAndColor, new ButtonState("is-hovered", "is-focus", "is-active", "is-loading"), new ButtonStyles("is-link", "is-outlined", "is-inverted"));
+const button = new Button("button", new ButtonSize("is-small", "is-medium", "is-large ", "is-fullwidth"), levelAndColor, new ButtonState("is-hovered", "is-focus", "is-active", "is-loading"), new ButtonStyles("is-link", "is-outlined", "is-inverted"));
+const card = new Card("card", new CardHeader("card-header", "card-header-title", "card-header-icon"), "card-image", "card-content", new CardFooter("card-footer", "card-footer-item"));
 const content = new Content("content", standardSize);
 const control = new Control("control", new ControlHasIcon("has-icons-left", "has-icons-right"), new ControlState("is-loading"));
+const columns = new Columns("columns", new ColumnsAlignment("is-centered", "is-vcentered"), new ColumnsSpacing("is-multiline", "is-gapless", "is-grid"), new ColumnsDisplay("on-mobile", "only-desktop"));
+function generateColumnSize(suffix) {
+  return new GenericColumnSize("is-one-quarter" + suffix, "is-one-third" + suffix, "is-half" + suffix, "is-two-third + suffixs", "is-three + suffix-quarters", "is-1" + suffix, "is-2" + suffix, "is-3" + suffix, "is-4" + suffix, "is-5" + suffix, "is-6" + suffix, "is-7" + suffix, "is-8" + suffix, "is-9" + suffix, "is-10" + suffix, "is-11" + suffix, "is-narrow" + suffix, "is-full" + suffix);
+}
+function generateColumnOffset(suffix) {
+  return new GenericColumnSize("is-offset-one-quarter" + suffix, "is-offset-one-third" + suffix, "is-offset-half" + suffix, "is-offset-two-thirds" + suffix, "is-offset-three-qua + suffixrters", "is-offset-1" + suffix, "is-offset-2" + suffix, "is-offset-3" + suffix, "is-offset-4" + suffix, "is-offset-5" + suffix, "is-offset-6" + suffix, "is-offset-7" + suffix, "is-offset-8" + suffix, "is-offset-9" + suffix, "is-offset-10" + suffix, "is-offset-11" + suffix, "is-offset-narrow" + suffix, "is-full" + suffix);
+}
+const column = (() => {
+  const Width = generateColumnSize("");
+  const Offset = generateColumnOffset("");
+  const Desktop = new ColunScreenTypeSize(generateColumnSize("-desktop"), generateColumnOffset("-desktop"));
+  const Mobile = new ColunScreenTypeSize(generateColumnSize("-mobile"), generateColumnOffset("-mobule"));
+  return new Column("column", Width, Offset, Desktop, new ColunScreenTypeSize(generateColumnSize("-tablet"), generateColumnOffset("-tablet")), Mobile, new ColunScreenTypeSize(generateColumnSize("-widescreen"), generateColumnOffset("-widescreen")));
+})();
 
 const _delete = new Delete("delete", standardSize);
 
 const field = new Field("field", "field-label", "field-body", new FieldHasAddons("has-addons", "has-addons-centered", "has-addons-right", "has-addons-fullwidth"), new FieldIsGrouped("is-grouped", "is-grouped-centered", "is-grouped-right"), new FieldLayout("is-horizontal"));
-const icon$1 = new Icon("icon", new IconPosition("is-left", "is-right"), standardSize);
+const icon = new Icon("icon", new IconPosition("is-left", "is-right"), standardSize);
 const input = new Input("input", new InputDisplay("is-inline"), standardSize, new InputState("is-hovered", "is-focus", "is-active", "is-loading"), levelAndColor, new InputAddon("is-expanded"));
 const image = new Image("image", new ImageSize("is-16x16", "is-24x24", "is-32x32", "is-48x48", "is-64x64", "is-96x96", "is-128x128"), new ImageRatio("is-square", "is-1by1", "is-4by3", "is-3by2", "is-16by9", "is-2by1"));
 const heading = new Heading("title", "subtitle", new HeadingSize("is-1", "is-2", "is-3", "is-4", "is-5", "is-6"), new HeadingSpacing("is-spaced"));
-const label = new Label("label", standardSize);
+const label$1 = new Label("label", standardSize);
+const level = new Level("level", "level-left", "level-right", new LevelItem("level-item", "has-text-centered"), new LevelMobile("is-mobile"));
+const menu$2 = new Menu("menu", "menu-label", "menu-list");
+const media = new Media("media", "media-left", "media-right", "media-content", new MediaSize("is-large"));
+const message = new Message("message", "message-header", "message-body", levelAndColor);
+const panel = new Panel("panel", "panel-heading", new PanelTabs("panel-tabs", new PanelTabsTab(new PanelTabsTabState("is-active"))), new PanelBlock("panel-block", "panel-icon", "panel-list", new PanelBlockState("is-active")));
+function generateDisplayType(prefix) {
+  return new DisplayType(op_PlusPlus("is-" + prefix + "-touch", "is-") + prefix + "-desktop", "is-" + prefix + "-mobile", "is-" + prefix + "-tablet", "is-" + prefix + "-tablet-only", "is-" + prefix + "-touch", "is-" + prefix + "-desktop", "is-" + prefix + "-desktop-only", "is-" + prefix + "-widescreen");
+}
+const properties = new Properties(new PropertiesFloat("is-clearfix", "is-pulled-left", "is-pulled-right"), new PropertiesAlignment("has-text-centered", "has-text-left", "has-text-right"), new PropertiesSizing("is-overlay", "is-fullwidth", "is-marginless", "is-paddingless"), new PropertiesDisplay(generateDisplayType("block"), generateDisplayType("flex"), generateDisplayType("inline"), generateDisplayType("inline-block"), generateDisplayType("inline-flex")), new PropertiesVisibility(generateDisplayType("hidden")), new PropertiesInteraction("is-unselectable"));
 const progress = new Progress("progress", standardSize, levelAndColor);
 const table = new Table("table", new TableRow(new TableRowState("is-selected")), new TableStyle("is-bordered", "is-stripped "), new TableSpacing("is-narrow"));
 const tagSize = new TagSize("is-medium", "is-large");
 const tag = new Tag("tag", tagSize, levelAndColor);
 const bulma = (() => {
-  const modifiers = new Modifiers(standardSize, levelAndColor);
-  return new Bulma(modifiers, box, button, content, control, _delete, field, heading, label, progress, icon$1, image, input, table, tag);
+  const Modifiers_1 = new Modifiers(standardSize, levelAndColor);
+  const Grid_1 = new Grid(columns, column);
+  return new Bulma(Modifiers_1, box, button, card, content, control, _delete, field, Grid_1, heading, label$1, level, menu$2, media, message, panel, properties, progress, icon, image, input, table, tag);
 })();
-function op_PlusPlus(str1, str2) {
-  return str1 + " " + str2;
+
+const menu$1 = (() => {
+  const b = ofArray([new Props.HTMLAttr(22, bulma.Menu.Container)]);
+  return function (c) {
+    return react_1("aside", createObj(b, 1), ...c);
+  };
+})();
+function label(menuLabel) {
+  return react_1("p", {
+    className: bulma.Menu.Label
+  }, menuLabel);
+}
+const list = (() => {
+  const b = ofArray([new Props.HTMLAttr(22, bulma.Menu.List)]);
+  return function (c) {
+    return react_1("ul", createObj(b, 1), ...c);
+  };
+})();
+
+function box_(dummy, children) {
+  return react_1("div", {
+    className: bulma.Box.Container
+  }, ...children);
 }
 
 class ISize {
@@ -6024,38 +7595,38 @@ class ILevelAndColor {
 
 }
 setType("Elmish.Bulma.Common.ILevelAndColor", ILevelAndColor);
-function ofLevelAndColor(level) {
-  if (level.tag === 1) {
-    return bulma.modifiers.color.isDark;
-  } else if (level.tag === 2) {
-    return bulma.modifiers.color.isLight;
-  } else if (level.tag === 3) {
-    return bulma.modifiers.color.isWhite;
-  } else if (level.tag === 4) {
-    return bulma.modifiers.color.isPrimary;
-  } else if (level.tag === 5) {
-    return bulma.modifiers.color.isInfo;
-  } else if (level.tag === 6) {
-    return bulma.modifiers.color.isSuccess;
-  } else if (level.tag === 7) {
-    return bulma.modifiers.color.isWarning;
-  } else if (level.tag === 8) {
-    return bulma.modifiers.color.isDanger;
-  } else if (level.tag === 9) {
+function ofLevelAndColor(level$$1) {
+  if (level$$1.tag === 1) {
+    return bulma.Modifiers.Color.IsDark;
+  } else if (level$$1.tag === 2) {
+    return bulma.Modifiers.Color.IsLight;
+  } else if (level$$1.tag === 3) {
+    return bulma.Modifiers.Color.IsWhite;
+  } else if (level$$1.tag === 4) {
+    return bulma.Modifiers.Color.IsPrimary;
+  } else if (level$$1.tag === 5) {
+    return bulma.Modifiers.Color.IsInfo;
+  } else if (level$$1.tag === 6) {
+    return bulma.Modifiers.Color.IsSuccess;
+  } else if (level$$1.tag === 7) {
+    return bulma.Modifiers.Color.IsWarning;
+  } else if (level$$1.tag === 8) {
+    return bulma.Modifiers.Color.IsDanger;
+  } else if (level$$1.tag === 9) {
     return "";
   } else {
-    return bulma.modifiers.color.isBlack;
+    return bulma.Modifiers.Color.IsBlack;
   }
 }
 function ofSize(size) {
   if (size.tag === 1) {
-    return bulma.modifiers.size.isMedium;
+    return bulma.Modifiers.Size.IsMedium;
   } else if (size.tag === 2) {
-    return bulma.modifiers.size.isLarge;
+    return bulma.Modifiers.Size.IsLarge;
   } else if (size.tag === 3) {
     return "";
   } else {
-    return bulma.modifiers.size.isSmall;
+    return bulma.Modifiers.Size.IsSmall;
   }
 }
 
@@ -6080,6 +7651,25 @@ function isValid(s, radix) {
 // tslint:disable:curly
 // tslint:disable:member-access
 // tslint:disable:member-ordering
+// The internal representation of a long is the two given signed, 32-bit values.
+// We use 32-bit pieces because these are the size of integers on which
+// Javascript performs bit-operations.  For operations like addition and
+// multiplication, we split each number into 16 bit pieces, which can easily be
+// multiplied within Javascript's floating-point representation without overflow
+// or change in sign.
+//
+// In the algorithms below, we frequently reduce the negative case to the
+// positive case by negating the input(s) and then post-processing the result.
+// Note that we must ALWAYS check specially whether those values are MIN_VALUE
+// (-2^63) because -MIN_VALUE == MIN_VALUE (since 2^63 cannot be represented as
+// a positive number, it overflows back into a negative).  Not handling this
+// case would often result in infinite recursion.
+//
+// Common constant values ZERO, ONE, NEG_ONE, etc. are defined below the from*
+// methods on which they depend.
+/**
+ * @class A Long class for representing a 64 bit two's-complement integer value.
+ */
 class Long {
     /**
      * Constructs a 64 bit two's-complement integer, given its low and high 32 bit values as *signed* integers.
@@ -7199,6 +8789,218 @@ function split(str, splitters, count, removeEmpty) {
 }
 
 const Types = function (__exports) {
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Content.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Size", ISize]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Content.Types.Option", Option$$1);
+  const Options = __exports.Options = class Options {
+    constructor(size) {
+      this.Size = size;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Content.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Size: Option("string")
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+
+    static get Empty() {
+      return new Options(null);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Content.Types.Options", Options);
+  return __exports;
+}({});
+const isSmall = new Types.Option(0, new ISize(0));
+const isMedium = new Types.Option(0, new ISize(1));
+const isLarge = new Types.Option(0, new ISize(2));
+function content$1(options, children) {
+  const parseOption = function (result, opt) {
+    return new Types.Options(ofSize(opt.data));
+  };
+
+  const opts = (() => {
+    const state = Types.Options.Empty;
+    return function (list) {
+      return fold$1(parseOption, state, list);
+    };
+  })()(options);
+
+  return react_1("div", {
+    className: join(" ", new List$1(bulma.Content.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Size])))))
+  }, ...children);
+}
+
+function htmlFromMarkdown(str) {
+  return react_1("div", {
+    dangerouslySetInnerHTML: {
+      __html: marked.parse(str)
+    }
+  });
+}
+function contentFromMarkdown(str) {
+  return content$1(new List$1(), ofArray([htmlFromMarkdown(str)]));
+}
+function docSection(title, viewer) {
+  return react_1("div", {}, ...toList(delay(function () {
+    return append$1(singleton$1(contentFromMarkdown(title)), delay(function () {
+      return singleton$1(viewer);
+    }));
+  })));
+}
+function docPage(children) {
+  return react_1("div", {}, ...toList(delay(function () {
+    return collect$1(function (child) {
+      return append$1(singleton$1(child), delay(function () {
+        return singleton$1(react_1("hr", {}));
+      }));
+    }, children);
+  })));
+}
+
+class Model {
+  constructor(isExpanded, code) {
+    this.IsExpanded = isExpanded;
+    this.Code = code;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Viewer.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        IsExpanded: "boolean",
+        Code: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Viewer.Types.Model", Model);
+class Msg {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Viewer.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["Expand"], ["Collapse"]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Viewer.Types.Msg", Msg);
+
+function card$1(props, children) {
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Container)), delay(function () {
+      return props;
+    }));
+  })), 1), ...children);
+}
+
+function content$2(props, children) {
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Content)), delay(function () {
+      return props;
+    }));
+  })), 1), ...children);
+}
+function footer(props, children) {
+  return react_1("footer", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Footer.Container)), delay(function () {
+      return props;
+    }));
+  })), 1), ...children);
+}
+const Header = function (__exports) {
+  const icon$$1 = __exports.icon = function (props, children) {
+    return react_1("a", createObj(toList(delay(function () {
+      return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Header.Icon)), delay(function () {
+        return props;
+      }));
+    })), 1), ...children);
+  };
+
+  const title = __exports.title = function (props, children) {
+    return react_1("p", createObj(toList(delay(function () {
+      return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Header.Title)), delay(function () {
+        return props;
+      }));
+    })), 1), ...children);
+  };
+
+  return __exports;
+}({});
+const Footer = function (__exports) {
+  const item$$1 = __exports.item = function (props, children) {
+    return react_1("a", createObj(toList(delay(function () {
+      return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Card.Footer.Item)), delay(function () {
+        return props;
+      }));
+    })), 1), ...children);
+  };
+
+  return __exports;
+}({});
+
+const Types$1 = function (__exports) {
   const IPosition = __exports.IPosition = class IPosition {
     constructor(tag$$1, data) {
       this.tag = tag$$1;
@@ -7281,38 +9083,38 @@ const Types = function (__exports) {
 
   const ofPosition = __exports.ofPosition = function (_arg1) {
     if (_arg1.tag === 1) {
-      return bulma.icon.position.right;
+      return bulma.Icon.Position.Right;
     } else {
-      return bulma.icon.position.left;
+      return bulma.Icon.Position.Left;
     }
   };
 
   return __exports;
 }({});
-const isSmall = new Types.Option(0, new ISize(0));
-const isMedium = new Types.Option(0, new ISize(1));
-const isLarge = new Types.Option(0, new ISize(2));
-const isLeft = new Types.Option(1, new Types.IPosition(0));
-const isRight = new Types.Option(1, new Types.IPosition(1));
-function icon(options, children) {
+const isSmall$1 = new Types$1.Option(0, new ISize(0));
+const isMedium$1 = new Types$1.Option(0, new ISize(1));
+const isLarge$1 = new Types$1.Option(0, new ISize(2));
+const isLeft = new Types$1.Option(1, new Types$1.IPosition(0));
+const isRight = new Types$1.Option(1, new Types$1.IPosition(1));
+function icon$1(options, children) {
   const parseOptions = function (result, option) {
     if (option.tag === 1) {
-      const Position = Types.ofPosition(option.data);
-      return new Types.Options(result.Size, Position);
+      const Position = Types$1.ofPosition(option.data);
+      return new Types$1.Options(result.Size, Position);
     } else {
-      return new Types.Options(ofSize(option.data), result.Position);
+      return new Types$1.Options(ofSize(option.data), result.Position);
     }
   };
 
   const opts = (() => {
-    const state = Types.Options.Empty;
+    const state = Types$1.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
   })()(options);
 
   return react_1("span", {
-    className: join(" ", new List$1(bulma.icon.container, map(function (x) {
+    className: join(" ", new List$1(bulma.Icon.Container, map(function (x) {
       return x;
     }, filter(function (x_1) {
       return (() => x_1 != null)();
@@ -7320,24 +9122,2872 @@ function icon(options, children) {
   }, ...children);
 }
 
-function section(model) {
-  return sectionBase(model.text, toList$1(docBlock(model.code, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, icon(ofArray([isSmall]), ofArray([react_1("i", {
-    className: "fa fa-home"
-  })])), icon(new List$1(), ofArray([react_1("i", {
-    className: "fa fa-home"
-  })])), icon(ofArray([isMedium]), ofArray([react_1("i", {
-    className: "fa fa-home"
-  })])), icon(ofArray([isLarge]), ofArray([react_1("i", {
-    className: "fa fa-home"
-  })])))))));
-}
-function root$1(model) {
-  return react_1("div", {}, section(model));
+function root$2(interactiveView, model, dispatch) {
+  const eventToTrigger = model.IsExpanded ? new Msg(1) : new Msg(0);
+  let footerItemIcon;
+  const footerIconClass = model.IsExpanded ? new Props.HTMLAttr(22, "fa fa-angle-up") : new Props.HTMLAttr(22, "fa fa-angle-down");
+  footerItemIcon = Footer.item(new List$1(), ofArray([icon$1(new List$1(), ofArray([react_1("i", createObj(ofArray([footerIconClass]), 1))]))]));
+  const footerItemText = model.IsExpanded ? Footer.item(new List$1(), ofArray(["Hide code"])) : Footer.item(new List$1(), ofArray(["View code"]));
+  return card$1(new List$1(), toList(delay(function () {
+    return append$1(singleton$1(content$2(new List$1(), ofArray([interactiveView]))), delay(function () {
+      return append$1(singleton$1(footer(ofArray([new Props.DOMAttr(39, function (_arg1) {
+        dispatch(eventToTrigger);
+      })]), ofArray([footerItemIcon, footerItemText, footerItemIcon]))), delay(function () {
+        return model.IsExpanded ? singleton$1(box_(new List$1(), ofArray([contentFromMarkdown(model.Code)]))) : empty();
+      }));
+    }));
+  })));
 }
 
-const Types$1 = function (__exports) {
+class Model$1 {
+  constructor(intro, boxViewer) {
+    this.Intro = intro;
+    this.BoxViewer = boxViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Box.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        BoxViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Box.Types.Model", Model$1);
+class Msg$1 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Box.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["BoxViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Box.Types.Msg", Msg$1);
+
+const iconInteractive = react_1("div", {
+  className: "block"
+}, box_(new List$1(), ofArray(["Lorem ipsum dolor sit amet, consectetur adipisicing elit\r\n                   , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."])));
+function root$1(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive, model.BoxViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$1(0, arg0);
+  }($var1))))]));
+}
+
+class Model$3 {
+  constructor(intro, colorViewer, sizeViewer, outlinedViewer, mixedStyleViewer, stateViewer, extraViewer, clickCount) {
+    this.Intro = intro;
+    this.ColorViewer = colorViewer;
+    this.SizeViewer = sizeViewer;
+    this.OutlinedViewer = outlinedViewer;
+    this.MixedStyleViewer = mixedStyleViewer;
+    this.StateViewer = stateViewer;
+    this.ExtraViewer = extraViewer;
+    this.ClickCount = clickCount | 0;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Button.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        ColorViewer: Model,
+        SizeViewer: Model,
+        OutlinedViewer: Model,
+        MixedStyleViewer: Model,
+        StateViewer: Model,
+        ExtraViewer: Model,
+        ClickCount: "number"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Button.Types.Model", Model$3);
+class Msg$3 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Button.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["ColorViewerMsg", Msg], ["SizeViewerMsg", Msg], ["OutlinedViewerMsg", Msg], ["MixedStyleViewerMsg", Msg], ["StateViewerMsg", Msg], ["ExtraViewerMsg", Msg], ["Click"]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Button.Types.Msg", Msg$3);
+
+class Model$4 {
+  constructor(intro, contentViewer, sizeViewer) {
+    this.Intro = intro;
+    this.ContentViewer = contentViewer;
+    this.SizeViewer = sizeViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Content.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        ContentViewer: Model,
+        SizeViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Content.Types.Model", Model$4);
+class Msg$4 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Content.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["ContentViewerMsg", Msg], ["SizeViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Content.Types.Msg", Msg$4);
+
+class Model$5 {
+  constructor(intro, demoViewer, extraViewer, clicked) {
+    this.Intro = intro;
+    this.DemoViewer = demoViewer;
+    this.ExtraViewer = extraViewer;
+    this.Clicked = clicked;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Delete.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        DemoViewer: Model,
+        ExtraViewer: Model,
+        Clicked: "boolean"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Delete.Types.Model", Model$5);
+class Msg$5 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Delete.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["DemoViewerMsg", Msg], ["ExtraViewerMsg", Msg], ["Click"]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Delete.Types.Msg", Msg$5);
+
+class Model$6 {
+  constructor(intro, iconViewer) {
+    this.Intro = intro;
+    this.IconViewer = iconViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Icon.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        IconViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Icon.Types.Model", Model$6);
+class Msg$6 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Icon.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["IconViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Icon.Types.Msg", Msg$6);
+
+class Model$7 {
+  constructor(intro, fixedViewer, responsiveViewer) {
+    this.Intro = intro;
+    this.FixedViewer = fixedViewer;
+    this.ResponsiveViewer = responsiveViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Image.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        FixedViewer: Model,
+        ResponsiveViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Image.Types.Model", Model$7);
+class Msg$7 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Image.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["FixedViewerMsg", Msg], ["ResponsiveViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Image.Types.Msg", Msg$7);
+
+class Model$8 {
+  constructor(intro, colorViewer, sizeViewer, clicked) {
+    this.Intro = intro;
+    this.ColorViewer = colorViewer;
+    this.SizeViewer = sizeViewer;
+    this.Clicked = clicked;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Progress.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        ColorViewer: Model,
+        SizeViewer: Model,
+        Clicked: "boolean"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Progress.Types.Model", Model$8);
+class Msg$8 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Progress.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["ColorViewerMsg", Msg], ["SizeViewerMsg", Msg], ["Click"]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Progress.Types.Msg", Msg$8);
+
+class Model$9 {
+  constructor(intro, simpleViewer, modifierViewer) {
+    this.Intro = intro;
+    this.SimpleViewer = simpleViewer;
+    this.ModifierViewer = modifierViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Table.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        SimpleViewer: Model,
+        ModifierViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Table.Types.Model", Model$9);
+class Msg$9 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Table.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["SimpleViewerMsg", Msg], ["ModifierViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Table.Types.Msg", Msg$9);
+
+class Model$10 {
+  constructor(intro, colorViewer, sizeViewer, nestedDeleteViewer) {
+    this.Intro = intro;
+    this.ColorViewer = colorViewer;
+    this.SizeViewer = sizeViewer;
+    this.NestedDeleteViewer = nestedDeleteViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Tag.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        ColorViewer: Model,
+        SizeViewer: Model,
+        NestedDeleteViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Tag.Types.Model", Model$10);
+class Msg$10 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Tag.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["ColorViewerMsg", Msg], ["SizeViewerMsg", Msg], ["NestedDeleteViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Tag.Types.Msg", Msg$10);
+
+class Model$11 {
+  constructor(intro, typeViewer, sizeViewer) {
+    this.Intro = intro;
+    this.TypeViewer = typeViewer;
+    this.SizeViewer = sizeViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Title.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        TypeViewer: Model,
+        SizeViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Elements.Title.Types.Model", Model$11);
+class Msg$11 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Elements.Title.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["TypeViewerMsg", Msg], ["SizeViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Elements.Title.Types.Msg", Msg$11);
+
+class Model$12 {
+  constructor(intro, panelViewer) {
+    this.Intro = intro;
+    this.PanelViewer = panelViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Components.Panel.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        PanelViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Components.Panel.Types.Model", Model$12);
+class Msg$12 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Components.Panel.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["PanelViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Components.Panel.Types.Msg", Msg$12);
+
+class Model$13 {
+  constructor(intro, boxViewer) {
+    this.Intro = intro;
+    this.BoxViewer = boxViewer;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Components.Level.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string",
+        BoxViewer: Model
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Components.Level.Types.Model", Model$13);
+class Msg$13 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Components.Level.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["BoxViewerMsg", Msg]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("Components.Level.Types.Msg", Msg$13);
+
+class Model$14 {
+  constructor(intro) {
+    this.Intro = intro;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "Home.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Intro: "string"
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("Home.Types.Model", Model$14);
+
+class Msg$2 {
+  constructor(tag, data) {
+    this.tag = tag;
+    this.data = data;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "App.Types.Msg",
+      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+      cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13]]
+    };
+  }
+
+  Equals(other) {
+    return this === other || this.tag === other.tag && equals(this.data, other.data);
+  }
+
+  CompareTo(other) {
+    return compareUnions(this, other) | 0;
+  }
+
+}
+setType("App.Types.Msg", Msg$2);
+class ElementsModel {
+  constructor(box, button, content, _delete, icon, image, progress, table, tag, title) {
+    this.Box = box;
+    this.Button = button;
+    this.Content = content;
+    this.Delete = _delete;
+    this.Icon = icon;
+    this.Image = image;
+    this.Progress = progress;
+    this.Table = table;
+    this.Tag = tag;
+    this.Title = title;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "App.Types.ElementsModel",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Box: Model$1,
+        Button: Model$3,
+        Content: Model$4,
+        Delete: Model$5,
+        Icon: Model$6,
+        Image: Model$7,
+        Progress: Model$8,
+        Table: Model$9,
+        Tag: Model$10,
+        Title: Model$11
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("App.Types.ElementsModel", ElementsModel);
+class ComponentsModel {
+  constructor(panel, level) {
+    this.Panel = panel;
+    this.Level = level;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "App.Types.ComponentsModel",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        Panel: Model$12,
+        Level: Model$13
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("App.Types.ComponentsModel", ComponentsModel);
+class Model$2 {
+  constructor(currentPage, home, elements, components) {
+    this.CurrentPage = currentPage;
+    this.Home = home;
+    this.Elements = elements;
+    this.Components = components;
+  }
+
+  [FSymbol.reflection]() {
+    return {
+      type: "App.Types.Model",
+      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+      properties: {
+        CurrentPage: Page,
+        Home: Model$14,
+        Elements: ElementsModel,
+        Components: ComponentsModel
+      }
+    };
+  }
+
+  Equals(other) {
+    return equalsRecords(this, other);
+  }
+
+  CompareTo(other) {
+    return compareRecords(this, other) | 0;
+  }
+
+}
+setType("App.Types.Model", Model$2);
+
+const Types$2 = function (__exports) {
+  const IDisplay = __exports.IDisplay = class IDisplay {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Columns.Types.IDisplay",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Mobile"], ["DesktopOnly"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Columns.Types.IDisplay", IDisplay);
+  const ISpacing = __exports.ISpacing = class ISpacing {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Columns.Types.ISpacing",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsMultiline"], ["IsGapless"], ["IsGrid"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Columns.Types.ISpacing", ISpacing);
+  const IAlignement = __exports.IAlignement = class IAlignement {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Columns.Types.IAlignement",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsCentered"], ["IsVCentered"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Columns.Types.IAlignement", IAlignement);
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Columns.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Display", IDisplay], ["Spacing", ISpacing], ["Alignment", IAlignement]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Columns.Types.Option", Option$$1);
+
+  const ofAlignment = __exports.ofAlignment = function (_arg1) {
+    if (_arg1.tag === 1) {
+      return bulma.Grid.Columns.Alignment.IsVCentered;
+    } else {
+      return bulma.Grid.Columns.Alignment.IsCentered;
+    }
+  };
+
+  const ofSpacing = __exports.ofSpacing = function (_arg1) {
+    if (_arg1.tag === 1) {
+      return bulma.Grid.Columns.Spacing.IsGapless;
+    } else if (_arg1.tag === 2) {
+      return bulma.Grid.Columns.Spacing.IsGrid;
+    } else {
+      return bulma.Grid.Columns.Spacing.IsMultiline;
+    }
+  };
+
+  const ofDisplay = __exports.ofDisplay = function (_arg1) {
+    if (_arg1.tag === 1) {
+      return bulma.Grid.Columns.Display.OnlyDesktop;
+    } else {
+      return bulma.Grid.Columns.Display.OnMobile;
+    }
+  };
+
+  const Options = __exports.Options = class Options {
+    constructor(display, spacing, alignment) {
+      this.Display = display;
+      this.Spacing = spacing;
+      this.Alignment = alignment;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Columns.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Display: Option("string"),
+          Spacing: Option("string"),
+          Alignment: Option("string")
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+
+    static get Empty() {
+      return new Options(null, null, null);
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Columns.Types.Options", Options);
+  return __exports;
+}({});
+const isCentered = new Types$2.Option(2, new Types$2.IAlignement(0));
+const isVCentered = new Types$2.Option(2, new Types$2.IAlignement(1));
+const onMobile = new Types$2.Option(0, new Types$2.IDisplay(0));
+const onDesktopOnly = new Types$2.Option(0, new Types$2.IDisplay(1));
+const isMultiline = new Types$2.Option(1, new Types$2.ISpacing(0));
+const isGapless = new Types$2.Option(1, new Types$2.ISpacing(1));
+const isGrid = new Types$2.Option(1, new Types$2.ISpacing(2));
+function columns$1(options, children) {
+  const parseOptions = function (result, _arg1) {
+    if (_arg1.tag === 1) {
+      const Spacing = Types$2.ofSpacing(_arg1.data);
+      return new Types$2.Options(result.Display, Spacing, result.Alignment);
+    } else if (_arg1.tag === 2) {
+      const Alignment = Types$2.ofAlignment(_arg1.data);
+      return new Types$2.Options(result.Display, result.Spacing, Alignment);
+    } else {
+      return new Types$2.Options(Types$2.ofDisplay(_arg1.data), result.Spacing, result.Alignment);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$2.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("div", {
+    className: join(" ", new List$1(bulma.Grid.Columns.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Alignment, opts.Display, opts.Spacing])))))
+  }, ...children);
+}
+
+const Types$3 = function (__exports) {
+  const ISize = __exports.ISize = class ISize {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Column.Types.ISize",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsOneQuarter"], ["IsOneThird"], ["IsHalf"], ["IsTwoThirds"], ["IsThreeQuarters"], ["Is1"], ["Is2"], ["Is3"], ["Is4"], ["Is5"], ["Is6"], ["Is7"], ["Is8"], ["Is9"], ["Is10"], ["Is11"], ["IsNarrow"], ["IsFull"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Column.Types.ISize", ISize);
+  const IScreen = __exports.IScreen = class IScreen {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Column.Types.IScreen",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["All"], ["Desktop"], ["Tablet"], ["Mobile"], ["WideScreen"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Column.Types.IScreen", IScreen);
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Column.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Width", IScreen, ISize], ["Offset", IScreen, ISize]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Column.Types.Option", Option$$1);
+
+  const ofWidth = __exports.ofWidth = function (_arg1_0, _arg1_1) {
+    const _arg1 = [_arg1_0, _arg1_1];
+
+    if (_arg1[0].tag === 1) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Desktop.Width.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Desktop.Width.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Desktop.Width.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Desktop.Width.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Desktop.Width.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Desktop.Width.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Desktop.Width.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Desktop.Width.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Desktop.Width.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Desktop.Width.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Desktop.Width.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Desktop.Width.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Desktop.Width.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Desktop.Width.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Desktop.Width.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Desktop.Width.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Desktop.Width.IsFull;
+      } else {
+        return bulma.Grid.Column.Desktop.Width.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 2) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Tablet.Width.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Tablet.Width.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Tablet.Width.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Tablet.Width.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Tablet.Width.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Tablet.Width.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Tablet.Width.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Tablet.Width.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Tablet.Width.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Tablet.Width.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Tablet.Width.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Tablet.Width.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Tablet.Width.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Tablet.Width.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Tablet.Width.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Tablet.Width.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Tablet.Width.IsFull;
+      } else {
+        return bulma.Grid.Column.Tablet.Width.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 3) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Mobile.Width.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Mobile.Width.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Mobile.Width.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Mobile.Width.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Mobile.Width.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Mobile.Width.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Mobile.Width.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Mobile.Width.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Mobile.Width.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Mobile.Width.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Mobile.Width.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Mobile.Width.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Mobile.Width.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Mobile.Width.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Mobile.Width.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Mobile.Width.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Mobile.Width.IsFull;
+      } else {
+        return bulma.Grid.Column.Mobile.Width.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 4) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.WideScreen.Width.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.WideScreen.Width.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.WideScreen.Width.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.WideScreen.Width.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.WideScreen.Width.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.WideScreen.Width.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.WideScreen.Width.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.WideScreen.Width.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.WideScreen.Width.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.WideScreen.Width.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.WideScreen.Width.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.WideScreen.Width.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.WideScreen.Width.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.WideScreen.Width.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.WideScreen.Width.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.WideScreen.Width.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.WideScreen.Width.IsFull;
+      } else {
+        return bulma.Grid.Column.WideScreen.Width.IsOneQuarter;
+      }
+    } else if (_arg1[1].tag === 1) {
+      return bulma.Grid.Column.Width.IsOneThird;
+    } else if (_arg1[1].tag === 2) {
+      return bulma.Grid.Column.Width.IsHalf;
+    } else if (_arg1[1].tag === 3) {
+      return bulma.Grid.Column.Width.IsTwoThirds;
+    } else if (_arg1[1].tag === 4) {
+      return bulma.Grid.Column.Width.IsThreeQuarters;
+    } else if (_arg1[1].tag === 5) {
+      return bulma.Grid.Column.Width.Is1;
+    } else if (_arg1[1].tag === 6) {
+      return bulma.Grid.Column.Width.Is2;
+    } else if (_arg1[1].tag === 7) {
+      return bulma.Grid.Column.Width.Is3;
+    } else if (_arg1[1].tag === 8) {
+      return bulma.Grid.Column.Width.Is4;
+    } else if (_arg1[1].tag === 9) {
+      return bulma.Grid.Column.Width.Is5;
+    } else if (_arg1[1].tag === 10) {
+      return bulma.Grid.Column.Width.Is6;
+    } else if (_arg1[1].tag === 11) {
+      return bulma.Grid.Column.Width.Is7;
+    } else if (_arg1[1].tag === 12) {
+      return bulma.Grid.Column.Width.Is8;
+    } else if (_arg1[1].tag === 13) {
+      return bulma.Grid.Column.Width.Is9;
+    } else if (_arg1[1].tag === 14) {
+      return bulma.Grid.Column.Width.Is10;
+    } else if (_arg1[1].tag === 15) {
+      return bulma.Grid.Column.Width.Is11;
+    } else if (_arg1[1].tag === 16) {
+      return bulma.Grid.Column.Width.IsNarrow;
+    } else if (_arg1[1].tag === 17) {
+      return bulma.Grid.Column.Width.IsFull;
+    } else {
+      return bulma.Grid.Column.Width.IsOneQuarter;
+    }
+  };
+
+  const ofOffset = __exports.ofOffset = function (_arg1_0, _arg1_1) {
+    const _arg1 = [_arg1_0, _arg1_1];
+
+    if (_arg1[0].tag === 1) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Desktop.Offset.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Desktop.Offset.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Desktop.Offset.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Desktop.Offset.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Desktop.Offset.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Desktop.Offset.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Desktop.Offset.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Desktop.Offset.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Desktop.Offset.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Desktop.Offset.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Desktop.Offset.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Desktop.Offset.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Desktop.Offset.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Desktop.Offset.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Desktop.Offset.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Desktop.Offset.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Desktop.Offset.IsFull;
+      } else {
+        return bulma.Grid.Column.Desktop.Offset.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 2) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Tablet.Offset.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Tablet.Offset.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Tablet.Offset.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Tablet.Offset.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Tablet.Offset.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Tablet.Offset.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Tablet.Offset.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Tablet.Offset.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Tablet.Offset.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Tablet.Offset.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Tablet.Offset.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Tablet.Offset.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Tablet.Offset.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Tablet.Offset.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Tablet.Offset.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Tablet.Offset.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Tablet.Offset.IsFull;
+      } else {
+        return bulma.Grid.Column.Tablet.Offset.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 3) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.Mobile.Offset.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.Mobile.Offset.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.Mobile.Offset.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.Mobile.Offset.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.Mobile.Offset.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.Mobile.Offset.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.Mobile.Offset.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.Mobile.Offset.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.Mobile.Offset.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.Mobile.Offset.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.Mobile.Offset.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.Mobile.Offset.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.Mobile.Offset.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.Mobile.Offset.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.Mobile.Offset.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.Mobile.Offset.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.Mobile.Offset.IsFull;
+      } else {
+        return bulma.Grid.Column.Mobile.Offset.IsOneQuarter;
+      }
+    } else if (_arg1[0].tag === 4) {
+      if (_arg1[1].tag === 1) {
+        return bulma.Grid.Column.WideScreen.Offset.IsOneThird;
+      } else if (_arg1[1].tag === 2) {
+        return bulma.Grid.Column.WideScreen.Offset.IsHalf;
+      } else if (_arg1[1].tag === 3) {
+        return bulma.Grid.Column.WideScreen.Offset.IsTwoThirds;
+      } else if (_arg1[1].tag === 4) {
+        return bulma.Grid.Column.WideScreen.Offset.IsThreeQuarters;
+      } else if (_arg1[1].tag === 5) {
+        return bulma.Grid.Column.WideScreen.Offset.Is1;
+      } else if (_arg1[1].tag === 6) {
+        return bulma.Grid.Column.WideScreen.Offset.Is2;
+      } else if (_arg1[1].tag === 7) {
+        return bulma.Grid.Column.WideScreen.Offset.Is3;
+      } else if (_arg1[1].tag === 8) {
+        return bulma.Grid.Column.WideScreen.Offset.Is4;
+      } else if (_arg1[1].tag === 9) {
+        return bulma.Grid.Column.WideScreen.Offset.Is5;
+      } else if (_arg1[1].tag === 10) {
+        return bulma.Grid.Column.WideScreen.Offset.Is6;
+      } else if (_arg1[1].tag === 11) {
+        return bulma.Grid.Column.WideScreen.Offset.Is7;
+      } else if (_arg1[1].tag === 12) {
+        return bulma.Grid.Column.WideScreen.Offset.Is8;
+      } else if (_arg1[1].tag === 13) {
+        return bulma.Grid.Column.WideScreen.Offset.Is9;
+      } else if (_arg1[1].tag === 14) {
+        return bulma.Grid.Column.WideScreen.Offset.Is10;
+      } else if (_arg1[1].tag === 15) {
+        return bulma.Grid.Column.WideScreen.Offset.Is11;
+      } else if (_arg1[1].tag === 16) {
+        return bulma.Grid.Column.WideScreen.Offset.IsNarrow;
+      } else if (_arg1[1].tag === 17) {
+        return bulma.Grid.Column.WideScreen.Offset.IsFull;
+      } else {
+        return bulma.Grid.Column.WideScreen.Offset.IsOneQuarter;
+      }
+    } else if (_arg1[1].tag === 1) {
+      return bulma.Grid.Column.Offset.IsOneThird;
+    } else if (_arg1[1].tag === 2) {
+      return bulma.Grid.Column.Offset.IsHalf;
+    } else if (_arg1[1].tag === 3) {
+      return bulma.Grid.Column.Offset.IsTwoThirds;
+    } else if (_arg1[1].tag === 4) {
+      return bulma.Grid.Column.Offset.IsThreeQuarters;
+    } else if (_arg1[1].tag === 5) {
+      return bulma.Grid.Column.Offset.Is1;
+    } else if (_arg1[1].tag === 6) {
+      return bulma.Grid.Column.Offset.Is2;
+    } else if (_arg1[1].tag === 7) {
+      return bulma.Grid.Column.Offset.Is3;
+    } else if (_arg1[1].tag === 8) {
+      return bulma.Grid.Column.Offset.Is4;
+    } else if (_arg1[1].tag === 9) {
+      return bulma.Grid.Column.Offset.Is5;
+    } else if (_arg1[1].tag === 10) {
+      return bulma.Grid.Column.Offset.Is6;
+    } else if (_arg1[1].tag === 11) {
+      return bulma.Grid.Column.Offset.Is7;
+    } else if (_arg1[1].tag === 12) {
+      return bulma.Grid.Column.Offset.Is8;
+    } else if (_arg1[1].tag === 13) {
+      return bulma.Grid.Column.Offset.Is9;
+    } else if (_arg1[1].tag === 14) {
+      return bulma.Grid.Column.Offset.Is10;
+    } else if (_arg1[1].tag === 15) {
+      return bulma.Grid.Column.Offset.Is11;
+    } else if (_arg1[1].tag === 16) {
+      return bulma.Grid.Column.Offset.IsNarrow;
+    } else if (_arg1[1].tag === 17) {
+      return bulma.Grid.Column.Offset.IsFull;
+    } else {
+      return bulma.Grid.Column.Offset.IsOneQuarter;
+    }
+  };
+
+  const Options = __exports.Options = class Options {
+    constructor(width, offset, desktopWidth, desktopOffset, tabletpWidth, tabletpOffset, mobileWidth, mobileOffset, wideScreenpWidth, wideScreenpOffset) {
+      this.Width = width;
+      this.Offset = offset;
+      this.DesktopWidth = desktopWidth;
+      this.DesktopOffset = desktopOffset;
+      this.TabletpWidth = tabletpWidth;
+      this.TabletpOffset = tabletpOffset;
+      this.MobileWidth = mobileWidth;
+      this.MobileOffset = mobileOffset;
+      this.WideScreenpWidth = wideScreenpWidth;
+      this.WideScreenpOffset = wideScreenpOffset;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Components.Grids.Column.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Width: Option("string"),
+          Offset: Option("string"),
+          DesktopWidth: Option("string"),
+          DesktopOffset: Option("string"),
+          TabletpWidth: Option("string"),
+          TabletpOffset: Option("string"),
+          MobileWidth: Option("string"),
+          MobileOffset: Option("string"),
+          WideScreenpWidth: Option("string"),
+          WideScreenpOffset: Option("string")
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+
+    static get Empty() {
+      return new Options(null, null, null, null, null, null, null, null, null, null);
+    }
+
+  };
+  setType("Elmish.Bulma.Components.Grids.Column.Types.Options", Options);
+  return __exports;
+}({});
+const Width = function (__exports) {
+  const Dekstop = __exports.Dekstop = function (__exports) {
+    const isOneQuarter = __exports.isOneQuarter = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(0)]);
+    const isOneThird = __exports.isOneThird = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(1)]);
+    const isHalf = __exports.isHalf = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(2)]);
+    const isTwoThirds = __exports.isTwoThirds = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(3)]);
+    const isThreeQuarters = __exports.isThreeQuarters = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(4)]);
+    const is1 = __exports.is1 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(5)]);
+    const is2 = __exports.is2 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(6)]);
+    const is3 = __exports.is3 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(7)]);
+    const is4 = __exports.is4 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(8)]);
+    const is5 = __exports.is5 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(9)]);
+    const is6 = __exports.is6 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(10)]);
+    const is7 = __exports.is7 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(11)]);
+    const is8 = __exports.is8 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(12)]);
+    const is9 = __exports.is9 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(13)]);
+    const is10 = __exports.is10 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(14)]);
+    const is11 = __exports.is11 = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(15)]);
+    const isNarrow = __exports.isNarrow = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(16)]);
+    const isFull = __exports.isFull = new Types$3.Option(0, [new Types$3.IScreen(1), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const WideScreen = __exports.WideScreen = function (__exports) {
+    const isOneQuarter_1 = __exports.isOneQuarter = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(0)]);
+    const isOneThird_1 = __exports.isOneThird = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(1)]);
+    const isHalf_1 = __exports.isHalf = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(2)]);
+    const isTwoThirds_1 = __exports.isTwoThirds = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(3)]);
+    const isThreeQuarters_1 = __exports.isThreeQuarters = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(4)]);
+    const is1_1 = __exports.is1 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(5)]);
+    const is2_1 = __exports.is2 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(6)]);
+    const is3_1 = __exports.is3 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(7)]);
+    const is4_1 = __exports.is4 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(8)]);
+    const is5_1 = __exports.is5 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(9)]);
+    const is6_1 = __exports.is6 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(10)]);
+    const is7_1 = __exports.is7 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(11)]);
+    const is8_1 = __exports.is8 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(12)]);
+    const is9_1 = __exports.is9 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(13)]);
+    const is10_1 = __exports.is10 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(14)]);
+    const is11_1 = __exports.is11 = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(15)]);
+    const isNarrow_1 = __exports.isNarrow = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(16)]);
+    const isFull_1 = __exports.isFull = new Types$3.Option(0, [new Types$3.IScreen(4), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const Mobile = __exports.Mobile = function (__exports) {
+    const isOneQuarter_2 = __exports.isOneQuarter = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(0)]);
+    const isOneThird_2 = __exports.isOneThird = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(1)]);
+    const isHalf_2 = __exports.isHalf = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(2)]);
+    const isTwoThirds_2 = __exports.isTwoThirds = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(3)]);
+    const isThreeQuarters_2 = __exports.isThreeQuarters = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(4)]);
+    const is1_2 = __exports.is1 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(5)]);
+    const is2_2 = __exports.is2 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(6)]);
+    const is3_2 = __exports.is3 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(7)]);
+    const is4_2 = __exports.is4 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(8)]);
+    const is5_2 = __exports.is5 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(9)]);
+    const is6_2 = __exports.is6 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(10)]);
+    const is7_2 = __exports.is7 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(11)]);
+    const is8_2 = __exports.is8 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(12)]);
+    const is9_2 = __exports.is9 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(13)]);
+    const is10_2 = __exports.is10 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(14)]);
+    const is11_2 = __exports.is11 = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(15)]);
+    const isNarrow_2 = __exports.isNarrow = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(16)]);
+    const isFull_2 = __exports.isFull = new Types$3.Option(0, [new Types$3.IScreen(3), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const Tablet = __exports.Tablet = function (__exports) {
+    const isOneQuarter_3 = __exports.isOneQuarter = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(0)]);
+    const isOneThird_3 = __exports.isOneThird = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(1)]);
+    const isHalf_3 = __exports.isHalf = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(2)]);
+    const isTwoThirds_3 = __exports.isTwoThirds = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(3)]);
+    const isThreeQuarters_3 = __exports.isThreeQuarters = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(4)]);
+    const is1_3 = __exports.is1 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(5)]);
+    const is2_3 = __exports.is2 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(6)]);
+    const is3_3 = __exports.is3 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(7)]);
+    const is4_3 = __exports.is4 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(8)]);
+    const is5_3 = __exports.is5 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(9)]);
+    const is6_3 = __exports.is6 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(10)]);
+    const is7_3 = __exports.is7 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(11)]);
+    const is8_3 = __exports.is8 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(12)]);
+    const is9_3 = __exports.is9 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(13)]);
+    const is10_3 = __exports.is10 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(14)]);
+    const is11_3 = __exports.is11 = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(15)]);
+    const isNarrow_3 = __exports.isNarrow = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(16)]);
+    const isFull_3 = __exports.isFull = new Types$3.Option(0, [new Types$3.IScreen(2), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const isOneQuarter_4 = __exports.isOneQuarter = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(0)]);
+  const isOneThird_4 = __exports.isOneThird = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(1)]);
+  const isHalf_4 = __exports.isHalf = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(2)]);
+  const isTwoThirds_4 = __exports.isTwoThirds = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(3)]);
+  const isThreeQuarters_4 = __exports.isThreeQuarters = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(4)]);
+  const is1_4 = __exports.is1 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(5)]);
+  const is2_4 = __exports.is2 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(6)]);
+  const is3_4 = __exports.is3 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(7)]);
+  const is4_4 = __exports.is4 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(8)]);
+  const is5_4 = __exports.is5 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(9)]);
+  const is6_4 = __exports.is6 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(10)]);
+  const is7_4 = __exports.is7 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(11)]);
+  const is8_4 = __exports.is8 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(12)]);
+  const is9_4 = __exports.is9 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(13)]);
+  const is10_4 = __exports.is10 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(14)]);
+  const is11_4 = __exports.is11 = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(15)]);
+  const isNarrow_4 = __exports.isNarrow = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(16)]);
+  const isFull_4 = __exports.isFull = new Types$3.Option(0, [new Types$3.IScreen(0), new Types$3.ISize(17)]);
+  return __exports;
+}({});
+const Offset = function (__exports) {
+  const Dekstop = __exports.Dekstop = function (__exports) {
+    const isOneQuarter_5 = __exports.isOneQuarter = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(0)]);
+    const isOneThird_5 = __exports.isOneThird = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(1)]);
+    const isHalf_5 = __exports.isHalf = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(2)]);
+    const isTwoThirds_5 = __exports.isTwoThirds = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(3)]);
+    const isThreeQuarters_5 = __exports.isThreeQuarters = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(4)]);
+    const is1_5 = __exports.is1 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(5)]);
+    const is2_5 = __exports.is2 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(6)]);
+    const is3_5 = __exports.is3 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(7)]);
+    const is4_5 = __exports.is4 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(8)]);
+    const is5_5 = __exports.is5 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(9)]);
+    const is6_5 = __exports.is6 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(10)]);
+    const is7_5 = __exports.is7 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(11)]);
+    const is8_5 = __exports.is8 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(12)]);
+    const is9_5 = __exports.is9 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(13)]);
+    const is10_5 = __exports.is10 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(14)]);
+    const is11_5 = __exports.is11 = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(15)]);
+    const isNarrow_5 = __exports.isNarrow = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(16)]);
+    const isFull_5 = __exports.isFull = new Types$3.Option(1, [new Types$3.IScreen(1), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const WideScreen = __exports.WideScreen = function (__exports) {
+    const isOneQuarter_6 = __exports.isOneQuarter = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(0)]);
+    const isOneThird_6 = __exports.isOneThird = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(1)]);
+    const isHalf_6 = __exports.isHalf = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(2)]);
+    const isTwoThirds_6 = __exports.isTwoThirds = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(3)]);
+    const isThreeQuarters_6 = __exports.isThreeQuarters = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(4)]);
+    const is1_6 = __exports.is1 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(5)]);
+    const is2_6 = __exports.is2 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(6)]);
+    const is3_6 = __exports.is3 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(7)]);
+    const is4_6 = __exports.is4 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(8)]);
+    const is5_6 = __exports.is5 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(9)]);
+    const is6_6 = __exports.is6 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(10)]);
+    const is7_6 = __exports.is7 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(11)]);
+    const is8_6 = __exports.is8 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(12)]);
+    const is9_6 = __exports.is9 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(13)]);
+    const is10_6 = __exports.is10 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(14)]);
+    const is11_6 = __exports.is11 = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(15)]);
+    const isNarrow_6 = __exports.isNarrow = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(16)]);
+    const isFull_6 = __exports.isFull = new Types$3.Option(1, [new Types$3.IScreen(4), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const Mobile = __exports.Mobile = function (__exports) {
+    const isOneQuarter_7 = __exports.isOneQuarter = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(0)]);
+    const isOneThird_7 = __exports.isOneThird = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(1)]);
+    const isHalf_7 = __exports.isHalf = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(2)]);
+    const isTwoThirds_7 = __exports.isTwoThirds = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(3)]);
+    const isThreeQuarters_7 = __exports.isThreeQuarters = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(4)]);
+    const is1_7 = __exports.is1 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(5)]);
+    const is2_7 = __exports.is2 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(6)]);
+    const is3_7 = __exports.is3 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(7)]);
+    const is4_7 = __exports.is4 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(8)]);
+    const is5_7 = __exports.is5 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(9)]);
+    const is6_7 = __exports.is6 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(10)]);
+    const is7_7 = __exports.is7 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(11)]);
+    const is8_7 = __exports.is8 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(12)]);
+    const is9_7 = __exports.is9 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(13)]);
+    const is10_7 = __exports.is10 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(14)]);
+    const is11_7 = __exports.is11 = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(15)]);
+    const isNarrow_7 = __exports.isNarrow = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(16)]);
+    const isFull_7 = __exports.isFull = new Types$3.Option(1, [new Types$3.IScreen(3), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const Tablet = __exports.Tablet = function (__exports) {
+    const isOneQuarter_8 = __exports.isOneQuarter = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(0)]);
+    const isOneThird_8 = __exports.isOneThird = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(1)]);
+    const isHalf_8 = __exports.isHalf = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(2)]);
+    const isTwoThirds_8 = __exports.isTwoThirds = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(3)]);
+    const isThreeQuarters_8 = __exports.isThreeQuarters = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(4)]);
+    const is1_8 = __exports.is1 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(5)]);
+    const is2_8 = __exports.is2 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(6)]);
+    const is3_8 = __exports.is3 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(7)]);
+    const is4_8 = __exports.is4 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(8)]);
+    const is5_8 = __exports.is5 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(9)]);
+    const is6_8 = __exports.is6 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(10)]);
+    const is7_8 = __exports.is7 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(11)]);
+    const is8_8 = __exports.is8 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(12)]);
+    const is9_8 = __exports.is9 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(13)]);
+    const is10_8 = __exports.is10 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(14)]);
+    const is11_8 = __exports.is11 = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(15)]);
+    const isNarrow_8 = __exports.isNarrow = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(16)]);
+    const isFull_8 = __exports.isFull = new Types$3.Option(1, [new Types$3.IScreen(2), new Types$3.ISize(17)]);
+    return __exports;
+  }({});
+
+  const isOneQuarter_9 = __exports.isOneQuarter = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(0)]);
+  const isOneThird_9 = __exports.isOneThird = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(1)]);
+  const isHalf_9 = __exports.isHalf = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(2)]);
+  const isTwoThirds_9 = __exports.isTwoThirds = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(3)]);
+  const isThreeQuarters_9 = __exports.isThreeQuarters = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(4)]);
+  const is1_9 = __exports.is1 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(5)]);
+  const is2_9 = __exports.is2 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(6)]);
+  const is3_9 = __exports.is3 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(7)]);
+  const is4_9 = __exports.is4 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(8)]);
+  const is5_9 = __exports.is5 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(9)]);
+  const is6_9 = __exports.is6 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(10)]);
+  const is7_9 = __exports.is7 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(11)]);
+  const is8_9 = __exports.is8 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(12)]);
+  const is9_9 = __exports.is9 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(13)]);
+  const is10_9 = __exports.is10 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(14)]);
+  const is11_9 = __exports.is11 = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(15)]);
+  const isNarrow_9 = __exports.isNarrow = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(16)]);
+  const isFull_9 = __exports.isFull = new Types$3.Option(1, [new Types$3.IScreen(0), new Types$3.ISize(17)]);
+  return __exports;
+}({});
+function column$1(options, children) {
+  const parseOptions = function (result, _arg1) {
+    const $var1 = _arg1.tag === 0 ? _arg1.data[0].Equals(new Types$3.IScreen(0)) ? [0, _arg1.data[0], _arg1.data[1]] : [1] : [1];
+
+    switch ($var1[0]) {
+      case 0:
+        return new Types$3.Options(Types$3.ofWidth($var1[1], $var1[2]), result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+      case 1:
+        const $var2 = _arg1.tag === 1 ? _arg1.data[0].Equals(new Types$3.IScreen(0)) ? [0, _arg1.data[1], _arg1.data[0]] : [1] : [1];
+
+        switch ($var2[0]) {
+          case 0:
+            const Offset_1 = Types$3.ofOffset($var2[2], $var2[1]);
+            return new Types$3.Options(result.Width, Offset_1, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+          case 1:
+            const $var3 = _arg1.tag === 0 ? _arg1.data[0].Equals(new Types$3.IScreen(1)) ? [0, _arg1.data[0], _arg1.data[1]] : [1] : [1];
+
+            switch ($var3[0]) {
+              case 0:
+                const DesktopWidth = Types$3.ofWidth($var3[1], $var3[2]);
+                return new Types$3.Options(result.Width, result.Offset, DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+              case 1:
+                const $var4 = _arg1.tag === 1 ? _arg1.data[0].Equals(new Types$3.IScreen(1)) ? [0, _arg1.data[1], _arg1.data[0]] : [1] : [1];
+
+                switch ($var4[0]) {
+                  case 0:
+                    const DesktopOffset = Types$3.ofOffset($var4[2], $var4[1]);
+                    return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+                  case 1:
+                    const $var5 = _arg1.tag === 0 ? _arg1.data[0].Equals(new Types$3.IScreen(2)) ? [0, _arg1.data[0], _arg1.data[1]] : [1] : [1];
+
+                    switch ($var5[0]) {
+                      case 0:
+                        const TabletpWidth = Types$3.ofWidth($var5[1], $var5[2]);
+                        return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+                      case 1:
+                        const $var6 = _arg1.tag === 1 ? _arg1.data[0].Equals(new Types$3.IScreen(2)) ? [0, _arg1.data[1], _arg1.data[0]] : [1] : [1];
+
+                        switch ($var6[0]) {
+                          case 0:
+                            const TabletpOffset = Types$3.ofOffset($var6[2], $var6[1]);
+                            return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+                          case 1:
+                            const $var7 = _arg1.tag === 0 ? _arg1.data[0].Equals(new Types$3.IScreen(3)) ? [0, _arg1.data[0], _arg1.data[1]] : [1] : [1];
+
+                            switch ($var7[0]) {
+                              case 0:
+                                const MobileWidth = Types$3.ofWidth($var7[1], $var7[2]);
+                                return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, MobileWidth, result.MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+                              case 1:
+                                const $var8 = _arg1.tag === 1 ? _arg1.data[0].Equals(new Types$3.IScreen(3)) ? [0, _arg1.data[1], _arg1.data[0]] : [1] : [1];
+
+                                switch ($var8[0]) {
+                                  case 0:
+                                    const MobileOffset = Types$3.ofOffset($var8[2], $var8[1]);
+                                    return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, MobileOffset, result.WideScreenpWidth, result.WideScreenpOffset);
+
+                                  case 1:
+                                    const $var9 = _arg1.tag === 0 ? _arg1.data[0].Equals(new Types$3.IScreen(4)) ? [0, _arg1.data[0], _arg1.data[1]] : [1] : [1];
+
+                                    switch ($var9[0]) {
+                                      case 0:
+                                        const WideScreenpWidth = Types$3.ofWidth($var9[1], $var9[2]);
+                                        return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, WideScreenpWidth, result.WideScreenpOffset);
+
+                                      case 1:
+                                        const $var10 = _arg1.tag === 1 ? _arg1.data[0].Equals(new Types$3.IScreen(4)) ? [0, _arg1.data[1], _arg1.data[0]] : [1] : [1];
+
+                                        switch ($var10[0]) {
+                                          case 0:
+                                            const WideScreenpOffset = Types$3.ofOffset($var10[2], $var10[1]);
+                                            return new Types$3.Options(result.Width, result.Offset, result.DesktopWidth, result.DesktopOffset, result.TabletpWidth, result.TabletpOffset, result.MobileWidth, result.MobileOffset, result.WideScreenpWidth, WideScreenpOffset);
+
+                                          case 1:
+                                            return {
+                                              formatFn: fsFormat("Error when parsing column option %A"),
+                                              input: "Error when parsing column option %A"
+                                            }.formatFn(x => {
+                                              throw new Error(x);
+                                            })(_arg1);
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$3.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("div", {
+    className: join(" ", new List$1(bulma.Grid.Column.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Width, opts.Offset, opts.DesktopWidth, opts.DesktopOffset, opts.MobileWidth, opts.MobileOffset, opts.TabletpWidth, opts.TabletpOffset, opts.WideScreenpWidth, opts.WideScreenpOffset])))))
+  }, ...children);
+}
+
+const Types$4 = function (__exports) {
+  const ISize$$1 = __exports.ISize = class ISize$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Button.Types.ISize",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsSmall"], ["IsMedium"], ["IsLarge"], ["IsFullWidth"], ["Nothing"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Button.Types.ISize", ISize$$1);
+  const IState = __exports.IState = class IState {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Button.Types.IState",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsHovered"], ["IsFocused"], ["IsActive"], ["IsLoading"], ["Nothing"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Button.Types.IState", IState);
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Button.Types.Option",
+        interfaces: ["FSharpUnion"],
+        cases: [["Level", ILevelAndColor], ["Size", ISize$$1], ["IsOutlined"], ["IsInverted"], ["IsLink"], ["State", IState], ["Props", makeGeneric(List$1, {
+          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+        })], ["OnClick", FableFunction([Interface("Fable.Import.React.MouseEvent"), Unit])]]
+      };
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Button.Types.Option", Option$$1);
+
+  const ofSize$$1 = __exports.ofSize = function (size) {
+    if (size.tag === 1) {
+      return bulma.Button.Size.IsMedium;
+    } else if (size.tag === 2) {
+      return bulma.Button.Size.IsLarge;
+    } else if (size.tag === 3) {
+      return bulma.Button.Size.IsFullwidth;
+    } else if (size.tag === 4) {
+      return "";
+    } else {
+      return bulma.Button.Size.IsSmall;
+    }
+  };
+
+  const ofStyles = __exports.ofStyles = function (style) {
+    if (style.tag === 2) {
+      return bulma.Button.Styles.IsOutlined;
+    } else if (style.tag === 3) {
+      return bulma.Button.Styles.IsInverted;
+    } else if (style.tag === 4) {
+      return bulma.Button.Styles.IsLink;
+    } else {
+      return {
+        formatFn: fsFormat("%A isn't a valid style value"),
+        input: "%A isn't a valid style value"
+      }.formatFn(x => {
+        throw new Error(x);
+      })(style);
+    }
+  };
+
+  const ofState = __exports.ofState = function (state) {
+    if (state.tag === 0) {
+      return bulma.Button.State.IsHovered;
+    } else if (state.tag === 1) {
+      return bulma.Button.State.IsFocused;
+    } else if (state.tag === 2) {
+      return bulma.Button.State.IsActive;
+    } else if (state.tag === 3) {
+      return bulma.Button.State.IsLoading;
+    } else {
+      return "";
+    }
+  };
+
+  const Options = __exports.Options = class Options {
+    constructor(level$$1, size, isOutlined, isInverted, isLink, state, props, onClick) {
+      this.Level = level$$1;
+      this.Size = size;
+      this.IsOutlined = isOutlined;
+      this.IsInverted = isInverted;
+      this.IsLink = isLink;
+      this.State = state;
+      this.Props = props;
+      this.OnClick = onClick;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Button.Types.Options",
+        interfaces: ["FSharpRecord"],
+        properties: {
+          Level: Option("string"),
+          Size: Option("string"),
+          IsOutlined: "boolean",
+          IsInverted: "boolean",
+          IsLink: "boolean",
+          State: Option("string"),
+          Props: makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          }),
+          OnClick: Option(FableFunction([Interface("Fable.Import.React.MouseEvent"), Unit]))
+        }
+      };
+    }
+
+    static get Empty() {
+      return new Options(null, null, false, false, false, null, new List$1(), null);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Button.Types.Options", Options);
+  return __exports;
+}({});
+const isSmall$2 = new Types$4.Option(1, new Types$4.ISize(0));
+const isMedium$2 = new Types$4.Option(1, new Types$4.ISize(1));
+const isLarge$2 = new Types$4.Option(1, new Types$4.ISize(2));
+const isFullWidth = new Types$4.Option(1, new Types$4.ISize(3));
+const isHovered = new Types$4.Option(5, new Types$4.IState(0));
+const isFocused = new Types$4.Option(5, new Types$4.IState(1));
+const isActive = new Types$4.Option(5, new Types$4.IState(2));
+const isLoading = new Types$4.Option(5, new Types$4.IState(3));
+const isOutlined = new Types$4.Option(2);
+const isInverted = new Types$4.Option(3);
+const isLink = new Types$4.Option(4);
+const isBlack = new Types$4.Option(0, new ILevelAndColor(0));
+const isDark = new Types$4.Option(0, new ILevelAndColor(1));
+const isLight = new Types$4.Option(0, new ILevelAndColor(2));
+const isWhite = new Types$4.Option(0, new ILevelAndColor(3));
+const isPrimary = new Types$4.Option(0, new ILevelAndColor(4));
+const isInfo = new Types$4.Option(0, new ILevelAndColor(5));
+const isSuccess = new Types$4.Option(0, new ILevelAndColor(6));
+const isWarning = new Types$4.Option(0, new ILevelAndColor(7));
+const isDanger = new Types$4.Option(0, new ILevelAndColor(8));
+function props(props_1) {
+  return new Types$4.Option(6, props_1);
+}
+function onClick(cb) {
+  return new Types$4.Option(7, cb);
+}
+function button$1(options, children) {
+  const parseOptions = function (result, opt) {
+    if (opt.tag === 1) {
+      const Size = Types$4.ofSize(opt.data);
+      return new Types$4.Options(result.Level, Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, result.Props, result.OnClick);
+    } else if (opt.tag === 2) {
+      return new Types$4.Options(result.Level, result.Size, true, result.IsInverted, result.IsLink, result.State, result.Props, result.OnClick);
+    } else if (opt.tag === 3) {
+      return new Types$4.Options(result.Level, result.Size, result.IsOutlined, true, result.IsLink, result.State, result.Props, result.OnClick);
+    } else if (opt.tag === 4) {
+      return new Types$4.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, true, result.State, result.Props, result.OnClick);
+    } else if (opt.tag === 5) {
+      const State = Types$4.ofState(opt.data);
+      return new Types$4.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, result.IsLink, State, result.Props, result.OnClick);
+    } else if (opt.tag === 6) {
+      return new Types$4.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, opt.data, result.OnClick);
+    } else if (opt.tag === 7) {
+      const OnClick = opt.data;
+      return new Types$4.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, result.Props, OnClick);
+    } else {
+      return new Types$4.Options(ofLevelAndColor(opt.data), result.Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, result.Props, result.OnClick);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$4.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("a", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList(join(" ", new List$1(bulma.Button.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Level, opts.Size, opts.State]))))), ofArray([[bulma.Button.Styles.IsOutlined, opts.IsOutlined], [bulma.Button.Styles.IsInverted, opts.IsInverted], [bulma.Button.Styles.IsLink, opts.IsLink]]))), delay(function () {
+      return append$1((() => opts.OnClick != null)() ? singleton$1(new Props.DOMAttr(39, opts.OnClick)) : empty(), delay(function () {
+        return opts.Props;
+      }));
+    }));
+  })), 1), ...children);
+}
+
+const colorInteractive = columns$1(new List$1(), ofArray([column$1(new List$1(), ofArray([react_1("div", {
+  className: "block"
+}, button$1(new List$1(), ofArray(["Button"])), button$1(ofArray([isWhite]), ofArray(["White"])), button$1(ofArray([isLight]), ofArray(["Light"])), button$1(ofArray([isDark]), ofArray(["Dark"])), button$1(ofArray([isBlack]), ofArray(["Black"])))])), column$1(new List$1(), ofArray([react_1("div", {
+  className: "block"
+}, button$1(ofArray([isLink]), ofArray(["Link"])), button$1(ofArray([isPrimary]), ofArray(["Primary"])), button$1(ofArray([isInfo]), ofArray(["Info"])), button$1(ofArray([isSuccess]), ofArray(["Success"])), button$1(ofArray([isWarning]), ofArray(["Warning"])), button$1(ofArray([isDanger]), ofArray(["Danger"])))]))]));
+const sizeInteractive = react_1("div", {
+  className: "block"
+}, button$1(ofArray([isSmall$2]), ofArray(["Small"])), button$1(new List$1(), ofArray(["Normal"])), button$1(ofArray([isMedium$2]), ofArray(["Medium"])), button$1(ofArray([isLarge$2]), ofArray(["Large"])));
+const outlinedInteractive = react_1("div", {
+  className: "block"
+}, button$1(ofArray([isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isSuccess, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isPrimary, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isInfo, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isDanger, isOutlined]), ofArray(["Outlined"])));
+const mixedStyleInteractive = react_1("div", {
+  className: "callout is-primary block"
+}, button$1(ofArray([isInverted]), ofArray(["Inverted"])), button$1(ofArray([isSuccess, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isDanger, isInverted, isOutlined]), ofArray(["Invert Outlined"])), button$1(ofArray([isInfo, isInverted, isOutlined]), ofArray(["Invert Outlined"])));
+const stateInteractive = react_1("div", {
+  className: "block"
+}, button$1(new List$1(), ofArray(["Normal"])), button$1(ofArray([isSuccess, isHovered]), ofArray(["Hover"])), button$1(ofArray([isWarning, isFocused]), ofArray(["Focus"])), button$1(ofArray([isInfo, isActive]), ofArray(["Active"])), button$1(ofArray([isBlack, isLoading]), ofArray(["Loading"])));
+function extraInteractive(model, dispatch) {
+  const buttonTxt = model.ClickCount === 0 ? "Click me !" : {
+    formatFn: fsFormat("Clicked: %i times."),
+    input: "Clicked: %i times."
+  }.formatFn(x => x)(model.ClickCount);
+  return react_1("div", {
+    className: "block"
+  }, button$1(ofArray([onClick(function (_arg1) {
+    dispatch(new Msg$3(6));
+  })]), ofArray([buttonTxt])), button$1(ofArray([props(ofArray([new Props.HTMLAttr(37, true)]))]), ofArray(["Disabled via props"])));
+}
+function root$3(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Colors", root$2(colorInteractive, model.ColorViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$3(0, arg0);
+  }($var1)))), docSection("### Sizes", root$2(sizeInteractive, model.SizeViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$3(1, arg0_1);
+  }($var2)))), docSection("\r\n### Styles\r\nThe button can be **outlined** and/or **inverted**.\r\n                        ", react_1("div", {}, root$2(outlinedInteractive, model.OutlinedViewer, $var3 => dispatch(function (arg0_2) {
+    return new Msg$3(2, arg0_2);
+  }($var3))), react_1("br", {}), root$2(mixedStyleInteractive, model.MixedStyleViewer, $var4 => dispatch(function (arg0_3) {
+    return new Msg$3(3, arg0_3);
+  }($var4))))), docSection("### States", root$2(stateInteractive, model.StateViewer, $var5 => dispatch(function (arg0_4) {
+    return new Msg$3(4, arg0_4);
+  }($var5)))), docSection("### Extra", root$2(extraInteractive(model, dispatch), model.ExtraViewer, $var6 => dispatch(function (arg0_5) {
+    return new Msg$3(5, arg0_5);
+  }($var6))))]));
+}
+
+const contentInteractive = content$1(new List$1(), ofArray([react_1("h1", {}, "Hello World"), react_1("p", {}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque."), react_1("h2", {}, "Second level"), react_1("p", {}, "Curabitur accumsan turpis pharetra ", react_1("strong", {}, "augue tincidunt"), "blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl."), react_1("ul", {}, react_1("li", {}, "In fermentum leo eu lectus mollis, quis dictum mi aliquet."), react_1("li", {}, "Morbi eu nulla lobortis, lobortis est in, fringilla felis."), react_1("li", {}, "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."), react_1("li", {}, "Ut non enim metus.")), react_1("p", {}, "Sed sagittis enim ac tortor maximus rutrum.\r\n                     Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                     Maecenas vestibulum interdum commodo.")]));
+const sizeInteractive$1 = content$1(ofArray([isSmall]), ofArray([react_1("h1", {}, "Hello World"), react_1("p", {}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque."), react_1("h2", {}, "Second level"), react_1("p", {}, "Curabitur accumsan turpis pharetra ", react_1("strong", {}, "augue tincidunt"), "blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl."), react_1("ul", {}, react_1("li", {}, "In fermentum leo eu lectus mollis, quis dictum mi aliquet."), react_1("li", {}, "Morbi eu nulla lobortis, lobortis est in, fringilla felis."), react_1("li", {}, "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."), react_1("li", {}, "Ut non enim metus.")), react_1("p", {}, "Sed sagittis enim ac tortor maximus rutrum.\r\n                     Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                     Maecenas vestibulum interdum commodo.")]));
+function root$4(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Demo", root$2(contentInteractive, model.ContentViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$4(0, arg0);
+  }($var1)))), docSection("\r\n### Size\r\n\r\nSupported size:\r\n\r\n* `Content.isSmall`\r\n* `Content.isMedium`\r\n* `Content.isLarge`\r\n\r\nWhen you do not set the size, it's consider *normal*.\r\n                        ", root$2(sizeInteractive$1, model.SizeViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$4(1, arg0_1);
+  }($var2))))]));
+}
+
+const Types$5 = function (__exports) {
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Delete.Types.Option",
+        interfaces: ["FSharpUnion"],
+        cases: [["Size", ISize], ["Props", makeGeneric(List$1, {
+          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+        })], ["OnClick", FableFunction([Interface("Fable.Import.React.MouseEvent"), Unit])]]
+      };
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Delete.Types.Option", Option$$1);
+  const Options = __exports.Options = class Options {
+    constructor(size, props, onClick) {
+      this.Size = size;
+      this.Props = props;
+      this.OnClick = onClick;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Delete.Types.Options",
+        interfaces: ["FSharpRecord"],
+        properties: {
+          Size: Option("string"),
+          Props: makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          }),
+          OnClick: Option(FableFunction([Interface("Fable.Import.React.MouseEvent"), Unit]))
+        }
+      };
+    }
+
+    static get Empty() {
+      return new Options(null, new List$1(), null);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Delete.Types.Options", Options);
+  return __exports;
+}({});
+const isSmall$3 = new Types$5.Option(0, new ISize(0));
+const isMedium$3 = new Types$5.Option(0, new ISize(1));
+const isLarge$3 = new Types$5.Option(0, new ISize(2));
+
+function onClick$1(cb) {
+  return new Types$5.Option(2, cb);
+}
+
+function _delete$1(options, children) {
+  const parseOption = function (result, opt) {
+    if (opt.tag === 1) {
+      return new Types$5.Options(result.Size, opt.data, result.OnClick);
+    } else if (opt.tag === 2) {
+      const OnClick = opt.data;
+      return new Types$5.Options(result.Size, result.Props, OnClick);
+    } else {
+      return new Types$5.Options(ofSize(opt.data), result.Props, result.OnClick);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$5.Options.Empty;
+    return function (list) {
+      return fold$1(parseOption, state, list);
+    };
+  })()(options);
+
+  return react_1("a", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.Delete.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Size]))))))), delay(function () {
+      return append$1(opts.Props, delay(function () {
+        return (() => opts.OnClick != null)() ? singleton$1(new Props.DOMAttr(39, opts.OnClick)) : empty();
+      }));
+    }));
+  })), 1), ...children);
+}
+
+const demoInteractive = react_1("div", {
+  className: "block"
+}, _delete$1(ofArray([isSmall$3]), new List$1()), _delete$1(new List$1(), new List$1()), _delete$1(ofArray([isMedium$3]), new List$1()), _delete$1(ofArray([isLarge$3]), new List$1()));
+function extraInteractive$1(model, dispatch) {
+  return react_1("div", {
+    className: "block"
+  }, ...toList(delay(function () {
+    return append$1(singleton$1(_delete$1(ofArray([onClick$1(function (_arg1) {
+      dispatch(new Msg$5(2));
+    })]), new List$1())), delay(function () {
+      return model.Clicked ? append$1(singleton$1(react_1("br", {})), delay(function () {
+        return singleton$1("You clicked the delete button");
+      })) : empty();
+    }));
+  })));
+}
+function root$5(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Sizes", root$2(demoInteractive, model.DemoViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$5(0, arg0);
+  }($var1)))), docSection("\r\n### Extra\r\n\r\nYou can also attach any props to delete elements. Try clicking on the next button.\r\n                        ", root$2(extraInteractive$1(model, dispatch), model.ExtraViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$5(1, arg0_1);
+  }($var2))))]));
+}
+
+const iconInteractive$1 = react_1("div", {
+  className: "block"
+}, icon$1(ofArray([isSmall$1]), ofArray([react_1("i", {
+  className: "fa fa-home"
+})])), icon$1(new List$1(), ofArray([react_1("i", {
+  className: "fa fa-home"
+})])), icon$1(ofArray([isMedium$1]), ofArray([react_1("i", {
+  className: "fa fa-home"
+})])), icon$1(ofArray([isLarge$1]), ofArray([react_1("i", {
+  className: "fa fa-home"
+})])));
+function root$6(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Sizes", root$2(iconInteractive$1, model.IconViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$6(0, arg0);
+  }($var1))))]));
+}
+
+const Types$6 = function (__exports) {
+  const IImageSize = __exports.IImageSize = class IImageSize {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Image.Types.IImageSize",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Is16x16"], ["Is24x24"], ["Is32x32"], ["Is48x48"], ["Is64x64"], ["Is96x96"], ["Is128x128"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Image.Types.IImageSize", IImageSize);
+  const IImageRatio = __exports.IImageRatio = class IImageRatio {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Image.Types.IImageRatio",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsSquare"], ["Is1by1"], ["Is4by3"], ["Is3by2"], ["Is16by9"], ["Is2by1"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Image.Types.IImageRatio", IImageRatio);
+
+  const ofImageSize = __exports.ofImageSize = function (_arg1) {
+    if (_arg1.tag === 1) {
+      return bulma.Image.Size.Is24x24;
+    } else if (_arg1.tag === 2) {
+      return bulma.Image.Size.Is32x32;
+    } else if (_arg1.tag === 3) {
+      return bulma.Image.Size.Is48x48;
+    } else if (_arg1.tag === 4) {
+      return bulma.Image.Size.Is64x64;
+    } else if (_arg1.tag === 5) {
+      return bulma.Image.Size.Is96x96;
+    } else if (_arg1.tag === 6) {
+      return bulma.Image.Size.Is128x128;
+    } else {
+      return bulma.Image.Size.Is16x16;
+    }
+  };
+
+  const ofImageRatio = __exports.ofImageRatio = function (_arg1) {
+    if (_arg1.tag === 1) {
+      return bulma.Image.Ratio.Is1by1;
+    } else if (_arg1.tag === 2) {
+      return bulma.Image.Ratio.Is4by3;
+    } else if (_arg1.tag === 3) {
+      return bulma.Image.Ratio.Is3by2;
+    } else if (_arg1.tag === 4) {
+      return bulma.Image.Ratio.Is16by9;
+    } else if (_arg1.tag === 5) {
+      return bulma.Image.Ratio.Is2by1;
+    } else {
+      return bulma.Image.Ratio.IsSquare;
+    }
+  };
+
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Image.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["Size", IImageSize], ["Ratio", IImageRatio]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Image.Types.Option", Option$$1);
+  const Options = __exports.Options = class Options {
+    constructor(size, ratio) {
+      this.Size = size;
+      this.Ratio = ratio;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Image.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Size: Option("string"),
+          Ratio: Option("string")
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+
+    static get Empty() {
+      return new Options(null, null);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Image.Types.Options", Options);
+  return __exports;
+}({});
+const is16x16 = new Types$6.Option(0, new Types$6.IImageSize(0));
+const is24x24 = new Types$6.Option(0, new Types$6.IImageSize(1));
+const is32x32 = new Types$6.Option(0, new Types$6.IImageSize(2));
+const is48x48 = new Types$6.Option(0, new Types$6.IImageSize(3));
+const is64x64 = new Types$6.Option(0, new Types$6.IImageSize(4));
+const is96x96 = new Types$6.Option(0, new Types$6.IImageSize(5));
+const is128x128 = new Types$6.Option(0, new Types$6.IImageSize(6));
+const isSquare = new Types$6.Option(1, new Types$6.IImageRatio(0));
+const is1by1 = new Types$6.Option(1, new Types$6.IImageRatio(1));
+const is4by3 = new Types$6.Option(1, new Types$6.IImageRatio(2));
+const is3by2 = new Types$6.Option(1, new Types$6.IImageRatio(3));
+const is16by9 = new Types$6.Option(1, new Types$6.IImageRatio(4));
+const is2by1 = new Types$6.Option(1, new Types$6.IImageRatio(5));
+function image$1(options, children) {
+  const parseOptions = function (result, _arg1) {
+    if (_arg1.tag === 1) {
+      const Ratio = Types$6.ofImageRatio(_arg1.data);
+      return new Types$6.Options(result.Size, Ratio);
+    } else {
+      return new Types$6.Options(Types$6.ofImageSize(_arg1.data), result.Ratio);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$6.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("figure", {
+    className: join(" ", new List$1(bulma.Image.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Size, opts.Ratio])))))
+  }, ...children);
+}
+
+const fixedInteractive = react_1("div", {
+  className: "block"
+}, image$1(ofArray([is64x64]), ofArray([react_1("img", {
+  src: "https://dummyimage.com/64x64/7a7a7a/fff"
+})])), react_1("br", {}), image$1(ofArray([is128x128]), ofArray([react_1("img", {
+  src: "https://dummyimage.com/128x128/7a7a7a/fff"
+})])));
+const responsiveInteractive = react_1("div", {
+  className: "block"
+}, image$1(ofArray([is2by1]), ofArray([react_1("img", {
+  src: "https://dummyimage.com/640x320/7a7a7a/fff"
+})])));
+function root$7(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Fixed square images", root$2(fixedInteractive, model.FixedViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$7(0, arg0);
+  }($var1)))), docSection("### Responsive images with ratio", root$2(responsiveInteractive, model.FixedViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$7(0, arg0_1);
+  }($var2))))]));
+}
+
+const Types$7 = function (__exports) {
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Progress.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable"],
+        cases: [["Size", ISize], ["Color", ILevelAndColor], ["Props", makeGeneric(List$1, {
+          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+        })], ["Value", "number"], ["Max", "number"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Progress.Types.Option", Option$$1);
+  const Options = __exports.Options = class Options {
+    constructor(size, color, props, max$$1, value) {
+      this.Size = size;
+      this.Color = color;
+      this.Props = props;
+      this.Max = max$$1;
+      this.Value = value;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Progress.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable"],
+        properties: {
+          Size: Option("string"),
+          Color: Option("string"),
+          Props: makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          }),
+          Max: Option("number"),
+          Value: Option("number")
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    static get Empty() {
+      return new Options(null, null, new List$1(), null, null);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Progress.Types.Options", Options);
+  return __exports;
+}({});
+const isSmall$4 = new Types$7.Option(0, new ISize(0));
+const isMedium$4 = new Types$7.Option(0, new ISize(1));
+const isLarge$4 = new Types$7.Option(0, new ISize(2));
+const isBlack$1 = new Types$7.Option(1, new ILevelAndColor(0));
+const isDark$1 = new Types$7.Option(1, new ILevelAndColor(1));
+const isLight$1 = new Types$7.Option(1, new ILevelAndColor(2));
+const isWhite$1 = new Types$7.Option(1, new ILevelAndColor(3));
+const isPrimary$1 = new Types$7.Option(1, new ILevelAndColor(4));
+const isInfo$1 = new Types$7.Option(1, new ILevelAndColor(5));
+const isSuccess$1 = new Types$7.Option(1, new ILevelAndColor(6));
+const isWarning$1 = new Types$7.Option(1, new ILevelAndColor(7));
+const isDanger$1 = new Types$7.Option(1, new ILevelAndColor(8));
+
+function value(v) {
+  return new Types$7.Option(3, v);
+}
+function max$1(m) {
+  return new Types$7.Option(4, m);
+}
+function progress$1(options, children) {
+  const parseOptions = function (result, _arg1) {
+    if (_arg1.tag === 1) {
+      const Color = ofLevelAndColor(_arg1.data);
+      return new Types$7.Options(result.Size, Color, result.Props, result.Max, result.Value);
+    } else if (_arg1.tag === 2) {
+      return new Types$7.Options(result.Size, result.Color, _arg1.data, result.Max, result.Value);
+    } else if (_arg1.tag === 3) {
+      const Value = _arg1.data;
+      return new Types$7.Options(result.Size, result.Color, result.Props, result.Max, Value);
+    } else if (_arg1.tag === 4) {
+      const Max = _arg1.data;
+      return new Types$7.Options(result.Size, result.Color, result.Props, Max, result.Value);
+    } else {
+      return new Types$7.Options(ofSize(_arg1.data), result.Color, result.Props, result.Max, result.Value);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$7.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("progress", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.Progress.Container, map(function (x) {
+      return x;
+    }, filter(function (x_1) {
+      return (() => x_1 != null)();
+    }, ofArray([opts.Size, opts.Color]))))))), delay(function () {
+      return append$1(opts.Props, delay(function () {
+        return append$1((() => opts.Value != null)() ? singleton$1(new Props.HTMLAttr(118, opts.Value.toString())) : empty(), delay(function () {
+          return (() => opts.Max != null)() ? singleton$1(new Props.HTMLAttr(71, opts.Max)) : empty();
+        }));
+      }));
+    }));
+  })), 1), ...children);
+}
+
+const colorInteractive$1 = react_1("div", {
+  className: "block"
+}, progress$1(ofArray([value(15), max$1(100)]), ofArray(["15%"])), progress$1(ofArray([isSuccess$1, value(30), max$1(100)]), ofArray(["30%"])), progress$1(ofArray([isInfo$1, value(45), max$1(100)]), ofArray(["45%"])), progress$1(ofArray([isWarning$1, value(60), max$1(100)]), ofArray(["60%"])), progress$1(ofArray([isPrimary$1, value(75), max$1(100)]), ofArray(["75%"])), progress$1(ofArray([isDanger$1, value(90), max$1(100)]), ofArray(["90%"])));
+const sizeInteractive$2 = react_1("div", {
+  className: "block"
+}, progress$1(ofArray([isSmall$4, value(15), max$1(100)]), ofArray(["15%"])), progress$1(ofArray([value(30), max$1(100)]), ofArray(["30%"])), progress$1(ofArray([isMedium$4, value(45), max$1(100)]), ofArray(["45%"])), progress$1(ofArray([isLarge$4, value(60), max$1(100)]), ofArray(["60%"])));
+function root$8(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Colors", root$2(colorInteractive$1, model.ColorViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$8(0, arg0);
+  }($var1)))), docSection("### Sizes", root$2(sizeInteractive$2, model.SizeViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$8(1, arg0_1);
+  }($var2))))]));
+}
+
+const Types$8 = function (__exports) {
+  const TableOption = __exports.TableOption = class TableOption {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Table.Types.TableOption",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsBordered"], ["IsStripped"], ["IsNarrow"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Table.Types.TableOption", TableOption);
+  const TableOptions = __exports.TableOptions = class TableOptions {
+    constructor(isBordered, isStripped, isNarrow) {
+      this.IsBordered = isBordered;
+      this.IsStripped = isStripped;
+      this.IsNarrow = isNarrow;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Table.Types.TableOptions",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          IsBordered: "boolean",
+          IsStripped: "boolean",
+          IsNarrow: "boolean"
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+
+    static get Empty() {
+      return new TableOptions(false, false, false);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Table.Types.TableOptions", TableOptions);
+  return __exports;
+}({});
+const isBordered = new Types$8.TableOption(0);
+const isStripped = new Types$8.TableOption(1);
+const isNarrow = new Types$8.TableOption(2);
+function table$1(options, children) {
+  const parseOptions = function (result, _arg1) {
+    if (_arg1.tag === 1) {
+      return new Types$8.TableOptions(result.IsBordered, true, result.IsNarrow);
+    } else if (_arg1.tag === 2) {
+      return new Types$8.TableOptions(result.IsBordered, result.IsStripped, true);
+    } else {
+      return new Types$8.TableOptions(true, result.IsStripped, result.IsNarrow);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$8.TableOptions.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  })()(options);
+
+  return react_1("table", createObj(ofArray([classBaseList(bulma.Table.Container, ofArray([[bulma.Table.Style.IsBordered, opts.IsBordered], [bulma.Table.Style.IsStripped, opts.IsStripped], [bulma.Table.Spacing.IsNarrow, opts.IsNarrow]]))]), 1), ...children);
+}
+const Row = function (__exports) {
+  const isSelected = __exports.isSelected = new Props.HTMLAttr(22, bulma.Table.Row.State.IsSelected);
+  return __exports;
+}({});
+
+const simpleInteractive = table$1(new List$1(), ofArray([react_1("thead", {}, react_1("tr", {}, react_1("th", {}, "Firstname"), react_1("th", {}, "Surname"), react_1("th", {}, "Birthday"))), react_1("tbody", {}, react_1("tr", {}, react_1("td", {}, "Maxime"), react_1("td", {}, "Mangel"), react_1("td", {}, "28/02/1992")), react_1("tr", createObj(ofArray([Row.isSelected]), 1), react_1("td", {}, "Jane"), react_1("td", {}, "Doe"), react_1("td", {}, "21/07/1987")), react_1("tr", {}, react_1("td", {}, "John"), react_1("td", {}, "Doe"), react_1("td", {}, "11/07/1978")))]));
+const modifierInteractive = table$1(ofArray([isBordered, isNarrow, isStripped]), ofArray([react_1("thead", {}, react_1("tr", {}, react_1("th", {}, "Firstname"), react_1("th", {}, "Surname"), react_1("th", {}, "Birthday"))), react_1("tbody", {}, react_1("tr", {}, react_1("td", {}, "Maxime"), react_1("td", {}, "Mangel"), react_1("td", {}, "28/02/1992")), react_1("tr", createObj(ofArray([Row.isSelected]), 1), react_1("td", {}, "Jane"), react_1("td", {}, "Doe"), react_1("td", {}, "21/07/1987")), react_1("tr", {}, react_1("td", {}, "John"), react_1("td", {}, "Doe"), react_1("td", {}, "11/07/1978")))]));
+function root$9(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Table", root$2(simpleInteractive, model.SimpleViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$9(0, arg0);
+  }($var1)))), docSection("\r\n### Modifiers\r\n\r\nThere is three modifiers:\r\n\r\n- `Table.isBordered`\r\n- `Table.isNarrow`\r\n- `Table.isStripped`\r\n\r\nYou can apply any combination of this three.\r\n                        ", root$2(modifierInteractive, model.ModifierViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$9(1, arg0_1);
+  }($var2))))]));
+}
+
+const Types$9 = function (__exports) {
+  const ITagSize = __exports.ITagSize = class ITagSize {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Tag.Types.ITagSize",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["IsMedium"], ["IsLarge"]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+    CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Tag.Types.ITagSize", ITagSize);
+  const Option$$1 = __exports.Option = class Option$$1 {
+    constructor(tag$$1, data) {
+      this.tag = tag$$1;
+      this.data = data;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Tag.Types.Option",
+        interfaces: ["FSharpUnion", "System.IEquatable"],
+        cases: [["Size", ITagSize], ["Color", ILevelAndColor], ["Props", makeGeneric(List$1, {
+          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+        })]]
+      };
+    }
+
+    Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Tag.Types.Option", Option$$1);
+
+  const ofTagSize = __exports.ofTagSize = function (size) {
+    if (size.tag === 1) {
+      return bulma.Tag.Size.IsLarge;
+    } else {
+      return bulma.Tag.Size.IsMedium;
+    }
+  };
+
+  const Options = __exports.Options = class Options {
+    constructor(size, color, props) {
+      this.Size = size;
+      this.Color = color;
+      this.Props = props;
+    }
+
+    [FSymbol.reflection]() {
+      return {
+        type: "Elmish.Bulma.Elements.Tag.Types.Options",
+        interfaces: ["FSharpRecord", "System.IEquatable"],
+        properties: {
+          Size: Option("string"),
+          Color: Option("string"),
+          Props: makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          })
+        }
+      };
+    }
+
+    Equals(other) {
+      return equalsRecords(this, other);
+    }
+
+    static get Empty() {
+      return new Options(null, null, new List$1());
+    }
+
+  };
+  setType("Elmish.Bulma.Elements.Tag.Types.Options", Options);
+  return __exports;
+}({});
+const isMedium$5 = new Types$9.Option(0, new Types$9.ITagSize(0));
+const isLarge$5 = new Types$9.Option(0, new Types$9.ITagSize(1));
+const isBlack$2 = new Types$9.Option(1, new ILevelAndColor(0));
+const isDark$2 = new Types$9.Option(1, new ILevelAndColor(1));
+const isLight$2 = new Types$9.Option(1, new ILevelAndColor(2));
+const isWhite$2 = new Types$9.Option(1, new ILevelAndColor(3));
+const isPrimary$2 = new Types$9.Option(1, new ILevelAndColor(4));
+const isInfo$2 = new Types$9.Option(1, new ILevelAndColor(5));
+const isSuccess$2 = new Types$9.Option(1, new ILevelAndColor(6));
+const isWarning$2 = new Types$9.Option(1, new ILevelAndColor(7));
+const isDanger$2 = new Types$9.Option(1, new ILevelAndColor(8));
+
+function tag$1(options, children) {
+  const parseOption = function (result, opt) {
+    if (opt.tag === 1) {
+      const Color = ofLevelAndColor(opt.data);
+      return new Types$9.Options(result.Size, Color, result.Props);
+    } else if (opt.tag === 2) {
+      return new Types$9.Options(result.Size, result.Color, opt.data);
+    } else {
+      return new Types$9.Options(Types$9.ofTagSize(opt.data), result.Color, result.Props);
+    }
+  };
+
+  const opts = (() => {
+    const state = Types$9.Options.Empty;
+    return function (list) {
+      return fold$1(parseOption, state, list);
+    };
+  })()(options);
+
+  const className = new Props.HTMLAttr(22, join(" ", new List$1(bulma.Tag.Container, map(function (x) {
+    return x;
+  }, filter(function (x_1) {
+    return (() => x_1 != null)();
+  }, ofArray([opts.Size, opts.Color]))))));
+  return react_1("span", createObj(new List$1(className, opts.Props), 1), ...children);
+}
+
+const colorInteractive$2 = react_1("div", {
+  className: "block"
+}, tag$1(new List$1(), ofArray(["Default"])), tag$1(ofArray([isWhite$2]), ofArray(["White"])), tag$1(ofArray([isLight$2]), ofArray(["Light"])), tag$1(ofArray([isDark$2]), ofArray(["Dark"])), tag$1(ofArray([isBlack$2]), ofArray(["Black"])), tag$1(ofArray([isPrimary$2]), ofArray(["Primary"])), tag$1(ofArray([isInfo$2]), ofArray(["Info"])), tag$1(ofArray([isSuccess$2]), ofArray(["Success"])), tag$1(ofArray([isWarning$2]), ofArray(["Warning"])), tag$1(ofArray([isDanger$2]), ofArray(["Danger"])));
+const sizeInteractive$3 = react_1("div", {
+  className: "block"
+}, tag$1(new List$1(), ofArray(["Normal"])), tag$1(ofArray([isPrimary$2, isMedium$5]), ofArray(["Medium"])), tag$1(ofArray([isInfo$2, isLarge$5]), ofArray(["Large"])));
+const nestedDeleteStyleInteractive = react_1("div", {
+  className: "block"
+}, tag$1(ofArray([isDark$2]), ofArray(["With delete", _delete$1(ofArray([isSmall$3]), new List$1())])), tag$1(ofArray([isMedium$5]), ofArray(["With delete", _delete$1(new List$1(), new List$1())])), tag$1(ofArray([isWarning$2, isLarge$5]), ofArray(["With delete", _delete$1(ofArray([isLarge$3]), new List$1())])));
+function root$10(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Colors", root$2(colorInteractive$2, model.ColorViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$10(0, arg0);
+  }($var1)))), docSection("### Sizes", root$2(sizeInteractive$3, model.SizeViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$10(1, arg0_1);
+  }($var2)))), docSection("### Nested delete", root$2(nestedDeleteStyleInteractive, model.NestedDeleteViewer, $var3 => dispatch(function (arg0_2) {
+    return new Msg$10(2, arg0_2);
+  }($var3))))]));
+}
+
+const Types$10 = function (__exports) {
   const ITitleSize = __exports.ITitleSize = class ITitleSize {
     constructor(tag$$1, data) {
       this.tag = tag$$1;
@@ -7389,25 +12039,25 @@ const Types$1 = function (__exports) {
 
   const ofTitleSize = __exports.ofTitleSize = function (titleSize) {
     if (titleSize.tag === 1) {
-      return bulma.heading.size.is2;
+      return bulma.Heading.Size.Is2;
     } else if (titleSize.tag === 2) {
-      return bulma.heading.size.is3;
+      return bulma.Heading.Size.Is3;
     } else if (titleSize.tag === 3) {
-      return bulma.heading.size.is4;
+      return bulma.Heading.Size.Is4;
     } else if (titleSize.tag === 4) {
-      return bulma.heading.size.is5;
+      return bulma.Heading.Size.Is5;
     } else if (titleSize.tag === 5) {
-      return bulma.heading.size.is6;
+      return bulma.Heading.Size.Is6;
     } else {
-      return bulma.heading.size.is1;
+      return bulma.Heading.Size.Is1;
     }
   };
 
   const ofTitleType = __exports.ofTitleType = function (titleType) {
     if (titleType.tag === 1) {
-      return bulma.heading.subtitle;
+      return bulma.Heading.Subtitle;
     } else {
-      return bulma.heading.title;
+      return bulma.Heading.Title;
     }
   };
 
@@ -7470,29 +12120,29 @@ const Types$1 = function (__exports) {
   setType("Elmish.Bulma.Elements.Heading.Types.Options", Options);
   return __exports;
 }({});
-const isTitle = new Types$1.Option(1, new Types$1.ITitleType(0));
-const isSubtitle = new Types$1.Option(1, new Types$1.ITitleType(1));
-const is1 = new Types$1.Option(0, new Types$1.ITitleSize(0));
-const is2 = new Types$1.Option(0, new Types$1.ITitleSize(1));
-const is3 = new Types$1.Option(0, new Types$1.ITitleSize(2));
-const is4 = new Types$1.Option(0, new Types$1.ITitleSize(3));
-const is5 = new Types$1.Option(0, new Types$1.ITitleSize(4));
-const is6 = new Types$1.Option(0, new Types$1.ITitleSize(5));
-const isSpaced = new Types$1.Option(2);
+const isTitle = new Types$10.Option(1, new Types$10.ITitleType(0));
+const isSubtitle = new Types$10.Option(1, new Types$10.ITitleType(1));
+const is1 = new Types$10.Option(0, new Types$10.ITitleSize(0));
+const is2 = new Types$10.Option(0, new Types$10.ITitleSize(1));
+const is3 = new Types$10.Option(0, new Types$10.ITitleSize(2));
+const is4 = new Types$10.Option(0, new Types$10.ITitleSize(3));
+const is5 = new Types$10.Option(0, new Types$10.ITitleSize(4));
+const is6 = new Types$10.Option(0, new Types$10.ITitleSize(5));
+const isSpaced = new Types$10.Option(2);
 function title(element, options, children) {
   const parseOption = function (result, opt) {
     if (opt.tag === 1) {
-      const TitleType = Types$1.ofTitleType(opt.data);
-      return new Types$1.Options(result.TitleSize, TitleType, result.IsSpaced);
+      const TitleType = Types$10.ofTitleType(opt.data);
+      return new Types$10.Options(result.TitleSize, TitleType, result.IsSpaced);
     } else if (opt.tag === 2) {
-      return new Types$1.Options(result.TitleSize, result.TitleType, true);
+      return new Types$10.Options(result.TitleSize, result.TitleType, true);
     } else {
-      return new Types$1.Options(Types$1.ofTitleSize(opt.data), result.TitleType, result.IsSpaced);
+      return new Types$10.Options(Types$10.ofTitleSize(opt.data), result.TitleType, result.IsSpaced);
     }
   };
 
   const opts = (() => {
-    const state = Types$1.Options.Empty;
+    const state = Types$10.Options.Empty;
     return function (list) {
       return fold$1(parseOption, state, list);
     };
@@ -7502,795 +12152,240 @@ function title(element, options, children) {
     return x;
   }, filter(function (x_1) {
     return (() => x_1 != null)();
-  }, ofArray([opts.TitleSize]))))), ofArray([[bulma.heading.spacing.isNormal, opts.IsSpaced]]));
+  }, ofArray([opts.TitleSize]))))), ofArray([[bulma.Heading.Spacing.IsNormal, opts.IsSpaced]]));
   return element(ofArray([className]), children);
 }
-function h1(options, children) {
-  return title(function (b, c) {
-    return react_1("h1", createObj(b, 1), ...c);
-  }, options, children);
-}
-
-function h3(options, children) {
-  return title(function (b, c) {
-    return react_1("h3", createObj(b, 1), ...c);
-  }, options, children);
-}
-
-
-function h6(options, children) {
-  return title(function (b, c) {
-    return react_1("h6", createObj(b, 1), ...c);
-  }, options, children);
-}
-function p(options, children) {
-  return title(function (b, c) {
-    return react_1("p", createObj(b, 1), ...c);
-  }, options, children);
-}
-
-const Types$2 = function (__exports) {
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Content.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Size", ISize]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
+function h1(options) {
+  const options_1 = new List$1(is1, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h1", createObj(b, 1), ...c);
+    }, options_1, children);
   };
-  setType("Elmish.Bulma.Elements.Content.Types.Option", Option$$1);
-  const Options = __exports.Options = class Options {
-    constructor(size) {
-      this.Size = size;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Content.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-        properties: {
-          Size: Option("string")
-        }
-      };
-    }
-
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
-
-    CompareTo(other) {
-      return compareRecords(this, other) | 0;
-    }
-
-    static get Empty() {
-      return new Options(null);
-    }
-
+}
+function h2(options) {
+  const options_1 = new List$1(is2, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h2", createObj(b, 1), ...c);
+    }, options_1, children);
   };
-  setType("Elmish.Bulma.Elements.Content.Types.Options", Options);
-  return __exports;
-}({});
-const isSmall$1 = new Types$2.Option(0, new ISize(0));
-const isMedium$1 = new Types$2.Option(0, new ISize(1));
-const isLarge$1 = new Types$2.Option(0, new ISize(2));
-function content$1(options, children) {
-  const parseOption = function (result, opt) {
-    return new Types$2.Options(ofSize(opt.data));
+}
+function h3(options) {
+  const options_1 = new List$1(is3, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h3", createObj(b, 1), ...c);
+    }, options_1, children);
   };
-
-  const opts = (() => {
-    const state = Types$2.Options.Empty;
-    return function (list) {
-      return fold$1(parseOption, state, list);
-    };
-  })()(options);
-
-  return react_1("div", {
-    className: join(" ", new List$1(bulma.content.container, map(function (x) {
-      return x;
-    }, filter(function (x_1) {
-      return (() => x_1 != null)();
-    }, ofArray([opts.Size])))))
-  }, ...children);
 }
-
-function sectionType(model) {
-  return sectionBase(model.typeText, toList$1(docBlock(model.typeCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, h1(new List$1(), ofArray(["Title"])), react_1("br", {}), h3(ofArray([isSubtitle]), ofArray(["Subtitle"])))))));
-}
-function sectionSize(model) {
-  return sectionBase(model.sizeText, toList$1(docBlock(model.sizeCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, h1(ofArray([isTitle, is1]), ofArray(["Title 1"])), h1(ofArray([isTitle, is2]), ofArray(["Title 2"])), h1(ofArray([isTitle, is3]), ofArray(["Title 3 (Default size)"])), h1(ofArray([isTitle, is4]), ofArray(["Title 4"])), h1(ofArray([isTitle, is5]), ofArray(["Title 5"])), h1(ofArray([isTitle, is6]), ofArray(["Title 6"])), react_1("br", {}), h1(ofArray([isSubtitle, is1]), ofArray(["Subtitle 1"])), h1(ofArray([isSubtitle, is2]), ofArray(["Subtitle 2"])), h1(ofArray([isSubtitle, is3]), ofArray(["Subtitle 3"])), h1(ofArray([isSubtitle, is4]), ofArray(["Subtitle 4"])), h1(ofArray([isSubtitle, is5]), ofArray(["Subtitle 5 (Default size)"])), h1(ofArray([isSubtitle, is6]), ofArray(["Subtitle 6"])))))));
-}
-function sectionExtra(model) {
-  return sectionBase(model.spacedText, toList$1(docBlock(model.spacedCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, "Default behavior", p(ofArray([isTitle, is1]), ofArray(["Title 1"])), p(ofArray([isSubtitle, is3]), ofArray(["Subtitle 3"])), react_1("br", {}), "Behavior when using IsSpaced", p(ofArray([isTitle, is1, isSpaced]), ofArray(["Title 1"])), p(ofArray([isSubtitle, is3]), ofArray(["Subtitle 3"])))))));
-}
-function root$2(model) {
-  return react_1("div", {}, content$1(new List$1(), ofArray([renderMarkdown(model.text)])), react_1("hr", {}), sectionType(model), react_1("hr", {}), sectionSize(model), react_1("hr", {}), sectionExtra(model));
-}
-
-const Types$3 = function (__exports) {
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Delete.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable"],
-        cases: [["Size", ISize], ["Props", makeGeneric(List$1, {
-          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-        })]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
+function h4(options) {
+  const options_1 = new List$1(is4, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h4", createObj(b, 1), ...c);
+    }, options_1, children);
   };
-  setType("Elmish.Bulma.Elements.Delete.Types.Option", Option$$1);
-  const Options = __exports.Options = class Options {
-    constructor(size, props) {
-      this.Size = size;
-      this.Props = props;
-    }
+}
+function h5(options) {
+  const options_1 = new List$1(is5, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h5", createObj(b, 1), ...c);
+    }, options_1, children);
+  };
+}
+function h6(options) {
+  const options_1 = new List$1(is6, options);
+  return function (children) {
+    return title(function (b, c) {
+      return react_1("h6", createObj(b, 1), ...c);
+    }, options_1, children);
+  };
+}
 
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Delete.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          Size: Option("string"),
-          Props: makeGeneric(List$1, {
+const simpleInteractive$1 = react_1("div", {}, h1(ofArray([isTitle]))(ofArray(["Title"])), h2(ofArray([isSubtitle]))(ofArray(["Subtitle"])));
+const sizeInteractive$4 = react_1("div", {}, h1(ofArray([isTitle]))(ofArray(["Title 1"])), h2(ofArray([isTitle]))(ofArray(["Title 2"])), h3(ofArray([isTitle]))(ofArray(["Title 3"])), h4(ofArray([isTitle]))(ofArray(["Title 3"])), h5(ofArray([isTitle]))(ofArray(["Title 5"])), h6(ofArray([isTitle]))(ofArray(["Title 6"])), h1(ofArray([isSubtitle]))(ofArray(["Subtitle 1"])), h2(ofArray([isSubtitle]))(ofArray(["Subtitle 2"])), h3(ofArray([isSubtitle]))(ofArray(["Subtitle 3"])), h4(ofArray([isSubtitle]))(ofArray(["Subtitle 4"])), h5(ofArray([isSubtitle]))(ofArray(["Subtitle 5"])), h6(ofArray([isSubtitle]))(ofArray(["Subtitle 6"])));
+function root$11(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("\r\n### Types\r\n\r\n**Title** can be of two types *Title* and *Subtitle*.\r\n                        ", root$2(simpleInteractive$1, model.TypeViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$11(0, arg0);
+  }($var1)))), docSection("\r\n### Sizes\r\n\r\nElmish.Bulma already associate each header size with the equivalent class.\r\n\r\nFor example, `Heading.h1 [ Heading.isTitle ] [ str \"Title 1\" ]` will output `<h1 class=\"title is-1\">Title 1</h1>`\r\n                        ", root$2(sizeInteractive$4, model.SizeViewer, $var2 => dispatch(function (arg0_1) {
+    return new Msg$11(1, arg0_1);
+  }($var2)))), contentFromMarkdown("We also provide `Heading.isSpaced` helper. See the *[bulma documentation](http://bulma.io/documentation/elements/title/)* to learn more about it.")]));
+}
+
+const Types$11 = function (__exports) {
+  const Level$$1 = __exports.Level = function (__exports) {
+    const Option$$1 = __exports.Option = class Option$$1 {
+      constructor(tag$$1, data) {
+        this.tag = tag$$1;
+        this.data = data;
+      }
+
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Level.Types.Level.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Props", makeGeneric(List$1, {
             T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-          })
-        }
-      };
-    }
+          })], ["IsMobile"]]
+        };
+      }
 
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
+      Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
 
-    static get Empty() {
-      return new Options(null, new List$1());
-    }
+    };
+    setType("Elmish.Bulma.Components.Level.Types.Level.Option", Option$$1);
+    const Options = __exports.Options = class Options {
+      constructor(props, isMobile) {
+        this.Props = props;
+        this.IsMobile = isMobile;
+      }
 
-  };
-  setType("Elmish.Bulma.Elements.Delete.Types.Options", Options);
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Level.Types.Level.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            }),
+            IsMobile: "boolean"
+          }
+        };
+      }
+
+      Equals(other) {
+        return equalsRecords(this, other);
+      }
+
+      static get Empty() {
+        return new Options(new List$1(), false);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Level.Types.Level.Options", Options);
+    return __exports;
+  }({});
+
+  const Item = __exports.Item = function (__exports) {
+    const Option$$1 = __exports.Option = class Option$$1 {
+      constructor(tag$$1, data) {
+        this.tag = tag$$1;
+        this.data = data;
+      }
+
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Level.Types.Item.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Props", makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          })], ["HasTextCentered"]]
+        };
+      }
+
+      Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Level.Types.Item.Option", Option$$1);
+    const Options = __exports.Options = class Options {
+      constructor(props, hasTextCentered) {
+        this.Props = props;
+        this.HasTextCentered = hasTextCentered;
+      }
+
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Level.Types.Item.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            }),
+            HasTextCentered: "boolean"
+          }
+        };
+      }
+
+      Equals(other) {
+        return equalsRecords(this, other);
+      }
+
+      static get Empty() {
+        return new Options(new List$1(), false);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Level.Types.Item.Options", Options);
+    return __exports;
+  }({});
+
   return __exports;
 }({});
-const isSmall$2 = new Types$3.Option(0, new ISize(0));
-const isMedium$2 = new Types$3.Option(0, new ISize(1));
-const isLarge$2 = new Types$3.Option(0, new ISize(2));
-
-
-function _delete$1(options, children) {
-  const parseOption = function (result, opt) {
+const isMobile = new Types$11.Level.Option(1);
+function level$1(options, children) {
+  const parseOptions = function (result, opt) {
     if (opt.tag === 1) {
-      return new Types$3.Options(result.Size, opt.data);
+      return new Types$11.Level.Options(result.Props, true);
     } else {
-      return new Types$3.Options(ofSize(opt.data), result.Props);
+      return new Types$11.Level.Options(opt.data, result.IsMobile);
     }
   };
 
   const opts = (() => {
-    const state = Types$3.Options.Empty;
+    const state = Types$11.Level.Options.Empty;
     return function (list) {
-      return fold$1(parseOption, state, list);
+      return fold$1(parseOptions, state, list);
     };
   })()(options);
 
-  return react_1("a", createObj(new List$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.delete.container, map(function (x) {
-    return x;
-  }, filter(function (x_1) {
-    return (() => x_1 != null)();
-  }, ofArray([opts.Size])))))), opts.Props), 1), ...children);
+  return react_1("nav", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList(bulma.Level.Container, ofArray([[bulma.Level.Mobile.IsHorizontal, opts.IsMobile]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), ...children);
 }
-
-function section$1(model) {
-  return sectionBase(model.text, toList$1(docBlock(model.code, react_1("div", {}, renderMarkdown("Using `a` elements"), react_1("br", {}), react_1("div", {
-    className: "block"
-  }, _delete$1(ofArray([isSmall$2]), new List$1()), _delete$1(new List$1(), new List$1()), _delete$1(ofArray([isMedium$2]), new List$1()), _delete$1(ofArray([isLarge$2]), new List$1()))))));
+function left(props, children) {
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Level.Left)), delay(function () {
+      return props;
+    }));
+  })), 1), ...children);
 }
-function root$3(model) {
-  return react_1("div", {}, section$1(model));
+function right(props, children) {
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(new Props.HTMLAttr(22, bulma.Level.Right)), delay(function () {
+      return props;
+    }));
+  })), 1), ...children);
 }
-
-function box_(children) {
-  return react_1("div", {
-    className: bulma.box.container
-  }, ...children);
-}
-
-function section$2(model) {
-  return sectionBase(model.text, toList$1(docBlock(model.code, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, box_(ofArray(["Lorem ipsum dolor sit amet, consectetur adipisicing elit\r\n                , sed do eiusmod tempor incididunt ut labore et dolore\r\n                magna aliqua.\r\n                "])))))));
-}
-function root$4(model) {
-  return react_1("div", {}, section$2(model));
-}
-
-function section$3(model) {
-  return sectionBase(model.sizeText, toList$1(docBlock(model.sizeCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, content$1(new List$1(), ofArray([react_1("h1", {}, "Hello World"), react_1("p", {}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque."), react_1("h2", {}, "Second level"), react_1("p", {}, "Curabitur accumsan turpis pharetra ", react_1("strong", {}, "augue tincidunt"), "blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl."), react_1("ul", {}, react_1("li", {}, "In fermentum leo eu lectus mollis, quis dictum mi aliquet."), react_1("li", {}, "Morbi eu nulla lobortis, lobortis est in, fringilla felis."), react_1("li", {}, "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."), react_1("li", {}, "Ut non enim metus.")), react_1("p", {}, "Sed sagittis enim ac tortor maximus rutrum.\r\n              Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                Maecenas vestibulum interdum commodo.")]))), react_1("hr", {}), react_1("div", {
-    className: "block"
-  }, content$1(ofArray([isSmall$1]), ofArray([react_1("h1", {}, "Hello World"), react_1("p", {}, "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque."), react_1("h2", {}, "Second level"), react_1("p", {}, "Curabitur accumsan turpis pharetra ", react_1("strong", {}, "augue tincidunt"), "blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl."), react_1("ul", {}, react_1("li", {}, "In fermentum leo eu lectus mollis, quis dictum mi aliquet."), react_1("li", {}, "Morbi eu nulla lobortis, lobortis est in, fringilla felis."), react_1("li", {}, "Aliquam nec felis in sapien venenatis viverra fermentum nec lectus."), react_1("li", {}, "Ut non enim metus.")), react_1("p", {}, "Sed sagittis enim ac tortor maximus rutrum.\r\n              Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                Maecenas vestibulum interdum commodo.")])))))));
-}
-function root$5(model) {
-  return react_1("div", {}, content$1(new List$1(), ofArray([renderMarkdown(model.text)])), react_1("hr", {}), section$3(model));
-}
-
-const Types$4 = function (__exports) {
-  const ITagSize = __exports.ITagSize = class ITagSize {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Tag.Types.ITagSize",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["IsMedium"], ["IsLarge"]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Tag.Types.ITagSize", ITagSize);
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Tag.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable"],
-        cases: [["Size", ITagSize], ["Color", ILevelAndColor], ["Props", makeGeneric(List$1, {
-          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-        })]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Tag.Types.Option", Option$$1);
-
-  const ofTagSize = __exports.ofTagSize = function (size) {
-    if (size.tag === 1) {
-      return bulma.tag.size.isLarge;
-    } else {
-      return bulma.tag.size.isMedium;
-    }
-  };
-
-  const Options = __exports.Options = class Options {
-    constructor(size, color, props) {
-      this.Size = size;
-      this.Color = color;
-      this.Props = props;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Tag.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          Size: Option("string"),
-          Color: Option("string"),
-          Props: makeGeneric(List$1, {
-            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-          })
-        }
-      };
-    }
-
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
-
-    static get Empty() {
-      return new Options(null, null, new List$1());
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Tag.Types.Options", Options);
-  return __exports;
-}({});
-const isMedium$3 = new Types$4.Option(0, new Types$4.ITagSize(0));
-const isLarge$3 = new Types$4.Option(0, new Types$4.ITagSize(1));
-const isBlack = new Types$4.Option(1, new ILevelAndColor(0));
-const isDark = new Types$4.Option(1, new ILevelAndColor(1));
-const isLight = new Types$4.Option(1, new ILevelAndColor(2));
-const isWhite = new Types$4.Option(1, new ILevelAndColor(3));
-const isPrimary = new Types$4.Option(1, new ILevelAndColor(4));
-const isInfo = new Types$4.Option(1, new ILevelAndColor(5));
-const isSuccess = new Types$4.Option(1, new ILevelAndColor(6));
-const isWarning = new Types$4.Option(1, new ILevelAndColor(7));
-const isDanger = new Types$4.Option(1, new ILevelAndColor(8));
-
-function tag$1(options, children) {
-  const parseOption = function (result, opt) {
+const hasTextCentered = new Types$11.Item.Option(1);
+function item$1(options, children) {
+  const parseOptions = function (result, opt) {
     if (opt.tag === 1) {
-      const Color = ofLevelAndColor(opt.data);
-      return new Types$4.Options(result.Size, Color, result.Props);
-    } else if (opt.tag === 2) {
-      return new Types$4.Options(result.Size, result.Color, opt.data);
+      return new Types$11.Item.Options(result.Props, true);
     } else {
-      return new Types$4.Options(Types$4.ofTagSize(opt.data), result.Color, result.Props);
+      return new Types$11.Item.Options(opt.data, result.HasTextCentered);
     }
   };
 
   const opts = (() => {
-    const state = Types$4.Options.Empty;
-    return function (list) {
-      return fold$1(parseOption, state, list);
-    };
-  })()(options);
-
-  const className = new Props.HTMLAttr(22, join(" ", new List$1(bulma.tag.container, map(function (x) {
-    return x;
-  }, filter(function (x_1) {
-    return (() => x_1 != null)();
-  }, ofArray([opts.Size, opts.Color]))))));
-  return react_1("span", createObj(new List$1(className, opts.Props), 1), ...children);
-}
-
-function section$4(model) {
-  return sectionBase(model.text, toList$1(docBlock(model.code, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, tag$1(new List$1(), ofArray(["Tag label"])))))));
-}
-function sectionColor(model) {
-  return sectionBase(model.colorText, toList$1(docBlock(model.colorCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, tag$1(ofArray([isBlack]), ofArray(["Black"])), tag$1(ofArray([isDark]), ofArray(["Dark"])), tag$1(ofArray([isLight]), ofArray(["Light"])), tag$1(ofArray([isWhite]), ofArray(["White"])), tag$1(ofArray([isPrimary]), ofArray(["Primary"]))), react_1("br", {}), react_1("div", {
-    className: "block"
-  }, tag$1(ofArray([isInfo]), ofArray(["Info"])), tag$1(ofArray([isSuccess]), ofArray(["Success"])), tag$1(ofArray([isWarning]), ofArray(["Warning"])), tag$1(ofArray([isDanger]), ofArray(["Danger"])))))));
-}
-function sectionSize$1(model) {
-  return sectionBase(model.sizeText, toList$1(docBlock(model.sizeCode, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, tag$1(ofArray([isSuccess, isMedium$3]), ofArray(["Medium"])), tag$1(ofArray([isInfo, isLarge$3]), ofArray(["Large"])))))));
-}
-function root$6(model) {
-  return react_1("div", {}, section$4(model), react_1("hr", {}), sectionColor(model), react_1("hr", {}), sectionSize$1(model));
-}
-
-const Types$5 = function (__exports) {
-  const IImageSize = __exports.IImageSize = class IImageSize {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Image.Types.IImageSize",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Is16x16"], ["Is24x24"], ["Is32x32"], ["Is48x48"], ["Is64x64"], ["Is96x96"], ["Is128x128"]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Image.Types.IImageSize", IImageSize);
-  const IImageRatio = __exports.IImageRatio = class IImageRatio {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Image.Types.IImageRatio",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["IsSquare"], ["Is1by1"], ["Is4by3"], ["Is3by2"], ["Is16by9"], ["Is2by1"]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Image.Types.IImageRatio", IImageRatio);
-
-  const ofImageSize = __exports.ofImageSize = function (_arg1) {
-    if (_arg1.tag === 1) {
-      return bulma.image.size.is24x24;
-    } else if (_arg1.tag === 2) {
-      return bulma.image.size.is32x32;
-    } else if (_arg1.tag === 3) {
-      return bulma.image.size.is48x48;
-    } else if (_arg1.tag === 4) {
-      return bulma.image.size.is64x64;
-    } else if (_arg1.tag === 5) {
-      return bulma.image.size.is96x96;
-    } else if (_arg1.tag === 6) {
-      return bulma.image.size.is128x128;
-    } else {
-      return bulma.image.size.is16x16;
-    }
-  };
-
-  const ofImageRatio = __exports.ofImageRatio = function (_arg1) {
-    if (_arg1.tag === 1) {
-      return bulma.image.ratio.is1by1;
-    } else if (_arg1.tag === 2) {
-      return bulma.image.ratio.is4by3;
-    } else if (_arg1.tag === 3) {
-      return bulma.image.ratio.is3by2;
-    } else if (_arg1.tag === 4) {
-      return bulma.image.ratio.is16by9;
-    } else if (_arg1.tag === 5) {
-      return bulma.image.ratio.is2by1;
-    } else {
-      return bulma.image.ratio.isSquare;
-    }
-  };
-
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Image.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Size", IImageSize], ["Ratio", IImageRatio]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Image.Types.Option", Option$$1);
-  const Options = __exports.Options = class Options {
-    constructor(size, ratio) {
-      this.Size = size;
-      this.Ratio = ratio;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Image.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-        properties: {
-          Size: Option("string"),
-          Ratio: Option("string")
-        }
-      };
-    }
-
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
-
-    CompareTo(other) {
-      return compareRecords(this, other) | 0;
-    }
-
-    static get Empty() {
-      return new Options(null, null);
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Image.Types.Options", Options);
-  return __exports;
-}({});
-const is16x16 = new Types$5.Option(0, new Types$5.IImageSize(0));
-const is24x24 = new Types$5.Option(0, new Types$5.IImageSize(1));
-const is32x32 = new Types$5.Option(0, new Types$5.IImageSize(2));
-const is48x48 = new Types$5.Option(0, new Types$5.IImageSize(3));
-const is64x64 = new Types$5.Option(0, new Types$5.IImageSize(4));
-const is96x96 = new Types$5.Option(0, new Types$5.IImageSize(5));
-const is128x128 = new Types$5.Option(0, new Types$5.IImageSize(6));
-const isSquare = new Types$5.Option(1, new Types$5.IImageRatio(0));
-const is1by1 = new Types$5.Option(1, new Types$5.IImageRatio(1));
-const is4by3 = new Types$5.Option(1, new Types$5.IImageRatio(2));
-const is3by2 = new Types$5.Option(1, new Types$5.IImageRatio(3));
-const is16by9 = new Types$5.Option(1, new Types$5.IImageRatio(4));
-const is2by1 = new Types$5.Option(1, new Types$5.IImageRatio(5));
-function image$1(options, children) {
-  const parseOptions = function (result, _arg1) {
-    if (_arg1.tag === 1) {
-      const Ratio = Types$5.ofImageRatio(_arg1.data);
-      return new Types$5.Options(result.Size, Ratio);
-    } else {
-      return new Types$5.Options(Types$5.ofImageSize(_arg1.data), result.Ratio);
-    }
-  };
-
-  const opts = (() => {
-    const state = Types$5.Options.Empty;
+    const state = Types$11.Item.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
   })()(options);
 
-  return react_1("figure", {
-    className: join(" ", new List$1(bulma.image.container, map(function (x) {
-      return x;
-    }, filter(function (x_1) {
-      return (() => x_1 != null)();
-    }, ofArray([opts.Size, opts.Ratio])))))
-  }, ...children);
-}
-
-function imageDummy(strSize, imageSize) {
-  return react_1("div", {}, h6(ofArray([isSubtitle]), ofArray([strSize + "px"])), image$1(ofArray([imageSize]), ofArray([react_1("img", {
-    src: fsFormat("https://dummyimage.com/%s/7a7a7a/fff")(x => x)(strSize)
-  })])));
-}
-function sectionSize$2(model) {
-  return sectionBase(model.textSize, toList$1(docBlock(model.codeSize, react_1("div", {}, imageDummy("64x64", is64x64), react_1("hr", {}), imageDummy("128x128", is128x128)))));
-}
-function sectionRatio(model) {
-  return sectionBase(model.textRatio, toList$1(docBlock(model.codeRatio, react_1("div", {}, image$1(ofArray([is2by1]), ofArray([react_1("img", {
-    src: "https://dummyimage.com/640x320/7a7a7a/fff"
-  })]))))));
-}
-function root$7(model) {
-  return react_1("div", {}, content$1(new List$1(), ofArray([renderMarkdown(model.text)])), react_1("hr", {}), sectionSize$2(model), react_1("hr", {}), sectionRatio(model));
-}
-
-const Types$6 = function (__exports) {
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Progress.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable"],
-        cases: [["Size", ISize], ["Color", ILevelAndColor], ["Props", makeGeneric(List$1, {
-          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-        })]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Progress.Types.Option", Option$$1);
-  const Options = __exports.Options = class Options {
-    constructor(size, color, props) {
-      this.Size = size;
-      this.Color = color;
-      this.Props = props;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Progress.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          Size: Option("string"),
-          Color: Option("string"),
-          Props: makeGeneric(List$1, {
-            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-          })
-        }
-      };
-    }
-
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
-
-    static get Empty() {
-      return new Options(null, null, new List$1());
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Progress.Types.Options", Options);
-  return __exports;
-}({});
-const isSmall$3 = new Types$6.Option(0, new ISize(0));
-const isMedium$4 = new Types$6.Option(0, new ISize(1));
-const isLarge$4 = new Types$6.Option(0, new ISize(2));
-const isBlack$1 = new Types$6.Option(1, new ILevelAndColor(0));
-const isDark$1 = new Types$6.Option(1, new ILevelAndColor(1));
-const isLight$1 = new Types$6.Option(1, new ILevelAndColor(2));
-const isWhite$1 = new Types$6.Option(1, new ILevelAndColor(3));
-const isPrimary$1 = new Types$6.Option(1, new ILevelAndColor(4));
-const isInfo$1 = new Types$6.Option(1, new ILevelAndColor(5));
-const isSuccess$1 = new Types$6.Option(1, new ILevelAndColor(6));
-const isWarning$1 = new Types$6.Option(1, new ILevelAndColor(7));
-const isDanger$1 = new Types$6.Option(1, new ILevelAndColor(8));
-function props$2(props_1) {
-  return new Types$6.Option(2, props_1);
-}
-function progress$1(options, children) {
-  const parseOptions = function (result, _arg1) {
-    if (_arg1.tag === 1) {
-      const Color = ofLevelAndColor(_arg1.data);
-      return new Types$6.Options(result.Size, Color, result.Props);
-    } else if (_arg1.tag === 2) {
-      return new Types$6.Options(result.Size, result.Color, _arg1.data);
-    } else {
-      return new Types$6.Options(ofSize(_arg1.data), result.Color, result.Props);
-    }
-  };
-
-  const opts = (() => {
-    const state = Types$6.Options.Empty;
-    return function (list) {
-      return fold$1(parseOptions, state, list);
-    };
-  })()(options);
-
-  return react_1("progress", createObj(new List$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.progress.container, map(function (x) {
-    return x;
-  }, filter(function (x_1) {
-    return (() => x_1 != null)();
-  }, ofArray([opts.Size, opts.Color])))))), opts.Props), 1), ...children);
-}
-
-function section$5(model) {
-  return sectionBase(model.text, toList$1(docBlock(model.code, react_1("div", {}, progress$1(ofArray([isSuccess$1, isSmall$3, props$2(ofArray([new Props.HTMLAttr(118, "15"), new Props.HTMLAttr(71, "100")]))]), ofArray(["15%"])), progress$1(ofArray([isPrimary$1, isMedium$4, props$2(ofArray([new Props.HTMLAttr(118, "85"), new Props.HTMLAttr(71, "100")]))]), ofArray(["15%"])), progress$1(ofArray([isDanger$1, isLarge$4, props$2(ofArray([new Props.HTMLAttr(118, "50"), new Props.HTMLAttr(71, "100")]))]), ofArray(["15%"]))))));
-}
-function root$8(model) {
-  return react_1("div", {}, section$5(model));
-}
-
-const Types$7 = function (__exports) {
-  const TableOption = __exports.TableOption = class TableOption {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Table.Types.TableOption",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["IsBordered"], ["IsStripped"], ["IsNarrow"]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Table.Types.TableOption", TableOption);
-  const TableOptions = __exports.TableOptions = class TableOptions {
-    constructor(isBordered, isStripped, isNarrow) {
-      this.IsBordered = isBordered;
-      this.IsStripped = isStripped;
-      this.IsNarrow = isNarrow;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Table.Types.TableOptions",
-        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-        properties: {
-          IsBordered: "boolean",
-          IsStripped: "boolean",
-          IsNarrow: "boolean"
-        }
-      };
-    }
-
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
-
-    CompareTo(other) {
-      return compareRecords(this, other) | 0;
-    }
-
-    static get Empty() {
-      return new TableOptions(false, false, false);
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Table.Types.TableOptions", TableOptions);
-  return __exports;
-}({});
-const isBordered = new Types$7.TableOption(0);
-const isStripped = new Types$7.TableOption(1);
-const isNarrow = new Types$7.TableOption(2);
-function table$1(options, children) {
-  const parseOptions = function (result, _arg1) {
-    if (_arg1.tag === 1) {
-      return new Types$7.TableOptions(result.IsBordered, true, result.IsNarrow);
-    } else if (_arg1.tag === 2) {
-      return new Types$7.TableOptions(result.IsBordered, result.IsStripped, true);
-    } else {
-      return new Types$7.TableOptions(true, result.IsStripped, result.IsNarrow);
-    }
-  };
-
-  const opts = (() => {
-    const state = Types$7.TableOptions.Empty;
-    return function (list) {
-      return fold$1(parseOptions, state, list);
-    };
-  })()(options);
-
-  return react_1("table", createObj(ofArray([classBaseList(bulma.table.container, ofArray([[bulma.table.style.isBordered, opts.IsBordered], [bulma.table.style.isStripped, opts.IsStripped], [bulma.table.spacing.isNarrow, opts.IsNarrow]]))]), 1), ...children);
-}
-const Row = function (__exports) {
-  const isSelected = __exports.isSelected = new Props.HTMLAttr(22, bulma.table.row.state.isSelected);
-  return __exports;
-}({});
-
-function sectionGeneral(model) {
-  return sectionBase(model.generalText, toList$1(docBlock(model.generalCode, table$1(new List$1(), ofArray([react_1("thead", {}, react_1("tr", {}, react_1("th", {}, "Firstname"), react_1("th", {}, "Surname"), react_1("th", {}, "Birthday"))), react_1("tbody", {}, react_1("tr", {}, react_1("td", {}, "Maxime"), react_1("td", {}, "Mangel"), react_1("td", {}, "28/02/1992")), react_1("tr", createObj(ofArray([Row.isSelected]), 1), react_1("td", {}, "Jane"), react_1("td", {}, "Doe"), react_1("td", {}, "21/07/1987")), react_1("tr", {}, react_1("td", {}, "John"), react_1("td", {}, "Doe"), react_1("td", {}, "11/07/1978")))])))));
-}
-function sectionStyle(model) {
-  return sectionBase(model.styleText, toList$1(docBlock(model.styleCode, table$1(ofArray([isBordered, isNarrow, isStripped]), ofArray([react_1("thead", {}, react_1("tr", {}, react_1("th", {}, "Firstname"), react_1("th", {}, "Surname"), react_1("th", {}, "Birthday"))), react_1("tbody", {}, react_1("tr", {}, react_1("td", {}, "Maxime"), react_1("td", {}, "Mangel"), react_1("td", {}, "28/02/1992")), react_1("tr", createObj(ofArray([Row.isSelected]), 1), react_1("td", {}, "Jane"), react_1("td", {}, "Doe"), react_1("td", {}, "21/07/1987")), react_1("tr", {}, react_1("td", {}, "John"), react_1("td", {}, "Doe"), react_1("td", {}, "11/07/1978")))])))));
-}
-function root$9(model) {
-  return react_1("div", {}, sectionGeneral(model), react_1("hr", {}), sectionStyle(model));
+  return react_1("nav", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList(bulma.Level.Item.Container, ofArray([[bulma.Level.Item.HasTextCentered, opts.HasTextCentered]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), ...children);
 }
 
 const Control$1 = function (__exports) {
@@ -8379,9 +12474,9 @@ const Control$1 = function (__exports) {
 
     const ofHasIcon = __exports.ofHasIcon = function (_arg1) {
       if (_arg1.tag === 1) {
-        return bulma.control.hasIcon.right;
+        return bulma.Control.HasIcon.Right;
       } else {
-        return bulma.control.hasIcon.left;
+        return bulma.Control.HasIcon.Left;
       }
     };
 
@@ -8397,10 +12492,10 @@ const Control$1 = function (__exports) {
       if (_arg1.tag === 1) {
         return new Types.Options(result.HasIconLeft, result.HasIconRight, true);
       } else if (_arg1.data.tag === 1) {
-        const HasIconRight = bulma.control.hasIcon.right;
+        const HasIconRight = bulma.Control.HasIcon.Right;
         return new Types.Options(result.HasIconLeft, HasIconRight, result.IsLoading);
       } else {
-        return new Types.Options(bulma.control.hasIcon.left, result.HasIconRight, result.IsLoading);
+        return new Types.Options(bulma.Control.HasIcon.Left, result.HasIconRight, result.IsLoading);
       }
     };
 
@@ -8411,11 +12506,11 @@ const Control$1 = function (__exports) {
       };
     })()(options);
 
-    return react_1("p", createObj(ofArray([classBaseList(join(" ", new List$1(bulma.control.container, map(function (x) {
+    return react_1("p", createObj(ofArray([classBaseList(join(" ", new List$1(bulma.Control.Container, map(function (x) {
       return x;
     }, filter(function (x_1) {
       return (() => x_1 != null)();
-    }, ofArray([opts.HasIconLeft, opts.HasIconRight]))))), ofArray([[bulma.control.state.isLoading, opts.IsLoading]]))]), 1), ...children);
+    }, ofArray([opts.HasIconLeft, opts.HasIconRight]))))), ofArray([[bulma.Control.State.IsLoading, opts.IsLoading]]))]), 1), ...children);
   };
 
   return __exports;
@@ -8488,7 +12583,7 @@ const Label$1 = function (__exports) {
     return new Types.Option(1, id);
   };
 
-  const label$$1 = __exports.label = function (options, children) {
+  const label = __exports.label = function (options, children) {
     const parseOptions = function (result, _arg1) {
       if (_arg1.tag === 1) {
         const HtmlFor = _arg1.data;
@@ -8506,7 +12601,7 @@ const Label$1 = function (__exports) {
     })()(options);
 
     return react_1("label", createObj(toList(delay(function () {
-      return append$1(singleton$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.label.container, map(function (x) {
+      return append$1(singleton$1(new Props.HTMLAttr(22, join(" ", new List$1(bulma.Label.Container, map(function (x) {
         return x;
       }, filter(function (x_1) {
         return (() => x_1 != null)();
@@ -8799,7 +12894,7 @@ const Input$1 = function (__exports) {
       };
     })()(options);
 
-    const className = join(" ", new List$1(bulma.input.container, map(function (x) {
+    const className = join(" ", new List$1(bulma.Input.Container, map(function (x) {
       return x;
     }, filter(function (x_1) {
       return (() => x_1 != null)();
@@ -9009,28 +13104,28 @@ const Field$1 = function (__exports) {
 
     const ofHasAddons = __exports.ofHasAddons = function (_arg1) {
       if (_arg1.tag === 1) {
-        return op_PlusPlus(bulma.field.hasAddons.left, bulma.field.hasAddons.centered);
+        return op_PlusPlus(bulma.Field.HasAddons.Left, bulma.Field.HasAddons.Centered);
       } else if (_arg1.tag === 2) {
-        return op_PlusPlus(bulma.field.hasAddons.left, bulma.field.hasAddons.right);
+        return op_PlusPlus(bulma.Field.HasAddons.Left, bulma.Field.HasAddons.Right);
       } else if (_arg1.tag === 3) {
-        return op_PlusPlus(bulma.field.hasAddons.left, bulma.field.hasAddons.fullWidh);
+        return op_PlusPlus(bulma.Field.HasAddons.Left, bulma.Field.HasAddons.FullWidh);
       } else {
-        return bulma.field.hasAddons.left;
+        return bulma.Field.HasAddons.Left;
       }
     };
 
     const ofIsGrouped = __exports.ofIsGrouped = function (_arg1) {
       if (_arg1.tag === 1) {
-        return op_PlusPlus(bulma.field.isGrouped.left, bulma.field.isGrouped.centered);
+        return op_PlusPlus(bulma.Field.IsGrouped.Left, bulma.Field.IsGrouped.Centered);
       } else if (_arg1.tag === 2) {
-        return op_PlusPlus(bulma.field.isGrouped.left, bulma.field.isGrouped.right);
+        return op_PlusPlus(bulma.Field.IsGrouped.Left, bulma.Field.IsGrouped.Right);
       } else {
-        return bulma.field.isGrouped.left;
+        return bulma.Field.IsGrouped.Left;
       }
     };
 
     const ofLayout = __exports.ofLayout = function (_arg1) {
-      return bulma.field.layout.isHorizontal;
+      return bulma.Field.Layout.IsHorizontal;
     };
 
     const FieldLabelOption = __exports.FieldLabelOption = class FieldLabelOption {
@@ -9118,7 +13213,7 @@ const Field$1 = function (__exports) {
       };
     })()(options);
 
-    const className = join(" ", new List$1(bulma.field.container, map(function (x) {
+    const className = join(" ", new List$1(bulma.Field.Container, map(function (x) {
       return x;
     }, filter(function (x_1) {
       return (() => x_1 != null)();
@@ -9145,7 +13240,7 @@ const Field$1 = function (__exports) {
     })()(options);
 
     return react_1("div", {
-      className: join(" ", new List$1(bulma.field.label, map(function (x) {
+      className: join(" ", new List$1(bulma.Field.Label, map(function (x) {
         return x;
       }, filter(function (x_1) {
         return (() => x_1 != null)();
@@ -9155,770 +13250,269 @@ const Field$1 = function (__exports) {
 
   const body = __exports.body = function (options, children) {
     return react_1("div", {
-      className: bulma.field.body
+      className: bulma.Field.Body
     }, ...children);
   };
 
   return __exports;
 }({});
 
-const Types$8 = function (__exports) {
-  const IState = __exports.IState = class IState {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
+const iconInteractive$2 = level$1(new List$1(), ofArray([left(new List$1(), ofArray([item$1(new List$1(), ofArray([h5(ofArray([isSubtitle]))(ofArray([react_1("strong", {}, "123"), " posts"]))])), item$1(new List$1(), ofArray([Field$1.field(ofArray([Field$1.hasAddonsLeft]), ofArray([Control$1.control(new List$1(), ofArray([Input$1.input(ofArray([Input$1.typeIsText, Input$1.placeholder("Find a post")]))])), Control$1.control(new List$1(), ofArray([button$1(new List$1(), ofArray(["Search"]))]))]))]))])), right(new List$1(), ofArray([item$1(new List$1(), ofArray([react_1("a", {}, "All")])), item$1(new List$1(), ofArray([react_1("a", {}, "Published")])), item$1(new List$1(), ofArray([react_1("a", {}, "Drafts")])), item$1(new List$1(), ofArray([react_1("a", {}, "Deleted")])), item$1(new List$1(), ofArray([button$1(ofArray([isSuccess]), ofArray(["New"]))]))]))]));
+function root$12(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$2, model.BoxViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$13(0, arg0);
+  }($var1))))]));
+}
 
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Button.Types.IState",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["IsHovered"], ["IsFocused"], ["IsActive"], ["IsLoading"], ["Nothing"]]
-      };
-    }
+const Types$12 = function (__exports) {
+  const Block = __exports.Block = function (__exports) {
+    const Option$$1 = __exports.Option = class Option$$1 {
+      constructor(tag$$1, data) {
+        this.tag = tag$$1;
+        this.data = data;
+      }
 
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-    CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Button.Types.IState", IState);
-  const Option$$1 = __exports.Option = class Option$$1 {
-    constructor(tag$$1, data) {
-      this.tag = tag$$1;
-      this.data = data;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Button.Types.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable"],
-        cases: [["Level", ILevelAndColor], ["Size", ISize], ["IsOutlined"], ["IsInverted"], ["IsLink"], ["State", IState], ["Props", makeGeneric(List$1, {
-          T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-        })]]
-      };
-    }
-
-    Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-
-  };
-  setType("Elmish.Bulma.Elements.Button.Types.Option", Option$$1);
-
-  const ofStyles = __exports.ofStyles = function (style) {
-    if (style.tag === 2) {
-      return bulma.button.styles.isOutlined;
-    } else if (style.tag === 3) {
-      return bulma.button.styles.isInverted;
-    } else if (style.tag === 4) {
-      return bulma.button.styles.isLink;
-    } else {
-      return fsFormat("%A isn't a valid style value")(x => {
-        throw new Error(x);
-      })(style);
-    }
-  };
-
-  const ofState = __exports.ofState = function (state) {
-    if (state.tag === 0) {
-      return bulma.button.state.isHovered;
-    } else if (state.tag === 1) {
-      return bulma.button.state.isFocused;
-    } else if (state.tag === 2) {
-      return bulma.button.state.isActive;
-    } else if (state.tag === 3) {
-      return bulma.button.state.isLoading;
-    } else {
-      return "";
-    }
-  };
-
-  const Options = __exports.Options = class Options {
-    constructor(level, size, isOutlined, isInverted, isLink, state, props) {
-      this.Level = level;
-      this.Size = size;
-      this.IsOutlined = isOutlined;
-      this.IsInverted = isInverted;
-      this.IsLink = isLink;
-      this.State = state;
-      this.Props = props;
-    }
-
-    [FSymbol.reflection]() {
-      return {
-        type: "Elmish.Bulma.Elements.Button.Types.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          Level: Option("string"),
-          Size: Option("string"),
-          IsOutlined: "boolean",
-          IsInverted: "boolean",
-          IsLink: "boolean",
-          State: Option("string"),
-          Props: makeGeneric(List$1, {
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Panel.Types.Block.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Props", makeGeneric(List$1, {
             T: Interface("Fable.Helpers.React.Props.IHTMLProp")
-          })
-        }
-      };
-    }
+          })], ["IsActive"]]
+        };
+      }
 
-    Equals(other) {
-      return equalsRecords(this, other);
-    }
+      Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
 
-    static get Empty() {
-      return new Options(null, null, false, false, false, null, new List$1());
-    }
+    };
+    setType("Elmish.Bulma.Components.Panel.Types.Block.Option", Option$$1);
+    const Options = __exports.Options = class Options {
+      constructor(props, isActive) {
+        this.Props = props;
+        this.IsActive = isActive;
+      }
 
-  };
-  setType("Elmish.Bulma.Elements.Button.Types.Options", Options);
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Panel.Types.Block.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            }),
+            IsActive: "boolean"
+          }
+        };
+      }
+
+      Equals(other) {
+        return equalsRecords(this, other);
+      }
+
+      static get Empty() {
+        return new Options(new List$1(), false);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Panel.Types.Block.Options", Options);
+    return __exports;
+  }({});
+
+  const Tab = __exports.Tab = function (__exports) {
+    const Option$$1 = __exports.Option = class Option$$1 {
+      constructor(tag$$1, data) {
+        this.tag = tag$$1;
+        this.data = data;
+      }
+
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Panel.Types.Tab.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Props", makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          })], ["IsActive"]]
+        };
+      }
+
+      Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Panel.Types.Tab.Option", Option$$1);
+    const Options = __exports.Options = class Options {
+      constructor(props, isActive) {
+        this.Props = props;
+        this.IsActive = isActive;
+      }
+
+      [FSymbol.reflection]() {
+        return {
+          type: "Elmish.Bulma.Components.Panel.Types.Tab.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            }),
+            IsActive: "boolean"
+          }
+        };
+      }
+
+      Equals(other) {
+        return equalsRecords(this, other);
+      }
+
+      static get Empty() {
+        return new Options(new List$1(), false);
+      }
+
+    };
+    setType("Elmish.Bulma.Components.Panel.Types.Tab.Options", Options);
+    return __exports;
+  }({});
+
   return __exports;
 }({});
-const isSmall$4 = new Types$8.Option(1, new ISize(0));
-const isMedium$5 = new Types$8.Option(1, new ISize(1));
-const isLarge$5 = new Types$8.Option(1, new ISize(2));
-const isHovered = new Types$8.Option(5, new Types$8.IState(0));
-const isFocused = new Types$8.Option(5, new Types$8.IState(1));
-const isActive = new Types$8.Option(5, new Types$8.IState(2));
-const isLoading = new Types$8.Option(5, new Types$8.IState(3));
-const isOutlined = new Types$8.Option(2);
-const isInverted = new Types$8.Option(3);
-const isLink = new Types$8.Option(4);
-const isBlack$2 = new Types$8.Option(0, new ILevelAndColor(0));
-const isDark$2 = new Types$8.Option(0, new ILevelAndColor(1));
-const isLight$2 = new Types$8.Option(0, new ILevelAndColor(2));
-const isWhite$2 = new Types$8.Option(0, new ILevelAndColor(3));
-const isPrimary$2 = new Types$8.Option(0, new ILevelAndColor(4));
-const isInfo$2 = new Types$8.Option(0, new ILevelAndColor(5));
-const isSuccess$2 = new Types$8.Option(0, new ILevelAndColor(6));
-const isWarning$2 = new Types$8.Option(0, new ILevelAndColor(7));
-const isDanger$2 = new Types$8.Option(0, new ILevelAndColor(8));
-
-function button$1(options, children) {
-  const parseOptions = function (options_1, result) {
-    if (options_1.tail == null) {
-      return result;
+const Block = function (__exports) {
+  const isActive = __exports.isActive = new Types$12.Block.Option(1);
+  return __exports;
+}({});
+function block(options, children) {
+  const parseOptions = function (result, opt) {
+    if (opt.tag === 1) {
+      return new Types$12.Block.Options(result.Props, true);
     } else {
-      return ($var1 => parseOptions(options_1.tail, $var1))(options_1.head.tag === 1 ? (() => {
-        const Size = ofSize(options_1.head.data);
-        return new Types$8.Options(result.Level, Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, result.Props);
-      })() : options_1.head.tag === 2 ? new Types$8.Options(result.Level, result.Size, true, result.IsInverted, result.IsLink, result.State, result.Props) : options_1.head.tag === 3 ? new Types$8.Options(result.Level, result.Size, result.IsOutlined, true, result.IsLink, result.State, result.Props) : options_1.head.tag === 4 ? new Types$8.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, true, result.State, result.Props) : options_1.head.tag === 5 ? (() => {
-        const State = Types$8.ofState(options_1.head.data);
-        return new Types$8.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, result.IsLink, State, result.Props);
-      })() : options_1.head.tag === 6 ? new Types$8.Options(result.Level, result.Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, options_1.head.data) : new Types$8.Options(ofLevelAndColor(options_1.head.data), result.Size, result.IsOutlined, result.IsInverted, result.IsLink, result.State, result.Props));
+      return new Types$12.Block.Options(opt.data, result.IsActive);
     }
   };
 
-  const opts = parseOptions(options, Types$8.Options.Empty);
-  return react_1("a", createObj(new List$1(classBaseList(join(" ", new List$1(bulma.button.container, map(function (x) {
-    return x;
-  }, filter(function (x_1) {
-    return (() => x_1 != null)();
-  }, ofArray([opts.Level, opts.Size, opts.State]))))), ofArray([[bulma.button.styles.isOutlined, opts.IsOutlined], [bulma.button.styles.isInverted, opts.IsInverted], [bulma.button.styles.isLink, opts.IsLink]])), opts.Props), 1), ...children);
-}
-
-function sectionColor$1(model) {
-  return sectionBase(model.textColor, toList$1(docBlock(model.codeColor, react_1("div", {}, Field$1.field(new List$1(), ofArray([Label$1.label(new List$1(), ofArray(["Name"])), Control$1.control(new List$1(), ofArray([Input$1.text(ofArray([Input$1.placeholder("Text input")]))]))])), Field$1.field(new List$1(), ofArray([Label$1.label(new List$1(), ofArray(["Username"])), Control$1.control(ofArray([Control$1.hasIconLeft, Control$1.hasIconRight]), ofArray([Input$1.text(ofArray([Input$1.isSuccess, Input$1.placeholder("Text input"), Input$1.value("bulma")])), icon(ofArray([isSmall, isLeft]), ofArray([react_1("i", {
-    className: "fa fa-user"
-  })])), icon(ofArray([isSmall, isRight]), ofArray([react_1("i", {
-    className: "fa fa-check"
-  })])), react_1("p", {
-    className: "help is-success"
-  }, "This username is available")]))])), Field$1.field(new List$1(), ofArray([Label$1.label(new List$1(), ofArray(["Email"])), Control$1.control(ofArray([Control$1.hasIconLeft, Control$1.hasIconRight]), ofArray([Input$1.email(ofArray([Input$1.isDanger, Input$1.placeholder("Email input"), Input$1.value("hello@")])), icon(ofArray([isSmall, isLeft]), ofArray([react_1("i", {
-    className: "fa fa-envelope"
-  })])), icon(ofArray([isSmall, isRight]), ofArray([react_1("i", {
-    className: "fa fa-warning"
-  })])), react_1("p", {
-    className: "help is-danger"
-  }, "This email is invalid")]))]))))));
-}
-function sectionSize$3(model) {
-  return sectionBase(model.textSize, toList$1(docBlock(model.codeSize, react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isSmall$4]), ofArray(["Small"])), button$1(new List$1(), ofArray(["Normal"])), button$1(ofArray([isMedium$5]), ofArray(["Medium"])), button$1(ofArray([isLarge$5]), ofArray(["Large"]))))));
-}
-function sectionStyle$1(model) {
-  return sectionBase(model.textStyle, map(function (tupledArg) {
-    return docBlock(tupledArg[1], tupledArg[0]);
-  }, ofArray([[react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isSuccess$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isPrimary$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isInfo$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isDark$2, isOutlined]), ofArray(["Outlined"]))), model.codeStyleOutlined], [react_1("div", {
-    className: "block callout is-primary"
-  }, button$1(ofArray([isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isSuccess$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isPrimary$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isInfo$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isDark$2, isInverted]), ofArray(["Inverted"]))), model.codeStyleInverted], [react_1("div", {}, react_1("div", {
-    className: "block callout is-success"
-  }, button$1(ofArray([isOutlined, isInverted]), ofArray(["Invert Outlined"])), button$1(ofArray([isSuccess$2, isOutlined, isInverted]), ofArray(["Invert outlined"])), button$1(ofArray([isPrimary$2, isOutlined, isInverted]), ofArray(["Invert outlined"])))), model.codeStyleInvertOutlined]])));
-}
-function sectionState(model) {
-  return sectionBase(model.textState, toList$1(docBlock(model.codeState, react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isSuccess$2]), ofArray(["Normal"])), button$1(ofArray([isHovered, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isFocused, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isActive, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isLoading, isSuccess$2]), ofArray(["Hover"]))))));
-}
-function root$10(model) {
-  return react_1("div", {}, sectionColor$1(model), react_1("hr", {}), sectionSize$3(model), react_1("hr", {}), sectionStyle$1(model), react_1("hr", {}), sectionState(model));
-}
-
-function sectionColor$2(model) {
-  return sectionBase(model.textColor, toList$1(docBlock(model.codeColor, react_1("div", {}, react_1("div", {
-    className: "block"
-  }, button$1(new List$1(), ofArray(["Button"])), button$1(ofArray([isWhite$2]), ofArray(["White"])), button$1(ofArray([isLight$2]), ofArray(["Light"])), button$1(ofArray([isDark$2]), ofArray(["Dark"])), button$1(ofArray([isBlack$2]), ofArray(["Black"])), button$1(ofArray([isLink]), ofArray(["Link"]))), react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isPrimary$2]), ofArray(["Primary"])), button$1(ofArray([isInfo$2]), ofArray(["Info"])), button$1(ofArray([isSuccess$2]), ofArray(["Success"])), button$1(ofArray([isWarning$2]), ofArray(["Warning"])), button$1(ofArray([isDanger$2]), ofArray(["Danger"])))))));
-}
-function sectionSize$4(model) {
-  return sectionBase(model.textSize, toList$1(docBlock(model.codeSize, react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isSmall$4]), ofArray(["Small"])), button$1(new List$1(), ofArray(["Normal"])), button$1(ofArray([isMedium$5]), ofArray(["Medium"])), button$1(ofArray([isLarge$5]), ofArray(["Large"]))))));
-}
-function sectionStyle$2(model) {
-  return sectionBase(model.textStyle, map(function (tupledArg) {
-    return docBlock(tupledArg[1], tupledArg[0]);
-  }, ofArray([[react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isSuccess$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isPrimary$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isInfo$2, isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isDark$2, isOutlined]), ofArray(["Outlined"]))), model.codeStyleOutlined], [react_1("div", {
-    className: "block callout is-primary"
-  }, button$1(ofArray([isOutlined]), ofArray(["Outlined"])), button$1(ofArray([isSuccess$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isPrimary$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isInfo$2, isInverted]), ofArray(["Inverted"])), button$1(ofArray([isDark$2, isInverted]), ofArray(["Inverted"]))), model.codeStyleInverted], [react_1("div", {}, react_1("div", {
-    className: "block callout is-success"
-  }, button$1(ofArray([isOutlined, isInverted]), ofArray(["Invert Outlined"])), button$1(ofArray([isSuccess$2, isOutlined, isInverted]), ofArray(["Invert outlined"])), button$1(ofArray([isPrimary$2, isOutlined, isInverted]), ofArray(["Invert outlined"])))), model.codeStyleInvertOutlined]])));
-}
-function sectionState$1(model) {
-  return sectionBase(model.textState, toList$1(docBlock(model.codeState, react_1("div", {
-    className: "block"
-  }, button$1(ofArray([isSuccess$2]), ofArray(["Normal"])), button$1(ofArray([isHovered, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isFocused, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isActive, isSuccess$2]), ofArray(["Hover"])), button$1(ofArray([isLoading, isSuccess$2]), ofArray(["Hover"]))))));
-}
-function root$11(model) {
-  return react_1("div", {}, sectionColor$2(model), react_1("hr", {}), sectionSize$4(model), react_1("hr", {}), sectionStyle$2(model), react_1("hr", {}), sectionState$1(model));
-}
-
-class Msg {
-  constructor(tag, data) {
-    this.tag = tag;
-    this.data = data;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Home.Types.Msg",
-      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-      cases: [["ChangeStr", "string"]]
+  const opts = (() => {
+    const state = Types$12.Block.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
     };
-  }
+  })()(options);
 
-  Equals(other) {
-    return this === other || this.tag === other.tag && equals(this.data, other.data);
-  }
-
-  CompareTo(other) {
-    return compareUnions(this, other) | 0;
-  }
-
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList(bulma.Panel.Block.Container, ofArray([[bulma.Panel.Block.State.IsActive, opts.IsActive]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), ...children);
 }
-setType("Home.Types.Msg", Msg);
-
-function root$12(model, dispatch) {
-  return react_1("div", {}, react_1("p", {
-    className: "control"
-  }, react_1("input", {
-    className: "input",
-    type: "text",
-    placeholder: "Type your name",
-    defaultValue: model,
-    autoFocus: true,
-    onChange: function (ev) {
-      dispatch(new Msg(0, ev.target.value));
+function checkbox(options, children) {
+  const parseOptions = function (result, opt) {
+    if (opt.tag === 1) {
+      return new Types$12.Block.Options(result.Props, true);
+    } else {
+      return new Types$12.Block.Options(opt.data, result.IsActive);
     }
-  })), react_1("br", {}), react_1("span", {}, fsFormat("Hello %s")(x => x)(model)));
-}
+  };
 
-class Model$1 {
-  constructor(textColor, codeColor, textSize, codeSize, textStyle, codeStyleOutlined, codeStyleInverted, codeStyleInvertOutlined, textState, codeState) {
-    this.textColor = textColor;
-    this.codeColor = codeColor;
-    this.textSize = textSize;
-    this.codeSize = codeSize;
-    this.textStyle = textStyle;
-    this.codeStyleOutlined = codeStyleOutlined;
-    this.codeStyleInverted = codeStyleInverted;
-    this.codeStyleInvertOutlined = codeStyleInvertOutlined;
-    this.textState = textState;
-    this.codeState = codeState;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Button.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        textColor: "string",
-        codeColor: "string",
-        textSize: "string",
-        codeSize: "string",
-        textStyle: "string",
-        codeStyleOutlined: "string",
-        codeStyleInverted: "string",
-        codeStyleInvertOutlined: "string",
-        textState: "string",
-        codeState: "string"
-      }
+  const opts = (() => {
+    const state = Types$12.Block.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
     };
-  }
+  })()(options);
 
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
+  return react_1("label", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList(bulma.Panel.Block.Container, ofArray([[bulma.Panel.Block.State.IsActive, opts.IsActive]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), ...children);
 }
-setType("Elements.Button.Types.Model", Model$1);
+function panel$1(children) {
+  return react_1("nav", {
+    className: bulma.Panel.Container
+  }, ...children);
+}
+function heading$1(children) {
+  return react_1("div", {
+    className: bulma.Panel.Heading
+  }, ...children);
+}
+function tabs(children) {
+  return react_1("div", {
+    className: bulma.Panel.Tabs.Container
+  }, ...children);
+}
+const Tab = function (__exports) {
+  const isActive_1 = __exports.isActive = new Types$12.Tab.Option(1);
+  return __exports;
+}({});
+function tab(options, children) {
+  const parseOptions = function (result, opt) {
+    if (opt.tag === 1) {
+      return new Types$12.Tab.Options(result.Props, true);
+    } else {
+      return new Types$12.Tab.Options(opt.data, result.IsActive);
+    }
+  };
 
-class Model$2 {
-  constructor(text, code) {
-    this.text = text;
-    this.code = code;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Icon.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        code: "string"
-      }
+  const opts = (() => {
+    const state = Types$12.Tab.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
     };
-  }
+  })()(options);
 
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
+  return react_1("a", createObj(toList(delay(function () {
+    return append$1(singleton$1(classList(ofArray([[bulma.Panel.Tabs.Tab.State.IsActive, opts.IsActive]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), ...children);
 }
-setType("Elements.Icon.Types.Model", Model$2);
-
-class Model$3 {
-  constructor(text, textSize, codeSize, textRatio, codeRatio) {
-    this.text = text;
-    this.textSize = textSize;
-    this.codeSize = codeSize;
-    this.textRatio = textRatio;
-    this.codeRatio = codeRatio;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Image.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        textSize: "string",
-        codeSize: "string",
-        textRatio: "string",
-        codeRatio: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
+function icon$2(children) {
+  return react_1("span", {
+    className: bulma.Panel.Block.Icon
+  }, ...children);
 }
-setType("Elements.Image.Types.Model", Model$3);
 
-class Model$4 {
-  constructor(text, code) {
-    this.text = text;
-    this.code = code;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Progress.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        code: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
+const iconInteractive$3 = columns$1(new List$1(), ofArray([column$1(ofArray([Offset.is3, Width.is6]), ofArray([panel$1(ofArray([heading$1(ofArray(["Repositories"])), block(new List$1(), ofArray([Control$1.control(ofArray([Control$1.hasIconLeft]), ofArray([Input$1.input(ofArray([Input$1.isSmall, Input$1.typeIsText, Input$1.placeholder("Search")])), icon$1(ofArray([isSmall$1, isLeft]), ofArray([react_1("i", {
+  className: "fa fa-search"
+})]))]))])), tabs(ofArray([tab(new List$1(), ofArray(["All"])), tab(ofArray([Tab.isActive]), ofArray(["Fable"])), tab(new List$1(), ofArray(["Elmish"])), tab(new List$1(), ofArray(["Bulma"]))])), block(ofArray([Block.isActive]), ofArray([icon$2(ofArray([react_1("i", {
+  className: "fa fa-book"
+})])), "Bulma"])), block(new List$1(), ofArray([icon$2(ofArray([react_1("i", {
+  className: "fa fa-code-fork"
+})])), "Fable"])), checkbox(new List$1(), ofArray([react_1("input", {
+  type: "checkbox"
+}), "I am a checkbox"])), block(new List$1(), ofArray([button$1(ofArray([isPrimary, isOutlined, isFullWidth]), ofArray(["Reset"]))]))]))]))]));
+function root$13(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$3, model.PanelViewer, $var1 => dispatch(function (arg0) {
+    return new Msg$12(0, arg0);
+  }($var1))))]));
 }
-setType("Elements.Progress.Types.Model", Model$4);
 
-class Model$5 {
-  constructor(generalText, generalCode, styleText, styleCode) {
-    this.generalText = generalText;
-    this.generalCode = generalCode;
-    this.styleText = styleText;
-    this.styleCode = styleCode;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Table.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        generalText: "string",
-        generalCode: "string",
-        styleText: "string",
-        styleCode: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
+function root$14(model) {
+  return contentFromMarkdown(model.Intro);
 }
-setType("Elements.Table.Types.Model", Model$5);
-
-class Model$6 {
-  constructor(textColor, codeColor, textSize, codeSize, textStyle, codeStyleOutlined, codeStyleInverted, codeStyleInvertOutlined, textState, codeState) {
-    this.textColor = textColor;
-    this.codeColor = codeColor;
-    this.textSize = textSize;
-    this.codeSize = codeSize;
-    this.textStyle = textStyle;
-    this.codeStyleOutlined = codeStyleOutlined;
-    this.codeStyleInverted = codeStyleInverted;
-    this.codeStyleInvertOutlined = codeStyleInvertOutlined;
-    this.textState = textState;
-    this.codeState = codeState;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Form.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        textColor: "string",
-        codeColor: "string",
-        textSize: "string",
-        codeSize: "string",
-        textStyle: "string",
-        codeStyleOutlined: "string",
-        codeStyleInverted: "string",
-        codeStyleInvertOutlined: "string",
-        textState: "string",
-        codeState: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Form.Types.Model", Model$6);
-
-class Model$7 {
-  constructor(text, typeText, typeCode, sizeText, sizeCode, spacedText, spacedCode) {
-    this.text = text;
-    this.typeText = typeText;
-    this.typeCode = typeCode;
-    this.sizeText = sizeText;
-    this.sizeCode = sizeCode;
-    this.spacedText = spacedText;
-    this.spacedCode = spacedCode;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Title.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        typeText: "string",
-        typeCode: "string",
-        sizeText: "string",
-        sizeCode: "string",
-        spacedText: "string",
-        spacedCode: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Title.Types.Model", Model$7);
-
-class Model$8 {
-  constructor(text, code) {
-    this.text = text;
-    this.code = code;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Delete.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        code: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Delete.Types.Model", Model$8);
-
-class Model$9 {
-  constructor(text, code) {
-    this.text = text;
-    this.code = code;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Box.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        code: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Box.Types.Model", Model$9);
-
-class Model$10 {
-  constructor(text, sizeText, sizeCode) {
-    this.text = text;
-    this.sizeText = sizeText;
-    this.sizeCode = sizeCode;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Content.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        sizeText: "string",
-        sizeCode: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Content.Types.Model", Model$10);
-
-class Model$11 {
-  constructor(text, code, colorText, colorCode, sizeText, sizeCode) {
-    this.text = text;
-    this.code = code;
-    this.colorText = colorText;
-    this.colorCode = colorCode;
-    this.sizeText = sizeText;
-    this.sizeCode = sizeCode;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "Elements.Tag.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        text: "string",
-        code: "string",
-        colorText: "string",
-        colorCode: "string",
-        sizeText: "string",
-        sizeCode: "string"
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("Elements.Tag.Types.Model", Model$11);
-
-class Msg$1 {
-  constructor(tag, data) {
-    this.tag = tag;
-    this.data = data;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "App.Types.Msg",
-      interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-      cases: [["HomeMsg", Msg], ["SendNotification"], ["Test"]]
-    };
-  }
-
-  Equals(other) {
-    return this === other || this.tag === other.tag && equals(this.data, other.data);
-  }
-
-  CompareTo(other) {
-    return compareUnions(this, other) | 0;
-  }
-
-}
-setType("App.Types.Msg", Msg$1);
-class ElementsModel {
-  constructor(button, icon, image, progress, table, form, title, _delete, box, content, tag) {
-    this.button = button;
-    this.icon = icon;
-    this.image = image;
-    this.progress = progress;
-    this.table = table;
-    this.form = form;
-    this.title = title;
-    this.delete = _delete;
-    this.box = box;
-    this.content = content;
-    this.tag = tag;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "App.Types.ElementsModel",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        button: Model$1,
-        icon: Model$2,
-        image: Model$3,
-        progress: Model$4,
-        table: Model$5,
-        form: Model$6,
-        title: Model$7,
-        delete: Model$8,
-        box: Model$9,
-        content: Model$10,
-        tag: Model$11
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("App.Types.ElementsModel", ElementsModel);
-class Model {
-  constructor(currentPage, home, elements) {
-    this.currentPage = currentPage;
-    this.home = home;
-    this.elements = elements;
-  }
-
-  [FSymbol.reflection]() {
-    return {
-      type: "App.Types.Model",
-      interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-      properties: {
-        currentPage: Page,
-        home: "string",
-        elements: ElementsModel
-      }
-    };
-  }
-
-  Equals(other) {
-    return equalsRecords(this, other);
-  }
-
-  CompareTo(other) {
-    return compareRecords(this, other) | 0;
-  }
-
-}
-setType("App.Types.Model", Model);
 
 function navButton(classy, href, faClass, txt) {
   return react_1("div", {
     className: "control"
   }, react_1("a", {
-    className: fsFormat("button %s")(x => x)(classy),
+    className: {
+      formatFn: fsFormat("button %s"),
+      input: "button %s"
+    }.formatFn(x => x)(classy),
     href: href
   }, react_1("span", {
     className: "icon"
   }, react_1("i", {
-    className: fsFormat("fa %s")(x => x)(faClass)
+    className: {
+      formatFn: fsFormat("fa %s"),
+      input: "fa %s"
+    }.formatFn(x => x)(faClass)
   })), react_1("span", {}, txt)));
 }
 const navButtons = react_1("span", {
   className: "nav-item block"
 }, navButton("twitter", "https://twitter.com/FableCompiler", "fa-twitter", "Twitter"), navButton("github", "https://github.com/MangelMaxime/Fable.Elmish.Bulma/", "fa-github", "Github"), navButton("github", "https://gitter.im/fable-compiler/Fable", "fa-comments", "Gitter"));
-const root$13 = react_1("div", {
+const root$15 = react_1("div", {
   className: "nav"
 }, react_1("div", {
   className: "nav-left"
@@ -9927,6 +13521,34 @@ const root$13 = react_1("div", {
 }, react_1("img", createObj(ofArray([new Props.HTMLAttr(106, "logo.png"), new Props.HTMLAttr(8, "logo"), ["style", {
   marginRight: "10px"
 }]]), 1)), "Fable.Elmish.Bulma")), navButtons);
+
+function CurriedLambda(f, _this, expectedArgsLength) {
+    if (f.curried === true) {
+        return f;
+    }
+    const curriedFn = (...args) => {
+        // _this = _this || this;
+        expectedArgsLength = expectedArgsLength || f.length;
+        if (args.length >= expectedArgsLength) {
+            const restArgs = args.splice(expectedArgsLength);
+            const res = f.apply(_this, args);
+            if (typeof res === "function") {
+                const newLambda = CurriedLambda(res, _this);
+                return restArgs.length === 0 ? newLambda : newLambda.apply(_this, restArgs);
+            }
+            else {
+                return res;
+            }
+        }
+        else {
+            return CurriedLambda((...args2) => {
+                return f.apply(_this, args.concat(args2));
+            }, _this, expectedArgsLength - args.length);
+        }
+    };
+    curriedFn.curried = true;
+    return curriedFn;
+}
 
 class Trampoline {
     static get maxTrampolineCallCount() {
@@ -10157,11 +13779,11 @@ const Cmd = function (__exports) {
   };
 
   const map$$1 = __exports.map = function (f, cmd) {
-    return map(function (g) {
+    return map(CurriedLambda(function (g) {
       return $var2 => g(function (dispatch) {
         return $var1 => dispatch(f($var1));
       }($var2));
-    }, cmd);
+    }), cmd);
   };
 
   const batch = __exports.batch = function (cmds) {
@@ -10237,6 +13859,9 @@ const Cmd = function (__exports) {
 // TODO: This needs improvement, check namespace for non-custom types?
 
 // tslint:disable:max-line-length
+// ----------------------------------------------
+// These functions belong to Seq.ts but are
+// implemented here to prevent cyclic dependencies
 
 
 class SetTree {
@@ -10820,41 +14445,38 @@ const ProgramModule = function (__exports) {
   };
 
   const mkProgram = __exports.mkProgram = function (init, update, view) {
-    const setState = function (model) {
+    const setState = CurriedLambda(function (model) {
       return $var2 => function (value) {
         value;
       }(($var1 => view(model, $var1))($var2));
-    };
-
+    });
     return new Program(init, update, function (_arg1) {
       return Cmd.none();
-    }, view, ($var3, $var4) => setState($var3)($var4), function (tupledArg) {
+    }, view, setState, function (tupledArg) {
       onError(tupledArg[0], tupledArg[1]);
     });
   };
 
   const mkSimple = __exports.mkSimple = function (init, update, view) {
-    const init_1 = $var5 => {
+    const init_1 = $var3 => {
       return function (state) {
         return [state, Cmd.none()];
-      }(init($var5));
+      }(init($var3));
     };
 
-    const update_1 = function (msg) {
-      return $var7 => function (state_1) {
+    const update_1 = CurriedLambda(function (msg) {
+      return $var5 => function (state_1) {
         return [state_1, Cmd.none()];
-      }(($var6 => update(msg, $var6))($var7));
-    };
-
-    const setState = function (model) {
-      return $var9 => function (value) {
+      }(($var4 => update(msg, $var4))($var5));
+    });
+    const setState = CurriedLambda(function (model) {
+      return $var7 => function (value) {
         value;
-      }(($var8 => view(model, $var8))($var9));
-    };
-
-    return new Program(init_1, ($var10, $var11) => update_1($var10)($var11), function (_arg1) {
+      }(($var6 => view(model, $var6))($var7));
+    });
+    return new Program(init_1, update_1, function (_arg1) {
       return Cmd.none();
-    }, view, ($var12, $var13) => setState($var12)($var13), function (tupledArg) {
+    }, view, setState, function (tupledArg) {
       onError(tupledArg[0], tupledArg[1]);
     });
   };
@@ -10864,24 +14486,32 @@ const ProgramModule = function (__exports) {
   };
 
   const withConsoleTrace = __exports.withConsoleTrace = function (program) {
-    const trace = function (text, msg, model) {
-      console.log(text, function (o) {
+    const traceInit = function (arg) {
+      const patternInput = program.init(arg);
+      console.log("New model:", function (o) {
         return function (arg00) {
           return JSON.parse(arg00);
         }(toJson(o));
-      }(model), function (o_1) {
+      }(patternInput[0]));
+      return [patternInput[0], patternInput[1]];
+    };
+
+    const traceUpdate = function (msg, model) {
+      console.log("New message:", function (o_1) {
         return function (arg00_1) {
           return JSON.parse(arg00_1);
         }(toJson(o_1));
       }(msg));
-      return program.update(msg, model);
+      const patternInput_1 = program.update(msg, model);
+      console.log("Updated:", function (o_2) {
+        return function (arg00_2) {
+          return JSON.parse(arg00_2);
+        }(toJson(o_2));
+      }(patternInput_1[0]));
+      return [patternInput_1[0], patternInput_1[1]];
     };
 
-    const update = ($var14, $var15) => {
-      return trace("Updating:", $var14, $var15);
-    };
-
-    return new Program(program.init, update, program.subscribe, program.view, program.setState, program.onError);
+    return new Program(traceInit, traceUpdate, program.subscribe, program.view, program.setState, program.onError);
   };
 
   const withTrace = __exports.withTrace = function (trace, program) {
@@ -11072,7 +14702,6 @@ var ATTRIBUTE_NAME_START_CHAR = ':A-Z_a-z\\u00C0-\\u00D6\\u00D8-\\u00F6\\u00F8-\
  * @see http://jsperf.com/key-missing
  */
 var DOMProperty = {
-
   ID_ATTRIBUTE_NAME: 'data-reactid',
   ROOT_ATTRIBUTE_NAME: 'data-reactroot',
 
@@ -11408,6 +15037,9 @@ var ARIADOMPropertyConfig = {
 
 var ARIADOMPropertyConfig_1 = ARIADOMPropertyConfig;
 
+/**
+ * Injectable ordering of event plugins.
+ */
 var eventPluginOrder = null;
 
 /**
@@ -11498,7 +15130,6 @@ function publishRegistrationName(registrationName, pluginModule, eventName) {
  * @see {EventPluginHub}
  */
 var EventPluginRegistry = {
-
   /**
    * Ordered list of injected plugins.
    */
@@ -11638,7 +15269,6 @@ var EventPluginRegistry = {
       }
     }
   }
-
 };
 
 var EventPluginRegistry_1 = EventPluginRegistry;
@@ -11717,6 +15347,14 @@ var ReactErrorUtils = {
 
 var ReactErrorUtils_1 = ReactErrorUtils;
 
+/**
+ * Injected dependencies:
+ */
+
+/**
+ * - `ComponentTree`: [required] Module that can convert between React instances
+ *   and actual node references.
+ */
 var ComponentTree;
 var TreeTraversal;
 var injection = {
@@ -11916,6 +15554,19 @@ var EventPluginUtils = {
 
 var EventPluginUtils_1 = EventPluginUtils;
 
+/**
+ * Accumulates items that must not be null or undefined into the first one. This
+ * is used to conserve memory by avoiding array allocations, and thus sacrifices
+ * API cleanness. Since `current` can be null before being passed in and not
+ * null after this function, make sure to assign it back to `current`:
+ *
+ * `a = accumulateInto(a, b);`
+ *
+ * This API should be sparingly used. Try `accumulate` for something cleaner.
+ *
+ * @return {*|array<*>} An accumulation of items.
+ */
+
 function accumulateInto(current, next) {
   !(next != null) ? invariant_1(false, 'accumulateInto(...): Accumulated items must not be null or undefined.') : void 0;
 
@@ -11955,6 +15606,14 @@ var accumulateInto_1 = accumulateInto;
  * 
  */
 
+/**
+ * @param {array} arr an "accumulation" of items which is either an Array or
+ * a single item. Useful when paired with the `accumulate` module. This is a
+ * simple utility that allows us to reason about a collection of items, but
+ * handling the case when there is exactly one item (and we do not need to
+ * allocate an array).
+ */
+
 function forEachAccumulated(arr, cb, scope) {
   if (Array.isArray(arr)) {
     arr.forEach(cb, scope);
@@ -11965,6 +15624,9 @@ function forEachAccumulated(arr, cb, scope) {
 
 var forEachAccumulated_1 = forEachAccumulated;
 
+/**
+ * Internal store for event listeners
+ */
 var listenerBank = {};
 
 /**
@@ -12047,12 +15709,10 @@ function shouldPreventMouseEvent(name, type, props) {
  * @public
  */
 var EventPluginHub = {
-
   /**
    * Methods for injecting dependencies.
    */
   injection: {
-
     /**
      * @param {array} InjectedEventPluginOrder
      * @public
@@ -12063,7 +15723,6 @@ var EventPluginHub = {
      * @param {object} injectedNamesToPlugins Map from names to plugin modules.
      */
     injectEventPluginsByName: EventPluginRegistry_1.injectEventPluginsByName
-
   },
 
   /**
@@ -12213,7 +15872,6 @@ var EventPluginHub = {
   __getListenerBank: function () {
     return listenerBank;
   }
-
 };
 
 var EventPluginHub_1 = EventPluginHub;
@@ -12367,6 +16025,13 @@ var ExecutionEnvironment$1 = {
 
 var ExecutionEnvironment_1 = ExecutionEnvironment$1;
 
+/**
+ * Static poolers. Several custom versions for each potential number of
+ * arguments. A completely generic pooler is easy to implement, but would
+ * require accessing the `arguments` object. In each of these, `this` refers to
+ * the Class itself, not an instance. If any others are needed, simply add them
+ * here, or in their own files.
+ */
 var oneArgumentPooler$1 = function (copyFieldsFrom) {
   var Klass = this;
   if (Klass.instancePool.length) {
@@ -12474,6 +16139,17 @@ function getTextContentAccessor() {
 
 var getTextContentAccessor_1 = getTextContentAccessor;
 
+/**
+ * This helper class stores information about text content of a target node,
+ * allowing comparison of content before and after a given event.
+ *
+ * Identify the node where selection currently begins, then observe
+ * both its text content and its current position in the DOM. Since the
+ * browser may natively replace the target node during composition, we can
+ * use its position to find its replacement.
+ *
+ * @param {DOMEventTarget} root
+ */
 function FallbackCompositionState(root) {
   this._root = root;
   this._startText = this.getText();
@@ -12625,7 +16301,6 @@ function SyntheticEvent(dispatchConfig, targetInst, nativeEvent, nativeEventTarg
 }
 
 index(SyntheticEvent.prototype, {
-
   preventDefault: function () {
     this.defaultPrevented = true;
     var event = this.nativeEvent;
@@ -12635,8 +16310,8 @@ index(SyntheticEvent.prototype, {
 
     if (event.preventDefault) {
       event.preventDefault();
+      // eslint-disable-next-line valid-typeof
     } else if (typeof event.returnValue !== 'unknown') {
-      // eslint-disable-line valid-typeof
       event.returnValue = false;
     }
     this.isDefaultPrevented = emptyFunction_1.thatReturnsTrue;
@@ -12650,8 +16325,8 @@ index(SyntheticEvent.prototype, {
 
     if (event.stopPropagation) {
       event.stopPropagation();
+      // eslint-disable-next-line valid-typeof
     } else if (typeof event.cancelBubble !== 'unknown') {
-      // eslint-disable-line valid-typeof
       // The ChangeEventPlugin registers a "propertychange" event for
       // IE. This event does not support bubbling or cancelling, and
       // any references to cancelBubble throw "Member not found".  A
@@ -12698,7 +16373,6 @@ index(SyntheticEvent.prototype, {
       Object.defineProperty(this, 'stopPropagation', getPooledWarningPropertyDefinition('stopPropagation', emptyFunction_1));
     }
   }
-
 });
 
 SyntheticEvent.Interface = EventInterface;
@@ -12714,7 +16388,7 @@ SyntheticEvent.Interface = EventInterface;
         return new Proxy(constructor.apply(that, args), {
           set: function (target, prop, value) {
             if (prop !== 'isPersistent' && !target.constructor.Interface.hasOwnProperty(prop) && shouldBeReleasedProperties.indexOf(prop) === -1) {
-              warning_1(didWarnForAddedNewProperty || target.isPersistent(), 'This synthetic event is reused for performance reasons. If you\'re ' + 'seeing this, you\'re adding a new property in the synthetic event object. ' + 'The property is never released. See ' + 'https://fb.me/react-event-pooling for more information.');
+              warning_1(didWarnForAddedNewProperty || target.isPersistent(), "This synthetic event is reused for performance reasons. If you're " + "seeing this, you're adding a new property in the synthetic event object. " + 'The property is never released. See ' + 'https://fb.me/react-event-pooling for more information.');
               didWarnForAddedNewProperty = true;
             }
             target[prop] = value;
@@ -12783,10 +16457,14 @@ function getPooledWarningPropertyDefinition(propName, getVal) {
 
   function warn(action, result) {
     var warningCondition = false;
-    warning_1(warningCondition, 'This synthetic event is reused for performance reasons. If you\'re seeing this, ' + 'you\'re %s `%s` on a released/nullified synthetic event. %s. ' + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result);
+    warning_1(warningCondition, "This synthetic event is reused for performance reasons. If you're seeing this, " + "you're %s `%s` on a released/nullified synthetic event. %s. " + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result);
   }
 }
 
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/#events-compositionevents
+ */
 var CompositionEventInterface = {
   data: null
 };
@@ -12805,6 +16483,11 @@ SyntheticEvent_1.augmentClass(SyntheticCompositionEvent, CompositionEventInterfa
 
 var SyntheticCompositionEvent_1 = SyntheticCompositionEvent;
 
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/2013/WD-DOM-Level-3-Events-20131105
+ *      /#events-inputevents
+ */
 var InputEventInterface = {
   data: null
 };
@@ -13180,7 +16863,6 @@ function extractBeforeInputEvent(topLevelType, targetInst, nativeEvent, nativeEv
  * `composition` event types.
  */
 var BeforeInputEventPlugin = {
-
   eventTypes: eventTypes,
 
   extractEvents: function (topLevelType, targetInst, nativeEvent, nativeEventTarget) {
@@ -13314,6 +16996,11 @@ var ReactFeatureFlags = {
 
 var ReactFeatureFlags_1 = ReactFeatureFlags;
 
+/**
+ * @param {?object} object
+ * @return {boolean} True if `object` is a valid owner.
+ * @final
+ */
 function isValidOwner(object) {
   return !!(object && typeof object.attachRef === 'function' && typeof object.detachRef === 'function');
 }
@@ -13381,7 +17068,6 @@ var ReactOwner = {
       owner.detachRef(ref);
     }
   }
-
 };
 
 var ReactOwner_1 = ReactOwner;
@@ -13521,6 +17207,19 @@ if (ExecutionEnvironment_1.canUseDOM) {
 }
 
 var performance_1 = performance$1 || {};
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+
 
 var performanceNow;
 
@@ -13748,7 +17447,9 @@ function markEnd(debugID, markType) {
   }
 
   performance.clearMarks(markName);
-  performance.clearMeasures(measurementName);
+  if (measurementName) {
+    performance.clearMeasures(measurementName);
+  }
 }
 
 var ReactDebugTool$1 = {
@@ -13879,6 +17580,8 @@ if (/[?&]react_perf\b/.test(url)) {
 
 var ReactDebugTool_1 = ReactDebugTool$1;
 
+// Trust the developer to only use ReactInstrumentation with a __DEV__ check
+
 var debugTool = null;
 
 {
@@ -13888,12 +17591,15 @@ var debugTool = null;
 
 var ReactInstrumentation$1 = { debugTool: debugTool };
 
+/**
+ * Helper to call ReactRef.attachRefs with this composite component, split out
+ * to avoid allocations in the transaction mount-ready queue.
+ */
 function attachRefs() {
   ReactRef_1.attachRefs(this, this._currentElement);
 }
 
 var ReactReconciler = {
-
   /**
    * Initializes the component, renders markup, and registers event listeners.
    *
@@ -13905,8 +17611,8 @@ var ReactReconciler = {
    * @final
    * @internal
    */
-  mountComponent: function (internalInstance, transaction, hostParent, hostContainerInfo, context, parentDebugID // 0 in production and for roots
-  ) {
+  mountComponent: function (internalInstance, transaction, hostParent, hostContainerInfo, context, parentDebugID) // 0 in production and for roots
+  {
     {
       if (internalInstance._debugID !== 0) {
         ReactInstrumentation$1.debugTool.onBeforeMountComponent(internalInstance._debugID, internalInstance._currentElement, parentDebugID);
@@ -14030,7 +17736,6 @@ var ReactReconciler = {
       }
     }
   }
-
 };
 
 var ReactReconciler_1 = ReactReconciler;
@@ -14128,6 +17833,8 @@ var TransactionImpl = {
     return !!this._isInTransaction;
   },
 
+  /* eslint-disable space-before-function-paren */
+
   /**
    * Executes the function within a safety window. Use this for the top level
    * methods that result in large amounts of computation/mutations that would
@@ -14146,6 +17853,7 @@ var TransactionImpl = {
    * @return {*} Return value from `method`.
    */
   perform: function (method, scope, a, b, c, d, e, f) {
+    /* eslint-enable space-before-function-paren */
     !!this.isInTransaction() ? invariant_1(false, 'Transaction.perform(...): Cannot initialize a transaction when there is already an outstanding transaction.') : void 0;
     var errorThrown;
     var ret;
@@ -14471,6 +18179,114 @@ var ReactUpdates = {
 
 var ReactUpdates_1 = ReactUpdates;
 
+function isCheckable(elem) {
+  var type = elem.type;
+  var nodeName = elem.nodeName;
+  return nodeName && nodeName.toLowerCase() === 'input' && (type === 'checkbox' || type === 'radio');
+}
+
+function getTracker(inst) {
+  return inst._wrapperState.valueTracker;
+}
+
+function attachTracker(inst, tracker) {
+  inst._wrapperState.valueTracker = tracker;
+}
+
+function detachTracker(inst) {
+  delete inst._wrapperState.valueTracker;
+}
+
+function getValueFromNode(node) {
+  var value;
+  if (node) {
+    value = isCheckable(node) ? '' + node.checked : node.value;
+  }
+  return value;
+}
+
+var inputValueTracking = {
+  // exposed for testing
+  _getTrackerFromNode: function (node) {
+    return getTracker(ReactDOMComponentTree_1.getInstanceFromNode(node));
+  },
+
+
+  track: function (inst) {
+    if (getTracker(inst)) {
+      return;
+    }
+
+    var node = ReactDOMComponentTree_1.getNodeFromInstance(inst);
+    var valueField = isCheckable(node) ? 'checked' : 'value';
+    var descriptor = Object.getOwnPropertyDescriptor(node.constructor.prototype, valueField);
+
+    var currentValue = '' + node[valueField];
+
+    // if someone has already defined a value bail and don't track value
+    // will cause over reporting of changes, but it's better then a hard failure
+    // (needed for certain tests that spyOn input values)
+    if (node.hasOwnProperty(valueField)) {
+      return;
+    }
+
+    Object.defineProperty(node, valueField, {
+      enumerable: descriptor.enumerable,
+      configurable: true,
+      get: function () {
+        return descriptor.get.call(this);
+      },
+      set: function (value) {
+        currentValue = '' + value;
+        descriptor.set.call(this, value);
+      }
+    });
+
+    attachTracker(inst, {
+      getValue: function () {
+        return currentValue;
+      },
+      setValue: function (value) {
+        currentValue = '' + value;
+      },
+      stopTracking: function () {
+        detachTracker(inst);
+        delete node[valueField];
+      }
+    });
+  },
+
+  updateValueIfChanged: function (inst) {
+    if (!inst) {
+      return false;
+    }
+    var tracker = getTracker(inst);
+
+    if (!tracker) {
+      inputValueTracking.track(inst);
+      return true;
+    }
+
+    var lastValue = tracker.getValue();
+    var nextValue = getValueFromNode(ReactDOMComponentTree_1.getNodeFromInstance(inst));
+
+    if (nextValue !== lastValue) {
+      tracker.setValue(nextValue);
+      return true;
+    }
+
+    return false;
+  },
+  stopTracking: function (inst) {
+    var tracker = getTracker(inst);
+    if (tracker) {
+      tracker.stopTracking();
+    }
+  }
+};
+
+var inputValueTracking_1 = inputValueTracking;
+
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -14479,6 +18295,14 @@ var ReactUpdates_1 = ReactUpdates;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
+ */
+
+/**
+ * Gets the target node from a native browser event by accounting for
+ * inconsistencies in browser DOM APIs.
+ *
+ * @param {object} nativeEvent Native browser event.
+ * @return {DOMEventTarget} Target node.
  */
 
 function getEventTarget(nativeEvent) {
@@ -14553,22 +18377,26 @@ var isEventSupported_1 = isEventSupported;
  * 
  */
 
+/**
+ * @see http://www.whatwg.org/specs/web-apps/current-work/multipage/the-input-element.html#input-type-attr-summary
+ */
+
 var supportedInputTypes = {
-  'color': true,
-  'date': true,
-  'datetime': true,
+  color: true,
+  date: true,
+  datetime: true,
   'datetime-local': true,
-  'email': true,
-  'month': true,
-  'number': true,
-  'password': true,
-  'range': true,
-  'search': true,
-  'tel': true,
-  'text': true,
-  'time': true,
-  'url': true,
-  'week': true
+  email: true,
+  month: true,
+  number: true,
+  password: true,
+  range: true,
+  search: true,
+  tel: true,
+  text: true,
+  time: true,
+  url: true,
+  week: true
 };
 
 function isTextInputElement(elem) {
@@ -14597,13 +18425,17 @@ var eventTypes$1 = {
   }
 };
 
+function createAndAccumulateChangeEvent(inst, nativeEvent, target) {
+  var event = SyntheticEvent_1.getPooled(eventTypes$1.change, inst, nativeEvent, target);
+  event.type = 'change';
+  EventPropagators_1.accumulateTwoPhaseDispatches(event);
+  return event;
+}
 /**
  * For IE shims
  */
 var activeElement = null;
 var activeElementInst = null;
-var activeElementValue = null;
-var activeElementValueProp = null;
 
 /**
  * SECTION: handle `change` event
@@ -14620,8 +18452,7 @@ if (ExecutionEnvironment_1.canUseDOM) {
 }
 
 function manualDispatchChangeEvent(nativeEvent) {
-  var event = SyntheticEvent_1.getPooled(eventTypes$1.change, activeElementInst, nativeEvent, getEventTarget_1(nativeEvent));
-  EventPropagators_1.accumulateTwoPhaseDispatches(event);
+  var event = createAndAccumulateChangeEvent(activeElementInst, nativeEvent, getEventTarget_1(nativeEvent));
 
   // If change and propertychange bubbled, we'd just bind to it like all the
   // other events and have it go through ReactBrowserEventEmitter. Since it
@@ -14657,11 +18488,21 @@ function stopWatchingForChangeEventIE8() {
   activeElementInst = null;
 }
 
+function getInstIfValueChanged(targetInst, nativeEvent) {
+  var updated = inputValueTracking_1.updateValueIfChanged(targetInst);
+  var simulated = nativeEvent.simulated === true && ChangeEventPlugin._allowSimulatedPassThrough;
+
+  if (updated || simulated) {
+    return targetInst;
+  }
+}
+
 function getTargetInstForChangeEvent(topLevelType, targetInst) {
   if (topLevelType === 'topChange') {
     return targetInst;
   }
 }
+
 function handleEventsForChangeEventIE8(topLevelType, target, targetInst) {
   if (topLevelType === 'topFocus') {
     // stopWatching() should be a noop here but we call it just in case we
@@ -14680,105 +18521,54 @@ var isInputEventSupported = false;
 if (ExecutionEnvironment_1.canUseDOM) {
   // IE9 claims to support the input event but fails to trigger it when
   // deleting text, so we ignore its input events.
-  // IE10+ fire input events to often, such when a placeholder
-  // changes or when an input with a placeholder is focused.
-  isInputEventSupported = isEventSupported_1('input') && (!document.documentMode || document.documentMode > 11);
+
+  isInputEventSupported = isEventSupported_1('input') && (!('documentMode' in document) || document.documentMode > 9);
 }
 
 /**
- * (For IE <=11) Replacement getter/setter for the `value` property that gets
- * set on the active element.
- */
-var newValueProp = {
-  get: function () {
-    return activeElementValueProp.get.call(this);
-  },
-  set: function (val) {
-    // Cast to a string so we can do equality checks.
-    activeElementValue = '' + val;
-    activeElementValueProp.set.call(this, val);
-  }
-};
-
-/**
- * (For IE <=11) Starts tracking propertychange events on the passed-in element
+ * (For IE <=9) Starts tracking propertychange events on the passed-in element
  * and override the value property so that we can distinguish user events from
  * value changes in JS.
  */
 function startWatchingForValueChange(target, targetInst) {
   activeElement = target;
   activeElementInst = targetInst;
-  activeElementValue = target.value;
-  activeElementValueProp = Object.getOwnPropertyDescriptor(target.constructor.prototype, 'value');
-
-  // Not guarded in a canDefineProperty check: IE8 supports defineProperty only
-  // on DOM elements
-  Object.defineProperty(activeElement, 'value', newValueProp);
-  if (activeElement.attachEvent) {
-    activeElement.attachEvent('onpropertychange', handlePropertyChange);
-  } else {
-    activeElement.addEventListener('propertychange', handlePropertyChange, false);
-  }
+  activeElement.attachEvent('onpropertychange', handlePropertyChange);
 }
 
 /**
- * (For IE <=11) Removes the event listeners from the currently-tracked element,
+ * (For IE <=9) Removes the event listeners from the currently-tracked element,
  * if any exists.
  */
 function stopWatchingForValueChange() {
   if (!activeElement) {
     return;
   }
-
-  // delete restores the original property definition
-  delete activeElement.value;
-
-  if (activeElement.detachEvent) {
-    activeElement.detachEvent('onpropertychange', handlePropertyChange);
-  } else {
-    activeElement.removeEventListener('propertychange', handlePropertyChange, false);
-  }
+  activeElement.detachEvent('onpropertychange', handlePropertyChange);
 
   activeElement = null;
   activeElementInst = null;
-  activeElementValue = null;
-  activeElementValueProp = null;
 }
 
 /**
- * (For IE <=11) Handles a propertychange event, sending a `change` event if
+ * (For IE <=9) Handles a propertychange event, sending a `change` event if
  * the value of the active element has changed.
  */
 function handlePropertyChange(nativeEvent) {
   if (nativeEvent.propertyName !== 'value') {
     return;
   }
-  var value = nativeEvent.srcElement.value;
-  if (value === activeElementValue) {
-    return;
-  }
-  activeElementValue = value;
-
-  manualDispatchChangeEvent(nativeEvent);
-}
-
-/**
- * If a `change` event should be fired, returns the target's ID.
- */
-function getTargetInstForInputEvent(topLevelType, targetInst) {
-  if (topLevelType === 'topInput') {
-    // In modern browsers (i.e., not IE8 or IE9), the input event is exactly
-    // what we want so fall through here and trigger an abstract event
-    return targetInst;
+  if (getInstIfValueChanged(activeElementInst, nativeEvent)) {
+    manualDispatchChangeEvent(nativeEvent);
   }
 }
 
-function handleEventsForInputEventIE(topLevelType, target, targetInst) {
+function handleEventsForInputEventPolyfill(topLevelType, target, targetInst) {
   if (topLevelType === 'topFocus') {
     // In IE8, we can capture almost all .value changes by adding a
     // propertychange handler and looking for events with propertyName
     // equal to 'value'
-    // In IE9-11, propertychange fires for most input events but is buggy and
+    // In IE9, propertychange fires for most input events but is buggy and
     // doesn't fire when text is deleted, but conveniently, selectionchange
     // appears to fire in all of the remaining cases so we catch those and
     // forward the event if the value has changed
@@ -14796,7 +18586,7 @@ function handleEventsForInputEventIE(topLevelType, target, targetInst) {
 }
 
 // For IE8 and IE9.
-function getTargetInstForInputEventIE(topLevelType, targetInst) {
+function getTargetInstForInputEventPolyfill(topLevelType, targetInst, nativeEvent) {
   if (topLevelType === 'topSelectionChange' || topLevelType === 'topKeyUp' || topLevelType === 'topKeyDown') {
     // On the selectionchange event, the target is just document which isn't
     // helpful for us so just check activeElement instead.
@@ -14808,10 +18598,7 @@ function getTargetInstForInputEventIE(topLevelType, targetInst) {
     // keystroke if user does a key repeat (it'll be a little delayed: right
     // before the second keystroke). Other input methods (e.g., paste) seem to
     // fire selectionchange normally.
-    if (activeElement && activeElement.value !== activeElementValue) {
-      activeElementValue = activeElement.value;
-      return activeElementInst;
-    }
+    return getInstIfValueChanged(activeElementInst, nativeEvent);
   }
 }
 
@@ -14822,12 +18609,19 @@ function shouldUseClickEvent(elem) {
   // Use the `click` event to detect changes to checkbox and radio inputs.
   // This approach works across all browsers, whereas `change` does not fire
   // until `blur` in IE8.
-  return elem.nodeName && elem.nodeName.toLowerCase() === 'input' && (elem.type === 'checkbox' || elem.type === 'radio');
+  var nodeName = elem.nodeName;
+  return nodeName && nodeName.toLowerCase() === 'input' && (elem.type === 'checkbox' || elem.type === 'radio');
 }
 
-function getTargetInstForClickEvent(topLevelType, targetInst) {
+function getTargetInstForClickEvent(topLevelType, targetInst, nativeEvent) {
   if (topLevelType === 'topClick') {
-    return targetInst;
+    return getInstIfValueChanged(targetInst, nativeEvent);
+  }
+}
+
+function getTargetInstForInputOrChangeEvent(topLevelType, targetInst, nativeEvent) {
+  if (topLevelType === 'topInput' || topLevelType === 'topChange') {
+    return getInstIfValueChanged(targetInst, nativeEvent);
   }
 }
 
@@ -14862,8 +18656,10 @@ function handleControlledInputBlur(inst, node) {
  * - select
  */
 var ChangeEventPlugin = {
-
   eventTypes: eventTypes$1,
+
+  _allowSimulatedPassThrough: true,
+  _isInputEventSupported: isInputEventSupported,
 
   extractEvents: function (topLevelType, targetInst, nativeEvent, nativeEventTarget) {
     var targetNode = targetInst ? ReactDOMComponentTree_1.getNodeFromInstance(targetInst) : window;
@@ -14877,21 +18673,19 @@ var ChangeEventPlugin = {
       }
     } else if (isTextInputElement_1(targetNode)) {
       if (isInputEventSupported) {
-        getTargetInstFunc = getTargetInstForInputEvent;
+        getTargetInstFunc = getTargetInstForInputOrChangeEvent;
       } else {
-        getTargetInstFunc = getTargetInstForInputEventIE;
-        handleEventFunc = handleEventsForInputEventIE;
+        getTargetInstFunc = getTargetInstForInputEventPolyfill;
+        handleEventFunc = handleEventsForInputEventPolyfill;
       }
     } else if (shouldUseClickEvent(targetNode)) {
       getTargetInstFunc = getTargetInstForClickEvent;
     }
 
     if (getTargetInstFunc) {
-      var inst = getTargetInstFunc(topLevelType, targetInst);
+      var inst = getTargetInstFunc(topLevelType, targetInst, nativeEvent);
       if (inst) {
-        var event = SyntheticEvent_1.getPooled(eventTypes$1.change, inst, nativeEvent, nativeEventTarget);
-        event.type = 'change';
-        EventPropagators_1.accumulateTwoPhaseDispatches(event);
+        var event = createAndAccumulateChangeEvent(inst, nativeEvent, nativeEventTarget);
         return event;
       }
     }
@@ -14905,7 +18699,6 @@ var ChangeEventPlugin = {
       handleControlledInputBlur(targetInst, targetNode);
     }
   }
-
 };
 
 var ChangeEventPlugin_1 = ChangeEventPlugin;
@@ -14920,10 +18713,24 @@ var ChangeEventPlugin_1 = ChangeEventPlugin;
  *
  */
 
+/**
+ * Module that is injectable into `EventPluginHub`, that specifies a
+ * deterministic ordering of `EventPlugin`s. A convenient way to reason about
+ * plugins, without having to package every one of them. This is better than
+ * having plugins be ordered in the same order that they are injected because
+ * that ordering would be influenced by the packaging order.
+ * `ResponderEventPlugin` must occur before `SimpleEventPlugin` so that
+ * preventing default on events is convenient in `SimpleEventPlugin` handlers.
+ */
+
 var DefaultEventPluginOrder = ['ResponderEventPlugin', 'SimpleEventPlugin', 'TapEventPlugin', 'EnterLeaveEventPlugin', 'ChangeEventPlugin', 'SelectEventPlugin', 'BeforeInputEventPlugin'];
 
 var DefaultEventPluginOrder_1 = DefaultEventPluginOrder;
 
+/**
+ * @interface UIEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var UIEventInterface = {
   view: function (event) {
     if (event.view) {
@@ -14974,7 +18781,6 @@ var SyntheticUIEvent_1 = SyntheticUIEvent;
  */
 
 var ViewportMetrics = {
-
   currentScrollLeft: 0,
 
   currentScrollTop: 0,
@@ -14983,7 +18789,6 @@ var ViewportMetrics = {
     ViewportMetrics.currentScrollLeft = scrollPosition.x;
     ViewportMetrics.currentScrollTop = scrollPosition.y;
   }
-
 };
 
 var ViewportMetrics_1 = ViewportMetrics;
@@ -14998,11 +18803,16 @@ var ViewportMetrics_1 = ViewportMetrics;
  *
  */
 
+/**
+ * Translation from modifier key to the associated property in the event.
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/#keys-Modifiers
+ */
+
 var modifierKeyToProp = {
-  'Alt': 'altKey',
-  'Control': 'ctrlKey',
-  'Meta': 'metaKey',
-  'Shift': 'shiftKey'
+  Alt: 'altKey',
+  Control: 'ctrlKey',
+  Meta: 'metaKey',
+  Shift: 'shiftKey'
 };
 
 // IE8 does not implement getModifierState so we simply map it to the only
@@ -15024,6 +18834,10 @@ function getEventModifierState(nativeEvent) {
 
 var getEventModifierState_1 = getEventModifierState;
 
+/**
+ * @interface MouseEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var MouseEventInterface = {
   screenX: null,
   screenY: null,
@@ -15087,7 +18901,6 @@ var eventTypes$2 = {
 };
 
 var EnterLeaveEventPlugin = {
-
   eventTypes: eventTypes$2,
 
   /**
@@ -15154,7 +18967,6 @@ var EnterLeaveEventPlugin = {
 
     return [leave, enter];
   }
-
 };
 
 var EnterLeaveEventPlugin_1 = EnterLeaveEventPlugin;
@@ -15411,6 +19223,10 @@ var DOMNamespaces_1 = DOMNamespaces;
 
 /* globals MSApp */
 
+/**
+ * Create a function which has 'unsafe' privileges (required by windows8 apps)
+ */
+
 var createMicrosoftUnsafeLocalFunction = function (func) {
   if (typeof MSApp !== 'undefined' && MSApp.execUnsafeLocalFunction) {
     return function (arg0, arg1, arg2, arg3) {
@@ -15488,7 +19304,7 @@ if (ExecutionEnvironment_1.canUseDOM) {
         // in hopes that this is preserved even if "\uFEFF" is transformed to
         // the actual Unicode character (by Babel, for example).
         // https://github.com/mishoo/UglifyJS2/blob/v2.4.20/lib/parse.js#L216
-        node.innerHTML = String.fromCharCode(0xFEFF) + html;
+        node.innerHTML = String.fromCharCode(0xfeff) + html;
 
         // deleteData leaves an empty `TextNode` which offsets the index of all
         // children. Definitely want to avoid this.
@@ -15541,6 +19357,12 @@ var setInnerHTML_1 = setInnerHTML;
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
+ */
+
+// code copied and modified from escape-html
+/**
+ * Module variables.
+ * @private
  */
 
 var matchHtmlRegExp = /["'&<>]/;
@@ -15604,7 +19426,6 @@ function escapeHtml(string) {
 }
 // end code copied and modified from escape-html
 
-
 /**
  * Escapes text to prevent scripting attacks.
  *
@@ -15623,6 +19444,16 @@ function escapeTextContentForBrowser(text) {
 
 var escapeTextContentForBrowser_1 = escapeTextContentForBrowser;
 
+/**
+ * Set the textContent property of a node, ensuring that whitespace is preserved
+ * even in IE8. innerText is a poor substitute for textContent and, among many
+ * issues, inserts <br> instead of the literal newline chars. innerHTML behaves
+ * as it should.
+ *
+ * @param {DOMElement} node
+ * @param {string} text
+ * @internal
+ */
 var setTextContent = function (node, text) {
   if (text) {
     var firstChild = node.firstChild;
@@ -15749,6 +19580,28 @@ DOMLazyTree.queueText = queueText;
 
 var DOMLazyTree_1 = DOMLazyTree;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+
+
+/**
+ * Convert array-like objects to arrays.
+ *
+ * This API assumes the caller knows the contents of the data type. For less
+ * well defined inputs use createArrayFromMixed.
+ *
+ * @param {object|function|filelist} obj
+ * @return {array}
+ */
 function toArray$1(obj) {
   var length = obj.length;
 
@@ -15852,6 +19705,25 @@ function createArrayFromMixed(obj) {
 
 var createArrayFromMixed_1 = createArrayFromMixed;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ */
+
+/*eslint-disable fb-www/unsafe-html */
+
+
+
+
+
+/**
+ * Dummy container used to detect which wraps are necessary.
+ */
 var dummyNode$1 = ExecutionEnvironment_1.canUseDOM ? document.createElement('div') : null;
 
 /**
@@ -15926,6 +19798,28 @@ function getMarkupWrap(nodeName) {
 
 var getMarkupWrap_1 = getMarkupWrap;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/*eslint-disable fb-www/unsafe-html*/
+
+
+
+
+
+
+
+/**
+ * Dummy container used to render all markup.
+ */
 var dummyNode = ExecutionEnvironment_1.canUseDOM ? document.createElement('div') : null;
 
 /**
@@ -15987,7 +19881,6 @@ function createNodesFromMarkup(markup, handleScript) {
 var createNodesFromMarkup_1 = createNodesFromMarkup;
 
 var Danger = {
-
   /**
    * Replaces a node with a string of markup at its current position within its
    * parent. The markup must render into a single root node.
@@ -16008,7 +19901,6 @@ var Danger = {
       DOMLazyTree_1.replaceChildWithTree(oldChild, markup);
     }
   }
-
 };
 
 var Danger_1 = Danger;
@@ -16139,7 +20031,6 @@ var dangerouslyReplaceNodeWithMarkup = Danger_1.dangerouslyReplaceNodeWithMarkup
  * Operations for updating with DOM children.
  */
 var DOMChildrenOperations = {
-
   dangerouslyReplaceNodeWithMarkup: dangerouslyReplaceNodeWithMarkup,
 
   replaceDelimitedText: replaceDelimitedText,
@@ -16165,7 +20056,10 @@ var DOMChildrenOperations = {
             ReactInstrumentation$1.debugTool.onHostOperation({
               instanceID: parentNodeDebugID,
               type: 'insert child',
-              payload: { toIndex: update.toIndex, content: update.content.toString() }
+              payload: {
+                toIndex: update.toIndex,
+                content: update.content.toString()
+              }
             });
           }
           break;
@@ -16212,13 +20106,14 @@ var DOMChildrenOperations = {
       }
     }
   }
-
 };
 
 var DOMChildrenOperations_1 = DOMChildrenOperations;
 
+/**
+ * Operations used to process updates to DOM nodes.
+ */
 var ReactDOMIDOperations = {
-
   /**
    * Updates a component's children by processing a series of updates.
    *
@@ -16233,12 +20128,15 @@ var ReactDOMIDOperations = {
 
 var ReactDOMIDOperations_1 = ReactDOMIDOperations;
 
+/**
+ * Abstracts away all functionality of the reconciler that requires knowledge of
+ * the browser context. TODO: These callers should be refactored to avoid the
+ * need for this injection.
+ */
 var ReactComponentBrowserEnvironment = {
-
   processChildrenUpdates: ReactDOMIDOperations_1.dangerouslyProcessChildrenUpdates,
 
   replaceNodeWithMarkup: DOMChildrenOperations_1.dangerouslyReplaceNodeWithMarkup
-
 };
 
 var ReactComponentBrowserEnvironment_1 = ReactComponentBrowserEnvironment;
@@ -16251,6 +20149,10 @@ var ReactComponentBrowserEnvironment_1 = ReactComponentBrowserEnvironment;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
+ */
+
+/**
+ * @param {DOMElement} node input/textarea to focus
  */
 
 function focusNode(node) {
@@ -16282,6 +20184,10 @@ var AutoFocusUtils_1 = AutoFocusUtils;
  *
  */
 
+/**
+ * CSS properties which accept numbers but are not in units of "px".
+ */
+
 var isUnitlessNumber = {
   animationIterationCount: true,
   borderImageOutset: true,
@@ -16298,7 +20204,13 @@ var isUnitlessNumber = {
   flexNegative: true,
   flexOrder: true,
   gridRow: true,
+  gridRowEnd: true,
+  gridRowSpan: true,
+  gridRowStart: true,
   gridColumn: true,
+  gridColumnEnd: true,
+  gridColumnSpan: true,
+  gridColumnStart: true,
   fontWeight: true,
   lineClamp: true,
   lineHeight: true,
@@ -16414,6 +20326,17 @@ var CSSProperty = {
 
 var CSSProperty_1 = CSSProperty;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
 var _hyphenPattern = /-(.)/g;
 
 /**
@@ -16522,6 +20445,17 @@ function dangerousStyleValue(name, value, component) {
 
 var dangerousStyleValue_1 = dangerousStyleValue;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
 var _uppercasePattern = /([A-Z])/g;
 
 /**
@@ -16576,6 +20510,10 @@ var hyphenateStyleName_1 = hyphenateStyleName;
  *
  * 
  * @typechecks static-only
+ */
+
+/**
+ * Memoizes the return value of a function that accepts one string argument.
  */
 
 function memoizeStringOnly(callback) {
@@ -16645,7 +20583,7 @@ if (ExecutionEnvironment_1.canUseDOM) {
     }
 
     warnedStyleValues[value] = true;
-    warning_1(false, 'Style property values shouldn\'t contain a semicolon.%s ' + 'Try "%s: %s" instead.', checkRenderMessage(owner), name, value.replace(badStyleValueWithSemicolonPattern, ''));
+    warning_1(false, "Style property values shouldn't contain a semicolon.%s " + 'Try "%s: %s" instead.', checkRenderMessage(owner), name, value.replace(badStyleValueWithSemicolonPattern, ''));
   };
 
   var warnStyleValueIsNaN = function (name, value, owner) {
@@ -16673,6 +20611,10 @@ if (ExecutionEnvironment_1.canUseDOM) {
    * @param {ReactDOMComponent} component
    */
   var warnValidStyle = function (name, value, component) {
+    // Don't warn for CSS variables
+    if (name.indexOf('--') === 0) {
+      return;
+    }
     var owner;
     if (component) {
       owner = component._currentElement._owner;
@@ -16695,7 +20637,6 @@ if (ExecutionEnvironment_1.canUseDOM) {
  * Operations for dealing with CSS properties.
  */
 var CSSPropertyOperations = {
-
   /**
    * Serializes a mapping of style properties for use as inline styles:
    *
@@ -16756,7 +20697,9 @@ var CSSPropertyOperations = {
       if (styleName === 'float' || styleName === 'cssFloat') {
         styleName = styleFloatAccessor;
       }
-      if (styleValue) {
+      if (styleName.indexOf('--') === 0) {
+        style.setProperty(styleName, styleValue);
+      } else if (styleValue) {
         style[styleName] = styleValue;
       } else {
         var expansion = hasShorthandPropertyBug && CSSProperty_1.shorthandPropertyExpansions[styleName];
@@ -16772,11 +20715,16 @@ var CSSPropertyOperations = {
       }
     }
   }
-
 };
 
 var CSSPropertyOperations_1 = CSSPropertyOperations;
 
+/**
+ * Escapes attribute value to prevent scripting attacks.
+ *
+ * @param {*} value Value to escape.
+ * @return {string} An escaped string.
+ */
 function quoteAttributeValueForBrowser(value) {
   return '"' + escapeTextContentForBrowser_1(value) + '"';
 }
@@ -16811,7 +20759,6 @@ function shouldIgnoreValue(propertyInfo, value) {
  * Operations for dealing with DOM properties.
  */
 var DOMPropertyOperations = {
-
   /**
    * Creates markup for the ID property.
    *
@@ -16996,7 +20943,6 @@ var DOMPropertyOperations = {
       });
     }
   }
-
 };
 
 var DOMPropertyOperations_1 = DOMPropertyOperations;
@@ -17007,7 +20953,6 @@ function runEventQueueInBatch(events) {
 }
 
 var ReactEventEmitterMixin = {
-
   /**
    * Streams a fired top-level event to `EventPluginHub` where plugins have the
    * opportunity to create `ReactEvent`s to be dispatched.
@@ -17020,6 +20965,13 @@ var ReactEventEmitterMixin = {
 
 var ReactEventEmitterMixin_1 = ReactEventEmitterMixin;
 
+/**
+ * Generate a mapping of standard vendor prefixes using the defined style property and event name.
+ *
+ * @param {string} styleProp
+ * @param {string} eventName
+ * @returns {object}
+ */
 function makePrefixMap(styleProp, eventName) {
   var prefixes = {};
 
@@ -17099,6 +21051,61 @@ function getVendorPrefixedEventName(eventName) {
 }
 
 var getVendorPrefixedEventName_1 = getVendorPrefixedEventName;
+
+/**
+ * Summary of `ReactBrowserEventEmitter` event handling:
+ *
+ *  - Top-level delegation is used to trap most native browser events. This
+ *    may only occur in the main thread and is the responsibility of
+ *    ReactEventListener, which is injected and can therefore support pluggable
+ *    event sources. This is the only work that occurs in the main thread.
+ *
+ *  - We normalize and de-duplicate events to account for browser quirks. This
+ *    may be done in the worker thread.
+ *
+ *  - Forward these native events (with the associated top-level type used to
+ *    trap it) to `EventPluginHub`, which in turn will ask plugins if they want
+ *    to extract any synthetic events.
+ *
+ *  - The `EventPluginHub` will then process each event by annotating them with
+ *    "dispatches", a sequence of listeners and IDs that care about that event.
+ *
+ *  - The `EventPluginHub` then dispatches the events.
+ *
+ * Overview of React and the event system:
+ *
+ * +------------+    .
+ * |    DOM     |    .
+ * +------------+    .
+ *       |           .
+ *       v           .
+ * +------------+    .
+ * | ReactEvent |    .
+ * |  Listener  |    .
+ * +------------+    .                         +-----------+
+ *       |           .               +--------+|SimpleEvent|
+ *       |           .               |         |Plugin     |
+ * +-----|------+    .               v         +-----------+
+ * |     |      |    .    +--------------+                    +------------+
+ * |     +-----------.--->|EventPluginHub|                    |    Event   |
+ * |            |    .    |              |     +-----------+  | Propagators|
+ * | ReactEvent |    .    |              |     |TapEvent   |  |------------|
+ * |  Emitter   |    .    |              |<---+|Plugin     |  |other plugin|
+ * |            |    .    |              |     +-----------+  |  utilities |
+ * |     +-----------.--->|              |                    +------------+
+ * |     |      |    .    +--------------+
+ * +-----|------+    .                ^        +-----------+
+ *       |           .                |        |Enter/Leave|
+ *       +           .                +-------+|Plugin     |
+ * +-------------+   .                         +-----------+
+ * | application |   .
+ * |-------------|   .
+ * |             |   .
+ * |             |   .
+ * +-------------+   .
+ *                   .
+ *    React Core     .  General Purpose Event Plugin System
+ */
 
 var hasEventPageXY;
 var alreadyListeningTo = {};
@@ -17201,7 +21208,6 @@ function getListeningForDocument(mountAt) {
  * @internal
  */
 var ReactBrowserEventEmitter = index({}, ReactEventEmitterMixin_1, {
-
   /**
    * Injectable event backend
    */
@@ -17275,14 +21281,12 @@ var ReactBrowserEventEmitter = index({}, ReactEventEmitterMixin_1, {
             ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topWheel', 'DOMMouseScroll', mountAt);
           }
         } else if (dependency === 'topScroll') {
-
           if (isEventSupported_1('scroll', true)) {
             ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topScroll', 'scroll', mountAt);
           } else {
             ReactBrowserEventEmitter.ReactEventListener.trapBubbledEvent('topScroll', 'scroll', ReactBrowserEventEmitter.ReactEventListener.WINDOW_HANDLE);
           }
         } else if (dependency === 'topFocus' || dependency === 'topBlur') {
-
           if (isEventSupported_1('focus', true)) {
             ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topFocus', 'focus', mountAt);
             ReactBrowserEventEmitter.ReactEventListener.trapCapturedEvent('topBlur', 'blur', mountAt);
@@ -17347,7 +21351,6 @@ var ReactBrowserEventEmitter = index({}, ReactEventEmitterMixin_1, {
       isMonitoringScrollValue = true;
     }
   }
-
 });
 
 var ReactBrowserEventEmitter_1 = ReactBrowserEventEmitter;
@@ -17373,13 +21376,13 @@ var PropTypes = factory_1(React_1.isValidElement);
 
 
 var hasReadOnlyValue = {
-  'button': true,
-  'checkbox': true,
-  'image': true,
-  'hidden': true,
-  'radio': true,
-  'reset': true,
-  'submit': true
+  button: true,
+  checkbox: true,
+  image: true,
+  hidden: true,
+  radio: true,
+  reset: true,
+  submit: true
 };
 
 function _assertSingleLink(inputProps) {
@@ -17616,14 +21619,16 @@ var ReactDOMInput = {
         // Simulate `input.valueAsNumber`. IE9 does not support it
         var valueAsNumber = parseFloat(node.value, 10) || 0;
 
+        if (
         // eslint-disable-next-line
-        if (value != valueAsNumber) {
+        value != valueAsNumber ||
+        // eslint-disable-next-line
+        value == valueAsNumber && node.value != value) {
           // Cast `value` to a string to ensure the value is set correctly. While
           // browsers typically do this as necessary, jsdom doesn't.
           node.value = '' + value;
         }
-        // eslint-disable-next-line
-      } else if (value != node.value) {
+      } else if (node.value !== '' + value) {
         // Cast `value` to a string to ensure the value is set correctly. While
         // browsers typically do this as necessary, jsdom doesn't.
         node.value = '' + value;
@@ -18028,7 +22033,6 @@ var ReactDOMOption = {
 
     return hostProps;
   }
-
 };
 
 var ReactDOMOption_1 = ReactDOMOption;
@@ -18174,7 +22178,6 @@ var ReactDOMTextarea_1 = ReactDOMTextarea;
 var injected = false;
 
 var ReactComponentEnvironment = {
-
   /**
    * Optionally injectable hook for swapping out mount images in the middle of
    * the tree.
@@ -18195,7 +22198,6 @@ var ReactComponentEnvironment = {
       injected = true;
     }
   }
-
 };
 
 var ReactComponentEnvironment_1 = ReactComponentEnvironment;
@@ -18210,8 +22212,16 @@ var ReactComponentEnvironment_1 = ReactComponentEnvironment;
  *
  */
 
-var ReactInstanceMap = {
+/**
+ * `ReactInstanceMap` maintains a mapping from a public facing stateful
+ * instance (key) and the internal representation (value). This allows public
+ * methods to accept the user facing instance as an argument and map them back
+ * to internal methods.
+ */
 
+// TODO: Replace this with ES6: var ReactInstanceMap = new Map();
+
+var ReactInstanceMap = {
   /**
    * This API should be called `delete` but we'd have to make sure to always
    * transform these to strings for IE support. When this transform is fully
@@ -18232,7 +22242,6 @@ var ReactInstanceMap = {
   set: function (key, value) {
     key._reactInternalInstance = value;
   }
-
 };
 
 var ReactInstanceMap_1 = ReactInstanceMap;
@@ -18269,17 +22278,17 @@ var ReactNodeTypes_1 = ReactNodeTypes;
  * 
  */
 
-var ReactPropTypeLocationNames$2 = {};
+var ReactPropTypeLocationNames$3 = {};
 
 {
-  ReactPropTypeLocationNames$2 = {
+  ReactPropTypeLocationNames$3 = {
     prop: 'prop',
     context: 'context',
     childContext: 'child context'
   };
 }
 
-var ReactPropTypeLocationNames_1$2 = ReactPropTypeLocationNames$2;
+var ReactPropTypeLocationNames_1$2 = ReactPropTypeLocationNames$3;
 
 var ReactComponentTreeHook$4;
 
@@ -18424,6 +22433,18 @@ var shallowEqual_1 = shallowEqual;
  *
  */
 
+/**
+ * Given a `prevElement` and `nextElement`, determines if the existing
+ * instance should be updated as opposed to being destroyed or replaced by a new
+ * instance. Both arguments are elements. This ensures that this logic can
+ * operate on stateless trees without any backing instance.
+ *
+ * @param {?object} prevElement
+ * @param {?object} nextElement
+ * @return {boolean} True if the existing instance should be updated.
+ * @protected
+ */
+
 function shouldUpdateReactComponent(prevElement, nextElement) {
   var prevEmpty = prevElement === null || prevElement === false;
   var nextEmpty = nextElement === null || nextElement === false;
@@ -18537,7 +22558,6 @@ var nextMountID = 1;
  * @lends {ReactCompositeComponent.prototype}
  */
 var ReactCompositeComponent = {
-
   /**
    * Base constructor for all composite component.
    *
@@ -18633,7 +22653,7 @@ var ReactCompositeComponent = {
       var propsMutated = inst.props !== publicProps;
       var componentName = Component.displayName || Component.name || 'Component';
 
-      warning_1(inst.props === undefined || !propsMutated, '%s(...): When calling super() in `%s`, make sure to pass ' + 'up the same props that your component\'s constructor was passed.', componentName, componentName);
+      warning_1(inst.props === undefined || !propsMutated, '%s(...): When calling super() in `%s`, make sure to pass ' + "up the same props that your component's constructor was passed.", componentName, componentName);
     }
 
     // These should be set up in the constructor, but as a convenience for
@@ -19291,7 +23311,6 @@ var ReactCompositeComponent = {
 
   // Stub
   _instantiateReactComponent: null
-
 };
 
 var ReactCompositeComponent_1 = ReactCompositeComponent;
@@ -19395,6 +23414,7 @@ function getNextDebugID() {
 
 var getNextDebugID_1 = getNextDebugID;
 
+// To avoid a cyclic dependency, we create the final class in this module
 var ReactCompositeComponentWrapper = function (element) {
   this.construct(element);
 };
@@ -19440,7 +23460,7 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
       var info = '';
       {
         if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
-          info += ' You likely forgot to export your component from the file ' + 'it\'s defined in.';
+          info += ' You likely forgot to export your component from the file ' + "it's defined in.";
         }
       }
       info += getDeclarationErrorAddendum$4(element._owner);
@@ -19511,6 +23531,13 @@ var instantiateReactComponent_1 = instantiateReactComponent;
  * 
  */
 
+/**
+ * Escape and wrap key so it is safe to use as a reactid
+ *
+ * @param {string} key to be escaped.
+ * @return {string} the escaped key.
+ */
+
 function escape$2(key) {
   var escapeRegex = /[=:]/g;
   var escaperLookup = {
@@ -19561,6 +23588,9 @@ var KeyEscapeUtils_1$2 = KeyEscapeUtils$2;
  * 
  */
 
+// The Symbol used to tag the ReactElement type. If there is no native Symbol
+// nor polyfill, then a plain number is used for performance.
+
 var REACT_ELEMENT_TYPE$2 = typeof Symbol === 'function' && Symbol['for'] && Symbol['for']('react.element') || 0xeac7;
 
 var ReactElementSymbol$2 = REACT_ELEMENT_TYPE$2;
@@ -19575,6 +23605,8 @@ var ReactElementSymbol$2 = REACT_ELEMENT_TYPE$2;
  *
  * 
  */
+
+/* global Symbol */
 
 var ITERATOR_SYMBOL$1 = typeof Symbol === 'function' && Symbol.iterator;
 var FAUX_ITERATOR_SYMBOL$1 = '@@iterator'; // Before Symbol spec.
@@ -19713,7 +23745,7 @@ function traverseAllChildrenImpl$1(children, nameSoFar, callback, traverseContex
       {
         addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
         if (children._isReactElement) {
-          addendum = ' It looks like you\'re using an element created by a different ' + 'version of React. Make sure to use only one copy of React.';
+          addendum = " It looks like you're using an element created by a different " + 'version of React. Make sure to use only one copy of React.';
         }
         if (ReactCurrentOwner_1.current) {
           var name = ReactCurrentOwner_1.current.getName();
@@ -19797,8 +23829,8 @@ var ReactChildReconciler = {
    * @return {?object} A set of child instances.
    * @internal
    */
-  instantiateChildren: function (nestedChildNodes, transaction, context, selfDebugID // 0 in production and for roots
-  ) {
+  instantiateChildren: function (nestedChildNodes, transaction, context, selfDebugID) // 0 in production and for roots
+  {
     if (nestedChildNodes == null) {
       return null;
     }
@@ -19822,8 +23854,8 @@ var ReactChildReconciler = {
    * @return {?object} A new set of child instances.
    * @internal
    */
-  updateChildren: function (prevChildren, nextChildren, mountImages, removedNodes, transaction, hostParent, hostContainerInfo, context, selfDebugID // 0 in production and for roots
-  ) {
+  updateChildren: function (prevChildren, nextChildren, mountImages, removedNodes, transaction, hostParent, hostContainerInfo, context, selfDebugID) // 0 in production and for roots
+  {
     // We currently don't have a way to track moves here but if we use iterators
     // instead of for..in we can zip the iterators and check if an item has
     // moved.
@@ -19883,7 +23915,6 @@ var ReactChildReconciler = {
       }
     }
   }
-
 };
 
 var ReactChildReconciler_1 = ReactChildReconciler;
@@ -19945,6 +23976,13 @@ function flattenChildren$1(children, selfDebugID) {
 
 var flattenChildren_1 = flattenChildren$1;
 
+/**
+ * Make an update for markup to be rendered and inserted at a supplied index.
+ *
+ * @param {string} markup Markup that renders into an element.
+ * @param {number} toIndex Destination index.
+ * @private
+ */
 function makeInsertMarkup(markup, afterNode, toIndex) {
   // NOTE: Null values reduce hidden classes.
   return {
@@ -20082,7 +24120,6 @@ var setChildrenForInstrumentation = emptyFunction_1;
  * @internal
  */
 var ReactMultiChild = {
-
   /**
    * Provides common functionality for components that must reconcile multiple
    * children. This is used by `ReactDOMComponent` to mount, update, and
@@ -20091,7 +24128,6 @@ var ReactMultiChild = {
    * @lends {ReactMultiChild.prototype}
    */
   Mixin: {
-
     _reconcilerInstantiateChildren: function (nestedChildren, transaction, context) {
       {
         var selfDebugID = getDebugID(this);
@@ -20355,9 +24391,7 @@ var ReactMultiChild = {
       child._mountIndex = null;
       return update;
     }
-
   }
-
 };
 
 var ReactMultiChild_1 = ReactMultiChild;
@@ -20393,7 +24427,7 @@ function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
   }
 
   {
-    warning_1(ReactCurrentOwner_1.current == null, '%s(...): Cannot update during an existing state transition (such as ' + 'within `render` or another component\'s constructor). Render methods ' + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName);
+    warning_1(ReactCurrentOwner_1.current == null, '%s(...): Cannot update during an existing state transition (such as ' + "within `render` or another component's constructor). Render methods " + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName);
   }
 
   return internalInstance;
@@ -20404,7 +24438,6 @@ function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
  * reconciliation step.
  */
 var ReactUpdateQueue = {
-
   /**
    * Checks whether or not this composite component is mounted.
    * @param {ReactClass} publicInstance The instance we want to test.
@@ -20571,7 +24604,6 @@ var ReactUpdateQueue = {
   validateCallback: function (callback, callerName) {
     !(!callback || typeof callback === 'function') ? invariant_1(false, '%s(...): Expected the last optional `callback` argument to be a function. Instead received: %s.', callerName, formatUnexpectedArgument(callback)) : void 0;
   }
-
 };
 
 var ReactUpdateQueue_1 = ReactUpdateQueue;
@@ -20702,6 +24734,11 @@ var ReactServerUpdateQueue = function () {
 
 var ReactServerUpdateQueue_1 = ReactServerUpdateQueue;
 
+/**
+ * Executed within the scope of the `Transaction` instance. Consider these as
+ * being member methods, but with an implied ordering while being isolated from
+ * each other.
+ */
 var TRANSACTION_WRAPPERS$1 = [];
 
 {
@@ -20874,7 +24911,6 @@ var validateDOMNesting = emptyFunction_1;
       // but
       case 'option':
         return tag === '#text';
-
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
       // No special behavior since these rules fall back to "in body" mode for
@@ -20883,25 +24919,20 @@ var validateDOMNesting = emptyFunction_1;
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
       case 'tr':
         return tag === 'th' || tag === 'td' || tag === 'style' || tag === 'script' || tag === 'template';
-
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
       case 'tbody':
       case 'thead':
       case 'tfoot':
         return tag === 'tr' || tag === 'style' || tag === 'script' || tag === 'template';
-
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
       case 'colgroup':
         return tag === 'col' || tag === 'template';
-
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
       case 'table':
         return tag === 'caption' || tag === 'colgroup' || tag === 'tbody' || tag === 'tfoot' || tag === 'thead' || tag === 'style' || tag === 'script' || tag === 'template';
-
       // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
       case 'head':
         return tag === 'base' || tag === 'basefont' || tag === 'bgsound' || tag === 'link' || tag === 'meta' || tag === 'title' || tag === 'noscript' || tag === 'noframes' || tag === 'style' || tag === 'script' || tag === 'template';
-
       // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
       case 'html':
         return tag === 'head' || tag === 'body';
@@ -21097,7 +25128,7 @@ var validateDOMNesting = emptyFunction_1;
           tagDisplayName = 'Text nodes';
         } else {
           tagDisplayName = 'Whitespace text nodes';
-          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+          whitespaceInfo = " Make sure you don't have any extra whitespace between tags on " + 'each line of your source code.';
         }
       } else {
         tagDisplayName = '<' + childTag + '>';
@@ -21135,7 +25166,7 @@ var listenTo = ReactBrowserEventEmitter_1.listenTo;
 var registrationNameModules = EventPluginRegistry_1.registrationNameModules;
 
 // For quickly matching children type, to test if can be treated as content.
-var CONTENT_TYPES = { 'string': true, 'number': true };
+var CONTENT_TYPES = { string: true, number: true };
 
 var STYLE = 'style';
 var HTML = '__html';
@@ -21244,7 +25275,7 @@ function enqueuePutListener(inst, registrationName, listener, transaction) {
   {
     // IE8 has no API for event capturing and the `onScroll` event doesn't
     // bubble.
-    warning_1(registrationName !== 'onScroll' || isEventSupported_1('scroll', true), 'This browser doesn\'t support the `onScroll` event');
+    warning_1(registrationName !== 'onScroll' || isEventSupported_1('scroll', true), "This browser doesn't support the `onScroll` event");
   }
   var containerInfo = inst._hostContainerInfo;
   var isDocumentFragment = containerInfo._node && containerInfo._node.nodeType === DOC_FRAGMENT_TYPE;
@@ -21334,6 +25365,10 @@ var mediaEvents = {
   topWaiting: 'waiting'
 };
 
+function trackInputValue() {
+  inputValueTracking_1.track(this);
+}
+
 function trapBubbledEventsLocal() {
   var inst = this;
   // If a component renders to null or if another component fatals and causes
@@ -21349,7 +25384,6 @@ function trapBubbledEventsLocal() {
       break;
     case 'video':
     case 'audio':
-
       inst._wrapperState.listeners = [];
       // Create listener for each media event
       for (var event in mediaEvents) {
@@ -21383,34 +25417,35 @@ function postUpdateSelectWrapper() {
 // those special-case tags.
 
 var omittedCloseTags = {
-  'area': true,
-  'base': true,
-  'br': true,
-  'col': true,
-  'embed': true,
-  'hr': true,
-  'img': true,
-  'input': true,
-  'keygen': true,
-  'link': true,
-  'meta': true,
-  'param': true,
-  'source': true,
-  'track': true,
-  'wbr': true
+  area: true,
+  base: true,
+  br: true,
+  col: true,
+  embed: true,
+  hr: true,
+  img: true,
+  input: true,
+  keygen: true,
+  link: true,
+  meta: true,
+  param: true,
+  source: true,
+  track: true,
+  wbr: true
+  // NOTE: menuitem's close tag should be omitted, but that causes problems.
 };
 
 var newlineEatingTags = {
-  'listing': true,
-  'pre': true,
-  'textarea': true
+  listing: true,
+  pre: true,
+  textarea: true
 };
 
 // For HTML, certain tags cannot have children. This has the same purpose as
 // `omittedCloseTags` except that `menuitem` should still have its closing tag.
 
 var voidElementTags = index({
-  'menuitem': true
+  menuitem: true
 }, omittedCloseTags);
 
 // We accept any tag to be rendered but since this gets injected into arbitrary
@@ -21474,7 +25509,6 @@ function ReactDOMComponent(element) {
 ReactDOMComponent.displayName = 'ReactDOMComponent';
 
 ReactDOMComponent.Mixin = {
-
   /**
    * Generates root tag markup then recurses. This method has side effects and
    * is not idempotent.
@@ -21511,6 +25545,7 @@ ReactDOMComponent.Mixin = {
       case 'input':
         ReactDOMInput_1.mountWrapper(this, props, hostParent);
         props = ReactDOMInput_1.getHostProps(this, props);
+        transaction.getReactMountReady().enqueue(trackInputValue, this);
         transaction.getReactMountReady().enqueue(trapBubbledEventsLocal, this);
         break;
       case 'option':
@@ -21525,6 +25560,7 @@ ReactDOMComponent.Mixin = {
       case 'textarea':
         ReactDOMTextarea_1.mountWrapper(this, props, hostParent);
         props = ReactDOMTextarea_1.getHostProps(this, props);
+        transaction.getReactMountReady().enqueue(trackInputValue, this);
         transaction.getReactMountReady().enqueue(trapBubbledEventsLocal, this);
         break;
     }
@@ -22050,6 +26086,10 @@ ReactDOMComponent.Mixin = {
           }
         }
         break;
+      case 'input':
+      case 'textarea':
+        inputValueTracking_1.stopTracking(this);
+        break;
       case 'html':
       case 'head':
       case 'body':
@@ -22078,7 +26118,6 @@ ReactDOMComponent.Mixin = {
   getPublicInstance: function () {
     return getNode(this);
   }
-
 };
 
 index(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild_1.Mixin);
@@ -22128,6 +26167,10 @@ index(ReactDOMEmptyComponent.prototype, {
 
 var ReactDOMEmptyComponent_1 = ReactDOMEmptyComponent;
 
+/**
+ * Return the lowest common ancestor of A and B, or null if they are in
+ * different trees.
+ */
 function getLowestCommonAncestor(instA, instB) {
   !('_hostNode' in instA) ? invariant_1(false, 'getNodeFromInstance: Invalid argument.') : void 0;
   !('_hostNode' in instB) ? invariant_1(false, 'getNodeFromInstance: Invalid argument.') : void 0;
@@ -22244,6 +26287,21 @@ var ReactDOMTreeTraversal = {
   traverseEnterLeave: traverseEnterLeave
 };
 
+/**
+ * Text nodes violate a couple assumptions that React makes about components:
+ *
+ *  - When mounting text into the DOM, adjacent text nodes are merged.
+ *  - Text nodes cannot be assigned a React root ID.
+ *
+ * This component is used to wrap strings between comment nodes so that they
+ * can undergo the same reconciliation that is applied to elements.
+ *
+ * TODO: Investigate representing React components in the DOM with text nodes.
+ *
+ * @class ReactDOMTextComponent
+ * @extends ReactComponent
+ * @internal
+ */
 var ReactDOMTextComponent = function (text) {
   // TODO: This is really a ReactText (ReactNode), not a ReactElement
   this._currentElement = text;
@@ -22260,7 +26318,6 @@ var ReactDOMTextComponent = function (text) {
 };
 
 index(ReactDOMTextComponent.prototype, {
-
   /**
    * Creates the markup for this text node. This node is not intended to have
    * any features besides containing text content.
@@ -22365,7 +26422,6 @@ index(ReactDOMTextComponent.prototype, {
     this._commentNodes = null;
     ReactDOMComponentTree_1.uncacheNode(this);
   }
-
 });
 
 var ReactDOMTextComponent_1 = ReactDOMTextComponent;
@@ -22419,6 +26475,30 @@ var ReactDefaultBatchingStrategy = {
 
 var ReactDefaultBatchingStrategy_1 = ReactDefaultBatchingStrategy;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @typechecks
+ */
+
+
+
+/**
+ * Upstream version of event listener. Does not take into account specific
+ * nature of platform.
+ */
 var EventListener = {
   /**
    * Listen to DOM events during the bubble phase.
@@ -22488,6 +26568,17 @@ var EventListener_1 = EventListener;
  * @typechecks
  */
 
+/**
+ * Gets the scroll position of the supplied element or window.
+ *
+ * The return values are unbounded, unlike `getScrollPosition`. This means they
+ * may be negative or exceed the element boundaries (which is possible using
+ * inertial scrolling).
+ *
+ * @param {DOMWindow|DOMElement} scrollable
+ * @return {object} Map with `x` and `y` keys.
+ */
+
 function getUnboundedScrollPosition(scrollable) {
   if (scrollable.Window && scrollable instanceof scrollable.Window) {
     return {
@@ -22503,6 +26594,11 @@ function getUnboundedScrollPosition(scrollable) {
 
 var getUnboundedScrollPosition_1 = getUnboundedScrollPosition;
 
+/**
+ * Find the deepest React component completely containing the root of the
+ * passed-in instance (for use when entire React trees are nested within each
+ * other). If React trees are not nested, returns null.
+ */
 function findParent(inst) {
   // TODO: It may be a good idea to cache this to prevent unnecessary DOM
   // traversal, but caching is difficult to do correctly without using a
@@ -22653,6 +26749,13 @@ var ReactInjection_1 = ReactInjection;
  *
  */
 
+/**
+ * Given any node return the first leaf node without children.
+ *
+ * @param {DOMElement|DOMTextNode} node
+ * @return {DOMElement|DOMTextNode}
+ */
+
 function getLeafNode(node) {
   while (node && node.firstChild) {
     node = node.firstChild;
@@ -22708,6 +26811,11 @@ function getNodeForCharacterOffset(root, offset) {
 
 var getNodeForCharacterOffset_1 = getNodeForCharacterOffset;
 
+/**
+ * While `isCollapsed` is available on the Selection object and `collapsed`
+ * is available on the Range object, IE11 sometimes gets them wrong.
+ * If the anchor/focus nodes and offsets are the same, the range is collapsed.
+ */
 function isCollapsed(anchorNode, anchorOffset, focusNode, focusOffset) {
   return anchorNode === focusNode && anchorOffset === focusOffset;
 }
@@ -22898,6 +27006,21 @@ var ReactDOMSelection = {
 
 var ReactDOMSelection_1 = ReactDOMSelection;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/**
+ * @param {*} object The object to check.
+ * @return {boolean} Whether or not the object is a DOM node.
+ */
 function isNode(object) {
   var doc = object ? object.ownerDocument || object : document;
   var defaultView = doc.defaultView || window;
@@ -22906,12 +27029,47 @@ function isNode(object) {
 
 var isNode_1 = isNode;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+
+
+/**
+ * @param {*} object The object to check.
+ * @return {boolean} Whether or not the object is a DOM text node.
+ */
 function isTextNode(object) {
   return isNode_1(object) && object.nodeType == 3;
 }
 
 var isTextNode_1 = isTextNode;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * 
+ */
+
+
+
+/*eslint-disable no-bitwise */
+
+/**
+ * Checks if a given DOM node contains or is another DOM node.
+ */
 function containsNode(outerNode, innerNode) {
   if (!outerNode || !innerNode) {
     return false;
@@ -22932,6 +27090,29 @@ function containsNode(outerNode, innerNode) {
 
 var containsNode_1 = containsNode;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+/* eslint-disable fb-www/typeof-undefined */
+
+/**
+ * Same as document.activeElement but wraps in a try-catch block. In IE it is
+ * not safe to call document.activeElement if there is nothing focused.
+ *
+ * The activeElement will be null only if the document or document body is not
+ * yet defined.
+ *
+ * @param {?DOMDocument} doc Defaults to current document.
+ * @return {?DOMElement}
+ */
 function getActiveElement(doc) /*?DOMElement*/{
   doc = doc || (typeof document !== 'undefined' ? document : undefined);
   if (typeof doc === 'undefined') {
@@ -22957,7 +27138,6 @@ function isInDocument(node) {
  * Input selection module for React.
  */
 var ReactInputSelection = {
-
   hasSelectionCapabilities: function (elem) {
     var nodeName = elem && elem.nodeName && elem.nodeName.toLowerCase();
     return nodeName && (nodeName === 'input' && elem.type === 'text' || nodeName === 'textarea' || elem.contentEditable === 'true');
@@ -23052,6 +27232,10 @@ var ReactInputSelection = {
 
 var ReactInputSelection_1 = ReactInputSelection;
 
+/**
+ * Ensures that, when possible, the selection range (currently selected text
+ * input) is not disturbed by performing the transaction.
+ */
 var SELECTION_RESTORATION = {
   /**
    * @return {Selection} Selection information.
@@ -23607,7 +27791,6 @@ function constructSelectEvent(nativeEvent, nativeEventTarget) {
  * - Fires after user input.
  */
 var SelectEventPlugin = {
-
   eventTypes: eventTypes$3,
 
   extractEvents: function (topLevelType, targetInst, nativeEvent, nativeEventTarget) {
@@ -23631,7 +27814,6 @@ var SelectEventPlugin = {
         activeElementInst$1 = null;
         lastSelection = null;
         break;
-
       // Don't fire the event while the user is dragging. This matches the
       // semantics of the native select event.
       case 'topMouseDown':
@@ -23641,7 +27823,6 @@ var SelectEventPlugin = {
       case 'topMouseUp':
         mouseDown = false;
         return constructSelectEvent(nativeEvent, nativeEventTarget);
-
       // Chrome and IE fire non-standard event when selection is changed (and
       // sometimes when it hasn't). IE's event fires out of order with respect
       // to key and input events on deletion, so we discard it.
@@ -23673,6 +27854,11 @@ var SelectEventPlugin = {
 
 var SelectEventPlugin_1 = SelectEventPlugin;
 
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/css3-animations/#AnimationEvent-interface
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/AnimationEvent
+ */
 var AnimationEventInterface = {
   animationName: null,
   elapsedTime: null,
@@ -23693,6 +27879,10 @@ SyntheticEvent_1.augmentClass(SyntheticAnimationEvent, AnimationEventInterface);
 
 var SyntheticAnimationEvent_1 = SyntheticAnimationEvent;
 
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/clipboard-apis/
+ */
 var ClipboardEventInterface = {
   clipboardData: function (event) {
     return 'clipboardData' in event ? event.clipboardData : window.clipboardData;
@@ -23713,6 +27903,10 @@ SyntheticEvent_1.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 var SyntheticClipboardEvent_1 = SyntheticClipboardEvent;
 
+/**
+ * @interface FocusEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var FocusEventInterface = {
   relatedTarget: null
 };
@@ -23739,6 +27933,17 @@ var SyntheticFocusEvent_1 = SyntheticFocusEvent;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
+ */
+
+/**
+ * `charCode` represents the actual "character code" and is safe to use with
+ * `String.fromCharCode`. As such, only keys that correspond to printable
+ * characters produce a valid `charCode`, the only exception to this is Enter.
+ * The Tab-key is considered non-printable and does not have a `charCode`,
+ * presumably because it does not produce a tab-character in browsers.
+ *
+ * @param {object} nativeEvent Native browser event.
+ * @return {number} Normalized `charCode` property.
  */
 
 function getEventCharCode(nativeEvent) {
@@ -23768,19 +27973,23 @@ function getEventCharCode(nativeEvent) {
 
 var getEventCharCode_1 = getEventCharCode;
 
+/**
+ * Normalization of deprecated HTML5 `key` values
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Key_names
+ */
 var normalizeKey = {
-  'Esc': 'Escape',
-  'Spacebar': ' ',
-  'Left': 'ArrowLeft',
-  'Up': 'ArrowUp',
-  'Right': 'ArrowRight',
-  'Down': 'ArrowDown',
-  'Del': 'Delete',
-  'Win': 'OS',
-  'Menu': 'ContextMenu',
-  'Apps': 'ContextMenu',
-  'Scroll': 'ScrollLock',
-  'MozPrintableKey': 'Unidentified'
+  Esc: 'Escape',
+  Spacebar: ' ',
+  Left: 'ArrowLeft',
+  Up: 'ArrowUp',
+  Right: 'ArrowRight',
+  Down: 'ArrowDown',
+  Del: 'Delete',
+  Win: 'OS',
+  Menu: 'ContextMenu',
+  Apps: 'ContextMenu',
+  Scroll: 'ScrollLock',
+  MozPrintableKey: 'Unidentified'
 };
 
 /**
@@ -23810,8 +28019,18 @@ var translateToKey = {
   40: 'ArrowDown',
   45: 'Insert',
   46: 'Delete',
-  112: 'F1', 113: 'F2', 114: 'F3', 115: 'F4', 116: 'F5', 117: 'F6',
-  118: 'F7', 119: 'F8', 120: 'F9', 121: 'F10', 122: 'F11', 123: 'F12',
+  112: 'F1',
+  113: 'F2',
+  114: 'F3',
+  115: 'F4',
+  116: 'F5',
+  117: 'F6',
+  118: 'F7',
+  119: 'F8',
+  120: 'F9',
+  121: 'F10',
+  122: 'F11',
+  123: 'F12',
   144: 'NumLock',
   145: 'ScrollLock',
   224: 'Meta'
@@ -23852,6 +28071,10 @@ function getEventKey(nativeEvent) {
 
 var getEventKey_1 = getEventKey;
 
+/**
+ * @interface KeyboardEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var KeyboardEventInterface = {
   key: getEventKey_1,
   location: null,
@@ -23914,6 +28137,10 @@ SyntheticUIEvent_1.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 var SyntheticKeyboardEvent_1 = SyntheticKeyboardEvent;
 
+/**
+ * @interface DragEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var DragEventInterface = {
   dataTransfer: null
 };
@@ -23932,6 +28159,10 @@ SyntheticMouseEvent_1.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 var SyntheticDragEvent_1 = SyntheticDragEvent;
 
+/**
+ * @interface TouchEvent
+ * @see http://www.w3.org/TR/touch-events/
+ */
 var TouchEventInterface = {
   touches: null,
   targetTouches: null,
@@ -23957,6 +28188,11 @@ SyntheticUIEvent_1.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 var SyntheticTouchEvent_1 = SyntheticTouchEvent;
 
+/**
+ * @interface Event
+ * @see http://www.w3.org/TR/2009/WD-css3-transitions-20090320/#transition-events-
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/TransitionEvent
+ */
 var TransitionEventInterface = {
   propertyName: null,
   elapsedTime: null,
@@ -23977,17 +28213,18 @@ SyntheticEvent_1.augmentClass(SyntheticTransitionEvent, TransitionEventInterface
 
 var SyntheticTransitionEvent_1 = SyntheticTransitionEvent;
 
+/**
+ * @interface WheelEvent
+ * @see http://www.w3.org/TR/DOM-Level-3-Events/
+ */
 var WheelEventInterface = {
   deltaX: function (event) {
-    return 'deltaX' in event ? event.deltaX :
-    // Fallback to `wheelDeltaX` for Webkit and normalize (right is positive).
+    return 'deltaX' in event ? event.deltaX : // Fallback to `wheelDeltaX` for Webkit and normalize (right is positive).
     'wheelDeltaX' in event ? -event.wheelDeltaX : 0;
   },
   deltaY: function (event) {
-    return 'deltaY' in event ? event.deltaY :
-    // Fallback to `wheelDeltaY` for Webkit and normalize (down is positive).
-    'wheelDeltaY' in event ? -event.wheelDeltaY :
-    // Fallback to `wheelDelta` for IE<9 and normalize (down is positive).
+    return 'deltaY' in event ? event.deltaY : // Fallback to `wheelDeltaY` for Webkit and normalize (down is positive).
+    'wheelDeltaY' in event ? -event.wheelDeltaY : // Fallback to `wheelDelta` for IE<9 and normalize (down is positive).
     'wheelDelta' in event ? -event.wheelDelta : 0;
   },
   deltaZ: null,
@@ -24013,6 +28250,24 @@ SyntheticMouseEvent_1.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 var SyntheticWheelEvent_1 = SyntheticWheelEvent;
 
+/**
+ * Turns
+ * ['abort', ...]
+ * into
+ * eventTypes = {
+ *   'abort': {
+ *     phasedRegistrationNames: {
+ *       bubbled: 'onAbort',
+ *       captured: 'onAbortCapture',
+ *     },
+ *     dependencies: ['topAbort'],
+ *   },
+ *   ...
+ * };
+ * topLevelEventsToDispatchConfig = {
+ *   'topAbort': { sameConfig }
+ * };
+ */
 var eventTypes$4 = {};
 var topLevelEventsToDispatchConfig = {};
 ['abort', 'animationEnd', 'animationIteration', 'animationStart', 'blur', 'canPlay', 'canPlayThrough', 'click', 'contextMenu', 'copy', 'cut', 'doubleClick', 'drag', 'dragEnd', 'dragEnter', 'dragExit', 'dragLeave', 'dragOver', 'dragStart', 'drop', 'durationChange', 'emptied', 'encrypted', 'ended', 'error', 'focus', 'input', 'invalid', 'keyDown', 'keyPress', 'keyUp', 'load', 'loadedData', 'loadedMetadata', 'loadStart', 'mouseDown', 'mouseMove', 'mouseOut', 'mouseOver', 'mouseUp', 'paste', 'pause', 'play', 'playing', 'progress', 'rateChange', 'reset', 'scroll', 'seeked', 'seeking', 'stalled', 'submit', 'suspend', 'timeUpdate', 'touchCancel', 'touchEnd', 'touchMove', 'touchStart', 'transitionEnd', 'volumeChange', 'waiting', 'wheel'].forEach(function (event) {
@@ -24044,7 +28299,6 @@ function isInteractive$1(tag) {
 }
 
 var SimpleEventPlugin = {
-
   eventTypes: eventTypes$4,
 
   extractEvents: function (topLevelType, targetInst, nativeEvent, nativeEventTarget) {
@@ -24184,7 +28438,6 @@ var SimpleEventPlugin = {
       delete onClickListeners[key];
     }
   }
-
 };
 
 var SimpleEventPlugin_1 = SimpleEventPlugin;
@@ -24578,7 +28831,6 @@ TopLevelWrapper.isReactTopLevelWrapper = true;
  * Inside of `container`, the first element rendered is the "reactRoot".
  */
 var ReactMount = {
-
   TopLevelWrapper: TopLevelWrapper,
 
   /**
@@ -24667,13 +28919,14 @@ var ReactMount = {
 
   _renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
     ReactUpdateQueue_1.validateCallback(callback, 'ReactDOM.render');
-    !React_1.isValidElement(nextElement) ? invariant_1(false, 'ReactDOM.render(): Invalid component element.%s', typeof nextElement === 'string' ? ' Instead of passing a string like \'div\', pass ' + 'React.createElement(\'div\') or <div />.' : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' :
-    // Check if it quacks like an element
+    !React_1.isValidElement(nextElement) ? invariant_1(false, 'ReactDOM.render(): Invalid component element.%s', typeof nextElement === 'string' ? " Instead of passing a string like 'div', pass " + "React.createElement('div') or <div />." : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' : // Check if it quacks like an element
     nextElement != null && nextElement.props !== undefined ? ' This may be caused by unintentionally loading two independent ' + 'copies of React.' : '') : void 0;
 
     warning_1(!container || !container.tagName || container.tagName.toUpperCase() !== 'BODY', 'render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.');
 
-    var nextWrappedElement = React_1.createElement(TopLevelWrapper, { child: nextElement });
+    var nextWrappedElement = React_1.createElement(TopLevelWrapper, {
+      child: nextElement
+    });
 
     var nextContext;
     if (parentComponent) {
@@ -24762,7 +29015,7 @@ var ReactMount = {
     !isValidContainer(container) ? invariant_1(false, 'unmountComponentAtNode(...): Target container is not a DOM element.') : void 0;
 
     {
-      warning_1(!nodeIsRenderedByOtherInstance(container), 'unmountComponentAtNode(): The node you\'re attempting to unmount ' + 'was rendered by another copy of React.');
+      warning_1(!nodeIsRenderedByOtherInstance(container), "unmountComponentAtNode(): The node you're attempting to unmount " + 'was rendered by another copy of React.');
     }
 
     var prevComponent = getTopLevelWrapperInContainer(container);
@@ -24775,7 +29028,7 @@ var ReactMount = {
       var isContainerReactRoot = container.nodeType === 1 && container.hasAttribute(ROOT_ATTR_NAME);
 
       {
-        warning_1(!containerHasNonRootReactChild, 'unmountComponentAtNode(): The node you\'re attempting to unmount ' + 'was rendered by React and is not a top-level container. %s', isContainerReactRoot ? 'You may have accidentally passed in a React root node instead ' + 'of its container.' : 'Instead, have the parent component update its state and ' + 'rerender in order to remove this component.');
+        warning_1(!containerHasNonRootReactChild, "unmountComponentAtNode(): The node you're attempting to unmount " + 'was rendered by React and is not a top-level container. %s', isContainerReactRoot ? 'You may have accidentally passed in a React root node instead ' + 'of its container.' : 'Instead, have the parent component update its state and ' + 'rerender in order to remove this component.');
       }
 
       return false;
@@ -24868,7 +29121,7 @@ var ReactMount_1 = ReactMount;
  *
  */
 
-var ReactVersion$3 = '15.5.4';
+var ReactVersion$3 = '15.6.0';
 
 function getHostComponentFromComposite(inst) {
   var type;
@@ -24886,6 +29139,14 @@ function getHostComponentFromComposite(inst) {
 
 var getHostComponentFromComposite_1 = getHostComponentFromComposite;
 
+/**
+ * Returns the DOM node rendered by this element.
+ *
+ * See https://facebook.github.io/react/docs/top-level-api.html#reactdom.finddomnode
+ *
+ * @param {ReactComponent|DOMElement} componentOrElement
+ * @return {?DOMElement} The root node of this element.
+ */
 function findDOMNode(componentOrElement) {
   {
     var owner = ReactCurrentOwner_1.current;
@@ -25126,6 +29387,7 @@ var ReactDOM = {
   /* eslint-disable camelcase */
   unstable_batchedUpdates: ReactUpdates_1.batchedUpdates,
   unstable_renderSubtreeIntoContainer: renderSubtreeIntoContainer
+  /* eslint-enable camelcase */
 };
 
 // Inject the runtime into a devtools global hook regardless of browser.
@@ -25154,7 +29416,6 @@ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVT
 {
   var ExecutionEnvironment = ExecutionEnvironment_1;
   if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
-
     // First check if devtools is not installed
     if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
       // If we're in Chrome or Firefox, provide a download link if not installed.
@@ -25166,7 +29427,7 @@ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVT
     }
 
     var testFunc = function testFn() {};
-    warning_1((testFunc.name || testFunc.toString()).indexOf('testFn') !== -1, 'It looks like you\'re using a minified copy of the development build ' + 'of React. When deploying React apps to production, make sure to use ' + 'the production build which skips development warnings and is faster. ' + 'See https://fb.me/react-minification for more details.');
+    warning_1((testFunc.name || testFunc.toString()).indexOf('testFn') !== -1, "It looks like you're using a minified copy of the development build " + 'of React. When deploying React apps to production, make sure to use ' + 'the production build which skips development warnings and is faster. ' + 'See https://fb.me/react-minification for more details.');
 
     // If we're in IE8, check to see if we are in compatibility mode and provide
     // information on preventing compatibility mode
@@ -25204,7 +29465,7 @@ var index$2 = ReactDOM_1;
 
 var index_1 = index$2.render;
 
-const Components = function (__exports) {
+const Components$1 = function (__exports) {
   const LazyView = __exports.LazyView = class LazyView extends react_2 {
     [FSymbol.reflection]() {
       return extendInfo(LazyView, {
@@ -25232,7 +29493,7 @@ const Components = function (__exports) {
 }({});
 const Common = function (__exports) {
   const lazyViewWith = __exports.lazyViewWith = function (equal, view, state) {
-    return react_1(Components.LazyView, (() => {
+    return react_1(Components$1.LazyView, (() => {
       const render = function () {
         return view(state);
       };
@@ -25246,7 +29507,7 @@ const Common = function (__exports) {
   };
 
   const lazyView2With = __exports.lazyView2With = function (equal, view, state, dispatch) {
-    return react_1(Components.LazyView, (() => {
+    return react_1(Components$1.LazyView, (() => {
       const render = function () {
         return view(state, dispatch);
       };
@@ -25260,7 +29521,7 @@ const Common = function (__exports) {
   };
 
   const lazyView3With = __exports.lazyView3With = function (equal, view, state1, state2, dispatch) {
-    return react_1(Components.LazyView, (() => {
+    return react_1(Components$1.LazyView, (() => {
       const render = function () {
         return view(state1, state2, dispatch);
       };
@@ -25635,13 +29896,12 @@ const Program$1 = function (__exports) {
       }, patternInput_1[1])]))];
     };
 
-    const setState = function (model_3) {
+    const setState = CurriedLambda(function (model_3) {
       return $var4 => function (value) {
         value;
       }(($var3 => view(model_3, $var3))($var4));
-    };
-
-    return new Program(init, update, subs, view, ($var5, $var6) => setState($var5)($var6), program.onError);
+    });
+    return new Program(init, update, subs, view, setState, program.onError);
   };
 
   return __exports;
@@ -25941,55 +30201,254 @@ function parseHash(parser, location) {
   return parse$3(parser, patternInput[0], parseParams(patternInput[1]));
 }
 
+function init$2(code) {
+  return new Model(false, code);
+}
+function update$2(msg, model) {
+  if (msg.tag === 1) {
+    return [new Model(false, model.Code), Cmd.none()];
+  } else {
+    return [new Model(true, model.Code), Cmd.none()];
+  }
+}
+
+const iconCode = "\r\n```fsharp\r\nBox.box' [ ]\r\n    [ str \"Lorem ipsum dolor sit amet, consectetur adipisicing elit\r\n           , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\" ]\r\n```\r\n    ";
 function init$1() {
-  return ["", new List$1()];
+  return new Model$1("\r\n# Box\r\n\r\nA white **box** to contain other elements .\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/box/)*\r\n        ", init$2(iconCode));
 }
 function update$1(msg, model) {
-  return [msg.data, new List$1()];
+  const patternInput = update$2(msg.data, model.BoxViewer);
+  return [new Model$1(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$1(0, arg0);
+  }, patternInput[1])];
 }
 
-function init$2() {
-  return new Model$1("\r\n# Buttons\r\nThe **button** can have different colors, sizes and states.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isWhite ] [ str \"White\" ]\r\nButton.button [ Button.isDark ] [ str \"Dark\" ]\r\nButton.button [ Button.isInfo ] [ str \"Info\" ]\r\nButton.button [ Button.isSuccess ] [ str \"Success\" ]\r\n```\r\n      ", "## Sizes", "\r\n```fsharp\r\nButton.button [ ] [ str \"Normal\" ]\r\nButton.button [ Button.isMedium ] [ str \"Medium\" ]\r\n```\r\n      ", "\r\n## Styles\r\nThe button can be **outlined** and/or **inverted**.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess; Button.isOutlined ] [str \"Outlined\" ]\r\nButton.button [ Button.isPrimary; Button.isOutlined ] [ str \"Outlined\" ]\r\n```\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess; Button.isInverted ] [ str \"Inverted\" ]\r\nButton.button [ Button.isPrimary; Button.isInverted ] [ str \"Inverted\" ]\r\n```\r\n      ", "\r\n```fsharp\r\nButton.button\r\n  [ Button.isSuccess;\r\n    Button.isOutlined;\r\n    Button.isInverted ] [ str \"Invert outlined\" ]\r\n```\r\n      ", "\r\n## State\r\nYou can control the state of the buttons.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess ] [ str \"Normal\" ]\r\nButton.button [ Button.isHovered; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isFocused; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isActive; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isLoading; dButton.isSuccess ] [ str \"Hover\" ]\r\n```\r\n      ");
-}
-
+const colorCode = "\r\n```fsharp\r\n    Button.button [ ] [ str \"Button\" ]\r\n    Button.button [ Button.isWhite ] [ str \"White\" ]\r\n    Button.button [ Button.isLight ] [ str \"Light\" ]\r\n    Button.button [ Button.isLight ] [ str \"Light\" ]\r\n    Button.button [ Button.isDark ] [ str \"Dark\" ]\r\n    Button.button [ Button.isBlack ] [ str \"Black\" ]\r\n    Button.button [ Button.isLink ] [ str \"Link\" ]\r\n    Button.button [ Button.isPrimary ] [ str \"Primary\" ]\r\n    Button.button [ Button.isInfo ] [ str \"Info\" ]\r\n    Button.button [ Button.isSuccess ] [ str \"Success\" ]\r\n    Button.button [ Button.isWarning ] [ str \"Warning\" ]\r\n    Button.button [ Button.isDanger ] [ str \"Danger\" ]\r\n```\r\n    ";
+const sizeCode = "\r\n```fsharp\r\n    Button.button [ Button.isSmall ] [ str \"Small\" ]\r\n    Button.button [ ] [ str \"Normal\" ]\r\n    Button.button [ Button.isMedium ] [ str \"Medium\" ]\r\n    Button.button [ Button.isLarge ] [ str \"Large\" ]\r\n```\r\n    ";
+const outlinedCode = "\r\n```fsharp\r\n    Button.button [ Button.isOutlined ] [ str \"Outlined\" ]\r\n    Button.button [ Button.isSuccess; Button.isOutlined ] [ str \"Outlined\" ]\r\n    Button.button [ Button.isPrimary; Button.isOutlined ] [ str \"Outlined\" ]\r\n    Button.button [ Button.isInfo; Button.isOutlined ] [ str \"Outlined\" ]\r\n    Button.button [ Button.isDanger;  Button.isOutlined ] [ str \"Outlined\" ]\r\n```\r\n    ";
+const mixedStyleCode = "\r\n```fsharp\r\n    Button.button [ Button.isInverted ] [ str \"Inverted\" ]\r\n    Button.button [ Button.isSuccess; Button.isInverted ] [ str \"Inverted\" ]\r\n    Button.button [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str \"Invert Outlined\" ]\r\n    Button.button [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str \"Invert Outlined\" ]\r\n```\r\n    ";
+const stateCode = "\r\n```fsharp\r\n    Button.button [ ] [ str \"Normal\" ]\r\n    Button.button [ Button.isSuccess; Button.isHovered ] [ str \"Hover\" ]\r\n    Button.button [ Button.isWarning; Button.isFocused ] [ str \"Focus\" ]\r\n    Button.button [ Button.isInfo; Button.isActive ] [ str \"Active\" ]\r\n    Button.button [ Button.isBlack; Button.isLoading ] [ str \"Loading\" ]\r\n```\r\n    ";
+const extraCode = "\r\n```fsharp\r\n    // For registering a click event, we can use the Button.onClick helper\r\n    Button.button [ Button.onClick (fun _ -> dispatch Click) ]\r\n                  [ str buttonTxt ]\r\n    // Or we can pass any IProps via Button.props\r\n    // Equivalent of the Button.onClick\r\n    Button.button [ Button.props [ OnClick (fun _ -> dispatch Click) ] ]\r\n                  [ str buttonTxt ]\r\n    // Disabled button\r\n    Button.button [ Button.props [ Disabled true ] ]\r\n                  [ str \"Fixed width\" ]\r\n```\r\n    ";
 function init$3() {
-  return new Model$2("\r\n# Icons\r\n      ", "\r\n```fsharp\r\nIcon.icon\r\n  [ Icon.isSmall ]\r\n  [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\nIcon.icon\r\n  [  ]\r\n  [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\nIcon.icon\r\n  [ Icon.isMedium ]\r\n  [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\nIcon.icon\r\n  [ Icon.isLarge ]\r\n  [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n```\r\n      ");
+  return new Model$3("\r\n# Buttons\r\n\r\nThe **buttons** can have different colors, sizes and states.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/button/)*\r\n        ", init$2(colorCode), init$2(sizeCode), init$2(outlinedCode), init$2(mixedStyleCode), init$2(stateCode), init$2(extraCode), 0);
+}
+function update$3(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$3(model.Intro, model.ColorViewer, patternInput[0], model.OutlinedViewer, model.MixedStyleViewer, model.StateViewer, model.ExtraViewer, model.ClickCount), Cmd.map(function (arg0) {
+      return new Msg$3(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    const patternInput_1 = update$2(msg.data, model.OutlinedViewer);
+    return [new Model$3(model.Intro, model.ColorViewer, model.SizeViewer, patternInput_1[0], model.MixedStyleViewer, model.StateViewer, model.ExtraViewer, model.ClickCount), Cmd.map(function (arg0_1) {
+      return new Msg$3(2, arg0_1);
+    }, patternInput_1[1])];
+  } else if (msg.tag === 3) {
+    const patternInput_2 = update$2(msg.data, model.MixedStyleViewer);
+    return [new Model$3(model.Intro, model.ColorViewer, model.SizeViewer, model.OutlinedViewer, patternInput_2[0], model.StateViewer, model.ExtraViewer, model.ClickCount), Cmd.map(function (arg0_2) {
+      return new Msg$3(3, arg0_2);
+    }, patternInput_2[1])];
+  } else if (msg.tag === 4) {
+    const patternInput_3 = update$2(msg.data, model.StateViewer);
+    return [new Model$3(model.Intro, model.ColorViewer, model.SizeViewer, model.OutlinedViewer, model.MixedStyleViewer, patternInput_3[0], model.ExtraViewer, model.ClickCount), Cmd.map(function (arg0_3) {
+      return new Msg$3(4, arg0_3);
+    }, patternInput_3[1])];
+  } else if (msg.tag === 5) {
+    const patternInput_4 = update$2(msg.data, model.ExtraViewer);
+    return [new Model$3(model.Intro, model.ColorViewer, model.SizeViewer, model.OutlinedViewer, model.MixedStyleViewer, model.StateViewer, patternInput_4[0], model.ClickCount), Cmd.map(function (arg0_4) {
+      return new Msg$3(5, arg0_4);
+    }, patternInput_4[1])];
+  } else if (msg.tag === 6) {
+    return [(() => {
+      const ClickCount = model.ClickCount + 1 | 0;
+      return new Model$3(model.Intro, model.ColorViewer, model.SizeViewer, model.OutlinedViewer, model.MixedStyleViewer, model.StateViewer, model.ExtraViewer, ClickCount);
+    })(), Cmd.none()];
+  } else {
+    const patternInput_5 = update$2(msg.data, model.ColorViewer);
+    return [new Model$3(model.Intro, patternInput_5[0], model.SizeViewer, model.OutlinedViewer, model.MixedStyleViewer, model.StateViewer, model.ExtraViewer, model.ClickCount), Cmd.map(function (arg0_5) {
+      return new Msg$3(0, arg0_5);
+    }, patternInput_5[1])];
+  }
 }
 
+const contentCode = "\r\n```fsharp\r\n    Content.content [ ]\r\n        [ h1 [ ] [str \"Hello World\"]\r\n          p [ ]\r\n            [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque.\" ]\r\n          h2 [ ] [str \"Second level\" ]\r\n          p [ ]\r\n            [ str \"Curabitur accumsan turpis pharetra \"\r\n              strong [ ] [str \"augue tincidunt\" ]\r\n              str \"blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl.\" ]\r\n          ul [ ]\r\n             [ li [ ] [str \"In fermentum leo eu lectus mollis, quis dictum mi aliquet.\" ]\r\n               li [ ] [str \"Morbi eu nulla lobortis, lobortis est in, fringilla felis.\" ]\r\n               li [ ] [str \"Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.\" ]\r\n               li [ ] [str \"Ut non enim metus.\"] ]\r\n          p [ ] [str \"Sed sagittis enim ac tortor maximus rutrum.\r\n                     Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                     Maecenas vestibulum interdum commodo.\" ] ]\r\n```\r\n    ";
+const sizeCode$1 = "\r\n```fsharp\r\n    Content.content [ Content.isSmall ]\r\n        [ h1 [ ] [str \"Hello World\"]\r\n          p [ ]\r\n            [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n                  Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus\r\n                  , nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio\r\n                  , sollicitudin vel erat vel, interdum mattis neque.\" ]\r\n          h2 [ ] [str \"Second level\" ]\r\n          p [ ]\r\n            [ str \"Curabitur accumsan turpis pharetra \"\r\n              strong [ ] [str \"augue tincidunt\" ]\r\n              str \"blandit. Quisque condimentum maximus mi\r\n                  , sit amet commodo arcu rutrum id. Proin pretium urna vel cursus venenatis.\r\n                  Suspendisse potenti. Etiam mattis sem rhoncus lacus dapibus facilisis.\r\n                  Donec at dignissim dui. Ut et neque nisl.\" ]\r\n          ul [ ]\r\n             [ li [ ] [str \"In fermentum leo eu lectus mollis, quis dictum mi aliquet.\" ]\r\n               li [ ] [str \"Morbi eu nulla lobortis, lobortis est in, fringilla felis.\" ]\r\n               li [ ] [str \"Aliquam nec felis in sapien venenatis viverra fermentum nec lectus.\" ]\r\n               li [ ] [str \"Ut non enim metus.\"] ]\r\n          p [ ] [str \"Sed sagittis enim ac tortor maximus rutrum.\r\n                     Nulla facilisi. Donec mattis vulputate risus in luctus.\r\n                     Maecenas vestibulum interdum commodo.\" ] ]\r\n```\r\n    ";
 function init$4() {
-  return new Model$3("\r\n# Image\r\nA container for **responsive** images\r\n      ", "## Fixed square images", "\r\n```fsharp\r\nImage.image\r\n  [ Image.is64x64 ]\r\n  [ img\r\n      [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ]\r\nImage.image\r\n  [ Image.is128x128 ]\r\n  [ img\r\n      [ Src \"https://dummyimage.com/128x128/7a7a7a/fff\" ] ]\r\n```\r\n      ", "## Responsive images with ratios", "\r\n```fsharp\r\nImage.image\r\n  [ Image.is2by1 ]\r\n  [ img\r\n      [ Src \"https://dummyimage.com/640x320/7a7a7a/fff\" ] ]\r\n```\r\n      ");
+  return new Model$4("\r\n# Content\r\n\r\nA single class to handle WYSIWYG generated content, where only **HTML tags** are available. Content also support size attributes.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/content/)*\r\n        ", init$2(contentCode), init$2(sizeCode$1));
+}
+function update$4(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$4(model.Intro, model.ContentViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$4(1, arg0);
+    }, patternInput[1])];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.ContentViewer);
+    return [new Model$4(model.Intro, patternInput_1[0], model.SizeViewer), Cmd.map(function (arg0_1) {
+      return new Msg$4(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const demoCode = "\r\n```fsharp\r\n    Delete.delete\r\n        [ Delete.isSmall ] [ ]\r\n    Delete.delete\r\n        [ ] [ ]\r\n    Delete.delete\r\n        [ Delete.isMedium ] [ ]\r\n    Delete.delete\r\n        [ Delete.isLarge ] [ ]\r\n```\r\n    ";
+const extraCode$1 = "\r\n```fsharp\r\n    // Using Button.onClick helper\r\n    Delete.delete\r\n        [ Delete.onClick (fun _ -> Click |> dispatch) ] [ ]\r\n    // Is equivalent to:\r\n    Delete.delete\r\n        [ Delete.props [ OnClick (fun _ -> Click |> dispatch) ] ] [ ]\r\n```\r\n    ";
 function init$5() {
-  return new Model$4("\r\n# Progress bars\r\nProgress bars can have **colors** or **sizes** modifiers\r\n      ", "\r\n```fsharp\r\nProgress.progress\r\n  [ Progress.isSuccess\r\n    Progress.isSmall\r\n    Progress.props\r\n      [ Value !^\"15\"\r\n        Max !^\"100\" ] ]\r\n  [ str \"15%\" ]\r\nProgress.progress\r\n  [ Progress.isPrimary\r\n    Progress.isMedium\r\n    Progress.props\r\n      [ Value !^\"85\"\r\n        Max !^\"100\" ] ]\r\n  [ str \"85%\" ]\r\nProgress.progress\r\n  [ Progress.isDanger\r\n    Progress.isLarge\r\n    Progress.props\r\n      [ Value !^\"50\"\r\n        Max !^\"100\" ] ]\r\n  [ str \"50%\" ]\r\n```\r\n      ");
+  return new Model$5("\r\n# Delete\r\n\r\nThe **delete** element can have different sizes.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/delete/)*\r\n        ", init$2(demoCode), init$2(extraCode$1), false);
+}
+function update$5(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.ExtraViewer);
+    return [new Model$5(model.Intro, model.DemoViewer, patternInput[0], model.Clicked), Cmd.map(function (arg0) {
+      return new Msg$5(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    return [new Model$5(model.Intro, model.DemoViewer, model.ExtraViewer, true), Cmd.none()];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.DemoViewer);
+    return [new Model$5(model.Intro, patternInput_1[0], model.ExtraViewer, model.Clicked), Cmd.map(function (arg0_1) {
+      return new Msg$5(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const iconCode$1 = "\r\n```fsharp\r\n    Icon.icon [ Icon.isSmall ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ Icon.isMedium ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ Icon.isLarge ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n```\r\n    ";
 function init$6() {
-  return new Model$6("\r\n# Buttons\r\nThe **button** can have different colors, sizes and states.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isWhite ] [ str \"White\" ]\r\nButton.button [ Button.isDark ] [ str \"Dark\" ]\r\nButton.button [ Button.isInfo ] [ str \"Info\" ]\r\nButton.button [ Button.isSuccess ] [ str \"Success\" ]\r\n```\r\n      ", "## Sizes", "\r\n```fsharp\r\nButton.button [ ] [ str \"Normal\" ]\r\nButton.button [ Button.isMedium ] [ str \"Medium\" ]\r\n```\r\n      ", "\r\n## Styles\r\nThe button can be **outlined** and/or **inverted**.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess; Button.isOutlined ] [str \"Outlined\" ]\r\nButton.button [ Button.isPrimary; Button.isOutlined ] [ str \"Outlined\" ]\r\n```\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess; Button.isInverted ] [ str \"Inverted\" ]\r\nButton.button [ Button.isPrimary; Button.isInverted ] [ str \"Inverted\" ]\r\n```\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess; Button.isOutlined; Button.isInverted ] [ str \"Invert outlined\" ]\r\n```\r\n      ", "\r\n## State\r\nYou can control the state of the buttons.\r\n      ", "\r\n```fsharp\r\nButton.button [ Button.isSuccess ] [ str \"Normal\" ]\r\nButton.button [ Button.isHovered; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isFocused; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isActive; Button.isSuccess ] [ str \"Hover\" ]\r\nButton.button [ Button.isLoading; Button.isSuccess ] [ str \"Hover\" ]\r\n```\r\n      ");
+  return new Model$6("\r\n# Icons\r\n\r\nThe **icons** can have different sizes and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/icon/)*\r\n        ", init$2(iconCode$1));
+}
+function update$6(msg, model) {
+  const patternInput = update$2(msg.data, model.IconViewer);
+  return [new Model$6(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$6(0, arg0);
+  }, patternInput[1])];
 }
 
+const fixedCode = "\r\n```fsharp\r\n    Image.image [ Image.is64x64 ]\r\n        [ img [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ]\r\n    br [ ]\r\n    Image.image [ Image.is128x128 ]\r\n        [ img [ Src \"https://dummyimage.com/128x128/7a7a7a/fff\" ] ]\r\n```\r\n    ";
+const responsiveCode = "\r\n```fsharp\r\n    Image.image [ Image.is2by1 ]\r\n        [ img [ Src \"https://dummyimage.com/640x320/7a7a7a/fff\" ] ]\r\n```\r\n    ";
 function init$7() {
-  return new Model$5("\r\n# Table\r\n            ", "\r\n```fsharp\r\n  Table.table\r\n    [ ]\r\n    [ thead\r\n        [ ]\r\n        [ tr\r\n            [ ]\r\n            [ th [ ] [ str \"Firstname\" ]\r\n              th [ ] [ str \"Surname\" ]\r\n              th [ ] [ str \"Birthday\" ] ] ]\r\n      tbody\r\n        [ ]\r\n        [ tr\r\n            [ ]\r\n            [ td [ ] [ str \"Maxime\" ]\r\n              td [ ] [ str \"Mangel\" ]\r\n              td [ ] [ str \"28/02/1992\" ] ]\r\n          tr\r\n            [ Table.Row.isSelected ]\r\n            [ td [ ] [ str \"Jane\" ]\r\n              td [ ] [ str \"Doe\" ]\r\n              td [ ] [ str \"21/07/1987\" ] ]\r\n          tr\r\n            [  ]\r\n            [ td [ ] [ str \"John\" ]\r\n              td [ ] [ str \"Doe\" ]\r\n              td [ ] [ str \"11/07/1978\" ] ] ]\r\n```\r\n            ", "\r\n## Modifiers\r\nYou can also apply modifiers to the table\r\n            ", "\r\n```fsharp\r\n  Table.table\r\n    [ Table.isBordered\r\n      Table.isNarrow\r\n      Table.isStripped ]\r\n    [ thead\r\n        [ ]\r\n        [ tr\r\n            [ ]\r\n            [ th [ ] [ str \"Firstname\" ]\r\n              th [ ] [ str \"Surname\" ]\r\n              th [ ] [ str \"Birthday\" ] ] ]\r\n      tbody\r\n        [ ]\r\n        [ tr\r\n            [ ]\r\n            [ td [ ] [ str \"Maxime\" ]\r\n              td [ ] [ str \"Mangel\" ]\r\n              td [ ] [ str \"28/02/1992\" ] ]\r\n          tr\r\n            [ Table.Row.isSelected ]\r\n            [ td [ ] [ str \"Jane\" ]\r\n              td [ ] [ str \"Doe\" ]\r\n              td [ ] [ str \"21/07/1987\" ] ]\r\n          tr\r\n            [  ]\r\n            [ td [ ] [ str \"John\" ]\r\n              td [ ] [ str \"Doe\" ]\r\n              td [ ] [ str \"11/07/1978\" ] ] ]\r\n```\r\n            ");
+  return new Model$7("\r\n# Images\r\n\r\nThe **images** can have different sizes (fixed or ratio).\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/image/)*\r\n        ", init$2(fixedCode), init$2(responsiveCode));
+}
+function update$7(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.ResponsiveViewer);
+    return [new Model$7(model.Intro, model.FixedViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$7(1, arg0);
+    }, patternInput[1])];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.FixedViewer);
+    return [new Model$7(model.Intro, patternInput_1[0], model.ResponsiveViewer), Cmd.map(function (arg0_1) {
+      return new Msg$7(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const colorCode$1 = "\r\n```fsharp\r\nProgress.progress\r\n    [ Progress.value 15\r\n      Progress.max 100 ] [ str \"15%\" ]\r\nProgress.progress\r\n    [ Progress.isSuccess\r\n      Progress.value 30\r\n      Progress.max 100 ] [ str \"30%\" ]\r\nProgress.progress\r\n    [ Progress.isInfo\r\n      Progress.value 45\r\n      Progress.max 100 ] [ str \"45%\" ]\r\nProgress.progress\r\n    [ Progress.isWarning\r\n      Progress.value 60\r\n      Progress.max 100 ] [ str \"60%\" ]\r\nProgress.progress\r\n    [ Progress.isPrimary\r\n      Progress.value 75\r\n      Progress.max 100 ] [ str \"75%\" ]\r\nProgress.progress\r\n    [ Progress.isDanger\r\n      Progress.value 90\r\n      Progress.max 100 ] [ str \"90%\" ]\r\n```\r\n    ";
+const extraCode$2 = "\r\n```fsharp\r\nProgress.progress\r\n    [ Progress.isSmall\r\n      Progress.value 15\r\n      Progress.max 100 ] [ str \"15%\" ]\r\nProgress.progress\r\n    [ Progress.value 30\r\n      Progress.max 100 ] [ str \"30%\" ]\r\nProgress.progress\r\n    [ Progress.isMedium\r\n      Progress.value 45\r\n      Progress.max 100 ] [ str \"45%\" ]\r\nProgress.progress\r\n    [ Progress.isLarge\r\n      Progress.value 60\r\n      Progress.max 100 ] [ str \"60%\" ]\r\n```\r\n    ";
 function init$8() {
-  return new Model$7("\r\n# Titles\r\nSimple **headings** to add depth to your page\r\n          ", "\r\n## Types\r\n**Title** can be of two types *Title* and *Subtitle*.\r\n            ", "\r\n```fsharp\r\nHeading.h1 [ ] [str \"Title\"]\r\nbr []\r\nHeading.h3 [ Heading.isSubtitle ] [str \"Subtitle\"]\r\n```\r\n            ", "\r\n## Sizes\r\nThere can be **six** different sizes for title\r\n            ", "\r\n```fsharp\r\nHeading.h1 [ Heading.isTitle; Heading.is1 ] [str \"Title 1\"]\r\nHeading.h1 [ Heading.isTitle; Heading.is2 ] [str \"Title 2\"]\r\nHeading.h1 [ Heading.isTitle; Heading.is3 ] [str \"Title 3 (Default size)\"]\r\nHeading.h1 [ Heading.isTitle; Heading.is4 ] [str \"Title 4\"]\r\nHeading.h1 [ Heading.isTitle; Heading.is5 ] [str \"Title 5\"]\r\nHeading.h1 [ Heading.isTitle; Heading.is6 ] [str \"Title 6\"]\r\nbr []\r\nHeading.h1 [ Heading.isSubtitle; Heading.is1 ] [str \"Subtitle 1\"]\r\nHeading.h1 [ Heading.isSubtitle; Heading.is2 ] [str \"Subtitle 2\"]\r\nHeading.h1 [ Heading.isSubtitle; Heading.is3 ] [str \"Subtitle 3\"]\r\nHeading.h1 [ Heading.isSubtitle; Heading.is4 ] [str \"Subtitle 4\"]\r\nHeading.h1 [ Heading.isSubtitle; Heading.is5 ] [str \"Subtitle 5 (Default size)\"]\r\nHeading.h1 [ Heading.isSubtitle; Heading.is6 ] [str \"Subtitle 6\"]\r\n```\r\n            ", "\r\nWhen **conbining** a title and a subtile, they move closer together.\r\n\r\nYou can prevent this behavior by adding `IsSpaced` on the first element.\r\n          ", "\r\n```fsharp\r\nHeading.p [ Heading.isTitle; Heading.is1; Heading.isSpaced ] [ str \"Title 1\" ]\r\nHeading.p [ Heading.isSubtitle; Heading.is3 ] [ str \"Subtitle 3\" ]\r\n```\r\n        ");
+  return new Model$8("\r\n# Progress\r\n\r\nThe **progress** element can have different colors and sizes.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/progress/)*\r\n        ", init$2(colorCode$1), init$2(extraCode$2), false);
+}
+function update$8(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$8(model.Intro, model.ColorViewer, patternInput[0], model.Clicked), Cmd.map(function (arg0) {
+      return new Msg$8(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    return [new Model$8(model.Intro, model.ColorViewer, model.SizeViewer, true), Cmd.none()];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.ColorViewer);
+    return [new Model$8(model.Intro, patternInput_1[0], model.SizeViewer, model.Clicked), Cmd.map(function (arg0_1) {
+      return new Msg$8(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const simpleCode = "\r\n```fsharp\r\n    Table.table [ ]\r\n        [ thead [ ]\r\n            [ tr\r\n            [ ]\r\n            [ th [ ] [ str \"Firstname\" ]\r\n              th [ ] [ str \"Surname\" ]\r\n              th [ ] [ str \"Birthday\" ] ] ]\r\n          tbody [ ]\r\n            [ tr [ ]\r\n                 [ td [ ] [ str \"Maxime\" ]\r\n                   td [ ] [ str \"Mangel\" ]\r\n                   td [ ] [ str \"28/02/1992\" ] ]\r\n              tr [ Table.Row.isSelected ]\r\n                 [ td [ ] [ str \"Jane\" ]\r\n                   td [ ] [ str \"Doe\" ]\r\n                   td [ ] [ str \"21/07/1987\" ] ]\r\n              tr [  ]\r\n                 [ td [ ] [ str \"John\" ]\r\n                   td [ ] [ str \"Doe\" ]\r\n                   td [ ] [ str \"11/07/1978\" ] ] ] ]\r\n```\r\n    ";
+const modifierCode = "\r\n```fsharp\r\n    Table.table [ Table.isBordered\r\n                  Table.isNarrow\r\n                  Table.isStripped ]\r\n        [ thead [ ]\r\n            [ tr [ ]\r\n                 [ th [ ] [ str \"Firstname\" ]\r\n                   th [ ] [ str \"Surname\" ]\r\n                   th [ ] [ str \"Birthday\" ] ] ]\r\n          tbody [ ]\r\n            [ tr [ ]\r\n                [ td [ ] [ str \"Maxime\" ]\r\n                  td [ ] [ str \"Mangel\" ]\r\n                  td [ ] [ str \"28/02/1992\" ] ]\r\n              tr [ Table.Row.isSelected ]\r\n                 [ td [ ] [ str \"Jane\" ]\r\n                   td [ ] [ str \"Doe\" ]\r\n                   td [ ] [ str \"21/07/1987\" ] ]\r\n              tr [  ]\r\n                 [ td [ ] [ str \"John\" ]\r\n                   td [ ] [ str \"Doe\" ]\r\n                   td [ ] [ str \"11/07/1978\" ] ] ] ]\r\n```\r\n    ";
 function init$9() {
-  return new Model$8("\r\n# Delete\r\n      ", "\r\n```fsharp\r\nDelete.delete\r\n  [ Delete.isSmall ] [ ]\r\nDelete.delete\r\n  [ ] [ ]\r\nDelete.delete\r\n  [ Delete.isMedium ] [ ]\r\nDelete.delete\r\n  [ Delete.isLarge ] [ ]\r\n```\r\n      ");
+  return new Model$9("\r\n# Table\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/table/)*\r\n        ", init$2(simpleCode), init$2(modifierCode));
+}
+function update$9(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.ModifierViewer);
+    return [new Model$9(model.Intro, model.SimpleViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$9(1, arg0);
+    }, patternInput[1])];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.SimpleViewer);
+    return [new Model$9(model.Intro, patternInput_1[0], model.ModifierViewer), Cmd.map(function (arg0_1) {
+      return new Msg$9(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const colorCode$2 = "\r\n```fsharp\r\n    Tag.tag [ ] [ str \"Default\" ]\r\n    Tag.tag [ Tag.isWhite ] [ str \"White\" ]\r\n    Tag.tag [ Tag.isLight ] [ str \"Light\" ]\r\n    Tag.tag [ Tag.isDark ] [ str \"Dark\" ]\r\n    Tag.tag [ Tag.isBlack ] [ str \"Black\" ]\r\n    Tag.tag [ Tag.isPrimary ] [ str \"Primary\" ]\r\n    Tag.tag [ Tag.isInfo ] [ str \"Info\" ]\r\n    Tag.tag [ Tag.isSuccess ] [ str \"Success\" ]\r\n    Tag.tag [ Tag.isWarning ] [ str \"Warning\" ]\r\n    Tag.tag [ Tag.isDanger ] [ str \"Danger\" ]\r\n```\r\n    ";
+const sizeCode$2 = "\r\n```fsharp\r\n    Tag.tag [ ] [ str \"Normal\" ]\r\n    Tag.tag [ Tag.isPrimary; Tag.isMedium ] [ str \"Medium\" ]\r\n    Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str \"Large\" ]\r\n```\r\n    ";
+const nestedDeletedCode = "\r\n```fsharp\r\n    Tag.tag [ Tag.isDark ]\r\n        [ str \"With delete\"\r\n          Delete.delete [ Delete.isSmall ] [ ] ]\r\n    Tag.tag [ Tag.isMedium ]\r\n        [ str \"With delete\"\r\n          Delete.delete [ ] [ ] ]\r\n    Tag.tag [ Tag.isWarning; Tag.isLarge ]\r\n        [ str \"With delete\"\r\n          Delete.delete [ Delete.isLarge ] [ ] ]\r\n```\r\n    ";
 function init$10() {
-  return new Model$9("\r\n# Box\r\n      ", "\r\n```fsharp\r\n\r\n// Example\r\nbox' [\r\n      str\r\n          \"Lorem ipsum dolor sit amet, consectetur adipisicing elit\r\n          , sed do eiusmod tempor incididunt ut labore et dolore\r\n          magna aliqua.\r\n          \"\r\n      ]\r\n```\r\n      ");
+  return new Model$10("\r\n# Tags\r\n\r\nThe **tags** can have different colors and sizes. You can also nest a *[Delete element](#elements/delete)* in it.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/tag/)*\r\n        ", init$2(colorCode$2), init$2(sizeCode$2), init$2(nestedDeletedCode));
+}
+function update$10(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$10(model.Intro, model.ColorViewer, patternInput[0], model.NestedDeleteViewer), Cmd.map(function (arg0) {
+      return new Msg$10(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    const patternInput_1 = update$2(msg.data, model.NestedDeleteViewer);
+    return [new Model$10(model.Intro, model.ColorViewer, model.SizeViewer, patternInput_1[0]), Cmd.map(function (arg0_1) {
+      return new Msg$10(2, arg0_1);
+    }, patternInput_1[1])];
+  } else {
+    const patternInput_2 = update$2(msg.data, model.ColorViewer);
+    return [new Model$10(model.Intro, patternInput_2[0], model.SizeViewer, model.NestedDeleteViewer), Cmd.map(function (arg0_2) {
+      return new Msg$10(0, arg0_2);
+    }, patternInput_2[1])];
+  }
 }
 
+const typeCode = "\r\n```fsharp\r\n    Heading.h1 [ Heading.isTitle ]\r\n        [ str \"Title\" ]\r\n    Heading.h2 [ Heading.isSubtitle ]\r\n        [ str \"Subtitle\" ]\r\n```\r\n    ";
+const sizeCode$3 = "\r\n```fsharp\r\nHeading.h1 [ Heading.isTitle ]\r\n    [ str \"Title 1\" ]\r\nHeading.h2 [ Heading.isTitle ]\r\n    [ str \"Title 2\" ]\r\nHeading.h3 [ Heading.isTitle ]\r\n    [ str \"Title 3\" ]\r\nHeading.h4 [ Heading.isTitle ]\r\n    [ str \"Title 3\" ]\r\nHeading.h5 [ Heading.isTitle ]\r\n    [ str \"Title 5\" ]\r\nHeading.h6 [ Heading.isTitle ]\r\n    [ str \"Title 6\" ]\r\nHeading.h1 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 1\" ]\r\nHeading.h2 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 2\" ]\r\nHeading.h3 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 3\" ]\r\nHeading.h4 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 4\" ]\r\nHeading.h5 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 5\" ]\r\nHeading.h6 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 6\" ]\r\n```\r\n    ";
 function init$11() {
-  return new Model$10("\r\n# Content\r\n\r\nA single class to handle WYSIWYG generated content, where only **HTML tags** are available.\r\n      ", "\r\n## Sizes\r\n        ", "\r\n```fsharp\r\n  // Normal size\r\n  Content.content\r\n    [] []\r\n    [ h1 [] [str \"Hello World\"]\r\n      ..... ]\r\n\r\n  // Small size\r\n  Content.content\r\n    [ Content.isSmall ] []\r\n    [ h1 [] [str \"Hello World\"]\r\n      ..... ]\r\n\r\n  // Medium size\r\n  Content.content\r\n    [ Content.isMedium ] []\r\n    [ h1 [] [str \"Hello World\"]\r\n      ..... ]\r\n\r\n  // Large size\r\n  Content.content\r\n    [ Content.isLarge ] []\r\n    [ h1 [] [str \"Hello World\"]\r\n      ..... ]\r\n```\r\n    ");
+  return new Model$11("\r\n# Title\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/title/)*\r\n        ", init$2(typeCode), init$2(sizeCode$3));
+}
+function update$11(msg, model) {
+  if (msg.tag === 1) {
+    const patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$11(model.Intro, model.TypeViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$11(1, arg0);
+    }, patternInput[1])];
+  } else {
+    const patternInput_1 = update$2(msg.data, model.TypeViewer);
+    return [new Model$11(model.Intro, patternInput_1[0], model.SizeViewer), Cmd.map(function (arg0_1) {
+      return new Msg$11(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
+const iconCode$2 = "\r\n```fsharp\r\nPanel.panel\r\n    [ Panel.heading [ str \"Repositories\"]\r\n      Panel.block [ ]\r\n        [ Control.control [ Control.hasIconLeft ]\r\n            [ Input.input [ Input.isSmall\r\n                            Input.typeIsText\r\n                            Input.placeholder \"Search\" ]\r\n              Icon.icon [ Icon.isSmall\r\n                          Icon.isLeft ]\r\n                        [ i [ ClassName \"fa fa-search\" ] [ ] ] ] ]\r\n      Panel.tabs\r\n        [ Panel.tab [ ] [ str \"All\" ]\r\n          Panel.tab [ Panel.Tab.isActive ] [ str \"Fable\" ]\r\n          Panel.tab [ ] [ str \"Elmish\" ]\r\n          Panel.tab [ ] [ str \"Bulma\" ] ]\r\n      Panel.block [ Panel.Block.isActive ]\r\n        [ Panel.icon [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n          str \"Bulma\" ]\r\n      Panel.block [ ]\r\n        [ Panel.icon [ i [ ClassName \"fa fa-code-fork\" ] [ ] ]\r\n          str \"Fable\" ]\r\n      Panel.checkbox [ ]\r\n        [ input [ Type \"checkbox\" ]\r\n          str \"I am a checkbox\" ]\r\n      Panel.block [ ]\r\n        [ Button.button [ Button.isPrimary\r\n                          Button.isOutlined\r\n                          Button.isFullWidth ]\r\n                        [ str \"Reset\" ] ] ]\r\n```\r\n    ";
 function init$12() {
-  return new Model$11("\r\n# Tags\r\n            ", "\r\n```fsharp\r\n//Example\r\ntag [] [] [str \"Tag label\"]\r\n```\r\n            ", "\r\n## Colors\r\n            ", "\r\n```fsharp\r\nTag.tag [ Tag.isBlack ] [ str \"Black\" ]\r\nTag.tag [ Tag.isDark ] [ str \"Dark\" ]\r\nTag.tag [ Tag.isLight ] [ str \"Light\" ]\r\nTag.tag [ Tag.isWhite ] [ str \"White\" ]\r\nTag.tag [ Tag.isPrimary ] [ str \"Primary\"]\r\nTag.tag [ Tag.isInfo ] [ str \"Info\" ]\r\nTag.tag [ Tag.isSuccess ] [ str \"Success\" ]\r\nTag.tag [ Tag.isWarning ] [ str \"Warning\" ]\r\nTag.tag [ Tag.isDanger ] [ str \"Danger\" ]\r\n```\r\n            ", "\r\n## Sizes\r\n            ", "\r\n```fsharp\r\nTag.tag [ Tag.isSuccess; Tag.isMedium ] [ str \"Medium\" ]\r\nTag.tag [ Tag.isInfo; Tag.isLarge ] [ str \"Large\" ]\r\n```\r\n            ");
+  return new Model$12("\r\n# Panel\r\n\r\nA composable **panel**, for compact controls\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/panel/)*\r\n        ", init$2(iconCode$2));
+}
+function update$12(msg, model) {
+  const patternInput = update$2(msg.data, model.PanelViewer);
+  return [new Model$12(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$12(0, arg0);
+  }, patternInput[1])];
+}
+
+const iconCode$3 = "\r\n```fsharp\r\n    Level.level [ ]\r\n        [ Level.left [ ]\r\n            [ Level.item [ ]\r\n                [ Heading.h5 [ Heading.isSubtitle ]\r\n                    [ strong [ ] [ str \"123\"]\r\n                      str \" posts\" ] ]\r\n              Level.item [ ]\r\n                [ Field.field [ Field.hasAddonsLeft ]\r\n                    [ Control.control [ ]\r\n                        [ Input.input [ Input.typeIsText\r\n                                        Input.placeholder \"Find a post\" ] ]\r\n                      Control.control [ ]\r\n                        [ Button.button [ ]\r\n                            [ str \"Search\" ] ] ] ] ]\r\n          Level.right [ ]\r\n            [ Level.item [ ]\r\n                [ a [ ] [ str \"All\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Published\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Drafts\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Deleted\" ] ]\r\n              Level.item [ ]\r\n                [ Button.button [ Button.isSuccess ] [ str \"New\" ] ] ] ]\r\n```\r\n    ";
+function init$13() {
+  return new Model$13("\r\n# Level\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/level/)*\r\n        ", init$2(iconCode$3));
+}
+function update$13(msg, model) {
+  const patternInput = update$2(msg.data, model.BoxViewer);
+  return [new Model$13(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$13(0, arg0);
+  }, patternInput[1])];
+}
+
+function init$14() {
+  return new Model$14("\r\n# Fable.Elmish.Bulma\r\n\r\nBring Bulma power into Elmish.\r\n\r\n---\r\n    test\r\n---\r\n\r\n\r\n        ");
 }
 
 const pageParser = (() => {
@@ -26059,46 +30518,140 @@ const pageParser = (() => {
     return function (state_10) {
       return collect(parseAfter_10, parseBefore_10(state_10));
     };
-  })()), map_1(new Page(0), function (state_11) {
-    return top(state_11);
+  })()), map_1(new Page(2, new Components(0)), (() => {
+    const parseBefore_11 = s("components");
+    const parseAfter_11 = s("panel");
+    return function (state_11) {
+      return collect(parseAfter_11, parseBefore_11(state_11));
+    };
+  })()), map_1(new Page(2, new Components(1)), (() => {
+    const parseBefore_12 = s("components");
+    const parseAfter_12 = s("level");
+    return function (state_12) {
+      return collect(parseAfter_12, parseBefore_12(state_12));
+    };
+  })()), map_1(new Page(0), function (state_13) {
+    return top(state_13);
   })]);
-  return function (state_12) {
-    return oneOf(parsers, state_12);
+  return function (state_14) {
+    return oneOf(parsers, state_14);
   };
 })();
 function urlUpdate(result, model) {
   if (result != null) {
-    return [new Model(result, model.home, model.elements), new List$1()];
+    return [new Model$2(result, model.Home, model.Elements, model.Components), new List$1()];
   } else {
     console.error("Error parsing url");
-    return [model, Navigation.modifyUrl(toHash(model.currentPage))];
+    return [model, Navigation.modifyUrl(toHash(model.CurrentPage))];
   }
 }
 function init(result) {
-  const patternInput = init$1();
-  let elements;
-  const button = init$2();
-  const icon = init$3();
-  const image = init$4();
-  const progress = init$5();
-  const form = init$6();
-  elements = new ElementsModel(button, icon, image, progress, init$7(), form, init$8(), init$9(), init$10(), init$11(), init$12());
-  const patternInput_1 = urlUpdate(result, new Model(new Page(0), patternInput[0], elements));
-  return [patternInput_1[0], Cmd.batch(ofArray([patternInput_1[1], Cmd.map(function (arg0) {
-    return new Msg$1(0, arg0);
-  }, patternInput[1])]))];
+  const elements = new ElementsModel(init$1(), init$3(), init$4(), init$5(), init$6(), init$7(), init$8(), init$9(), init$10(), init$11());
+  const components = new ComponentsModel(init$12(), init$13());
+  const patternInput = urlUpdate(result, new Model$2(new Page(0), init$14(), elements, components));
+  return [patternInput[0], Cmd.batch(ofArray([patternInput[1]]))];
 }
 function update(msg, model) {
   if (msg.tag === 1) {
-    return [model, Cmd$1.newNotification(notification(new List$1(), new List$1(), ofArray(["coucou"])))];
+    return [model, Cmd.none()];
   } else if (msg.tag === 2) {
-    console.log("couocuo");
-    return [model, new List$1()];
-  } else {
-    const patternInput = update$1(msg.data, model.home);
-    return [new Model(model.currentPage, patternInput[0], model.elements), Cmd.map(function (arg0) {
-      return new Msg$1(0, arg0);
+    const patternInput = update$1(msg.data, model.Elements.Box);
+    return [(() => {
+      const Elements$$1 = new ElementsModel(patternInput[0], model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements$$1, model.Components);
+    })(), Cmd.map(function (arg0) {
+      return new Msg$2(2, arg0);
     }, patternInput[1])];
+  } else if (msg.tag === 3) {
+    const patternInput_1 = update$3(msg.data, model.Elements.Button);
+    return [(() => {
+      const Elements_1 = new ElementsModel(model.Elements.Box, patternInput_1[0], model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_1, model.Components);
+    })(), Cmd.map(function (arg0_1) {
+      return new Msg$2(3, arg0_1);
+    }, patternInput_1[1])];
+  } else if (msg.tag === 4) {
+    const patternInput_2 = update$4(msg.data, model.Elements.Content);
+    return [(() => {
+      const Elements_2 = new ElementsModel(model.Elements.Box, model.Elements.Button, patternInput_2[0], model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_2, model.Components);
+    })(), Cmd.map(function (arg0_2) {
+      return new Msg$2(4, arg0_2);
+    }, patternInput_2[1])];
+  } else if (msg.tag === 5) {
+    const patternInput_3 = update$5(msg.data, model.Elements.Delete);
+    return [(() => {
+      const Elements_3 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, patternInput_3[0], model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_3, model.Components);
+    })(), Cmd.map(function (arg0_3) {
+      return new Msg$2(5, arg0_3);
+    }, patternInput_3[1])];
+  } else if (msg.tag === 6) {
+    const patternInput_4 = update$6(msg.data, model.Elements.Icon);
+    return [(() => {
+      const Elements_4 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, patternInput_4[0], model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_4, model.Components);
+    })(), Cmd.map(function (arg0_4) {
+      return new Msg$2(6, arg0_4);
+    }, patternInput_4[1])];
+  } else if (msg.tag === 7) {
+    const patternInput_5 = update$7(msg.data, model.Elements.Image);
+    return [(() => {
+      const Elements_5 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, patternInput_5[0], model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_5, model.Components);
+    })(), Cmd.map(function (arg0_5) {
+      return new Msg$2(7, arg0_5);
+    }, patternInput_5[1])];
+  } else if (msg.tag === 8) {
+    const patternInput_6 = update$8(msg.data, model.Elements.Progress);
+    return [(() => {
+      const Elements_6 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, patternInput_6[0], model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_6, model.Components);
+    })(), Cmd.map(function (arg0_6) {
+      return new Msg$2(8, arg0_6);
+    }, patternInput_6[1])];
+  } else if (msg.tag === 9) {
+    const patternInput_7 = update$9(msg.data, model.Elements.Table);
+    return [(() => {
+      const Elements_7 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, patternInput_7[0], model.Elements.Tag, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_7, model.Components);
+    })(), Cmd.map(function (arg0_7) {
+      return new Msg$2(9, arg0_7);
+    }, patternInput_7[1])];
+  } else if (msg.tag === 10) {
+    const patternInput_8 = update$10(msg.data, model.Elements.Tag);
+    return [(() => {
+      const Elements_8 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, patternInput_8[0], model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_8, model.Components);
+    })(), Cmd.map(function (arg0_8) {
+      return new Msg$2(10, arg0_8);
+    }, patternInput_8[1])];
+  } else if (msg.tag === 11) {
+    const patternInput_9 = update$11(msg.data, model.Elements.Title);
+    return [(() => {
+      const Elements_9 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, patternInput_9[0]);
+      return new Model$2(model.CurrentPage, model.Home, Elements_9, model.Components);
+    })(), Cmd.map(function (arg0_9) {
+      return new Msg$2(11, arg0_9);
+    }, patternInput_9[1])];
+  } else if (msg.tag === 12) {
+    const patternInput_10 = update$12(msg.data, model.Components.Panel);
+    return [(() => {
+      const Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components$$1);
+    })(), Cmd.map(function (arg0_10) {
+      return new Msg$2(12, arg0_10);
+    }, patternInput_10[1])];
+  } else if (msg.tag === 13) {
+    const patternInput_11 = update$13(msg.data, model.Components.Level);
+    return [(() => {
+      const Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0]);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_1);
+    })(), Cmd.map(function (arg0_11) {
+      return new Msg$2(13, arg0_11);
+    }, patternInput_11[1])];
+  } else {
+    return [model, Cmd$1.newNotification(notification(new List$1(), new List$1(), ofArray(["coucou"])))];
   }
 }
 
@@ -26109,17 +30662,11 @@ const options = {
   langPrefix: "language-"
 };
 marked.setOptions(options);
-function menuItem(label, page, currentPage) {
-  return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([["is-active", page.Equals(currentPage)]])), new Props.HTMLAttr(51, toHash(page))]), 1), label));
+function menuItem(label$$1, page, currentPage) {
+  return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([["is-active", page.Equals(currentPage)]])), new Props.HTMLAttr(51, toHash(page))]), 1), label$$1));
 }
 function menu(currentPage) {
-  return react_1("aside", {
-    className: "menu"
-  }, react_1("p", {
-    className: "menu-label"
-  }, "General"), react_1("ul", {
-    className: "menu-list"
-  }, menuItem("Home", new Page(0), currentPage), menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Form", new Page(1, new Elements(10)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)));
+  return menu$1(ofArray([label("Elements"), list(ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label("Components"), list(ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage)]))]));
 }
 const header = react_1("div", {
   className: "hero is-primary"
@@ -26128,38 +30675,66 @@ const header = react_1("div", {
 }, react_1("div", {
   className: "column has-text-centered"
 }, react_1("h2", {
-  className: "subtitle"
+  className: "subtitle cookieregular"
 }, "Binding for Elmish using Bulma CSS framework"))));
 function root(model, dispatch) {
   const pageHtml = function (_arg1) {
     if (_arg1.tag === 1) {
-      if (_arg1.data.tag === 1) {
-        return root$1(model.elements.icon);
-      } else if (_arg1.data.tag === 2) {
-        return root$2(model.elements.title);
-      } else if (_arg1.data.tag === 3) {
-        return root$3(model.elements.delete);
-      } else if (_arg1.data.tag === 4) {
-        return root$4(model.elements.box);
+      if (_arg1.data.tag === 4) {
+        return root$1(model.Elements.Box, $var1 => dispatch(function (arg0) {
+          return new Msg$2(2, arg0);
+        }($var1)));
+      } else if (_arg1.data.tag === 0) {
+        return root$3(model.Elements.Button, $var2 => dispatch(function (arg0_1) {
+          return new Msg$2(3, arg0_1);
+        }($var2)));
       } else if (_arg1.data.tag === 5) {
-        return root$5(model.elements.content);
-      } else if (_arg1.data.tag === 6) {
-        return root$6(model.elements.tag);
+        return root$4(model.Elements.Content, $var3 => dispatch(function (arg0_2) {
+          return new Msg$2(4, arg0_2);
+        }($var3)));
+      } else if (_arg1.data.tag === 3) {
+        return root$5(model.Elements.Delete, $var4 => dispatch(function (arg0_3) {
+          return new Msg$2(5, arg0_3);
+        }($var4)));
+      } else if (_arg1.data.tag === 1) {
+        return root$6(model.Elements.Icon, $var5 => dispatch(function (arg0_4) {
+          return new Msg$2(6, arg0_4);
+        }($var5)));
       } else if (_arg1.data.tag === 7) {
-        return root$7(model.elements.image);
+        return root$7(model.Elements.Image, $var6 => dispatch(function (arg0_5) {
+          return new Msg$2(7, arg0_5);
+        }($var6)));
       } else if (_arg1.data.tag === 8) {
-        return root$8(model.elements.progress);
+        return root$8(model.Elements.Progress, $var7 => dispatch(function (arg0_6) {
+          return new Msg$2(8, arg0_6);
+        }($var7)));
       } else if (_arg1.data.tag === 9) {
-        return root$9(model.elements.table);
-      } else if (_arg1.data.tag === 10) {
-        return root$10(model.elements.form);
+        return root$9(model.Elements.Table, $var8 => dispatch(function (arg0_7) {
+          return new Msg$2(9, arg0_7);
+        }($var8)));
+      } else if (_arg1.data.tag === 6) {
+        return root$10(model.Elements.Tag, $var9 => dispatch(function (arg0_8) {
+          return new Msg$2(10, arg0_8);
+        }($var9)));
+      } else if (_arg1.data.tag === 2) {
+        return root$11(model.Elements.Title, $var10 => dispatch(function (arg0_9) {
+          return new Msg$2(11, arg0_9);
+        }($var10)));
       } else {
-        return root$11(model.elements.button);
+        return react_1("div", {});
+      }
+    } else if (_arg1.tag === 2) {
+      if (_arg1.data.tag === 1) {
+        return root$12(model.Components.Level, $var11 => dispatch(function (arg0_10) {
+          return new Msg$2(13, arg0_10);
+        }($var11)));
+      } else {
+        return root$13(model.Components.Panel, $var12 => dispatch(function (arg0_11) {
+          return new Msg$2(12, arg0_11);
+        }($var12)));
       }
     } else {
-      return root$12(model.home, $var1 => dispatch(function (arg0) {
-        return new Msg$1(0, arg0);
-      }($var1)));
+      return root$14(model.Home);
     }
   };
 
@@ -26167,7 +30742,7 @@ function root(model, dispatch) {
     className: "navbar-bg"
   }, react_1("div", {
     className: "container"
-  }, root$13)), header, react_1("div", {
+  }, root$15)), header, react_1("div", {
     className: "section"
   }, react_1("div", {
     className: "container"
@@ -26175,9 +30750,9 @@ function root(model, dispatch) {
     className: "columns"
   }, react_1("div", {
     className: "column is-2"
-  }, menu(model.currentPage)), react_1("div", {
+  }, menu(model.CurrentPage)), react_1("div", {
     className: "column"
-  }, pageHtml(model.currentPage))))));
+  }, pageHtml(model.CurrentPage))))));
 }
 ProgramModule.run(withReact("elmish-app", function (program) {
   return Program$1.toNotifiable(function (notifications) {
