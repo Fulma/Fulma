@@ -1,3 +1,7 @@
+#### 0.1.0-next
+
+* Fix #15: Remove duplicate `IsLight`
+
 #### 0.1.0-alpha-3
 
 * Add box

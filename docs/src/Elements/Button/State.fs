@@ -9,7 +9,6 @@ let colorCode =
     Button.button [ ] [ str "Button" ]
     Button.button [ Button.isWhite ] [ str "White" ]
     Button.button [ Button.isLight ] [ str "Light" ]
-    Button.button [ Button.isLight ] [ str "Light" ]
     Button.button [ Button.isDark ] [ str "Dark" ]
     Button.button [ Button.isBlack ] [ str "Black" ]
     Button.button [ Button.isLink ] [ str "Link" ]
