@@ -1,6 +1,7 @@
-#### 0.1.0-next
+#### 0.1.0-alpha4
 
 * Fix #15: Remove duplicate `IsLight`
+* Fix `fable` nuget content (add all the **\*.fs files)
 
 #### 0.1.0-alpha-3
 
