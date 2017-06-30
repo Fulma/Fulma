@@ -16,6 +16,7 @@
     <Compile Include="Components/Media.fs" />
     <Compile Include="Components/Message.fs" />
     <Compile Include="Components/Panel.fs" />
+    <Compile Include="Components/Nav.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />

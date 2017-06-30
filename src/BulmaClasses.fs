@@ -17,6 +17,9 @@ module BulmaClasses =
           IsWarning : string
           IsDanger : string }
 
+    and GenericIsActiveState =
+        { IsActive : string }
+
     and Box =
         { Container : string }
 
@@ -270,6 +273,35 @@ module BulmaClasses =
         { Size : StandardSize
           Color : LevelAndColor }
 
+    and Nav =
+        { Container : string
+          Left : string
+          Center : string
+          Right : string
+          Toggle : NavToggle
+          Menu : NavMenu
+          Item : NavItem
+          Style : NavStyle }
+
+    and NavToggle =
+        { Container : string
+          State : GenericIsActiveState }
+
+    and NavMenu =
+        { Container : string
+          State : GenericIsActiveState }
+
+    and NavItem =
+        { Container : string
+          Style : NavItemStyle
+          State : GenericIsActiveState }
+
+    and NavItemStyle =
+        { IsTab : string }
+
+    and NavStyle =
+        { HasShadow : string }
+
     and Panel =
         { Container : string
           Heading : string
@@ -394,6 +426,7 @@ module BulmaClasses =
           Menu : Menu
           Media : Media
           Message : Message
+          Nav : Nav
           Panel : Panel
           Properties : Properties
           Progress : Progress
@@ -420,6 +453,9 @@ module BulmaClasses =
           IsSuccess = "is-success"
           IsWarning = "is-warning"
           IsDanger = "is-danger" }
+
+    let genericIsActiveState : GenericIsActiveState =
+        { IsActive = "is-active" }
 
     let box = { Container = "box" }
 
@@ -634,6 +670,25 @@ module BulmaClasses =
           Body = "message-body"
           Color = levelAndColor }
 
+    let nav : Nav =
+        { Container = "nav"
+          Left = "nav-left"
+          Center = "nav-center"
+          Right = "nav-right"
+          Toggle =
+            { Container = "nav-toggle"
+              State = genericIsActiveState }
+          Menu =
+            { Container = "nav-menu"
+              State = genericIsActiveState }
+          Item =
+            { Container = "nav-item"
+              Style =
+                { IsTab = "is-tab" }
+              State = genericIsActiveState }
+          Style =
+            { HasShadow = "has-shadow" } }
+
     let panel : Panel =
         { Container = "panel"
           Heading = "panel-heading"
@@ -728,6 +783,7 @@ module BulmaClasses =
           Menu = menu
           Media = media
           Message = message
+          Nav = nav
           Panel = panel
           Properties = properties
           Progress = progress

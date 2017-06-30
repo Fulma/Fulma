@@ -1,9 +1,13 @@
-#### 0.1.0-alpha4
+### 0.1.0-alpha5
+
+* Add Nav components support
+
+### 0.1.0-alpha4
 
 * Fix #15: Remove duplicate `IsLight`
 * Fix `fable` nuget content (add all the **\*.fs files)
 
-#### 0.1.0-alpha-3
+### 0.1.0-alpha-3
 
 * Add box
 * Add button
