@@ -6,7 +6,7 @@ open Types
 let typeCode =
     """
 ```fsharp
-    Heading.h1 [ Heading.isTitle ]
+    Heading.h1 [ ]
         [ str "Title" ]
     Heading.h2 [ Heading.isSubtitle ]
         [ str "Subtitle" ]
@@ -16,17 +16,17 @@ let typeCode =
 let sizeCode =
     """
 ```fsharp
-Heading.h1 [ Heading.isTitle ]
+Heading.h1 [ ]
     [ str "Title 1" ]
-Heading.h2 [ Heading.isTitle ]
+Heading.h2 [ ]
     [ str "Title 2" ]
-Heading.h3 [ Heading.isTitle ]
+Heading.h3 [ ]
     [ str "Title 3" ]
-Heading.h4 [ Heading.isTitle ]
+Heading.h4 [ ]
     [ str "Title 3" ]
-Heading.h5 [ Heading.isTitle ]
+Heading.h5 [ ]
     [ str "Title 5" ]
-Heading.h6 [ Heading.isTitle ]
+Heading.h6 [ ]
     [ str "Title 6" ]
 Heading.h1 [ Heading.isSubtitle ]
     [ str "Subtitle 1" ]

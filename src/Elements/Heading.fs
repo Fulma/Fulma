@@ -19,10 +19,6 @@ module Heading =
             | Is5
             | Is6
 
-        type ITitleType =
-            | Title
-            | Subtitle
-
         let ofTitleSize titleSize =
             match titleSize with
             | Is1 -> bulma.Heading.Size.Is1
@@ -32,14 +28,9 @@ module Heading =
             | Is5 -> bulma.Heading.Size.Is5
             | Is6 -> bulma.Heading.Size.Is6
 
-        let ofTitleType titleType =
-            match titleType with
-            | Title -> bulma.Heading.Title
-            | Subtitle -> bulma.Heading.Subtitle
-
         type Option =
             | Size of ITitleSize
-            | Type of ITitleType
+            | IsSubtitle
             | IsSpaced
 
         type Options =
@@ -48,14 +39,13 @@ module Heading =
               IsSpaced : bool }
             static member Empty =
                 { TitleSize = None
-                  TitleType = ""
+                  TitleType = bulma.Heading.Title
                   IsSpaced = false }
 
     open Types
 
     //Types
-    let isTitle = Type Title
-    let isSubtitle = Type Subtitle
+    let isSubtitle = IsSubtitle
     // Sizes
     let is1 = Size Is1
     let is2 = Size Is2
@@ -71,7 +61,7 @@ module Heading =
         let parseOption result opt =
             match opt with
             | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
-            | Type tt -> { result with TitleType = ofTitleType tt }
+            | IsSubtitle -> { result with TitleType = bulma.Heading.Subtitle }
             | IsSpaced -> { result with IsSpaced = true }
 
         let opts = options |> List.fold parseOption Options.Empty

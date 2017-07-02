@@ -1,3 +1,7 @@
+### 0.1.0-next
+
+* Fix #18: Heading should generate `title` by default
+
 ### 0.1.0-alpha5
 
 * Add Nav components support
