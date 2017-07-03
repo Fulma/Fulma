@@ -1,6 +1,8 @@
-### 0.1.0-next
+### 0.1.0-alpha6
 
 * Fix #18: Heading should generate `title` by default
+* Add Hero support
+* Start implemententing `genericOptions`. Related to #16 & #17
 
 ### 0.1.0-alpha5
 

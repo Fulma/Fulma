@@ -30,6 +30,8 @@
     <Compile Include="Elements/Content.fs" />
     <Compile Include="Elements/Tag.fs" />
     <Compile Include="Elements/Form.fs" />
+    <!-- Layout -->
+    <Compile Include="Layout/Hero.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />

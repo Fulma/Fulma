@@ -2,6 +2,7 @@ namespace Elmish.Bulma
 
 open Elmish.Bulma.BulmaClasses
 open Fable.Core
+open Fable.Helpers.React.Props
 
 module Common =
     type ISize =
@@ -41,6 +42,28 @@ module Common =
         | IsMedium -> bulma.Modifiers.Size.IsMedium
         | IsLarge -> bulma.Modifiers.Size.IsLarge
         | ISize.Nothing -> ""
+
+    type GenericOption =
+        | Classy of string
+        | Props of IHTMLProp list
+
+    type GenericOptions =
+        { Classy : string option
+          Props : IHTMLProp list }
+
+        static member Empty =
+            { Classy = None
+              Props = [] }
+
+    let genericParse options =
+        let parseOptions (result: GenericOptions ) opt =
+            match opt with
+            | Props props -> { result with Props = props }
+            | Classy classy -> { result with Classy = Some classy }
+
+        options |> List.fold parseOptions GenericOptions.Empty
+
+
 
     module Helpers =
         let inline generateClassName baseClass (values : string option list) =

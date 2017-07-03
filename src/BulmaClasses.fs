@@ -229,6 +229,33 @@ module BulmaClasses =
     and HeadingSpacing =
         { IsNormal : string }
 
+    and Hero =
+        { Container : string
+          Head : string
+          Body : string
+          Foot : string
+          Video : HeroVideo
+          Buttons : HeroButtons
+          Style : HeroStyle
+          Size : HeroSize
+          Color : LevelAndColor }
+
+    and HeroVideo =
+        { Container : string
+          IsTransparent : string }
+
+    and HeroButtons =
+        { Container : string }
+
+    and HeroStyle =
+        { IsBold : string }
+
+    and HeroSize =
+        { IsMedium : string
+          IsLarge : string
+          IsHalfHeight : string
+          IsFullHeight : string }
+
     and Label =
         { Container : string
           Size : StandardSize }
@@ -421,6 +448,7 @@ module BulmaClasses =
           Field : Field
           Grid : Grid
           Heading : Heading
+          Hero : Hero
           Label : Label
           Level : Level
           Menu : Menu
@@ -457,7 +485,7 @@ module BulmaClasses =
     let genericIsActiveState : GenericIsActiveState =
         { IsActive = "is-active" }
 
-    let box = { Container = "box" }
+    let box : Box = { Container = "box" }
 
     let button : Button =
         { Container = "button"
@@ -637,6 +665,25 @@ module BulmaClasses =
                 Is6 = "is-6" }
           Spacing = { IsNormal = "is-spaced" } }
 
+    let hero : Hero =
+        { Container = "hero"
+          Head = "hero-head"
+          Body = "hero-body"
+          Foot = "hero-foot"
+          Video =
+            { Container = "hero-video"
+              IsTransparent = "is-transparent" }
+          Buttons =
+            { Container = "hero-buttons" }
+          Style =
+            { IsBold = "is-bold" }
+          Size =
+            { IsMedium = "is-medium"
+              IsLarge = "is-large"
+              IsHalfHeight = "is-halfheight"
+              IsFullHeight = "is-fullheight" }
+          Color = levelAndColor }
+
     let label : Label =
         { Container = "label"
           Size = standardSize }
@@ -788,5 +835,6 @@ module BulmaClasses =
           Properties = properties
           Progress = progress
           Heading = heading
+          Hero = hero
           Table = table
           Tag = tag }
