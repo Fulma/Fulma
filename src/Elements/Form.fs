@@ -204,7 +204,7 @@ module Form =
         let isDanger = Color IsDanger
         // Types
         let typeIsText = Type Text
-        let typeIsSassword = Type Password
+        let typeIsPassword = Type Password
         let typeIsDatetimeLocal = Type DatetimeLocal
         let typeIsDate = Type Date
         let typeIsMonth = Type Month

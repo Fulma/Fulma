@@ -1,3 +1,7 @@
+### 0.1.0-next
+
+* Fix typo `typeIsSassword` -> `typeIsPassword`
+
 ### 0.1.0-alpha6
 
 * Fix #18: Heading should generate `title` by default
