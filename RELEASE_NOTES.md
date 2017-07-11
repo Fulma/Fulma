@@ -1,6 +1,7 @@
-### 0.1.0-next
+### 0.1.0-alpha7
 
 * Fix typo `typeIsSassword` -> `typeIsPassword`
+* Implements `CustomClass` and `Props` for all the helpers
 
 ### 0.1.0-alpha6
 
