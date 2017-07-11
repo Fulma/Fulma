@@ -32,7 +32,7 @@ let root interactiveView model dispatch =
     Card.card [ ]
         [ yield Card.content [ ] [ interactiveView ]
           yield Card.footer
-            [ OnClick (fun _ -> eventToTrigger |> dispatch) ]
+            [ Card.Footer.props [ OnClick (fun _ -> eventToTrigger |> dispatch) ] ]
             [ footerItemIcon
               footerItemText
               footerItemIcon ]

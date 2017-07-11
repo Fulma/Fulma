@@ -11,41 +11,72 @@ open Fable.Import
 
 module Card =
 
-    let card (props : IHTMLProp list) children =
-        div [ yield ClassName bulma.Card.Container :> IHTMLProp
-              yield! props ]
+    let customClass = CustomClass
+    let props = Props
+
+    let card (options: GenericOption list) children =
+        let opts = genericParse options
+        div [ yield classBaseList
+                        bulma.Card.Container
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children
 
-    let header props children =
-        header [ yield ClassName bulma.Card.Header.Container :> IHTMLProp
-                 yield! props ]
+    let header (options: GenericOption list) children =
+        let opts = genericParse options
+        header [ yield classBaseList
+                        bulma.Card.Header.Container
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                 yield! opts.Props ]
                children
 
-    let content props children =
-        div [ yield ClassName bulma.Card.Content :> IHTMLProp
-              yield! props ]
+    let content (options: GenericOption list) children =
+        let opts = genericParse options
+        div [ yield classBaseList
+                        bulma.Card.Content
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children
 
-    let footer props children =
-        footer [ yield ClassName bulma.Card.Footer.Container :> IHTMLProp
-                 yield! props ]
+    let footer (options: GenericOption list) children =
+        let opts = genericParse options
+        footer [ yield classBaseList
+                        bulma.Card.Footer.Container
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                 yield! opts.Props ]
                children
 
     module Header =
 
-        let icon props children =
-            a [ yield ClassName bulma.Card.Header.Icon :> IHTMLProp
-                yield! props ]
+        let customClass = CustomClass
+        let props = Props
+
+        let icon (options: GenericOption list) children =
+            let opts = genericParse options
+            a [ yield classBaseList
+                        bulma.Card.Header.Icon
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                yield! opts.Props ]
               children
 
-        let title props children =
-            p [ yield ClassName bulma.Card.Header.Title :> IHTMLProp
-                yield! props ]
+        let title (options: GenericOption list) children =
+            let opts = genericParse options
+            p [ yield classBaseList
+                        bulma.Card.Header.Title
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                yield! opts.Props ]
               children
 
     module Footer =
 
-        let item props children =
-            a [ yield ClassName bulma.Card.Footer.Item :> IHTMLProp
-                yield! props ]
+        let customClass = CustomClass
+        let props = Props
+
+        let item (options: GenericOption list) children =
+            let opts = genericParse options
+
+            a [ yield classBaseList
+                        bulma.Card.Footer.Item
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                yield! opts.Props ]
               children

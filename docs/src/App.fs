@@ -38,9 +38,9 @@ let menuItem label page currentPage =
            [ str label ] ]
 
 let menu currentPage =
-    Menu.menu
-        [ Menu.label "Elements"
-          Menu.list
+    Menu.menu [ ]
+        [ Menu.label [ ] [ str "Elements" ]
+          Menu.list [ ]
             [ //menuItem "Home" Home currentPage
               menuItem "Button" (Element Button) currentPage
               menuItem "Icon" (Element Elements.Icon) currentPage
@@ -53,8 +53,8 @@ let menu currentPage =
               menuItem "Table" (Element Elements.Table) currentPage
               //menuItem "Form" (Element Elements.Form) currentPage
               menuItem "Tag" (Element Elements.Tag) currentPage ]
-          Menu.label "Components"
-          Menu.list
+          Menu.label [ ] [ str "Components" ]
+          Menu.list [ ]
             [ menuItem "Panel" (Component Panel) currentPage
               menuItem "Level" (Component Level) currentPage ] ]
 

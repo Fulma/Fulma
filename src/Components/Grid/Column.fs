@@ -43,6 +43,8 @@ module Column =
         type Option =
             | Width of IScreen * ISize
             | Offset of IScreen * ISize
+            | CustomClass of string
+            | Props of IHTMLProp list
 
         let ofWidth =
             function
@@ -260,7 +262,9 @@ module Column =
               MobileWidth : string option
               MobileOffset : string option
               WideScreenpWidth : string option
-              WideScreenpOffset : string option }
+              WideScreenpOffset : string option
+              CustomClass : string option
+              Props : IHTMLProp list }
             static member Empty =
                 { Width = None
                   Offset = None
@@ -271,7 +275,9 @@ module Column =
                   MobileWidth = None
                   MobileOffset = None
                   WideScreenpWidth = None
-                  WideScreenpOffset = None }
+                  WideScreenpOffset = None
+                  CustomClass = None
+                  Props = [] }
 
     open Types
 
@@ -478,6 +484,9 @@ module Column =
         let isNarrow = Offset (All, IsNarrow)
         let isFull = Offset (All, IsFull)
 
+    // Extra
+    let customClass = CustomClass
+    let props = Props
 
     let column (options : Option list) children =
         let parseOptions (result: Options) =
@@ -502,12 +511,14 @@ module Column =
                 { result with WideScreenpWidth = ofWidth (screen, width) |> Some }
             | Offset (screen, offset) when screen = WideScreen ->
                 { result with WideScreenpOffset = ofOffset (screen, offset) |> Some }
+            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Props props -> { result with Props = props }
             | x -> failwithf "Error when parsing column option %A" x
 
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        div [ ClassName ( Helpers.generateClassName bulma.Grid.Column.Container
+        div [ yield ClassName ( Helpers.generateClassName bulma.Grid.Column.Container
                                                     [ opts.Width
                                                       opts.Offset
                                                       opts.DesktopWidth
@@ -517,5 +528,7 @@ module Column =
                                                       opts.TabletpWidth
                                                       opts.TabletpOffset
                                                       opts.WideScreenpWidth
-                                                      opts.WideScreenpOffset ] ) ]
+                                                      opts.WideScreenpOffset
+                                                      opts.CustomClass ] ) :> IHTMLProp
+              yield! opts.Props ]
             children

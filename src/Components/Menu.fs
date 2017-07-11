@@ -11,8 +11,26 @@ open Fable.Import
 
 module Menu =
 
-    let menu  = aside [ ClassName bulma.Menu.Container ]
+    let menu (options: GenericOption list) children =
+        let opts = genericParse options
 
-    let label menuLabel = p [ ClassName bulma.Menu.Label ] [ str menuLabel ]
+        aside [ yield classBaseList bulma.Menu.Container
+                                    [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                yield! opts.Props ]
+              children
 
-    let list = ul [ ClassName bulma.Menu.List ]
+    let label (options: GenericOption list) children =
+        let opts = genericParse options
+
+        p [ yield classBaseList bulma.Menu.Label
+                                [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+            yield! opts.Props ]
+          children
+
+    let list (options: GenericOption list) children =
+        let opts = genericParse options
+
+        ul [ yield classBaseList bulma.Menu.List
+                                 [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+             yield! opts.Props ]
+           children

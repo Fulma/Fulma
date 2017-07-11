@@ -18,69 +18,97 @@ module Level =
             type Option =
                 | Props of IHTMLProp list
                 | IsMobile
+                | CustomClass of string
 
             type Options =
                 { Props : IHTMLProp list
-                  IsMobile : bool }
+                  IsMobile : bool
+                  CustomClass : string option }
 
                 static member Empty =
                     { Props = []
-                      IsMobile = false }
+                      IsMobile = false
+                      CustomClass = None }
 
         module Item =
 
             type Option =
                 | Props of IHTMLProp list
                 | HasTextCentered
+                | CustomClass of string
 
             type Options =
                 { Props : IHTMLProp list
-                  HasTextCentered : bool }
+                  HasTextCentered : bool
+                  CustomClass : string option }
 
                 static member Empty =
                     { Props = []
-                      HasTextCentered = false }
+                      HasTextCentered = false
+                      CustomClass = None }
 
     open Types
 
-    let isMobile = Level.IsMobile
+    module Level =
+        let isMobile = Level.IsMobile
+        // Extra
+        let props = Level.Props
+        let customClass = Level.CustomClass
 
     let level (options : Level.Option list) children =
         let parseOptions (result: Level.Options ) opt =
             match opt with
             | Level.Option.Props props -> { result with Props = props }
             | Level.Option.IsMobile -> { result with IsMobile = true }
+            | Level.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Level.Options.Empty
 
         nav [ yield classBaseList
                         bulma.Level.Container
-                        [ bulma.Level.Mobile.IsHorizontal, opts.IsMobile ] :> IHTMLProp
+                        [ bulma.Level.Mobile.IsHorizontal, opts.IsMobile
+                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
 
-    let left props children =
-        div [ yield ClassName bulma.Level.Left :> IHTMLProp
-              yield! props ]
+    let props = GenericOption.Props
+    let customClass = GenericOption.CustomClass
+
+    let left (options: GenericOption list) children =
+        let opts = genericParse options
+
+        div [ yield classBaseList bulma.Level.Left
+                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children
 
-    let right props children =
-        div [ yield ClassName bulma.Level.Right :> IHTMLProp
-              yield! props ]
+    let right (options: GenericOption list) children =
+        let opts = genericParse options
+
+        div [ yield classBaseList bulma.Level.Right
+                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children
 
-    let hasTextCentered = Item.HasTextCentered
+    module Item =
+        let hasTextCentered = Item.HasTextCentered
+        // Extra
+        let props = Item.Props
+        let customClass = Item.CustomClass
+
 
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
             match opt with
             | Item.Props props -> { result with Props = props }
             | Item.HasTextCentered -> { result with HasTextCentered = true }
+            | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
         nav [ yield classBaseList
                         bulma.Level.Item.Container
-                        [ bulma.Level.Item.HasTextCentered, opts.HasTextCentered ] :> IHTMLProp
+                        [ bulma.Level.Item.HasTextCentered, opts.HasTextCentered
+                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
