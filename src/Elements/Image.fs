@@ -50,18 +50,18 @@ module Image =
         type Option =
             | Size of IImageSize
             | Ratio of IImageRatio
-            | Classy of string
+            | CustomClass of string
             | Props of IHTMLProp list
 
         type Options =
             { Size : string option
               Ratio : string option
-              Classy : string option
+              CustomClass : string option
               Props : IHTMLProp list }
             static member Empty =
                 { Size = None
                   Ratio = None
-                  Classy = None
+                  CustomClass = None
                   Props = [] }
 
     open Types
@@ -82,7 +82,7 @@ module Image =
     let is16by9 = Ratio Is16by9
     let is2by1 = Ratio Is2by1
     // Extra
-    let classy = Classy
+    let customClass = CustomClass
     let props = Props
 
     let image options children =
@@ -90,13 +90,13 @@ module Image =
             function
             | Size size -> { result with Size = ofImageSize size |> Some }
             | Ratio ratio -> { result with Ratio = ofImageRatio ratio |> Some }
-            | Classy classy -> { result with Classy = classy |> Some }
+            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
         figure
             [ yield ClassName(Helpers.generateClassName
                                     bulma.Image.Container
-                                    [ opts.Size; opts.Ratio; opts.Classy ]) :> IHTMLProp
+                                    [ opts.Size; opts.Ratio; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props ]
             children

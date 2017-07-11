@@ -11,7 +11,7 @@ open Elmish.Bulma.Common
 
 module Box =
 
-    let classy cls = Classy cls
+    let customClass cls = CustomClass cls
     let props props = Props props
 
     let box' (options: GenericOption list) children =
@@ -20,6 +20,6 @@ module Box =
         div
             [ yield classBaseList
                         bulma.Box.Container
-                        [ opts.Classy.Value, opts.Classy.IsSome ] :> IHTMLProp
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

@@ -32,20 +32,20 @@ module Heading =
             | Size of ITitleSize
             | IsSubtitle
             | IsSpaced
-            | Classy of string
+            | CustomClass of string
             | Props of IHTMLProp list
 
         type Options =
             { TitleSize : string option
               TitleType : string
               IsSpaced : bool
-              Classy : string option
+              CustomClass : string option
               Props : IHTMLProp list }
             static member Empty =
                 { TitleSize = None
                   TitleType = bulma.Heading.Title
                   IsSpaced = false
-                  Classy = None
+                  CustomClass = None
                   Props = [] }
 
     open Types
@@ -63,7 +63,7 @@ module Heading =
     let isSpaced = IsSpaced
     // Extra
     let props = Props
-    let classy = Classy
+    let customClass = CustomClass
 
     let internal title (element : IHTMLProp list -> React.ReactElement list -> React.ReactElement) (options : Option list)
         (children) =
@@ -72,12 +72,12 @@ module Heading =
             | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
             | IsSubtitle -> { result with TitleType = bulma.Heading.Subtitle }
             | IsSpaced -> { result with IsSpaced = true }
-            | Classy classy -> { result with Classy = classy |> Some }
+            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
         let className =
-            classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize; opts.Classy ])
+            classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize; opts.CustomClass ])
                 [ bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
         element
             [ yield className :> IHTMLProp

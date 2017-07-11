@@ -34,7 +34,7 @@ module Button =
             | State of IState
             | Props of IHTMLProp list
             | OnClick of (React.MouseEvent -> unit)
-            | Classy of string
+            | CustomClass of string
 
         let ofSize size =
             match size with
@@ -67,7 +67,7 @@ module Button =
               IsLink : bool
               State : string option
               Props : IHTMLProp list
-              Classy : string option
+              CustomClass : string option
               OnClick : (React.MouseEvent -> unit) option }
             static member Empty =
                 { Level = None
@@ -77,7 +77,7 @@ module Button =
                   IsLink = false
                   State = None
                   Props = []
-                  Classy = None
+                  CustomClass = None
                   OnClick = None }
 
     open Types
@@ -120,7 +120,7 @@ module Button =
             | IsLink -> { result with IsLink = true }
             | State state -> { result with State = ofState state |> Some }
             | Props props -> { result with Props = props }
-            | Classy classy -> { result with Classy = Some classy }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
@@ -131,7 +131,7 @@ module Button =
                  [ bulma.Button.Styles.IsOutlined, opts.IsOutlined
                    bulma.Button.Styles.IsInverted, opts.IsInverted
                    bulma.Button.Styles.IsLink, opts.IsLink
-                   opts.Classy.Value, opts.Classy.IsSome ] :> IHTMLProp
+                   opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               if opts.OnClick.IsSome then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
               yield! opts.Props ]

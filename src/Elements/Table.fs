@@ -15,20 +15,20 @@ module Table =
             | IsBordered
             | IsStripped
             | IsNarrow
-            | Classy of string
+            | CustomClass of string
             | Props of IHTMLProp list
 
         type TableOptions =
             { IsBordered : bool
               IsStripped : bool
               IsNarrow : bool
-              Classy : string option
+              CustomClass : string option
               Props : IHTMLProp list }
             static member Empty =
                 { IsBordered = false
                   IsStripped = false
                   IsNarrow = false
-                  Classy = None
+                  CustomClass = None
                   Props = [] }
 
     open Types
@@ -39,7 +39,7 @@ module Table =
     // Spacing
     let isNarrow = IsNarrow
     // Extra
-    let classy = Classy
+    let customClass = CustomClass
     let props = Props
 
     let table options children =
@@ -48,7 +48,7 @@ module Table =
             | IsBordered -> { result with IsBordered = true }
             | IsStripped -> { result with IsStripped = true }
             | IsNarrow -> { result with IsNarrow = true }
-            | Classy classy -> { result with Classy = classy |> Some }
+            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
@@ -56,7 +56,7 @@ module Table =
             [ yield classBaseList bulma.Table.Container [ bulma.Table.Style.IsBordered, opts.IsBordered
                                                           bulma.Table.Style.IsStripped, opts.IsStripped
                                                           bulma.Table.Spacing.IsNarrow, opts.IsNarrow
-                                                          opts.Classy.Value, opts.Classy.IsSome ] :> IHTMLProp
+                                                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
 

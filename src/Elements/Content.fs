@@ -13,17 +13,17 @@ module Content =
     module Types =
         type Option =
             | Size of ISize
-            | Classy of string
+            | CustomClass of string
             | Props of IHTMLProp list
 
         type Options =
             { Size : string option
               Props : IHTMLProp list
-              Classy : string option }
+              CustomClass : string option }
             static member Empty =
                 { Size = None
                   Props = []
-                  Classy = None }
+                  CustomClass = None }
 
     open Types
 
@@ -33,20 +33,20 @@ module Content =
     let isLarge = Size IsLarge
     // Extra
     let props = Props
-    let classy = Classy
+    let customClass = CustomClass
 
     let content (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with
             | Size size -> { result with Size = ofSize size |> Some }
-            | Classy classy -> { result with Classy = Some classy }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
         div
             [ yield classBaseList
                         bulma.Content.Container
-                        [ opts.Classy.Value, opts.Classy.IsSome
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
                           opts.Size.Value, opts.Size.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

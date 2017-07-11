@@ -14,18 +14,18 @@ module Delete =
         type Option =
             | Size of ISize
             | Props of IHTMLProp list
-            | Classy of string
+            | CustomClass of string
             | OnClick of (React.MouseEvent -> unit)
 
         type Options =
             { Size : string option
               Props : IHTMLProp list
-              Classy : string option
+              CustomClass : string option
               OnClick : (React.MouseEvent -> unit) option }
             static member Empty =
                 { Size = None
                   Props = []
-                  Classy = None
+                  CustomClass = None
                   OnClick = None }
 
     open Types
@@ -36,7 +36,7 @@ module Delete =
     let isLarge = Size IsLarge
     // Extra props
     let props props = Props props
-    let classy = Classy
+    let customClass = CustomClass
     let onClick cb = OnClick cb
 
     let delete (options : Option list) children =
@@ -44,12 +44,12 @@ module Delete =
             match opt with
             | Size size -> { result with Size = ofSize size |> Some }
             | Props props -> { result with Props = props }
-            | Classy classy -> { result with Classy = Some classy }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
 
         let opts = options |> List.fold parseOption Options.Empty
         a [ yield ClassName (Helpers.generateClassName
-                                bulma.Delete.Container [ opts.Size; opts.Classy ]) :> IHTMLProp
+                                bulma.Delete.Container [ opts.Size; opts.CustomClass ]) :> IHTMLProp
             yield! opts.Props
             if opts.OnClick.IsSome then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp ]

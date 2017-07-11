@@ -44,22 +44,22 @@ module Common =
         | ISize.Nothing -> ""
 
     type GenericOption =
-        | Classy of string
+        | CustomClass of string
         | Props of IHTMLProp list
 
     type GenericOptions =
-        { Classy : string option
+        { CustomClass : string option
           Props : IHTMLProp list }
 
         static member Empty =
-            { Classy = None
+            { CustomClass = None
               Props = [] }
 
     let genericParse options =
         let parseOptions (result: GenericOptions ) opt =
             match opt with
             | Props props -> { result with Props = props }
-            | Classy classy -> { result with Classy = Some classy }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         options |> List.fold parseOptions GenericOptions.Empty
 
