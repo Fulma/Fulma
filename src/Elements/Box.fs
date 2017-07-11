@@ -7,9 +7,19 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
+open Elmish.Bulma.Common
 
 module Box =
-    let box' (dummy: unit list) children =
+
+    let classy cls = Classy cls
+    let props props = Props props
+
+    let box' (options: GenericOption list) children =
+        let opts = genericParse options
+
         div
-            [ ClassName bulma.Box.Container ]
+            [ yield classBaseList
+                        bulma.Box.Container
+                        [ opts.Classy.Value, opts.Classy.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children

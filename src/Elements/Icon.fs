@@ -18,13 +18,19 @@ module Icon =
         type Option =
             | Size of ISize
             | Position of IPosition
+            | Classy of string
+            | Props of IHTMLProp list
 
         type Options =
             { Size : string option
-              Position : string option }
+              Position : string option
+              Classy : string option
+              Props : IHTMLProp list }
             static member Empty =
                 { Size = None
-                  Position = None }
+                  Position = None
+                  Classy = None
+                  Props = [] }
 
         let ofPosition =
             function
@@ -40,14 +46,22 @@ module Icon =
     // Position
     let isLeft = Position Left
     let isRight = Position Right
+    // Extra
+    let props = Props
+    let classy = Classy
 
     let icon options children =
         let parseOptions (result : Options) option =
             match option with
             | Size size -> { result with Size = ofSize size |> Some }
             | Position position -> { result with Position = ofPosition position |> Some }
+            | Classy classy -> { result with Classy = classy |> Some }
+            | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
         span
-            [ ClassName(Helpers.generateClassName bulma.Icon.Container [ opts.Size; opts.Position ]) ]
+            [ yield ClassName (Helpers.generateClassName
+                                        bulma.Icon.Container
+                                        [ opts.Size; opts.Position; opts.Classy ]) :> IHTMLProp
+              yield! opts.Props ]
             children

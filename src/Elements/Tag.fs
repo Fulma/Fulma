@@ -19,6 +19,7 @@ module Tag =
             | Size of ITagSize
             | Color of ILevelAndColor
             | Props of IHTMLProp list
+            | Classy of string
 
         let ofTagSize size =
             match size with
@@ -28,11 +29,13 @@ module Tag =
         type Options =
             { Size : string option
               Color : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Classy : string option }
             static member Empty =
                 { Size = None
                   Color = None
-                  Props = [] }
+                  Props = []
+                  Classy = None }
 
     open Types
 
@@ -50,6 +53,7 @@ module Tag =
     let isWarning = Color IsWarning
     let isDanger = Color IsDanger
     let props props = Props props
+    let classy = Classy
 
     let tag (options : Option list) children =
         let parseOption (result : Options) opt =
@@ -57,9 +61,10 @@ module Tag =
             | Size size -> { result with Size = ofTagSize size |> Some }
             | Color color -> { result with Color = ofLevelAndColor color |> Some }
             | Props props -> { result with Props = props }
+            | Classy classy -> { result with Classy = classy |> Some }
 
         let opts = options |> List.fold parseOption Options.Empty
-        let className = ClassName(Helpers.generateClassName bulma.Tag.Container [ opts.Size; opts.Color ])
+        let className = ClassName(Helpers.generateClassName bulma.Tag.Container [ opts.Size; opts.Color; opts.Classy ])
         span
             (className :> IHTMLProp :: opts.Props)
             children

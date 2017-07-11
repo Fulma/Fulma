@@ -17,19 +17,22 @@ module Progress =
             | Props of IHTMLProp list
             | Value of int
             | Max of int
+            | Classy of string
 
         type Options =
             { Size : string option
               Color : string option
               Props : IHTMLProp list
               Max : int option
-              Value : int option }
+              Value : int option
+              Classy : string option }
             static member Empty =
                 { Size = None
                   Color = None
                   Props = []
                   Max = None
-                  Value = None }
+                  Value = None
+                  Classy = None }
 
     open Types
 
@@ -51,6 +54,7 @@ module Progress =
     let props props = Props props
     let value v = Value v
     let max m = Max m
+    let classy = Classy
 
     let progress options children =
         let parseOptions (result : Options) =
@@ -60,10 +64,11 @@ module Progress =
             | Props props -> { result with Props = props }
             | Value value -> { result with Value = value |> Some }
             | Max max -> { result with Max = max |> Some }
+            | Classy classy -> { result with Classy = classy |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
         progress
-            [ yield ClassName (Helpers.generateClassName bulma.Progress.Container [ opts.Size; opts.Color ]) :> IHTMLProp
+            [ yield ClassName (Helpers.generateClassName bulma.Progress.Container [ opts.Size; opts.Color; opts.Classy ]) :> IHTMLProp
               yield! opts.Props
               if opts.Value.IsSome then yield HTMLAttr.Value !^(string opts.Value.Value) :> IHTMLProp
               if opts.Max.IsSome then yield HTMLAttr.Max !^(float opts.Max.Value) :> IHTMLProp ]

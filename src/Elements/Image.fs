@@ -50,13 +50,19 @@ module Image =
         type Option =
             | Size of IImageSize
             | Ratio of IImageRatio
+            | Classy of string
+            | Props of IHTMLProp list
 
         type Options =
             { Size : string option
-              Ratio : string option }
+              Ratio : string option
+              Classy : string option
+              Props : IHTMLProp list }
             static member Empty =
                 { Size = None
-                  Ratio = None }
+                  Ratio = None
+                  Classy = None
+                  Props = [] }
 
     open Types
 
@@ -75,14 +81,22 @@ module Image =
     let is3by2 = Ratio Is3by2
     let is16by9 = Ratio Is16by9
     let is2by1 = Ratio Is2by1
+    // Extra
+    let classy = Classy
+    let props = Props
 
     let image options children =
         let parseOptions (result : Options) =
             function
             | Size size -> { result with Size = ofImageSize size |> Some }
             | Ratio ratio -> { result with Ratio = ofImageRatio ratio |> Some }
+            | Classy classy -> { result with Classy = classy |> Some }
+            | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
         figure
-            [ ClassName(Helpers.generateClassName bulma.Image.Container [ opts.Size; opts.Ratio ]) ]
+            [ yield ClassName(Helpers.generateClassName
+                                    bulma.Image.Container
+                                    [ opts.Size; opts.Ratio; opts.Classy ]) :> IHTMLProp
+              yield! opts.Props ]
             children

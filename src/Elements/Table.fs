@@ -15,15 +15,21 @@ module Table =
             | IsBordered
             | IsStripped
             | IsNarrow
+            | Classy of string
+            | Props of IHTMLProp list
 
         type TableOptions =
             { IsBordered : bool
               IsStripped : bool
-              IsNarrow : bool }
+              IsNarrow : bool
+              Classy : string option
+              Props : IHTMLProp list }
             static member Empty =
                 { IsBordered = false
                   IsStripped = false
-                  IsNarrow = false }
+                  IsNarrow = false
+                  Classy = None
+                  Props = [] }
 
     open Types
 
@@ -32,6 +38,9 @@ module Table =
     let isStripped = IsStripped
     // Spacing
     let isNarrow = IsNarrow
+    // Extra
+    let classy = Classy
+    let props = Props
 
     let table options children =
         let parseOptions (result : TableOptions) =
@@ -39,12 +48,16 @@ module Table =
             | IsBordered -> { result with IsBordered = true }
             | IsStripped -> { result with IsStripped = true }
             | IsNarrow -> { result with IsNarrow = true }
+            | Classy classy -> { result with Classy = classy |> Some }
+            | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
         table
-            [ classBaseList bulma.Table.Container [ bulma.Table.Style.IsBordered, opts.IsBordered
-                                                    bulma.Table.Style.IsStripped, opts.IsStripped
-                                                    bulma.Table.Spacing.IsNarrow, opts.IsNarrow ] ]
+            [ yield classBaseList bulma.Table.Container [ bulma.Table.Style.IsBordered, opts.IsBordered
+                                                          bulma.Table.Style.IsStripped, opts.IsStripped
+                                                          bulma.Table.Spacing.IsNarrow, opts.IsNarrow
+                                                          opts.Classy.Value, opts.Classy.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
             children
 
     module Row =
