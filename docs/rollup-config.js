@@ -16,7 +16,11 @@ export default {
     entry: './docs.fsproj',
     dest: './public/dist/js/bundle.js',
     plugins: [
-        fable(),
+        fable({
+            extra: {
+                useCache: true
+            }
+        }),
         livereload(),
         serve({
             contentBase: 'public',
