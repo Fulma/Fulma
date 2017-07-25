@@ -21,12 +21,12 @@ module Heading =
 
         let ofTitleSize titleSize =
             match titleSize with
-            | Is1 -> bulma.Heading.Size.Is1
-            | Is2 -> bulma.Heading.Size.Is2
-            | Is3 -> bulma.Heading.Size.Is3
-            | Is4 -> bulma.Heading.Size.Is4
-            | Is5 -> bulma.Heading.Size.Is5
-            | Is6 -> bulma.Heading.Size.Is6
+            | Is1 -> Bulma.Heading.Size.Is1
+            | Is2 -> Bulma.Heading.Size.Is2
+            | Is3 -> Bulma.Heading.Size.Is3
+            | Is4 -> Bulma.Heading.Size.Is4
+            | Is5 -> Bulma.Heading.Size.Is5
+            | Is6 -> Bulma.Heading.Size.Is6
 
         type Option =
             | Size of ITitleSize
@@ -43,7 +43,7 @@ module Heading =
               Props : IHTMLProp list }
             static member Empty =
                 { TitleSize = None
-                  TitleType = bulma.Heading.Title
+                  TitleType = Bulma.Heading.Title
                   IsSpaced = false
                   CustomClass = None
                   Props = [] }
@@ -70,7 +70,7 @@ module Heading =
         let parseOption result opt =
             match opt with
             | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
-            | IsSubtitle -> { result with TitleType = bulma.Heading.Subtitle }
+            | IsSubtitle -> { result with TitleType = Bulma.Heading.Subtitle }
             | IsSpaced -> { result with IsSpaced = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
@@ -78,7 +78,7 @@ module Heading =
         let opts = options |> List.fold parseOption Options.Empty
         let className =
             classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize; opts.CustomClass ])
-                [ bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
+                [ Bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
         element
             [ yield className :> IHTMLProp
               yield! opts.Props ]

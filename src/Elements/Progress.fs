@@ -68,7 +68,7 @@ module Progress =
 
         let opts = options |> List.fold parseOptions Options.Empty
         progress
-            [ yield ClassName (Helpers.generateClassName bulma.Progress.Container [ opts.Size; opts.Color; opts.CustomClass ]) :> IHTMLProp
+            [ yield ClassName (Helpers.generateClassName Bulma.Progress.Container [ opts.Size; opts.Color; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props
               if opts.Value.IsSome then yield HTMLAttr.Value !^(string opts.Value.Value) :> IHTMLProp
               if opts.Max.IsSome then yield HTMLAttr.Max !^(float opts.Max.Value) :> IHTMLProp ]

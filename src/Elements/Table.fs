@@ -53,13 +53,13 @@ module Table =
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
         table
-            [ yield classBaseList bulma.Table.Container [ bulma.Table.Style.IsBordered, opts.IsBordered
-                                                          bulma.Table.Style.IsStripped, opts.IsStripped
-                                                          bulma.Table.Spacing.IsNarrow, opts.IsNarrow
+            [ yield classBaseList Bulma.Table.Container [ Bulma.Table.Style.IsBordered, opts.IsBordered
+                                                          Bulma.Table.Style.IsStripped, opts.IsStripped
+                                                          Bulma.Table.Spacing.IsNarrow, opts.IsNarrow
                                                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
 
     module Row =
         // Row
-        let isSelected = ClassName bulma.Table.Row.State.IsSelected
+        let isSelected = ClassName Bulma.Table.Row.State.IsSelected

@@ -65,8 +65,8 @@ module Level =
         let opts = options |> List.fold parseOptions Level.Options.Empty
 
         nav [ yield classBaseList
-                        bulma.Level.Container
-                        [ bulma.Level.Mobile.IsHorizontal, opts.IsMobile
+                        Bulma.Level.Container
+                        [ Bulma.Level.Mobile.IsHorizontal, opts.IsMobile
                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -77,7 +77,7 @@ module Level =
     let left (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Level.Left
+        div [ yield classBaseList Bulma.Level.Left
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -85,7 +85,7 @@ module Level =
     let right (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Level.Right
+        div [ yield classBaseList Bulma.Level.Right
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -107,8 +107,8 @@ module Level =
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
         nav [ yield classBaseList
-                        bulma.Level.Item.Container
-                        [ bulma.Level.Item.HasTextCentered, opts.HasTextCentered
+                        Bulma.Level.Item.Container
+                        [ Bulma.Level.Item.HasTextCentered, opts.HasTextCentered
                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

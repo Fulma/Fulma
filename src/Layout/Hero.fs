@@ -28,10 +28,10 @@ module Hero =
 
         let ofSize =
             function
-            | IsMedium -> bulma.Hero.Size.IsMedium
-            | IsLarge -> bulma.Hero.Size.IsLarge
-            | IsHalfHeight -> bulma.Hero.Size.IsHalfHeight
-            | IsFullHeight -> bulma.Hero.Size.IsFullHeight
+            | IsMedium -> Bulma.Hero.Size.IsMedium
+            | IsLarge -> Bulma.Hero.Size.IsLarge
+            | IsHalfHeight -> Bulma.Hero.Size.IsHalfHeight
+            | IsFullHeight -> Bulma.Hero.Size.IsFullHeight
 
         type Options =
             { Props : IHTMLProp list
@@ -82,8 +82,8 @@ module Hero =
         let opts = options |> List.fold parseOptions Options.Empty
 
         section [ yield classBaseList
-                        bulma.Hero.Container
-                        [ bulma.Hero.Style.IsBold, opts.IsBold
+                        Bulma.Hero.Container
+                        [ Bulma.Hero.Style.IsBold, opts.IsBold
                           opts.Color.Value , opts.Color.IsSome
                           opts.Size.Value, opts.Size.IsSome
                           opts.CustomClass.Value, opts.CustomClass.IsSome
@@ -115,7 +115,7 @@ module Hero =
         let opts = genericParse options
 
         div [ yield classBaseList
-                        bulma.Hero.Head
+                        Bulma.Hero.Head
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -124,7 +124,7 @@ module Hero =
         let opts = genericParse options
 
         div [ yield classBaseList
-                        bulma.Hero.Body
+                        Bulma.Hero.Body
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -133,7 +133,7 @@ module Hero =
         let opts = genericParse options
 
         div [ yield classBaseList
-                        bulma.Hero.Foot
+                        Bulma.Hero.Foot
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -142,7 +142,7 @@ module Hero =
         let opts = genericParse options
 
         div [ yield classBaseList
-                        bulma.Hero.Video.Container
+                        Bulma.Hero.Video.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -151,7 +151,7 @@ module Hero =
         let opts = genericParse options
 
         div [ yield classBaseList
-                        bulma.Hero.Buttons.Container
+                        Bulma.Hero.Buttons.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

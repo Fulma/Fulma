@@ -23,8 +23,8 @@ module Tag =
 
         let ofTagSize size =
             match size with
-            | IsMedium -> bulma.Tag.Size.IsMedium
-            | IsLarge -> bulma.Tag.Size.IsLarge
+            | IsMedium -> Bulma.Tag.Size.IsMedium
+            | IsLarge -> Bulma.Tag.Size.IsLarge
 
         type Options =
             { Size : string option
@@ -64,7 +64,7 @@ module Tag =
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
 
         let opts = options |> List.fold parseOption Options.Empty
-        let className = ClassName(Helpers.generateClassName bulma.Tag.Container [ opts.Size; opts.Color; opts.CustomClass ])
+        let className = ClassName(Helpers.generateClassName Bulma.Tag.Container [ opts.Size; opts.Color; opts.CustomClass ])
         span
             (className :> IHTMLProp :: opts.Props)
             children

@@ -34,8 +34,8 @@ module Icon =
 
         let ofPosition =
             function
-            | Left -> bulma.Icon.Position.Left
-            | Right -> bulma.Icon.Position.Right
+            | Left -> Bulma.Icon.Position.Left
+            | Right -> Bulma.Icon.Position.Right
 
     open Types
 
@@ -61,7 +61,7 @@ module Icon =
         let opts = options |> List.fold parseOptions Options.Empty
         span
             [ yield ClassName (Helpers.generateClassName
-                                        bulma.Icon.Container
+                                        Bulma.Icon.Container
                                         [ opts.Size; opts.Position; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props ]
             children

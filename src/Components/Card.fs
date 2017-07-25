@@ -17,7 +17,7 @@ module Card =
     let card (options: GenericOption list) children =
         let opts = genericParse options
         div [ yield classBaseList
-                        bulma.Card.Container
+                        Bulma.Card.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -25,7 +25,7 @@ module Card =
     let header (options: GenericOption list) children =
         let opts = genericParse options
         header [ yield classBaseList
-                        bulma.Card.Header.Container
+                        Bulma.Card.Header.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                  yield! opts.Props ]
                children
@@ -33,7 +33,7 @@ module Card =
     let content (options: GenericOption list) children =
         let opts = genericParse options
         div [ yield classBaseList
-                        bulma.Card.Content
+                        Bulma.Card.Content
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -41,7 +41,7 @@ module Card =
     let footer (options: GenericOption list) children =
         let opts = genericParse options
         footer [ yield classBaseList
-                        bulma.Card.Footer.Container
+                        Bulma.Card.Footer.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                  yield! opts.Props ]
                children
@@ -54,7 +54,7 @@ module Card =
         let icon (options: GenericOption list) children =
             let opts = genericParse options
             a [ yield classBaseList
-                        bulma.Card.Header.Icon
+                        Bulma.Card.Header.Icon
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                 yield! opts.Props ]
               children
@@ -62,7 +62,7 @@ module Card =
         let title (options: GenericOption list) children =
             let opts = genericParse options
             p [ yield classBaseList
-                        bulma.Card.Header.Title
+                        Bulma.Card.Header.Title
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                 yield! opts.Props ]
               children
@@ -76,7 +76,7 @@ module Card =
             let opts = genericParse options
 
             a [ yield classBaseList
-                        bulma.Card.Footer.Item
+                        Bulma.Card.Footer.Item
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                 yield! opts.Props ]
               children

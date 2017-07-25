@@ -125,7 +125,7 @@ module BulmaClasses =
 
 
 
-    module bulma =
+    module Bulma =
         module Modifiers =
               let Size = standardSize
               let Color = levelAndColor

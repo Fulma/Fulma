@@ -14,7 +14,7 @@ module Media =
     let media (options: GenericOption list) children =
         let opts = genericParse options
 
-        article [ yield classBaseList bulma.Media.Container
+        article [ yield classBaseList Bulma.Media.Container
                                       [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                   yield! opts.Props ]
             children
@@ -22,7 +22,7 @@ module Media =
     let left (options: GenericOption list) children =
         let opts = genericParse options
 
-        figure [ yield classBaseList bulma.Media.Left
+        figure [ yield classBaseList Bulma.Media.Left
                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                  yield! opts.Props ]
             children
@@ -30,7 +30,7 @@ module Media =
     let right (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Media.Right
+        div [ yield classBaseList Bulma.Media.Right
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -38,7 +38,7 @@ module Media =
     let content (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Media.Content
+        div [ yield classBaseList Bulma.Media.Content
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

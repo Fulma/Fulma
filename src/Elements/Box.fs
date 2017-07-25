@@ -19,7 +19,7 @@ module Box =
 
         div
             [ yield classBaseList
-                        bulma.Box.Container
+                        Bulma.Box.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

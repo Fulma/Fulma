@@ -49,7 +49,7 @@ module Delete =
 
         let opts = options |> List.fold parseOption Options.Empty
         a [ yield ClassName (Helpers.generateClassName
-                                bulma.Delete.Container [ opts.Size; opts.CustomClass ]) :> IHTMLProp
+                                Bulma.Delete.Container [ opts.Size; opts.CustomClass ]) :> IHTMLProp
             yield! opts.Props
             if opts.OnClick.IsSome then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp ]
