@@ -20,114 +20,6 @@ module BulmaClasses =
     and GenericIsActiveState =
         { IsActive : string }
 
-    and Box =
-        { Container : string }
-
-    and Button =
-        { Container : string
-          Size : ButtonSize
-          Color : LevelAndColor
-          State : ButtonState
-          Styles : ButtonStyles }
-
-    and ButtonSize =
-        { IsSmall : string
-          IsMedium : string
-          IsLarge : string
-          IsFullwidth : string }
-
-    and ButtonState =
-        { IsHovered : string
-          IsFocused : string
-          IsActive : string
-          IsLoading : string }
-
-    and ButtonStyles =
-        { IsLink : string
-          IsOutlined : string
-          IsInverted : string }
-
-    and Card =
-        { Container : string
-          Header : CardHeader
-          Image : string
-          Content : string
-          Footer : CardFooter }
-
-    and CardHeader =
-        { Container : string
-          Title : string
-          Icon : string }
-
-    and CardFooter =
-        { Container : string
-          Item : string }
-
-    and Content =
-        { Container : string
-          Size : StandardSize }
-
-    and Control =
-        { Container : string
-          HasIcon : ControlHasIcon
-          State : ControlState }
-
-    and ControlHasIcon =
-        { Left : string
-          Right : string }
-
-    and ControlState =
-        { IsLoading : string }
-
-    and Delete =
-        { Container : string
-          Size : StandardSize }
-
-    and Field =
-        { Container : string
-          Label : string
-          Body : string
-          HasAddons : FieldHasAddons
-          IsGrouped : FieldIsGrouped
-          Layout : FieldLayout }
-
-    and FieldHasAddons =
-        { Left : string
-          Centered : string
-          Right : string
-          FullWidh : string }
-
-    and FieldIsGrouped =
-        { Left : string
-          Centered : string
-          Right : string }
-
-    and FieldLayout =
-        { IsHorizontal : string }
-
-    and Grid =
-        { Columns : Columns
-          Column : Column }
-
-    and Columns =
-        { Container : string
-          Alignment : ColumnsAlignment
-          Spacing : ColumnsSpacing
-          Display : ColumnsDisplay }
-
-    and Column =
-        { Container : string
-          Width : GenericColumnSize
-          Offset : GenericColumnSize
-          Desktop : ColunScreenTypeSize
-          Tablet : ColunScreenTypeSize
-          Mobile : ColunScreenTypeSize
-          WideScreen : ColunScreenTypeSize }
-
-    and ColunScreenTypeSize =
-        { Width : GenericColumnSize
-          Offset : GenericColumnSize }
-
     and GenericColumnSize =
         { IsOneQuarter : string
           IsOneThird : string
@@ -148,245 +40,6 @@ module BulmaClasses =
           IsNarrow : string
           IsFull : string }
 
-    and ColumnsAlignment =
-        { IsCentered : string
-          IsVCentered : string }
-
-    and ColumnsSpacing =
-        { IsMultiline : string
-          IsGapless : string
-          IsGrid : string }
-
-    and ColumnsDisplay =
-        { OnMobile : string
-          OnlyDesktop : string }
-
-    and Icon =
-        { Container : string
-          Position : IconPosition
-          Size : StandardSize }
-
-    and IconPosition =
-        { Left : string
-          Right : string }
-
-    and Input =
-        { Container : string
-          Display : InputDisplay
-          Size : StandardSize
-          State : InputState
-          Color : LevelAndColor
-          Addon : InputAddon }
-
-    and InputDisplay =
-        { IsInline : string }
-
-    and InputState =
-        { IsHovered : string
-          IsFocused : string
-          IsActive : string
-          IsLoading : string }
-
-    and InputAddon =
-        { IsExpanded : string }
-
-    and Image =
-        { Container : string
-          Size : ImageSize
-          Ratio : ImageRatio }
-
-    and ImageSize =
-        { Is16x16 : string
-          Is24x24 : string
-          Is32x32 : string
-          Is48x48 : string
-          Is64x64 : string
-          Is96x96 : string
-          Is128x128 : string }
-
-    and ImageRatio =
-        { IsSquare : string
-          Is1by1 : string
-          Is4by3 : string
-          Is3by2 : string
-          Is16by9 : string
-          Is2by1 : string }
-
-    and Heading =
-        { Title : string
-          Subtitle : string
-          Size : HeadingSize
-          Spacing : HeadingSpacing }
-
-    and HeadingSize =
-        { Is1 : string
-          Is2 : string
-          Is3 : string
-          Is4 : string
-          Is5 : string
-          Is6 : string }
-
-    and HeadingSpacing =
-        { IsNormal : string }
-
-    and Hero =
-        { Container : string
-          Head : string
-          Body : string
-          Foot : string
-          Video : HeroVideo
-          Buttons : HeroButtons
-          Style : HeroStyle
-          Size : HeroSize
-          Color : LevelAndColor }
-
-    and HeroVideo =
-        { Container : string
-          IsTransparent : string }
-
-    and HeroButtons =
-        { Container : string }
-
-    and HeroStyle =
-        { IsBold : string }
-
-    and HeroSize =
-        { IsMedium : string
-          IsLarge : string
-          IsHalfHeight : string
-          IsFullHeight : string }
-
-    and Label =
-        { Container : string
-          Size : StandardSize }
-
-    and Level =
-        { Container : string
-          Left : string
-          Right : string
-          Item : LevelItem
-          Mobile : LevelMobile }
-
-
-    and LevelItem =
-        { Container : string
-          HasTextCentered : string }
-
-    and LevelMobile =
-        { IsHorizontal : string }
-
-    and Menu =
-        { Container : string
-          Label : string
-          List : string }
-
-    and Media =
-        { Container : string
-          Left : string
-          Right : string
-          Content : string
-          Size : MediaSize }
-
-    and MediaSize =
-        { isLarge : string }
-
-    and Message =
-        { Container : string
-          Header : string
-          Body : string
-          Color : LevelAndColor }
-
-    and Modifiers =
-        { Size : StandardSize
-          Color : LevelAndColor }
-
-    and Nav =
-        { Container : string
-          Left : string
-          Center : string
-          Right : string
-          Toggle : NavToggle
-          Menu : NavMenu
-          Item : NavItem
-          Style : NavStyle }
-
-    and NavToggle =
-        { Container : string
-          State : GenericIsActiveState }
-
-    and NavMenu =
-        { Container : string
-          State : GenericIsActiveState }
-
-    and NavItem =
-        { Container : string
-          Style : NavItemStyle
-          State : GenericIsActiveState }
-
-    and NavItemStyle =
-        { IsTab : string }
-
-    and NavStyle =
-        { HasShadow : string }
-
-    and Panel =
-        { Container : string
-          Heading : string
-          Tabs : PanelTabs
-          Block : PanelBlock }
-
-    and PanelTabs =
-        { Container : string
-          Tab : PanelTabsTab }
-
-    and PanelTabsTab =
-        { State : PanelTabsTabState }
-
-    and PanelTabsTabState =
-        { IsActive : string }
-
-    and PanelTabsState =
-        { IsActive : string }
-
-    and PanelBlock =
-        { Container : string
-          Icon : string
-          List : string
-          State : PanelBlockState }
-
-    and PanelBlockState =
-        { IsActive : string }
-
-    and Properties =
-        { Float : PropertiesFloat
-          Alignment : PropertiesAlignment
-          Sizing : PropertiesSizing
-          Display : PropertiesDisplay
-          Visibility : PropertiesVisibility
-          Interaction : PropertiesInteraction }
-
-    and PropertiesFloat =
-        { IsClearfix : string
-          IsPulledLeft : string
-          IsPulledRight : string }
-
-    and PropertiesAlignment =
-        { HasTextCentered : string
-          HasTextLeft : string
-          HasTextRight : string }
-
-    and PropertiesSizing =
-        { IsOverlay : string
-          IsFullwidth : string
-          IsMarginless : string
-          IsPaddingless : string }
-
-    and PropertiesDisplay =
-        { IsBlock : DisplayType
-          IsFlex : DisplayType
-          IsInline : DisplayType
-          IsInlineBox : DisplayType
-          IsInlineFlex : DisplayType }
 
     and DisplayType =
         { Always : string
@@ -397,72 +50,6 @@ module BulmaClasses =
           Desktop : string
           DesktopOnly : string
           Widescreen : string }
-
-    and PropertiesVisibility =
-        { IsHidden : DisplayType }
-
-    and PropertiesInteraction =
-        { IsUnselectable : string }
-
-    and Progress =
-        { Container : string
-          Size : StandardSize
-          Color : LevelAndColor }
-
-    and Table =
-        { Container : string
-          Row : TableRow
-          Style : TableStyle
-          Spacing : TableSpacing }
-
-    and TableRow =
-        { State : TableRowState }
-
-    and TableRowState =
-        { IsSelected : string }
-
-    and TableStyle =
-        { IsBordered : string
-          IsStripped : string }
-
-    and TableSpacing =
-        { IsNarrow : string }
-
-    and Tag =
-        { Container : string
-          Size : TagSize
-          Color : LevelAndColor }
-
-    and TagSize =
-        { IsMedium : string
-          IsLarge : string }
-
-    and Bulma =
-        { Modifiers : Modifiers
-          Box : Box
-          Button : Button
-          Card : Card
-          Content : Content
-          Control : Control
-          Delete : Delete
-          Field : Field
-          Grid : Grid
-          Heading : Heading
-          Hero : Hero
-          Label : Label
-          Level : Level
-          Menu : Menu
-          Media : Media
-          Message : Message
-          Nav : Nav
-          Panel : Panel
-          Properties : Properties
-          Progress : Progress
-          Icon : Icon
-          Image : Image
-          Input : Input
-          Table : Table
-          Tag : Tag }
 
     let (++) str1 str2 = str1 + " " + str2
 
@@ -485,60 +72,6 @@ module BulmaClasses =
     let genericIsActiveState : GenericIsActiveState =
         { IsActive = "is-active" }
 
-    let box : Box = { Container = "box" }
-
-    let button : Button =
-        { Container = "button"
-          Size =
-            { IsSmall = "is-small"
-              IsMedium = "is-medium"
-              IsLarge = "is-large "
-              IsFullwidth = "is-fullwidth" }
-          Color = levelAndColor
-          State =
-              { IsHovered = "is-hovered"
-                IsFocused = "is-focus"
-                IsActive = "is-active"
-                IsLoading = "is-loading" }
-          Styles =
-              { IsLink = "is-link"
-                IsOutlined = "is-outlined"
-                IsInverted = "is-inverted" } }
-
-    let card : Card =
-        { Container = "card"
-          Header =
-            { Container = "card-header"
-              Title = "card-header-title"
-              Icon ="card-header-icon" }
-          Image = "card-image"
-          Content = "card-content"
-          Footer =
-            { Container = "card-footer"
-              Item = "card-footer-item" } }
-    let content : Content =
-        { Container = "content"
-          Size = standardSize }
-
-    let control : Control =
-        { Container = "control"
-          HasIcon =
-              { Left = "has-icons-left"
-                Right = "has-icons-right" }
-          State = { IsLoading = "is-loading" } }
-
-    let columns : Columns =
-        { Container = "columns"
-          Alignment =
-            { IsCentered = "is-centered"
-              IsVCentered = "is-vcentered" }
-          Spacing =
-            { IsMultiline = "is-multiline"
-              IsGapless = "is-gapless"
-              IsGrid = "is-grid" }
-          Display =
-            { OnMobile = "on-mobile"
-              OnlyDesktop = "only-desktop" } }
 
     let generateColumnSize suffix =
         { IsOneQuarter = "is-one-quarter" + suffix
@@ -580,177 +113,6 @@ module BulmaClasses =
           IsNarrow = "is-offset-narrow" + suffix
           IsFull = "is-full" + suffix }
 
-    let column : Column =
-        { Container = "column"
-          Width = generateColumnSize ""
-          Offset = generateColumnOffset ""
-          Desktop =
-            { Width = generateColumnSize "-desktop"
-              Offset = generateColumnOffset "-desktop" }
-          Mobile =
-            { Width = generateColumnSize "-mobile"
-              Offset = generateColumnOffset "-mobule" }
-          Tablet =
-            { Width = generateColumnSize "-tablet"
-              Offset = generateColumnOffset "-tablet" }
-          WideScreen =
-            { Width = generateColumnSize "-widescreen"
-              Offset = generateColumnOffset "-widescreen" } }
-
-    let delete : Delete =
-        { Container = "delete"
-          Size = standardSize }
-
-    let field : Field =
-        { Container = "field"
-          Label = "field-label"
-          Body = "field-body"
-          HasAddons =
-              { Left = "has-addons"
-                Centered = "has-addons-centered"
-                Right = "has-addons-right"
-                FullWidh = "has-addons-fullwidth" }
-          IsGrouped =
-              { Left = "is-grouped"
-                Centered = "is-grouped-centered"
-                Right = "is-grouped-right" }
-          Layout = { IsHorizontal = "is-horizontal" } }
-
-    let icon : Icon =
-        { Container = "icon"
-          Position =
-              { Left = "is-left"
-                Right = "is-right" }
-          Size = standardSize }
-
-    let input : Input =
-        { Container = "input"
-          Display = { IsInline = "is-inline" }
-          Size = standardSize
-          State =
-              { IsHovered = "is-hovered"
-                IsFocused = "is-focus"
-                IsActive = "is-active"
-                IsLoading = "is-loading" }
-          Color = levelAndColor
-          Addon = { IsExpanded = "is-expanded" } }
-
-    let image : Image =
-        { Container = "image"
-          Size =
-              { Is16x16 = "is-16x16"
-                Is24x24 = "is-24x24"
-                Is32x32 = "is-32x32"
-                Is48x48 = "is-48x48"
-                Is64x64 = "is-64x64"
-                Is96x96 = "is-96x96"
-                Is128x128 = "is-128x128" }
-          Ratio =
-              { IsSquare = "is-square"
-                Is1by1 = "is-1by1"
-                Is4by3 = "is-4by3"
-                Is3by2 = "is-3by2"
-                Is16by9 = "is-16by9"
-                Is2by1 = "is-2by1" } }
-
-    let heading : Heading =
-        { Title = "title"
-          Subtitle = "subtitle"
-          Size =
-              { Is1 = "is-1"
-                Is2 = "is-2"
-                Is3 = "is-3"
-                Is4 = "is-4"
-                Is5 = "is-5"
-                Is6 = "is-6" }
-          Spacing = { IsNormal = "is-spaced" } }
-
-    let hero : Hero =
-        { Container = "hero"
-          Head = "hero-head"
-          Body = "hero-body"
-          Foot = "hero-foot"
-          Video =
-            { Container = "hero-video"
-              IsTransparent = "is-transparent" }
-          Buttons =
-            { Container = "hero-buttons" }
-          Style =
-            { IsBold = "is-bold" }
-          Size =
-            { IsMedium = "is-medium"
-              IsLarge = "is-large"
-              IsHalfHeight = "is-halfheight"
-              IsFullHeight = "is-fullheight" }
-          Color = levelAndColor }
-
-    let label : Label =
-        { Container = "label"
-          Size = standardSize }
-
-    let level : Level =
-        { Container = "level"
-          Left = "level-left"
-          Right = "level-right"
-          Item =
-            { Container = "level-item"
-              HasTextCentered = "has-text-centered" }
-          Mobile =
-            { IsHorizontal = "is-mobile" } }
-
-    let menu : Menu =
-        { Container = "menu"
-          Label = "menu-label"
-          List = "menu-list" }
-
-    let media : Media =
-        { Container = "media"
-          Left = "media-left"
-          Right = "media-right"
-          Content = "media-content"
-          Size =
-              { isLarge = "is-large" } }
-
-    let message : Message =
-        { Container = "message"
-          Header = "message-header"
-          Body = "message-body"
-          Color = levelAndColor }
-
-    let nav : Nav =
-        { Container = "nav"
-          Left = "nav-left"
-          Center = "nav-center"
-          Right = "nav-right"
-          Toggle =
-            { Container = "nav-toggle"
-              State = genericIsActiveState }
-          Menu =
-            { Container = "nav-menu"
-              State = genericIsActiveState }
-          Item =
-            { Container = "nav-item"
-              Style =
-                { IsTab = "is-tab" }
-              State = genericIsActiveState }
-          Style =
-            { HasShadow = "has-shadow" } }
-
-    let panel : Panel =
-        { Container = "panel"
-          Heading = "panel-heading"
-          Tabs =
-            { Container = "panel-tabs"
-              Tab =
-                { State =
-                    { IsActive = "is-active" } } }
-          Block =
-            { Container = "panel-block"
-              Icon = "panel-icon"
-              List = "panel-list"
-              State =
-                { IsActive = "is-active" } } }
-
     let generateDisplayType prefix =
         { Always = "is-" + prefix + "-touch" ++ "is-" + prefix + "-desktop"
           Mobile = "is-" + prefix + "-mobile"
@@ -761,80 +123,289 @@ module BulmaClasses =
           DesktopOnly = "is-" + prefix + "-desktop-only"
           Widescreen = "is-" + prefix + "-widescreen" }
 
-    let properties : Properties =
-        { Float =
-            { IsClearfix = "is-clearfix"
-              IsPulledLeft = "is-pulled-left"
-              IsPulledRight = "is-pulled-right" }
-          Alignment =
-            { HasTextCentered = "has-text-centered"
-              HasTextLeft = "has-text-left"
-              HasTextRight = "has-text-right" }
-          Sizing =
-            { IsOverlay = "is-overlay"
-              IsFullwidth = "is-fullwidth"
-              IsMarginless = "is-marginless"
-              IsPaddingless = "is-paddingless" }
-          Display =
-            { IsBlock = generateDisplayType "block"
-              IsFlex = generateDisplayType "flex"
-              IsInline = generateDisplayType "inline"
-              IsInlineBox = generateDisplayType "inline-block"
-              IsInlineFlex = generateDisplayType "inline-flex" }
-          Visibility =
-            { IsHidden = generateDisplayType "hidden" }
-          Interaction =
-            { IsUnselectable = "is-unselectable" }
-          }
 
-    let progress : Progress =
-        { Container = "progress"
-          Size = standardSize
-          Color = levelAndColor }
 
-    let table : Table =
-        { Container = "table"
-          Row = { State = { IsSelected = "is-selected" } }
-          Style =
-              { IsBordered = "is-bordered"
-                IsStripped = "is-stripped " }
-          Spacing = { IsNarrow = "is-narrow" } }
+    module Bulma =
+        module Modifiers =
+              let Size = standardSize
+              let Color = levelAndColor
+        module Box =
+            let [<Literal>] Container = "box"
+        module Button =
+            let [<Literal>] Container = "button"
+            module Size =
+                let [<Literal>] IsSmall = "is-small"
+                let [<Literal>] IsMedium = "is-medium"
+                let [<Literal>] IsLarge = "is-large "
+                let [<Literal>] IsFullwidth = "is-fullwidth"
+            let Color = levelAndColor
+            module State =
+                  let [<Literal>] IsHovered = "is-hovered"
+                  let [<Literal>] IsFocused = "is-focus"
+                  let [<Literal>] IsActive = "is-active"
+                  let [<Literal>] IsLoading = "is-loading"
+            module Styles =
+                let [<Literal>] IsLink = "is-link"
+                let [<Literal>] IsOutlined = "is-outlined"
+                let [<Literal>] IsInverted = "is-inverted"
 
-    let tagSize : TagSize =
-        { IsMedium = "is-medium"
-          IsLarge = "is-large" }
+        module Card =
+            let [<Literal>] Container = "card"
+            module Header =
+                let [<Literal>] Container = "card-header"
+                let [<Literal>] Title = "card-header-title"
+                let [<Literal>] Icon ="card-header-icon"
+            let [<Literal>] Image = "card-image"
+            let [<Literal>] Content = "card-content"
+            module Footer =
+                let [<Literal>] Container = "card-footer"
+                let [<Literal>] Item = "card-footer-item"
 
-    let tag : Tag =
-        { Container = "tag"
-          Size = tagSize
-          Color = levelAndColor }
+        module Content =
+            let [<Literal>] Container = "content"
+            let Size = standardSize
 
-    let bulma =
-        { Modifiers =
-              { Size = standardSize
-                Color = levelAndColor }
-          Box = box
-          Button = button
-          Card = card
-          Content = content
-          Control = control
-          Delete = delete
-          Field = field
-          Grid = { Columns = columns
-                   Column = column }
-          Icon = icon
-          Image = image
-          Input = input
-          Label = label
-          Level = level
-          Menu = menu
-          Media = media
-          Message = message
-          Nav = nav
-          Panel = panel
-          Properties = properties
-          Progress = progress
-          Heading = heading
-          Hero = hero
-          Table = table
-          Tag = tag }
+        module Control =
+            let [<Literal>] Container = "control"
+            module HasIcon =
+                let [<Literal>] Left = "has-icons-left"
+                let [<Literal>] Right = "has-icons-right"
+            module State =
+                let [<Literal>] IsLoading = "is-loading"
+
+        module Delete  =
+            let [<Literal>] Container = "delete"
+            let Size = standardSize
+
+        module Field =
+            let [<Literal>] Container = "field"
+            let [<Literal>] Label = "field-label"
+            let [<Literal>] Body = "field-body"
+            module HasAddons =
+                  let [<Literal>] Left = "has-addons"
+                  let [<Literal>] Centered = "has-addons-centered"
+                  let [<Literal>] Right = "has-addons-right"
+                  let [<Literal>] FullWidh = "has-addons-fullwidth"
+            module IsGrouped =
+                  let [<Literal>] Left = "is-grouped"
+                  let [<Literal>] Centered = "is-grouped-centered"
+                  let [<Literal>] Right = "is-grouped-right"
+            module Layout =
+                let [<Literal>] IsHorizontal = "is-horizontal"
+
+        module Grid =
+            module Columns =
+                let [<Literal>] Container = "columns"
+                module Alignment =
+                    let [<Literal>] IsCentered = "is-centered"
+                    let [<Literal>] IsVCentered = "is-vcentered"
+                module Spacing =
+                    let [<Literal>] IsMultiline = "is-multiline"
+                    let [<Literal>] IsGapless = "is-gapless"
+                    let [<Literal>] IsGrid = "is-grid"
+                module Display =
+                    let [<Literal>] OnMobile = "on-mobile"
+                    let [<Literal>] OnlyDesktop = "only-desktop"
+            module Column =
+                let [<Literal>] Container = "column"
+                let Width = generateColumnSize ""
+                let Offset = generateColumnOffset ""
+                module Desktop =
+                    let Width = generateColumnSize "-desktop"
+                    let Offset = generateColumnOffset "-desktop"
+                module Mobile =
+                    let Width = generateColumnSize "-mobile"
+                    let Offset = generateColumnOffset "-mobule"
+                module Tablet =
+                    let Width = generateColumnSize "-tablet"
+                    let Offset = generateColumnOffset "-tablet"
+                module WideScreen =
+                    let Width = generateColumnSize "-widescreen"
+                    let Offset = generateColumnOffset "-widescreen"
+        module Icon =
+            let [<Literal>] Container = "icon"
+            module Position =
+                  let [<Literal>] Left = "is-left"
+                  let [<Literal>] Right = "is-right"
+            let Size = standardSize
+
+        module Image =
+            let [<Literal>] Container = "image"
+            module Size =
+                  let [<Literal>] Is16x16 = "is-16x16"
+                  let [<Literal>] Is24x24 = "is-24x24"
+                  let [<Literal>] Is32x32 = "is-32x32"
+                  let [<Literal>] Is48x48 = "is-48x48"
+                  let [<Literal>] Is64x64 = "is-64x64"
+                  let [<Literal>] Is96x96 = "is-96x96"
+                  let [<Literal>] Is128x128 = "is-128x128"
+            module Ratio =
+                  let [<Literal>] IsSquare = "is-square"
+                  let [<Literal>] Is1by1 = "is-1by1"
+                  let [<Literal>] Is4by3 = "is-4by3"
+                  let [<Literal>] Is3by2 = "is-3by2"
+                  let [<Literal>] Is16by9 = "is-16by9"
+                  let [<Literal>] Is2by1 = "is-2by1"
+
+        module Input =
+            let [<Literal>] Container = "input"
+            module Display =
+                let [<Literal>] IsInline = "is-inline"
+            let Size = standardSize
+            module State =
+                  let [<Literal>] IsHovered = "is-hovered"
+                  let [<Literal>] IsFocused = "is-focus"
+                  let [<Literal>] IsActive = "is-active"
+                  let [<Literal>] IsLoading = "is-loading"
+            let Color = levelAndColor
+            module Addon =
+                let [<Literal>] IsExpanded = "is-expanded"
+
+        module Label =
+            let [<Literal>] Container = "label"
+            let Size = standardSize
+
+        module Level =
+            let [<Literal>] Container = "level"
+            let [<Literal>] Left = "level-left"
+            let [<Literal>] Right = "level-right"
+            module Item =
+                let [<Literal>] Container = "level-item"
+                let [<Literal>] HasTextCentered = "has-text-centered"
+            module Mobile =
+                let [<Literal>] IsHorizontal = "is-mobile"
+
+        module Menu =
+            let [<Literal>] Container = "menu"
+            let [<Literal>] Label = "menu-label"
+            let [<Literal>] List = "menu-list"
+
+        module Media =
+            let [<Literal>] Container = "media"
+            let [<Literal>] Left = "media-left"
+            let [<Literal>] Right = "media-right"
+            let [<Literal>] Content = "media-content"
+            module Size =
+                  let [<Literal>] isLarge = "is-large"
+
+        module Message =
+            let [<Literal>] Container = "message"
+            let [<Literal>] Header = "message-header"
+            let [<Literal>] Body = "message-body"
+            let Color = levelAndColor
+
+        module Nav =
+            let [<Literal>] Container = "nav"
+            let [<Literal>] Left = "nav-left"
+            let [<Literal>] Center = "nav-center"
+            let [<Literal>] Right = "nav-right"
+            module Toggle =
+                let [<Literal>] Container = "nav-toggle"
+                let State = genericIsActiveState
+            module Menu =
+                let [<Literal>] Container = "nav-menu"
+                let State = genericIsActiveState
+            module Item =
+                let [<Literal>] Container = "nav-item"
+                module Style =
+                    let [<Literal>] IsTab = "is-tab"
+                let State = genericIsActiveState
+            module Style =
+                let [<Literal>] HasShadow = "has-shadow"
+
+        module Panel =
+            let [<Literal>] Container = "panel"
+            let [<Literal>] Heading = "panel-heading"
+            module Tabs =
+                let [<Literal>] Container = "panel-tabs"
+                module Tab =
+                    module State =
+                        let [<Literal>] IsActive = "is-active"
+            module Block =
+                let [<Literal>] Container = "panel-block"
+                let [<Literal>] Icon = "panel-icon"
+                let [<Literal>] List = "panel-list"
+                module State =
+                    let [<Literal>] IsActive = "is-active"
+
+        module Properties =
+            module Float =
+                let [<Literal>] IsClearfix = "is-clearfix"
+                let [<Literal>] IsPulledLeft = "is-pulled-left"
+                let [<Literal>] IsPulledRight = "is-pulled-right"
+            module Alignment =
+                let [<Literal>] HasTextCentered = "has-text-centered"
+                let [<Literal>] HasTextLeft = "has-text-left"
+                let [<Literal>] HasTextRight = "has-text-right"
+            module Sizing =
+                let [<Literal>] IsOverlay = "is-overlay"
+                let [<Literal>] IsFullwidth = "is-fullwidth"
+                let [<Literal>] IsMarginless = "is-marginless"
+                let [<Literal>] IsPaddingless = "is-paddingless"
+            module Display =
+                let IsBlock = generateDisplayType "block"
+                let IsFlex = generateDisplayType "flex"
+                let IsInline = generateDisplayType "inline"
+                let IsInlineBox = generateDisplayType "inline-block"
+                let IsInlineFlex = generateDisplayType "inline-flex"
+            module Visibility =
+                let IsHidden = generateDisplayType "hidden"
+            module Interaction =
+                let [<Literal>] IsUnselectable = "is-unselectable"
+
+
+        module Progress =
+            let [<Literal>] Container = "progress"
+            let Size = standardSize
+            let Color = levelAndColor
+
+        module Heading =
+            let [<Literal>] Title = "title"
+            let [<Literal>] Subtitle = "subtitle"
+            module Size =
+              let [<Literal>] Is1 = "is-1"
+              let [<Literal>] Is2 = "is-2"
+              let [<Literal>] Is3 = "is-3"
+              let [<Literal>] Is4 = "is-4"
+              let [<Literal>] Is5 = "is-5"
+              let [<Literal>] Is6 = "is-6"
+            module Spacing =
+                let [<Literal>] IsNormal = "is-spaced"
+
+        module Hero =
+            let [<Literal>] Container = "hero"
+            let [<Literal>] Head = "hero-head"
+            let [<Literal>] Body = "hero-body"
+            let [<Literal>] Foot = "hero-foot"
+            module Video =
+                let [<Literal>] Container = "hero-video"
+                let [<Literal>] IsTransparent = "is-transparent"
+            module Buttons =
+                let [<Literal>] Container = "hero-buttons"
+            module Style =
+                let [<Literal>] IsBold = "is-bold"
+            module Size =
+                let [<Literal>] IsMedium = "is-medium"
+                let [<Literal>] IsLarge = "is-large"
+                let [<Literal>] IsHalfHeight = "is-halfheight"
+                let [<Literal>] IsFullHeight = "is-fullheight"
+            let Color = levelAndColor
+
+        module Table =
+            let [<Literal>] Container = "table"
+            module Row =
+                module State =
+                    let [<Literal>] IsSelected = "is-selected"
+            module Style =
+              let [<Literal>] IsBordered = "is-bordered"
+              let [<Literal>] IsStripped = "is-stripped "
+            module Spacing =
+                let [<Literal>] IsNarrow = "is-narrow"
+
+        module Tag =
+          let [<Literal>] Container = "tag"
+
+          module Size =
+            let [<Literal>] IsMedium = "is-medium"
+            let [<Literal>] IsLarge = "is-large"
+          let Color = levelAndColor

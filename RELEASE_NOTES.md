@@ -1,3 +1,9 @@
+### 0.1.0-alpha8-next
+
+* Refactored BulmaClasses to have more modules and literals
+* Updated `bulma` to `Bulma` to give better represantation as module
+* Performace improved and generated code reduced by 1800+ lines
+
 ### 0.1.0-alpha7
 
 * Fix typo `typeIsSassword` -> `typeIsPassword`

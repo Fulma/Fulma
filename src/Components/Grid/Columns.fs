@@ -35,19 +35,19 @@ module Columns =
 
         let ofAlignment =
             function
-            | IsCentered -> bulma.Grid.Columns.Alignment.IsCentered
-            | IsVCentered -> bulma.Grid.Columns.Alignment.IsVCentered
+            | IsCentered -> Bulma.Grid.Columns.Alignment.IsCentered
+            | IsVCentered -> Bulma.Grid.Columns.Alignment.IsVCentered
 
         let ofSpacing =
             function
-            | IsMultiline -> bulma.Grid.Columns.Spacing.IsMultiline
-            | IsGapless -> bulma.Grid.Columns.Spacing.IsGapless
-            | IsGrid -> bulma.Grid.Columns.Spacing.IsGrid
+            | IsMultiline -> Bulma.Grid.Columns.Spacing.IsMultiline
+            | IsGapless -> Bulma.Grid.Columns.Spacing.IsGapless
+            | IsGrid -> Bulma.Grid.Columns.Spacing.IsGrid
 
         let ofDisplay =
             function
-            | Mobile -> bulma.Grid.Columns.Display.OnMobile
-            | DesktopOnly -> bulma.Grid.Columns.Display.OnlyDesktop
+            | Mobile -> Bulma.Grid.Columns.Display.OnMobile
+            | DesktopOnly -> Bulma.Grid.Columns.Display.OnlyDesktop
 
         type Options =
             { Display : string option
@@ -96,7 +96,7 @@ module Columns =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        div [ yield ClassName ( Helpers.generateClassName bulma.Grid.Columns.Container
+        div [ yield ClassName ( Helpers.generateClassName Bulma.Grid.Columns.Container
                                                     [ opts.Alignment
                                                       opts.Display
                                                       opts.Spacing

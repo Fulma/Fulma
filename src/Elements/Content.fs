@@ -45,7 +45,7 @@ module Content =
         let opts = options |> List.fold parseOption Options.Empty
         div
             [ yield classBaseList
-                        bulma.Content.Container
+                        Bulma.Content.Container
                         [ opts.CustomClass.Value, opts.CustomClass.IsSome
                           opts.Size.Value, opts.Size.IsSome ] :> IHTMLProp
               yield! opts.Props ]

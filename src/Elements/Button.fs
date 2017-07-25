@@ -38,26 +38,26 @@ module Button =
 
         let ofSize size =
             match size with
-            | IsSmall -> bulma.Button.Size.IsSmall
-            | IsMedium -> bulma.Button.Size.IsMedium
-            | IsLarge -> bulma.Button.Size.IsLarge
-            | IsFullWidth -> bulma.Button.Size.IsFullwidth
+            | IsSmall -> Bulma.Button.Size.IsSmall
+            | IsMedium -> Bulma.Button.Size.IsMedium
+            | IsLarge -> Bulma.Button.Size.IsLarge
+            | IsFullWidth -> Bulma.Button.Size.IsFullwidth
             | ISize.Nothing -> ""
 
         let ofStyles style =
             match style with
-            | IsOutlined -> bulma.Button.Styles.IsOutlined
-            | IsInverted -> bulma.Button.Styles.IsInverted
-            | IsLink -> bulma.Button.Styles.IsLink
+            | IsOutlined -> Bulma.Button.Styles.IsOutlined
+            | IsInverted -> Bulma.Button.Styles.IsInverted
+            | IsLink -> Bulma.Button.Styles.IsLink
             | value -> failwithf "%A isn't a valid style value" value
 
         let ofState state =
             match state with
             | IState.Nothing -> ""
-            | IsHovered -> bulma.Button.State.IsHovered
-            | IsFocused -> bulma.Button.State.IsFocused
-            | IsActive -> bulma.Button.State.IsActive
-            | IsLoading -> bulma.Button.State.IsLoading
+            | IsHovered -> Bulma.Button.State.IsHovered
+            | IsFocused -> Bulma.Button.State.IsFocused
+            | IsActive -> Bulma.Button.State.IsActive
+            | IsLoading -> Bulma.Button.State.IsLoading
 
         type Options =
             { Level : string option
@@ -127,10 +127,10 @@ module Button =
 
         a
             [ yield classBaseList
-                (Helpers.generateClassName bulma.Button.Container [ opts.Level; opts.Size; opts.State ])
-                 [ bulma.Button.Styles.IsOutlined, opts.IsOutlined
-                   bulma.Button.Styles.IsInverted, opts.IsInverted
-                   bulma.Button.Styles.IsLink, opts.IsLink
+                (Helpers.generateClassName Bulma.Button.Container [ opts.Level; opts.Size; opts.State ])
+                 [ Bulma.Button.Styles.IsOutlined, opts.IsOutlined
+                   Bulma.Button.Styles.IsInverted, opts.IsInverted
+                   Bulma.Button.Styles.IsLink, opts.IsLink
                    opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               if opts.OnClick.IsSome then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp

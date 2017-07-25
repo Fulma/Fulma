@@ -49,7 +49,7 @@ module Message =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        article [ yield ClassName (Helpers.generateClassName bulma.Message.Container
+        article [ yield ClassName (Helpers.generateClassName Bulma.Message.Container
                                                              [ opts.Color; opts.CustomClass ] ) :> IHTMLProp
                   yield! opts.Props ]
             children
@@ -57,7 +57,7 @@ module Message =
     let header (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Message.Header
+        div [ yield classBaseList Bulma.Message.Header
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
@@ -65,7 +65,7 @@ module Message =
     let body (options: GenericOption list) children =
         let opts = genericParse options
 
-        div [ yield classBaseList bulma.Message.Body
+        div [ yield classBaseList Bulma.Message.Body
                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children

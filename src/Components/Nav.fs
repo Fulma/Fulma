@@ -118,24 +118,24 @@ module Nav =
 
         let opts = options |> List.fold parseOptions Nav.Options.Empty
 
-        nav [ yield (classBaseList bulma.Nav.Container
-                                   [ bulma.Nav.Style.HasShadow, opts.HasShadow
+        nav [ yield (classBaseList Bulma.Nav.Container
+                                   [ Bulma.Nav.Style.HasShadow, opts.HasShadow
                                      opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp
               yield! opts.Props ]
             children
 
     let left props children =
-        div [ yield ClassName bulma.Nav.Left :> IHTMLProp
+        div [ yield ClassName Bulma.Nav.Left :> IHTMLProp
               yield! props ]
             children
 
     let right props children =
-        div [ yield ClassName bulma.Nav.Right :> IHTMLProp
+        div [ yield ClassName Bulma.Nav.Right :> IHTMLProp
               yield! props ]
             children
 
     let center props children =
-        div [ yield ClassName bulma.Nav.Center :> IHTMLProp
+        div [ yield ClassName Bulma.Nav.Center :> IHTMLProp
               yield! props ]
             children
 
@@ -149,9 +149,9 @@ module Nav =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        a [ yield (classBaseList bulma.Nav.Item.Container
-                                  [ bulma.Nav.Item.State.IsActive, opts.IsActive
-                                    bulma.Nav.Item.Style.IsTab, opts.IsTab
+        a [ yield (classBaseList Bulma.Nav.Item.Container
+                                  [ Bulma.Nav.Item.State.IsActive, opts.IsActive
+                                    Bulma.Nav.Item.Style.IsTab, opts.IsTab
                                     opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp
             yield! opts.Props ]
             children
@@ -165,8 +165,8 @@ module Nav =
 
         let opts = options |> List.fold parseOptions Toggle.Options.Empty
 
-        span [ yield (classBaseList bulma.Nav.Toggle.Container
-                                    [ bulma.Nav.Toggle.State.IsActive, opts.IsActive
+        span [ yield (classBaseList Bulma.Nav.Toggle.Container
+                                    [ Bulma.Nav.Toggle.State.IsActive, opts.IsActive
                                       opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp ]
 
     let menu options children =
@@ -178,7 +178,7 @@ module Nav =
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
 
-        span [ yield (classBaseList bulma.Nav.Menu.Container
-                                    [ bulma.Nav.Menu.State.IsActive, opts.IsActive
+        span [ yield (classBaseList Bulma.Nav.Menu.Container
+                                    [ Bulma.Nav.Menu.State.IsActive, opts.IsActive
                                       opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp ]
               children

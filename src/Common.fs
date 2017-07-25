@@ -25,22 +25,22 @@ module Common =
 
     let ofLevelAndColor level =
         match level with
-        | IsBlack -> bulma.Modifiers.Color.IsBlack
-        | IsDark -> bulma.Modifiers.Color.IsDark
-        | IsLight -> bulma.Modifiers.Color.IsLight
-        | IsWhite -> bulma.Modifiers.Color.IsWhite
-        | IsPrimary -> bulma.Modifiers.Color.IsPrimary
-        | IsInfo -> bulma.Modifiers.Color.IsInfo
-        | IsSuccess -> bulma.Modifiers.Color.IsSuccess
-        | IsWarning -> bulma.Modifiers.Color.IsWarning
-        | IsDanger -> bulma.Modifiers.Color.IsDanger
+        | IsBlack -> Bulma.Modifiers.Color.IsBlack
+        | IsDark -> Bulma.Modifiers.Color.IsDark
+        | IsLight -> Bulma.Modifiers.Color.IsLight
+        | IsWhite -> Bulma.Modifiers.Color.IsWhite
+        | IsPrimary -> Bulma.Modifiers.Color.IsPrimary
+        | IsInfo -> Bulma.Modifiers.Color.IsInfo
+        | IsSuccess -> Bulma.Modifiers.Color.IsSuccess
+        | IsWarning -> Bulma.Modifiers.Color.IsWarning
+        | IsDanger -> Bulma.Modifiers.Color.IsDanger
         | ILevelAndColor.Nothing -> ""
 
     let ofSize size =
         match size with
-        | IsSmall -> bulma.Modifiers.Size.IsSmall
-        | IsMedium -> bulma.Modifiers.Size.IsMedium
-        | IsLarge -> bulma.Modifiers.Size.IsLarge
+        | IsSmall -> Bulma.Modifiers.Size.IsSmall
+        | IsMedium -> Bulma.Modifiers.Size.IsMedium
+        | IsLarge -> Bulma.Modifiers.Size.IsLarge
         | ISize.Nothing -> ""
 
     type GenericOption =

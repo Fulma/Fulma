@@ -30,22 +30,22 @@ module Image =
 
         let ofImageSize =
             function
-            | Is16x16 -> bulma.Image.Size.Is16x16
-            | Is24x24 -> bulma.Image.Size.Is24x24
-            | Is32x32 -> bulma.Image.Size.Is32x32
-            | Is48x48 -> bulma.Image.Size.Is48x48
-            | Is64x64 -> bulma.Image.Size.Is64x64
-            | Is96x96 -> bulma.Image.Size.Is96x96
-            | Is128x128 -> bulma.Image.Size.Is128x128
+            | Is16x16 -> Bulma.Image.Size.Is16x16
+            | Is24x24 -> Bulma.Image.Size.Is24x24
+            | Is32x32 -> Bulma.Image.Size.Is32x32
+            | Is48x48 -> Bulma.Image.Size.Is48x48
+            | Is64x64 -> Bulma.Image.Size.Is64x64
+            | Is96x96 -> Bulma.Image.Size.Is96x96
+            | Is128x128 -> Bulma.Image.Size.Is128x128
 
         let ofImageRatio =
             function
-            | IsSquare -> bulma.Image.Ratio.IsSquare
-            | Is1by1 -> bulma.Image.Ratio.Is1by1
-            | Is4by3 -> bulma.Image.Ratio.Is4by3
-            | Is3by2 -> bulma.Image.Ratio.Is3by2
-            | Is16by9 -> bulma.Image.Ratio.Is16by9
-            | Is2by1 -> bulma.Image.Ratio.Is2by1
+            | IsSquare -> Bulma.Image.Ratio.IsSquare
+            | Is1by1 -> Bulma.Image.Ratio.Is1by1
+            | Is4by3 -> Bulma.Image.Ratio.Is4by3
+            | Is3by2 -> Bulma.Image.Ratio.Is3by2
+            | Is16by9 -> Bulma.Image.Ratio.Is16by9
+            | Is2by1 -> Bulma.Image.Ratio.Is2by1
 
         type Option =
             | Size of IImageSize
@@ -96,7 +96,7 @@ module Image =
         let opts = options |> List.fold parseOptions Options.Empty
         figure
             [ yield ClassName(Helpers.generateClassName
-                                    bulma.Image.Container
+                                    Bulma.Image.Container
                                     [ opts.Size; opts.Ratio; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props ]
             children
