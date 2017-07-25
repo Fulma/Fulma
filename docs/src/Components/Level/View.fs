@@ -7,7 +7,7 @@ open Fable.Helpers.React.Props
 open Types
 open Elmish.Bulma.Elements
 open Elmish.Bulma.Components
-open Elmish.Bulma.Components.Grids
+open Elmish.Bulma.Grids
 open Elmish.Bulma.Elements.Form
 
 

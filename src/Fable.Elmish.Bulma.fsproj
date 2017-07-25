@@ -8,8 +8,6 @@
     <Compile Include="BulmaClasses.fs" />
     <Compile Include="Common.fs" />
     <!-- Components -->
-    <Compile Include="Components/Grid/Column.fs" />
-    <Compile Include="Components/Grid/Columns.fs" />
     <Compile Include="Components/Card.fs" />
     <Compile Include="Components/Level.fs" />
     <Compile Include="Components/Menu.fs" />
@@ -17,6 +15,9 @@
     <Compile Include="Components/Message.fs" />
     <Compile Include="Components/Panel.fs" />
     <Compile Include="Components/Nav.fs" />
+    <!-- Grids -->
+    <Compile Include="Grids/Column.fs" />
+    <Compile Include="Grids/Columns.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />
