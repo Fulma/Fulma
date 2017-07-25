@@ -2,7 +2,15 @@ module Components.Breadcrumb.Types
 
 type Model =
     { Intro : string
-      BoxViewer : Viewer.Types.Model }
+      BasicViewer : Viewer.Types.Model
+      AlignmentCenterViewer : Viewer.Types.Model
+      IconViewer : Viewer.Types.Model
+      SizeViewer : Viewer.Types.Model
+      SeparatorViewer : Viewer.Types.Model }
 
 type Msg =
-    | BoxViewerMsg of Viewer.Types.Msg
+    | BasicViewerMsg of Viewer.Types.Msg
+    | AlignmentCenterViewerMsg of Viewer.Types.Msg
+    | IconViewerMsg of Viewer.Types.Msg
+    | SizeViewerMsg of Viewer.Types.Msg
+    | SeparatorViewerMsg of Viewer.Types.Msg

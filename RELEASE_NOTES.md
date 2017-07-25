@@ -3,6 +3,8 @@
 * Fix #19: Refactored BulmaClasses to have more modules and literals
 * Updated `bulma` to `Bulma` to give better represantation as module
 * Performace improved and generated code reduced by 1800+ lines
+* Add breadcrumb support
+* Setup babel correctly for the docs site.
 
 ### 0.1.0-alpha7
 

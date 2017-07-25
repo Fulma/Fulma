@@ -107,6 +107,12 @@ module Breadcrumb =
               yield! opts.Props ]
             [ ul [ ] children ]
 
+    module Item =
+
+        let isActive = Item.IsActive
+        let props = Item.Props
+        let customClass = Item.CustomClass
+
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function
