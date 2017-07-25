@@ -149,6 +149,25 @@ module BulmaClasses =
                 let [<Literal>] IsOutlined = "is-outlined"
                 let [<Literal>] IsInverted = "is-inverted"
 
+        module Breadcrumb =
+
+            let [<Literal>] Container = "breadcrumb"
+            module Alignment =
+                let [<Literal>] IsCentered = "is-centered"
+                let [<Literal>] IsRight = "is-right"
+            module Separator =
+                /// Alias for: has-arrow-separator
+                let [<Literal>] Arrow = "has-arrow-separator"
+                /// Alias for: has-bullet-separator
+                let [<Literal>] Bullet = "has-bullet-separator"
+                /// Alias for: has-dot-separator
+                let [<Literal>] Dot = "has-dot-separator"
+                /// Alias for: has-succeeds-separator
+                let [<Literal>] Succeeds = "has-succeeds-separator"
+            module State =
+                let [<Literal>] IsActive = "is-active"
+            let Size = standardSize
+
         module Card =
             let [<Literal>] Container = "card"
             module Header =

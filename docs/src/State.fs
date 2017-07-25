@@ -23,6 +23,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Element Form) (s "elements" </> s "form")
             map (Component Panel) (s "components" </> s "panel")
             map (Component Level) (s "components" </> s "level")
+            map (Component Breadcrumb) (s "components" </> s "breadcrumb")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -48,7 +49,8 @@ let init result =
 
     let ``components`` =
         { Panel = Components.Panel.State.init ()
-          Level = Components.Level.State.init () }
+          Level = Components.Level.State.init ()
+          Breadcrumb = Components.Breadcrumb.State.init () }
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
@@ -128,3 +130,8 @@ let update msg model =
         let (level, levelMsg) = Components.Level.State.update msg model.Components.Level
         { model with Components =
                         { model.Components with Level = level } }, Cmd.map LevelMsg levelMsg
+
+    | BreadcrumbMsg msg ->
+        let (breadcrumb, breadcrumbMsg) = Components.Breadcrumb.State.update msg model.Components.Breadcrumb
+        { model with Components =
+                        { model.Components with Breadcrumb = breadcrumb } }, Cmd.map BreadcrumbMsg breadcrumbMsg
