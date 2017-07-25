@@ -34,7 +34,7 @@ module Notification =
           hasDeleteButton : bool }
         // AutoCloseDelay: float option
         static member Empty =
-            { level = ILevelAndColor.Nothing
+            { level = ILevelAndColor.IsBlack
               hasDeleteButton = false }
 
     let notification (options : Option list) (properties : IHTMLProp list) children =

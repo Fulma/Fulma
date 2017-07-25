@@ -6,6 +6,16 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import replace from 'rollup-plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import sass from 'node-sass';
+import babel from "rollup-plugin-babel";
+
+var babelOptions = {
+    presets: [["es2015", { "modules": false }]],
+    plugins: [["transform-runtime", {
+        helpers: true,
+        polyfill: false,
+        regenerator: false
+    }]]
+};
 
 const preprocessor = (content, id) => new Promise((resolve, reject) => {
     const result = sass.renderSync({ file: id });
@@ -16,7 +26,14 @@ export default {
     entry: './docs.fsproj',
     dest: './public/dist/js/bundle.js',
     plugins: [
-        fable(),
+        fable({
+            babel: babelOptions
+        }),
+        ,
+        babel({
+            options: babelOptions,
+            exclude: "../node_modules/**"
+        }),
         livereload(),
         serve({
             contentBase: 'public',

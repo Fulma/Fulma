@@ -129,7 +129,7 @@ babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@^6.24.1, babel-core@^6.25.0:
+babel-core@6, babel-core@^6.24.1, babel-core@^6.25.0:
   version "6.25.0"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.25.0.tgz#7dd42b0463c742e9d5296deb3ec67a9322dad729"
   dependencies:
@@ -283,7 +283,7 @@ babel-plugin-transform-es2015-block-scoping@^6.24.1:
     babel-types "^6.24.1"
     lodash "^4.2.0"
 
-babel-plugin-transform-es2015-classes@^6.24.1:
+babel-plugin-transform-es2015-classes@^6.24.1, babel-plugin-transform-es2015-classes@^6.9.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-es2015-classes/-/babel-plugin-transform-es2015-classes-6.24.1.tgz#5a4c58a50c9c9461e564b4b2a3bfabc97a2584db"
   dependencies:
@@ -604,9 +604,9 @@ builtin-modules@^1.0.0, builtin-modules@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
 
-bulma@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.4.3.tgz#060da634b579ed99d7cedf0251d9e21e1f5c770d"
+bulma@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.4.4.tgz#182a3d9fb15026b4602aa8da3cf42140bfb9bb2c"
 
 camelcase-keys@^2.0.0:
   version "2.1.0"
@@ -716,7 +716,7 @@ core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-create-react-class@^15.5.2:
+create-react-class@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.6.0.tgz#ab448497c26566e1e29413e883207d57cfe7bed4"
   dependencies:
@@ -1771,7 +1771,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.7:
+prop-types@^15.5.10:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -1819,15 +1819,15 @@ react-dom@^15.6.1:
     object-assign "^4.1.0"
     prop-types "^15.5.10"
 
-react@^15.6.0:
-  version "15.6.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.6.0.tgz#c23299b48e30ed302508ce89e1a02c919f826bce"
+react@^15.6.1:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
   dependencies:
-    create-react-class "^15.5.2"
+    create-react-class "^15.6.0"
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
-    prop-types "^15.5.7"
+    prop-types "^15.5.10"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -2003,6 +2003,15 @@ rn-host-detect@^1.0.1:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/rn-host-detect/-/rn-host-detect-1.1.3.tgz#242d76e2fa485c48d751416e65b7cce596969e91"
 
+rollup-plugin-babel@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-2.7.1.tgz#16528197b0f938a1536f44683c7a93d573182f57"
+  dependencies:
+    babel-core "6"
+    babel-plugin-transform-es2015-classes "^6.9.0"
+    object-assign "^4.1.0"
+    rollup-pluginutils "^1.5.0"
+
 rollup-plugin-buble@^0.15.0:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-buble/-/rollup-plugin-buble-0.15.0.tgz#83c3e89c7fd2266c7918f41ba3980313519c7fd0"
@@ -2020,9 +2029,9 @@ rollup-plugin-commonjs@^8.0.2:
     resolve "^1.1.7"
     rollup-pluginutils "^2.0.1"
 
-rollup-plugin-fable@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-fable/-/rollup-plugin-fable-1.0.7.tgz#9a26774b136d6c184a74953ae07fa69f4ca00804"
+rollup-plugin-fable@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-fable/-/rollup-plugin-fable-1.1.0.tgz#3946eba62b10838f55b547cea42f230467b9338d"
   dependencies:
     fable-utils "^1.0.1"
     rollup-pluginutils "2.0.1"
@@ -2042,9 +2051,9 @@ rollup-plugin-node-resolve@^3.0.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
-rollup-plugin-postcss@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-postcss/-/rollup-plugin-postcss-0.5.3.tgz#a62ede01f74c08f550dd1d4f23c8d6e6a11134b6"
+rollup-plugin-postcss@^0.5.4:
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-postcss/-/rollup-plugin-postcss-0.5.4.tgz#c6cac59047a0abcc49811090c5582a8ed4e42be5"
   dependencies:
     chalk "^1.1.3"
     concat-with-sourcemaps "^1.0.4"
@@ -2092,16 +2101,17 @@ rollup-pluginutils@^1.5.0:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
-rollup-watch@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/rollup-watch/-/rollup-watch-4.0.0.tgz#309051b9403b9e5445c5746c9eba9a466951d39e"
+rollup-watch@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/rollup-watch/-/rollup-watch-4.3.1.tgz#5aa1eaeab787addf368905d102b39d6fc5ce4a8b"
   dependencies:
     chokidar "^1.7.0"
     require-relative "0.8.7"
+    rollup-pluginutils "^2.0.1"
 
-rollup@^0.45.1:
-  version "0.45.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.45.1.tgz#af67ded79974079095b5fede8817b4ec26d610e1"
+rollup@^0.45.2:
+  version "0.45.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.45.2.tgz#63a284c2b31234656f24e9e9717fabb6a7f0fa43"
   dependencies:
     source-map-support "^0.4.0"
 

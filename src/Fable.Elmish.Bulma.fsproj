@@ -8,6 +8,7 @@
     <Compile Include="BulmaClasses.fs" />
     <Compile Include="Common.fs" />
     <!-- Components -->
+    <Compile Include="Components/Breadcrumb.fs" />
     <Compile Include="Components/Card.fs" />
     <Compile Include="Components/Level.fs" />
     <Compile Include="Components/Menu.fs" />
@@ -33,9 +34,6 @@
     <Compile Include="Elements/Form.fs" />
     <!-- Layout -->
     <Compile Include="Layout/Hero.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
   </ItemGroup>
   <!-- Add source files to "fable" folder in Nuget package -->
   <ItemGroup>

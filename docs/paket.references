@@ -2,3 +2,5 @@ FSharp.Core
 Fable.Core
 Fable.Elmish.React
 Fable.Elmish.Browser
+FSharp.NET.Sdk
+dotnet-fable

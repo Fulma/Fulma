@@ -9,7 +9,6 @@ module Common =
         | IsSmall
         | IsMedium
         | IsLarge
-        | Nothing
 
     type ILevelAndColor =
         | IsBlack
@@ -21,7 +20,6 @@ module Common =
         | IsSuccess
         | IsWarning
         | IsDanger
-        | Nothing
 
     let ofLevelAndColor level =
         match level with
@@ -34,14 +32,12 @@ module Common =
         | IsSuccess -> Bulma.Modifiers.Color.IsSuccess
         | IsWarning -> Bulma.Modifiers.Color.IsWarning
         | IsDanger -> Bulma.Modifiers.Color.IsDanger
-        | ILevelAndColor.Nothing -> ""
 
     let ofSize size =
         match size with
         | IsSmall -> Bulma.Modifiers.Size.IsSmall
         | IsMedium -> Bulma.Modifiers.Size.IsMedium
         | IsLarge -> Bulma.Modifiers.Size.IsLarge
-        | ISize.Nothing -> ""
 
     type GenericOption =
         | CustomClass of string
