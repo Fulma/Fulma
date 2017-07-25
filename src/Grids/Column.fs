@@ -1,4 +1,4 @@
-namespace Elmish.Bulma.Components.Grids
+namespace Elmish.Bulma.Grids
 
 open Elmish
 open Elmish.Bulma.BulmaClasses

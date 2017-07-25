@@ -286,7 +286,7 @@ module BulmaClasses =
             let [<Literal>] Right = "media-right"
             let [<Literal>] Content = "media-content"
             module Size =
-                  let [<Literal>] isLarge = "is-large"
+                  let [<Literal>] IsLarge = "is-large"
 
         module Message =
             let [<Literal>] Container = "message"

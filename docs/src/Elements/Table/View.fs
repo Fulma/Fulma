@@ -6,8 +6,6 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open Elmish.Bulma.Elements
-open Elmish.Bulma.Components.Grids
-
 
 let simpleInteractive =
     Table.table [ ]
