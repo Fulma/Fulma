@@ -1,4 +1,4 @@
-### 0.1.0-alpha8
+### 0.1.0-alpha8-next
 
 * Refactored BulmaClasses to have more modules and literals
 * Updated `bulma` to `Bulma` to give better represantation as module
