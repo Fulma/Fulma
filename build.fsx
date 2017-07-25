@@ -95,14 +95,14 @@ let watchDocs _ =
                                                 WorkingDir = workingDir
                                                 TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
 
-    runDotnetNoTimeout "docs" "fable node-run ../node_modules/.bin/rollup --port free -- -c rollup-config.js -w"
+    runDotnetNoTimeout "docs" "fable node-run ../node_modules/rollup/bin/rollup --port free -- -c rollup-config.js -w"
 
 Target "WatchDocs" watchDocs
 
 Target "QuickWatchDocs" watchDocs
 
 Target "BuildDocs" (fun _ ->
-    runDotnet "docs" "fable node-run ../node_modules/.bin/rollup --port free -- -c rollup-config.js"
+    runDotnet "docs" "fable node-run ../node_modules/rollup/bin/rollup --port free -- -c rollup-config.js"
 )
 
 // --------------------------------------------------------------------------------------
