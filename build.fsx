@@ -30,6 +30,8 @@ Target "Clean" (fun _ ->
   seq [
     "src/bin"
     "src/obj"
+    "docs/bin"
+    "docs/obj"
   ] |> CleanDirs
 )
 
@@ -109,12 +111,25 @@ Target "BuildDocs" (fun _ ->
 // Build a NuGet package
 
 Target "Package" (fun _ ->
-    runDotnet "src" "pack"
+    runDotnet "src" "restore"
+    runDotnet "src" "pack -c Release"
 )
 
 Target "PublishNuget" (fun _ ->
-    runDotnet "src" "push"
+    let nugetKey =
+        match environVarOrNone "NUGET_KEY" with
+        | Some nugetKey -> nugetKey
+        | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
+
+    Directory.GetFiles("src" </> "bin" </> "Release", "*.nupkg")
+    |> Array.find(fun nupkg -> nupkg.Contains(release.NugetVersion))
+    |> (fun nupkg ->
+            (Path.GetFullPath nupkg, nugetKey)
+            ||> sprintf "nuget push %s -s nuget.org -k %s"
+            |> runDotnet "src"
+    )
 )
+
 
 // --------------------------------------------------------------------------------------
 // Generate the documentation
@@ -157,8 +172,6 @@ Target "Release" (fun _ ->
     |> Async.RunSynchronously
 )
 
-Target "Publish" DoNothing
-
 // Build order
 "Meta"
     // ==> "InstallDotNetCore"
@@ -166,10 +179,8 @@ Target "Publish" DoNothing
     ==> "Install"
     ==> "Build"
     ==> "Package"
+    ==> "PublishNuget"
 
-"Publish"
-    <== [ "Build"
-          "PublishNuget" ]
 "Build"
     ==> "YarnInstall"
     ==> "InstallDocs"
