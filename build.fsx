@@ -133,43 +133,32 @@ Target "PublishNuget" (fun _ ->
 
 // --------------------------------------------------------------------------------------
 // Generate the documentation
-let gitName = "elmish"
-let gitOwner = "fable-elmish"
+let gitName = "Fable.Elmish.Bulma"
+let gitOwner = "MangelMaxime"
 let gitHome = sprintf "https://github.com/%s" gitOwner
 
+
+// Where to push generated documentation
+let githubLink = "git@github.com:MangelMaxime/Fable.Elmish.Bulma.git"
+let publishBranch = "gh-pages"
+let fableRoot   = __SOURCE_DIRECTORY__
+let temp        = fableRoot </> "temp"
+let docsOuput = fableRoot </> "docs" </> "public"
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
 #load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
 open Octokit
 
-Target "Release" (fun _ ->
-    let user =
-        match getBuildParam "github-user" with
-        | s when not (String.IsNullOrWhiteSpace s) -> s
-        | _ -> getUserInput "Username: "
-    let pw =
-        match getBuildParam "github-pw" with
-        | s when not (String.IsNullOrWhiteSpace s) -> s
-        | _ -> getUserPassword "Password: "
-    let remote =
-        Git.CommandHelper.getGitResult "" "remote -v"
-        |> Seq.filter (fun (s: string) -> s.EndsWith("(push)"))
-        |> Seq.tryFind (fun (s: string) -> s.Contains(gitOwner + "/" + gitName))
-        |> function None -> gitHome + "/" + gitName | Some (s: string) -> s.Split().[0]
 
-    StageAll ""
-    Git.Commit.Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Branches.pushBranch "" remote (Information.getBranchName "")
+Target "PublishDocs" (fun _ ->
+  CleanDir temp
+  Repository.cloneSingleBranch "" githubLink publishBranch temp
 
-    Branches.tag "" release.NugetVersion
-    Branches.pushTag "" remote release.NugetVersion
-
-    // release on github
-    createClient user pw
-    |> createDraft gitOwner gitName release.NugetVersion (release.SemVer.PreRelease <> None) release.Notes
-    |> releaseDraft
-    |> Async.RunSynchronously
+  CopyRecursive docsOuput temp true |> tracefn "%A"
+  StageAll temp
+  Git.Commit.Commit temp (sprintf "Update site (%s)" (DateTime.Now.ToShortDateString()))
+  Branches.push temp
 )
 
 // Build order
@@ -190,6 +179,7 @@ Target "Release" (fun _ ->
     ==> "YarnInstall"
     ==> "InstallDocs"
     ==> "BuildDocs"
+    ==> "PublishDocs"
 
 // start build
 RunTargetOrDefault "Build"
