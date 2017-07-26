@@ -4661,7 +4661,7 @@ var Components = function () {
       return {
         type: "Global.Components",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Panel"], ["Level"], ["Breadcrumb"]]
+        cases: [["Panel"], ["Level"], ["Breadcrumb"], ["Card"]]
       };
     }
   }, {
@@ -4738,6 +4738,8 @@ function toHash(page) {
       return "#components/level";
     } else if (page.data.tag === 2) {
       return "#components/breadcrumb";
+    } else if (page.data.tag === 3) {
+      return "#components/card";
     } else {
       return "#components/panel";
     }
@@ -5955,7 +5957,16 @@ function card(options, children) {
     }));
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
-
+function header$1(options, children) {
+  var opts = genericParse(options);
+  return react_1.apply(undefined, ["header", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("card-header", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
 function content$1(options, children) {
   var opts = genericParse(options);
   return react_1.apply(undefined, ["div", createObj(toList(delay(function () {
@@ -8321,6 +8332,70 @@ var Msg$14 = function () {
 setType("Components.Breadcrumb.Types.Msg", Msg$14);
 
 var Model$15 = function () {
+  function Model$$1(intro, basicViewer) {
+    babelHelpers.classCallCheck(this, Model$$1);
+    this.Intro = intro;
+    this.BasicViewer = basicViewer;
+  }
+
+  babelHelpers.createClass(Model$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Card.Types.Model",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Intro: "string",
+          BasicViewer: Model
+        }
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return equalsRecords(this, other);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+  }]);
+  return Model$$1;
+}();
+setType("Components.Card.Types.Model", Model$15);
+var Msg$15 = function () {
+  function Msg$$1(tag, data) {
+    babelHelpers.classCallCheck(this, Msg$$1);
+    this.tag = tag;
+    this.data = data;
+  }
+
+  babelHelpers.createClass(Msg$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Card.Types.Msg",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["BasicViewerMsg", Msg]]
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+  }]);
+  return Msg$$1;
+}();
+setType("Components.Card.Types.Msg", Msg$15);
+
+var Model$16 = function () {
   function Model(intro) {
     babelHelpers.classCallCheck(this, Model);
     this.Intro = intro;
@@ -8350,7 +8425,7 @@ var Model$15 = function () {
   }]);
   return Model;
 }();
-setType("Home.Types.Model", Model$15);
+setType("Home.Types.Model", Model$16);
 
 var Msg$2 = function () {
   function Msg(tag, data) {
@@ -8365,7 +8440,7 @@ var Msg$2 = function () {
       return {
         type: "App.Types.Msg",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13], ["BreadcrumbMsg", Msg$14]]
+        cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13], ["BreadcrumbMsg", Msg$14], ["CardMsg", Msg$15]]
       };
     }
   }, {
@@ -8432,11 +8507,12 @@ var ElementsModel = function () {
 }();
 setType("App.Types.ElementsModel", ElementsModel);
 var ComponentsModel = function () {
-  function ComponentsModel(panel, level, breadcrumb) {
+  function ComponentsModel(panel, level, breadcrumb, card) {
     babelHelpers.classCallCheck(this, ComponentsModel);
     this.Panel = panel;
     this.Level = level;
     this.Breadcrumb = breadcrumb;
+    this.Card = card;
   }
 
   babelHelpers.createClass(ComponentsModel, [{
@@ -8448,7 +8524,8 @@ var ComponentsModel = function () {
         properties: {
           Panel: Model$12,
           Level: Model$13,
-          Breadcrumb: Model$14
+          Breadcrumb: Model$14,
+          Card: Model$15
         }
       };
     }
@@ -8483,7 +8560,7 @@ var Model$2 = function () {
         interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
         properties: {
           CurrentPage: Page,
-          Home: Model$15,
+          Home: Model$16,
           Elements: ElementsModel,
           Components: ComponentsModel
         }
@@ -12846,6 +12923,17 @@ function root$13(model, dispatch) {
   }))]));
 }
 
+var basic$1 = card(new List$1(), ofArray([header$1(new List$1(), ofArray([Header.title(new List$1(), ofArray(["Component"])), Header.icon(new List$1(), ofArray([react_1("i", {
+  className: "fa fa-angle-down"
+})]))])), content$1(new List$1(), ofArray([content(new List$1(), ofArray(["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."]))])), footer(new List$1(), ofArray([Footer.item(new List$1(), ofArray(["Save"])), Footer.item(new List$1(), ofArray(["Edit"])), Footer.item(new List$1(), ofArray(["Delete"]))]))]));
+function root$14(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$1, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$15(0, arg0);
+    }($var1));
+  }))]));
+}
+
 var Types$13 = function (__exports) {
   var Block = __exports.Block = function (__exports) {
     var Option$$1 = __exports.Option = function () {
@@ -13148,7 +13236,7 @@ var iconInteractive$3 = columns(new List$1(), ofArray([column(ofArray([Offset.is
 })])), "Fable"])), checkbox(new List$1(), ofArray([react_1("input", {
   type: "checkbox"
 }), "I am a checkbox"])), block(new List$1(), ofArray([button(ofArray([isPrimary, isOutlined, isFullWidth]), ofArray(["Reset"]))]))]))]))]));
-function root$14(model, dispatch) {
+function root$15(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$3, model.PanelViewer, function ($var1) {
     return dispatch(function (arg0) {
       return new Msg$12(0, arg0);
@@ -13156,7 +13244,7 @@ function root$14(model, dispatch) {
   }))]));
 }
 
-function root$15(model) {
+function root$16(model) {
   return contentFromMarkdown(model.Intro);
 }
 
@@ -13185,7 +13273,7 @@ function navButton(classy, href, faClass, txt) {
 var navButtons = react_1("span", {
   className: "nav-item block"
 }, navButton("twitter", "https://twitter.com/FableCompiler", "fa-twitter", "Twitter"), navButton("github", "https://github.com/MangelMaxime/Fable.Elmish.Bulma/", "fa-github", "Github"), navButton("github", "https://gitter.im/fable-compiler/Fable", "fa-comments", "Gitter"));
-var root$16 = react_1("div", {
+var root$17 = react_1("div", {
   className: "nav"
 }, react_1("div", {
   className: "nav-left"
@@ -28616,13 +28704,13 @@ function update$13(msg, model) {
   }, patternInput[1])];
 }
 
-var basic$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var basic$2 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var alignmentCenter$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var icons$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n                  str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n                  str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-thumbs-up\" ] [ ] ]\r\n                  str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var size$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isLarge ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var separator$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.hasSucceedsSeparator ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 function init$14() {
-  return new Model$14("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$1), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$1), init$2(separator$1));
+  return new Model$14("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$2), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$1), init$2(separator$1));
 }
 function update$14(msg, model) {
   if (msg.tag === 1) {
@@ -28653,8 +28741,19 @@ function update$14(msg, model) {
   }
 }
 
+var basic$3 = "\r\n```fsharp\r\n    Card.card [ ]\r\n        [ Card.header [ ]\r\n            [ Card.Header.title [ ]\r\n                [ str \"Component\" ]\r\n              Card.Header.icon [ ]\r\n                [ i [ ClassName \"fa fa-angle-down\" ] [ ] ] ]\r\n          Card.content [ ]\r\n            [ Content.content [ ]\r\n                [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\" ] ]\r\n          Card.footer [ ]\r\n            [ Card.Footer.item [ ]\r\n                [ str \"Save\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Edit\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Delete\" ] ] ]\r\n```\r\n    ";
 function init$15() {
-  return new Model$15("\r\n# Fable.Elmish.Bulma\r\n\r\nBring Bulma power into Elmish.\r\n\r\n---\r\n    test\r\n---\r\n\r\n\r\n        ");
+  return new Model$15("\r\n# Card\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/card/)*\r\n        ", init$2(basic$3));
+}
+function update$15(msg, model) {
+  var patternInput = update$2(msg.data, model.BasicViewer);
+  return [new Model$15(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$15(0, arg0);
+  }, patternInput[1])];
+}
+
+function init$16() {
+  return new Model$16("\r\n# Fable.Elmish.Bulma\r\n\r\nBring Bulma power into Elmish.\r\n\r\n---\r\n    test\r\n---\r\n\r\n\r\n        ");
 }
 
 var pageParser = function () {
@@ -28742,11 +28841,17 @@ var pageParser = function () {
     return function (state_13) {
       return collect(parseAfter_13, parseBefore_13(state_13));
     };
-  }()), map_1(new Page(0), function (state_14) {
-    return top(state_14);
+  }()), map_1(new Page(2, new Components(3)), function () {
+    var parseBefore_14 = s("components");
+    var parseAfter_14 = s("card");
+    return function (state_14) {
+      return collect(parseAfter_14, parseBefore_14(state_14));
+    };
+  }()), map_1(new Page(0), function (state_15) {
+    return top(state_15);
   })]);
-  return function (state_15) {
-    return oneOf(parsers, state_15);
+  return function (state_16) {
+    return oneOf(parsers, state_16);
   };
 }();
 function urlUpdate(result, model) {
@@ -28759,8 +28864,8 @@ function urlUpdate(result, model) {
 }
 function init(result) {
   var elements = new ElementsModel(init$1(), init$3(), init$4(), init$5(), init$6(), init$7(), init$8(), init$9(), init$10(), init$11());
-  var components = new ComponentsModel(init$12(), init$13(), init$14());
-  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$15(), elements, components));
+  var components = new ComponentsModel(init$12(), init$13(), init$14(), init$15());
+  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$16(), elements, components));
   return [patternInput[0], Cmd.batch(ofArray([patternInput[1]]))];
 }
 function update(msg, model) {
@@ -28849,7 +28954,7 @@ function update(msg, model) {
   } else if (msg.tag === 12) {
     var patternInput_10 = update$12(msg.data, model.Components.Panel);
     return [function () {
-      var Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level, model.Components.Breadcrumb);
+      var Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level, model.Components.Breadcrumb, model.Components.Card);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components$$1);
     }(), Cmd.map(function (arg0_10) {
       return new Msg$2(12, arg0_10);
@@ -28857,7 +28962,7 @@ function update(msg, model) {
   } else if (msg.tag === 13) {
     var patternInput_11 = update$13(msg.data, model.Components.Level);
     return [function () {
-      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0], model.Components.Breadcrumb);
+      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0], model.Components.Breadcrumb, model.Components.Card);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_1);
     }(), Cmd.map(function (arg0_11) {
       return new Msg$2(13, arg0_11);
@@ -28865,11 +28970,19 @@ function update(msg, model) {
   } else if (msg.tag === 14) {
     var patternInput_12 = update$14(msg.data, model.Components.Breadcrumb);
     return [function () {
-      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_12[0]);
+      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_12[0], model.Components.Card);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_2);
     }(), Cmd.map(function (arg0_12) {
       return new Msg$2(14, arg0_12);
     }, patternInput_12[1])];
+  } else if (msg.tag === 15) {
+    var patternInput_13 = update$15(msg.data, model.Components.Card);
+    return [function () {
+      var Components_3 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, patternInput_13[0]);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_3);
+    }(), Cmd.map(function (arg0_13) {
+      return new Msg$2(15, arg0_13);
+    }, patternInput_13[1])];
   } else {
     return [model, Cmd$1.newNotification(notification(new List$1(), new List$1(), ofArray(["coucou"])))];
   }
@@ -28886,7 +28999,7 @@ function menuItem(label$$1, page, currentPage) {
   return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([["is-active", page.Equals(currentPage)]])), new Props.HTMLAttr(51, toHash(page))]), 1), label$$1));
 }
 function menu(currentPage) {
-  return menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage)]))]));
+  return menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage), menuItem("Card", new Page(2, new Components(3)), currentPage)]))]));
 }
 var header = react_1("div", {
   className: "hero is-primary"
@@ -28976,15 +29089,21 @@ function root(model, dispatch) {
             return new Msg$2(14, arg0_11);
           }($var12));
         });
-      } else {
-        return root$14(model.Components.Panel, function ($var13) {
+      } else if (_arg1.data.tag === 3) {
+        return root$14(model.Components.Card, function ($var13) {
           return dispatch(function (arg0_12) {
-            return new Msg$2(12, arg0_12);
+            return new Msg$2(15, arg0_12);
           }($var13));
+        });
+      } else {
+        return root$15(model.Components.Panel, function ($var14) {
+          return dispatch(function (arg0_13) {
+            return new Msg$2(12, arg0_13);
+          }($var14));
         });
       }
     } else {
-      return root$15(model.Home);
+      return root$16(model.Home);
     }
   };
 
@@ -28992,7 +29111,7 @@ function root(model, dispatch) {
     className: "navbar-bg"
   }, react_1("div", {
     className: "container"
-  }, root$16)), header, react_1("div", {
+  }, root$17)), header, react_1("div", {
     className: "section"
   }, react_1("div", {
     className: "container"
