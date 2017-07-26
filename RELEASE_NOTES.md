@@ -9,6 +9,7 @@
 * Performace improved and generated code reduced by 1800+ lines
 * Add breadcrumb support
 * Setup babel correctly for the docs site.
+* Fix #13 : Move grids into their own namespace
 
 ### 0.1.0-alpha7
 
