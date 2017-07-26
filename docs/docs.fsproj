@@ -23,6 +23,9 @@
         <Compile Include="src/Components/Breadcrumb/Types.fs" />
         <Compile Include="src/Components/Breadcrumb/State.fs" />
         <Compile Include="src/Components/Breadcrumb/View.fs" />
+        <Compile Include="src/Components/Card/Types.fs" />
+        <Compile Include="src/Components/Card/State.fs" />
+        <Compile Include="src/Components/Card/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

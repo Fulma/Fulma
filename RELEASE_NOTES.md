@@ -1,4 +1,8 @@
-### 0.1.0-alpha8-next
+### next
+
+* Add `Card` documentation
+
+### 0.1.0-alpha8
 
 * Fix #19: Refactored BulmaClasses to have more modules and literals
 * Updated `bulma` to `Bulma` to give better represantation as module

@@ -18,6 +18,7 @@ type Msg =
     | PanelMsg of Components.Panel.Types.Msg
     | LevelMsg of Components.Level.Types.Msg
     | BreadcrumbMsg of Components.Breadcrumb.Types.Msg
+    | CardMsg of Components.Card.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -34,7 +35,8 @@ type ElementsModel =
 type ComponentsModel =
     { Panel : Components.Panel.Types.Model
       Level : Components.Level.Types.Model
-      Breadcrumb : Components.Breadcrumb.Types.Model }
+      Breadcrumb : Components.Breadcrumb.Types.Model
+      Card : Components.Card.Types.Model }
 
 type Model =
     { CurrentPage : Page

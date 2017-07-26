@@ -19,6 +19,7 @@ type Components =
     | Panel
     | Level
     | Breadcrumb
+    | Card
 
 type Page =
     | Home
@@ -46,3 +47,4 @@ let toHash page =
         | Panel -> "#components/panel"
         | Level -> "#components/level"
         | Breadcrumb -> "#components/breadcrumb"
+        | Card  -> "#components/card"
