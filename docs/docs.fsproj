@@ -29,6 +29,9 @@
         <Compile Include="src/Components/Media/Types.fs" />
         <Compile Include="src/Components/Media/State.fs" />
         <Compile Include="src/Components/Media/View.fs" />
+        <Compile Include="src/Components/Menu/Types.fs" />
+        <Compile Include="src/Components/Menu/State.fs" />
+        <Compile Include="src/Components/Menu/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

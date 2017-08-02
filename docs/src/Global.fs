@@ -21,6 +21,7 @@ type Components =
     | Breadcrumb
     | Card
     | Media
+    | Menu
 
 type Page =
     | Home
@@ -50,3 +51,4 @@ let toHash page =
         | Breadcrumb -> "#components/breadcrumb"
         | Card  -> "#components/card"
         | Media -> "#components/media"
+        | Menu -> "#components/menu"

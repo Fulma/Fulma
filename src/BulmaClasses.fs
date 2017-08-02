@@ -299,6 +299,8 @@ module BulmaClasses =
             let [<Literal>] Label = "menu-label"
             let [<Literal>] List = "menu-list"
 
+            let State = genericIsActiveState
+
         module Media =
             let [<Literal>] Container = "media"
             let [<Literal>] Left = "media-left"

@@ -1,8 +1,10 @@
-### next
+### 0.1.0-next
 
 * Add `Card` documentation
 * Add `Media` documentation
+* Add `Menu` documentation
 * Add `Button.customClass` alias
+* Add `State` to `Menu` declaration in `BulmaClasses`
 
 ### 0.1.0-alpha8
 

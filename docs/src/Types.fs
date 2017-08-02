@@ -20,6 +20,7 @@ type Msg =
     | BreadcrumbMsg of Components.Breadcrumb.Types.Msg
     | CardMsg of Components.Card.Types.Msg
     | MediaMsg of Components.Media.Types.Msg
+    | MenuMsg of Components.Menu.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -38,7 +39,8 @@ type ComponentsModel =
       Level : Components.Level.Types.Model
       Breadcrumb : Components.Breadcrumb.Types.Model
       Card : Components.Card.Types.Model
-      Media : Components.Media.Types.Model }
+      Media : Components.Media.Types.Model
+      Menu : Components.Menu.Types.Model }
 
 type Model =
     { CurrentPage : Page
