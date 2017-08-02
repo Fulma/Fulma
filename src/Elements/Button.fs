@@ -108,6 +108,7 @@ module Button =
     let isDanger = Level IsDanger
     // Extra
     let props props = Props props
+    let customClass = CustomClass
     let onClick cb = OnClick cb
 
     let button (options : Option list) children =
