@@ -58,7 +58,8 @@ let menu currentPage =
             [ menuItem "Panel" (Component Panel) currentPage
               menuItem "Level" (Component Level) currentPage
               menuItem "Breadcrumb" (Component Breadcrumb) currentPage
-              menuItem "Card" (Component Card) currentPage ] ]
+              menuItem "Card" (Component Card) currentPage
+              menuItem "Media" (Component Components.Media) currentPage ] ]
 
 let header =
     div [ ClassName "hero is-primary" ]
@@ -90,6 +91,7 @@ let root model dispatch =
             | Level -> Components.Level.View.root model.Components.Level (LevelMsg >> dispatch)
             | Breadcrumb -> Components.Breadcrumb.View.root model.Components.Breadcrumb (BreadcrumbMsg >> dispatch)
             | Card -> Components.Card.View.root model.Components.Card (CardMsg >> dispatch)
+            | Components.Media -> Components.Media.View.root model.Components.Media (MediaMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

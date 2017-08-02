@@ -20,6 +20,7 @@ type Components =
     | Level
     | Breadcrumb
     | Card
+    | Media
 
 type Page =
     | Home
@@ -48,3 +49,4 @@ let toHash page =
         | Level -> "#components/level"
         | Breadcrumb -> "#components/breadcrumb"
         | Card  -> "#components/card"
+        | Media -> "#components/media"

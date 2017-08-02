@@ -26,6 +26,9 @@
         <Compile Include="src/Components/Card/Types.fs" />
         <Compile Include="src/Components/Card/State.fs" />
         <Compile Include="src/Components/Card/View.fs" />
+        <Compile Include="src/Components/Media/Types.fs" />
+        <Compile Include="src/Components/Media/State.fs" />
+        <Compile Include="src/Components/Media/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

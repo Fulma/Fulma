@@ -1,6 +1,7 @@
 ### next
 
 * Add `Card` documentation
+* Add `Media` documentation
 * Add `Button.customClass` alias
 
 ### 0.1.0-alpha8
