@@ -6,6 +6,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open Elmish.Bulma.Elements
+open Elmish.Bulma.Extra.FontAwesome
 
 let iconInteractive =
     div [ ClassName "block" ]
@@ -18,8 +19,32 @@ let iconInteractive =
           Icon.icon [ Icon.isLarge ]
             [ i [ ClassName "fa fa-home" ] [ ] ] ]
 
+let fontAwesome =
+    div [ ClassName "block" ]
+        [ Icon.faIcon [ Icon.isSmall ] Fa.Home
+          Icon.faIcon [ ] Fa.Tags
+          Icon.faIcon [ Icon.isMedium ] Fa.``500px``
+          Icon.faIcon [ Icon.isLarge ] Fa.Android ]
+
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
                         "### Sizes"
-                        (Viewer.View.root iconInteractive model.IconViewer (IconViewerMsg >> dispatch)) ]
+                        (Viewer.View.root iconInteractive model.IconViewer (IconViewerMsg >> dispatch))
+                     Render.docSection
+                        """
+### Convenience functions
+
+We provide convenience functions for **[font awesome](http://fontawesome.io/)**.
+
+You need the next `open` statement to access the FontAwesome convenience functions.
+
+```fsharp
+    open Elmish.Bulma.Elements
+    open Elmish.Bulma.Extra.FontAwesome
+```
+
+If the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fable.Elmish.Bulma/issues)*.
+You can also use `Fa.custom "fa-my-icon"` as a fix.
+                        """
+                        (Viewer.View.root fontAwesome model.ConvenienceViewer (ConvenienceViewerMsg >> dispatch)) ]

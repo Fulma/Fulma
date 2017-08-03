@@ -17,6 +17,16 @@ let iconCode =
 ```
     """
 
+let convenienceCode =
+    """
+```fsharp
+    Icon.faIcon [ Icon.isSmall ] Fa.Home
+    Icon.faIcon [ ] Fa.Tags
+    Icon.faIcon [ Icon.isMedium ] Fa.``500px``
+    Icon.faIcon [ Icon.isLarge ] Fa.Android
+```
+    """
+
 let init() =
     { Intro =
         """
@@ -26,10 +36,15 @@ The **icons** can have different sizes and is also compatible with *[Font Awesom
 
 *[Bulma documentation](http://bulma.io/documentation/elements/icon/)*
         """
-      IconViewer = Viewer.State.init iconCode }
+      IconViewer = Viewer.State.init iconCode
+      ConvenienceViewer = Viewer.State.init convenienceCode }
 
 let update msg model =
     match msg with
     | IconViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.IconViewer
         { model with IconViewer = viewer }, Cmd.map IconViewerMsg viewerMsg
+
+    | ConvenienceViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.ConvenienceViewer
+        { model with ConvenienceViewer = viewer }, Cmd.map ConvenienceViewerMsg viewerMsg
