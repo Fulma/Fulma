@@ -813,6 +813,6 @@ module FontAwesome =
 
     module Icon =
 
-        let faIcon options (faIcon: Fa.IFontAwesomeIcon) =
+        let inline faIcon options (faIcon: Fa.IFontAwesomeIcon) =
             icon options
                 [ i [ ClassName ("fa " + !!faIcon) ] [ ] ]

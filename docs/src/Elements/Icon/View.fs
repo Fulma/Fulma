@@ -46,5 +46,10 @@ You need the next `open` statement to access the FontAwesome convenience functio
 
 If the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fable.Elmish.Bulma/issues)*.
 You can also use `Fa.custom "fa-my-icon"` as a fix.
+
+```fsharp
+    // If the "fa-thumbs-up" icon was missing, you could use Fa.Custom to get it:
+    Icon.FaIcon [ Icon.isLarge ] (Fa.Custom "fa-thumbs-up")
+```
                         """
                         (Viewer.View.root fontAwesome model.ConvenienceViewer (ConvenienceViewerMsg >> dispatch)) ]

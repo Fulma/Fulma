@@ -5,10 +5,10 @@ open Fable.Helpers.React.Props
 
 let navButton classy href faClass txt =
     div [ ClassName "control" ]
-        [ a [ ClassName (sprintf "button %s" classy)
+        [ a [ ClassName ("button " + classy)
               Href href ]
             [ span [ ClassName "icon" ]
-                   [ i [ ClassName (sprintf "fa %s" faClass) ] [] ]
+                   [ i [ ClassName ("fa " + faClass) ] [] ]
               span [] [ str txt ] ] ]
 
 let navButtons =

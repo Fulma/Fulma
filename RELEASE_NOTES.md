@@ -1,10 +1,13 @@
-### 0.1.0-next
+### 0.1.0-alpha9
 
 * Add `Card` documentation
 * Add `Media` documentation
 * Add `Menu` documentation
 * Add `Button.customClass` alias
 * Add `State` to `Menu` declaration in `BulmaClasses`
+* Add framework versions to the README.md
+* Add `FontAwesome` convenience functions
+* Remove `sprintf %s` in favor of the `+` operator (small performance improvments)
 
 ### 0.1.0-alpha8
 
