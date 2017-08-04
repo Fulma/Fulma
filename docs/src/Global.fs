@@ -22,6 +22,7 @@ type Components =
     | Card
     | Media
     | Menu
+    | Message
 
 type Page =
     | Home
@@ -52,3 +53,4 @@ let toHash page =
         | Card  -> "#components/card"
         | Media -> "#components/media"
         | Menu -> "#components/menu"
+        | Message -> "#components/message"

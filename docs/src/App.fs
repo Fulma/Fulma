@@ -60,7 +60,8 @@ let menu currentPage =
               menuItem "Breadcrumb" (Component Breadcrumb) currentPage
               menuItem "Card" (Component Card) currentPage
               menuItem "Media" (Component Components.Media) currentPage
-              menuItem "Menu" (Component Components.Menu) currentPage ] ]
+              menuItem "Menu" (Component Components.Menu) currentPage
+              menuItem "Message" (Component Components.Message) currentPage ] ]
 
 let header =
     div [ ClassName "hero is-primary" ]
@@ -94,6 +95,7 @@ let root model dispatch =
             | Card -> Components.Card.View.root model.Components.Card (CardMsg >> dispatch)
             | Components.Media -> Components.Media.View.root model.Components.Media (MediaMsg >> dispatch)
             | Menu -> Components.Menu.View.root model.Components.Menu (MenuMsg >> dispatch)
+            | Message -> Components.Message.View.root model.Components.Message (MessageMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]
