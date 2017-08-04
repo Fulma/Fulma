@@ -8,10 +8,10 @@ let init() : Model =
         """
 # Fable.Elmish.Bulma
 
-Bring Bulma power into Elmish.
+Provide a wrapper around Bulma for [Elmish](https://fable-elmish.github.io/).
 
 ---
-    test
+
 ---
 
 

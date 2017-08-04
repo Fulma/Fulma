@@ -7,7 +7,6 @@ nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
 nuget Fable.PowerPack
 nuget Fable.React
-nuget Fable.Elmish.Bulma
 nuget FSharp.NET.Sdk
 
 clitool dotnet-fable
