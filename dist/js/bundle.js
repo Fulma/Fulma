@@ -4661,7 +4661,7 @@ var Components = function () {
       return {
         type: "Global.Components",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Panel"], ["Level"], ["Breadcrumb"], ["Card"]]
+        cases: [["Panel"], ["Level"], ["Breadcrumb"], ["Card"], ["Media"], ["Menu"]]
       };
     }
   }, {
@@ -4740,6 +4740,10 @@ function toHash(page) {
       return "#components/breadcrumb";
     } else if (page.data.tag === 3) {
       return "#components/card";
+    } else if (page.data.tag === 4) {
+      return "#components/media";
+    } else if (page.data.tag === 5) {
+      return "#components/menu";
     } else {
       return "#components/panel";
     }
@@ -5292,6 +5296,7 @@ var Bulma = function (__exports) {
     var Container_18 = __exports.Container = "menu";
     var Label_1 = __exports.Label = "menu-label";
     var List = __exports.List = "menu-list";
+    var State_1 = __exports.State = genericIsActiveState;
     return __exports;
   }({});
 
@@ -5325,13 +5330,13 @@ var Bulma = function (__exports) {
 
     var Toggle = __exports.Toggle = function (__exports) {
       var Container_22 = __exports.Container = "nav-toggle";
-      var State_1 = __exports.State = genericIsActiveState;
+      var State_2 = __exports.State = genericIsActiveState;
       return __exports;
     }({});
 
     var Menu = __exports.Menu = function (__exports) {
       var Container_23 = __exports.Container = "nav-menu";
-      var State_2 = __exports.State = genericIsActiveState;
+      var State_3 = __exports.State = genericIsActiveState;
       return __exports;
     }({});
 
@@ -5343,7 +5348,7 @@ var Bulma = function (__exports) {
         return __exports;
       }({});
 
-      var State_3 = __exports.State = genericIsActiveState;
+      var State_4 = __exports.State = genericIsActiveState;
       return __exports;
     }({});
 
@@ -7734,10 +7739,11 @@ var Msg$5 = function () {
 setType("Elements.Delete.Types.Msg", Msg$5);
 
 var Model$6 = function () {
-  function Model$$1(intro, iconViewer) {
+  function Model$$1(intro, iconViewer, convenienceViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
     this.IconViewer = iconViewer;
+    this.ConvenienceViewer = convenienceViewer;
   }
 
   babelHelpers.createClass(Model$$1, [{
@@ -7748,7 +7754,8 @@ var Model$6 = function () {
         interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
         properties: {
           Intro: "string",
-          IconViewer: Model
+          IconViewer: Model,
+          ConvenienceViewer: Model
         }
       };
     }
@@ -7779,7 +7786,7 @@ var Msg$6 = function () {
       return {
         type: "Elements.Icon.Types.Msg",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["IconViewerMsg", Msg]]
+        cases: [["IconViewerMsg", Msg], ["ConvenienceViewerMsg", Msg]]
       };
     }
   }, {
@@ -8396,6 +8403,134 @@ var Msg$15 = function () {
 setType("Components.Card.Types.Msg", Msg$15);
 
 var Model$16 = function () {
+  function Model$$1(intro, basicViewer) {
+    babelHelpers.classCallCheck(this, Model$$1);
+    this.Intro = intro;
+    this.BasicViewer = basicViewer;
+  }
+
+  babelHelpers.createClass(Model$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Media.Types.Model",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Intro: "string",
+          BasicViewer: Model
+        }
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return equalsRecords(this, other);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+  }]);
+  return Model$$1;
+}();
+setType("Components.Media.Types.Model", Model$16);
+var Msg$16 = function () {
+  function Msg$$1(tag, data) {
+    babelHelpers.classCallCheck(this, Msg$$1);
+    this.tag = tag;
+    this.data = data;
+  }
+
+  babelHelpers.createClass(Msg$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Media.Types.Msg",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["BasicViewerMsg", Msg]]
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+  }]);
+  return Msg$$1;
+}();
+setType("Components.Media.Types.Msg", Msg$16);
+
+var Model$17 = function () {
+  function Model$$1(intro, basicViewer) {
+    babelHelpers.classCallCheck(this, Model$$1);
+    this.Intro = intro;
+    this.BasicViewer = basicViewer;
+  }
+
+  babelHelpers.createClass(Model$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Menu.Types.Model",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Intro: "string",
+          BasicViewer: Model
+        }
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return equalsRecords(this, other);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+  }]);
+  return Model$$1;
+}();
+setType("Components.Menu.Types.Model", Model$17);
+var Msg$17 = function () {
+  function Msg$$1(tag, data) {
+    babelHelpers.classCallCheck(this, Msg$$1);
+    this.tag = tag;
+    this.data = data;
+  }
+
+  babelHelpers.createClass(Msg$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Menu.Types.Msg",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["BasicViewerMsg", Msg]]
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+  }]);
+  return Msg$$1;
+}();
+setType("Components.Menu.Types.Msg", Msg$17);
+
+var Model$18 = function () {
   function Model(intro) {
     babelHelpers.classCallCheck(this, Model);
     this.Intro = intro;
@@ -8425,7 +8560,7 @@ var Model$16 = function () {
   }]);
   return Model;
 }();
-setType("Home.Types.Model", Model$16);
+setType("Home.Types.Model", Model$18);
 
 var Msg$2 = function () {
   function Msg(tag, data) {
@@ -8440,7 +8575,7 @@ var Msg$2 = function () {
       return {
         type: "App.Types.Msg",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13], ["BreadcrumbMsg", Msg$14], ["CardMsg", Msg$15]]
+        cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13], ["BreadcrumbMsg", Msg$14], ["CardMsg", Msg$15], ["MediaMsg", Msg$16], ["MenuMsg", Msg$17]]
       };
     }
   }, {
@@ -8507,12 +8642,14 @@ var ElementsModel = function () {
 }();
 setType("App.Types.ElementsModel", ElementsModel);
 var ComponentsModel = function () {
-  function ComponentsModel(panel, level, breadcrumb, card) {
+  function ComponentsModel(panel, level, breadcrumb, card, media, menu) {
     babelHelpers.classCallCheck(this, ComponentsModel);
     this.Panel = panel;
     this.Level = level;
     this.Breadcrumb = breadcrumb;
     this.Card = card;
+    this.Media = media;
+    this.Menu = menu;
   }
 
   babelHelpers.createClass(ComponentsModel, [{
@@ -8525,7 +8662,9 @@ var ComponentsModel = function () {
           Panel: Model$12,
           Level: Model$13,
           Breadcrumb: Model$14,
-          Card: Model$15
+          Card: Model$15,
+          Media: Model$16,
+          Menu: Model$17
         }
       };
     }
@@ -8560,7 +8699,7 @@ var Model$2 = function () {
         interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
         properties: {
           CurrentPage: Page,
-          Home: Model$16,
+          Home: Model$18,
           Elements: ElementsModel,
           Components: ComponentsModel
         }
@@ -9924,6 +10063,7 @@ var isDanger = new Types$4.Option(0, new ILevelAndColor(8));
 function props$6(props_1) {
   return new Types$4.Option(6, props_1);
 }
+
 function onClick(cb) {
   return new Types$4.Option(7, cb);
 }
@@ -10190,6 +10330,18 @@ function root$5(model, dispatch) {
   }))]));
 }
 
+var Fa = function (__exports) {
+  var Tags = __exports.Tags = "fa-tags";
+
+  var _00px = __exports["500px"] = "fa-500px";
+
+  var Custom = __exports.Custom = function (iconClass) {
+    return iconClass;
+  };
+
+  return __exports;
+}({});
+
 var iconInteractive$1 = react_1("div", {
   className: "block"
 }, icon(ofArray([isSmall$1]), ofArray([react_1("i", {
@@ -10201,11 +10353,26 @@ var iconInteractive$1 = react_1("div", {
 })])), icon(ofArray([isLarge$1]), ofArray([react_1("i", {
   className: "fa fa-home"
 })])));
+var fontAwesome = react_1("div", {
+  className: "block"
+}, icon(ofArray([isSmall$1]), ofArray([react_1("i", {
+  className: "fa " + "fa-home"
+})])), icon(new List$1(), ofArray([react_1("i", {
+  className: "fa " + Fa.Tags
+})])), icon(ofArray([isMedium$1]), ofArray([react_1("i", {
+  className: "fa " + Fa["500px"]
+})])), icon(ofArray([isLarge$1]), ofArray([react_1("i", {
+  className: "fa " + "fa-android"
+})])));
 function root$6(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("### Sizes", root$2(iconInteractive$1, model.IconViewer, function ($var1) {
     return dispatch(function (arg0) {
       return new Msg$6(0, arg0);
     }($var1));
+  })), docSection("\r\n### Convenience functions\r\n\r\nWe provide convenience functions for **[font awesome](http://fontawesome.io/)**.\r\n\r\nYou need the next `open` statement to access the FontAwesome convenience functions.\r\n\r\n```fsharp\r\n    open Elmish.Bulma.Elements\r\n    open Elmish.Bulma.Extra.FontAwesome\r\n```\r\n\r\nIf the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fable.Elmish.Bulma/issues)*.\r\nYou can also use `Fa.custom \"fa-my-icon\"` as a fix.\r\n\r\n```fsharp\r\n    // If the \"fa-thumbs-up\" icon was missing, you could use Fa.Custom to get it:\r\n    Icon.FaIcon [ Icon.isLarge ] (Fa.Custom \"fa-thumbs-up\")\r\n```\r\n                        ", root$2(fontAwesome, model.ConvenienceViewer, function ($var2) {
+    return dispatch(function (arg0_1) {
+      return new Msg$6(1, arg0_1);
+    }($var2));
   }))]));
 }
 
@@ -12934,6 +13101,67 @@ function root$14(model, dispatch) {
   }))]));
 }
 
+function media(options, children) {
+  var opts = genericParse(options);
+  return react_1.apply(undefined, ["article", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("media", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+function left$1(options, children) {
+  var opts = genericParse(options);
+  return react_1.apply(undefined, ["figure", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("media-left", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+
+function content$2(options, children) {
+  var opts = genericParse(options);
+  return react_1.apply(undefined, ["div", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("media-content", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+
+var basic$2 = media(new List$1(), ofArray([left$1(new List$1(), ofArray([image(ofArray([is64x64]), ofArray([react_1("img", {
+  src: "https://dummyimage.com/64x64/7a7a7a/fff"
+})]))])), content$2(new List$1(), ofArray([Field.field(new List$1(), ofArray([Control.control(new List$1(), ofArray([react_1("textarea", {
+  className: "textarea",
+  placeholder: "Add a message ..."
+})]))])), level(new List$1(), ofArray([left(new List$1(), ofArray([item$1(new List$1(), ofArray([button(ofArray([isInfo]), ofArray(["Submit"]))]))])), right(new List$1(), ofArray([item$1(new List$1(), ofArray(["Press Ctrl + Enter to submit"]))]))]))]))]));
+function root$15(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$2, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$16(0, arg0);
+    }($var1));
+  }))]));
+}
+
+function menuItem$1(label$$1, isActive) {
+  return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([[Bulma.Menu.State.IsActive, isActive]]))]), 1), label$$1));
+}
+function subMenu(label$$1, isActive, children) {
+  return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([[Bulma.Menu.State.IsActive, isActive]]))]), 1), label$$1), react_1.apply(undefined, ["ul", {}].concat(babelHelpers.toConsumableArray(children))));
+}
+var basic$3 = menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["General"])), list(new List$1(), ofArray([menuItem$1("Dashboard", false), menuItem$1("Customers", false)])), label(new List$1(), ofArray(["Administration"])), list(new List$1(), ofArray([menuItem$1("Team Settings", false), subMenu("Manage your Team", true, ofArray([menuItem$1("Members", false), menuItem$1("Plugins", false), menuItem$1("Add a member", false)]))])), label(new List$1(), ofArray(["Transactions"])), list(new List$1(), ofArray([menuItem$1("Payments", false), menuItem$1("Transfers", false), menuItem$1("Balance", false)]))]));
+function root$16(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$3, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$17(0, arg0);
+    }($var1));
+  }))]));
+}
+
 var Types$13 = function (__exports) {
   var Block = __exports.Block = function (__exports) {
     var Option$$1 = __exports.Option = function () {
@@ -13236,7 +13464,7 @@ var iconInteractive$3 = columns(new List$1(), ofArray([column(ofArray([Offset.is
 })])), "Fable"])), checkbox(new List$1(), ofArray([react_1("input", {
   type: "checkbox"
 }), "I am a checkbox"])), block(new List$1(), ofArray([button(ofArray([isPrimary, isOutlined, isFullWidth]), ofArray(["Reset"]))]))]))]))]));
-function root$15(model, dispatch) {
+function root$17(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$3, model.PanelViewer, function ($var1) {
     return dispatch(function (arg0) {
       return new Msg$12(0, arg0);
@@ -13244,7 +13472,7 @@ function root$15(model, dispatch) {
   }))]));
 }
 
-function root$16(model) {
+function root$18(model) {
   return contentFromMarkdown(model.Intro);
 }
 
@@ -13252,28 +13480,18 @@ function navButton(classy, href, faClass, txt) {
   return react_1("div", {
     className: "control"
   }, react_1("a", {
-    className: {
-      formatFn: fsFormat("button %s"),
-      input: "button %s"
-    }.formatFn(function (x) {
-      return x;
-    })(classy),
+    className: "button " + classy,
     href: href
   }, react_1("span", {
     className: "icon"
   }, react_1("i", {
-    className: {
-      formatFn: fsFormat("fa %s"),
-      input: "fa %s"
-    }.formatFn(function (x) {
-      return x;
-    })(faClass)
+    className: "fa " + faClass
   })), react_1("span", {}, txt)));
 }
 var navButtons = react_1("span", {
   className: "nav-item block"
 }, navButton("twitter", "https://twitter.com/FableCompiler", "fa-twitter", "Twitter"), navButton("github", "https://github.com/MangelMaxime/Fable.Elmish.Bulma/", "fa-github", "Github"), navButton("github", "https://gitter.im/fable-compiler/Fable", "fa-comments", "Gitter"));
-var root$17 = react_1("div", {
+var root$19 = react_1("div", {
   className: "nav"
 }, react_1("div", {
   className: "nav-left"
@@ -28569,14 +28787,22 @@ function update$5(msg, model) {
 }
 
 var iconCode$1 = "\r\n```fsharp\r\n    Icon.icon [ Icon.isSmall ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ Icon.isMedium ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n    Icon.icon [ Icon.isLarge ]\r\n        [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n```\r\n    ";
+var convenienceCode = "\r\n```fsharp\r\n    Icon.faIcon [ Icon.isSmall ] Fa.Home\r\n    Icon.faIcon [ ] Fa.Tags\r\n    Icon.faIcon [ Icon.isMedium ] Fa.``500px``\r\n    Icon.faIcon [ Icon.isLarge ] Fa.Android\r\n```\r\n    ";
 function init$6() {
-  return new Model$6("\r\n# Icons\r\n\r\nThe **icons** can have different sizes and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/icon/)*\r\n        ", init$2(iconCode$1));
+  return new Model$6("\r\n# Icons\r\n\r\nThe **icons** can have different sizes and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/icon/)*\r\n        ", init$2(iconCode$1), init$2(convenienceCode));
 }
 function update$6(msg, model) {
-  var patternInput = update$2(msg.data, model.IconViewer);
-  return [new Model$6(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
-    return new Msg$6(0, arg0);
-  }, patternInput[1])];
+  if (msg.tag === 1) {
+    var patternInput = update$2(msg.data, model.ConvenienceViewer);
+    return [new Model$6(model.Intro, model.IconViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$6(1, arg0);
+    }, patternInput[1])];
+  } else {
+    var patternInput_1 = update$2(msg.data, model.IconViewer);
+    return [new Model$6(model.Intro, patternInput_1[0], model.ConvenienceViewer), Cmd.map(function (arg0_1) {
+      return new Msg$6(0, arg0_1);
+    }, patternInput_1[1])];
+  }
 }
 
 var fixedCode = "\r\n```fsharp\r\n    Image.image [ Image.is64x64 ]\r\n        [ img [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ]\r\n    br [ ]\r\n    Image.image [ Image.is128x128 ]\r\n        [ img [ Src \"https://dummyimage.com/128x128/7a7a7a/fff\" ] ]\r\n```\r\n    ";
@@ -28704,13 +28930,13 @@ function update$13(msg, model) {
   }, patternInput[1])];
 }
 
-var basic$2 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var basic$4 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var alignmentCenter$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var icons$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n                  str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n                  str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-thumbs-up\" ] [ ] ]\r\n                  str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var size$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isLarge ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 var separator$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.hasSucceedsSeparator ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
 function init$14() {
-  return new Model$14("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$2), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$1), init$2(separator$1));
+  return new Model$14("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$4), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$1), init$2(separator$1));
 }
 function update$14(msg, model) {
   if (msg.tag === 1) {
@@ -28741,9 +28967,9 @@ function update$14(msg, model) {
   }
 }
 
-var basic$3 = "\r\n```fsharp\r\n    Card.card [ ]\r\n        [ Card.header [ ]\r\n            [ Card.Header.title [ ]\r\n                [ str \"Component\" ]\r\n              Card.Header.icon [ ]\r\n                [ i [ ClassName \"fa fa-angle-down\" ] [ ] ] ]\r\n          Card.content [ ]\r\n            [ Content.content [ ]\r\n                [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\" ] ]\r\n          Card.footer [ ]\r\n            [ Card.Footer.item [ ]\r\n                [ str \"Save\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Edit\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Delete\" ] ] ]\r\n```\r\n    ";
+var basic$5 = "\r\n```fsharp\r\n    Card.card [ ]\r\n        [ Card.header [ ]\r\n            [ Card.Header.title [ ]\r\n                [ str \"Component\" ]\r\n              Card.Header.icon [ ]\r\n                [ i [ ClassName \"fa fa-angle-down\" ] [ ] ] ]\r\n          Card.content [ ]\r\n            [ Content.content [ ]\r\n                [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\" ] ]\r\n          Card.footer [ ]\r\n            [ Card.Footer.item [ ]\r\n                [ str \"Save\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Edit\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Delete\" ] ] ]\r\n```\r\n    ";
 function init$15() {
-  return new Model$15("\r\n# Card\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/card/)*\r\n        ", init$2(basic$3));
+  return new Model$15("\r\n# Card\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/card/)*\r\n        ", init$2(basic$5));
 }
 function update$15(msg, model) {
   var patternInput = update$2(msg.data, model.BasicViewer);
@@ -28752,8 +28978,30 @@ function update$15(msg, model) {
   }, patternInput[1])];
 }
 
+var basic$6 = "\r\n```fsharp\r\n    Media.media [ ]\r\n        [ Media.left [ ]\r\n            [ Image.image [ Image.is64x64 ]\r\n                [ img [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ] ]\r\n          Media.content [ ]\r\n            [ Field.field [ ]\r\n                [ Control.control [ ]\r\n                    [ textarea [ ClassName \"textarea\"\r\n                                 Placeholder \"Add a message ...\" ]\r\n                               [ ] ] ]\r\n              Level.level [ ]\r\n                [ Level.left [ ]\r\n                    [ Level.item [ ]\r\n                        [ Button.button [ Button.isInfo ]\r\n                            [ str \"Submit\" ] ] ]\r\n                  Level.right [ ]\r\n                    [ Level.item [ ]\r\n                        [ str \"Press Ctrl + Enter to submit\" ] ] ] ] ]\r\n```\r\n    ";
 function init$16() {
-  return new Model$16("\r\n# Fable.Elmish.Bulma\r\n\r\nBring Bulma power into Elmish.\r\n\r\n---\r\n    test\r\n---\r\n\r\n\r\n        ");
+  return new Model$16("\r\n# Media\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/media-object/)*\r\n        ", init$2(basic$6));
+}
+function update$16(msg, model) {
+  var patternInput = update$2(msg.data, model.BasicViewer);
+  return [new Model$16(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$16(0, arg0);
+  }, patternInput[1])];
+}
+
+var basic$7 = "\r\n```fsharp\r\n    let menuItem label isActive =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n               [ str label ] ]\r\n\r\n    let subMenu label isActive children =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n                     [ str label ]\r\n             ul [ ] children ]\r\n\r\n    Menu.menu [ ]\r\n        [ Menu.label [ ] [ str \"General\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Dashboard\" false\r\n              menuItem \"Customers\" false ]\r\n          Menu.label [ ] [ str \"Administration\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Team Settings\" false\r\n              subMenu \"Manage your Team\" true\r\n                [ menuItem \"Members\" false\r\n                  menuItem \"Plugins\" false\r\n                  menuItem \"Add a member\" false ] ]\r\n          Menu.label [ ] [ str \"Transactions\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Payments\" false\r\n              menuItem \"Transfers\" false\r\n              menuItem \"Balance\" false ] ]\r\n```\r\n    ";
+function init$17() {
+  return new Model$17("\r\n# Menu\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/menu/)*\r\n        ", init$2(basic$7));
+}
+function update$17(msg, model) {
+  var patternInput = update$2(msg.data, model.BasicViewer);
+  return [new Model$17(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$17(0, arg0);
+  }, patternInput[1])];
+}
+
+function init$18() {
+  return new Model$18("\r\n# Fable.Elmish.Bulma\r\n\r\nBring Bulma power into Elmish.\r\n\r\n---\r\n    test\r\n---\r\n\r\n\r\n        ");
 }
 
 var pageParser = function () {
@@ -28847,11 +29095,23 @@ var pageParser = function () {
     return function (state_14) {
       return collect(parseAfter_14, parseBefore_14(state_14));
     };
-  }()), map_1(new Page(0), function (state_15) {
-    return top(state_15);
+  }()), map_1(new Page(2, new Components(4)), function () {
+    var parseBefore_15 = s("components");
+    var parseAfter_15 = s("media");
+    return function (state_15) {
+      return collect(parseAfter_15, parseBefore_15(state_15));
+    };
+  }()), map_1(new Page(2, new Components(5)), function () {
+    var parseBefore_16 = s("components");
+    var parseAfter_16 = s("menu");
+    return function (state_16) {
+      return collect(parseAfter_16, parseBefore_16(state_16));
+    };
+  }()), map_1(new Page(0), function (state_17) {
+    return top(state_17);
   })]);
-  return function (state_16) {
-    return oneOf(parsers, state_16);
+  return function (state_18) {
+    return oneOf(parsers, state_18);
   };
 }();
 function urlUpdate(result, model) {
@@ -28864,8 +29124,8 @@ function urlUpdate(result, model) {
 }
 function init(result) {
   var elements = new ElementsModel(init$1(), init$3(), init$4(), init$5(), init$6(), init$7(), init$8(), init$9(), init$10(), init$11());
-  var components = new ComponentsModel(init$12(), init$13(), init$14(), init$15());
-  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$16(), elements, components));
+  var components = new ComponentsModel(init$12(), init$13(), init$14(), init$15(), init$16(), init$17());
+  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$18(), elements, components));
   return [patternInput[0], Cmd.batch(ofArray([patternInput[1]]))];
 }
 function update(msg, model) {
@@ -28954,7 +29214,7 @@ function update(msg, model) {
   } else if (msg.tag === 12) {
     var patternInput_10 = update$12(msg.data, model.Components.Panel);
     return [function () {
-      var Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level, model.Components.Breadcrumb, model.Components.Card);
+      var Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components$$1);
     }(), Cmd.map(function (arg0_10) {
       return new Msg$2(12, arg0_10);
@@ -28962,7 +29222,7 @@ function update(msg, model) {
   } else if (msg.tag === 13) {
     var patternInput_11 = update$13(msg.data, model.Components.Level);
     return [function () {
-      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0], model.Components.Breadcrumb, model.Components.Card);
+      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0], model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_1);
     }(), Cmd.map(function (arg0_11) {
       return new Msg$2(13, arg0_11);
@@ -28970,7 +29230,7 @@ function update(msg, model) {
   } else if (msg.tag === 14) {
     var patternInput_12 = update$14(msg.data, model.Components.Breadcrumb);
     return [function () {
-      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_12[0], model.Components.Card);
+      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_12[0], model.Components.Card, model.Components.Media, model.Components.Menu);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_2);
     }(), Cmd.map(function (arg0_12) {
       return new Msg$2(14, arg0_12);
@@ -28978,11 +29238,27 @@ function update(msg, model) {
   } else if (msg.tag === 15) {
     var patternInput_13 = update$15(msg.data, model.Components.Card);
     return [function () {
-      var Components_3 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, patternInput_13[0]);
+      var Components_3 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, patternInput_13[0], model.Components.Media, model.Components.Menu);
       return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_3);
     }(), Cmd.map(function (arg0_13) {
       return new Msg$2(15, arg0_13);
     }, patternInput_13[1])];
+  } else if (msg.tag === 16) {
+    var patternInput_14 = update$16(msg.data, model.Components.Media);
+    return [function () {
+      var Components_4 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, patternInput_14[0], model.Components.Menu);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_4);
+    }(), Cmd.map(function (arg0_14) {
+      return new Msg$2(16, arg0_14);
+    }, patternInput_14[1])];
+  } else if (msg.tag === 17) {
+    var patternInput_15 = update$17(msg.data, model.Components.Menu);
+    return [function () {
+      var Components_5 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, patternInput_15[0]);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_5);
+    }(), Cmd.map(function (arg0_15) {
+      return new Msg$2(17, arg0_15);
+    }, patternInput_15[1])];
   } else {
     return [model, Cmd$1.newNotification(notification(new List$1(), new List$1(), ofArray(["coucou"])))];
   }
@@ -28999,7 +29275,7 @@ function menuItem(label$$1, page, currentPage) {
   return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([["is-active", page.Equals(currentPage)]])), new Props.HTMLAttr(51, toHash(page))]), 1), label$$1));
 }
 function menu(currentPage) {
-  return menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage), menuItem("Card", new Page(2, new Components(3)), currentPage)]))]));
+  return menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage), menuItem("Card", new Page(2, new Components(3)), currentPage), menuItem("Media", new Page(2, new Components(4)), currentPage), menuItem("Menu", new Page(2, new Components(5)), currentPage)]))]));
 }
 var header = react_1("div", {
   className: "hero is-primary"
@@ -29095,15 +29371,27 @@ function root(model, dispatch) {
             return new Msg$2(15, arg0_12);
           }($var13));
         });
-      } else {
-        return root$15(model.Components.Panel, function ($var14) {
+      } else if (_arg1.data.tag === 4) {
+        return root$15(model.Components.Media, function ($var14) {
           return dispatch(function (arg0_13) {
-            return new Msg$2(12, arg0_13);
+            return new Msg$2(16, arg0_13);
           }($var14));
+        });
+      } else if (_arg1.data.tag === 5) {
+        return root$16(model.Components.Menu, function ($var15) {
+          return dispatch(function (arg0_14) {
+            return new Msg$2(17, arg0_14);
+          }($var15));
+        });
+      } else {
+        return root$17(model.Components.Panel, function ($var16) {
+          return dispatch(function (arg0_15) {
+            return new Msg$2(12, arg0_15);
+          }($var16));
         });
       }
     } else {
-      return root$16(model.Home);
+      return root$18(model.Home);
     }
   };
 
@@ -29111,7 +29399,7 @@ function root(model, dispatch) {
     className: "navbar-bg"
   }, react_1("div", {
     className: "container"
-  }, root$17)), header, react_1("div", {
+  }, root$19)), header, react_1("div", {
     className: "section"
   }, react_1("div", {
     className: "container"
