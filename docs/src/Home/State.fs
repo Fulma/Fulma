@@ -68,7 +68,7 @@ Bulma.Properties.Visibility.IsHidden
 
 ```
 
-All the compoments documented into this website, are available into the librarie.
+All the compoments documented into this website, are available into the library.
 
    """}
 
