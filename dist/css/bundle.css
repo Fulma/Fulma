@@ -5330,6 +5330,11 @@ h2.cookieregular {
   min-height: inherit;
   min-width: inherit; }
 
+a:not([class]) {
+  color: #028fcc; }
+  a:not([class]):hover {
+    color: #2d3947; }
+
 /* http://prismjs.com/download.html?themes=prism&languages=clike+fsharp */
 code[class*="language-"], pre[class*="language-"] {
   color: black;
