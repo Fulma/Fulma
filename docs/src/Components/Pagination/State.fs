@@ -30,7 +30,7 @@ let basic =
 let alignment =
     """
 ```fsharp
-    Pagination.pagination [ ]
+    Pagination.pagination [ Pagination.isCentered ]
         [ Pagination.previous [ ]
             [ str "Previous" ]
           Pagination.next [ ]
@@ -54,7 +54,7 @@ let alignment =
 let size =
     """
 ```fsharp
-    Pagination.pagination [ ]
+    Pagination.pagination [  Pagination.isSmall]
         [ Pagination.previous [ ]
             [ str "Previous" ]
           Pagination.next [ ]
