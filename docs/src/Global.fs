@@ -23,6 +23,7 @@ type Components =
     | Media
     | Menu
     | Message
+    | Navbar
 
 type Page =
     | Home
@@ -54,3 +55,4 @@ let toHash page =
         | Media -> "#components/media"
         | Menu -> "#components/menu"
         | Message -> "#components/message"
+        | Navbar -> "#components/navbar"

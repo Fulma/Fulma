@@ -63,6 +63,7 @@ let menu currentPage =
               menuItem "Card" (Component Card) currentPage
               menuItem "Media" (Component Components.Media) currentPage
               menuItem "Menu" (Component Components.Menu) currentPage
+              menuItem "Navbar" (Component Components.Navbar) currentPage
               menuItem "Message" (Component Components.Message) currentPage ] ]
 
 let header =
@@ -98,6 +99,7 @@ let root model dispatch =
             | Components.Media -> Components.Media.View.root model.Components.Media (MediaMsg >> dispatch)
             | Menu -> Components.Menu.View.root model.Components.Menu (MenuMsg >> dispatch)
             | Message -> Components.Message.View.root model.Components.Message (MessageMsg >> dispatch)
+            | Navbar -> Components.Navbar.View.root model.Components.Navbar (NavbarMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

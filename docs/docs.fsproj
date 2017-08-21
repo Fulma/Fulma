@@ -32,6 +32,9 @@
         <Compile Include="src/Components/Menu/Types.fs" />
         <Compile Include="src/Components/Menu/State.fs" />
         <Compile Include="src/Components/Menu/View.fs" />
+        <Compile Include="src/Components/Navbar/Types.fs" />
+        <Compile Include="src/Components/Navbar/State.fs" />
+        <Compile Include="src/Components/Navbar/View.fs" />
         <Compile Include="src/Components/Message/Types.fs" />
         <Compile Include="src/Components/Message/State.fs" />
         <Compile Include="src/Components/Message/View.fs" />

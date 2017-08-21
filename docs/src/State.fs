@@ -28,6 +28,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Component Media) (s "components" </> s "media")
             map (Component Menu) (s "components" </> s "menu")
             map (Component Message) (s "components" </> s "message")
+            map (Component Navbar) (s "components" </> s "navbar")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -58,6 +59,7 @@ let init result =
           Card = Components.Card.State.init ()
           Media = Components.Media.State.init ()
           Menu = Components.Menu.State.init ()
+          Navbar = Components.Navbar.State.init ()
           Message = Components.Message.State.init () }
 
     let (model, cmd) =
@@ -163,3 +165,8 @@ let update msg model =
         let (message, messageMsg) = Components.Message.State.update msg model.Components.Message
         { model with Components =
                         { model.Components with Message = message } }, Cmd.map MessageMsg messageMsg
+
+    | NavbarMsg msg ->
+        let (navbar, navbarMsg) = Components.Navbar.State.update msg model.Components.Navbar
+        { model with Components =
+                        { model.Components with Navbar = navbar } }, Cmd.map NavbarMsg navbarMsg

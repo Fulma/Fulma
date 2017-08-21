@@ -1,5 +1,7 @@
 namespace Elmish.Bulma
 
+open System
+
 module BulmaClasses =
     type StandardSize =
         { IsSmall : string
@@ -315,6 +317,7 @@ module BulmaClasses =
             let [<Literal>] Body = "message-body"
             let Color = levelAndColor
 
+        [<Obsolete>]
         module Nav =
             let [<Literal>] Container = "nav"
             let [<Literal>] Left = "nav-left"
@@ -333,6 +336,36 @@ module BulmaClasses =
                 let State = genericIsActiveState
             module Style =
                 let [<Literal>] HasShadow = "has-shadow"
+
+        module Navbar =
+            let [<Literal>] Container = "navbar"
+            let [<Literal>] Brand = "navbar-brand"
+            let [<Literal>] Burger = "navbar-burger"
+            let [<Literal>] Content = "navbar-content"
+            let [<Literal>] Divider = "navbar-divider"
+            let [<Literal>] Start = "navbar-start"
+            let [<Literal>] End = "navbar-end"
+            module Item =
+                let [<Literal>] Container = "navbar-item"
+                let [<Literal>] IsHoverable = "is-hoverable"
+                let State = genericIsActiveState
+                module Style =
+                    let [<Literal>] HasDropdown = "has-dropdown"
+                    let [<Literal>] IsTab = "is-tab"
+            module Menu =
+                let [<Literal>] Container = "navbar-menu"
+                let State = genericIsActiveState
+            module Link =
+                let [<Literal>] Container = "navbar-link"
+                let State = genericIsActiveState
+            module Dropdown =
+                let [<Literal>] Container = "navbar-dropdown"
+                let State = genericIsActiveState
+                let [<Literal>] IsBoxed = "is-boxed"
+                let [<Literal>] IsRight = "is-right"
+            module Style =
+                let [<Literal>] HasShadow = "has-shadow"
+                let [<Literal>] IsTransparent = "is-transparent"
 
         module Panel =
             let [<Literal>] Container = "panel"

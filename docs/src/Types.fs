@@ -22,6 +22,7 @@ type Msg =
     | MediaMsg of Components.Media.Types.Msg
     | MenuMsg of Components.Menu.Types.Msg
     | MessageMsg of Components.Message.Types.Msg
+    | NavbarMsg of Components.Navbar.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -42,6 +43,7 @@ type ComponentsModel =
       Card : Components.Card.Types.Model
       Media : Components.Media.Types.Model
       Menu : Components.Menu.Types.Model
+      Navbar : Components.Navbar.Types.Model
       Message : Components.Message.Types.Model }
 
 type Model =

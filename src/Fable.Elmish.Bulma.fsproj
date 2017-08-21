@@ -16,6 +16,7 @@
     <Compile Include="Components/Message.fs" />
     <Compile Include="Components/Panel.fs" />
     <Compile Include="Components/Nav.fs" />
+    <Compile Include="Components/Navbar.fs" />
     <!-- Grids -->
     <Compile Include="Grids/Column.fs" />
     <Compile Include="Grids/Columns.fs" />
@@ -36,6 +37,9 @@
     <Compile Include="Layout/Hero.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
   </ItemGroup>
   <!-- Add source files to "fable" folder in Nuget package -->
   <ItemGroup>

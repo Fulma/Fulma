@@ -8,7 +8,9 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
+open System
 
+[<Obsolete("Use Navbar instead")>]
 module Nav =
 
     module Types =
@@ -109,6 +111,7 @@ module Nav =
         let props props = Menu.Props props
         let customClass = Menu.CustomClass
 
+    [<Obsolete("Use Navbar instead")>]
     let nav (options : Nav.Option list) children =
         let parseOptions (result: Nav.Options ) opt =
             match opt with
@@ -124,21 +127,25 @@ module Nav =
               yield! opts.Props ]
             children
 
+    [<Obsolete("Use Navbar instead")>]
     let left props children =
         div [ yield ClassName Bulma.Nav.Left :> IHTMLProp
               yield! props ]
             children
 
+    [<Obsolete("Use Navbar instead")>]
     let right props children =
         div [ yield ClassName Bulma.Nav.Right :> IHTMLProp
               yield! props ]
             children
 
+    [<Obsolete("Use Navbar instead")>]
     let center props children =
         div [ yield ClassName Bulma.Nav.Center :> IHTMLProp
               yield! props ]
             children
 
+    [<Obsolete("Use Navbar instead")>]
     let item options children =
         let parseOptions (result: Item.Options ) opt =
             match opt with
@@ -156,6 +163,7 @@ module Nav =
             yield! opts.Props ]
             children
 
+    [<Obsolete("Use Navbar instead")>]
     let toggle options =
         let parseOptions (result: Toggle.Options ) opt =
             match opt with
@@ -169,6 +177,7 @@ module Nav =
                                     [ Bulma.Nav.Toggle.State.IsActive, opts.IsActive
                                       opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp ]
 
+    [<Obsolete("Use Navbar instead")>]
     let menu options children =
         let parseOptions (result: Menu.Options ) opt =
             match opt with
