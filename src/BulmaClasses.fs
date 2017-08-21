@@ -382,6 +382,20 @@ module BulmaClasses =
                 module State =
                     let [<Literal>] IsActive = "is-active"
 
+        module Pagination =
+            let [<Literal>] Container = "pagination"
+            let [<Literal>] Previous = "pagination-previous"
+            let [<Literal>] Next = "pagination-next"
+            let [<Literal>] Link = "pagination-link"
+            let [<Literal>] Ellipsis = "pagination-ellipsis"
+            let [<Literal>] List = "pagination-list"
+            let Size = standardSize
+            module Alignment =
+                let [<Literal>] Center = "is-centered"
+                let [<Literal>] Right = "is-right"
+            module State =
+                let [<Literal>] IsCurrent = "is-current"
+
         module Properties =
             module Float =
                 let [<Literal>] IsClearfix = "is-clearfix"

@@ -6,6 +6,7 @@
 * `Nav` has been dreprecated in Bulma. Users should use `Navbar` from now.
 * Remove `FSharp.NET.Sdk` from the dependencies.
 * Implement `Navbar` components with documentation
+* Implement `Pagination` components with documentation
 
 ### 0.1.0-alpha9
 

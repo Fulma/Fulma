@@ -38,6 +38,9 @@
         <Compile Include="src/Components/Message/Types.fs" />
         <Compile Include="src/Components/Message/State.fs" />
         <Compile Include="src/Components/Message/View.fs" />
+        <Compile Include="src/Components/Pagination/Types.fs" />
+        <Compile Include="src/Components/Pagination/State.fs" />
+        <Compile Include="src/Components/Pagination/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

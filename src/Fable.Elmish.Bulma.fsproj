@@ -17,6 +17,7 @@
     <Compile Include="Components/Panel.fs" />
     <Compile Include="Components/Nav.fs" />
     <Compile Include="Components/Navbar.fs" />
+    <Compile Include="Components/Pagination.fs" />
     <!-- Grids -->
     <Compile Include="Grids/Column.fs" />
     <Compile Include="Grids/Columns.fs" />

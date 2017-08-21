@@ -67,3 +67,7 @@ module Common =
                           |> List.filter (fun x -> x.IsSome)
                           |> List.map (fun x -> x.Value))
             |> String.concat " "
+
+    [<Pojo>]
+    type DangerousInnerHtml =
+        { __html : string }
