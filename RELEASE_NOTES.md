@@ -1,4 +1,4 @@
-### 0.1.0-alpha10
+### 0.1.0-alpha.10
 
 * Fix `Message` colors properties
 * Add `Message` documentation
