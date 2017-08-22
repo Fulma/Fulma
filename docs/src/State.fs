@@ -30,6 +30,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Component Message) (s "components" </> s "message")
             map (Component Navbar) (s "components" </> s "navbar")
             map (Component Pagination) (s "components" </> s "pagination")
+            map (Component Tabs) (s "components" </> s "tabs")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -62,6 +63,7 @@ let init result =
           Menu = Components.Menu.State.init ()
           Navbar = Components.Navbar.State.init ()
           Pagination = Components.Pagination.State.init ()
+          Tabs = Components.Tabs.State.init ()
           Message = Components.Message.State.init () }
 
     let (model, cmd) =
@@ -177,3 +179,8 @@ let update msg model =
         let (pagination, paginationMsg) = Components.Pagination.State.update msg model.Components.Pagination
         { model with Components =
                         { model.Components with Pagination = pagination } }, Cmd.map PaginationMsg paginationMsg
+
+    | TabsMsg msg ->
+        let (tabs, tabsMsg) = Components.Tabs.State.update msg model.Components.Tabs
+        { model with Components =
+                        { model.Components with Tabs = tabs } }, Cmd.map TabsMsg tabsMsg

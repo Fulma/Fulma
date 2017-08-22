@@ -25,6 +25,7 @@ type Components =
     | Message
     | Navbar
     | Pagination
+    | Tabs
 
 type Page =
     | Home
@@ -58,3 +59,4 @@ let toHash page =
         | Message -> "#components/message"
         | Navbar -> "#components/navbar"
         | Pagination -> "#components/pagination"
+        | Tabs -> "#components/tabs"

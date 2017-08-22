@@ -41,6 +41,9 @@
         <Compile Include="src/Components/Pagination/Types.fs" />
         <Compile Include="src/Components/Pagination/State.fs" />
         <Compile Include="src/Components/Pagination/View.fs" />
+        <Compile Include="src/Components/Tabs/Types.fs" />
+        <Compile Include="src/Components/Tabs/State.fs" />
+        <Compile Include="src/Components/Tabs/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Elements/Box/Types.fs" />
         <Compile Include="src/Elements/Box/State.fs" />

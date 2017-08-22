@@ -65,6 +65,7 @@ let menu currentPage =
               menuItem "Menu" (Component Components.Menu) currentPage
               menuItem "Navbar" (Component Components.Navbar) currentPage
               menuItem "Pagination" (Component Components.Pagination) currentPage
+              menuItem "Tabs" (Component Components.Tabs) currentPage
               menuItem "Message" (Component Components.Message) currentPage ] ]
 
 let header =
@@ -102,6 +103,7 @@ let root model dispatch =
             | Message -> Components.Message.View.root model.Components.Message (MessageMsg >> dispatch)
             | Navbar -> Components.Navbar.View.root model.Components.Navbar (NavbarMsg >> dispatch)
             | Pagination -> Components.Pagination.View.root model.Components.Pagination (PaginationMsg >> dispatch)
+            | Tabs -> Components.Tabs.View.root model.Components.Tabs (TabsMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

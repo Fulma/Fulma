@@ -386,10 +386,13 @@ module BulmaClasses =
             let [<Literal>] Container = "tabs"
             let State = genericIsActiveState
             let Size = standardSize
+            module Alignment =
+                let [<Literal>] Center = "is-centered"
+                let [<Literal>] Right = "is-right"
             module Style =
                 let [<Literal>] IsBoxed = "is-boxed"
                 let [<Literal>] IsToggle = "is-toggle"
-                let [<Literal>] IsFullWidth = "is-fullwidth"
+                let [<Literal>] IsFullwidth = "is-fullwidth"
 
         module Pagination =
             let [<Literal>] Container = "pagination"
