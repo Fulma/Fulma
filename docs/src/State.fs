@@ -21,8 +21,9 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Element Progress) (s "elements" </> s "progress")
             map (Element Table) (s "elements" </> s "table")
             map (Element Form) (s "elements" </> s "form")
+            map (Element Notification) (s "elements" </> s "notification")
             map (Component Panel) (s "components" </> s "panel")
-            map (Component Level) (s "components" </> s "level")
+            map (Component Components.Level) (s "components" </> s "level")
             map (Component Breadcrumb) (s "components" </> s "breadcrumb")
             map (Component Card) (s "components" </> s "card")
             map (Component Media) (s "components" </> s "media")
@@ -52,6 +53,7 @@ let init result =
           Progress = Elements.Progress.State.init ()
           Table = Elements.Table.State.init ()
           Tag = Elements.Tag.State.init ()
+          Notification = Elements.Notification.State.init ()
           Title = Elements.Title.State.init () }
 
     let ``components`` =
@@ -79,12 +81,6 @@ open Fable.Helpers.React.Props
 
 let update msg model =
     match msg with
-    | SendNotification ->
-        model, Elmish.Bulma.Elements.Notification.Cmd.newNotification (notification [] [] [ (*Level Success*) str "coucou" ])
-
-    | Test ->
-        model, Cmd.none
-
     | BoxMsg msg ->
         let (box, boxMsg) = Elements.Box.State.update msg model.Elements.Box
         { model with Elements =
@@ -184,3 +180,8 @@ let update msg model =
         let (tabs, tabsMsg) = Components.Tabs.State.update msg model.Components.Tabs
         { model with Components =
                         { model.Components with Tabs = tabs } }, Cmd.map TabsMsg tabsMsg
+
+    | NotificationMsg msg ->
+        let (notification, notificationMsg) = Elements.Notification.State.update msg model.Elements.Notification
+        { model with Elements =
+                        { model.Elements with Notification = notification } }, Cmd.map NotificationMsg notificationMsg

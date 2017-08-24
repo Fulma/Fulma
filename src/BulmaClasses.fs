@@ -367,6 +367,12 @@ module BulmaClasses =
                 let [<Literal>] HasShadow = "has-shadow"
                 let [<Literal>] IsTransparent = "is-transparent"
 
+        module Notification =
+            let [<Literal>] Container = "notification"
+            let Color = levelAndColor
+            module Delete =
+                let [<Literal>] Container = "delete"
+
         module Panel =
             let [<Literal>] Container = "panel"
             let [<Literal>] Heading = "panel-heading"

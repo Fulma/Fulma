@@ -14,6 +14,7 @@ type Elements =
     | Progress
     | Table
     | Form
+    | Notification
 
 type Components =
     | Panel
@@ -48,6 +49,7 @@ let toHash page =
         | Progress -> "#elements/progress"
         | Table -> "#elements/table"
         | Form -> "#elements/form"
+        | Notification -> "#elements/notification"
     | Component ``component`` ->
         match ``component`` with
         | Panel -> "#components/panel"

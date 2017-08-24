@@ -54,6 +54,7 @@ let menu currentPage =
               menuItem "Content" (Element Elements.Content)  currentPage
               menuItem "Table" (Element Elements.Table) currentPage
               //menuItem "Form" (Element Elements.Form) currentPage
+              menuItem "Notification" (Element Elements.Notification) currentPage
               menuItem "Tag" (Element Elements.Tag) currentPage ]
           Menu.label [ ] [ str "Components" ]
           Menu.list [ ]
@@ -91,7 +92,7 @@ let root model dispatch =
             | Elements.Table -> Elements.Table.View.root model.Elements.Table (TableMsg >> dispatch)
             | Elements.Tag -> Elements.Tag.View.root model.Elements.Tag (TagMsg >> dispatch)
             | Elements.Title -> Elements.Title.View.root model.Elements.Title (TitleMsg >> dispatch)
-            | _ -> div [] []
+            | Elements.Notification -> Elements.Notification.View.root model.Elements.Notification (NotificationMsg >> dispatch)
         | Component ``component`` ->
             match ``component`` with
             | Panel -> Components.Panel.View.root model.Components.Panel (PanelMsg >> dispatch)
@@ -116,12 +117,12 @@ let root model dispatch =
                                 [ menu model.CurrentPage ]
                             div [ ClassName "column" ] [ pageHtml model.CurrentPage ] ] ] ] ]
 
-open Elmish.Bulma.Elements.Notification
+open Elmish.Bulma.Extra.Notification
 open Elmish.React
 
 // App
 Program.mkProgram init update root
 |> Program.toNavigable (parseHash pageParser) urlUpdate
-|> Program.toNotifiable defaultNotificationArea
+|> Program.toNotifiable defaultNotificationConfig
 |> Program.withReact "elmish-app"
 |> Program.run

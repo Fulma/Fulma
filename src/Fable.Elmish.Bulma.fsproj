@@ -39,6 +39,7 @@
     <Compile Include="Layout/Hero.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
+    <Compile Include="Extra/Extra.Notification.fs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />

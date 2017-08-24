@@ -147,10 +147,6 @@ let docsOuput = fableRoot </> "docs" </> "public"
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
-#load "paket-files/build/fsharp/FAKE/modules/Octokit/Octokit.fsx"
-open Octokit
-
-
 Target "PublishDocs" (fun _ ->
   CleanDir temp
   Repository.cloneSingleBranch "" githubLink publishBranch temp

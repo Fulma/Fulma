@@ -75,6 +75,9 @@
         <Compile Include="src/Elements/Title/Types.fs" />
         <Compile Include="src/Elements/Title/State.fs" />
         <Compile Include="src/Elements/Title/View.fs" />
+        <Compile Include="src/Elements/Notification/Types.fs" />
+        <Compile Include="src/Elements/Notification/State.fs" />
+        <Compile Include="src/Elements/Notification/View.fs" />
     <!-- End Elements -->
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />

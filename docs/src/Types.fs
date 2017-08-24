@@ -3,8 +3,6 @@ module App.Types
 open Global
 
 type Msg =
-    | SendNotification
-    | Test
     | BoxMsg of Elements.Box.Types.Msg
     | ButtonMsg of Elements.Button.Types.Msg
     | ContentMsg of Elements.Content.Types.Msg
@@ -14,6 +12,7 @@ type Msg =
     | ProgressMsg of Elements.Progress.Types.Msg
     | TableMsg of Elements.Table.Types.Msg
     | TagMsg of Elements.Tag.Types.Msg
+    | NotificationMsg of Elements.Notification.Types.Msg
     | TitleMsg of Elements.Title.Types.Msg
     | PanelMsg of Components.Panel.Types.Msg
     | LevelMsg of Components.Level.Types.Msg
@@ -36,6 +35,7 @@ type ElementsModel =
       Progress : Elements.Progress.Types.Model
       Table : Elements.Table.Types.Model
       Tag : Elements.Tag.Types.Model
+      Notification : Elements.Notification.Types.Model
       Title : Elements.Title.Types.Model }
 
 type ComponentsModel =

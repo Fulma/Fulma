@@ -7,106 +7,69 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
+open Bulma.BulmaClasses
 
 module Notification =
-    type NotificationProgramEvent =
-        { notif : React.ReactElement }
 
-    type Notification =
-        { id : int
-          view : React.ReactElement }
+    module Types =
 
-    type Notifiable<'msg> =
-        | AddNewNotification of React.ReactElement
-        | UserMsg of 'msg
+        type Option =
+            | Level of ILevelAndColor
+            | CustomClass of string
+            | Props of IHTMLProp list
 
-    type NotificationModel<'model> =
-        { notifications : Notification list
-          userModel : 'model }
+        // | AutoCloseDelay of float
+        type Options =
+            { Level : string option
+              CustomClass : string option
+              Props : IHTMLProp list }
+            // AutoCloseDelay: float option
+            static member Empty =
+                { Level = None
+                  CustomClass = None
+                  Props = [] }
 
-    type Option =
-        | Level of ILevelAndColor
-        | Closable
+    open Types
 
-    // | AutoCloseDelay of float
-    type Options =
-        { level : ILevelAndColor
-          hasDeleteButton : bool }
-        // AutoCloseDelay: float option
-        static member Empty =
-            { level = ILevelAndColor.IsBlack
-              hasDeleteButton = false }
+    // Levels and colors
+    let isBlack = Level IsBlack
+    let isDark = Level IsDark
+    let isLight = Level IsLight
+    let isWhite = Level IsWhite
+    let isPrimary = Level IsPrimary
+    let isInfo = Level IsInfo
+    let isSuccess = Level IsSuccess
+    let isWarning = Level IsWarning
+    let isDanger = Level IsDanger
+    // Extra
+    let props props = Props props
+    let customClass = CustomClass
 
-    let notification (options : Option list) (properties : IHTMLProp list) children =
-        let rec parseOptions options result =
-            match options with
-            | x :: xs ->
-                match x with
-                | Level level -> { result with level = level }
-                | Closable -> { result with hasDeleteButton = true }
-                |> parseOptions xs
-            | [] -> result
+    module Delete =
+        let props = GenericOption.Props
+        let customClass = GenericOption.CustomClass
 
-        let opts = parseOptions options Options.Empty
+    let notification (options : Option list) children =
+        let parseOptions (result : Options) opt =
+            match opt with
+            | Level level -> { result with Level = ofLevelAndColor level |> Some }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Props props -> { result with Props = props }
 
-        let closeArea =
-            [ if opts.hasDeleteButton then yield button [ ClassName "delete" ] [] ]
+        let opts = options |> List.fold parseOptions Options.Empty
 
-        let className = ClassName("notification " + !!opts.level)
-        div ((className :> IHTMLProp) :: properties) (closeArea @ children)
+        div [ yield (classBaseList Bulma.Notification.Container
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome
+                              opts.Level.Value, opts.Level.IsSome ]) :> IHTMLProp
+              yield! opts.Props ]
+            children
 
-    let defaultNotificationArea notifications =
-        div [ Style [ Position "fixed"
-                      CSSProp.Width(U2.Case1 500)
-                      Top 55
-                      Right 25
-                      ZIndex 100. ] ] (List.map (fun x -> x.view) notifications)
+    let delete (options: GenericOption list) children =
+        let opts = genericParse options
 
-    let internal onNotificationEvent = new Event<NotificationProgramEvent>()
-
-    [<RequireQualifiedAccess>]
-    module Cmd =
-        [<Literal>]
-        let NotifiedEvent = "NotifiedEvent"
-
-        let newNotification (notif : React.ReactElement) : Cmd<_> =
-            [ fun _ -> onNotificationEvent.Trigger({ notif = notif }) |> ignore ]
-
-    [<RequireQualifiedAccess>]
-    module Program =
-        let toNotifiable notificationArea (program : Program<'a, 'model, 'msg, 'view>) =
-            let map (model, cmd) = model, cmd |> Cmd.map UserMsg
-
-            let update msg model =
-                match msg with
-                | UserMsg userMsg ->
-                    let (userModel, userCmd) = program.update userMsg model.userModel
-                    { model with userModel = userModel }, userCmd |> Cmd.map UserMsg
-                | AddNewNotification view ->
-                    let notification =
-                        { id = System.DateTime.Now.Millisecond
-                          view = view }
-                    { model with notifications = notification :: model.notifications }, []
-
-            let view model dispatch =
-                div [] [ notificationArea model.notifications
-                         program.view model.userModel (UserMsg >> dispatch) ]
-
-            let newNotificationRecieved (dispatch : Dispatch<_ Notifiable>) =
-                onNotificationEvent.Publish.Add(fun evt -> AddNewNotification evt.notif |> dispatch)
-
-            let subs model =
-                Cmd.batch [ [ newNotificationRecieved ]
-                            program.subscribe model.userModel |> Cmd.map UserMsg ]
-
-            let init args =
-                let (userModel, userCmd) = program.init args
-                { notifications = []
-                  userModel = userModel }, Cmd.batch [ Cmd.map UserMsg userCmd ]
-
-            { init = init
-              update = update
-              subscribe = subs
-              onError = program.onError
-              setState = fun model -> view model >> ignore
-              view = view }
+        button
+            [ yield classBaseList
+                        Bulma.Notification.Delete.Container
+                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              yield! opts.Props ]
+            children
