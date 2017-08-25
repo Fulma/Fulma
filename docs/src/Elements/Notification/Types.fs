@@ -10,4 +10,3 @@ type Msg =
     | BasicViewerMsg of Viewer.Types.Msg
     | ColorViewerMsg of Viewer.Types.Msg
     | DeleteViewerMsg of Viewer.Types.Msg
-    | NewGlobalNotification

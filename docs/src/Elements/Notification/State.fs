@@ -40,8 +40,8 @@ let init() =
       DeleteViewer = Viewer.State.init delete }
 
 open Elmish.Bulma.Elements
-open Elmish.Bulma.Extra.Notification
 open Fable.Helpers.React
+open Fable.Helpers.React.Props
 
 let notificationRoot =
     Notification.notification [ Notification.isSuccess ]
@@ -60,6 +60,3 @@ let update msg model =
     | DeleteViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.DeleteViewer
         { model with DeleteViewer = viewer }, Cmd.map DeleteViewerMsg viewerMsg
-
-    | NewGlobalNotification ->
-        model, Cmd.newNotification notificationRoot

@@ -1,6 +1,7 @@
 ### 0.1.0-alpha.11
 
 * Implement `Tabs` components with documentation
+* Implement `Notification` components with documentation
 
 ### 0.1.0-alpha.10
 
