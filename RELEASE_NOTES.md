@@ -1,4 +1,4 @@
-### 0.1.0-alpha.11
+### 0.1.1
 
 * Implement `Tabs` components with documentation
 * Implement `Notification` components with documentation
