@@ -28,37 +28,42 @@ type Components =
     | Pagination
     | Tabs
 
-type Page =
-    | Home
+type FableReactBulmaPage =
     | Element of Elements
     | Component of Components
+
+type Page =
+    | Home
+    | FableReactBulma of FableReactBulmaPage
 
 let toHash page =
     match page with
     | Home -> "#home"
-    | Element element ->
-        match element with
-        | Button -> "#elements/button"
-        | Icon -> "#elements/icon"
-        | Title -> "#elements/title"
-        | Delete -> "#elements/delete"
-        | Box -> "#elements/box"
-        | Content -> "#elements/content"
-        | Tag -> "#elements/tag"
-        | Image -> "#elements/image"
-        | Progress -> "#elements/progress"
-        | Table -> "#elements/table"
-        | Form -> "#elements/form"
-        | Notification -> "#elements/notification"
-    | Component ``component`` ->
-        match ``component`` with
-        | Panel -> "#components/panel"
-        | Level -> "#components/level"
-        | Breadcrumb -> "#components/breadcrumb"
-        | Card  -> "#components/card"
-        | Media -> "#components/media"
-        | Menu -> "#components/menu"
-        | Message -> "#components/message"
-        | Navbar -> "#components/navbar"
-        | Pagination -> "#components/pagination"
-        | Tabs -> "#components/tabs"
+    | FableReactBulma pageType ->
+        match pageType with
+        | Element element ->
+            match element with
+            | Button -> "#fable-react-bulma/elements/button"
+            | Icon -> "#fable-react-bulma/elements/icon"
+            | Title -> "#fable-react-bulma/elements/title"
+            | Delete -> "#fable-react-bulma/elements/delete"
+            | Box -> "#fable-react-bulma/elements/box"
+            | Content -> "#fable-react-bulma/elements/content"
+            | Tag -> "#fable-react-bulma/elements/tag"
+            | Image -> "#fable-react-bulma/elements/image"
+            | Progress -> "#fable-react-bulma/elements/progress"
+            | Table -> "#fable-react-bulma/elements/table"
+            | Form -> "#fable-react-bulma/elements/form"
+            | Notification -> "#fable-react-bulma/elements/notification"
+        | Component ``component`` ->
+            match ``component`` with
+            | Panel -> "#fable-react-bulma/components/panel"
+            | Level -> "#fable-react-bulma/components/level"
+            | Breadcrumb -> "#fable-react-bulma/components/breadcrumb"
+            | Card  -> "#fable-react-bulma/components/card"
+            | Media -> "#fable-react-bulma/components/media"
+            | Menu -> "#fable-react-bulma/components/menu"
+            | Message -> "#fable-react-bulma/components/message"
+            | Navbar -> "#fable-react-bulma/components/navbar"
+            | Pagination -> "#fable-react-bulma/components/pagination"
+            | Tabs -> "#fable-react-bulma/components/tabs"

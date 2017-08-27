@@ -24,6 +24,7 @@ type Msg =
     | NavbarMsg of Components.Navbar.Types.Msg
     | PaginationMsg of Components.Pagination.Types.Msg
     | TabsMsg of Components.Tabs.Types.Msg
+    | MenuTempMsg of Menu.Types.Msg
 
 type ElementsModel =
     { Box : Elements.Box.Types.Model
@@ -51,7 +52,8 @@ type ComponentsModel =
       Message : Components.Message.Types.Model }
 
 type Model =
-    { CurrentPage : Page
+    { Menu : Menu.Types.Model
+      CurrentPage : Page
       Home : Home.Types.Model
       Elements : ElementsModel
       Components : ComponentsModel }

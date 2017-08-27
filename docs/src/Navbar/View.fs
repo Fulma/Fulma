@@ -16,7 +16,7 @@ let navButtons =
     span
         [ ClassName "nav-item block" ]
         [ navButton "twitter" "https://twitter.com/FableCompiler" "fa-twitter" "Twitter"
-          navButton "github" "https://github.com/MangelMaxime/Fable.Elmish.Bulma/" "fa-github" "Github"
+          navButton "github" "https://github.com/MangelMaxime/Fable.React.Bulma/" "fa-github" "Github"
           navButton "github" "https://gitter.im/fable-compiler/Fable" "fa-comments" "Gitter" ]
 
 let root =
@@ -26,5 +26,5 @@ let root =
                    [ img  [ Src "logo.png"
                             Alt "logo"
                             Style [ MarginRight "10px" ] ]
-                     str "Fable.Elmish.Bulma" ] ]
+                     str "Fable.React.Bulma" ] ]
           navButtons ]

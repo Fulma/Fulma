@@ -9,28 +9,28 @@ open Types
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
-            map (Element Button) (s "elements" </> s "button")
-            map (Element Icon) (s "elements" </> s "icon")
-            map (Element Title) (s "elements" </> s "title")
-            map (Element Delete) (s "elements" </> s "delete")
-            map (Element Box) (s "elements" </> s "box")
-            map (Element Content) (s "elements" </> s "content")
-            map (Element Tag) (s "elements" </> s "tag")
-            map (Element Image) (s "elements" </> s "image")
-            map (Element Progress) (s "elements" </> s "progress")
-            map (Element Table) (s "elements" </> s "table")
-            map (Element Form) (s "elements" </> s "form")
-            map (Element Notification) (s "elements" </> s "notification")
-            map (Component Panel) (s "components" </> s "panel")
-            map (Component Components.Level) (s "components" </> s "level")
-            map (Component Breadcrumb) (s "components" </> s "breadcrumb")
-            map (Component Card) (s "components" </> s "card")
-            map (Component Media) (s "components" </> s "media")
-            map (Component Menu) (s "components" </> s "menu")
-            map (Component Message) (s "components" </> s "message")
-            map (Component Navbar) (s "components" </> s "navbar")
-            map (Component Pagination) (s "components" </> s "pagination")
-            map (Component Tabs) (s "components" </> s "tabs")
+            map (FableReactBulma (Element Button)) (s "fable-react-bulma" </> s "elements" </> s "button")
+            map (FableReactBulma (Element Icon)) (s "fable-react-bulma" </> s "elements" </> s "icon")
+            map (FableReactBulma (Element Title)) (s "fable-react-bulma" </> s "elements" </> s "title")
+            map (FableReactBulma (Element Delete)) (s "fable-react-bulma" </> s "elements" </> s "delete")
+            map (FableReactBulma (Element Box)) (s "fable-react-bulma" </> s "elements" </> s "box")
+            map (FableReactBulma (Element Content)) (s "fable-react-bulma" </> s "elements" </> s "content")
+            map (FableReactBulma (Element Tag)) (s "fable-react-bulma" </> s "elements" </> s "tag")
+            map (FableReactBulma (Element Image)) (s "fable-react-bulma" </> s "elements" </> s "image")
+            map (FableReactBulma (Element Progress)) (s "fable-react-bulma" </> s "elements" </> s "progress")
+            map (FableReactBulma (Element Table)) (s "fable-react-bulma" </> s "elements" </> s "table")
+            map (FableReactBulma (Element Form)) (s "fable-react-bulma" </> s "elements" </> s "form")
+            map (FableReactBulma (Element Notification)) (s "fable-react-bulma" </> s "elements" </> s "notification")
+            map (FableReactBulma (Component Panel)) (s "fable-react-bulma" </> s "components" </> s "panel")
+            map (FableReactBulma (Component Components.Level)) (s "fable-react-bulma" </> s "components" </> s "level")
+            map (FableReactBulma (Component Breadcrumb)) (s "fable-react-bulma" </> s "components" </> s "breadcrumb")
+            map (FableReactBulma (Component Card)) (s "fable-react-bulma" </> s "components" </> s "card")
+            map (FableReactBulma (Component Media)) (s "fable-react-bulma" </> s "components" </> s "media")
+            map (FableReactBulma (Component Menu)) (s "fable-react-bulma" </> s "components" </> s "menu")
+            map (FableReactBulma (Component Message)) (s "fable-react-bulma" </> s "components" </> s "message")
+            map (FableReactBulma (Component Navbar)) (s "fable-react-bulma" </> s "components" </> s "navbar")
+            map (FableReactBulma (Component Pagination)) (s "fable-react-bulma" </> s "components" </> s "pagination")
+            map (FableReactBulma (Component Tabs)) (s "fable-react-bulma" </> s "components" </> s "tabs")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -39,7 +39,9 @@ let urlUpdate (result : Option<Page>) model =
         Browser.console.error ("Error parsing url")
         model, Navigation.modifyUrl (toHash model.CurrentPage)
 
-    | Some page -> { model with CurrentPage = page }, []
+    | Some page ->
+        { model with CurrentPage = page
+                     Menu = { model.Menu with CurrentPage = page } }, Cmd.none
 
 let init result =
     let elements =
@@ -69,6 +71,7 @@ let init result =
 
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
+                           Menu = Menu.State.init Home
                            Home = Home.State.init ()
                            Elements = elements
                            Components = ``components`` }
@@ -184,3 +187,7 @@ let update msg model =
         let (notification, notificationMsg) = Elements.Notification.State.update msg model.Elements.Notification
         { model with Elements =
                         { model.Elements with Notification = notification } }, Cmd.map NotificationMsg notificationMsg
+
+    | MenuTempMsg msg ->
+        let (menu, menuMsg) = Menu.State.update msg model.Menu
+        { model with Menu = menu }, Cmd.map MenuMsg menuMsg
