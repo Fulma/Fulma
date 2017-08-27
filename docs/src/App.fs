@@ -31,13 +31,6 @@ Marked.Globals.marked.setOptions (unbox options) |> ignore
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
-let header =
-    div [ ClassName "hero is-primary" ]
-        [ div [ ClassName "hero-body" ]
-              [ div [ ClassName "column has-text-centered" ]
-                    [ h2 [ ClassName "subtitle cookieregular" ]
-                         [ str "Binding for Elmish using Bulma CSS framework" ] ] ] ]
-
 let root model dispatch =
     let pageHtml =
         function
@@ -73,7 +66,6 @@ let root model dispatch =
     div []
         [ div [ ClassName "navbar-bg" ]
               [ div [ ClassName "container" ] [ Navbar.View.root ] ]
-          header
           div [ ClassName "section" ]
               [ div [ ClassName "container" ]
                     [ div [ ClassName "columns" ]
