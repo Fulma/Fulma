@@ -5,9 +5,9 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.BulmaClasses
-open Elmish.Bulma.Components
-open Elmish.Bulma.Elements
+open Fable.React.Bulma.BulmaClasses
+open Fable.React.Bulma.Components
+open Fable.React.Bulma.Elements
 
 let basic =
     Navbar.navbar [ ]

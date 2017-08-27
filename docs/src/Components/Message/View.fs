@@ -5,9 +5,9 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.Elements
-open Elmish.Bulma.Elements.Form
-open Elmish.Bulma.Components
+open Fable.React.Bulma.Elements
+open Fable.React.Bulma.Elements.Form
+open Fable.React.Bulma.Components
 
 let loremText =
     "Donec fermentum interdum elit, in congue justo maximus congue. Mauris tincidunt ultricies lacus, vel pulvinar diam luctus et. In vel tellus vitae dolor efficitur pulvinar eu non tortor. Nunc eget augue id nisl bibendum congue vitae vitae purus. Phasellus pharetra nunc at justo dictum rutrum. Nullam diam diam, tincidunt id interdum a, rutrum ac lorem."

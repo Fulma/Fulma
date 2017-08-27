@@ -3,7 +3,6 @@ module App.State
 open Elmish
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
-open Elmish.Bulma.Elements.Notification
 open Fable.Import
 open Global
 open Types

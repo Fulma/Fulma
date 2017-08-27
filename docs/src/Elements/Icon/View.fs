@@ -5,8 +5,8 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.Elements
-open Elmish.Bulma.Extra.FontAwesome
+open Fable.React.Bulma.Elements
+open Fable.React.Bulma.Extra.FontAwesome
 
 let iconInteractive =
     div [ ClassName "block" ]
@@ -40,7 +40,7 @@ We provide convenience functions for **[Font Awesome](http://fontawesome.io/)**.
 You need the next `open` statement to access the FontAwesome convenience functions.
 
 ```fsharp
-    open Elmish.Bulma.Elements
+    open Fable.React.Bulma.Elements
     open Elmish.Bulma.Extra.FontAwesome
 ```
 

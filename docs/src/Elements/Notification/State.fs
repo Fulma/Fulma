@@ -39,14 +39,6 @@ let init() =
       ColorViewer = Viewer.State.init color
       DeleteViewer = Viewer.State.init delete }
 
-open Elmish.Bulma.Elements
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-
-let notificationRoot =
-    Notification.notification [ Notification.isSuccess ]
-        [ str "I am a global notification"]
-
 let update msg model =
     match msg with
     | BasicViewerMsg msg ->

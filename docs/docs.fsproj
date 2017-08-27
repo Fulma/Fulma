@@ -91,7 +91,7 @@
     <Compile Include="src/App.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../src/Fable.Elmish.Bulma.fsproj" />
+    <ProjectReference Include="../src/Fable.React.Bulma/Fable.React.Bulma.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

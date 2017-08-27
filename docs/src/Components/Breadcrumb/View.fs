@@ -5,8 +5,8 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.Elements
-open Elmish.Bulma.Components
+open Fable.React.Bulma.Elements
+open Fable.React.Bulma.Components
 
 let basic =
     Breadcrumb.breadcrumb [ ]
@@ -15,7 +15,7 @@ let basic =
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
           Breadcrumb.item [ Breadcrumb.Item.isActive ]
-            [ a [ ] [ str "Elmish" ] ] ]
+            [ a [ ] [ str "Fable.React" ] ] ]
 
 let alignmentCenter =
     Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]

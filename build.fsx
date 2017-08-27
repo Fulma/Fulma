@@ -27,30 +27,29 @@ Target "InstallDotNetCore" (fun _ ->
 )
 
 Target "Clean" (fun _ ->
-  seq [
-    "src/bin"
-    "src/obj"
-    "docs/bin"
-    "docs/obj"
-  ] |> CleanDirs
+    !! "docs/**/bin"
+    ++ "docs/**/obj"
+    ++ "src/**/bin"
+    ++ "src/**/obj"
+    |> Seq.iter(CleanDir)
 )
 
 Target "Install" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "restore")
 )
 
 Target "Build" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
 )
 
 Target "QuickBuild" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
@@ -61,24 +60,6 @@ Target "YarnInstall" (fun _ ->
     { p with
         Command = Install Standard
     })
-)
-
-let release = LoadReleaseNotes "RELEASE_NOTES.md"
-
-Target "Meta" (fun _ ->
-    [ "<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">"
-      "<PropertyGroup>"
-      "<Description>Helpers around Bulma for Elmish apps</Description>"
-      "<PackageProjectUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</PackageProjectUrl>"
-      "<PackageLicenseUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma/blob/master/LICENSE.md</PackageLicenseUrl>"
-      "<PackageIconUrl></PackageIconUrl>"
-      "<RepositoryUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</RepositoryUrl>"
-      "<PackageTags>fable;elm;fsharp;bulma</PackageTags>"
-      "<Authors>Maxime Mangel</Authors>"
-      sprintf "<Version>%s</Version>" (string release.SemVer)
-      "</PropertyGroup>"
-      "</Project>"]
-    |> WriteToFile false "Meta.props"
 )
 
 // --------------------------------------------------------------------------------------
@@ -116,18 +97,19 @@ Target "Package" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
-    let nugetKey =
-        match environVarOrNone "NUGET_KEY" with
-        | Some nugetKey -> nugetKey
-        | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
+    // let nugetKey =
+    //     match environVarOrNone "NUGET_KEY" with
+    //     | Some nugetKey -> nugetKey
+    //     | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
 
-    Directory.GetFiles("src" </> "bin" </> "Release", "*.nupkg")
-    |> Array.find(fun nupkg -> nupkg.Contains(release.NugetVersion))
-    |> (fun nupkg ->
-            (Path.GetFullPath nupkg, nugetKey)
-            ||> sprintf "nuget push %s -s nuget.org -k %s"
-            |> runDotnet "src"
-    )
+    // Directory.GetFiles("src" </> "bin" </> "Release", "*.nupkg")
+    // |> Array.find(fun nupkg -> nupkg.Contains(release.NugetVersion))
+    // |> (fun nupkg ->
+    //         (Path.GetFullPath nupkg, nugetKey)
+    //         ||> sprintf "nuget push %s -s nuget.org -k %s"
+    //         |> runDotnet "src"
+    // )
+    ()
 )
 
 
@@ -158,9 +140,7 @@ Target "PublishDocs" (fun _ ->
 )
 
 // Build order
-"Meta"
-    // ==> "InstallDotNetCore"
-    ==> "Clean"
+"Clean"
     ==> "Install"
     ==> "Build"
     ==> "Package"

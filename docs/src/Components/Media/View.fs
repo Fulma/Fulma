@@ -5,9 +5,9 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.Elements
-open Elmish.Bulma.Elements.Form
-open Elmish.Bulma.Components
+open Fable.React.Bulma.Elements
+open Fable.React.Bulma.Elements.Form
+open Fable.React.Bulma.Components
 
 let basic =
     Media.media [ ]

@@ -2,7 +2,7 @@ module Navbar.View
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Elmish.Bulma.Components
+open Fable.React.Bulma.Components
 
 let navButton classy href faClass txt =
     div [ ClassName "control" ]
