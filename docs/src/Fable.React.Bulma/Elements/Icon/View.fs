@@ -41,7 +41,7 @@ You need the next `open` statement to access the FontAwesome convenience functio
 
 ```fsharp
     open Fable.React.Bulma.Elements
-    open Elmish.Bulma.Extra.FontAwesome
+    open Fable.React.Bulma.Extra.FontAwesome
 ```
 
 If the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fable.Elmish.Bulma/issues)*.
