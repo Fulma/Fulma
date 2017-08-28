@@ -28,42 +28,49 @@ type Components =
     | Pagination
     | Tabs
 
-type FableReactBulmaPage =
+type FulmaPage =
     | Element of Elements
     | Component of Components
 
+type FulmaExtensionsPage =
+    | Calendar
+
 type Page =
     | Home
-    | FableReactBulma of FableReactBulmaPage
+    | Fulma of FulmaPage
+    | FulmaExtensions of FulmaExtensionsPage
 
 let toHash page =
     match page with
     | Home -> "#home"
-    | FableReactBulma pageType ->
+    | Fulma pageType ->
         match pageType with
         | Element element ->
             match element with
-            | Button -> "#fable-react-bulma/elements/button"
-            | Icon -> "#fable-react-bulma/elements/icon"
-            | Title -> "#fable-react-bulma/elements/title"
-            | Delete -> "#fable-react-bulma/elements/delete"
-            | Box -> "#fable-react-bulma/elements/box"
-            | Content -> "#fable-react-bulma/elements/content"
-            | Tag -> "#fable-react-bulma/elements/tag"
-            | Image -> "#fable-react-bulma/elements/image"
-            | Progress -> "#fable-react-bulma/elements/progress"
-            | Table -> "#fable-react-bulma/elements/table"
-            | Form -> "#fable-react-bulma/elements/form"
-            | Notification -> "#fable-react-bulma/elements/notification"
+            | Button -> "#fulma/elements/button"
+            | Icon -> "#fulma/elements/icon"
+            | Title -> "#fulma/elements/title"
+            | Delete -> "#fulma/elements/delete"
+            | Box -> "#fulma/elements/box"
+            | Content -> "#fulma/elements/content"
+            | Tag -> "#fulma/elements/tag"
+            | Image -> "#fulma/elements/image"
+            | Progress -> "#fulma/elements/progress"
+            | Table -> "#fulma/elements/table"
+            | Form -> "#fulma/elements/form"
+            | Notification -> "#fulma/elements/notification"
         | Component ``component`` ->
             match ``component`` with
-            | Panel -> "#fable-react-bulma/components/panel"
-            | Level -> "#fable-react-bulma/components/level"
-            | Breadcrumb -> "#fable-react-bulma/components/breadcrumb"
-            | Card  -> "#fable-react-bulma/components/card"
-            | Media -> "#fable-react-bulma/components/media"
-            | Menu -> "#fable-react-bulma/components/menu"
-            | Message -> "#fable-react-bulma/components/message"
-            | Navbar -> "#fable-react-bulma/components/navbar"
-            | Pagination -> "#fable-react-bulma/components/pagination"
-            | Tabs -> "#fable-react-bulma/components/tabs"
+            | Panel -> "#fulma/components/panel"
+            | Level -> "#fulma/components/level"
+            | Breadcrumb -> "#fulma/components/breadcrumb"
+            | Card  -> "#fulma/components/card"
+            | Media -> "#fulma/components/media"
+            | Menu -> "#fulma/components/menu"
+            | Message -> "#fulma/components/message"
+            | Navbar -> "#fulma/components/navbar"
+            | Pagination -> "#fulma/components/pagination"
+            | Tabs -> "#fulma/components/tabs"
+    | FulmaExtensions pageType ->
+        match pageType with
+        | Calendar -> "#fulma-extensions/calendar"

@@ -13,10 +13,11 @@ let basic =
     Navbar.navbar [ ]
         [ Navbar.brand_div [ ]
             [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
-                [ img [ Src "/logo.png" ] ] ]
+                [ img [ Style [ Width "2.5em" ] // Force svg display
+                        Src "/logo_transparent.svg" ] ] ]
           Navbar.item_a [ Navbar.Item.hasDropdown
                           Navbar.Item.isHoverable ]
-
+// just a test
             [ Navbar.link_a [ ]
                 [ str "Docs" ]
               Navbar.dropdown_div [ ]

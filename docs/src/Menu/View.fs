@@ -16,11 +16,11 @@ let menuItem label page currentPage =
              Href(toHash page) ]
            [ str label ] ]
 
-let menuFableReactBulma currentPage subModel dispatch =
+let menuFulma currentPage subModel dispatch =
     let (elementsClass, elementsIcon) =
         if not subModel.IsElementsExpanded then
             match currentPage with
-            | FableReactBulma (Element _) ->
+            | Fulma (Element _) ->
                 "menu-group is-active", Fa.AngleDown
             | _ -> "menu-group", Fa.AngleDown
         else
@@ -29,7 +29,7 @@ let menuFableReactBulma currentPage subModel dispatch =
     let (componentsClass, componentsIcon) =
         if not subModel.IsComponentsExpanded then
             match currentPage with
-            | FableReactBulma (Component _) ->
+            | Fulma (Component _) ->
                 "menu-group is-active", Fa.AngleDown
             | _ -> "menu-group", Fa.AngleDown
         else
@@ -40,44 +40,50 @@ let menuFableReactBulma currentPage subModel dispatch =
         [ li [ ]
              //Dummy class name to prevent default link style
              [ yield a [ ClassName elementsClass
-                         OnClick (fun _ -> ToggleMenu (Library.FableReactBulma Elements) |> dispatch ) ]
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Elements) |> dispatch ) ]
                        [ span [ ] [ str "Elements" ]
                          Icon.faIcon [ ] elementsIcon ]
                if subModel.IsElementsExpanded then
                     yield ul [ ]
-                             [ menuItem "Button" (FableReactBulma (Element Elements.Button)) currentPage
-                               menuItem "Icon" (FableReactBulma (Element Elements.Icon)) currentPage
-                               menuItem "Image" (FableReactBulma (Element Elements.Image)) currentPage
-                               menuItem "Title" (FableReactBulma (Element Elements.Title)) currentPage
-                               menuItem "Delete" (FableReactBulma (Element Elements.Delete)) currentPage
-                               menuItem "Progress" (FableReactBulma (Element Elements.Progress))  currentPage
-                               menuItem "Box" (FableReactBulma (Element Elements.Box)) currentPage
-                               menuItem "Content" (FableReactBulma (Element Elements.Content))  currentPage
-                               menuItem "Table" (FableReactBulma (Element Elements.Table)) currentPage
-                               //menuItem "Form" (FableReactBulma (Element Elements.Form)) currentPage
-                               menuItem "Notification" (FableReactBulma (Element Elements.Notification)) currentPage
-                               menuItem "Tag" (FableReactBulma (Element Elements.Tag)) currentPage ] ] ]
+                             [ menuItem "Button" (Fulma (Element Elements.Button)) currentPage
+                               menuItem "Icon" (Fulma (Element Elements.Icon)) currentPage
+                               menuItem "Image" (Fulma (Element Elements.Image)) currentPage
+                               menuItem "Title" (Fulma (Element Elements.Title)) currentPage
+                               menuItem "Delete" (Fulma (Element Elements.Delete)) currentPage
+                               menuItem "Progress" (Fulma (Element Elements.Progress))  currentPage
+                               menuItem "Box" (Fulma (Element Elements.Box)) currentPage
+                               menuItem "Content" (Fulma (Element Elements.Content))  currentPage
+                               menuItem "Table" (Fulma (Element Elements.Table)) currentPage
+                               //menuItem "Form" (Fulma (Element Elements.Form)) currentPage
+                               menuItem "Notification" (Fulma (Element Elements.Notification)) currentPage
+                               menuItem "Tag" (Fulma (Element Elements.Tag)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName componentsClass
-                         OnClick (fun _ -> ToggleMenu (Library.FableReactBulma Components) |> dispatch ) ]
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Components) |> dispatch ) ]
                        [ span [ ] [ str "Components" ]
                          Icon.faIcon [ ] componentsIcon ]
                if subModel.IsComponentsExpanded then
                     yield ul [ ]
-                             [ menuItem "Panel" (FableReactBulma (Component Components.Panel)) currentPage
-                               menuItem "Level" (FableReactBulma (Component Components.Level)) currentPage
-                               menuItem "Breadcrumb" (FableReactBulma (Component Components.Breadcrumb)) currentPage
-                               menuItem "Card" (FableReactBulma (Component Components.Card)) currentPage
-                               menuItem "Media" (FableReactBulma (Component Components.Media)) currentPage
-                               menuItem "Menu" (FableReactBulma (Component Components.Menu)) currentPage
-                               menuItem "Navbar" (FableReactBulma (Component Components.Navbar)) currentPage
-                               menuItem "Pagination" (FableReactBulma (Component Components.Pagination)) currentPage
-                               menuItem "Tabs" (FableReactBulma (Component Components.Tabs)) currentPage
-                               menuItem "Message" (FableReactBulma (Component Components.Message)) currentPage ] ] ] ]
+                             [ menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
+                               menuItem "Level" (Fulma (Component Components.Level)) currentPage
+                               menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage
+                               menuItem "Card" (Fulma (Component Components.Card)) currentPage
+                               menuItem "Media" (Fulma (Component Components.Media)) currentPage
+                               menuItem "Menu" (Fulma (Component Components.Menu)) currentPage
+                               menuItem "Navbar" (Fulma (Component Components.Navbar)) currentPage
+                               menuItem "Pagination" (Fulma (Component Components.Pagination)) currentPage
+                               menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage
+                               menuItem "Message" (Fulma (Component Components.Message)) currentPage ] ] ] ]
+
+let menuFulmaExtensions currentPage subModel dispatch =
+    [ Menu.label [ ] [ str "Fulma.Extensions" ]
+      Menu.list [ ]
+        [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage ] ]
 
 let root model dispatch =
     Menu.menu [ ]
         [ yield Menu.list [ ]
                     [ menuItem "Home" Home model.CurrentPage ]
-          yield! menuFableReactBulma model.CurrentPage model.FableReactBulma dispatch ]
+          yield! menuFulma model.CurrentPage model.Fulma dispatch
+          yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch ]

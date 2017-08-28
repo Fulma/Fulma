@@ -1,7 +1,8 @@
-### 0.2.0
+### 0.2.0-beta-001
 
 * Convert from Fable.Elmish.Bulma to Fulma
-* BREAKINGS CHANGE: Remove `Nav` support as it's deprecated in Bulma. Please use `Navbar` instead
+* BREAKING CHANGE: Remove `Nav` support as it's deprecated in Bulma. Please use `Navbar` instead
+* BREAKING CHANGE: Move to Netstandard 2.0
 
 ### 0.1.1
 

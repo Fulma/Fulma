@@ -3,19 +3,24 @@ module Menu.Types
 open Fable.Import.React
 open Global
 
-type FableReactBulmaModules =
+type FulmaModules =
     | Elements
     | Components
 
 type Library =
-    | FableReactBulma of FableReactBulmaModules
+    | Fulma of FulmaModules
+    | FulmaExtensions
 
-type FableReactBulma =
+type Fulma =
     { IsElementsExpanded : bool
       IsComponentsExpanded : bool }
 
+type FulmaExtensions =
+    { IsExpanded : bool }
+
 type Model =
-    { FableReactBulma : FableReactBulma
+    { Fulma : Fulma
+      FulmaExtensions : FulmaExtensions
       CurrentPage : Page }
 
 type Msg =

@@ -5,21 +5,28 @@ open Global
 open Types
 
 let init currentPage : Model =
-    { FableReactBulma =
+    { Fulma =
             { IsElementsExpanded = false
               IsComponentsExpanded = false }
+      FulmaExtensions =
+            { IsExpanded = false }
       CurrentPage = currentPage }
 
 let update msg model =
     match msg with
     | ToggleMenu library ->
         match library with
-        | FableReactBulma ``module`` ->
+        | Fulma ``module`` ->
             match ``module`` with
             | Elements ->
-                { model with FableReactBulma =
-                                { model.FableReactBulma with IsElementsExpanded = not model.FableReactBulma.IsElementsExpanded } }
+                { model with Fulma =
+                                { model.Fulma with IsElementsExpanded = not model.Fulma.IsElementsExpanded } }
             | Components ->
-                { model with FableReactBulma =
-                                { model.FableReactBulma with IsComponentsExpanded = not model.FableReactBulma.IsComponentsExpanded } }
+                { model with Fulma =
+                                { model.Fulma with IsComponentsExpanded = not model.Fulma.IsComponentsExpanded } }
+
+        | FulmaExtensions ->
+            { model with FulmaExtensions =
+                                { model.FulmaExtensions with IsExpanded = not model.FulmaExtensions.IsExpanded } }
+
         , Cmd.none
