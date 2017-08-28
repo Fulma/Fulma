@@ -277,10 +277,10 @@ module Form =
                    yield Props.Disabled opts.Disabled :> IHTMLProp
                    yield Props.Type opts.Type :> IHTMLProp
                    if opts.Id.IsSome then yield Props.Id opts.Id.Value :> IHTMLProp
-                   if opts.Value.IsSome then yield Props.Value(U2.Case1 opts.Value.Value) :> IHTMLProp
+                   if opts.Value.IsSome then yield Props.Value opts.Value.Value :> IHTMLProp
 
                    if opts.DefaultValue.IsSome then
-                       yield Props.DefaultValue(U2.Case1 opts.DefaultValue.Value) :> IHTMLProp
+                       yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
                    if opts.Placeholder.IsSome then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]
                  @ opts.Props)
 

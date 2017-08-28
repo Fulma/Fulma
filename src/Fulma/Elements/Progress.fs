@@ -67,6 +67,6 @@ module Progress =
         progress
             [ yield ClassName (Helpers.generateClassName Bulma.Progress.Container [ opts.Size; opts.Color; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props
-              if opts.Value.IsSome then yield HTMLAttr.Value !^(string opts.Value.Value) :> IHTMLProp
-              if opts.Max.IsSome then yield HTMLAttr.Max !^(float opts.Max.Value) :> IHTMLProp ]
+              if opts.Value.IsSome then yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
+              if opts.Max.IsSome then yield HTMLAttr.Max (float opts.Max.Value) :> IHTMLProp ]
             children
