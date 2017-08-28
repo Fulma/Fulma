@@ -1,7 +1,7 @@
 source https://nuget.org/api/v2
 
-nuget FSharp.Core  redirects:force, content:none
-nuget Fable.Core
+nuget FSharp.Core redirects:force, content:none
+nuget Fable.Core prerelease
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
@@ -10,7 +10,6 @@ nuget Fable.React prerelease
 nuget FSharp.NET.Sdk
 
 clitool dotnet-fable
-
 
 group Build
 framework: net46
