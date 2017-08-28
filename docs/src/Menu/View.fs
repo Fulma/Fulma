@@ -5,9 +5,9 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Fable.React.Bulma.Components
-open Fable.React.Bulma.Elements
-open Fable.React.Bulma.Extra.FontAwesome
+open Fulma.Components
+open Fulma.Elements
+open Fulma.Extra.FontAwesome
 open Global
 
 let menuItem label page currentPage =
@@ -35,7 +35,7 @@ let menuFableReactBulma currentPage subModel dispatch =
         else
             "menu-group", Fa.AngleUp
 
-    [ Menu.label [ ] [ str "Fable.React.Bulma" ]
+    [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ li [ ]
              //Dummy class name to prevent default link style

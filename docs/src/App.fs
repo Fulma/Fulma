@@ -4,7 +4,7 @@ open App.State
 open Elmish
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
-open Fable.React.Bulma.Components
+open Fulma.Components
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
