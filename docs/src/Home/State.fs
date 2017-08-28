@@ -8,6 +8,9 @@ let init() : Model =
         """
 # Fulma
 
+<center style="width: 200px;margin: auto;">
+![Fulma log](logo_transparent.svg)
+</center>
 Provide a wrapper around [Bulma](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
 This website isn't intended into providing a full documentation of Bulma.
