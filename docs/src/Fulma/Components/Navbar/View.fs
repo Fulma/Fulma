@@ -17,7 +17,7 @@ let basic =
                         Src "/logo_transparent.svg" ] ] ]
           Navbar.item_a [ Navbar.Item.hasDropdown
                           Navbar.Item.isHoverable ]
-// just a test
+
             [ Navbar.link_a [ ]
                 [ str "Docs" ]
               Navbar.dropdown_div [ ]

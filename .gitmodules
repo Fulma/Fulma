@@ -1,0 +1,3 @@
+[submodule "src/Fulma.Extensions/styles/bulma-calendar"]
+	path = src/Fulma.Extensions/styles/bulma-calendar
+	url = https://github.com/Wikiki/bulma-calendar

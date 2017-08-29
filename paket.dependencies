@@ -8,6 +8,7 @@ nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
 nuget Fable.PowerPack
 nuget Fable.React prerelease
+nuget Fulma prerelease
 
 clitool dotnet-fable prerelease
 

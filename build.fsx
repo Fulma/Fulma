@@ -101,7 +101,6 @@ Target "BuildDocs" (fun _ ->
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
-
 let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes) projFile =
     printfn "Project: %s" projFile
     if releaseNotes.NugetVersion.ToUpper().EndsWith("NEXT")
