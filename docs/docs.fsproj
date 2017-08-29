@@ -86,14 +86,17 @@
         <Compile Include="src/Fulma/Dispatcher/Types.fs" />
         <Compile Include="src/Fulma/Dispatcher/State.fs" />
         <Compile Include="src/Fulma/Dispatcher/View.fs" />
-    <!-- Fulma.Extensions -->
-        <Compile Include="src/Fulma.Extensions/Calendar/Types.fs" />
-        <Compile Include="src/Fulma.Extensions/Calendar/State.fs" />
-        <Compile Include="src/Fulma.Extensions/Calendar/View.fs" />
+    <!-- FulmaExtensions -->
+        <Compile Include="src/FulmaExtensions/Calendar/Types.fs" />
+        <Compile Include="src/FulmaExtensions/Calendar/State.fs" />
+        <Compile Include="src/FulmaExtensions/Calendar/View.fs" />
+        <Compile Include="src/FulmaExtensions/Tooltip/Types.fs" />
+        <Compile Include="src/FulmaExtensions/Tooltip/State.fs" />
+        <Compile Include="src/FulmaExtensions/Tooltip/View.fs" />
         <!-- Dispatcher need to be latest of the group -->
-        <Compile Include="src/Fulma.Extensions/Dispatcher/Types.fs" />
-        <Compile Include="src/Fulma.Extensions/Dispatcher/State.fs" />
-        <Compile Include="src/Fulma.Extensions/Dispatcher/View.fs" />
+        <Compile Include="src/FulmaExtensions/Dispatcher/Types.fs" />
+        <Compile Include="src/FulmaExtensions/Dispatcher/State.fs" />
+        <Compile Include="src/FulmaExtensions/Dispatcher/View.fs" />
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />

@@ -15,6 +15,7 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="Tooltip.fs" />
         <Compile Include="Calendar.fs" />
     </ItemGroup>
     <ItemGroup>
@@ -22,14 +23,11 @@
     </ItemGroup>
 
     <!-- Add source files to "fable" folder in Nuget package -->
-    <PropertyGroup>
-        <ExcludeFromPackage>
-            styles\**\.git;
-        </ExcludeFromPackage>
-    </PropertyGroup>
     <ItemGroup>
         <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
-        <Content Include="styles\**\*" Exclude="$(ExcludeFromPackage)" PackagePath="styles\" />
+        <!-- Need to specify styles folder one by one otherwise License is moved upward -->
+        <Content Include="styles\bulma-calendar\*" Exclude="styles\bulma-calendar\.git" PackagePath="styles\bulma-calendar\" />
+        <Content Include="styles\bulma-tooltip\*" Exclude="styles\bulma-tooltip\.git" PackagePath="styles\bulma-tooltip\" />
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

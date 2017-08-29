@@ -32,6 +32,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Pagination)) (s "fulma" </> s "components" </> s "pagination")
             map (Fulma (Component Tabs)) (s "fulma" </> s "components" </> s "tabs")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
+            map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -50,7 +51,7 @@ let init result =
                            Menu = Menu.State.init Home
                            Home = Home.State.init ()
                            Fulma = Fulma.Dispatcher.State.init ()
-                           FulmaExtensions = Fulma.Extensions.Dispatcher.State.init () }
+                           FulmaExtensions = FulmaExtensions.Dispatcher.State.init () }
 
     model, Cmd.batch [ cmd ]
 
@@ -68,5 +69,5 @@ let update msg model =
         { model with Fulma = fulma }, Cmd.map FulmaMsg fulmaMsg
 
     | FulmaExtensionsMsg msg ->
-        let (fulmaExtensions, fulmaExtensionsMsg) = Fulma.Extensions.Dispatcher.State.update msg model.FulmaExtensions
+        let (fulmaExtensions, fulmaExtensionsMsg) = FulmaExtensions.Dispatcher.State.update msg model.FulmaExtensions
         { model with FulmaExtensions = fulmaExtensions }, Cmd.map FulmaExtensionsMsg fulmaExtensionsMsg

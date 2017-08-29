@@ -34,6 +34,7 @@ type FulmaPage =
 
 type FulmaExtensionsPage =
     | Calendar
+    | Tooltip
 
 type Page =
     | Home
@@ -74,3 +75,4 @@ let toHash page =
     | FulmaExtensions pageType ->
         match pageType with
         | Calendar -> "#fulma-extensions/calendar"
+        | Tooltip -> "#fulma-extensions/tooltip"

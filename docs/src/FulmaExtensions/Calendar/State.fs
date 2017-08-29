@@ -1,15 +1,11 @@
-module Fulma.Extensions.Calendar.View
+module FulmaExtensions.Calendar.State
 
-open Fable.Core
-open Fable.Core.JsInterop
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Elmish
 open Types
-open Fulma.Extensions
-open Fulma.Elements
-open Fulma.Extra.FontAwesome
 
-let basic =
+let iconCode =
+    """
+```fsharp
     Calendar.calendar [ ]
         [ Calendar.Nav.nav [ ]
             [ Calendar.Nav.left [ ]
@@ -134,9 +130,22 @@ let basic =
                   Calendar.Date.date [ Calendar.Date.isDisabled ]
                       [ Calendar.Date.item [ ]
                           [ str "3" ] ] ] ] ]
+```
+    """
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
-                     Render.docSection
-                        ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+let init() =
+    { Intro =
+        """
+# Calendar
+
+Display a **calendar** for date selection or for planning management, in different colors and sizes.
+
+*[Documentation](https://wikiki.github.io/bulma-extensions/calendar)*
+        """
+      BasicViewer = Viewer.State.init iconCode }
+
+let update msg model =
+    match msg with
+    | BasicViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.BasicViewer
+        { model with BasicViewer = viewer }, Cmd.map BasicViewerMsg viewerMsg

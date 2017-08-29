@@ -1,4 +1,4 @@
-module Fulma.Extensions.Calendar.Types
+module FulmaExtensions.Calendar.Types
 
 type Model =
     { Intro : string
