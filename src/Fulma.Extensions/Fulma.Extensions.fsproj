@@ -9,7 +9,7 @@
         <RepositoryUrl>https://github.com/MangelMaxime/Fulma</RepositoryUrl>
         <PackageTags>fable;elm;fsharp;bulma</PackageTags>
         <Authors>Maxime Mangel</Authors>
-        <Version>0.2.0-beta-001</Version>
+        <Version>0.1.0-beta-001</Version>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -20,9 +20,16 @@
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
     </ItemGroup>
+
     <!-- Add source files to "fable" folder in Nuget package -->
+    <PropertyGroup>
+        <ExcludeFromPackage>
+            styles\**\.git;
+        </ExcludeFromPackage>
+    </PropertyGroup>
     <ItemGroup>
         <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
+        <Content Include="styles\**\*" Exclude="$(ExcludeFromPackage)" PackagePath="styles\" />
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
