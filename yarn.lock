@@ -849,6 +849,10 @@ fable-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/fable-utils/-/fable-utils-1.0.1.tgz#76046b1da137bd3474918532451c1d47651620af"
 
+fable-utils@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/fable-utils/-/fable-utils-1.0.2.tgz#3f687ef9c573c4be915396d6656a6888aa92c259"
+
 fbjs@^0.8.9:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
