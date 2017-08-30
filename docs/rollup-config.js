@@ -1,3 +1,5 @@
+import * as path from "path";
+import * as fableUtils from "fable-utils";
 import fable from 'rollup-plugin-fable';
 import livereload from 'rollup-plugin-livereload';
 import serve from 'rollup-plugin-serve';
@@ -8,10 +10,10 @@ import postcss from 'rollup-plugin-postcss';
 import sass from 'node-sass';
 import babel from "rollup-plugin-babel";
 
-var babelOptions = {
+var babelOptions = fableUtils.resolveBabelOptions({
     presets: [["es2015", { "modules": false }]],
     plugins: ["external-helpers"]
-};
+});
 
 const preprocessor = (content, id) => new Promise((resolve, reject) => {
     const result = sass.renderSync({ file: id });
@@ -34,7 +36,14 @@ let rollupPlugins = [
             'react-dom': ['render']
         }
     }),
-    nodeResolve({ jsnext: true, main: true, browser: true }),
+    nodeResolve({
+        jsnext: true,
+        main: true,
+        browser: true,
+        customResolveOptions: {
+            moduleDirectory: path.join(__dirname, '../node_modules')
+        }
+    }),
     replace({ 'process.env.NODE_ENV':
         JSON.stringify(isWatching ? 'development' : 'production')}),
     postcss({
