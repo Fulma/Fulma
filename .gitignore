@@ -36,3 +36,5 @@ docs/public/bundle\.js\.map
 docs/paket\.local
 
 docs/public/dist/
+
+paket-files/
