@@ -16,15 +16,18 @@ module Menu =
                 | IsActive
                 | Props of IHTMLProp list
                 | CustomClass of string
+                | OnClick of (React.MouseEvent -> unit)
 
             type Options =
                 {   Props : IHTMLProp list
                     IsActive : bool
-                    CustomClass : string option }
+                    CustomClass : string option
+                    OnClick : (React.MouseEvent -> unit) option }
                 static member Empty =
                     { Props = []
                       IsActive = false
-                      CustomClass = None }
+                      CustomClass = None
+                      OnClick = None }
 
     open Types
 
@@ -56,24 +59,29 @@ module Menu =
         let isActive = Item.IsActive
         let props = Item.Props
         let customClass = Item.CustomClass
+        let onClick cb = Item.OnClick cb
+    let item (options: Item.Option list) children =
+        let parseOptions (result: Item.Options) =
+            function
+            | Item.IsActive -> { result with IsActive = true }
+            | Item.Props props -> { result with Props = props }
+            | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Item.OnClick cb -> { result with OnClick = cb |> Some }
 
-        let item (options: Item.Option list) children =
-            let parseOptions (result: Item.Options) =
-                function
-                | Item.IsActive -> { result with IsActive = true }
-                | Item.Props props -> { result with Props = props }
-                | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
+        let opts = options |> List.fold parseOptions Item.Options.Empty
 
-            let opts = options |> List.fold parseOptions Item.Options.Empty
-
-            let className =
-                [ if opts.IsActive then
-                    yield Bulma.Menu.State.IsActive
-                  if opts.CustomClass.IsSome then
-                    yield opts.CustomClass.Value
-                ] |> String.concat " "
+        let className =
+            [ if opts.IsActive then
+                yield Bulma.Menu.State.IsActive
+              if opts.CustomClass.IsSome then
+                yield opts.CustomClass.Value
+            ] |> String.concat " "
 
 
-            li [ yield ClassName className :>  IHTMLProp
-                 yield! opts.Props ]
+        li [] [
+            a [ yield ClassName className :>  IHTMLProp
+                if opts.OnClick.IsSome then
+                    yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
+                yield! opts.Props ]
                 children
+            ]
