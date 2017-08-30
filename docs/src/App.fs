@@ -32,10 +32,21 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 let menuItem label page currentPage =
-    li []
-       [ a [ classList [ "is-active", page = currentPage ]
-             Href(toHash page) ]
-           [ str label ] ]
+    if page = currentPage then
+        Menu.item [
+                Menu.Item.isActive
+                Menu.Item.onClick(fun _ -> console.log "Active Link")
+                Menu.Item.props [ Href(toHash page) ]
+                ] [
+                str label
+            ]
+    else
+        Menu.item [
+                Menu.Item.onClick(fun _ -> console.log "Inactive Link")
+                Menu.Item.props [ Href(toHash page) ]
+                ] [
+                str label
+            ]
 
 let menu currentPage =
     Menu.menu [ ]
