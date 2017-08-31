@@ -109,7 +109,7 @@
     <Compile Include="src/App.fs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="../src/Fulma/Fulma.fsproj" />
+    <!-- <ProjectReference Include="../src/Fulma/Fulma.fsproj" /> -->
     <ProjectReference Include="../src/Fulma.Extensions/Fulma.Extensions.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
