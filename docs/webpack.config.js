@@ -18,7 +18,8 @@ module.exports = {
     devtool: "source-map",
     entry: resolve('./docs.fsproj'),
     output: {
-        filename: 'public/dist/js/bundle.js'
+        path: resolve('public/dist/js'),
+        filename: 'bundle.js'
     },
     resolve: {
         modules: [resolve("../node_modules/")]

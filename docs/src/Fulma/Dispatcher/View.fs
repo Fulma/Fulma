@@ -19,6 +19,7 @@ let root fulmaPage model dispatch =
         | Elements.Tag -> Elements.Tag.View.root model.Elements.Tag (TagMsg >> dispatch)
         | Elements.Title -> Elements.Title.View.root model.Elements.Title (TitleMsg >> dispatch)
         | Elements.Notification -> Elements.Notification.View.root model.Elements.Notification (NotificationMsg >> dispatch)
+        | Elements.Form -> failwith "NOT SUPPORTED"
     | Component ``component`` ->
         match ``component`` with
         | Panel -> Components.Panel.View.root model.Components.Panel (PanelMsg >> dispatch)

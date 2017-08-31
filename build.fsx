@@ -89,14 +89,14 @@ let watchDocs _ =
                                                 WorkingDir = workingDir
                                                 TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
 
-    runDotnetNoTimeout "docs" "fable node-run ../node_modules/webpack-dev-server/bin/webpack-dev-server.js --port free -- --config webpack.config.js"
+    runDotnetNoTimeout "docs" "fable webpack-dev-server --port free"
 
 Target "WatchDocs" watchDocs
 
 Target "QuickWatchDocs" watchDocs
 
 Target "BuildDocs" (fun _ ->
-    runDotnet "docs" "fable node-run ../node_modules/webpack/bin/webpack.js --port free -- --config webpack.config.js"
+    runDotnet "docs" "fable webpack --port free"
 )
 
 // --------------------------------------------------------------------------------------
