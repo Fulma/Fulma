@@ -3,12 +3,23 @@ $dark-blue: #2D3947
 $primary: $dark-blue
 
 @import '../node_modules/bulma/bulma'
+// not full  @import '../node_modules/bulma-extensions/extensions.sass'
+@import "../node_modules/bulma-extensions/bulma-badge/badge.sass"
+@import "../node_modules/bulma-extensions/bulma-calendar/calendar.sass"
+@import "../node_modules/bulma-extensions/bulma-checkradio/checkradio.sass"
+@import "../node_modules/bulma-extensions/bulma-divider/divider.sass"
+@import "../node_modules/bulma-extensions/bulma-pageloader/pageloader.sass"
+@import "../node_modules/bulma-extensions/bulma-pricingtable/pricing-table.sass"
+@import "../node_modules/bulma-extensions/bulma-ribbon/ribbon.sass" 
+@import "../node_modules/bulma-extensions/bulma-slider/slider.sass" 
+@import "../node_modules/bulma-extensions/bulma-steps/steps.sass"
+@import "../node_modules/bulma-extensions/bulma-switch/switch.sass"
+@import "../node_modules/bulma-extensions/bulma-timeline/timeline.sass"
+@import "../node_modules/bulma-extensions/bulma-tooltip/tooltip.sass"
+
+
 @import "./callout"
 @import "./prism"
-
-// Import extensions styles
-@import "./../../src/Fulma.Extensions/styles/bulma-calendar/calendar.sass"
-@import "./../../src/Fulma.Extensions/styles/bulma-tooltip/tooltip.sass"
 
 .navbar-bg
     background-color: $dark-blue
