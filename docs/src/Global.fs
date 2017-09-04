@@ -27,6 +27,7 @@ type Components =
     | Navbar
     | Pagination
     | Tabs
+    | Modal
 
 type FulmaPage =
     | Element of Elements
@@ -72,6 +73,7 @@ let toHash page =
             | Navbar -> "#fulma/components/navbar"
             | Pagination -> "#fulma/components/pagination"
             | Tabs -> "#fulma/components/tabs"
+            | Modal -> "#fulma/components/modal"
     | FulmaExtensions pageType ->
         match pageType with
         | Calendar -> "#fulma-extensions/calendar"

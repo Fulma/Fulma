@@ -315,6 +315,23 @@ module BulmaClasses =
             let [<Literal>] Body = "message-body"
             let Color = levelAndColor
 
+        module Modal =
+            let [<Literal>] Container = "modal"
+            let [<Literal>] Background = "modal-background"
+            let [<Literal>] Content = "modal-content"
+            let State = genericIsActiveState
+
+            module Close =
+                let [<Literal>] Container = "modal-close"
+                let Size = standardSize
+
+            module Card =
+                let [<Literal>] Container = "modal-card"
+                let [<Literal>] Head = "modal-card-head"
+                let [<Literal>] Foot = "modal-card-foot"
+                let [<Literal>] Title = "modal-card-title"
+                let [<Literal>] Body = "modal-card-body"
+
         module Navbar =
             let [<Literal>] Container = "navbar"
             let [<Literal>] Brand = "navbar-brand"

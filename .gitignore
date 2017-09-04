@@ -38,3 +38,5 @@ docs/paket\.local
 docs/public/dist/
 
 paket-files/
+
+paket\.local

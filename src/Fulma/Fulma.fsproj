@@ -24,6 +24,7 @@
     <Compile Include="Components/Menu.fs" />
     <Compile Include="Components/Media.fs" />
     <Compile Include="Components/Message.fs" />
+    <Compile Include="Components/Modal.fs" />
     <Compile Include="Components/Panel.fs" />
     <Compile Include="Components/Navbar.fs" />
     <Compile Include="Components/Pagination.fs" />

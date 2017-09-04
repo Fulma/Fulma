@@ -32,3 +32,4 @@ let root fulmaPage model dispatch =
         | Navbar -> Components.Navbar.View.root model.Components.Navbar (NavbarMsg >> dispatch)
         | Pagination -> Components.Pagination.View.root model.Components.Pagination (PaginationMsg >> dispatch)
         | Tabs -> Components.Tabs.View.root model.Components.Tabs (TabsMsg >> dispatch)
+        | Modal -> Components.Modal.View.root model.Components.Modal (ModalMsg >> dispatch)

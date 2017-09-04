@@ -26,7 +26,8 @@ let init() =
           Navbar = Components.Navbar.State.init ()
           Pagination = Components.Pagination.State.init ()
           Tabs = Components.Tabs.State.init ()
-          Message = Components.Message.State.init () } }
+          Message = Components.Message.State.init ()
+          Modal = Components.Modal.State.init () } }
 
 let update msg model =
     match msg with
@@ -134,3 +135,8 @@ let update msg model =
         let (notification, notificationMsg) = Elements.Notification.State.update msg model.Elements.Notification
         { model with Elements =
                         { model.Elements with Notification = notification } }, Cmd.map NotificationMsg notificationMsg
+
+    | ModalMsg msg ->
+        let (modal, modalMsg) = Components.Modal.State.update msg model.Components.Modal
+        { model with Components =
+                        { model.Components with Modal = modal } }, Cmd.map ModalMsg modalMsg

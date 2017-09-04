@@ -1,4 +1,3 @@
-STORAGE: NONE
 NUGET
   remote: https://www.nuget.org/api/v2
     dotnet-fable (1.2.0-beta-005) - clitool: true

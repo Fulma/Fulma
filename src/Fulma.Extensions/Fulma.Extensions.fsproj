@@ -18,7 +18,9 @@
         <Compile Include="Tooltip.fs" />
         <Compile Include="Calendar.fs" />
     </ItemGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="../Fulma/Fulma.fsproj" />
+    </ItemGroup>
     <!-- Add source files to "fable" folder in Nuget package -->
     <ItemGroup>
         <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />

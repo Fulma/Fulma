@@ -25,7 +25,8 @@ type ComponentsModel =
       Navbar : Components.Navbar.Types.Model
       Pagination : Components.Pagination.Types.Model
       Tabs : Components.Tabs.Types.Model
-      Message : Components.Message.Types.Model }
+      Message : Components.Message.Types.Model
+      Modal : Components.Modal.Types.Model }
 
 type Model =
     { Elements : ElementsModel
@@ -53,3 +54,4 @@ type Msg =
     | NavbarMsg of Components.Navbar.Types.Msg
     | PaginationMsg of Components.Pagination.Types.Msg
     | TabsMsg of Components.Tabs.Types.Msg
+    | ModalMsg of Components.Modal.Types.Msg
