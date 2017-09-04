@@ -1,3 +1,7 @@
+### 0.1.0-beta-005
+
+* Test release with projet reference
+
 ### 0.1.0-beta-004
 
 * Fulma.Extensions build for netstandard1.6 now

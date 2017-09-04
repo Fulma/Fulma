@@ -1,3 +1,7 @@
+### 0.2.0-beta-003
+
+* Implement `Modal`
+
 ### 0.2.0-beta-002
 
 * Fulma is again a netstandard1.6 lib
