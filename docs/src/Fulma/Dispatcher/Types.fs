@@ -28,9 +28,13 @@ type ComponentsModel =
       Message : Components.Message.Types.Model
       Modal : Components.Modal.Types.Model }
 
+type LayoutModel =
+    { Container : Layouts.Container.Types.Model }
+
 type Model =
     { Elements : ElementsModel
-      Components : ComponentsModel }
+      Components : ComponentsModel
+      Layouts : LayoutModel }
 
 type Msg =
     | BoxMsg of Elements.Box.Types.Msg
@@ -55,3 +59,4 @@ type Msg =
     | PaginationMsg of Components.Pagination.Types.Msg
     | TabsMsg of Components.Tabs.Types.Msg
     | ModalMsg of Components.Modal.Types.Msg
+    | ContainerMsg of Layouts.Container.Types.Msg

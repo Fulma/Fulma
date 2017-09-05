@@ -332,6 +332,13 @@ module BulmaClasses =
                 let [<Literal>] Title = "modal-card-title"
                 let [<Literal>] Body = "modal-card-body"
 
+        module Container =
+            let [<Literal>] Container = "container"
+            let [<Literal>] IsFluid = "is-fluid"
+            module Breakpoint =
+                let [<Literal>] IsWideScreen = "is-widescreen"
+                let [<Literal>] IsFullHD = "is-fullhd"
+
         module Navbar =
             let [<Literal>] Container = "navbar"
             let [<Literal>] Brand = "navbar-brand"

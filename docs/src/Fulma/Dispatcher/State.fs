@@ -27,7 +27,9 @@ let init() =
           Pagination = Components.Pagination.State.init ()
           Tabs = Components.Tabs.State.init ()
           Message = Components.Message.State.init ()
-          Modal = Components.Modal.State.init () } }
+          Modal = Components.Modal.State.init () }
+      Layouts =
+        { Container = Layouts.Container.State.init () } }
 
 let update msg model =
     match msg with
@@ -140,3 +142,8 @@ let update msg model =
         let (modal, modalMsg) = Components.Modal.State.update msg model.Components.Modal
         { model with Components =
                         { model.Components with Modal = modal } }, Cmd.map ModalMsg modalMsg
+
+    | ContainerMsg msg ->
+        let (container, containerMsg) = Layouts.Container.State.update msg model.Layouts.Container
+        { model with Layouts =
+                        { model.Layouts with Container = container } }, Cmd.map ContainerMsg containerMsg

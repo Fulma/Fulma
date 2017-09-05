@@ -7,7 +7,8 @@ open Types
 let init currentPage : Model =
     { Fulma =
             { IsElementsExpanded = false
-              IsComponentsExpanded = false }
+              IsComponentsExpanded = false
+              IsLayoutExpanded = false }
       FulmaExtensions =
             { IsExpanded = false }
       CurrentPage = currentPage }
@@ -24,6 +25,10 @@ let update msg model =
             | Components ->
                 { model with Fulma =
                                 { model.Fulma with IsComponentsExpanded = not model.Fulma.IsComponentsExpanded } }
+
+            | Layouts ->
+                { model with Fulma =
+                                { model.Fulma with IsLayoutExpanded = not model.Fulma.IsLayoutExpanded } }
 
         | FulmaExtensions ->
             { model with FulmaExtensions =

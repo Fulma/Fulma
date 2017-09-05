@@ -17,6 +17,10 @@
     <Compile Include="src/Menu/Types.fs" />
     <Compile Include="src/Menu/State.fs" />
     <Compile Include="src/Menu/View.fs" />
+    <!-- Layouts -->
+        <Compile Include="src/Fulma/Layout/Container/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Container/State.fs" />
+        <Compile Include="src/Fulma/Layout/Container/View.fs" />
     <!-- Components -->
         <Compile Include="src/Fulma/Components/Panel/Types.fs" />
         <Compile Include="src/Fulma/Components/Panel/State.fs" />

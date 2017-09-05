@@ -6,6 +6,7 @@ open Global
 type FulmaModules =
     | Elements
     | Components
+    | Layouts
 
 type Library =
     | Fulma of FulmaModules
@@ -13,7 +14,8 @@ type Library =
 
 type Fulma =
     { IsElementsExpanded : bool
-      IsComponentsExpanded : bool }
+      IsComponentsExpanded : bool
+      IsLayoutExpanded : bool }
 
 type FulmaExtensions =
     { IsExpanded : bool }

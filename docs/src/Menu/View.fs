@@ -35,10 +35,27 @@ let menuFulma currentPage subModel dispatch =
         else
             "menu-group", Fa.AngleUp
 
+    let (layoutsClass, layoutsIcon) =
+        if not subModel.IsLayoutExpanded then
+            match currentPage with
+            | Fulma (Layout _) ->
+                "menu-group is-active", Fa.AngleDown
+            | _ -> "menu-group", Fa.AngleDown
+        else
+            "menu-group", Fa.AngleUp
+
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ li [ ]
-             //Dummy class name to prevent default link style
+             [ yield a [ ClassName layoutsClass
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Layouts) |> dispatch ) ]
+                       [ span [ ] [ str "Layouts" ]
+                         Icon.faIcon [ ] layoutsIcon ]
+               if subModel.IsLayoutExpanded then
+                    yield ul [ ]
+                             [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage ] ] ]
+      Menu.list [ ]
+        [ li [ ]
              [ yield a [ ClassName elementsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Elements) |> dispatch ) ]
                        [ span [ ] [ str "Elements" ]
