@@ -29,9 +29,13 @@ type Components =
     | Tabs
     | Modal
 
+type Layouts =
+    | Container
+
 type FulmaPage =
     | Element of Elements
     | Component of Components
+    | Layout of Layouts
 
 type FulmaExtensionsPage =
     | Calendar
@@ -47,6 +51,9 @@ let toHash page =
     | Home -> "#home"
     | Fulma pageType ->
         match pageType with
+        | Layout layout ->
+            match layout with
+            | Container -> "#fulma/layouts/container"
         | Element element ->
             match element with
             | Button -> "#fulma/elements/button"

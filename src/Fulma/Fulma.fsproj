@@ -47,6 +47,7 @@
     <Compile Include="Elements/Form.fs" />
     <!-- Layout -->
     <Compile Include="Layout/Hero.fs" />
+    <Compile Include="Layout/Container.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
   </ItemGroup>

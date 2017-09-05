@@ -1,3 +1,7 @@
+### 0.2.0-next
+
+* Implement `Container`
+
 ### 0.2.0-beta-003
 
 * Implement `Modal`
