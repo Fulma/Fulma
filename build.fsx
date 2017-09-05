@@ -96,7 +96,7 @@ Target "WatchDocs" watchDocs
 Target "QuickWatchDocs" watchDocs
 
 Target "BuildDocs" (fun _ ->
-    runDotnet "docs" "fable webpack --port free"
+    runDotnet "docs" "fable webpack --port free -- -p"
 )
 
 // --------------------------------------------------------------------------------------

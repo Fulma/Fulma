@@ -1,0 +1,9 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+build_script:
+- cmd: >-
+    .paket\paket.exe restore
+
+    build.cmd builddocs
+artifacts:
+- path: .\docs\public
