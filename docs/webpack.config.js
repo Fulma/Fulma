@@ -1,6 +1,7 @@
 var path = require("path");
 var webpack = require("webpack");
 var fableUtils = require("fable-utils");
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function resolve(filePath) {
     return path.join(__dirname, filePath)
@@ -21,6 +22,13 @@ module.exports = {
         path: resolve('./public'),
         filename: 'bundle.js'
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: resolve('./index.html'),
+            hash: true,
+            minify: isProduction ? {} : false
+        })
+    ],
     resolve: {
         modules: [resolve("../node_modules/")]
     },
