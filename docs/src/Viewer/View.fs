@@ -5,8 +5,8 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Elmish.Bulma.Elements
-open Elmish.Bulma.Components
+open Fulma.Components
+open Fulma.Elements
 
 let root interactiveView model dispatch =
     let eventToTrigger =

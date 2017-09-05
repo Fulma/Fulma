@@ -21,18 +21,15 @@ out
 
 .vs
 
-docs/output
-docs/temp
-
 Meta.props
 temp
 
 dotnetsdk/
 
-docs/public/bundle\.js
+paket-files/
 
-docs/public/bundle\.js\.map
+paket\.local
 
-docs/paket\.local
-
-docs/public/dist/
+docs/public/*
+!docs/public/libs
+!docs/public/assets

@@ -27,38 +27,61 @@ type Components =
     | Navbar
     | Pagination
     | Tabs
+    | Modal
+
+type Layouts =
+    | Container
+
+type FulmaPage =
+    | Element of Elements
+    | Component of Components
+    | Layout of Layouts
+
+type FulmaExtensionsPage =
+    | Calendar
+    | Tooltip
 
 type Page =
     | Home
-    | Element of Elements
-    | Component of Components
+    | Fulma of FulmaPage
+    | FulmaExtensions of FulmaExtensionsPage
 
 let toHash page =
     match page with
     | Home -> "#home"
-    | Element element ->
-        match element with
-        | Button -> "#elements/button"
-        | Icon -> "#elements/icon"
-        | Title -> "#elements/title"
-        | Delete -> "#elements/delete"
-        | Box -> "#elements/box"
-        | Content -> "#elements/content"
-        | Tag -> "#elements/tag"
-        | Image -> "#elements/image"
-        | Progress -> "#elements/progress"
-        | Table -> "#elements/table"
-        | Form -> "#elements/form"
-        | Notification -> "#elements/notification"
-    | Component ``component`` ->
-        match ``component`` with
-        | Panel -> "#components/panel"
-        | Level -> "#components/level"
-        | Breadcrumb -> "#components/breadcrumb"
-        | Card  -> "#components/card"
-        | Media -> "#components/media"
-        | Menu -> "#components/menu"
-        | Message -> "#components/message"
-        | Navbar -> "#components/navbar"
-        | Pagination -> "#components/pagination"
-        | Tabs -> "#components/tabs"
+    | Fulma pageType ->
+        match pageType with
+        | Layout layout ->
+            match layout with
+            | Container -> "#fulma/layouts/container"
+        | Element element ->
+            match element with
+            | Button -> "#fulma/elements/button"
+            | Icon -> "#fulma/elements/icon"
+            | Title -> "#fulma/elements/title"
+            | Delete -> "#fulma/elements/delete"
+            | Box -> "#fulma/elements/box"
+            | Content -> "#fulma/elements/content"
+            | Tag -> "#fulma/elements/tag"
+            | Image -> "#fulma/elements/image"
+            | Progress -> "#fulma/elements/progress"
+            | Table -> "#fulma/elements/table"
+            | Form -> "#fulma/elements/form"
+            | Notification -> "#fulma/elements/notification"
+        | Component ``component`` ->
+            match ``component`` with
+            | Panel -> "#fulma/components/panel"
+            | Level -> "#fulma/components/level"
+            | Breadcrumb -> "#fulma/components/breadcrumb"
+            | Card  -> "#fulma/components/card"
+            | Media -> "#fulma/components/media"
+            | Menu -> "#fulma/components/menu"
+            | Message -> "#fulma/components/message"
+            | Navbar -> "#fulma/components/navbar"
+            | Pagination -> "#fulma/components/pagination"
+            | Tabs -> "#fulma/components/tabs"
+            | Modal -> "#fulma/components/modal"
+    | FulmaExtensions pageType ->
+        match pageType with
+        | Calendar -> "#fulma-extensions/calendar"
+        | Tooltip -> "#fulma-extensions/tooltip"

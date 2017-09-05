@@ -1,16 +1,15 @@
-source https://nuget.org/api/v2
+source https://www.nuget.org/api/v2
+storage:none
 
-nuget FSharp.Core  redirects:force, content:none
-nuget Fable.Core
+nuget Fable.Core prerelease
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
 nuget Fable.PowerPack
-nuget Fable.React
-nuget FSharp.NET.Sdk
+nuget Fable.React prerelease
+nuget Fulma prerelease
 
-clitool dotnet-fable
-
+clitool dotnet-fable prerelease
 
 group Build
 framework: net46

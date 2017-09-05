@@ -4,16 +4,31 @@
 
 open System
 open System.IO
+open System.Text.RegularExpressions
 open Fake
 open Fake.NpmHelper
 open Fake.ReleaseNotesHelper
 open Fake.Git
 open Fake.YarnHelper
 
+module Util =
 
-let dotnetcliVersion = "1.0.1"
+    let visitFile (visitor: string->string) (fileName : string) =
+        File.ReadAllLines(fileName)
+        |> Array.map (visitor)
+        |> fun lines -> File.WriteAllLines(fileName, lines)
+
+    let replaceLines (replacer: string->Match->string option) (reg: Regex) (fileName: string) =
+        fileName |> visitFile (fun line ->
+            let m = reg.Match(line)
+            if not m.Success
+            then line
+            else
+                match replacer line m with
+                | None -> line
+                | Some newLine -> newLine)
+
 let mutable dotnetExePath = "dotnet"
-
 
 let runDotnet dir =
     DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
@@ -22,35 +37,30 @@ let runDotnet dir =
                                             // Extra timeout allow us to run watch mode
                                             // Otherwise, the process is stopped every 30 minutes by default
 
-Target "InstallDotNetCore" (fun _ ->
-   dotnetExePath <- DotNetCli.InstallDotNetSDK dotnetcliVersion
-)
-
 Target "Clean" (fun _ ->
-  seq [
-    "src/bin"
-    "src/obj"
-    "docs/bin"
-    "docs/obj"
-  ] |> CleanDirs
+    !! "docs/**/bin"
+    ++ "docs/**/obj"
+    ++ "src/**/bin"
+    ++ "src/**/obj"
+    |> Seq.iter(CleanDir)
 )
 
 Target "Install" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "restore")
 )
 
 Target "Build" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
 )
 
 Target "QuickBuild" (fun _ ->
-    !! "src/**.fsproj"
+    !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         runDotnet dir "build")
@@ -61,24 +71,6 @@ Target "YarnInstall" (fun _ ->
     { p with
         Command = Install Standard
     })
-)
-
-let release = LoadReleaseNotes "RELEASE_NOTES.md"
-
-Target "Meta" (fun _ ->
-    [ "<Project xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">"
-      "<PropertyGroup>"
-      "<Description>Helpers around Bulma for Elmish apps</Description>"
-      "<PackageProjectUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</PackageProjectUrl>"
-      "<PackageLicenseUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma/blob/master/LICENSE.md</PackageLicenseUrl>"
-      "<PackageIconUrl></PackageIconUrl>"
-      "<RepositoryUrl>https://github.com/MangelMaxime/Fable.Elmish.Bulma</RepositoryUrl>"
-      "<PackageTags>fable;elm;fsharp;bulma</PackageTags>"
-      "<Authors>Maxime Mangel</Authors>"
-      sprintf "<Version>%s</Version>" (string release.SemVer)
-      "</PropertyGroup>"
-      "</Project>"]
-    |> WriteToFile false "Meta.props"
 )
 
 // --------------------------------------------------------------------------------------
@@ -97,46 +89,67 @@ let watchDocs _ =
                                                 WorkingDir = workingDir
                                                 TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
 
-    runDotnetNoTimeout "docs" "fable node-run ../node_modules/rollup/bin/rollup --port free -- -c rollup-config.js -w"
+    runDotnetNoTimeout "docs" "fable webpack-dev-server --port free"
 
 Target "WatchDocs" watchDocs
 
 Target "QuickWatchDocs" watchDocs
 
 Target "BuildDocs" (fun _ ->
-    runDotnet "docs" "fable node-run ../node_modules/rollup/bin/rollup --port free -- -c rollup-config.js"
+    runDotnet "docs" "fable webpack --port free -- -p"
 )
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
+let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes) projFile =
+    printfn "Project: %s" projFile
+    if releaseNotes.NugetVersion.ToUpper().EndsWith("NEXT")
+    then
+        printfn "Version in Release Notes ends with NEXT, don't publish yet."
+        false
+    else
+        File.ReadLines(projFile)
+        |> Seq.tryPick (fun line ->
+            let m = versionRegex.Match(line)
+            if m.Success then Some m else None)
+        |> function
+            | None -> failwith "Couldn't find version in project file"
+            | Some m ->
+                let sameVersion = m.Groups.[1].Value = releaseNotes.NugetVersion
+                if sameVersion then
+                    printfn "Already version %s, no need to publish." releaseNotes.NugetVersion
+                not sameVersion
 
-Target "Package" (fun _ ->
-    runDotnet "src" "restore"
-    runDotnet "src" "pack -c Release"
-)
+let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
+    let versionRegex = Regex("<Version>(.*?)</Version>", RegexOptions.IgnoreCase)
 
-Target "PublishNuget" (fun _ ->
-    let nugetKey =
-        match environVarOrNone "NUGET_KEY" with
-        | Some nugetKey -> nugetKey
-        | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
-
-    Directory.GetFiles("src" </> "bin" </> "Release", "*.nupkg")
-    |> Array.find(fun nupkg -> nupkg.Contains(release.NugetVersion))
-    |> (fun nupkg ->
+    if needsPublishing versionRegex releaseNotes projFile then
+        let projDir = Path.GetDirectoryName(projFile)
+        let nugetKey =
+            match environVarOrNone "NUGET_KEY" with
+            | Some nugetKey -> nugetKey
+            | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
+        runDotnet projDir (sprintf "pack -c Release /p:Version=%s /p:PackageReleaseNotes=\"%s\"" releaseNotes.NugetVersion (String.Join("\n",releaseNotes.Notes)))
+        Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
+        |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
+        |> (fun nupkg ->
             (Path.GetFullPath nupkg, nugetKey)
             ||> sprintf "nuget push %s -s nuget.org -k %s"
-            |> runDotnet "src"
+            |> DotNetCli.RunCommand id)
+        // After successful publishing, update the project file
+        (versionRegex, projFile)
+        ||> Util.replaceLines (fun line _ ->
+                                    versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
+
+Target "PublishNugets" (fun _ ->
+    !! "src/**/*.fsproj"
+    |> Seq.iter(fun s ->
+        let projFile = s
+        let projDir = IO.Path.GetDirectoryName(projFile)
+        let release = projDir </> "RELEASE_NOTES.md" |> ReleaseNotesHelper.LoadReleaseNotes
+        pushNuget release projFile
     )
 )
-
-
-// --------------------------------------------------------------------------------------
-// Generate the documentation
-let gitName = "Fable.Elmish.Bulma"
-let gitOwner = "MangelMaxime"
-let gitHome = sprintf "https://github.com/%s" gitOwner
-
 
 // Where to push generated documentation
 let githubLink = "git@github.com:MangelMaxime/Fable.Elmish.Bulma.git"
@@ -144,6 +157,7 @@ let publishBranch = "gh-pages"
 let fableRoot   = __SOURCE_DIRECTORY__
 let temp        = fableRoot </> "temp"
 let docsOuput = fableRoot </> "docs" </> "public"
+
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
@@ -158,13 +172,10 @@ Target "PublishDocs" (fun _ ->
 )
 
 // Build order
-"Meta"
-    // ==> "InstallDotNetCore"
-    ==> "Clean"
+"Clean"
     ==> "Install"
     ==> "Build"
-    ==> "Package"
-    ==> "PublishNuget"
+    ==> "PublishNugets"
 
 "Build"
     ==> "YarnInstall"

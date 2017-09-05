@@ -6,45 +6,48 @@ open Types
 let init() : Model =
     { Intro =
         """
-# Fable.Elmish.Bulma
+# Fulma
 
-Provide a wrapper around [Bulma](http://bulma.io/) for [Elmish](https://fable-elmish.github.io/).
+<center style="width: 200px;margin: auto;">
+![Fulma logo](assets/logo_transparent.svg)
+</center>
+Provide a wrapper around [Bulma](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
 This website isn't intended into providing a full documentation of Bulma.
 
-It's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fable.Elmish.Bulma itself.
+It's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
 
 ---
 
 ## How to install ?
 
-Add `Fable.Elmish.Bulma` dependence into your paket files.
+Add `Fulma` dependence into your paket files.
 
 ```
 // paket.denpendencies
-nuget Fable.Elmish.Bulma
+nuget Fulma
 
 // paket.reference
-Fable.Elmish.Bulma
+Fulma
 ```
 
 Run `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.
 
-You are ready to start using Fable.Elmish.Bulma. You can confirm it by trying to open `Elmish.Bulma` namespace.
+You are ready to start using Fulma. You can confirm it by trying to open `Fulma` namespace.
 
 ```fsharp
-open Elmish.Bulma
+open Fulma
 ```
 
 ## Architecture
 
-Fable.Elmish.Bulma has been designed to provide the best experience over the Bulma CSS framework.
+Fulma has been designed to provide the best experience over the Bulma CSS framework.
 To archieve this goal, we assume the user to follow some conventions.
 
 Always open the "global" module and not the lower module of the hierachie. For example, if you want to use the Button element you should follow this code:
 
 ```fsharp
-open Elmish.Bulma.Elements
+open Fulma.Elements
 
 Button.button [ Button.isSmall ]
     [ str "A button" ]
@@ -56,19 +59,19 @@ Every function follow the "React DSL":
 2. List of properties
 3. Children
 
-Fable.Elmish.Bulma do not only provide wrappers around Bulma but also intellisense the classes provied.
+Fulma do not only provide wrappers around Bulma but also intellisense for the classes provided.
 
 For example, here is how to access the "is-hidden" class.
 
 ```fsharp
 
-open Elmish.Bulma.BulmaClasses
+open Fulma.BulmaClasses
 
 Bulma.Properties.Visibility.IsHidden
 
 ```
 
-All the compoments documented into this website, are available into the library.
+All the compoments documented into this website, are availables into the library.
 
    """}
 
