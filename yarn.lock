@@ -808,9 +808,53 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
 
-bulma-extensions@^0.0.1:
+bulma-badge@^0.0.1:
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/bulma-extensions/-/bulma-extensions-0.0.1.tgz#a161fdba054ee7d0c4f1ced4c0b280f679d489eb"
+  resolved "https://registry.yarnpkg.com/bulma-badge/-/bulma-badge-0.0.1.tgz#a0d5134f61c384fa0cb26c53f97a7ce27f37c2af"
+
+bulma-calendar@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-calendar/-/bulma-calendar-0.0.1.tgz#c8b0887c70a1e29fc873c003882df5ecdea94867"
+
+bulma-checkradio@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/bulma-checkradio/-/bulma-checkradio-0.0.3.tgz#0fe4c83f387fcc7df0ca54a8f4cc46486cadd8e9"
+
+bulma-divider@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-divider/-/bulma-divider-0.0.1.tgz#a9c5b54f0ce02a0e858d338f4e58203787512a4b"
+
+bulma-pageloader@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-pageloader/-/bulma-pageloader-0.0.1.tgz#bea22a9ee1a041c31638783c301eaca330c75430"
+
+bulma-pricingtable@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/bulma-pricingtable/-/bulma-pricingtable-0.0.2.tgz#c09f4fafc1fe31cba02772177d38680832b514ae"
+
+bulma-ribbon@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-ribbon/-/bulma-ribbon-0.0.1.tgz#cf31a00e2b042b98d74871ef5be81ed8714a63a6"
+
+bulma-slider@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-slider/-/bulma-slider-0.0.1.tgz#748f49f6fc1c424208663bc43c167366a8721bbb"
+
+bulma-steps@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-steps/-/bulma-steps-0.0.1.tgz#1bd554859821c22f0cabd97d0f69e6a4ed29e438"
+
+bulma-switch@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-switch/-/bulma-switch-0.0.1.tgz#2de6eb7c602244de7c5efa880b3b19b8464012a9"
+
+bulma-timeline@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-timeline/-/bulma-timeline-0.0.1.tgz#8093a711e1a46d2c2c61c052ccf2829a95b9ffb6"
+
+bulma-tooltip@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-tooltip/-/bulma-tooltip-0.0.1.tgz#5e19ff449f66ddc78db9c1d19953ffa2fc6a0859"
 
 bulma@^0.5.0:
   version "0.5.0"
