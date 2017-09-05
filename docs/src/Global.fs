@@ -18,7 +18,6 @@ type Elements =
 
 type Components =
     | Panel
-    | Level
     | Breadcrumb
     | Card
     | Media
@@ -31,6 +30,7 @@ type Components =
 
 type Layouts =
     | Container
+    | Level
 
 type FulmaPage =
     | Element of Elements
@@ -54,6 +54,7 @@ let toHash page =
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
+            | Level -> "#fulma/layouts/level"
         | Element element ->
             match element with
             | Button -> "#fulma/elements/button"
@@ -71,7 +72,6 @@ let toHash page =
         | Component ``component`` ->
             match ``component`` with
             | Panel -> "#fulma/components/panel"
-            | Level -> "#fulma/components/level"
             | Breadcrumb -> "#fulma/components/breadcrumb"
             | Card  -> "#fulma/components/card"
             | Media -> "#fulma/components/media"

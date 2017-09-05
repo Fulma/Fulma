@@ -23,7 +23,6 @@ let root fulmaPage model dispatch =
     | Component ``component`` ->
         match ``component`` with
         | Panel -> Components.Panel.View.root model.Components.Panel (PanelMsg >> dispatch)
-        | Level -> Components.Level.View.root model.Components.Level (LevelMsg >> dispatch)
         | Breadcrumb -> Components.Breadcrumb.View.root model.Components.Breadcrumb (BreadcrumbMsg >> dispatch)
         | Card -> Components.Card.View.root model.Components.Card (CardMsg >> dispatch)
         | Components.Media -> Components.Media.View.root model.Components.Media (MediaMsg >> dispatch)
@@ -36,3 +35,4 @@ let root fulmaPage model dispatch =
     | Layout layout ->
         match layout with
         | Container -> Layouts.Container.View.root model.Layouts.Container (ContainerMsg >> dispatch)
+        | Level -> Layouts.Level.View.root model.Layouts.Level (LevelMsg >> dispatch)

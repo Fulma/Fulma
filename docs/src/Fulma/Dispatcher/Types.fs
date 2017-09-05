@@ -17,7 +17,6 @@ type ElementsModel =
 
 type ComponentsModel =
     { Panel : Components.Panel.Types.Model
-      Level : Components.Level.Types.Model
       Breadcrumb : Components.Breadcrumb.Types.Model
       Card : Components.Card.Types.Model
       Media : Components.Media.Types.Model
@@ -29,7 +28,8 @@ type ComponentsModel =
       Modal : Components.Modal.Types.Model }
 
 type LayoutModel =
-    { Container : Layouts.Container.Types.Model }
+    { Container : Layouts.Container.Types.Model
+      Level : Layouts.Level.Types.Model }
 
 type Model =
     { Elements : ElementsModel
@@ -49,7 +49,6 @@ type Msg =
     | NotificationMsg of Elements.Notification.Types.Msg
     | TitleMsg of Elements.Title.Types.Msg
     | PanelMsg of Components.Panel.Types.Msg
-    | LevelMsg of Components.Level.Types.Msg
     | BreadcrumbMsg of Components.Breadcrumb.Types.Msg
     | CardMsg of Components.Card.Types.Msg
     | MediaMsg of Components.Media.Types.Msg
@@ -60,3 +59,4 @@ type Msg =
     | TabsMsg of Components.Tabs.Types.Msg
     | ModalMsg of Components.Modal.Types.Msg
     | ContainerMsg of Layouts.Container.Types.Msg
+    | LevelMsg of Layouts.Level.Types.Msg

@@ -291,6 +291,8 @@ module BulmaClasses =
             module Item =
                 let [<Literal>] Container = "level-item"
                 let [<Literal>] HasTextCentered = "has-text-centered"
+                let [<Literal>] Heading = "heading"
+                let [<Literal>] Title = "title"
             module Mobile =
                 let [<Literal>] IsHorizontal = "is-mobile"
 

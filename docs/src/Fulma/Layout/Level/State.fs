@@ -1,4 +1,4 @@
-module Components.Level.State
+module Layouts.Level.State
 
 open Elmish
 open Types
@@ -34,17 +34,41 @@ let iconCode =
 ```
     """
 
+let centered =
+    """
+```fsharp
+    Level.level [ ]
+        [ Level.item [ Level.Item.hasTextCentered ]
+            [ div [ ]
+                [ Level.heading [ ] [ str "Stars" ]
+                  Level.title [ ] [ str "1,010" ] ] ]
+          Level.item [ Level.Item.hasTextCentered ]
+            [ div [ ]
+                [ Level.heading [ ] [ str "Forks" ]
+                  Level.title [ ] [ str "127" ] ] ]
+          Level.item [ Level.Item.hasTextCentered ]
+            [ div [ ]
+                [ Level.heading [ ] [ str "Watchers" ]
+                  Level.title [ ] [ str "66" ] ] ] ]
+```
+    """
+
 let init() =
     { Intro =
         """
 # Level
 
-*[Bulma documentation](http://bulma.io/documentation/components/level/)*
+*[Bulma documentation](http://bulma.io/documentation/layout/level/)*
         """
-      BoxViewer = Viewer.State.init iconCode }
+      BoxViewer = Viewer.State.init iconCode
+      CenteredViewer = Viewer.State.init centered }
 
 let update msg model =
     match msg with
     | BoxViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.BoxViewer
         { model with BoxViewer = viewer }, Cmd.map BoxViewerMsg viewerMsg
+
+    | CenteredViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.CenteredViewer
+        { model with CenteredViewer = viewer }, Cmd.map CenteredViewerMsg viewerMsg

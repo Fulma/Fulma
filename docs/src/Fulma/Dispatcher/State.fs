@@ -18,7 +18,6 @@ let init() =
           Title = Elements.Title.State.init () }
       Components =
         { Panel = Components.Panel.State.init ()
-          Level = Components.Level.State.init ()
           Breadcrumb = Components.Breadcrumb.State.init ()
           Card = Components.Card.State.init ()
           Media = Components.Media.State.init ()
@@ -29,7 +28,8 @@ let init() =
           Message = Components.Message.State.init ()
           Modal = Components.Modal.State.init () }
       Layouts =
-        { Container = Layouts.Container.State.init () } }
+        { Container = Layouts.Container.State.init ()
+          Level = Layouts.Level.State.init () } }
 
 let update msg model =
     match msg with
@@ -88,11 +88,6 @@ let update msg model =
         { model with Components =
                         { model.Components with Panel = panel } }, Cmd.map PanelMsg panelMsg
 
-    | LevelMsg msg ->
-        let (level, levelMsg) = Components.Level.State.update msg model.Components.Level
-        { model with Components =
-                        { model.Components with Level = level } }, Cmd.map LevelMsg levelMsg
-
     | BreadcrumbMsg msg ->
         let (breadcrumb, breadcrumbMsg) = Components.Breadcrumb.State.update msg model.Components.Breadcrumb
         { model with Components =
@@ -147,3 +142,8 @@ let update msg model =
         let (container, containerMsg) = Layouts.Container.State.update msg model.Layouts.Container
         { model with Layouts =
                         { model.Layouts with Container = container } }, Cmd.map ContainerMsg containerMsg
+
+    | LevelMsg msg ->
+        let (level, levelMsg) = Layouts.Level.State.update msg model.Layouts.Level
+        { model with Layouts =
+                        { model.Layouts with Level = level } }, Cmd.map LevelMsg levelMsg

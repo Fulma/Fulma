@@ -53,7 +53,8 @@ let menuFulma currentPage subModel dispatch =
                          Icon.faIcon [ ] layoutsIcon ]
                if subModel.IsLayoutExpanded then
                     yield ul [ ]
-                             [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage ] ] ]
+                             [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage
+                               menuItem "Level" (Fulma (Layout Layouts.Level)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName elementsClass
@@ -83,7 +84,6 @@ let menuFulma currentPage subModel dispatch =
                if subModel.IsComponentsExpanded then
                     yield ul [ ]
                              [ menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
-                               menuItem "Level" (Fulma (Component Components.Level)) currentPage
                                menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage
                                menuItem "Card" (Fulma (Component Components.Card)) currentPage
                                menuItem "Media" (Fulma (Component Components.Media)) currentPage

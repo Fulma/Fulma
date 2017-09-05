@@ -1,4 +1,4 @@
-namespace Fulma.Components
+namespace Fulma.Layout
 
 open Fulma.BulmaClasses
 open Fulma.Common
@@ -95,6 +95,13 @@ module Level =
         let props = Item.Props
         let customClass = Item.CustomClass
 
+    module Heading =
+        let props = GenericOption.Props
+        let customClass = GenericOption.CustomClass
+
+    module Title =
+        let props = GenericOption.Props
+        let customClass = GenericOption.CustomClass
 
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
@@ -111,3 +118,19 @@ module Level =
                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
             children
+
+    let heading (options: GenericOption list) children =
+        let opts = genericParse options
+
+        p [ yield classBaseList Bulma.Level.Item.Heading
+                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+            yield! opts.Props ]
+          children
+
+    let title (options: GenericOption list) children =
+        let opts = genericParse options
+
+        p [ yield classBaseList Bulma.Level.Item.Title
+                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+            yield! opts.Props ]
+          children

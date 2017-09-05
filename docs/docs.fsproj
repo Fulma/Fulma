@@ -21,13 +21,13 @@
         <Compile Include="src/Fulma/Layout/Container/Types.fs" />
         <Compile Include="src/Fulma/Layout/Container/State.fs" />
         <Compile Include="src/Fulma/Layout/Container/View.fs" />
+        <Compile Include="src/Fulma/Layout/Level/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Level/State.fs" />
+        <Compile Include="src/Fulma/Layout/Level/View.fs" />
     <!-- Components -->
         <Compile Include="src/Fulma/Components/Panel/Types.fs" />
         <Compile Include="src/Fulma/Components/Panel/State.fs" />
         <Compile Include="src/Fulma/Components/Panel/View.fs" />
-        <Compile Include="src/Fulma/Components/Level/Types.fs" />
-        <Compile Include="src/Fulma/Components/Level/State.fs" />
-        <Compile Include="src/Fulma/Components/Level/View.fs" />
         <Compile Include="src/Fulma/Components/Breadcrumb/Types.fs" />
         <Compile Include="src/Fulma/Components/Breadcrumb/State.fs" />
         <Compile Include="src/Fulma/Components/Breadcrumb/View.fs" />
