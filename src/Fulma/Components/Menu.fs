@@ -58,7 +58,8 @@ module Menu =
         let isActive = Item.IsActive
         let props = Item.Props
         let customClass = Item.CustomClass
-        let onClick cb = Item.OnClick cb
+        let onClick = Item.OnClick
+
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function
@@ -69,18 +70,10 @@ module Menu =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        let className =
-            [ if opts.IsActive then
-                yield Bulma.Menu.State.IsActive
-              if opts.CustomClass.IsSome then
-                yield opts.CustomClass.Value
-            ] |> String.concat " "
-
-
-        li [] [
-            a [ yield ClassName className :>  IHTMLProp
-                if opts.OnClick.IsSome then
+        li [ ]
+           [ a [ yield classList [ Bulma.Menu.State.IsActive, opts.IsActive
+                                   opts.CustomClass.Value, opts.CustomClass.IsSome ] :>  IHTMLProp
+                 if opts.OnClick.IsSome then
                     yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-                yield! opts.Props ]
-                children
-            ]
+                 yield! opts.Props ]
+               children ]
