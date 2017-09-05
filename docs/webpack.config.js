@@ -16,7 +16,7 @@ var isProduction = process.argv.indexOf("-p") >= 0;
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
 
 module.exports = {
-    devtool: "source-map",
+    devtool: isProduction ? false : "source-map",
     entry: resolve('./docs.fsproj'),
     output: {
         path: resolve('./public'),
@@ -24,7 +24,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            filename: resolve('./index.html'),
+            filename: resolve('./public/index.html'),
+            template: resolve('./index.html'),
             hash: true,
             minify: isProduction ? {} : false
         })

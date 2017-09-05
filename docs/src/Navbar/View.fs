@@ -23,7 +23,7 @@ let root =
     div [ ClassName "nav" ]
         [ div [ ClassName "nav-left" ]
               [ h1 [ ClassName "nav-item is-brand title is-4" ]
-                   [ img  [ Src "mini_logo.svg"
+                   [ img  [ Src "assets/mini_logo.svg"
                             Alt "logo"
                             Style [ MarginRight "10px"
                                     Height "100%" ] ]

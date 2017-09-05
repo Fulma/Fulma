@@ -9,7 +9,7 @@ let basic =
     Navbar.navbar [ ]
         [ Navbar.brand_div [ ]
             [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
-                [ img [ Src "/logo.png" ] ] ]
+                [ img [ Src "/assets/logo.png" ] ] ]
           Navbar.item_a [ Navbar.Item.hasDropdown
                           Navbar.Item.isHoverable ]
 

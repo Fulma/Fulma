@@ -12,7 +12,6 @@ open Fable.Import.Browser
 open Global
 open Types
 
-
 // Bulma + Docs site css
 importSideEffects "../sass/main.sass"
 // Prism css
