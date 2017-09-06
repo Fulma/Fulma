@@ -36,3 +36,5 @@ let root fulmaPage model dispatch =
         match layout with
         | Container -> Layouts.Container.View.root model.Layouts.Container (ContainerMsg >> dispatch)
         | Level -> Layouts.Level.View.root model.Layouts.Level (LevelMsg >> dispatch)
+        | Hero -> Layouts.Hero.View.root model.Layouts.Hero (HeroMsg >> dispatch)
+        | Footer -> Layouts.Footer.View.root model.Layouts.Footer (FooterMsg >> dispatch)

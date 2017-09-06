@@ -54,6 +54,8 @@ let menuFulma currentPage subModel dispatch =
                if subModel.IsLayoutExpanded then
                     yield ul [ ]
                              [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage
+                               menuItem "Hero" (Fulma (Layout Layouts.Hero)) currentPage
+                               menuItem "Footer" (Fulma (Layout Layouts.Footer)) currentPage
                                menuItem "Level" (Fulma (Layout Layouts.Level)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]

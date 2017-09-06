@@ -462,6 +462,9 @@ module BulmaClasses =
             module Spacing =
                 let [<Literal>] IsNormal = "is-spaced"
 
+        module Footer =
+            let [<Literal>] Container = "footer"
+
         module Hero =
             let [<Literal>] Container = "hero"
             let [<Literal>] Head = "hero-head"
