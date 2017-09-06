@@ -53,6 +53,7 @@ type FulmaExtensionsPage =
     | PageLoader
     | Slider
     | Switch
+    | Checkradio
 
 type FulmaElmishPage =
     | Introduction
@@ -112,6 +113,7 @@ let toHash page =
     | FulmaExtensions pageType ->
         match pageType with
         | FulmaExtensionsPage.Introduction -> "#fulma-extensions"
+        | Checkradio -> "#fulma-extensions/checkradio"
         | Calendar -> "#fulma-extensions/calendar"
         | Tooltip -> "#fulma-extensions/tooltip"
         | PageLoader -> "#fulma-extensions/pageloader"

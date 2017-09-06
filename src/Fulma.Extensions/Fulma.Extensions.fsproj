@@ -20,6 +20,7 @@
         <Compile Include="Switch.fs" />
         <Compile Include="PageLoader.fs" />
         <Compile Include="Slider.fs" />
+        <Compile Include="Checkradio.fs" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />

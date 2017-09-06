@@ -47,6 +47,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Dropdown)) (s "fulma" </> s "components" </> s "dropdown")
             // Fulma Extension
             map (FulmaExtensions FulmaExtensionsPage.Introduction ) (s "fulma-extensions")
+            map (FulmaExtensions Checkradio) (s "fulma-extensions" </> s "checkradio")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
             map (FulmaExtensions Slider) (s "fulma-extensions" </> s "slider")

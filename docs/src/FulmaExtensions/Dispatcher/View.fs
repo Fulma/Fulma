@@ -14,6 +14,9 @@ let root fulmaExtensionsPage model dispatch =
 
     | Tooltip ->
         FulmaExtensions.Tooltip.View.root model.Tooltip (TooltipMsg >> dispatch)
+    
+    | Checkradio ->
+        FulmaExtensions.Checkradio.View.root model.Checkradio (CheckradioMsg >> dispatch)
 
     | Switch ->
         FulmaExtensions.Switch.View.root model.Switch (SwitchMsg >> dispatch)
