@@ -10,9 +10,7 @@ open Fable.Core.JsInterop
 module Slider =
 
     module Classes =
-
-        module Slider =
-            let [<Literal>] Container  = "slider "
+            let [<Literal>] Slider  = "slider "
             let [<Literal>] IsCircle = "is-circle"
             let [<Literal>] IsFullwidth = "is-fullwidth"
 
@@ -48,12 +46,12 @@ module Slider =
             | IsSmall -> Bulma.Modifiers.Size.IsSmall
             | IsMedium -> Bulma.Modifiers.Size.IsMedium
             | IsLarge -> Bulma.Modifiers.Size.IsLarge
-            | IsFullWidth -> Classes.Slider.IsFullwidth
+            | IsFullWidth -> Classes.IsFullwidth
             | ISize.Nothing -> ""
 
         let ofStyles style =
             match style with
-            | IsCircle -> Classes.Slider.IsCircle
+            | IsCircle -> Classes.IsCircle
             | value -> failwithf "%A isn't a valid style value" value
 
 
@@ -151,8 +149,8 @@ module Slider =
 
         input
             [ yield classBaseList
-                (Helpers.generateClassName Classes.Slider.Container [ opts.Level; opts.Size; ])
-                 [ Classes.Slider.IsCircle, opts.IsCircle
+                (Helpers.generateClassName Classes.Slider [ opts.Level; opts.Size; ])
+                 [ Classes.IsCircle, opts.IsCircle
                    opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               if opts.OnChange.IsSome then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
