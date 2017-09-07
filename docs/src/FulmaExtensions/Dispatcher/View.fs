@@ -11,3 +11,6 @@ let root fulmaExtensionsPage model dispatch =
 
     | Tooltip ->
         FulmaExtensions.Tooltip.View.root model.Tooltip (TooltipMsg >> dispatch)
+
+    | Divider ->
+        FulmaExtensions.Divider.View.root model.Divider (DividerMsg >> dispatch)
