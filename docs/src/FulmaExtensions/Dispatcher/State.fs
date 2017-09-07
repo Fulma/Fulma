@@ -5,7 +5,8 @@ open Types
 
 let init() =
     { Calendar = FulmaExtensions.Calendar.State.init ()
-      Tooltip = FulmaExtensions.Tooltip.State.init () }
+      Tooltip = FulmaExtensions.Tooltip.State.init ()
+      PageLoader = FulmaExtensions.PageLoader.State.init () }
 
 let update msg model =
     match msg with
@@ -16,3 +17,7 @@ let update msg model =
     | TooltipMsg msg ->
         let (tooltip, tooltipMsg) = FulmaExtensions.Tooltip.State.update msg model.Tooltip
         { model with Tooltip = tooltip }, Cmd.map TooltipMsg tooltipMsg
+
+    | PageLoaderMsg msg ->
+            let (pageLoader, pageLoaderMsg) = FulmaExtensions.PageLoader.State.update msg model.PageLoader
+            { model with PageLoader = pageLoader }, Cmd.map PageLoaderMsg pageLoaderMsg

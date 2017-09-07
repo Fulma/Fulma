@@ -38,6 +38,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Modal)) (s "fulma" </> s "components" </> s "modal")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
+            map (FulmaExtensions PageLoader) (s "fulma-extensions" </> s "pageloader")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =

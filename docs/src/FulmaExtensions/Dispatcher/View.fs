@@ -11,3 +11,6 @@ let root fulmaExtensionsPage model dispatch =
 
     | Tooltip ->
         FulmaExtensions.Tooltip.View.root model.Tooltip (TooltipMsg >> dispatch)
+
+    | PageLoader ->
+        FulmaExtensions.PageLoader.View.root model.PageLoader (PageLoaderMsg >> dispatch)
