@@ -7,7 +7,8 @@ let init() =
     { Calendar = FulmaExtensions.Calendar.State.init ()
       Tooltip = FulmaExtensions.Tooltip.State.init ()
       Divider = FulmaExtensions.Divider.State.init ()
-      PageLoader = FulmaExtensions.PageLoader.State.init () }
+      PageLoader = FulmaExtensions.PageLoader.State.init ()
+      Slider = FulmaExtensions.Slider.State.init () }
 
 let update msg model =
     match msg with
@@ -26,3 +27,7 @@ let update msg model =
     | PageLoaderMsg msg ->
             let (pageLoader, pageLoaderMsg) = FulmaExtensions.PageLoader.State.update msg model.PageLoader
             { model with PageLoader = pageLoader }, Cmd.map PageLoaderMsg pageLoaderMsg
+
+    | SliderMsg msg ->
+        let (slider, sliderMsg) = FulmaExtensions.Slider.State.update msg model.Slider
+        { model with Slider = slider }, Cmd.map SliderMsg sliderMsg
