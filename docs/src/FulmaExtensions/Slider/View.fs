@@ -9,35 +9,34 @@ open Fulma.Extensions
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 
-
 let colorInteractive =
     div [ ClassName "block" ]
-                      [ 
-                        Slider.slider [ ] [ ]
+                      [
+                        Slider.slider [ Slider.step 10.
+                                        Slider.defaultValue 40. ] [ ]
                         Slider.slider [ Slider.isPrimary ] [ ]
                         Slider.slider [ Slider.isInfo ] [ ]
                         Slider.slider [ Slider.isSuccess ] [ ]
                         Slider.slider [ Slider.isWarning ] [ ]
                         Slider.slider [ Slider.isDanger ] [ ]
                       ]
-                
+
 let sizeInteractive =
     div [ ClassName "block" ]
         [ Slider.slider [ Slider.isSmall ] [ ]
           Slider.slider [ ] [ ]
           Slider.slider [ Slider.isMedium ] [ ]
-          Slider.slider [ Slider.isLarge ] [ ] 
+          Slider.slider [ Slider.isLarge ] [ ]
+          br []
+          br []
           Slider.slider [ Slider.isFullWidth ] [ ]
         ]
-            
-
-        
 
 let stylesInteractive =
     div [ ClassName "block" ]
-        [  Slider.slider [ Slider.isCircle; Slider.isDisabled ] [ ] 
-           Slider.slider [ Slider.isCircle; Slider.isPrimary ] [ ] 
-           Slider.slider [ Slider.isCircle; Slider.isSuccess ] [ ] 
+        [  Slider.slider [ Slider.isCircle; Slider.isDisabled ] [ ]
+           Slider.slider [ Slider.isCircle; Slider.isPrimary ] [ ]
+           Slider.slider [ Slider.isCircle; Slider.isSuccess ] [ ]
            Slider.slider [ Slider.isCircle; Slider.isWarning ] [ ]
            Slider.slider [ Slider.isCircle; Slider.isDanger ] [ ]
            Slider.slider [ Slider.isCircle; Slider.isInfo ] [ ]
@@ -68,17 +67,27 @@ let root model dispatch =
 The Slider can be **rounded, outlined or both**.
                             """
                             (Viewer.View.root stylesInteractive model.CircleViewer (CircleViewerMsg >> dispatch))
-                     
-                        Render.docSection 
+
+                        Render.docSection
                             "### States"
                             (Viewer.View.root stateInteractive model.StateViewer (StateViewerMsg >> dispatch))
+                        Render.docSection
+                            """
+### Control is behavior
 
-                        Render.docSection 
+The following helper help you control the behavior of your slider:
+
+- `Slider.defaultValue`: Set the initial value. The slider value can change in time without requiring you to set it.
+- `Slider.value`: Force the value of the slider. You will need to update this value yourself if you want the slider to move.
+- `Slider.step`: control the step of the slider. Ex: If you set it to 10, it will increment 10 by 10
+- `Slider.min`: minimal value
+- `Slider.max`: maxime value
+                            """
+                            (div [] []) // No view for now
+                        Render.docSection
                             """
 ### Events
 You can subscribe to **OnChange**.
                             """
                             (Viewer.View.root (eventInteractive model dispatch) model.EventViewer (EventViewerMsg >> dispatch))
-                        
-                        
                     ]

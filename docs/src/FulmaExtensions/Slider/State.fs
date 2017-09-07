@@ -21,7 +21,7 @@ let sizeCode =
 Slider.slider [ Slider.isSmall ] [ ]
 Slider.slider [ ] [ ]
 Slider.slider [ Slider.isMedium ] [ ]
-Slider.slider [ Slider.isLarge ] [ ] 
+Slider.slider [ Slider.isLarge ] [ ]
 Slider.slider [ Slider.isFullWidth ] [ ]
 ```
     """
@@ -30,9 +30,9 @@ Slider.slider [ Slider.isFullWidth ] [ ]
 let circleCode =
     """
 ```fsharp
-Slider.slider [ Slider.isCircle; Slider.isDisabled ] [ ] 
-Slider.slider [ Slider.isCircle; Slider.isPrimary ] [ ] 
-Slider.slider [ Slider.isCircle; Slider.isSuccess ] [ ] 
+Slider.slider [ Slider.isCircle; Slider.isDisabled ] [ ]
+Slider.slider [ Slider.isCircle; Slider.isPrimary ] [ ]
+Slider.slider [ Slider.isCircle; Slider.isSuccess ] [ ]
 Slider.slider [ Slider.isCircle; Slider.isWarning ] [ ]
 Slider.slider [ Slider.isCircle; Slider.isDanger ] [ ]
 Slider.slider [ Slider.isCircle; Slider.isInfo ] [ ]
@@ -63,7 +63,7 @@ let intro =
 
 The **Slider** can have different colors, sizes and states.
 
-*[documentation](https://wikiki.github.io/bulma-extensions/slider)*
+*[Documentation](https://wikiki.github.io/bulma-extensions/slider)*
         """
 
 
@@ -95,5 +95,5 @@ let update msg model =
     | EventViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.EventViewer
         { model with EventViewer = viewer }, Cmd.map EventViewerMsg viewerMsg
-    | Change value -> 
+    | Change value ->
         { model with Value = value }, Cmd.none

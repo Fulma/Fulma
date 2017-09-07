@@ -5,13 +5,16 @@ open Fulma.Common
 open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fable.Core.JsInterop
 
 module Slider =
 
     module Classes =
-        let [<Literal>] Slider  = "slider "
-        let [<Literal>] IsCircle = "is-circle"
-        let [<Literal>] IsFullwidth = "is-fullwidth"
+
+        module Slider =
+            let [<Literal>] Container  = "slider "
+            let [<Literal>] IsCircle = "is-circle"
+            let [<Literal>] IsFullwidth = "is-fullwidth"
 
 
     module Types =
@@ -28,25 +31,29 @@ module Slider =
             | Level of ILevelAndColor
             | Size of ISize
             | IsCircle
-            | IsDisabled of bool
-            | Value of string // String ???
-            | Label of string
+            | IsDisabled
             | Props of IHTMLProp list
             | OnChange of (React.FormEvent -> unit)
             | CustomClass of string
             | ComponentId of string
-            
+            | Min of float
+            | Max of float
+            | Step of float
+            | Value of float
+            | DefaultValue of float
+            | IsVertical
+
         let ofSize size =
             match size with
             | IsSmall -> Bulma.Modifiers.Size.IsSmall
             | IsMedium -> Bulma.Modifiers.Size.IsMedium
             | IsLarge -> Bulma.Modifiers.Size.IsLarge
-            | IsFullWidth -> Classes.IsFullwidth
+            | IsFullWidth -> Classes.Slider.IsFullwidth
             | ISize.Nothing -> ""
 
         let ofStyles style =
             match style with
-            | IsCircle -> Classes.IsCircle
+            | IsCircle -> Classes.Slider.IsCircle
             | value -> failwithf "%A isn't a valid style value" value
 
 
@@ -56,8 +63,12 @@ module Slider =
               Size : string option
               IsCircle : bool
               IsDisabled : bool
-              Value : string
-              Label : string
+              Value : float option
+              DefaultValue : float option
+              Min : float option
+              Max : float option
+              Step : float option
+              IsVertical : bool
               Props : IHTMLProp list
               CustomClass : string option
               OnChange : (React.FormEvent -> unit) option
@@ -67,8 +78,12 @@ module Slider =
                   Size = None
                   IsCircle = false
                   IsDisabled = false
-                  Value = ""
-                  Label = ""
+                  DefaultValue = None
+                  Value = None
+                  Min = None
+                  Max = None
+                  Step = None
+                  IsVertical = false
                   Props = []
                   CustomClass = None
                   OnChange = None
@@ -83,7 +98,7 @@ module Slider =
     let isFullWidth = Size IsFullWidth
 
     // States
-    let isDisabled = IsDisabled true
+    let isDisabled = IsDisabled
 
     // Styles
     let isCircle = IsCircle
@@ -100,14 +115,16 @@ module Slider =
     let isWarning = Level IsWarning
     let isDanger = Level IsDanger
 
-    // Label and Value
-    let value data  = Value data
-    let text s = Label s
+    let value = Value
+    let defaultValue = DefaultValue
+    let min = Min
+    let max = Max
+    let step = Step
 
     // Extra
-    let props props = Props props
+    let props = Props
     let customClass = CustomClass
-    
+
     let onChange cb = OnChange cb
 
     let slider (options : Option list) children =
@@ -118,25 +135,41 @@ module Slider =
             | Option.Level level -> { result with Level = ofLevelAndColor level |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
             | IsCircle -> { result with IsCircle  = true }
-            | IsDisabled state -> { result with IsDisabled = state }
-            | Value value -> { result with Value = value }
-            | Label label -> { result with Label = label } 
+            | IsDisabled -> { result with IsDisabled = true }
+            | Value value -> { result with Value = Some value }
+            | Min min -> { result with Min = Some min }
+            | Max max -> { result with Max = Some max }
+            | Step step -> { result with Step = Some step }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnChange cb -> { result with OnChange = cb |> Some }
-            | ComponentId customId -> {result with ComponentId = customId }
+            | ComponentId customId -> { result with ComponentId = customId }
+            | IsVertical -> { result with IsVertical = true }
+            | DefaultValue value -> { result with DefaultValue = Some value }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        input 
+        input
             [ yield classBaseList
-                (Helpers.generateClassName Classes.Slider [ opts.Level; opts.Size; ])
-                 [ Classes.IsCircle, opts.IsCircle
+                (Helpers.generateClassName Classes.Slider.Container [ opts.Level; opts.Size; ])
+                 [ Classes.Slider.IsCircle, opts.IsCircle
                    opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               if opts.OnChange.IsSome then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
-              yield! opts.Props 
+              yield! opts.Props
               yield Type "range" :> IHTMLProp
               yield Id opts.ComponentId :> IHTMLProp
               yield Disabled opts.IsDisabled :> IHTMLProp
+              if opts.IsVertical then
+                yield !!("orient", "vertical")
+              if opts.Value.IsSome then
+                yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
+              if opts.Step.IsSome then
+                yield HTMLAttr.Step (string opts.Step.Value) :> IHTMLProp
+              if opts.Min.IsSome then
+                yield HTMLAttr.Min (string opts.Min.Value) :> IHTMLProp
+              if opts.Max.IsSome then
+                yield HTMLAttr.Max (string opts.Max.Value) :> IHTMLProp
+              if opts.DefaultValue.IsSome then
+                yield HTMLAttr.DefaultValue (string opts.DefaultValue.Value) :> IHTMLProp
             ]
