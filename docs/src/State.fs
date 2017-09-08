@@ -52,6 +52,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (FulmaExtensions Slider) (s "fulma-extensions" </> s "slider")
             map (FulmaExtensions PageLoader) (s "fulma-extensions" </> s "pageloader")
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")
+            map (FulmaExtensions Switch) (s "fulma-extensions" </> s "switch")
             // Fulma Elmish
             map (FulmaElmish FulmaElmishPage.Introduction) (s "fulma-elmish")
             map (FulmaElmish FulmaElmishPage.DatePicker) (s "fulma-elmish" </> s "date-picker")

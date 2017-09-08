@@ -52,6 +52,7 @@ type FulmaExtensionsPage =
     | Introduction
     | PageLoader
     | Slider
+    | Switch
 
 type FulmaElmishPage =
     | Introduction
@@ -115,6 +116,7 @@ let toHash page =
         | Tooltip -> "#fulma-extensions/tooltip"
         | PageLoader -> "#fulma-extensions/pageloader"
         | Divider -> "#fulma-extensions/divider"
+        | Switch -> "#fulma-extensions/switch"
         | Slider -> "#fulma-extensions/slider"
     | FulmaElmish pageType ->
         match pageType with

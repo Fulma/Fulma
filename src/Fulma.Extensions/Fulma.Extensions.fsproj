@@ -17,6 +17,7 @@
         <Compile Include="Tooltip.fs" />
         <Compile Include="Calendar.fs" />
         <Compile Include="Divider.fs" />
+        <Compile Include="Switch.fs" />
         <Compile Include="PageLoader.fs" />
         <Compile Include="Slider.fs" />
     </ItemGroup>

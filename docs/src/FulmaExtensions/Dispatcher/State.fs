@@ -8,7 +8,8 @@ let init() =
       Tooltip = FulmaExtensions.Tooltip.State.init ()
       Divider = FulmaExtensions.Divider.State.init ()
       PageLoader = FulmaExtensions.PageLoader.State.init ()
-      Slider = FulmaExtensions.Slider.State.init () }
+      Slider = FulmaExtensions.Slider.State.init ()
+      Switch = FulmaExtensions.Switch.State.init () }
 
 let update msg model =
     match msg with
@@ -19,6 +20,10 @@ let update msg model =
     | TooltipMsg msg ->
         let (tooltip, tooltipMsg) = FulmaExtensions.Tooltip.State.update msg model.Tooltip
         { model with Tooltip = tooltip }, Cmd.map TooltipMsg tooltipMsg
+
+    | SwitchMsg msg ->
+        let (switch, switchMsg) = FulmaExtensions.Switch.State.update msg model.Switch
+        { model with Switch = switch }, Cmd.map SwitchMsg switchMsg
 
     | DividerMsg msg ->
         let (divider, dividerMsg) = FulmaExtensions.Divider.State.update msg model.Divider

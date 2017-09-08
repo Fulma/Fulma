@@ -112,6 +112,7 @@ let menuFulmaExtensions currentPage subModel dispatch =
           menuItem "Divider" (FulmaExtensions Divider) currentPage
           menuItem "Page-loader" (FulmaExtensions PageLoader) currentPage
           menuItem "Slider" (FulmaExtensions Slider) currentPage
+          menuItem "Switch" (FulmaExtensions Switch) currentPage
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
 
 let menuFulmaElmish currentPage dispatch =
