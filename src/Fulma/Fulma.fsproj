@@ -30,6 +30,7 @@
     <!-- Grids -->
     <Compile Include="Grids/Column.fs" />
     <Compile Include="Grids/Columns.fs" />
+    <Compile Include="Grids/Tile.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />

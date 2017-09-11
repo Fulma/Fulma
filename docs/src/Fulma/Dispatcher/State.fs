@@ -32,7 +32,9 @@ let init() =
           Footer = Layouts.Footer.State.init ()
           Hero = Layouts.Hero.State.init ()
           Section = Layouts.Section.State.init ()
-          Level = Layouts.Level.State.init () } }
+          Level = Layouts.Level.State.init () }
+      Grids =
+        { Tile = Grid.Tile.State.init () } }
 
 let update msg model =
     match msg with
@@ -165,3 +167,8 @@ let update msg model =
         let (section, sectionMsg) = Layouts.Section.State.update msg model.Layouts.Section
         { model with Layouts =
                         { model.Layouts with Section = section } }, Cmd.map SectionMsg sectionMsg
+
+    | TileMsg msg ->
+        let (tile, tileMsg) = Grid.Tile.State.update msg model.Grids.Tile
+        { model with Grids =
+                        { model.Grids with Tile = tile } }, Cmd.map TileMsg tileMsg

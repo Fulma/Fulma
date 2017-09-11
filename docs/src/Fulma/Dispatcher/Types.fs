@@ -34,10 +34,14 @@ type LayoutModel =
       Section : Layouts.Section.Types.Model
       Level : Layouts.Level.Types.Model }
 
+type GridModel =
+    { Tile : Grid.Tile.Types.Model }
+
 type Model =
     { Elements : ElementsModel
       Components : ComponentsModel
-      Layouts : LayoutModel }
+      Layouts : LayoutModel
+      Grids : GridModel }
 
 type Msg =
     | BoxMsg of Elements.Box.Types.Msg
@@ -66,3 +70,4 @@ type Msg =
     | HeroMsg of Layouts.Hero.Types.Msg
     | FooterMsg of Layouts.Footer.Types.Msg
     | SectionMsg of Layouts.Section.Types.Msg
+    | TileMsg of Grid.Tile.Types.Msg

@@ -241,6 +241,28 @@ module BulmaClasses =
                 module WideScreen =
                     let Width = generateColumnSize "-widescreen"
                     let Offset = generateColumnOffset "-widescreen"
+
+            module Tile =
+                let [<Literal>] Container = "tile"
+                let [<Literal>] IsAncestor = "is-ancestor"
+                let [<Literal>] IsChild = "is-child"
+                let [<Literal>] IsParent = "is-parent"
+                let [<Literal>] IsVertical = "is-vertical"
+
+                module Size =
+                    let [<Literal>] Is1 = "is-1"
+                    let [<Literal>] Is2 = "is-2"
+                    let [<Literal>] Is3 = "is-3"
+                    let [<Literal>] Is4 = "is-4"
+                    let [<Literal>] Is5 = "is-5"
+                    let [<Literal>] Is6 = "is-6"
+                    let [<Literal>] Is7 = "is-7"
+                    let [<Literal>] Is8 = "is-8"
+                    let [<Literal>] Is9 = "is-9"
+                    let [<Literal>] Is10 = "is-10"
+                    let [<Literal>] Is11 = "is-11"
+                    let [<Literal>] Is12 = "is-12"
+
         module Icon =
             let [<Literal>] Container = "icon"
             module Position =

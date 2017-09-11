@@ -44,6 +44,15 @@ let menuFulma currentPage subModel dispatch =
         else
             "menu-group", Fa.AngleUp
 
+    let (gridsClass, gridsIcon) =
+        if not subModel.IsGridExpanded then
+            match currentPage with
+            | Fulma (Grid _) ->
+                "menu-group is-active", Fa.AngleDown
+            | _ -> "menu-group", Fa.AngleDown
+        else
+            "menu-group", Fa.AngleUp
+
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ li [ ]
@@ -58,6 +67,16 @@ let menuFulma currentPage subModel dispatch =
                                menuItem "Footer" (Fulma (Layout Layouts.Footer)) currentPage
                                menuItem "Section" (Fulma (Layout Layouts.Section)) currentPage
                                menuItem "Level" (Fulma (Layout Layouts.Level)) currentPage ] ] ]
+      Menu.list [ ]
+        [ li [ ]
+             [ yield a [ ClassName gridsClass
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Grids) |> dispatch ) ]
+                       [ span [ ] [ str "Grids" ]
+                         Icon.faIcon [ ] gridsIcon ]
+               if subModel.IsGridExpanded then
+                    yield ul [ ]
+                             [ menuItem "Tile" (Fulma (Grid Grids.Tile)) currentPage
+                                ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName elementsClass
