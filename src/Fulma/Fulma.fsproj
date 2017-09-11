@@ -47,6 +47,7 @@
     <Compile Include="Layout/Hero.fs" />
     <Compile Include="Layout/Container.fs" />
     <Compile Include="Layout/Level.fs" />
+    <Compile Include="Layout/Footer.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
   </ItemGroup>

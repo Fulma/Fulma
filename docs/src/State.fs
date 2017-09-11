@@ -12,6 +12,8 @@ let pageParser : Parser<Page -> Page, Page> =
             // Layouts
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")
             map (Fulma (Layout Layouts.Level)) (s "fulma" </> s "layouts" </> s "level")
+            map (Fulma (Layout Hero)) (s "fulma" </> s "layouts" </> s "hero")
+            map (Fulma (Layout Footer)) (s "fulma" </> s "layouts" </> s "footer")
             // Elements
             map (Fulma (Element Button)) (s "fulma" </> s "elements" </> s "button")
             map (Fulma (Element Icon)) (s "fulma" </> s "elements" </> s "icon")

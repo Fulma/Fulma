@@ -1,6 +1,8 @@
 ### 0.2.0-next
 
 * Implement `Container`
+* Implement `Footer`
+* Implement `Hero`
 
 ### 0.2.0-beta-003
 

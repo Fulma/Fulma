@@ -29,6 +29,8 @@ let init() =
           Modal = Components.Modal.State.init () }
       Layouts =
         { Container = Layouts.Container.State.init ()
+          Footer = Layouts.Footer.State.init ()
+          Hero = Layouts.Hero.State.init ()
           Level = Layouts.Level.State.init () } }
 
 let update msg model =
@@ -147,3 +149,13 @@ let update msg model =
         let (level, levelMsg) = Layouts.Level.State.update msg model.Layouts.Level
         { model with Layouts =
                         { model.Layouts with Level = level } }, Cmd.map LevelMsg levelMsg
+
+    | HeroMsg msg ->
+        let (hero, heroMsg) = Layouts.Hero.State.update msg model.Layouts.Hero
+        { model with Layouts =
+                        { model.Layouts with Hero = hero } }, Cmd.map HeroMsg heroMsg
+
+    | FooterMsg msg ->
+        let (footer, footerMsg) = Layouts.Footer.State.update msg model.Layouts.Footer
+        { model with Layouts =
+                        { model.Layouts with Footer = footer } }, Cmd.map FooterMsg footerMsg

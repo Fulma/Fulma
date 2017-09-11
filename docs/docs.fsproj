@@ -24,6 +24,12 @@
         <Compile Include="src/Fulma/Layout/Level/Types.fs" />
         <Compile Include="src/Fulma/Layout/Level/State.fs" />
         <Compile Include="src/Fulma/Layout/Level/View.fs" />
+        <Compile Include="src/Fulma/Layout/Hero/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Hero/State.fs" />
+        <Compile Include="src/Fulma/Layout/Hero/View.fs" />
+        <Compile Include="src/Fulma/Layout/Footer/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Footer/State.fs" />
+        <Compile Include="src/Fulma/Layout/Footer/View.fs" />
     <!-- Components -->
         <Compile Include="src/Fulma/Components/Panel/Types.fs" />
         <Compile Include="src/Fulma/Components/Panel/State.fs" />

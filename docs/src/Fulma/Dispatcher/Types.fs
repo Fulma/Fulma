@@ -29,6 +29,8 @@ type ComponentsModel =
 
 type LayoutModel =
     { Container : Layouts.Container.Types.Model
+      Hero : Layouts.Hero.Types.Model
+      Footer : Layouts.Footer.Types.Model
       Level : Layouts.Level.Types.Model }
 
 type Model =
@@ -60,3 +62,5 @@ type Msg =
     | ModalMsg of Components.Modal.Types.Msg
     | ContainerMsg of Layouts.Container.Types.Msg
     | LevelMsg of Layouts.Level.Types.Msg
+    | HeroMsg of Layouts.Hero.Types.Msg
+    | FooterMsg of Layouts.Footer.Types.Msg

@@ -31,6 +31,8 @@ type Components =
 type Layouts =
     | Container
     | Level
+    | Hero
+    | Footer
 
 type FulmaPage =
     | Element of Elements
@@ -56,6 +58,8 @@ let toHash page =
             match layout with
             | Container -> "#fulma/layouts/container"
             | Level -> "#fulma/layouts/level"
+            | Hero -> "#fulma/layouts/hero"
+            | Footer -> "#fulma/layouts/footer"
         | Element element ->
             match element with
             | Button -> "#fulma/elements/button"
