@@ -8,48 +8,39 @@ open Types
 open Fulma.Layout
 open Fulma.Elements.Form
 open Fulma.Elements
+open Fulma.Components
+open Fulma.BulmaClasses
 
 let iconInteractive =
-    Level.level [ ]
-        [ Level.left [ ]
-            [ Level.item [ ]
-                [ Heading.h5 [ Heading.isSubtitle ]
-                    [ strong [ ] [ str "123"]
-                      str " posts" ] ]
-              Level.item [ ]
-                [ Field.field [ Field.hasAddonsLeft ]
-                    [ Control.control [ ]
-                        [ Input.input [ Input.typeIsText
-                                        Input.placeholder "Find a post" ] ]
-                      Control.control [ ]
-                        [ Button.button [ ]
-                            [ str "Search" ] ] ] ] ]
-          Level.right [ ]
-            [ Level.item [ ]
-                [ a [ ] [ str "All" ] ]
-              Level.item [ ]
-                [ a [ ] [ str "Published" ] ]
-              Level.item [ ]
-                [ a [ ] [ str "Drafts" ] ]
-              Level.item [ ]
-                [ a [ ] [ str "Deleted" ] ]
-              Level.item [ ]
-                [ Button.button [ Button.isSuccess ] [ str "New" ] ] ] ]
+    Hero.hero [ ]
+        [ Hero.body [ ]
+            [ Container.container [ Container.isFluid ]
+                [ Heading.h1 [ ]
+                    [ str "Header" ]
+                  Heading.h2 [ Heading.isSubtitle ]
+                    [ str "Subtitle" ] ] ] ]
 
 let centered =
-    Level.level [ ]
-        [ Level.item [ Level.Item.hasTextCentered ]
-            [ div [ ]
-                [ Level.heading [ ] [ str "Stars" ]
-                  Level.title [ ] [ str "1,010" ] ] ]
-          Level.item [ Level.Item.hasTextCentered ]
-            [ div [ ]
-                [ Level.heading [ ] [ str "Forks" ]
-                  Level.title [ ] [ str "127" ] ] ]
-          Level.item [ Level.Item.hasTextCentered ]
-            [ div [ ]
-                [ Level.heading [ ] [ str "Watchers" ]
-                  Level.title [ ] [ str "66" ] ] ] ]
+    Hero.hero [ Hero.isSuccess
+                Hero.isMedium ]
+        [ Hero.head [ ]
+            [ Tabs.tabs [ Tabs.isBoxed
+                          Tabs.isCentered ]
+                [ Tabs.tab [ Tabs.Tab.isActive ]
+                    [ a [ ] [ str "Fable" ] ]
+                  Tabs.tab [ ]
+                    [ a [ ] [ str "Elmish" ] ]
+                  Tabs.tab [ ]
+                    [ a [ ] [ str "Bulma" ] ]
+                  Tabs.tab [ ]
+                    [ a [ ] [ str "Hink" ] ] ] ]
+          Hero.body [ ]
+            [ Container.container [ Container.isFluid
+                                    Container.customClass Bulma.Properties.Alignment.HasTextCentered ]
+                [ Heading.h1 [ ]
+                    [ str "Header" ]
+                  Heading.h2 [ Heading.isSubtitle ]
+                    [ str "Subtitle" ] ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
@@ -57,5 +48,33 @@ let root model dispatch =
                         ""
                         (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch))
                      Render.docSection
-                        "### Centered level"
-                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch)) ]
+                        ""
+                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch))
+                     Render.contentFromMarkdown
+                        """
+### Properties
+
+Colors:
+
+- `Hero.isBlack`
+- `Hero.isDark`
+- `Hero.isLight`
+- `Hero.isWhite`
+- `Hero.isPrimary`
+- `Hero.isInfo`
+- `Hero.isSuccess`
+- `Hero.isWarning`
+- `Hero.isDanger`
+
+Sizes:
+
+- `Hero.isMedium`
+- `Hero.isLarge`
+- `Hero.isHalfHeight`
+- `Hero.isFullHeight`
+
+Styles:
+
+- `Hero.isBold`
+                        """
+                        ]
