@@ -484,6 +484,12 @@ module BulmaClasses =
                 let [<Literal>] IsFullHeight = "is-fullheight"
             let Color = levelAndColor
 
+        module Section =
+            let [<Literal>] Container = "section"
+            module Spacing =
+                let [<Literal>] IsMedium = "is-medium"
+                let [<Literal>] IsLarge = "is-large"
+
         module Table =
             let [<Literal>] Container = "table"
             module Row =

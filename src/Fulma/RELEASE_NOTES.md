@@ -3,6 +3,7 @@
 * Implement `Container`
 * Implement `Footer`
 * Implement `Hero`
+* Implement `Section`
 
 ### 0.2.0-beta-003
 

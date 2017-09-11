@@ -31,6 +31,7 @@ let init() =
         { Container = Layouts.Container.State.init ()
           Footer = Layouts.Footer.State.init ()
           Hero = Layouts.Hero.State.init ()
+          Section = Layouts.Section.State.init ()
           Level = Layouts.Level.State.init () } }
 
 let update msg model =
@@ -159,3 +160,8 @@ let update msg model =
         let (footer, footerMsg) = Layouts.Footer.State.update msg model.Layouts.Footer
         { model with Layouts =
                         { model.Layouts with Footer = footer } }, Cmd.map FooterMsg footerMsg
+
+    | SectionMsg msg ->
+        let (section, sectionMsg) = Layouts.Section.State.update msg model.Layouts.Section
+        { model with Layouts =
+                        { model.Layouts with Section = section } }, Cmd.map SectionMsg sectionMsg

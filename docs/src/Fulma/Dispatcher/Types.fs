@@ -31,6 +31,7 @@ type LayoutModel =
     { Container : Layouts.Container.Types.Model
       Hero : Layouts.Hero.Types.Model
       Footer : Layouts.Footer.Types.Model
+      Section : Layouts.Section.Types.Model
       Level : Layouts.Level.Types.Model }
 
 type Model =
@@ -64,3 +65,4 @@ type Msg =
     | LevelMsg of Layouts.Level.Types.Msg
     | HeroMsg of Layouts.Hero.Types.Msg
     | FooterMsg of Layouts.Footer.Types.Msg
+    | SectionMsg of Layouts.Section.Types.Msg

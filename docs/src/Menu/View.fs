@@ -56,6 +56,7 @@ let menuFulma currentPage subModel dispatch =
                              [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage
                                menuItem "Hero" (Fulma (Layout Layouts.Hero)) currentPage
                                menuItem "Footer" (Fulma (Layout Layouts.Footer)) currentPage
+                               menuItem "Section" (Fulma (Layout Layouts.Section)) currentPage
                                menuItem "Level" (Fulma (Layout Layouts.Level)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]

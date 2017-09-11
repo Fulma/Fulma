@@ -33,6 +33,7 @@ type Layouts =
     | Level
     | Hero
     | Footer
+    | Section
 
 type FulmaPage =
     | Element of Elements
@@ -60,6 +61,7 @@ let toHash page =
             | Level -> "#fulma/layouts/level"
             | Hero -> "#fulma/layouts/hero"
             | Footer -> "#fulma/layouts/footer"
+            | Section -> "#fulma/layouts/section"
         | Element element ->
             match element with
             | Button -> "#fulma/elements/button"

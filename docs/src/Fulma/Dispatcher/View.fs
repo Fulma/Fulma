@@ -38,3 +38,4 @@ let root fulmaPage model dispatch =
         | Level -> Layouts.Level.View.root model.Layouts.Level (LevelMsg >> dispatch)
         | Hero -> Layouts.Hero.View.root model.Layouts.Hero (HeroMsg >> dispatch)
         | Footer -> Layouts.Footer.View.root model.Layouts.Footer (FooterMsg >> dispatch)
+        | Section -> Layouts.Section.View.root model.Layouts.Section (SectionMsg >> dispatch)
