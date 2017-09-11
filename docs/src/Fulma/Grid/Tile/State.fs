@@ -62,7 +62,7 @@ However with Fulma, we can't provide you a wrapper to work that way. So instead,
 </div>
 ```
 
-This is important because you will probably need to add `style="height: 100%` to your child element to make it take the whole tile height.
+This is important because you will probably need to add `style="height: 100%"` to your child element to make it take the whole tile height.
 
         """
       BoxViewer = Viewer.State.init iconCode }
