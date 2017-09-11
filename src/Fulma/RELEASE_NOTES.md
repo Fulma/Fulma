@@ -4,6 +4,7 @@
 * Implement `Footer`
 * Implement `Hero`
 * Implement `Section`
+* Implement `Tile`
 
 ### 0.2.0-beta-003
 
