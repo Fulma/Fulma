@@ -7,7 +7,7 @@ open Fable.Helpers.React.Props
 open Types
 open Fulma.Elements
 open Fulma.Elements.Form
-open Fulma.Layout
+open Fulma.Layouts
 open Fulma.Components
 
 let basic =

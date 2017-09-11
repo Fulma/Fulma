@@ -27,10 +27,6 @@
     <Compile Include="Components/Navbar.fs" />
     <Compile Include="Components/Pagination.fs" />
     <Compile Include="Components/Tabs.fs" />
-    <!-- Grids -->
-    <Compile Include="Grids/Column.fs" />
-    <Compile Include="Grids/Columns.fs" />
-    <Compile Include="Grids/Tile.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Notification.fs" />
     <Compile Include="Elements/Button.fs" />
@@ -45,11 +41,14 @@
     <Compile Include="Elements/Tag.fs" />
     <Compile Include="Elements/Form.fs" />
     <!-- Layout -->
-    <Compile Include="Layout/Hero.fs" />
-    <Compile Include="Layout/Container.fs" />
-    <Compile Include="Layout/Level.fs" />
-    <Compile Include="Layout/Footer.fs" />
-    <Compile Include="Layout/Section.fs" />
+    <Compile Include="Layouts/Hero.fs" />
+    <Compile Include="Layouts/Container.fs" />
+    <Compile Include="Layouts/Level.fs" />
+    <Compile Include="Layouts/Footer.fs" />
+    <Compile Include="Layouts/Section.fs" />
+    <Compile Include="Layouts/Column.fs" />
+    <Compile Include="Layouts/Columns.fs" />
+    <Compile Include="Layouts/Tile.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
   </ItemGroup>

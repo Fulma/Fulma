@@ -32,9 +32,9 @@ let init() =
           Footer = Layouts.Footer.State.init ()
           Hero = Layouts.Hero.State.init ()
           Section = Layouts.Section.State.init ()
-          Level = Layouts.Level.State.init () }
-      Grids =
-        { Tile = Grid.Tile.State.init () } }
+          Level = Layouts.Level.State.init ()
+          Tile = Layouts.Tile.State.init ()
+          Columns = Layouts.Columns.State.init () } }
 
 let update msg model =
     match msg with
@@ -169,6 +169,11 @@ let update msg model =
                         { model.Layouts with Section = section } }, Cmd.map SectionMsg sectionMsg
 
     | TileMsg msg ->
-        let (tile, tileMsg) = Grid.Tile.State.update msg model.Grids.Tile
-        { model with Grids =
-                        { model.Grids with Tile = tile } }, Cmd.map TileMsg tileMsg
+        let (tile, tileMsg) = Layouts.Tile.State.update msg model.Layouts.Tile
+        { model with Layouts =
+                        { model.Layouts with Tile = tile } }, Cmd.map TileMsg tileMsg
+
+    | ColumnsMsg msg ->
+        let (columns, columnsMsg) = Layouts.Columns.State.update msg model.Layouts.Columns
+        { model with Layouts =
+                        { model.Layouts with Columns = columns } }, Cmd.map ColumnsMsg columnsMsg

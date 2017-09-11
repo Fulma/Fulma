@@ -5,7 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Fulma.Layout
+open Fulma.Layouts
 open Fulma.Elements.Form
 open Fulma.Elements
 open Fulma.BulmaClasses

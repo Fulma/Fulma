@@ -1,15 +1,11 @@
-module Grid.Tile.View
+module Layouts.Columns.State
 
-open Fable.Core
-open Fable.Core.JsInterop
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Elmish
 open Types
-open Fulma.Elements
-open Fulma.Grids
 
-
-let iconInteractive =
+let iconCode =
+    """
+```fsharp
     Tile.ancestor [ ]
         [ Tile.parent [ Tile.isVertical
                         Tile.is4 ]
@@ -37,9 +33,42 @@ let iconInteractive =
                         [ str "Suspendisse vel turpis nisi. Fusce at risus accumsan, varius massa id, dictum est. Aenean consequat neque sed tincidunt eleifend." ]
                       p [ ]
                         [ str "Phasellus ac lectus in ex condimentum sollicitudin. Sed id mollis turpis. Sed at felis vel diam interdum viverra." ] ] ] ] ]
+```
+    """
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
-                     Render.docSection
-                        ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]
+let init() =
+    { Intro =
+        """
+# Tile
+
+A **single tile** element to build 2-dimensional Metro-like, Pinterest-like, or whatever-you-like grids
+
+*[Bulma documentation](http://bulma.io/documentation/layout/tiles/)*
+
+**Important**
+
+In Bulma, you would generally apply the `tile` class directly to your components.
+
+```html
+<div class="title box">
+</div>
+```
+
+However with Fulma, we can't provide you a wrapper to work that way. So instead, we create a "tile div" and you place you child in it.
+
+```html
+<div class="tile">
+    <div class="box"></div>
+</div>
+```
+
+This is important because you will probably need to add `style="height: 100%"` to your child element to make it take the whole tile height.
+
+        """
+      BoxViewer = Viewer.State.init iconCode }
+
+let update msg model =
+    match msg with
+    | BoxViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.BoxViewer
+        { model with BoxViewer = viewer }, Cmd.map BoxViewerMsg viewerMsg

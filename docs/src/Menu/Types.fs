@@ -7,7 +7,6 @@ type FulmaModules =
     | Elements
     | Components
     | Layouts
-    | Grids
 
 type Library =
     | Fulma of FulmaModules
@@ -16,8 +15,7 @@ type Library =
 type Fulma =
     { IsElementsExpanded : bool
       IsComponentsExpanded : bool
-      IsLayoutExpanded : bool
-      IsGridExpanded : bool }
+      IsLayoutExpanded : bool }
 
 type FulmaExtensions =
     { IsExpanded : bool }

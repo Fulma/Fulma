@@ -39,6 +39,5 @@ let root fulmaPage model dispatch =
         | Hero -> Layouts.Hero.View.root model.Layouts.Hero (HeroMsg >> dispatch)
         | Footer -> Layouts.Footer.View.root model.Layouts.Footer (FooterMsg >> dispatch)
         | Section -> Layouts.Section.View.root model.Layouts.Section (SectionMsg >> dispatch)
-    | Grid grid ->
-        match grid with
-        | Tile -> Grid.Tile.View.root model.Grids.Tile (TileMsg >> dispatch)
+        | Tile -> Layouts.Tile.View.root model.Layouts.Tile (TileMsg >> dispatch)
+        | Columns -> Layouts.Columns.View.root model.Layouts.Columns (ColumnsMsg >> dispatch)

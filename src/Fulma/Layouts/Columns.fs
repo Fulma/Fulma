@@ -1,4 +1,4 @@
-namespace Fulma.Grids
+namespace Fulma.Layouts
 
 open Fulma.BulmaClasses
 open Fulma.Common

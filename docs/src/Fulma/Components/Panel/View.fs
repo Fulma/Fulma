@@ -7,7 +7,7 @@ open Fable.Helpers.React.Props
 open Types
 open Fulma.Elements
 open Fulma.Components
-open Fulma.Grids
+open Fulma.Layouts
 open Fulma.Elements.Form
 
 let iconInteractive =

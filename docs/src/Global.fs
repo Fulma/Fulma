@@ -34,15 +34,13 @@ type Layouts =
     | Hero
     | Footer
     | Section
-
-type Grids =
+    | Columns
     | Tile
 
 type FulmaPage =
     | Element of Elements
     | Component of Components
     | Layout of Layouts
-    | Grid of Grids
 
 type FulmaExtensionsPage =
     | Calendar
@@ -59,9 +57,6 @@ let toHash page =
     | Home -> "#home"
     | Fulma pageType ->
         match pageType with
-        | Grid grid ->
-            match grid with
-            | Tile -> "#fulma/grids/tile"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
@@ -69,6 +64,8 @@ let toHash page =
             | Hero -> "#fulma/layouts/hero"
             | Footer -> "#fulma/layouts/footer"
             | Section -> "#fulma/layouts/section"
+            | Tile -> "#fulma/layouts/tile"
+            | Columns -> "#fulma/layouts/columns"
         | Element element ->
             match element with
             | Button -> "#fulma/elements/button"

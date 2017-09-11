@@ -9,14 +9,14 @@ open Types
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
-            // Grid
-            map (Fulma (Grid Grids.Tile)) (s "fulma" </> s "grids" </> s "tile")
             // Layouts
+            map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")
             map (Fulma (Layout Layouts.Level)) (s "fulma" </> s "layouts" </> s "level")
             map (Fulma (Layout Hero)) (s "fulma" </> s "layouts" </> s "hero")
             map (Fulma (Layout Footer)) (s "fulma" </> s "layouts" </> s "footer")
             map (Fulma (Layout Section)) (s "fulma" </> s "layouts" </> s "section")
+            map (Fulma (Layout Columns)) (s "fulma" </> s "layouts" </> s "columns")
             // Elements
             map (Fulma (Element Button)) (s "fulma" </> s "elements" </> s "button")
             map (Fulma (Element Icon)) (s "fulma" </> s "elements" </> s "icon")

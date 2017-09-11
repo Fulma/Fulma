@@ -32,16 +32,14 @@ type LayoutModel =
       Hero : Layouts.Hero.Types.Model
       Footer : Layouts.Footer.Types.Model
       Section : Layouts.Section.Types.Model
-      Level : Layouts.Level.Types.Model }
-
-type GridModel =
-    { Tile : Grid.Tile.Types.Model }
+      Tile : Layouts.Tile.Types.Model
+      Level : Layouts.Level.Types.Model
+      Columns : Layouts.Columns.Types.Model }
 
 type Model =
     { Elements : ElementsModel
       Components : ComponentsModel
-      Layouts : LayoutModel
-      Grids : GridModel }
+      Layouts : LayoutModel }
 
 type Msg =
     | BoxMsg of Elements.Box.Types.Msg
@@ -70,4 +68,5 @@ type Msg =
     | HeroMsg of Layouts.Hero.Types.Msg
     | FooterMsg of Layouts.Footer.Types.Msg
     | SectionMsg of Layouts.Section.Types.Msg
-    | TileMsg of Grid.Tile.Types.Msg
+    | TileMsg of Layouts.Tile.Types.Msg
+    | ColumnsMsg of Layouts.Columns.Types.Msg

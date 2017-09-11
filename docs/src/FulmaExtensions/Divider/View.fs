@@ -7,7 +7,7 @@ open Fable.Helpers.React.Props
 open Types
 open Fulma.Extensions
 open Fulma.Elements
-open Fulma.Grids
+open Fulma.Layouts
 open Fulma.Extra.FontAwesome
 open Fulma.BulmaClasses
 

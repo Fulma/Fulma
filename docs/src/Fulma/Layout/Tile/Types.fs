@@ -1,4 +1,4 @@
-module Grid.Tile.Types
+module Layouts.Tile.Types
 
 type Model =
     { Intro : string

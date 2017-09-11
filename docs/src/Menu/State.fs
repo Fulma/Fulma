@@ -8,8 +8,7 @@ let init currentPage : Model =
     { Fulma =
             { IsElementsExpanded = false
               IsComponentsExpanded = false
-              IsLayoutExpanded = false
-              IsGridExpanded = false }
+              IsLayoutExpanded = false }
       FulmaExtensions =
             { IsExpanded = false }
       CurrentPage = currentPage }
@@ -30,10 +29,6 @@ let update msg model =
             | Layouts ->
                 { model with Fulma =
                                 { model.Fulma with IsLayoutExpanded = not model.Fulma.IsLayoutExpanded } }
-
-            | Grids ->
-                { model with Fulma =
-                                { model.Fulma with IsGridExpanded = not model.Fulma.IsGridExpanded } }
 
         | FulmaExtensions ->
             { model with FulmaExtensions =

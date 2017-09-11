@@ -33,6 +33,12 @@
         <Compile Include="src/Fulma/Layout/Section/Types.fs" />
         <Compile Include="src/Fulma/Layout/Section/State.fs" />
         <Compile Include="src/Fulma/Layout/Section/View.fs" />
+        <Compile Include="src/Fulma/Layout/Tile/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Tile/State.fs" />
+        <Compile Include="src/Fulma/Layout/Tile/View.fs" />
+        <Compile Include="src/Fulma/Layout/Columns/Types.fs" />
+        <Compile Include="src/Fulma/Layout/Columns/State.fs" />
+        <Compile Include="src/Fulma/Layout/Columns/View.fs" />
     <!-- Components -->
         <Compile Include="src/Fulma/Components/Panel/Types.fs" />
         <Compile Include="src/Fulma/Components/Panel/State.fs" />
@@ -98,10 +104,6 @@
         <Compile Include="src/Fulma/Elements/Notification/Types.fs" />
         <Compile Include="src/Fulma/Elements/Notification/State.fs" />
         <Compile Include="src/Fulma/Elements/Notification/View.fs" />
-    <!-- Layouts -->
-        <Compile Include="src/Fulma/Grid/Tile/Types.fs" />
-        <Compile Include="src/Fulma/Grid/Tile/State.fs" />
-        <Compile Include="src/Fulma/Grid/Tile/View.fs" />
         <!-- Dispatcher need to be latest of the group -->
         <Compile Include="src/Fulma/Dispatcher/Types.fs" />
         <Compile Include="src/Fulma/Dispatcher/State.fs" />
