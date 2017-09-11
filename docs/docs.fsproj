@@ -106,6 +106,9 @@
         <Compile Include="src/FulmaExtensions/Tooltip/Types.fs" />
         <Compile Include="src/FulmaExtensions/Tooltip/State.fs" />
         <Compile Include="src/FulmaExtensions/Tooltip/View.fs" />
+        <Compile Include="src/FulmaExtensions/Divider/Types.fs" />
+        <Compile Include="src/FulmaExtensions/Divider/State.fs" />
+        <Compile Include="src/FulmaExtensions/Divider/View.fs" />
         <!-- Dispatcher need to be latest of the group -->
         <Compile Include="src/FulmaExtensions/Dispatcher/Types.fs" />
         <Compile Include="src/FulmaExtensions/Dispatcher/State.fs" />

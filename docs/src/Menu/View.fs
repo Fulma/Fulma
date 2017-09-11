@@ -100,7 +100,8 @@ let menuFulmaExtensions currentPage subModel dispatch =
     [ Menu.label [ ] [ str "Fulma.Extensions" ]
       Menu.list [ ]
         [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage
-          menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
+          menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage
+          menuItem "Divider" (FulmaExtensions Divider) currentPage ] ]
 
 let root model dispatch =
     Menu.menu [ ]

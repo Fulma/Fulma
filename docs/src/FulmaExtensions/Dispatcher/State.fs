@@ -5,7 +5,8 @@ open Types
 
 let init() =
     { Calendar = FulmaExtensions.Calendar.State.init ()
-      Tooltip = FulmaExtensions.Tooltip.State.init () }
+      Tooltip = FulmaExtensions.Tooltip.State.init ()
+      Divider = FulmaExtensions.Divider.State.init () }
 
 let update msg model =
     match msg with
@@ -16,3 +17,7 @@ let update msg model =
     | TooltipMsg msg ->
         let (tooltip, tooltipMsg) = FulmaExtensions.Tooltip.State.update msg model.Tooltip
         { model with Tooltip = tooltip }, Cmd.map TooltipMsg tooltipMsg
+
+    | DividerMsg msg ->
+        let (divider, dividerMsg) = FulmaExtensions.Divider.State.update msg model.Divider
+        { model with Divider = divider }, Cmd.map DividerMsg dividerMsg
