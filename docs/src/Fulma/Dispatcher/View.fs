@@ -32,6 +32,7 @@ let root fulmaPage model dispatch =
         | Pagination -> Components.Pagination.View.root model.Components.Pagination (PaginationMsg >> dispatch)
         | Tabs -> Components.Tabs.View.root model.Components.Tabs (TabsMsg >> dispatch)
         | Modal -> Components.Modal.View.root model.Components.Modal (ModalMsg >> dispatch)
+        | Dropdown -> Components.Dropdown.View.root model.Components.Dropdown (DropdownMsg >> dispatch)
     | Layout layout ->
         match layout with
         | Container -> Layouts.Container.View.root model.Layouts.Container (ContainerMsg >> dispatch)

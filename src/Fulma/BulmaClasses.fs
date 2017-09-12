@@ -169,6 +169,21 @@ module BulmaClasses =
                 let [<Literal>] IsActive = "is-active"
             let Size = standardSize
 
+        module Dropdown =
+            let [<Literal>] Container = "dropdown"
+            let [<Literal>] Menu = "dropdown-menu"
+            let [<Literal>] Content = "dropdown-content"
+            let [<Literal>] Divider = "dropdown-divider"
+            module State =
+                let [<Literal>] IsActive = "is-active"
+                let [<Literal>] IsHoverable = "is-hoverable"
+            module Alignment =
+                let [<Literal>] IsRight = "is-right"
+            module Item =
+                let [<Literal>] Container = "dropdown-item"
+                module State =
+                    let [<Literal>] IsActive = "is-active"
+
         module Card =
             let [<Literal>] Container = "card"
             module Header =

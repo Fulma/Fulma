@@ -70,6 +70,9 @@
         <Compile Include="src/Fulma/Components/Modal/Types.fs" />
         <Compile Include="src/Fulma/Components/Modal/State.fs" />
         <Compile Include="src/Fulma/Components/Modal/View.fs" />
+        <Compile Include="src/Fulma/Components/Dropdown/Types.fs" />
+        <Compile Include="src/Fulma/Components/Dropdown/State.fs" />
+        <Compile Include="src/Fulma/Components/Dropdown/View.fs" />
     <!-- Elements -->
         <Compile Include="src/Fulma/Elements/Box/Types.fs" />
         <Compile Include="src/Fulma/Elements/Box/State.fs" />

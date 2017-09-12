@@ -26,7 +26,8 @@ let init() =
           Pagination = Components.Pagination.State.init ()
           Tabs = Components.Tabs.State.init ()
           Message = Components.Message.State.init ()
-          Modal = Components.Modal.State.init () }
+          Modal = Components.Modal.State.init ()
+          Dropdown = Components.Dropdown.State.init () }
       Layouts =
         { Container = Layouts.Container.State.init ()
           Footer = Layouts.Footer.State.init ()
@@ -177,3 +178,8 @@ let update msg model =
         let (columns, columnsMsg) = Layouts.Columns.State.update msg model.Layouts.Columns
         { model with Layouts =
                         { model.Layouts with Columns = columns } }, Cmd.map ColumnsMsg columnsMsg
+
+    | DropdownMsg msg ->
+        let (dropdown, dropdownMsg) = Components.Dropdown.State.update msg model.Components.Dropdown
+        { model with Components =
+                        { model.Components with Dropdown = dropdown } }, Cmd.map DropdownMsg dropdownMsg

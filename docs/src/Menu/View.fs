@@ -97,6 +97,7 @@ let menuFulma currentPage subModel dispatch =
                                menuItem "Pagination" (Fulma (Component Components.Pagination)) currentPage
                                menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage
                                menuItem "Message" (Fulma (Component Components.Message)) currentPage
+                               menuItem "Dropdown" (Fulma (Component Components.Dropdown)) currentPage
                                menuItem "Modal" (Fulma (Component Components.Modal)) currentPage ] ] ] ]
 
 let menuFulmaExtensions currentPage subModel dispatch =

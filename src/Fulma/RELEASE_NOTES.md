@@ -9,6 +9,7 @@
 * Fix `Navbar.menu` should generate a `div` not a `span`
 * Fix `Navbar.menu` props
 * Implements missing feature for `Button`
+* Implement `Dropdown`
 
 ### 0.2.0-beta-003
 

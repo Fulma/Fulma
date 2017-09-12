@@ -27,6 +27,7 @@ type Components =
     | Pagination
     | Tabs
     | Modal
+    | Dropdown
 
 type Layouts =
     | Container
@@ -92,6 +93,7 @@ let toHash page =
             | Pagination -> "#fulma/components/pagination"
             | Tabs -> "#fulma/components/tabs"
             | Modal -> "#fulma/components/modal"
+            | Dropdown ->"#fulma/components/dropdown"
     | FulmaExtensions pageType ->
         match pageType with
         | Calendar -> "#fulma-extensions/calendar"

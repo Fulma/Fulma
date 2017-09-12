@@ -20,6 +20,7 @@
     <Compile Include="Components/Breadcrumb.fs" />
     <Compile Include="Components/Card.fs" />
     <Compile Include="Components/Menu.fs" />
+    <Compile Include="Components/Dropdown.fs" />
     <Compile Include="Components/Media.fs" />
     <Compile Include="Components/Message.fs" />
     <Compile Include="Components/Modal.fs" />

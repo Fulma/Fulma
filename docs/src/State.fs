@@ -41,6 +41,8 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Pagination)) (s "fulma" </> s "components" </> s "pagination")
             map (Fulma (Component Tabs)) (s "fulma" </> s "components" </> s "tabs")
             map (Fulma (Component Modal)) (s "fulma" </> s "components" </> s "modal")
+            map (Fulma (Component Dropdown)) (s "fulma" </> s "components" </> s "dropdown")
+            // Fulma Extension
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")

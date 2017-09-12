@@ -25,7 +25,8 @@ type ComponentsModel =
       Pagination : Components.Pagination.Types.Model
       Tabs : Components.Tabs.Types.Model
       Message : Components.Message.Types.Model
-      Modal : Components.Modal.Types.Model }
+      Modal : Components.Modal.Types.Model
+      Dropdown : Components.Dropdown.Types.Model }
 
 type LayoutModel =
     { Container : Layouts.Container.Types.Model
@@ -70,3 +71,4 @@ type Msg =
     | SectionMsg of Layouts.Section.Types.Msg
     | TileMsg of Layouts.Tile.Types.Msg
     | ColumnsMsg of Layouts.Columns.Types.Msg
+    | DropdownMsg of Components.Dropdown.Types.Msg
