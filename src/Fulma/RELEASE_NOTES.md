@@ -7,6 +7,7 @@
 * Implement `Tile`
 * BREAKING CHANGE: The `grid` module has been removed. You can find the `Columns` wrapper into `Layouts` module
 * Fix `Navbar.menu` should generate a `div` not a `span`
+* Fix `Navbar.menu` props
 
 ### 0.2.0-beta-003
 

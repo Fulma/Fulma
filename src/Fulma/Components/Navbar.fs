@@ -280,7 +280,8 @@ module Navbar =
 
         div [ yield (classBaseList Bulma.Navbar.Menu.Container
                                     [ Bulma.Navbar.Menu.State.IsActive, opts.IsActive
-                                      opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp ]
+                                      opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp
+              yield! opts.Props ]
               children
 
 
