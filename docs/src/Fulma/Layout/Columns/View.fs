@@ -8,38 +8,77 @@ open Types
 open Fulma.Elements
 open Fulma.Layouts
 
-
 let iconInteractive =
-    Tile.ancestor [ ]
-        [ Tile.parent [ Tile.isVertical
-                        Tile.is4 ]
-            [ Tile.child [ ]
-                [ Box.box' [ ]
-                    [ Heading.p [ ]
-                        [ str "Tile n°1" ]
-                      p [ ]
-                        [ str "Nulla at urna iaculis, eleifend dolor eget, pellentesque eros. Mauris luctus pharetra velit, viverra feugiat nibh vehicula vitae. Suspendisse vitae sem id." ] ] ]
-              Tile.child [ ]
-                [ Box.box' [ ]
-                    [ Heading.p [ ]
-                        [ str "Tile n°2" ]
-                      p [ ]
-                        [ str "Curabitur pretium nisi tortor, vitae elementum justo blandit sit amet. Pellentesque vel commodo metus. In scelerisque pretium quam, quis varius lectus maximus sed." ] ] ]
-            ]
-          Tile.parent [ ]
-            [ Tile.child [ ]
-                [ Box.box' [ Box.props [ Style [ Height "100%" ] ] ]
-                    [ Heading.p [ ]
-                        [ str "Tile n°3" ]
-                      p [ ]
-                        [ str "Etiam quis neque efficitur, iaculis urna eget, efficitur ligula. Cras faucibus, magna eu eleifend maximus, ligula ex gravida libero, vitae suscipit velit nibh eget eros." ]
-                      p [ ]
-                        [ str "Suspendisse vel turpis nisi. Fusce at risus accumsan, varius massa id, dictum est. Aenean consequat neque sed tincidunt eleifend." ]
-                      p [ ]
-                        [ str "Phasellus ac lectus in ex condimentum sollicitudin. Sed id mollis turpis. Sed at felis vel diam interdum viverra." ] ] ] ] ]
+    Columns.columns [ ]
+        [ Column.column [ Column.Width.is6 ]
+            [ Columns.columns [ ]
+                [ Column.column [ ]
+                    [ Notification.notification [ Notification.isSuccess ]
+                        [ str "Column n°1" ] ] ]
+              Columns.columns [ Columns.isGapless ]
+                [ Column.column [ ]
+                    [ Notification.notification [ Notification.isInfo ]
+                        [ str "Column n°1.1" ] ]
+                  Column.column [ ]
+                    [ Notification.notification [ Notification.isWarning ]
+                        [ str "Column n°1.2" ] ]
+                  Column.column [ ]
+                    [ Notification.notification [ Notification.isDanger ]
+                        [ str "Column n°1.3" ] ] ] ]
+          Column.column [ ]
+            [ Columns.columns [ ]
+                [ Column.column [ ]
+                    [ Notification.notification [ Notification.isLight ]
+                        [ str "Column n°2" ] ] ]
+              Columns.columns [ Columns.isCentered ]
+                [ Column.column [ Column.Width.is7 ]
+                    [ Notification.notification [ Notification.isBlack ]
+                        [ str "Column n°2.1" ] ] ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]
+                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch))
+                     Render.contentFromMarkdown
+                        """
+### Properties
+
+#### Columns
+
+Alignment:
+- `Columns.isCentered`
+- `Columns.isVCentered`
+
+Display:
+- `Columns.onMobile`
+- `Columns.onDesktopOnly`
+
+Spacing:
+- `Columns.isMultiline`
+- `Columns.isGapless`
+- `Columns.isGrid`
+
+#### Column
+
+You can access all the width properties of `Column` via `Column.Width.XXXX`.
+
+Ex:
+
+```
+Column.Width.is3
+Column.Width.Dekstop.is6
+Column.Width.Mobile.isFull
+```
+
+You can access all the width properties of `Column` via `Column.Offset.XXXX`.
+
+Ex:
+
+```
+Column.Offset.is3
+Column.Offset.Dekstop.is6
+Column.Offset.Mobile.isFull
+```
+                        """
+                         ]
