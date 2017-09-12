@@ -278,7 +278,7 @@ module Navbar =
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
 
-        span [ yield (classBaseList Bulma.Navbar.Menu.Container
+        div [ yield (classBaseList Bulma.Navbar.Menu.Container
                                     [ Bulma.Navbar.Menu.State.IsActive, opts.IsActive
                                       opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp ]
               children
