@@ -7,6 +7,7 @@ open Fable.Helpers.React.Props
 open Types
 open Fulma.Elements
 open Fulma.Layouts
+open Fulma.Extra.FontAwesome
 
 
 let colorInteractive =
@@ -70,6 +71,33 @@ let extraInteractive model dispatch =
           Button.button [ Button.props [ Disabled true ] ]
                         [ str "Disabled via props" ] ]
 
+let staticView =
+    Button.button [ Button.isStatic ]
+        [ str "Static" ]
+
+let disabled =
+    div [ ClassName "block" ]
+        [ Button.button [ Button.isDisabled
+                          Button.isLink ] [ str "Link" ]
+          Button.button [ Button.isDisabled
+                          Button.isPrimary ] [ str "Primary" ]
+          Button.button [ Button.isDisabled
+                          Button.isInfo ] [ str "Info" ]
+          Button.button [ Button.isDisabled
+                          Button.isSuccess ] [ str "Success" ]
+          Button.button [ Button.isDisabled
+                          Button.isWarning ] [ str "Warning" ]
+          Button.button [ Button.isDisabled
+                          Button.isDanger ] [ str "Danger" ] ]
+
+let icons =
+    div [ ClassName "block" ]
+        [ Button.button [ ] [ Icon.faIcon [ ] Fa.Bold ]
+          Button.button [ ] [ Icon.faIcon [ ] Fa.Italic ]
+          Button.button [ ] [ Icon.faIcon [ ] Fa.Underline ]
+          Button.button [ Button.isDanger
+                          Button.isOutlined ] [ str "Danger" ] ]
+
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
@@ -93,4 +121,17 @@ The button can be **outlined** and/or **inverted**.
                      Render.docSection
                         "### Extra"
                         (Viewer.View.root (extraInteractive model dispatch) model.ExtraViewer (ExtraViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Static"
+                        (Viewer.View.root staticView model.StaticViewer (StaticViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Disabled"
+                        (Viewer.View.root disabled model.DisabledViewer (DisabledViewerMsg >> dispatch))
+                     Render.docSection
+                        """
+### Font awesome icons support
+
+For more info, about Font Awesome support see [Convenience functions](#fulma/elements/icon).
+                        """
+                        (Viewer.View.root icons model.IconsViewer (IconsViewerMsg >> dispatch))
                                ]

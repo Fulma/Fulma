@@ -144,6 +144,7 @@ module BulmaClasses =
                   let [<Literal>] IsFocused = "is-focus"
                   let [<Literal>] IsActive = "is-active"
                   let [<Literal>] IsLoading = "is-loading"
+                  let [<Literal>] IsStatic = "is-static"
             module Styles =
                 let [<Literal>] IsLink = "is-link"
                 let [<Literal>] IsOutlined = "is-outlined"

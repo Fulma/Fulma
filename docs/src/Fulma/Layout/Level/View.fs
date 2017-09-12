@@ -17,7 +17,7 @@ let iconInteractive =
                     [ strong [ ] [ str "123"]
                       str " posts" ] ]
               Level.item [ ]
-                [ Field.field [ Field.hasAddonsLeft ]
+                [ Field.field_div [ Field.hasAddonsLeft ]
                     [ Control.control [ ]
                         [ Input.input [ Input.typeIsText
                                         Input.placeholder "Find a post" ] ]

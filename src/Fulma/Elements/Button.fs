@@ -21,6 +21,7 @@ module Button =
             | IsFocused
             | IsActive
             | IsLoading
+            | IsStatic
             | Nothing
 
         type Option =
@@ -29,6 +30,7 @@ module Button =
             | IsOutlined
             | IsInverted
             | IsLink
+            | IsDisabled
             | State of IState
             | Props of IHTMLProp list
             | OnClick of (MouseEvent -> unit)
@@ -56,6 +58,7 @@ module Button =
             | IsFocused -> Bulma.Button.State.IsFocused
             | IsActive -> Bulma.Button.State.IsActive
             | IsLoading -> Bulma.Button.State.IsLoading
+            | IsStatic -> Bulma.Button.State.IsStatic
 
         type Options =
             { Level : string option
@@ -63,6 +66,7 @@ module Button =
               IsOutlined : bool
               IsInverted : bool
               IsLink : bool
+              IsDisabled : bool
               State : string option
               Props : IHTMLProp list
               CustomClass : string option
@@ -73,6 +77,7 @@ module Button =
                   IsOutlined = false
                   IsInverted = false
                   IsLink = false
+                  IsDisabled = false
                   State = None
                   Props = []
                   CustomClass = None
@@ -90,6 +95,8 @@ module Button =
     let isFocused = State IsFocused
     let isActive = State IsActive
     let isLoading = State IsLoading
+    let isStatic = State IsStatic
+    let isDisabled = IsDisabled
     // Styles
     let isOutlined = IsOutlined
     let isInverted = IsInverted
@@ -121,6 +128,7 @@ module Button =
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
+            | IsDisabled -> { result with IsDisabled = true }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
@@ -131,6 +139,8 @@ module Button =
                    Bulma.Button.Styles.IsInverted, opts.IsInverted
                    Bulma.Button.Styles.IsLink, opts.IsLink
                    opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+              if opts.IsDisabled then
+                yield Disabled true :> IHTMLProp
               if opts.OnClick.IsSome then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
               yield! opts.Props ]

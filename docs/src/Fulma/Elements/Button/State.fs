@@ -79,6 +79,43 @@ let extraCode =
 ```
     """
 
+let staticView =
+    """
+```fsharp
+    Button.button [ Button.isStatic ]
+        [ str "Static" ]
+```
+    """
+
+let disabled =
+    """
+```fsharp
+    Button.button [ Button.isDisabled
+                    Button.isLink ] [ str "Link" ]
+    Button.button [ Button.isDisabled
+                    Button.isPrimary ] [ str "Primary" ]
+    Button.button [ Button.isDisabled
+                    Button.isInfo ] [ str "Info" ]
+    Button.button [ Button.isDisabled
+                    Button.isSuccess ] [ str "Success" ]
+    Button.button [ Button.isDisabled
+                    Button.isWarning ] [ str "Warning" ]
+    Button.button [ Button.isDisabled
+                    Button.isDanger ] [ str "Danger" ]
+```
+    """
+
+let icons =
+    """
+```fsharp
+    Button.button [ ] [ Icon.faIcon [ ] Fa.Bold ]
+    Button.button [ ] [ Icon.faIcon [ ] Fa.Italic ]
+    Button.button [ ] [ Icon.faIcon [ ] Fa.Underline ]
+    Button.button [ Button.isDanger
+                    Button.isOutlined ] [ str "Danger" ]
+```
+    """
+
 let init() =
     { Intro =
         """
@@ -94,6 +131,9 @@ The **buttons** can have different colors, sizes and states.
       MixedStyleViewer = Viewer.State.init mixedStyleCode
       StateViewer = Viewer.State.init stateCode
       ExtraViewer = Viewer.State.init extraCode
+      StaticViewer = Viewer.State.init staticView
+      DisabledViewer = Viewer.State.init disabled
+      IconsViewer = Viewer.State.init icons
       ClickCount = 0 }
 
 let update msg model =
@@ -123,3 +163,15 @@ let update msg model =
         { model with ExtraViewer = viewer }, Cmd.map ExtraViewerMsg viewerMsg
 
     | Click -> { model with ClickCount = model.ClickCount + 1 }, Cmd.none
+
+    | StaticViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.StaticViewer
+        { model with StaticViewer = viewer }, Cmd.map StaticViewerMsg viewerMsg
+
+    | DisabledViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.DisabledViewer
+        { model with DisabledViewer = viewer }, Cmd.map DisabledViewerMsg viewerMsg
+
+    | IconsViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.IconsViewer
+        { model with IconsViewer = viewer }, Cmd.map IconsViewerMsg viewerMsg

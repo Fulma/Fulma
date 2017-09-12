@@ -382,7 +382,7 @@ module Form =
         let customClass = CustomClass
         let props = Props
 
-        let field options children =
+        let internal field element options children =
             let parseOptions (result : Options) =
                 function
                 | HasAddons hasAddons -> { result with HasAddons = ofHasAddons hasAddons |> Some }
@@ -394,12 +394,13 @@ module Form =
             let opts = options |> List.fold parseOptions Options.Empty
             let className =
                 Helpers.generateClassName Bulma.Field.Container [ opts.HasAddons; opts.IsGrouped; opts.Layout; opts.CustomClass ]
-            div
+            element
                 [ yield ClassName className :> IHTMLProp
                   yield! opts.Props ]
                 children
 
-
+        let field_p = field p
+        let field_div = field div
 
         module Label =
             // Size
