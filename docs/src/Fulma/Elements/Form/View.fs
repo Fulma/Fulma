@@ -63,14 +63,22 @@ let iconInteractive =
                         [ Checkbox.input [ ]
                           str "I agree with the terms and conditions" ] ] ]
 
+           Field.field_div [ ]
+                [ Control.control_div [ ]
+                    [ Radio.radio [ ]
+                        [ Radio.input [ Radio.Input.name "answer" ]
+                          str "Yes" ]
+                      Radio.radio [ ]
+                        [ Radio.input [ Radio.Input.name "answer" ]
+                          str "No" ] ] ]
+
            Field.field_div [ Field.isGrouped ]
                 [ Control.control_div [ ]
                     [ Button.button [ Button.isPrimary ]
                         [ str "Submit" ] ]
                   Control.control_div [ ]
                     [ Button.button [ Button.isLink ]
-                        [ str "Cancel" ] ] ]
-                        ]
+                        [ str "Cancel" ] ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
@@ -78,15 +86,3 @@ let root model dispatch =
                         ""
                         (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]
 
-// <div class="field">
-//   <div class="control">
-//     <label class="radio">
-//       <input type="radio" name="question">
-//       Yes
-//     </label>
-//     <label class="radio">
-//       <input type="radio" name="question">
-//       No
-//     </label>
-//   </div>
-// </div>

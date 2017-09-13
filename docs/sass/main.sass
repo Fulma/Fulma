@@ -10,8 +10,8 @@ $primary: $dark-blue
 @import "../node_modules/bulma-divider/divider.sass"
 @import "../node_modules/bulma-pageloader/pageloader.sass"
 @import "../node_modules/bulma-pricingtable/pricing-table.sass"
-@import "../node_modules/bulma-ribbon/ribbon.sass" 
-@import "../node_modules/bulma-slider/slider.sass" 
+@import "../node_modules/bulma-ribbon/ribbon.sass"
+@import "../node_modules/bulma-slider/slider.sass"
 @import "../node_modules/bulma-steps/steps.sass"
 @import "../node_modules/bulma-switch/switch.sass"
 @import "../node_modules/bulma-timeline/timeline.sass"
@@ -99,3 +99,9 @@ a
         &:first-child:last-child
         margin-left: calc(-0.375em - 1px)
         margin-right: calc(-0.375em - 1px)
+
+// Fix Bulma radio & checkbox margin
+// Seems to be a problem with React
+input[type="checkbox"],
+input[type="radio"]
+    margin-right: 0.5em

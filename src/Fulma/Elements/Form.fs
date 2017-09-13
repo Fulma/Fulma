@@ -666,7 +666,6 @@ module Form =
                 | HasFixedSize -> { result with HasFixedSize = true }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let className = Helpers.generateClassName Bulma.Form.Input.Container [ opts.Size; opts.Color; opts.CustomClass ]
 
             textarea [ yield classBaseList Bulma.Form.TextArea.Container
                                            [ opts.Color.Value, opts.Color.IsSome
@@ -706,4 +705,61 @@ module Form =
             input
                 [ yield classList [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
                   yield Type "checkbox" :> IHTMLProp
+                  yield! opts.Props ]
+
+    module Radio =
+
+        module Types =
+
+            module Input =
+
+                type Option =
+                    | CustomClass of string
+                    | Props of IHTMLProp list
+                    | Name of string
+
+                type Options =
+                    { CustomClass : string option
+                      Props : IHTMLProp list
+                      Name : string option }
+
+                    static member Empty =
+                        { CustomClass = None
+                          Props = []
+                          Name = None }
+
+        open Types
+
+        let props = GenericOption.Props
+        let customClass = GenericOption.CustomClass
+
+        let radio (options : GenericOption list) children =
+            let opts = genericParse options
+
+            label
+                [ yield classBaseList
+                            Bulma.Form.Radio
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        module Input =
+            let props = Input.Props
+            let customClass = Input.CustomClass
+            let name = Input.Name
+
+        let input (options : Input.Option list) =
+            let parseOptions (result : Input.Options) option =
+                match option with
+                | Input.Name name -> { result with Name = Some name }
+                | Input.CustomClass customClass -> { result with CustomClass = customClass |> Some }
+                | Input.Props props -> { result with Props = props }
+
+            let opts = options |> List.fold parseOptions Input.Options.Empty
+
+            input
+                [ yield classList [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield Type "radio" :> IHTMLProp
+                  if opts.Name.IsSome then
+                    yield Name opts.Name.Value :> IHTMLProp
                   yield! opts.Props ]

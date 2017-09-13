@@ -10,6 +10,7 @@
 * Fix `Navbar.menu` props
 * Implements missing feature for `Button`
 * Implement `Dropdown`
+* Implements basic elements for `Form`
 
 ### 0.2.0-beta-003
 
