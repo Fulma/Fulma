@@ -15,7 +15,8 @@ let init() =
           Table = Elements.Table.State.init ()
           Tag = Elements.Tag.State.init ()
           Notification = Elements.Notification.State.init ()
-          Title = Elements.Title.State.init () }
+          Title = Elements.Title.State.init ()
+          Form = Elements.Form.State.init () }
       Components =
         { Panel = Components.Panel.State.init ()
           Breadcrumb = Components.Breadcrumb.State.init ()
@@ -183,3 +184,8 @@ let update msg model =
         let (dropdown, dropdownMsg) = Components.Dropdown.State.update msg model.Components.Dropdown
         { model with Components =
                         { model.Components with Dropdown = dropdown } }, Cmd.map DropdownMsg dropdownMsg
+
+    | FormMsg msg ->
+        let (form, formMsg) = Elements.Form.State.update msg model.Elements.Form
+        { model with Elements =
+                        { model.Elements with Form = form } }, Cmd.map FormMsg formMsg

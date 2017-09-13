@@ -17,7 +17,7 @@ let iconInteractive =
             [ Panel.panel [ ]
                 [ Panel.heading [ ] [ str "Repositories"]
                   Panel.block [ ]
-                    [ Control.control [ Control.hasIconLeft ]
+                    [ Control.control_div [ Control.hasIconLeft ]
                         [ Input.input [ Input.isSmall
                                         Input.typeIsText
                                         Input.placeholder "Search" ]

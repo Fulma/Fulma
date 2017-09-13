@@ -13,6 +13,7 @@ type ElementsModel =
       Table : Elements.Table.Types.Model
       Tag : Elements.Tag.Types.Model
       Notification : Elements.Notification.Types.Model
+      Form : Elements.Form.Types.Model
       Title : Elements.Title.Types.Model }
 
 type ComponentsModel =
@@ -72,3 +73,4 @@ type Msg =
     | TileMsg of Layouts.Tile.Types.Msg
     | ColumnsMsg of Layouts.Columns.Types.Msg
     | DropdownMsg of Components.Dropdown.Types.Msg
+    | FormMsg of Elements.Form.Types.Msg

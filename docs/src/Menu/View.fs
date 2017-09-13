@@ -77,7 +77,7 @@ let menuFulma currentPage subModel dispatch =
                                menuItem "Box" (Fulma (Element Elements.Box)) currentPage
                                menuItem "Content" (Fulma (Element Elements.Content))  currentPage
                                menuItem "Table" (Fulma (Element Elements.Table)) currentPage
-                               //menuItem "Form" (Fulma (Element Elements.Form)) currentPage
+                               menuItem "Form" (Fulma (Element Elements.Form)) currentPage
                                menuItem "Notification" (Fulma (Element Elements.Notification)) currentPage
                                menuItem "Tag" (Fulma (Element Elements.Tag)) currentPage ] ] ]
       Menu.list [ ]

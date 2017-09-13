@@ -1,17 +1,17 @@
 STORAGE: NONE
 NUGET
   remote: https://www.nuget.org/api/v2
-    dotnet-fable (1.2.0-beta-005) - clitool: true
+    dotnet-fable (1.2.1) - clitool: true
       Dotnet.ProjInfo (>= 0.7.4) - restriction: >= netcoreapp2.0
-      Fable.Compiler (>= 1.2.0-beta-0015) - restriction: >= netcoreapp2.0
-      Fable.Core (>= 1.2.0-beta-003) - restriction: >= netcoreapp2.0
+      Fable.Compiler (>= 1.2.1) - restriction: >= netcoreapp2.0
+      Fable.Core (>= 1.2.1) - restriction: >= netcoreapp2.0
       FSharp.Core (>= 4.2.3) - restriction: >= netcoreapp2.0
       Microsoft.NETCore.App (>= 2.0) - restriction: >= netcoreapp2.0
     Dotnet.ProjInfo (0.7.4) - restriction: >= netcoreapp2.0
       FSharp.Core (>= 4.1.17) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
-    Fable.Compiler (1.2.0-beta-0015) - restriction: >= netcoreapp2.0
-      Fable.Core (>= 1.2.0-beta-003) - restriction: >= netstandard1.6
+    Fable.Compiler (1.2.1) - restriction: >= netcoreapp2.0
+      Fable.Core (>= 1.2.1) - restriction: >= netstandard1.6
       FSharp.Compiler.Service (>= 14.0.2) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
@@ -20,7 +20,7 @@ NUGET
       System.Reflection.Metadata (>= 1.5) - restriction: >= netstandard1.6
       System.Runtime.Loader (>= 4.3) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.4) - restriction: >= netstandard1.6
-    Fable.Core (1.2.0-beta-004)
+    Fable.Core (1.2.1)
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
       System.ValueTuple (>= 4.4) - restriction: >= netstandard1.6
@@ -50,10 +50,10 @@ NUGET
       Fable.Core (>= 1.1.1) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.1) - restriction: >= netstandard1.6
-    Fable.React (1.2.0-beta-002)
-      Fable.Core (>= 1.1.2) - restriction: >= netstandard1.6
+    Fable.React (1.2)
+      Fable.Core (>= 1.1.15) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
-      FSharp.Core (>= 4.2.1) - restriction: >= netstandard1.6
+      FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
     FSharp.Compiler.Service (14.0.2) - restriction: >= netcoreapp2.0
       FSharp.Core (>= 4.1.18) - restriction: >= netstandard1.6
       NETStandard.Library (>= 1.6.1) - restriction: >= netstandard1.6
@@ -191,13 +191,13 @@ NUGET
       runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (>= 4.3.1)
       runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (>= 4.3.1)
     runtime.opensuse.13.2-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
-    runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
+    runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81)) (>= netcoreapp2.0)
     runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple (4.3) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81)) (>= netcoreapp2.0)
     runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
     runtime.rhel.7-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
-    runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
+    runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81)) (>= netcoreapp2.0)
     runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
-    runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
+    runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3.1) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81)) (>= netcoreapp2.0)
     System.AppContext (4.3) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< netstandard2.0) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac))
       System.Runtime (>= 4.3) - restriction: || (&& (< net46) (>= netstandard1.3) (< netstandard1.6) (< monoandroid)) (>= dnxcore50) (&& (>= netstandard1.6) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac))
     System.Buffers (4.4) - restriction: || (&& (>= net46) (< netstandard1.4) (>= netstandard1.6)) (&& (>= uap10.0) (>= netstandard1.6)) (&& (>= dnxcore50) (>= netstandard1.6)) (&& (< netstandard1.3) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.4) (>= netstandard1.6) (< monoandroid)) (&& (< netstandard1.5) (>= netstandard1.6) (< monoandroid)) (&& (>= netstandard1.6) (< netstandard2.0) (< monotouch) (< xamarintvos) (< xamarinwatchos) (< xamarinios) (< xamarinmac)) (&& (>= netstandard1.6) (< portable-net451+win81+wpa81))
