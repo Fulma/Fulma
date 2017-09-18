@@ -152,7 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <!-- <ProjectReference Include="../src/Fulma/Fulma.fsproj" /> -->
-    <ProjectReference Include="../src/Fulma.Extensions/Fulma.Extensions.fsproj" />
+    <ProjectReference Include="../src/Fulma.Elmish/Fulma.Elmish.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

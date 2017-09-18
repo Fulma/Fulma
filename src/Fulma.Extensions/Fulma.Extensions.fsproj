@@ -4,7 +4,7 @@
         <Description>Helpers around Bulma for Elmish apps</Description>
         <PackageProjectUrl>https://github.com/MangelMaxime/Fulma</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/MangelMaxime/Fulma/blob/master/LICENSE.md</PackageLicenseUrl>
-        <PackageIconUrl>https://raw.githubusercontent.com/MangelMaxime/Fable.Elmish.Bulma/master/docs/public/assets/logo-128x128.png</PackageIconUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/MangelMaxime/Fulma/master/docs/public/assets/logo-128x128.png</PackageIconUrl>
         <RepositoryUrl>https://github.com/MangelMaxime/Fulma</RepositoryUrl>
         <PackageTags>fable;elm;fsharp;bulma</PackageTags>
         <Authors>Maxime Mangel</Authors>

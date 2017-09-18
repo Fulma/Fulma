@@ -1,8 +1,11 @@
 module FulmaElmish.DatePicker.Types
 
+open Fulma.Elmish
+open System
+
 type Model =
-    { Intro : string
-      BasicViewer : Viewer.Types.Model }
+    { DatePickerState : DatePicker.Types.State
+      CurrentDate : DateTime option }
 
 type Msg =
-    | BasicViewerMsg of Viewer.Types.Msg
+    | DatePickerChanged of DatePicker.Types.State * (DateTime option)

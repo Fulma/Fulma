@@ -120,8 +120,8 @@ let menuFulmaElmish currentPage dispatch =
 
 let root model dispatch =
     Menu.menu [ ]
-        [ yield Menu.list [ ]
-                    [ menuItem "Introduction" Home model.CurrentPage ]
-          yield! menuFulma model.CurrentPage model.Fulma dispatch
-          yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch
-          yield! menuFulmaElmish model.CurrentPage dispatch ]
+        [ //yield Menu.list [ ]
+            //        [ menuItem "Introduction" Home model.CurrentPage ]
+          yield! menuFulma model.CurrentPage model.Fulma dispatch ]
+          //yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch
+        //   yield! menuFulmaElmish model.CurrentPage dispatch ]

@@ -29,6 +29,27 @@ let init() =
 Display a **tooltip** attached to any kind of element, in different position.
 
 *[Documentation](https://wikiki.github.io/bulma-extensions/tooltip)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-divider`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-divider@0.0.4`</td>
+        </tr>
+    </tbody>
+<table>
         """
       BasicViewer = Viewer.State.init iconCode }
 

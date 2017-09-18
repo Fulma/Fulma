@@ -152,7 +152,7 @@ Target "PublishNugets" (fun _ ->
 )
 
 // Where to push generated documentation
-let githubLink = "git@github.com:MangelMaxime/Fable.Elmish.Bulma.git"
+let githubLink = "git@github.com:MangelMaxime/Fulma.git"
 let publishBranch = "gh-pages"
 let fableRoot   = __SOURCE_DIRECTORY__
 let temp        = fableRoot </> "temp"

@@ -38,6 +38,27 @@ let intro =
 Display a vertical or horizontal divider to segment your design.
 
 *[Documentation](https://wikiki.github.io/bulma-extensions/divider)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th></th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-divider`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-divider@0.0.1`</td>
+        </tr>
+    </tbody>
+<table>
         """
 
 let init() =

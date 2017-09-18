@@ -2,12 +2,12 @@ source https://www.nuget.org/api/v2
 storage:none
 
 nuget Fable.Core
+nuget Fable.Elmish
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
-nuget Fable.PowerPack
+nuget Fable.PowerPack prerelease
 nuget Fable.React
-nuget Fulma prerelease
 
 clitool dotnet-fable
 

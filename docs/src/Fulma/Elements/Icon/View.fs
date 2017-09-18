@@ -44,7 +44,7 @@ You need the next `open` statement to access the FontAwesome convenience functio
     open Fulma.Extra.FontAwesome
 ```
 
-If the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fable.Elmish.Bulma/issues)*.
+If the icon you want to use isn't accessible via `Fa.*` please *[open an issue here](https://github.com/MangelMaxime/Fulma/issues)*.
 You can also use `Fa.Custom "fa-my-icon"` as a fix.
 
 ```fsharp
