@@ -35,18 +35,18 @@ Display a **tooltip** attached to any kind of element, in different position.
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th></th>
+            <th>Version</th>
             <th>CLI</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-divider`</td>
+            <td>`yarn add bulma bulma-tooltip`</td>
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-divider@0.0.4`</td>
+            <td>`yarn add bulma bulma-tooltip@0.0.4`</td>
         </tr>
     </tbody>
 <table>

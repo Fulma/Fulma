@@ -147,18 +147,18 @@ Display a **calendar** for date selection or for planning management, in differe
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th></th>
+            <th>Version</th>
             <th>CLI</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-calendar`</td>
+            <td>`yarn add bulma bulma-calendar bulma-tooltip`</td>
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-calendar@0.0.1`</td>
+            <td>`yarn add bulma bulma-calendar@0.0.1 bulma-tooltip@0.0.4`</td>
         </tr>
     </tbody>
 <table>

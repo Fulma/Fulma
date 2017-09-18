@@ -44,7 +44,7 @@ Display a vertical or horizontal divider to segment your design.
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th></th>
+            <th>Version</th>
             <th>CLI</th>
         </tr>
     </thead>
