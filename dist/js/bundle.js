@@ -1,3 +1,4 @@
+document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>');
 var bulmaDocSite = (function (exports) {
 'use strict';
 
@@ -101,32 +102,6 @@ var index = shouldUseNative() ? Object.assign : function (target, source) {
  *
  * 
  */
-/**
- * WARNING: DO NOT manually require this module.
- * This is a replacement for `invariant(...)` used by the error code system
- * and will _only_ be required by the corresponding babel pass.
- * It always throws.
- */
-
-function reactProdInvariant(code) {
-  var argCount = arguments.length - 1;
-
-  var message = 'Minified React error #' + code + '; visit ' + 'http://facebook.github.io/react/docs/error-decoder.html?invariant=' + code;
-
-  for (var argIdx = 0; argIdx < argCount; argIdx++) {
-    message += '&args[]=' + encodeURIComponent(arguments[argIdx + 1]);
-  }
-
-  message += ' for the full message or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
-
-  var error = new Error(message);
-  error.name = 'Invariant Violation';
-  error.framesToPop = 1; // we don't care about reactProdInvariant's own frame
-
-  throw error;
-}
-
-var reactProdInvariant_1 = reactProdInvariant;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -174,10 +149,55 @@ var emptyFunction_1 = emptyFunction;
 
 var warning = emptyFunction_1;
 
+{
+  (function () {
+    var printWarning = function printWarning(format) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      if (typeof console !== 'undefined') {
+        console.error(message);
+      }
+      try {
+        // --- Welcome to debugging React ---
+        // This error was thrown as a convenience so that you can use this stack
+        // to find the callsite that caused this warning to fire.
+        throw new Error(message);
+      } catch (x) {}
+    };
+
+    warning = function warning(condition, format) {
+      if (format === undefined) {
+        throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+      }
+
+      if (format.indexOf('Failed Composite propType: ') === 0) {
+        return; // Ignore CompositeComponent proptype check.
+      }
+
+      if (!condition) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+          args[_key2 - 2] = arguments[_key2];
+        }
+
+        printWarning.apply(undefined, [format].concat(args));
+      }
+    };
+  })();
+}
+
 var warning_1 = warning;
 
 function warnNoop(publicInstance, callerName) {
-  
+  {
+    var constructor = publicInstance.constructor;
+    warning_1(false, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass');
+  }
 }
 
 /**
@@ -265,6 +285,19 @@ var ReactNoopUpdateQueue_1 = ReactNoopUpdateQueue;
  * 
  */
 
+var canDefineProperty$1 = false;
+{
+  try {
+    // $FlowFixMe https://github.com/facebook/flow/issues/285
+    Object.defineProperty({}, 'x', { get: function () {} });
+    canDefineProperty$1 = true;
+  } catch (x) {
+    // IE will fail on defineProperty
+  }
+}
+
+var canDefineProperty_1 = canDefineProperty$1;
+
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -276,6 +309,10 @@ var ReactNoopUpdateQueue_1 = ReactNoopUpdateQueue;
  */
 
 var emptyObject = {};
+
+{
+  Object.freeze(emptyObject);
+}
 
 var emptyObject_1 = emptyObject;
 
@@ -301,6 +338,14 @@ var emptyObject_1 = emptyObject;
  */
 
 var validateFormat = function validateFormat(format) {};
+
+{
+  validateFormat = function validateFormat(format) {
+    if (format === undefined) {
+      throw new Error('invariant requires an error message argument');
+    }
+  };
+}
 
 function invariant(condition, format, a, b, c, d, e, f) {
   validateFormat(format);
@@ -334,6 +379,59 @@ var invariant_1 = invariant;
  * of patent rights can be found in the PATENTS file in the same directory.
  *
  */
+
+/**
+ * Forked from fbjs/warning:
+ * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+ *
+ * Only change is we use console.warn instead of console.error,
+ * and do nothing when 'console' is not supported.
+ * This really simplifies the code.
+ * ---
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var lowPriorityWarning$1 = function () {};
+
+{
+  var printWarning = function (format) {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    var argIndex = 0;
+    var message = 'Warning: ' + format.replace(/%s/g, function () {
+      return args[argIndex++];
+    });
+    if (typeof console !== 'undefined') {
+      console.warn(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  };
+
+  lowPriorityWarning$1 = function (condition, format) {
+    if (format === undefined) {
+      throw new Error('`warning(condition, format, ...args)` requires a warning ' + 'message argument');
+    }
+    if (!condition) {
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
+      }
+
+      printWarning.apply(undefined, [format].concat(args));
+    }
+  };
+}
+
+var lowPriorityWarning_1 = lowPriorityWarning$1;
 
 /**
  * Base class helpers for the updating state of a component.
@@ -375,7 +473,7 @@ ReactComponent.prototype.isReactComponent = {};
  * @protected
  */
 ReactComponent.prototype.setState = function (partialState, callback) {
-  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? reactProdInvariant_1('85') : void 0;
+  !(typeof partialState === 'object' || typeof partialState === 'function' || partialState == null) ? invariant_1(false, 'setState(...): takes an object of state variables to update or a function which returns an object of state variables.') : void 0;
   this.updater.enqueueSetState(this, partialState);
   if (callback) {
     this.updater.enqueueCallback(this, callback, 'setState');
@@ -408,6 +506,28 @@ ReactComponent.prototype.forceUpdate = function (callback) {
  * we would like to deprecate them, we're not going to move them over to this
  * modern base class. Instead, we define a getter that warns if it's accessed.
  */
+{
+  var deprecatedAPIs = {
+    isMounted: ['isMounted', 'Instead, make sure to clean up subscriptions and pending requests in ' + 'componentWillUnmount to prevent memory leaks.'],
+    replaceState: ['replaceState', 'Refactor your code to use setState instead (see ' + 'https://github.com/facebook/react/issues/3236).']
+  };
+  var defineDeprecationWarning = function (methodName, info) {
+    if (canDefineProperty_1) {
+      Object.defineProperty(ReactComponent.prototype, methodName, {
+        get: function () {
+          lowPriorityWarning_1(false, '%s(...) is deprecated in plain JavaScript React classes. %s', info[0], info[1]);
+          return undefined;
+        }
+      });
+    }
+  };
+  for (var fnName in deprecatedAPIs) {
+    if (deprecatedAPIs.hasOwnProperty(fnName)) {
+      defineDeprecationWarning(fnName, deprecatedAPIs[fnName]);
+    }
+  }
+}
+
 /**
  * Base class helpers for the updating state of a component.
  */
@@ -487,7 +607,7 @@ var fourArgumentPooler$1 = function (a1, a2, a3, a4) {
 
 var standardReleaser = function (instance) {
   var Klass = this;
-  !(instance instanceof Klass) ? reactProdInvariant_1('25') : void 0;
+  !(instance instanceof Klass) ? invariant_1(false, 'Trying to release an instance into a pool of a different type.') : void 0;
   instance.destructor();
   if (Klass.instancePool.length < Klass.poolSize) {
     Klass.instancePool.push(instance);
@@ -585,12 +705,59 @@ var RESERVED_PROPS = {
   __source: true
 };
 
+var specialPropKeyWarningShown;
+var specialPropRefWarningShown;
+
 function hasValidRef(config) {
+  {
+    if (hasOwnProperty$1.call(config, 'ref')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'ref').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
   return config.ref !== undefined;
 }
 
 function hasValidKey(config) {
+  {
+    if (hasOwnProperty$1.call(config, 'key')) {
+      var getter = Object.getOwnPropertyDescriptor(config, 'key').get;
+      if (getter && getter.isReactWarning) {
+        return false;
+      }
+    }
+  }
   return config.key !== undefined;
+}
+
+function defineKeyPropWarningGetter(props, displayName) {
+  var warnAboutAccessingKey = function () {
+    if (!specialPropKeyWarningShown) {
+      specialPropKeyWarningShown = true;
+      warning_1(false, '%s: `key` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingKey.isReactWarning = true;
+  Object.defineProperty(props, 'key', {
+    get: warnAboutAccessingKey,
+    configurable: true
+  });
+}
+
+function defineRefPropWarningGetter(props, displayName) {
+  var warnAboutAccessingRef = function () {
+    if (!specialPropRefWarningShown) {
+      specialPropRefWarningShown = true;
+      warning_1(false, '%s: `ref` is not a prop. Trying to access it will result ' + 'in `undefined` being returned. If you need to access the same ' + 'value within the child component, you should pass it as a different ' + 'prop. (https://fb.me/react-special-props)', displayName);
+    }
+  };
+  warnAboutAccessingRef.isReactWarning = true;
+  Object.defineProperty(props, 'ref', {
+    get: warnAboutAccessingRef,
+    configurable: true
+  });
 }
 
 /**
@@ -627,6 +794,50 @@ var ReactElement = function (type, key, ref, self, source, owner, props) {
     // Record the component responsible for creating this element.
     _owner: owner
   };
+
+  {
+    // The validation flag is currently mutative. We put it on
+    // an external backing store so that we can freeze the whole object.
+    // This can be replaced with a WeakMap once they are implemented in
+    // commonly used development environments.
+    element._store = {};
+
+    // To make comparing ReactElements easier for testing purposes, we make
+    // the validation flag non-enumerable (where possible, which should
+    // include every environment we run tests in), so the test framework
+    // ignores it.
+    if (canDefineProperty_1) {
+      Object.defineProperty(element._store, 'validated', {
+        configurable: false,
+        enumerable: false,
+        writable: true,
+        value: false
+      });
+      // self and source are DEV only properties.
+      Object.defineProperty(element, '_self', {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: self
+      });
+      // Two elements created in two different places should be considered
+      // equal for testing purposes and therefore we hide it from enumeration.
+      Object.defineProperty(element, '_source', {
+        configurable: false,
+        enumerable: false,
+        writable: false,
+        value: source
+      });
+    } else {
+      element._store.validated = false;
+      element._self = self;
+      element._source = source;
+    }
+    if (Object.freeze) {
+      Object.freeze(element.props);
+      Object.freeze(element);
+    }
+  }
 
   return element;
 };
@@ -674,6 +885,11 @@ ReactElement.createElement = function (type, config, children) {
     for (var i = 0; i < childrenLength; i++) {
       childArray[i] = arguments[i + 2];
     }
+    {
+      if (Object.freeze) {
+        Object.freeze(childArray);
+      }
+    }
     props.children = childArray;
   }
 
@@ -683,6 +899,19 @@ ReactElement.createElement = function (type, config, children) {
     for (propName in defaultProps) {
       if (props[propName] === undefined) {
         props[propName] = defaultProps[propName];
+      }
+    }
+  }
+  {
+    if (key || ref) {
+      if (typeof props.$$typeof === 'undefined' || props.$$typeof !== ReactElementSymbol) {
+        var displayName = typeof type === 'function' ? type.displayName || type.name || 'Unknown' : type;
+        if (key) {
+          defineKeyPropWarningGetter(props, displayName);
+        }
+        if (ref) {
+          defineRefPropWarningGetter(props, displayName);
+        }
       }
     }
   }
@@ -889,6 +1118,19 @@ var SEPARATOR = '.';
 var SUBSEPARATOR = ':';
 
 /**
+ * This is inlined from ReactElement since this file is shared between
+ * isomorphic and renderers. We could extract this to a
+ *
+ */
+
+/**
+ * TODO: Test that a single child and an array with one item have the same key
+ * pattern.
+ */
+
+var didWarnAboutMaps = false;
+
+/**
  * Generate a key string that identifies a component within a set.
  *
  * @param {*} component A component that could contain a manual key.
@@ -957,6 +1199,18 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
           subtreeCount += traverseAllChildrenImpl(child, nextName, callback, traverseContext);
         }
       } else {
+        {
+          var mapsAsChildrenAddendum = '';
+          if (ReactCurrentOwner_1.current) {
+            var mapsAsChildrenOwnerName = ReactCurrentOwner_1.current.getName();
+            if (mapsAsChildrenOwnerName) {
+              mapsAsChildrenAddendum = ' Check the render method of `' + mapsAsChildrenOwnerName + '`.';
+            }
+          }
+          warning_1(didWarnAboutMaps, 'Using Maps as children is not yet fully supported. It is an ' + 'experimental feature that might be removed. Convert it to a ' + 'sequence / iterable of keyed ReactElements instead.%s', mapsAsChildrenAddendum);
+          didWarnAboutMaps = true;
+        }
+        // Iterator will provide entry [k,v] tuples rather than values.
         while (!(step = iterator.next()).done) {
           var entry = step.value;
           if (entry) {
@@ -968,8 +1222,20 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
       }
     } else if (type === 'object') {
       var addendum = '';
+      {
+        addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
+        if (children._isReactElement) {
+          addendum = " It looks like you're using an element created by a different " + 'version of React. Make sure to use only one copy of React.';
+        }
+        if (ReactCurrentOwner_1.current) {
+          var name = ReactCurrentOwner_1.current.getName();
+          if (name) {
+            addendum += ' Check the render method of `' + name + '`.';
+          }
+        }
+      }
       var childrenString = String(children);
-      reactProdInvariant_1('31', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
+      invariant_1(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
     }
   }
 
@@ -1318,29 +1584,29 @@ function describeID(id) {
   if (ownerID) {
     ownerName = ReactComponentTreeHook.getDisplayName(ownerID);
   }
-  void 0;
+  warning_1(element, 'ReactComponentTreeHook: Missing React element for debugID %s when ' + 'building stack', id);
   return describeComponentFrame(name, element && element._source, ownerName);
 }
 
 var ReactComponentTreeHook = {
   onSetChildren: function (id, nextChildIDs) {
     var item = getItem(id);
-    !item ? reactProdInvariant_1('144') : void 0;
+    !item ? invariant_1(false, 'Item must have been set') : void 0;
     item.childIDs = nextChildIDs;
 
     for (var i = 0; i < nextChildIDs.length; i++) {
       var nextChildID = nextChildIDs[i];
       var nextChild = getItem(nextChildID);
-      !nextChild ? reactProdInvariant_1('140') : void 0;
-      !(nextChild.childIDs != null || typeof nextChild.element !== 'object' || nextChild.element == null) ? reactProdInvariant_1('141') : void 0;
-      !nextChild.isMounted ? reactProdInvariant_1('71') : void 0;
+      !nextChild ? invariant_1(false, 'Expected hook events to fire for the child before its parent includes it in onSetChildren().') : void 0;
+      !(nextChild.childIDs != null || typeof nextChild.element !== 'object' || nextChild.element == null) ? invariant_1(false, 'Expected onSetChildren() to fire for a container child before its parent includes it in onSetChildren().') : void 0;
+      !nextChild.isMounted ? invariant_1(false, 'Expected onMountComponent() to fire for the child before its parent includes it in onSetChildren().') : void 0;
       if (nextChild.parentID == null) {
         nextChild.parentID = id;
         // TODO: This shouldn't be necessary but mounting a new root during in
         // componentWillMount currently causes not-yet-mounted components to
         // be purged from our tree data so their parent id is missing.
       }
-      !(nextChild.parentID === id) ? reactProdInvariant_1('142', nextChildID, nextChild.parentID, id) : void 0;
+      !(nextChild.parentID === id) ? invariant_1(false, 'Expected onBeforeMountComponent() parent and onSetChildren() to be consistent (%s has parents %s and %s).', nextChildID, nextChild.parentID, id) : void 0;
     }
   },
   onBeforeMountComponent: function (id, element, parentID) {
@@ -1365,7 +1631,7 @@ var ReactComponentTreeHook = {
   },
   onMountComponent: function (id) {
     var item = getItem(id);
-    !item ? reactProdInvariant_1('144') : void 0;
+    !item ? invariant_1(false, 'Item must have been set') : void 0;
     item.isMounted = true;
     var isRoot = item.parentID === 0;
     if (isRoot) {
@@ -1545,6 +1811,18 @@ var ReactComponentTreeHook_1 = ReactComponentTreeHook;
  * 
  */
 
+var ReactPropTypeLocationNames = {};
+
+{
+  ReactPropTypeLocationNames = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
+}
+
+var ReactPropTypeLocationNames_1 = ReactPropTypeLocationNames;
+
 /**
  * Copyright 2013-present, Facebook, Inc.
  * All rights reserved.
@@ -1556,9 +1834,13 @@ var ReactComponentTreeHook_1 = ReactComponentTreeHook;
  * 
  */
 
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+var ReactPropTypesSecret_1 = ReactPropTypesSecret;
+
 var ReactComponentTreeHook$1;
 
-if (typeof process !== 'undefined' && process.env && "production" === 'test') {
+if (typeof process !== 'undefined' && process.env && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
@@ -1567,12 +1849,298 @@ if (typeof process !== 'undefined' && process.env && "production" === 'test') {
   ReactComponentTreeHook$1 = ReactComponentTreeHook_1;
 }
 
+var loggedTypeFailures = {};
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?object} element The React element that is being type-checked
+ * @param {?number} debugID The React component instance that is being type-checked
+ * @private
+ */
+function checkReactTypeSpec(typeSpecs, values, location, componentName, element, debugID) {
+  for (var typeSpecName in typeSpecs) {
+    if (typeSpecs.hasOwnProperty(typeSpecName)) {
+      var error;
+      // Prop type validation may throw. In case they do, we don't want to
+      // fail the render phase where it didn't fail before. So we log it.
+      // After these have been cleaned up, we'll let them throw.
+      try {
+        // This is intentionally an invariant that gets caught. It's the same
+        // behavior as without this statement except with a better message.
+        !(typeof typeSpecs[typeSpecName] === 'function') ? invariant_1(false, '%s: %s type `%s` is invalid; it must be a function, usually from React.PropTypes.', componentName || 'React class', ReactPropTypeLocationNames_1[location], typeSpecName) : void 0;
+        error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret_1);
+      } catch (ex) {
+        error = ex;
+      }
+      warning_1(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', ReactPropTypeLocationNames_1[location], typeSpecName, typeof error);
+      if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+        // Only monitor this failure once because there tends to be a lot of the
+        // same error.
+        loggedTypeFailures[error.message] = true;
+
+        var componentStackInfo = '';
+
+        {
+          if (!ReactComponentTreeHook$1) {
+            ReactComponentTreeHook$1 = ReactComponentTreeHook_1;
+          }
+          if (debugID !== null) {
+            componentStackInfo = ReactComponentTreeHook$1.getStackAddendumByID(debugID);
+          } else if (element !== null) {
+            componentStackInfo = ReactComponentTreeHook$1.getCurrentStackAddendum(element);
+          }
+        }
+
+        warning_1(false, 'Failed %s type: %s%s', location, error.message, componentStackInfo);
+      }
+    }
+  }
+}
+
+var checkReactTypeSpec_1 = checkReactTypeSpec;
+
+function getDeclarationErrorAddendum() {
+  if (ReactCurrentOwner_1.current) {
+    var name = ReactCurrentOwner_1.current.getName();
+    if (name) {
+      return ' Check the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+function getSourceInfoErrorAddendum(elementProps) {
+  if (elementProps !== null && elementProps !== undefined && elementProps.__source !== undefined) {
+    var source = elementProps.__source;
+    var fileName = source.fileName.replace(/^.*[\\\/]/, '');
+    var lineNumber = source.lineNumber;
+    return ' Check your code at ' + fileName + ':' + lineNumber + '.';
+  }
+  return '';
+}
+
+/**
+ * Warn if there's no key explicitly set on dynamic arrays of children or
+ * object keys are not valid. This allows us to keep track of children between
+ * updates.
+ */
+var ownerHasKeyUseWarning = {};
+
+function getCurrentComponentErrorInfo(parentType) {
+  var info = getDeclarationErrorAddendum();
+
+  if (!info) {
+    var parentName = typeof parentType === 'string' ? parentType : parentType.displayName || parentType.name;
+    if (parentName) {
+      info = ' Check the top-level render call using <' + parentName + '>.';
+    }
+  }
+  return info;
+}
+
+/**
+ * Warn if the element doesn't have an explicit key assigned to it.
+ * This element is in an array. The array could grow and shrink or be
+ * reordered. All children that haven't already been validated are required to
+ * have a "key" property assigned to it. Error statuses are cached so a warning
+ * will only be shown once.
+ *
+ * @internal
+ * @param {ReactElement} element Element that requires a key.
+ * @param {*} parentType element's parent's type.
+ */
+function validateExplicitKey(element, parentType) {
+  if (!element._store || element._store.validated || element.key != null) {
+    return;
+  }
+  element._store.validated = true;
+
+  var memoizer = ownerHasKeyUseWarning.uniqueKey || (ownerHasKeyUseWarning.uniqueKey = {});
+
+  var currentComponentErrorInfo = getCurrentComponentErrorInfo(parentType);
+  if (memoizer[currentComponentErrorInfo]) {
+    return;
+  }
+  memoizer[currentComponentErrorInfo] = true;
+
+  // Usually the current owner is the offender, but if it accepts children as a
+  // property, it may be the creator of the child that's responsible for
+  // assigning it a key.
+  var childOwner = '';
+  if (element && element._owner && element._owner !== ReactCurrentOwner_1.current) {
+    // Give the component that originally created this child.
+    childOwner = ' It was passed a child from ' + element._owner.getName() + '.';
+  }
+
+  warning_1(false, 'Each child in an array or iterator should have a unique "key" prop.' + '%s%s See https://fb.me/react-warning-keys for more information.%s', currentComponentErrorInfo, childOwner, ReactComponentTreeHook_1.getCurrentStackAddendum(element));
+}
+
+/**
+ * Ensure that every element either is passed in a static location, in an
+ * array with an explicit keys property defined, or in an object literal
+ * with valid key property.
+ *
+ * @internal
+ * @param {ReactNode} node Statically passed child of any type.
+ * @param {*} parentType node's parent's type.
+ */
+function validateChildKeys(node, parentType) {
+  if (typeof node !== 'object') {
+    return;
+  }
+  if (Array.isArray(node)) {
+    for (var i = 0; i < node.length; i++) {
+      var child = node[i];
+      if (ReactElement_1.isValidElement(child)) {
+        validateExplicitKey(child, parentType);
+      }
+    }
+  } else if (ReactElement_1.isValidElement(node)) {
+    // This element was passed in a valid location.
+    if (node._store) {
+      node._store.validated = true;
+    }
+  } else if (node) {
+    var iteratorFn = getIteratorFn_1(node);
+    // Entry iterators provide implicit keys.
+    if (iteratorFn) {
+      if (iteratorFn !== node.entries) {
+        var iterator = iteratorFn.call(node);
+        var step;
+        while (!(step = iterator.next()).done) {
+          if (ReactElement_1.isValidElement(step.value)) {
+            validateExplicitKey(step.value, parentType);
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Given an element, validate that its props follow the propTypes definition,
+ * provided by the type.
+ *
+ * @param {ReactElement} element
+ */
+function validatePropTypes(element) {
+  var componentClass = element.type;
+  if (typeof componentClass !== 'function') {
+    return;
+  }
+  var name = componentClass.displayName || componentClass.name;
+  if (componentClass.propTypes) {
+    checkReactTypeSpec_1(componentClass.propTypes, element.props, 'prop', name, element, null);
+  }
+  if (typeof componentClass.getDefaultProps === 'function') {
+    warning_1(componentClass.getDefaultProps.isReactClassApproved, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.');
+  }
+}
+
+var ReactElementValidator$2 = {
+  createElement: function (type, props, children) {
+    var validType = typeof type === 'string' || typeof type === 'function';
+    // We warn in this case but don't throw. We expect the element creation to
+    // succeed and there will likely be errors in render.
+    if (!validType) {
+      if (typeof type !== 'function' && typeof type !== 'string') {
+        var info = '';
+        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+          info += ' You likely forgot to export your component from the file ' + "it's defined in.";
+        }
+
+        var sourceInfo = getSourceInfoErrorAddendum(props);
+        if (sourceInfo) {
+          info += sourceInfo;
+        } else {
+          info += getDeclarationErrorAddendum();
+        }
+
+        info += ReactComponentTreeHook_1.getCurrentStackAddendum();
+
+        var currentSource = props !== null && props !== undefined && props.__source !== undefined ? props.__source : null;
+        ReactComponentTreeHook_1.pushNonStandardWarningStack(true, currentSource);
+        warning_1(false, 'React.createElement: type is invalid -- expected a string (for ' + 'built-in components) or a class/function (for composite ' + 'components) but got: %s.%s', type == null ? type : typeof type, info);
+        ReactComponentTreeHook_1.popNonStandardWarningStack();
+      }
+    }
+
+    var element = ReactElement_1.createElement.apply(this, arguments);
+
+    // The result can be nullish if a mock or a custom function is used.
+    // TODO: Drop this when these are no longer allowed as the type argument.
+    if (element == null) {
+      return element;
+    }
+
+    // Skip key warning if the type isn't valid since our key validation logic
+    // doesn't expect a non-string/function type and can throw confusing errors.
+    // We don't want exception behavior to differ between dev and prod.
+    // (Rendering will throw with a helpful message and as soon as the type is
+    // fixed, the key warnings will appear.)
+    if (validType) {
+      for (var i = 2; i < arguments.length; i++) {
+        validateChildKeys(arguments[i], type);
+      }
+    }
+
+    validatePropTypes(element);
+
+    return element;
+  },
+
+  createFactory: function (type) {
+    var validatedFactory = ReactElementValidator$2.createElement.bind(null, type);
+    // Legacy hook TODO: Warn if this is accessed
+    validatedFactory.type = type;
+
+    {
+      if (canDefineProperty_1) {
+        Object.defineProperty(validatedFactory, 'type', {
+          enumerable: false,
+          get: function () {
+            lowPriorityWarning_1(false, 'Factory.type is deprecated. Access the class directly ' + 'before passing it to createFactory.');
+            Object.defineProperty(this, 'type', {
+              value: type
+            });
+            return type;
+          }
+        });
+      }
+    }
+
+    return validatedFactory;
+  },
+
+  cloneElement: function (element, props, children) {
+    var newElement = ReactElement_1.cloneElement.apply(this, arguments);
+    for (var i = 2; i < arguments.length; i++) {
+      validateChildKeys(arguments[i], newElement.type);
+    }
+    validatePropTypes(newElement);
+    return newElement;
+  }
+};
+
+var ReactElementValidator_1 = ReactElementValidator$2;
+
 /**
  * Create a factory that creates HTML tag elements.
  *
  * @private
  */
 var createDOMFactory = ReactElement_1.createFactory;
+{
+  var ReactElementValidator$1 = ReactElementValidator_1;
+  createDOMFactory = ReactElementValidator$1.createFactory;
+}
+
 /**
  * Creates a mapping from supported HTML tags to `ReactDOMComponent` classes.
  *
@@ -1730,6 +2298,13 @@ var ReactPropTypesSecret$2 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 var ReactPropTypesSecret_1$2 = ReactPropTypesSecret$2;
 
+{
+  var invariant$2 = invariant_1;
+  var warning$2 = warning_1;
+  var ReactPropTypesSecret$3 = ReactPropTypesSecret_1$2;
+  var loggedTypeFailures$1 = {};
+}
+
 /**
  * Assert that the values match with the type specs.
  * Error messages are memorized and will only be shown once.
@@ -1742,7 +2317,34 @@ var ReactPropTypesSecret_1$2 = ReactPropTypesSecret$2;
  * @private
  */
 function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  
+  {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant$2(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'React.PropTypes.', componentName || 'React class', location, typeSpecName);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret$3);
+        } catch (ex) {
+          error = ex;
+        }
+        warning$2(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures$1)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures$1[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning$2(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
 }
 
 var checkPropTypes_1 = checkPropTypes;
@@ -1877,9 +2479,11 @@ var factoryWithTypeCheckers = function(isValidElement, throwOnDirectAccess) {
   PropTypeError.prototype = Error.prototype;
 
   function createChainableTypeChecker(validate) {
-    var manualPropTypeCallCache, manualPropTypeWarningCount;
-
-function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
+    {
+      var manualPropTypeCallCache = {};
+      var manualPropTypeWarningCount = 0;
+    }
+    function checkType(isRequired, props, propName, componentName, location, propFullName, secret) {
       componentName = componentName || ANONYMOUS;
       propFullName = propFullName || propName;
 
@@ -1892,7 +2496,7 @@ function checkType(isRequired, props, propName, componentName, location, propFul
             'Use `PropTypes.checkPropTypes()` to call them. ' +
             'Read more at http://fb.me/use-check-prop-types'
           );
-        } else if ("production" !== 'production' && typeof console !== 'undefined') {
+        } else if ("development" !== 'production' && typeof console !== 'undefined') {
           // Old behavior for people using React.PropTypes
           var cacheKey = componentName + ':' + propName;
           if (
@@ -2002,7 +2606,7 @@ function checkType(isRequired, props, propName, componentName, location, propFul
 
   function createEnumTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
-      void 0;
+      warning_1(false, 'Invalid argument supplied to oneOf, expected an instance of array.');
       return emptyFunction_1.thatReturnsNull;
     }
 
@@ -2045,7 +2649,7 @@ function checkType(isRequired, props, propName, componentName, location, propFul
 
   function createUnionTypeChecker(arrayOfTypeCheckers) {
     if (!Array.isArray(arrayOfTypeCheckers)) {
-      void 0;
+      warning_1(false, 'Invalid argument supplied to oneOfType, expected an instance of array.');
       return emptyFunction_1.thatReturnsNull;
     }
 
@@ -2269,6 +2873,10 @@ var ReactPropTypes = factory_1(isValidElement);
 
 var ReactVersion = '15.6.1';
 
+{
+  var warning$3 = warning_1;
+}
+
 var MIXINS_KEY = 'mixins';
 
 // Helper function to allow the creation of anonymous functions which do not
@@ -2277,8 +2885,13 @@ function identity(fn) {
   return fn;
 }
 
+var ReactPropTypeLocationNames$2;
 {
-  
+  ReactPropTypeLocationNames$2 = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
 }
 
 function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
@@ -2551,6 +3164,9 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       }
     },
     childContextTypes: function(Constructor, childContextTypes) {
+      {
+        validateTypeDef(Constructor, childContextTypes, 'childContext');
+      }
       Constructor.childContextTypes = index(
         {},
         Constructor.childContextTypes,
@@ -2558,6 +3174,9 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       );
     },
     contextTypes: function(Constructor, contextTypes) {
+      {
+        validateTypeDef(Constructor, contextTypes, 'context');
+      }
       Constructor.contextTypes = index(
         {},
         Constructor.contextTypes,
@@ -2579,6 +3198,9 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       }
     },
     propTypes: function(Constructor, propTypes) {
+      {
+        validateTypeDef(Constructor, propTypes, 'prop');
+      }
       Constructor.propTypes = index({}, Constructor.propTypes, propTypes);
     },
     statics: function(Constructor, statics) {
@@ -2586,6 +3208,25 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
     },
     autobind: function() {}
   };
+
+  function validateTypeDef(Constructor, typeDef, location) {
+    for (var propName in typeDef) {
+      if (typeDef.hasOwnProperty(propName)) {
+        // use a warning instead of an _invariant so components
+        // don't show up in prod but only in __DEV__
+        {
+          warning$3(
+            typeof typeDef[propName] === 'function',
+            '%s: %s type `%s` is invalid; it must be a function, usually from ' +
+              'React.PropTypes.',
+            Constructor.displayName || 'ReactClass',
+            ReactPropTypeLocationNames$2[location],
+            propName
+          );
+        }
+      }
+    }
+  }
 
   function validateMethodOverride(isAlreadyDefined, name) {
     var specPolicy = ReactClassInterface.hasOwnProperty(name)
@@ -2621,6 +3262,23 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
    */
   function mixSpecIntoComponent(Constructor, spec) {
     if (!spec) {
+      {
+        var typeofSpec = typeof spec;
+        var isMixinValid = typeofSpec === 'object' && spec !== null;
+
+        {
+          warning$3(
+            isMixinValid,
+            "%s: You're attempting to include a mixin that is either null " +
+              'or not an object. Check the mixins included by the component, ' +
+              'as well as any mixins they include themselves. ' +
+              'Expected object but got %s.',
+            Constructor.displayName || 'ReactClass',
+            spec === null ? null : typeofSpec
+          );
+        }
+      }
+
       return;
     }
 
@@ -2702,7 +3360,13 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
             }
           } else {
             proto[name] = property;
-            
+            {
+              // Add verbose displayName to the function, which helps when looking
+              // at profiling tools.
+              if (typeof property === 'function' && spec.displayName) {
+                proto[name].displayName = spec.displayName + '_' + name;
+              }
+            }
           }
         }
       }
@@ -2819,6 +3483,54 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
    */
   function bindAutoBindMethod(component, method) {
     var boundMethod = method.bind(component);
+    {
+      boundMethod.__reactBoundContext = component;
+      boundMethod.__reactBoundMethod = method;
+      boundMethod.__reactBoundArguments = null;
+      var componentName = component.constructor.displayName;
+      var _bind = boundMethod.bind;
+      boundMethod.bind = function(newThis) {
+        for (
+          var _len = arguments.length,
+            args = Array(_len > 1 ? _len - 1 : 0),
+            _key = 1;
+          _key < _len;
+          _key++
+        ) {
+          args[_key - 1] = arguments[_key];
+        }
+
+        // User is trying to bind() an autobound method; we effectively will
+        // ignore the value of "this" that the user is trying to use, so
+        // let's warn.
+        if (newThis !== component && newThis !== null) {
+          {
+            warning$3(
+              false,
+              'bind(): React component methods may only be bound to the ' +
+                'component instance. See %s',
+              componentName
+            );
+          }
+        } else if (!args.length) {
+          {
+            warning$3(
+              false,
+              'bind(): You are binding a component method to the component. ' +
+                'React does this for you automatically in a high-performance ' +
+                'way, so you can safely remove this call. See %s',
+              componentName
+            );
+          }
+          return boundMethod;
+        }
+        var reboundMethod = _bind.apply(boundMethod, arguments);
+        reboundMethod.__reactBoundContext = component;
+        reboundMethod.__reactBoundMethod = method;
+        reboundMethod.__reactBoundArguments = args;
+        return reboundMethod;
+      };
+    }
     return boundMethod;
   }
 
@@ -2868,6 +3580,18 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
      * @final
      */
     isMounted: function() {
+      {
+        warning$3(
+          this.__didWarnIsMounted,
+          '%s: isMounted is deprecated. Instead, make sure to clean up ' +
+            'subscriptions and pending requests in componentWillUnmount to ' +
+            'prevent memory leaks.',
+          (this.constructor && this.constructor.displayName) ||
+            this.name ||
+            'Component'
+        );
+        this.__didWarnIsMounted = true;
+      }
       return !!this.__isMounted;
     }
   };
@@ -2895,6 +3619,15 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       // This constructor gets overridden by mocks. The argument is used
       // by mocks to assert on what gets mounted.
 
+      {
+        warning$3(
+          this instanceof Constructor,
+          'Something is calling a React component directly. Use a factory or ' +
+            'JSX instead. See: https://fb.me/react-legacyfactory'
+        );
+      }
+
+      // Wire up auto-binding
       if (this.__reactAutoBindPairs.length) {
         bindAutoBindMethods(this);
       }
@@ -2910,6 +3643,17 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       // getInitialState and componentWillMount methods for initialization.
 
       var initialState = this.getInitialState ? this.getInitialState() : null;
+      {
+        // We allow auto-mocks to proceed as if they're returning null.
+        if (
+          initialState === undefined &&
+          this.getInitialState._isMockFunction
+        ) {
+          // This is probably bad practice. Consider warning here and
+          // deprecating this convenience.
+          initialState = null;
+        }
+      }
       invariant_1(
         typeof initialState === 'object' && !Array.isArray(initialState),
         '%s.getInitialState(): must return an object or null',
@@ -2933,11 +3677,42 @@ function factory$1(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
       Constructor.defaultProps = Constructor.getDefaultProps();
     }
 
+    {
+      // This is a tag to indicate that the use of these method names is ok,
+      // since it's used with createClass. If it's not, then it's likely a
+      // mistake so we'll warn you to use the static property, property
+      // initializer or constructor respectively.
+      if (Constructor.getDefaultProps) {
+        Constructor.getDefaultProps.isReactClassApproved = {};
+      }
+      if (Constructor.prototype.getInitialState) {
+        Constructor.prototype.getInitialState.isReactClassApproved = {};
+      }
+    }
+
     invariant_1(
       Constructor.prototype.render,
       'createClass(...): Class specification must implement a `render` method.'
     );
 
+    {
+      warning$3(
+        !Constructor.prototype.componentShouldUpdate,
+        '%s has a method called ' +
+          'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' +
+          'The name is phrased as a question because the function is ' +
+          'expected to return a value.',
+        spec.displayName || 'A component'
+      );
+      warning$3(
+        !Constructor.prototype.componentWillRecieveProps,
+        '%s has a method called ' +
+          'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?',
+        spec.displayName || 'A component'
+      );
+    }
+
+    // Reduce time spent doing lookups by setting these on the prototype.
     for (var methodName in ReactClassInterface) {
       if (!Constructor.prototype[methodName]) {
         Constructor.prototype[methodName] = null;
@@ -2976,7 +3751,7 @@ var createClass = factory_1$2(Component, isValidElement$1, ReactNoopUpdateQueue_
  * structure.
  */
 function onlyChild(children) {
-  !ReactElement_1.isValidElement(children) ? reactProdInvariant_1('143') : void 0;
+  !ReactElement_1.isValidElement(children) ? invariant_1(false, 'React.Children.only expected to receive a single React element child.') : void 0;
   return children;
 }
 
@@ -2986,10 +3761,36 @@ var createElement = ReactElement_1.createElement;
 var createFactory = ReactElement_1.createFactory;
 var cloneElement = ReactElement_1.cloneElement;
 
+{
+  var lowPriorityWarning = lowPriorityWarning_1;
+  var canDefineProperty = canDefineProperty_1;
+  var ReactElementValidator = ReactElementValidator_1;
+  var didWarnPropTypesDeprecated = false;
+  createElement = ReactElementValidator.createElement;
+  createFactory = ReactElementValidator.createFactory;
+  cloneElement = ReactElementValidator.cloneElement;
+}
+
 var __spread = index;
 var createMixin = function (mixin) {
   return mixin;
 };
+
+{
+  var warnedForSpread = false;
+  var warnedForCreateMixin = false;
+  __spread = function () {
+    lowPriorityWarning(warnedForSpread, 'React.__spread is deprecated and should not be used. Use ' + 'Object.assign directly or another helper function with similar ' + 'semantics. You may be seeing this warning due to your compiler. ' + 'See https://fb.me/react-spread-deprecation for more details.');
+    warnedForSpread = true;
+    return index.apply(null, arguments);
+  };
+
+  createMixin = function (mixin) {
+    lowPriorityWarning(warnedForCreateMixin, 'React.createMixin is deprecated and should not be used. ' + 'In React v16.0, it will be removed. ' + 'You can use this mixin directly instead. ' + 'See https://fb.me/createmixin-was-never-implemented for more info.');
+    warnedForCreateMixin = true;
+    return mixin;
+  };
+}
 
 var React = {
   // Modern
@@ -3025,6 +3826,42 @@ var React = {
   // Deprecated hook for JSX spread, don't use this for anything.
   __spread: __spread
 };
+
+{
+  var warnedForCreateClass = false;
+  if (canDefineProperty) {
+    Object.defineProperty(React, 'PropTypes', {
+      get: function () {
+        lowPriorityWarning(didWarnPropTypesDeprecated, 'Accessing PropTypes via the main React package is deprecated,' + ' and will be removed in  React v16.0.' + ' Use the latest available v15.* prop-types package from npm instead.' + ' For info on usage, compatibility, migration and more, see ' + 'https://fb.me/prop-types-docs');
+        didWarnPropTypesDeprecated = true;
+        return ReactPropTypes;
+      }
+    });
+
+    Object.defineProperty(React, 'createClass', {
+      get: function () {
+        lowPriorityWarning(warnedForCreateClass, 'Accessing createClass via the main React package is deprecated,' + ' and will be removed in React v16.0.' + " Use a plain JavaScript class instead. If you're not yet " + 'ready to migrate, create-react-class v15.* is available ' + 'on npm as a temporary, drop-in replacement. ' + 'For more info see https://fb.me/react-create-class');
+        warnedForCreateClass = true;
+        return createClass;
+      }
+    });
+  }
+
+  // React.DOM factories are deprecated. Wrap these methods so that
+  // invocations of the React.DOM namespace and alert users to switch
+  // to the `react-dom-factories` package.
+  React.DOM = {};
+  var warnedForFactories = false;
+  Object.keys(ReactDOMFactories_1).forEach(function (factory) {
+    React.DOM[factory] = function () {
+      if (!warnedForFactories) {
+        lowPriorityWarning(false, 'Accessing factories like React.DOM.%s has been deprecated ' + 'and will be removed in v16.0+. Use the ' + 'react-dom-factories package instead. ' + ' Version 1.0 provides a drop-in replacement.' + ' For more info, see https://fb.me/react-dom-factories', factory);
+        warnedForFactories = true;
+      }
+      return ReactDOMFactories_1[factory].apply(ReactDOMFactories_1, arguments);
+    };
+  });
+}
 
 var React_1 = React;
 
@@ -3486,13 +4323,7 @@ function compareUnions(x, y) {
         return res !== 0 ? res : compare(x.data, y.data);
     }
 }
-function createDisposable(f) {
-    return defineProperty({
-        Dispose: f
-    }, FSymbol.reflection, function () {
-        return { interfaces: ["System.IDisposable"] };
-    });
-}
+
 // tslint forbids non-arrow functions, but it's
 // necessary here to use the arguments object
 /* tslint:disable */
@@ -4631,7 +5462,7 @@ var Elements = function () {
       return {
         type: "Global.Elements",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Button"], ["Icon"], ["Title"], ["Delete"], ["Box"], ["Content"], ["Tag"], ["Image"], ["Progress"], ["Table"], ["Form"]]
+        cases: [["Button"], ["Icon"], ["Title"], ["Delete"], ["Box"], ["Content"], ["Tag"], ["Image"], ["Progress"], ["Table"], ["Form"], ["Notification"]]
       };
     }
   }, {
@@ -4661,7 +5492,7 @@ var Components = function () {
       return {
         type: "Global.Components",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Panel"], ["Level"], ["Breadcrumb"], ["Card"], ["Media"], ["Menu"], ["Message"], ["Navbar"], ["Pagination"]]
+        cases: [["Panel"], ["Level"], ["Breadcrumb"], ["Card"], ["Media"], ["Menu"], ["Message"], ["Navbar"], ["Pagination"], ["Tabs"]]
       };
     }
   }, {
@@ -4730,6 +5561,8 @@ function toHash(page) {
       return "#elements/table";
     } else if (page.data.tag === 10) {
       return "#elements/form";
+    } else if (page.data.tag === 11) {
+      return "#elements/notification";
     } else {
       return "#elements/button";
     }
@@ -4750,6 +5583,8 @@ function toHash(page) {
       return "#components/navbar";
     } else if (page.data.tag === 8) {
       return "#components/pagination";
+    } else if (page.data.tag === 9) {
+      return "#components/tabs";
     } else {
       return "#components/panel";
     }
@@ -5418,12 +6253,24 @@ var Bulma = function (__exports) {
     return __exports;
   }({});
 
+  var Notification = __exports.Notification = function (__exports) {
+    var Container_30 = __exports.Container = "notification";
+    var Color_4 = __exports.Color = levelAndColor;
+
+    var Delete = __exports.Delete = function (__exports) {
+      var Container_31 = __exports.Container = "delete";
+      return __exports;
+    }({});
+
+    return __exports;
+  }({});
+
   var Panel = __exports.Panel = function (__exports) {
-    var Container_30 = __exports.Container = "panel";
+    var Container_32 = __exports.Container = "panel";
     var Heading = __exports.Heading = "panel-heading";
 
     var Tabs = __exports.Tabs = function (__exports) {
-      var Container_31 = __exports.Container = "panel-tabs";
+      var Container_33 = __exports.Container = "panel-tabs";
 
       var Tab = __exports.Tab = function (__exports) {
         var State = __exports.State = function (__exports) {
@@ -5438,7 +6285,7 @@ var Bulma = function (__exports) {
     }({});
 
     var Block = __exports.Block = function (__exports) {
-      var Container_32 = __exports.Container = "panel-block";
+      var Container_34 = __exports.Container = "panel-block";
       var Icon_1 = __exports.Icon = "panel-icon";
       var List_1 = __exports.List = "panel-list";
 
@@ -5453,18 +6300,39 @@ var Bulma = function (__exports) {
     return __exports;
   }({});
 
-  var Pagination = __exports.Pagination = function (__exports) {
-    var Container_33 = __exports.Container = "pagination";
-    var Previous = __exports.Previous = "pagination-previous";
-    var Next = __exports.Next = "pagination-next";
-    var Link_1 = __exports.Link = "pagination-link";
-    var Ellipsis = __exports.Ellipsis = "pagination-ellipsis";
-    var List_2 = __exports.List = "pagination-list";
+  var Tabs = __exports.Tabs = function (__exports) {
+    var Container_35 = __exports.Container = "tabs";
+    var State_9 = __exports.State = genericIsActiveState;
     var Size_7 = __exports.Size = standardSize;
 
     var Alignment = __exports.Alignment = function (__exports) {
       var Center_1 = __exports.Center = "is-centered";
       var Right_7 = __exports.Right = "is-right";
+      return __exports;
+    }({});
+
+    var Style = __exports.Style = function (__exports) {
+      var IsBoxed_1 = __exports.IsBoxed = "is-boxed";
+      var IsToggle = __exports.IsToggle = "is-toggle";
+      var IsFullwidth_1 = __exports.IsFullwidth = "is-fullwidth";
+      return __exports;
+    }({});
+
+    return __exports;
+  }({});
+
+  var Pagination = __exports.Pagination = function (__exports) {
+    var Container_36 = __exports.Container = "pagination";
+    var Previous = __exports.Previous = "pagination-previous";
+    var Next = __exports.Next = "pagination-next";
+    var Link_1 = __exports.Link = "pagination-link";
+    var Ellipsis = __exports.Ellipsis = "pagination-ellipsis";
+    var List_2 = __exports.List = "pagination-list";
+    var Size_8 = __exports.Size = standardSize;
+
+    var Alignment = __exports.Alignment = function (__exports) {
+      var Center_2 = __exports.Center = "is-centered";
+      var Right_8 = __exports.Right = "is-right";
       return __exports;
     }({});
 
@@ -5493,7 +6361,7 @@ var Bulma = function (__exports) {
 
     var Sizing = __exports.Sizing = function (__exports) {
       var IsOverlay = __exports.IsOverlay = "is-overlay";
-      var IsFullwidth_1 = __exports.IsFullwidth = "is-fullwidth";
+      var IsFullwidth_2 = __exports.IsFullwidth = "is-fullwidth";
       var IsMarginless = __exports.IsMarginless = "is-marginless";
       var IsPaddingless = __exports.IsPaddingless = "is-paddingless";
       return __exports;
@@ -5522,9 +6390,9 @@ var Bulma = function (__exports) {
   }({});
 
   var Progress = __exports.Progress = function (__exports) {
-    var Container_34 = __exports.Container = "progress";
-    var Size_8 = __exports.Size = standardSize;
-    var Color_4 = __exports.Color = levelAndColor;
+    var Container_37 = __exports.Container = "progress";
+    var Size_9 = __exports.Size = standardSize;
+    var Color_5 = __exports.Color = levelAndColor;
     return __exports;
   }({});
 
@@ -5551,19 +6419,19 @@ var Bulma = function (__exports) {
   }({});
 
   var Hero = __exports.Hero = function (__exports) {
-    var Container_35 = __exports.Container = "hero";
+    var Container_38 = __exports.Container = "hero";
     var Head = __exports.Head = "hero-head";
     var Body_2 = __exports.Body = "hero-body";
     var Foot = __exports.Foot = "hero-foot";
 
     var Video = __exports.Video = function (__exports) {
-      var Container_36 = __exports.Container = "hero-video";
+      var Container_39 = __exports.Container = "hero-video";
       var IsTransparent_1 = __exports.IsTransparent = "is-transparent";
       return __exports;
     }({});
 
     var Buttons = __exports.Buttons = function (__exports) {
-      var Container_37 = __exports.Container = "hero-buttons";
+      var Container_40 = __exports.Container = "hero-buttons";
       return __exports;
     }({});
 
@@ -5580,12 +6448,12 @@ var Bulma = function (__exports) {
       return __exports;
     }({});
 
-    var Color_5 = __exports.Color = levelAndColor;
+    var Color_6 = __exports.Color = levelAndColor;
     return __exports;
   }({});
 
   var Table = __exports.Table = function (__exports) {
-    var Container_38 = __exports.Container = "table";
+    var Container_41 = __exports.Container = "table";
 
     var Row = __exports.Row = function (__exports) {
       var State = __exports.State = function (__exports) {
@@ -5611,7 +6479,7 @@ var Bulma = function (__exports) {
   }({});
 
   var Tag = __exports.Tag = function (__exports) {
-    var Container_39 = __exports.Container = "tag";
+    var Container_42 = __exports.Container = "tag";
 
     var Size = __exports.Size = function (__exports) {
       var IsMedium_2 = __exports.IsMedium = "is-medium";
@@ -5619,7 +6487,7 @@ var Bulma = function (__exports) {
       return __exports;
     }({});
 
-    var Color_6 = __exports.Color = levelAndColor;
+    var Color_7 = __exports.Color = levelAndColor;
     return __exports;
   }({});
 
@@ -7119,45 +7987,8 @@ var MAX_UNSIGNED_VALUE = fromBits(0xFFFFFFFF | 0, 0xFFFFFFFF | 0, true);
 var MIN_VALUE = fromBits(0, 0x80000000 | 0, false);
 
 /* tslint:disable */
-function parse$1(v, kind) {
-    if (kind == null) {
-        kind = typeof v === "string" && v.slice(-1) === "Z" ? 1 /* UTC */ : 2 /* Local */;
-    }
-    var date = v == null ? new Date() : new Date(v);
-    if (isNaN(date.getTime())) {
-        // Check if this is a time-only string, which JS Date parsing cannot handle (see #1045)
-        if (typeof v === "string" && /^(?:[01]?\d|2[0-3]):(?:[0-5]?\d)(?::[0-5]?\d(?:\.\d+)?)?(?:\s*[AaPp][Mm])?$/.test(v)) {
-            var d = new Date();
-            date = new Date(d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate() + " " + v);
-        } else {
-            throw new Error("The string is not a valid Date.");
-        }
-    }
-    if (kind === 2 /* Local */) {
-            date.kind = kind;
-        }
-    return date;
-}
+
 /* tslint:enable */
-
-
-function now() {
-    return parse$1();
-}
-
-
-
-
-
-
-
-
-
-
-
-function millisecond(d) {
-    return d.kind === 2 /* Local */ ? d.getMilliseconds() : d.getUTCMilliseconds();
-}
 
 // From http://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
 function escape$1(str) {
@@ -8154,6 +8985,74 @@ var Msg$10 = function () {
 setType("Elements.Tag.Types.Msg", Msg$10);
 
 var Model$11 = function () {
+  function Model$$1(intro, basicViewer, colorViewer, deleteViewer) {
+    babelHelpers.classCallCheck(this, Model$$1);
+    this.Intro = intro;
+    this.BasicViewer = basicViewer;
+    this.ColorViewer = colorViewer;
+    this.DeleteViewer = deleteViewer;
+  }
+
+  babelHelpers.createClass(Model$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Elements.Notification.Types.Model",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Intro: "string",
+          BasicViewer: Model,
+          ColorViewer: Model,
+          DeleteViewer: Model
+        }
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return equalsRecords(this, other);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+  }]);
+  return Model$$1;
+}();
+setType("Elements.Notification.Types.Model", Model$11);
+var Msg$11 = function () {
+  function Msg$$1(tag, data) {
+    babelHelpers.classCallCheck(this, Msg$$1);
+    this.tag = tag;
+    this.data = data;
+  }
+
+  babelHelpers.createClass(Msg$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Elements.Notification.Types.Msg",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["BasicViewerMsg", Msg], ["ColorViewerMsg", Msg], ["DeleteViewerMsg", Msg]]
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+  }]);
+  return Msg$$1;
+}();
+setType("Elements.Notification.Types.Msg", Msg$11);
+
+var Model$12 = function () {
   function Model$$1(intro, typeViewer, sizeViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8187,8 +9086,8 @@ var Model$11 = function () {
   }]);
   return Model$$1;
 }();
-setType("Elements.Title.Types.Model", Model$11);
-var Msg$11 = function () {
+setType("Elements.Title.Types.Model", Model$12);
+var Msg$12 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8217,9 +9116,9 @@ var Msg$11 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Elements.Title.Types.Msg", Msg$11);
+setType("Elements.Title.Types.Msg", Msg$12);
 
-var Model$12 = function () {
+var Model$13 = function () {
   function Model$$1(intro, panelViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8251,8 +9150,8 @@ var Model$12 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Panel.Types.Model", Model$12);
-var Msg$12 = function () {
+setType("Components.Panel.Types.Model", Model$13);
+var Msg$13 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8281,9 +9180,9 @@ var Msg$12 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Panel.Types.Msg", Msg$12);
+setType("Components.Panel.Types.Msg", Msg$13);
 
-var Model$13 = function () {
+var Model$14 = function () {
   function Model$$1(intro, boxViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8315,8 +9214,8 @@ var Model$13 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Level.Types.Model", Model$13);
-var Msg$13 = function () {
+setType("Components.Level.Types.Model", Model$14);
+var Msg$14 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8345,9 +9244,9 @@ var Msg$13 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Level.Types.Msg", Msg$13);
+setType("Components.Level.Types.Msg", Msg$14);
 
-var Model$14 = function () {
+var Model$15 = function () {
   function Model$$1(intro, basicViewer, alignmentCenterViewer, iconViewer, sizeViewer, separatorViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8387,8 +9286,8 @@ var Model$14 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Breadcrumb.Types.Model", Model$14);
-var Msg$14 = function () {
+setType("Components.Breadcrumb.Types.Model", Model$15);
+var Msg$15 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8417,9 +9316,9 @@ var Msg$14 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Breadcrumb.Types.Msg", Msg$14);
+setType("Components.Breadcrumb.Types.Msg", Msg$15);
 
-var Model$15 = function () {
+var Model$16 = function () {
   function Model$$1(intro, basicViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8451,8 +9350,8 @@ var Model$15 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Card.Types.Model", Model$15);
-var Msg$15 = function () {
+setType("Components.Card.Types.Model", Model$16);
+var Msg$16 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8481,9 +9380,9 @@ var Msg$15 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Card.Types.Msg", Msg$15);
+setType("Components.Card.Types.Msg", Msg$16);
 
-var Model$16 = function () {
+var Model$17 = function () {
   function Model$$1(intro, basicViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8515,8 +9414,8 @@ var Model$16 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Media.Types.Model", Model$16);
-var Msg$16 = function () {
+setType("Components.Media.Types.Model", Model$17);
+var Msg$17 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8545,9 +9444,9 @@ var Msg$16 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Media.Types.Msg", Msg$16);
+setType("Components.Media.Types.Msg", Msg$17);
 
-var Model$17 = function () {
+var Model$18 = function () {
   function Model$$1(intro, basicViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8579,8 +9478,8 @@ var Model$17 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Menu.Types.Model", Model$17);
-var Msg$17 = function () {
+setType("Components.Menu.Types.Model", Model$18);
+var Msg$18 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8609,9 +9508,9 @@ var Msg$17 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Menu.Types.Msg", Msg$17);
+setType("Components.Menu.Types.Msg", Msg$18);
 
-var Model$18 = function () {
+var Model$19 = function () {
   function Model$$1(intro, basicViewer, colorViewer, sizeViewer, bodyOnlyViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8649,8 +9548,8 @@ var Model$18 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Message.Types.Model", Model$18);
-var Msg$18 = function () {
+setType("Components.Message.Types.Model", Model$19);
+var Msg$19 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8679,9 +9578,9 @@ var Msg$18 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Message.Types.Msg", Msg$18);
+setType("Components.Message.Types.Msg", Msg$19);
 
-var Model$19 = function () {
+var Model$20 = function () {
   function Model$$1(intro, basicViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8713,8 +9612,8 @@ var Model$19 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Navbar.Types.Model", Model$19);
-var Msg$19 = function () {
+setType("Components.Navbar.Types.Model", Model$20);
+var Msg$20 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8743,9 +9642,9 @@ var Msg$19 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Navbar.Types.Msg", Msg$19);
+setType("Components.Navbar.Types.Msg", Msg$20);
 
-var Model$20 = function () {
+var Model$21 = function () {
   function Model$$1(intro, basicViewer, alignmentViewer, sizeViewer) {
     babelHelpers.classCallCheck(this, Model$$1);
     this.Intro = intro;
@@ -8781,8 +9680,8 @@ var Model$20 = function () {
   }]);
   return Model$$1;
 }();
-setType("Components.Pagination.Types.Model", Model$20);
-var Msg$20 = function () {
+setType("Components.Pagination.Types.Model", Model$21);
+var Msg$21 = function () {
   function Msg$$1(tag, data) {
     babelHelpers.classCallCheck(this, Msg$$1);
     this.tag = tag;
@@ -8811,9 +9710,79 @@ var Msg$20 = function () {
   }]);
   return Msg$$1;
 }();
-setType("Components.Pagination.Types.Msg", Msg$20);
+setType("Components.Pagination.Types.Msg", Msg$21);
 
-var Model$21 = function () {
+var Model$22 = function () {
+  function Model$$1(intro, basicViewer, alignmentViewer, sizeViewer, stylesViewer) {
+    babelHelpers.classCallCheck(this, Model$$1);
+    this.Intro = intro;
+    this.BasicViewer = basicViewer;
+    this.AlignmentViewer = alignmentViewer;
+    this.SizeViewer = sizeViewer;
+    this.StylesViewer = stylesViewer;
+  }
+
+  babelHelpers.createClass(Model$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Tabs.Types.Model",
+        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
+        properties: {
+          Intro: "string",
+          BasicViewer: Model,
+          AlignmentViewer: Model,
+          SizeViewer: Model,
+          StylesViewer: Model
+        }
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return equalsRecords(this, other);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareRecords(this, other) | 0;
+    }
+  }]);
+  return Model$$1;
+}();
+setType("Components.Tabs.Types.Model", Model$22);
+var Msg$22 = function () {
+  function Msg$$1(tag, data) {
+    babelHelpers.classCallCheck(this, Msg$$1);
+    this.tag = tag;
+    this.data = data;
+  }
+
+  babelHelpers.createClass(Msg$$1, [{
+    key: FSymbol.reflection,
+    value: function value() {
+      return {
+        type: "Components.Tabs.Types.Msg",
+        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+        cases: [["BasicViewerMsg", Msg], ["AlignmentViewerMsg", Msg], ["SizeViewerMsg", Msg], ["StylesViewerMsg", Msg]]
+      };
+    }
+  }, {
+    key: "Equals",
+    value: function Equals(other) {
+      return this === other || this.tag === other.tag && equals(this.data, other.data);
+    }
+  }, {
+    key: "CompareTo",
+    value: function CompareTo(other) {
+      return compareUnions(this, other) | 0;
+    }
+  }]);
+  return Msg$$1;
+}();
+setType("Components.Tabs.Types.Msg", Msg$22);
+
+var Model$23 = function () {
   function Model(intro) {
     babelHelpers.classCallCheck(this, Model);
     this.Intro = intro;
@@ -8843,7 +9812,7 @@ var Model$21 = function () {
   }]);
   return Model;
 }();
-setType("Home.Types.Model", Model$21);
+setType("Home.Types.Model", Model$23);
 
 var Msg$2 = function () {
   function Msg(tag, data) {
@@ -8858,7 +9827,7 @@ var Msg$2 = function () {
       return {
         type: "App.Types.Msg",
         interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["SendNotification"], ["Test"], ["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["TitleMsg", Msg$11], ["PanelMsg", Msg$12], ["LevelMsg", Msg$13], ["BreadcrumbMsg", Msg$14], ["CardMsg", Msg$15], ["MediaMsg", Msg$16], ["MenuMsg", Msg$17], ["MessageMsg", Msg$18], ["NavbarMsg", Msg$19], ["PaginationMsg", Msg$20]]
+        cases: [["BoxMsg", Msg$1], ["ButtonMsg", Msg$3], ["ContentMsg", Msg$4], ["DeleteMsg", Msg$5], ["IconMsg", Msg$6], ["ImageMsg", Msg$7], ["ProgressMsg", Msg$8], ["TableMsg", Msg$9], ["TagMsg", Msg$10], ["NotificationMsg", Msg$11], ["TitleMsg", Msg$12], ["PanelMsg", Msg$13], ["LevelMsg", Msg$14], ["BreadcrumbMsg", Msg$15], ["CardMsg", Msg$16], ["MediaMsg", Msg$17], ["MenuMsg", Msg$18], ["MessageMsg", Msg$19], ["NavbarMsg", Msg$20], ["PaginationMsg", Msg$21], ["TabsMsg", Msg$22]]
       };
     }
   }, {
@@ -8876,7 +9845,7 @@ var Msg$2 = function () {
 }();
 setType("App.Types.Msg", Msg$2);
 var ElementsModel = function () {
-  function ElementsModel(box, button, content, _delete, icon, image, progress, table, tag, title) {
+  function ElementsModel(box, button, content, _delete, icon, image, progress, table, tag, notification, title) {
     babelHelpers.classCallCheck(this, ElementsModel);
     this.Box = box;
     this.Button = button;
@@ -8887,6 +9856,7 @@ var ElementsModel = function () {
     this.Progress = progress;
     this.Table = table;
     this.Tag = tag;
+    this.Notification = notification;
     this.Title = title;
   }
 
@@ -8906,7 +9876,8 @@ var ElementsModel = function () {
           Progress: Model$8,
           Table: Model$9,
           Tag: Model$10,
-          Title: Model$11
+          Notification: Model$11,
+          Title: Model$12
         }
       };
     }
@@ -8925,7 +9896,7 @@ var ElementsModel = function () {
 }();
 setType("App.Types.ElementsModel", ElementsModel);
 var ComponentsModel = function () {
-  function ComponentsModel(panel, level, breadcrumb, card, media, menu, navbar, pagination, message) {
+  function ComponentsModel(panel, level, breadcrumb, card, media, menu, navbar, pagination, tabs, message) {
     babelHelpers.classCallCheck(this, ComponentsModel);
     this.Panel = panel;
     this.Level = level;
@@ -8935,6 +9906,7 @@ var ComponentsModel = function () {
     this.Menu = menu;
     this.Navbar = navbar;
     this.Pagination = pagination;
+    this.Tabs = tabs;
     this.Message = message;
   }
 
@@ -8945,15 +9917,16 @@ var ComponentsModel = function () {
         type: "App.Types.ComponentsModel",
         interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
         properties: {
-          Panel: Model$12,
-          Level: Model$13,
-          Breadcrumb: Model$14,
-          Card: Model$15,
-          Media: Model$16,
-          Menu: Model$17,
-          Navbar: Model$19,
-          Pagination: Model$20,
-          Message: Model$18
+          Panel: Model$13,
+          Level: Model$14,
+          Breadcrumb: Model$15,
+          Card: Model$16,
+          Media: Model$17,
+          Menu: Model$18,
+          Navbar: Model$20,
+          Pagination: Model$21,
+          Tabs: Model$22,
+          Message: Model$19
         }
       };
     }
@@ -8988,7 +9961,7 @@ var Model$2 = function () {
         interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
         properties: {
           CurrentPage: Page,
-          Home: Model$21,
+          Home: Model$23,
           Elements: ElementsModel,
           Components: ComponentsModel
         }
@@ -11644,16 +12617,170 @@ var sizeInteractive$4 = react_1("div", {}, h1(new List$1())(ofArray(["Title 1"])
 function root$11(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("\r\n### Types\r\n\r\n**Title** can be of two types *Title* and *Subtitle*.\r\n\r\nBy default, `Header.h1 [ ] [ ]` generate a title. You can specify `Heading.isSubtitle` if needed.\r\n                        ", root$2(simpleInteractive$1, model.TypeViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$11(0, arg0);
+      return new Msg$12(0, arg0);
     }($var1));
   })), docSection("\r\n### Sizes\r\n\r\nElmish.Bulma already associate each header size with the equivalent class.\r\n\r\nFor example, `Heading.h1 [ Heading.isTitle ] [ str \"Title 1\" ]` will output `<h1 class=\"title is-1\">Title 1</h1>`\r\n                        ", root$2(sizeInteractive$4, model.SizeViewer, function ($var2) {
     return dispatch(function (arg0_1) {
-      return new Msg$11(1, arg0_1);
+      return new Msg$12(1, arg0_1);
     }($var2));
   })), contentFromMarkdown("We also provide `Heading.isSpaced` helper. See the *[bulma documentation](http://bulma.io/documentation/elements/title/)* to learn more about it.")]));
 }
 
 var Types$11 = function (__exports) {
+  var Option$$1 = __exports.Option = function () {
+    function Option$$1(tag, data) {
+      babelHelpers.classCallCheck(this, Option$$1);
+      this.tag = tag;
+      this.data = data;
+    }
+
+    babelHelpers.createClass(Option$$1, [{
+      key: FSymbol.reflection,
+      value: function value() {
+        return {
+          type: "Elmish.Bulma.Elements.Notification.Types.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Level", ILevelAndColor], ["CustomClass", "string"], ["Props", makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          })]]
+        };
+      }
+    }, {
+      key: "Equals",
+      value: function Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
+    }]);
+    return Option$$1;
+  }();
+
+  setType("Elmish.Bulma.Elements.Notification.Types.Option", Option$$1);
+
+  var Options = __exports.Options = function () {
+    function Options(level, customClass, props) {
+      babelHelpers.classCallCheck(this, Options);
+      this.Level = level;
+      this.CustomClass = customClass;
+      this.Props = props;
+    }
+
+    babelHelpers.createClass(Options, [{
+      key: FSymbol.reflection,
+      value: function value() {
+        return {
+          type: "Elmish.Bulma.Elements.Notification.Types.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Level: Option("string"),
+            CustomClass: Option("string"),
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            })
+          }
+        };
+      }
+    }, {
+      key: "Equals",
+      value: function Equals(other) {
+        return equalsRecords(this, other);
+      }
+    }], [{
+      key: "Empty",
+      get: function get() {
+        return new Options(null, null, new List$1());
+      }
+    }]);
+    return Options;
+  }();
+
+  setType("Elmish.Bulma.Elements.Notification.Types.Options", Options);
+  return __exports;
+}({});
+var isBlack$3 = new Types$11.Option(0, new ILevelAndColor(0));
+var isDark$3 = new Types$11.Option(0, new ILevelAndColor(1));
+var isLight$3 = new Types$11.Option(0, new ILevelAndColor(2));
+var isWhite$3 = new Types$11.Option(0, new ILevelAndColor(3));
+var isPrimary$3 = new Types$11.Option(0, new ILevelAndColor(4));
+var isInfo$3 = new Types$11.Option(0, new ILevelAndColor(5));
+var isSuccess$3 = new Types$11.Option(0, new ILevelAndColor(6));
+var isWarning$3 = new Types$11.Option(0, new ILevelAndColor(7));
+var isDanger$3 = new Types$11.Option(0, new ILevelAndColor(8));
+
+
+var Delete = function (__exports) {
+  var props_1 = __exports.props = function (arg0) {
+    return new GenericOption(1, arg0);
+  };
+
+  var customClass_1 = __exports.customClass = function (arg0) {
+    return new GenericOption(0, arg0);
+  };
+
+  return __exports;
+}({});
+function notification(options, children) {
+  var parseOptions = function parseOptions(result, opt) {
+    if (opt.tag === 1) {
+      var CustomClass = opt.data;
+      return new Types$11.Options(result.Level, CustomClass, result.Props);
+    } else if (opt.tag === 2) {
+      return new Types$11.Options(result.Level, result.CustomClass, opt.data);
+    } else {
+      return new Types$11.Options(ofLevelAndColor(opt.data), result.CustomClass, result.Props);
+    }
+  };
+
+  var opts = function () {
+    var state = Types$11.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  }()(options);
+
+  return react_1.apply(undefined, ["div", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("notification", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()], [opts.Level, function () {
+      return opts.Level != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+
+function _delete$2(options, children) {
+  var opts = genericParse(options);
+  return react_1.apply(undefined, ["button", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("delete", ofArray([[opts.CustomClass, function () {
+      return opts.CustomClass != null;
+    }()]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+
+var basic = notification(new List$1(), ofArray(["I am a notification"]));
+var color = notification(ofArray([isSuccess$3]), ofArray(["I am a notification with some colors"]));
+
+var _delete$1 = notification(ofArray([isDanger$3]), ofArray([_delete$2(new List$1(), new List$1()), "I am a notification with some colors and a delete button"]));
+
+function root$12(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$11(0, arg0);
+    }($var1));
+  })), docSection("### Colors", root$2(color, model.ColorViewer, function ($var2) {
+    return dispatch(function (arg0_1) {
+      return new Msg$11(1, arg0_1);
+    }($var2));
+  })), docSection("### Delete button", root$2(_delete$1, model.DeleteViewer, function ($var3) {
+    return dispatch(function (arg0_2) {
+      return new Msg$11(2, arg0_2);
+    }($var3));
+  }))]));
+}
+
+var Types$12 = function (__exports) {
   var Level = __exports.Level = function (__exports) {
     var Option$$1 = __exports.Option = function () {
       function Option$$1(tag, data) {
@@ -11799,14 +12926,14 @@ var Types$11 = function (__exports) {
   return __exports;
 }({});
 var Level = function (__exports) {
-  var isMobile = __exports.isMobile = new Types$11.Level.Option(1);
+  var isMobile = __exports.isMobile = new Types$12.Level.Option(1);
 
   var props = __exports.props = function (arg0) {
-    return new Types$11.Level.Option(0, arg0);
+    return new Types$12.Level.Option(0, arg0);
   };
 
   var customClass = __exports.customClass = function (arg0) {
-    return new Types$11.Level.Option(2, arg0);
+    return new Types$12.Level.Option(2, arg0);
   };
 
   return __exports;
@@ -11814,17 +12941,17 @@ var Level = function (__exports) {
 function level(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
-      return new Types$11.Level.Options(result.Props, true, result.CustomClass);
+      return new Types$12.Level.Options(result.Props, true, result.CustomClass);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$11.Level.Options(result.Props, result.IsMobile, CustomClass);
+      return new Types$12.Level.Options(result.Props, result.IsMobile, CustomClass);
     } else {
-      return new Types$11.Level.Options(opt.data, result.IsMobile, result.CustomClass);
+      return new Types$12.Level.Options(opt.data, result.IsMobile, result.CustomClass);
     }
   };
 
   var opts = function () {
-    var state = Types$11.Level.Options.Empty;
+    var state = Types$12.Level.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -11860,14 +12987,14 @@ function right(options, children) {
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
 var Item = function (__exports) {
-  var hasTextCentered = __exports.hasTextCentered = new Types$11.Item.Option(1);
+  var hasTextCentered = __exports.hasTextCentered = new Types$12.Item.Option(1);
 
   var props_2 = __exports.props = function (arg0) {
-    return new Types$11.Item.Option(0, arg0);
+    return new Types$12.Item.Option(0, arg0);
   };
 
   var customClass_2 = __exports.customClass = function (arg0) {
-    return new Types$11.Item.Option(2, arg0);
+    return new Types$12.Item.Option(2, arg0);
   };
 
   return __exports;
@@ -11875,17 +13002,17 @@ var Item = function (__exports) {
 function item$1(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
-      return new Types$11.Item.Options(result.Props, true, result.CustomClass);
+      return new Types$12.Item.Options(result.Props, true, result.CustomClass);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$11.Item.Options(result.Props, result.HasTextCentered, CustomClass);
+      return new Types$12.Item.Options(result.Props, result.HasTextCentered, CustomClass);
     } else {
-      return new Types$11.Item.Options(opt.data, result.HasTextCentered, result.CustomClass);
+      return new Types$12.Item.Options(opt.data, result.HasTextCentered, result.CustomClass);
     }
   };
 
   var opts = function () {
-    var state = Types$11.Item.Options.Empty;
+    var state = Types$12.Item.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -13011,15 +14138,15 @@ var Field = function (__exports) {
 }({});
 
 var iconInteractive$2 = level(new List$1(), ofArray([left(new List$1(), ofArray([item$1(new List$1(), ofArray([h5(ofArray([isSubtitle]))(ofArray([react_1("strong", {}, "123"), " posts"]))])), item$1(new List$1(), ofArray([Field.field(ofArray([Field.hasAddonsLeft]), ofArray([Control.control(new List$1(), ofArray([Input.input(ofArray([Input.typeIsText, Input.placeholder("Find a post")]))])), Control.control(new List$1(), ofArray([button(new List$1(), ofArray(["Search"]))]))]))]))])), right(new List$1(), ofArray([item$1(new List$1(), ofArray([react_1("a", {}, "All")])), item$1(new List$1(), ofArray([react_1("a", {}, "Published")])), item$1(new List$1(), ofArray([react_1("a", {}, "Drafts")])), item$1(new List$1(), ofArray([react_1("a", {}, "Deleted")])), item$1(new List$1(), ofArray([button(ofArray([isSuccess]), ofArray(["New"]))]))]))]));
-function root$12(model, dispatch) {
+function root$13(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$2, model.BoxViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$13(0, arg0);
+      return new Msg$14(0, arg0);
     }($var1));
   }))]));
 }
 
-var Types$12 = function (__exports) {
+var Types$13 = function (__exports) {
   var IAlignment = __exports.IAlignment = function () {
     function IAlignment(tag, data) {
       babelHelpers.classCallCheck(this, IAlignment);
@@ -13249,38 +14376,38 @@ var Types$12 = function (__exports) {
 
   return __exports;
 }({});
-var isSmall$5 = new Types$12.Option(2, new ISize(0));
-var isMedium$6 = new Types$12.Option(2, new ISize(1));
-var isLarge$6 = new Types$12.Option(2, new ISize(2));
-var isCentered$1 = new Types$12.Option(0, new Types$12.IAlignment(0));
-var isRight$1 = new Types$12.Option(0, new Types$12.IAlignment(1));
-var hasArrowSeparator = new Types$12.Option(1, new Types$12.ISeparator(0));
-var hasBulletSeparator = new Types$12.Option(1, new Types$12.ISeparator(1));
-var hasDotSeparator = new Types$12.Option(1, new Types$12.ISeparator(2));
-var hasSucceedsSeparator = new Types$12.Option(1, new Types$12.ISeparator(3));
+var isSmall$5 = new Types$13.Option(2, new ISize(0));
+var isMedium$6 = new Types$13.Option(2, new ISize(1));
+var isLarge$6 = new Types$13.Option(2, new ISize(2));
+var isCentered$1 = new Types$13.Option(0, new Types$13.IAlignment(0));
+var isRight$1 = new Types$13.Option(0, new Types$13.IAlignment(1));
+var hasArrowSeparator = new Types$13.Option(1, new Types$13.ISeparator(0));
+var hasBulletSeparator = new Types$13.Option(1, new Types$13.ISeparator(1));
+var hasDotSeparator = new Types$13.Option(1, new Types$13.ISeparator(2));
+var hasSucceedsSeparator = new Types$13.Option(1, new Types$13.ISeparator(3));
 
 
 function breadcrumb(options, children) {
   var parseOptions = function parseOptions(result, _arg1) {
     if (_arg1.tag === 1) {
-      var Separator = Types$12.ofSeparator(_arg1.data);
-      return new Types$12.Options(result.Props, result.Alignment, Separator, result.Size, result.CustomClass);
+      var Separator = Types$13.ofSeparator(_arg1.data);
+      return new Types$13.Options(result.Props, result.Alignment, Separator, result.Size, result.CustomClass);
     } else if (_arg1.tag === 2) {
       var Size = ofSize(_arg1.data);
-      return new Types$12.Options(result.Props, result.Alignment, result.Separator, Size, result.CustomClass);
+      return new Types$13.Options(result.Props, result.Alignment, result.Separator, Size, result.CustomClass);
     } else if (_arg1.tag === 3) {
-      return new Types$12.Options(_arg1.data, result.Alignment, result.Separator, result.Size, result.CustomClass);
+      return new Types$13.Options(_arg1.data, result.Alignment, result.Separator, result.Size, result.CustomClass);
     } else if (_arg1.tag === 4) {
       var CustomClass = _arg1.data;
-      return new Types$12.Options(result.Props, result.Alignment, result.Separator, result.Size, CustomClass);
+      return new Types$13.Options(result.Props, result.Alignment, result.Separator, result.Size, CustomClass);
     } else {
-      var Alignment = Types$12.ofAlignment(_arg1.data);
-      return new Types$12.Options(result.Props, Alignment, result.Separator, result.Size, result.CustomClass);
+      var Alignment = Types$13.ofAlignment(_arg1.data);
+      return new Types$13.Options(result.Props, Alignment, result.Separator, result.Size, result.CustomClass);
     }
   };
 
   var opts = function () {
-    var state = Types$12.Options.Empty;
+    var state = Types$13.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -13299,14 +14426,14 @@ function breadcrumb(options, children) {
   })), 1), react_1.apply(undefined, ["ul", {}].concat(babelHelpers.toConsumableArray(children))));
 }
 var Item$1 = function (__exports) {
-  var isActive = __exports.isActive = new Types$12.Item.Option(0);
+  var isActive = __exports.isActive = new Types$13.Item.Option(0);
 
   var props_1 = __exports.props = function (arg0) {
-    return new Types$12.Item.Option(1, arg0);
+    return new Types$13.Item.Option(1, arg0);
   };
 
   var customClass_1 = __exports.customClass = function (arg0) {
-    return new Types$12.Item.Option(2, arg0);
+    return new Types$13.Item.Option(2, arg0);
   };
 
   return __exports;
@@ -13314,17 +14441,17 @@ var Item$1 = function (__exports) {
 function item$2(options, children) {
   var parseOptions = function parseOptions(result, _arg1) {
     if (_arg1.tag === 1) {
-      return new Types$12.Item.Options(_arg1.data, result.IsActive, result.CustomClass);
+      return new Types$13.Item.Options(_arg1.data, result.IsActive, result.CustomClass);
     } else if (_arg1.tag === 2) {
       var CustomClass = _arg1.data;
-      return new Types$12.Item.Options(result.Props, result.IsActive, CustomClass);
+      return new Types$13.Item.Options(result.Props, result.IsActive, CustomClass);
     } else {
-      return new Types$12.Item.Options(result.Props, true, result.CustomClass);
+      return new Types$13.Item.Options(result.Props, true, result.CustomClass);
     }
   };
 
   var opts = function () {
-    var state = Types$12.Item.Options.Empty;
+    var state = Types$13.Item.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -13344,7 +14471,7 @@ function item$2(options, children) {
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
 
-var basic = breadcrumb(new List$1(), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, "F#")])), item$2(new List$1(), ofArray([react_1("a", {}, "Fable")])), item$2(ofArray([Item$1.isActive]), ofArray([react_1("a", {}, "Elmish")]))]));
+var basic$1 = breadcrumb(new List$1(), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, "F#")])), item$2(new List$1(), ofArray([react_1("a", {}, "Fable")])), item$2(ofArray([Item$1.isActive]), ofArray([react_1("a", {}, "Elmish")]))]));
 var alignmentCenter = breadcrumb(ofArray([isCentered$1]), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, "F#")])), item$2(new List$1(), ofArray([react_1("a", {}, "Fable")])), item$2(ofArray([Item$1.isActive]), ofArray([react_1("a", {}, "Elmish")]))]));
 var icons = breadcrumb(new List$1(), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, icon(ofArray([isSmall$1]), ofArray([react_1("i", {
   className: "fa fa-home"
@@ -13355,37 +14482,37 @@ var icons = breadcrumb(new List$1(), ofArray([item$2(new List$1(), ofArray([reac
 })])), "Elmish")]))]));
 var size = breadcrumb(ofArray([isLarge$6]), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, "F#")])), item$2(new List$1(), ofArray([react_1("a", {}, "Fable")])), item$2(ofArray([Item$1.isActive]), ofArray([react_1("a", {}, "Elmish")]))]));
 var separator = breadcrumb(ofArray([hasSucceedsSeparator]), ofArray([item$2(new List$1(), ofArray([react_1("a", {}, "F#")])), item$2(new List$1(), ofArray([react_1("a", {}, "Fable")])), item$2(ofArray([Item$1.isActive]), ofArray([react_1("a", {}, "Elmish")]))]));
-function root$13(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic, model.BasicViewer, function ($var1) {
-    return dispatch(function (arg0) {
-      return new Msg$14(0, arg0);
-    }($var1));
-  })), docSection("\r\n### Alignment\r\n\r\nSupported alignment:\r\n\r\n* `Breadcrumb.isCentered`\r\n* `Breadcrumb.isRight`\r\n\r\nWhen you do not set the alignment, it's align to the *left*.\r\n\r\n                        ", root$2(alignmentCenter, model.AlignmentCenterViewer, function ($var2) {
-    return dispatch(function (arg0_1) {
-      return new Msg$14(1, arg0_1);
-    }($var2));
-  })), docSection("### Icons", root$2(icons, model.IconViewer, function ($var3) {
-    return dispatch(function (arg0_2) {
-      return new Msg$14(2, arg0_2);
-    }($var3));
-  })), docSection("\r\n### Size\r\n\r\nSupported size:\r\n\r\n* `Breadcrumb.isSmall`\r\n* `Breadcrumb.isMedium`\r\n* `Breadcrumb.isLarge`\r\n\r\nBy default, size is considered *normal*.\r\n\r\n                        ", root$2(size, model.SizeViewer, function ($var4) {
-    return dispatch(function (arg0_3) {
-      return new Msg$14(3, arg0_3);
-    }($var4));
-  })), docSection("\r\n### Separators\r\n\r\nSupported separators:\r\n\r\n* `Breadcrumb.hasArrowSeparator`\r\n* `Breadcrumb.hasBulletSeparator`\r\n* `Breadcrumb.hasDotSeparator`\r\n* `Breadcrumb.hasSucceedsSeparator`\r\n\r\n                        ", root$2(separator, model.SeparatorViewer, function ($var5) {
-    return dispatch(function (arg0_4) {
-      return new Msg$14(4, arg0_4);
-    }($var5));
-  }))]));
-}
-
-var basic$1 = card(new List$1(), ofArray([header$1(new List$1(), ofArray([Header.title(new List$1(), ofArray(["Component"])), Header.icon(new List$1(), ofArray([react_1("i", {
-  className: "fa fa-angle-down"
-})]))])), content$1(new List$1(), ofArray([content(new List$1(), ofArray(["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."]))])), footer(new List$1(), ofArray([Footer.item(new List$1(), ofArray(["Save"])), Footer.item(new List$1(), ofArray(["Edit"])), Footer.item(new List$1(), ofArray(["Delete"]))]))]));
 function root$14(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$1, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
       return new Msg$15(0, arg0);
+    }($var1));
+  })), docSection("\r\n### Alignment\r\n\r\nSupported alignment:\r\n\r\n* `Breadcrumb.isCentered`\r\n* `Breadcrumb.isRight`\r\n\r\nWhen you do not set the alignment, it's align to the *left*.\r\n\r\n                        ", root$2(alignmentCenter, model.AlignmentCenterViewer, function ($var2) {
+    return dispatch(function (arg0_1) {
+      return new Msg$15(1, arg0_1);
+    }($var2));
+  })), docSection("### Icons", root$2(icons, model.IconViewer, function ($var3) {
+    return dispatch(function (arg0_2) {
+      return new Msg$15(2, arg0_2);
+    }($var3));
+  })), docSection("\r\n### Size\r\n\r\nSupported size:\r\n\r\n* `Breadcrumb.isSmall`\r\n* `Breadcrumb.isMedium`\r\n* `Breadcrumb.isLarge`\r\n\r\nBy default, size is considered *normal*.\r\n\r\n                        ", root$2(size, model.SizeViewer, function ($var4) {
+    return dispatch(function (arg0_3) {
+      return new Msg$15(3, arg0_3);
+    }($var4));
+  })), docSection("\r\n### Separators\r\n\r\nSupported separators:\r\n\r\n* `Breadcrumb.hasArrowSeparator`\r\n* `Breadcrumb.hasBulletSeparator`\r\n* `Breadcrumb.hasDotSeparator`\r\n* `Breadcrumb.hasSucceedsSeparator`\r\n\r\n                        ", root$2(separator, model.SeparatorViewer, function ($var5) {
+    return dispatch(function (arg0_4) {
+      return new Msg$15(4, arg0_4);
+    }($var5));
+  }))]));
+}
+
+var basic$2 = card(new List$1(), ofArray([header$1(new List$1(), ofArray([Header.title(new List$1(), ofArray(["Component"])), Header.icon(new List$1(), ofArray([react_1("i", {
+  className: "fa fa-angle-down"
+})]))])), content$1(new List$1(), ofArray([content(new List$1(), ofArray(["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris."]))])), footer(new List$1(), ofArray([Footer.item(new List$1(), ofArray(["Save"])), Footer.item(new List$1(), ofArray(["Edit"])), Footer.item(new List$1(), ofArray(["Delete"]))]))]));
+function root$15(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$2, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$16(0, arg0);
     }($var1));
   }))]));
 }
@@ -13422,16 +14549,16 @@ function content$2(options, children) {
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
 
-var basic$2 = media(new List$1(), ofArray([left$1(new List$1(), ofArray([image(ofArray([is64x64]), ofArray([react_1("img", {
+var basic$3 = media(new List$1(), ofArray([left$1(new List$1(), ofArray([image(ofArray([is64x64]), ofArray([react_1("img", {
   src: "https://dummyimage.com/64x64/7a7a7a/fff"
 })]))])), content$2(new List$1(), ofArray([Field.field(new List$1(), ofArray([Control.control(new List$1(), ofArray([react_1("textarea", {
   className: "textarea",
   placeholder: "Add a message ..."
 })]))])), level(new List$1(), ofArray([left(new List$1(), ofArray([item$1(new List$1(), ofArray([button(ofArray([isInfo]), ofArray(["Submit"]))]))])), right(new List$1(), ofArray([item$1(new List$1(), ofArray(["Press Ctrl + Enter to submit"]))]))]))]))]));
-function root$15(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$2, model.BasicViewer, function ($var1) {
+function root$16(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$3, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$16(0, arg0);
+      return new Msg$17(0, arg0);
     }($var1));
   }))]));
 }
@@ -13442,16 +14569,16 @@ function menuItem$1(label$$1, isActive) {
 function subMenu(label$$1, isActive, children) {
   return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([[Bulma.Menu.State.IsActive, isActive]]))]), 1), label$$1), react_1.apply(undefined, ["ul", {}].concat(babelHelpers.toConsumableArray(children))));
 }
-var basic$3 = menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["General"])), list(new List$1(), ofArray([menuItem$1("Dashboard", false), menuItem$1("Customers", false)])), label(new List$1(), ofArray(["Administration"])), list(new List$1(), ofArray([menuItem$1("Team Settings", false), subMenu("Manage your Team", true, ofArray([menuItem$1("Members", false), menuItem$1("Plugins", false), menuItem$1("Add a member", false)]))])), label(new List$1(), ofArray(["Transactions"])), list(new List$1(), ofArray([menuItem$1("Payments", false), menuItem$1("Transfers", false), menuItem$1("Balance", false)]))]));
-function root$16(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$3, model.BasicViewer, function ($var1) {
+var basic$4 = menu$1(new List$1(), ofArray([label(new List$1(), ofArray(["General"])), list(new List$1(), ofArray([menuItem$1("Dashboard", false), menuItem$1("Customers", false)])), label(new List$1(), ofArray(["Administration"])), list(new List$1(), ofArray([menuItem$1("Team Settings", false), subMenu("Manage your Team", true, ofArray([menuItem$1("Members", false), menuItem$1("Plugins", false), menuItem$1("Add a member", false)]))])), label(new List$1(), ofArray(["Transactions"])), list(new List$1(), ofArray([menuItem$1("Payments", false), menuItem$1("Transfers", false), menuItem$1("Balance", false)]))]));
+function root$17(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$4, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$17(0, arg0);
+      return new Msg$18(0, arg0);
     }($var1));
   }))]));
 }
 
-var Types$13 = function (__exports) {
+var Types$14 = function (__exports) {
   var Option$$1 = __exports.Option = function () {
     function Option$$1(tag, data) {
       babelHelpers.classCallCheck(this, Option$$1);
@@ -13523,36 +14650,36 @@ var Types$13 = function (__exports) {
   setType("Elmish.Bulma.Components.Message.Types.Options", Options);
   return __exports;
 }({});
-var isBlack$3 = new Types$13.Option(1, new ILevelAndColor(0));
-var isDark$3 = new Types$13.Option(1, new ILevelAndColor(1));
-var isLight$3 = new Types$13.Option(1, new ILevelAndColor(2));
-var isWhite$3 = new Types$13.Option(1, new ILevelAndColor(3));
-var isPrimary$3 = new Types$13.Option(1, new ILevelAndColor(4));
-var isInfo$3 = new Types$13.Option(1, new ILevelAndColor(5));
-var isSuccess$3 = new Types$13.Option(1, new ILevelAndColor(6));
-var isWarning$3 = new Types$13.Option(1, new ILevelAndColor(7));
-var isDanger$3 = new Types$13.Option(1, new ILevelAndColor(8));
-var isSmall$6 = new Types$13.Option(2, new ISize(0));
-var isMedium$7 = new Types$13.Option(2, new ISize(1));
-var isLarge$7 = new Types$13.Option(2, new ISize(2));
+var isBlack$4 = new Types$14.Option(1, new ILevelAndColor(0));
+var isDark$4 = new Types$14.Option(1, new ILevelAndColor(1));
+var isLight$4 = new Types$14.Option(1, new ILevelAndColor(2));
+var isWhite$4 = new Types$14.Option(1, new ILevelAndColor(3));
+var isPrimary$4 = new Types$14.Option(1, new ILevelAndColor(4));
+var isInfo$4 = new Types$14.Option(1, new ILevelAndColor(5));
+var isSuccess$4 = new Types$14.Option(1, new ILevelAndColor(6));
+var isWarning$4 = new Types$14.Option(1, new ILevelAndColor(7));
+var isDanger$4 = new Types$14.Option(1, new ILevelAndColor(8));
+var isSmall$6 = new Types$14.Option(2, new ISize(0));
+var isMedium$7 = new Types$14.Option(2, new ISize(1));
+var isLarge$7 = new Types$14.Option(2, new ISize(2));
 function message(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
       var Color = ofLevelAndColor(opt.data);
-      return new Types$13.Options(result.Props, Color, result.Size, result.CustomClass);
+      return new Types$14.Options(result.Props, Color, result.Size, result.CustomClass);
     } else if (opt.tag === 3) {
       var CustomClass = opt.data;
-      return new Types$13.Options(result.Props, result.Color, result.Size, CustomClass);
+      return new Types$14.Options(result.Props, result.Color, result.Size, CustomClass);
     } else if (opt.tag === 2) {
       var Size = ofSize(opt.data);
-      return new Types$13.Options(result.Props, result.Color, Size, result.CustomClass);
+      return new Types$14.Options(result.Props, result.Color, Size, result.CustomClass);
     } else {
-      return new Types$13.Options(opt.data, result.Color, result.Size, result.CustomClass);
+      return new Types$14.Options(opt.data, result.Color, result.Size, result.CustomClass);
     }
   };
 
   var opts = function () {
-    var state = Types$13.Options.Empty;
+    var state = Types$14.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -13592,31 +14719,31 @@ function body(options, children) {
 }
 
 var loremText = "Donec fermentum interdum elit, in congue justo maximus congue. Mauris tincidunt ultricies lacus, vel pulvinar diam luctus et. In vel tellus vitae dolor efficitur pulvinar eu non tortor. Nunc eget augue id nisl bibendum congue vitae vitae purus. Phasellus pharetra nunc at justo dictum rutrum. Nullam diam diam, tincidunt id interdum a, rutrum ac lorem.";
-var basic$4 = message(new List$1(), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))]));
-var color = react_1("div", {}, message(ofArray([isInfo$3]), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))])), message(ofArray([isDanger$3]), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))])));
+var basic$5 = message(new List$1(), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))]));
+var color$1 = react_1("div", {}, message(ofArray([isInfo$4]), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))])), message(ofArray([isDanger$4]), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))])));
 var sizes = message(ofArray([isSmall$6]), ofArray([header$2(new List$1(), ofArray(["Nunc finibus ligula et semper suscipit", _delete(new List$1(), new List$1())])), body(new List$1(), ofArray([loremText]))]));
 var bodyOnly = message(new List$1(), ofArray([body(new List$1(), ofArray([loremText]))]));
-function root$17(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$4, model.BasicViewer, function ($var1) {
+function root$18(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$5, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$18(0, arg0);
+      return new Msg$19(0, arg0);
     }($var1));
-  })), docSection("### Colors", root$2(color, model.ColorViewer, function ($var2) {
+  })), docSection("### Colors", root$2(color$1, model.ColorViewer, function ($var2) {
     return dispatch(function (arg0_1) {
-      return new Msg$18(1, arg0_1);
+      return new Msg$19(1, arg0_1);
     }($var2));
   })), docSection("### Sizes", root$2(sizes, model.SizeViewer, function ($var3) {
     return dispatch(function (arg0_2) {
-      return new Msg$18(2, arg0_2);
+      return new Msg$19(2, arg0_2);
     }($var3));
   })), docSection("### Body only", root$2(bodyOnly, model.BodyOnlyViewer, function ($var4) {
     return dispatch(function (arg0_3) {
-      return new Msg$18(3, arg0_3);
+      return new Msg$19(3, arg0_3);
     }($var4));
   }))]));
 }
 
-var Types$14 = function (__exports) {
+var Types$15 = function (__exports) {
   var Navbar = __exports.Navbar = function (__exports) {
     var Option$$1 = __exports.Option = function () {
       function Option$$1(tag, data) {
@@ -13986,45 +15113,45 @@ var Types$14 = function (__exports) {
 
   return __exports;
 }({});
-var hasShadow = new Types$14.Navbar.Option(0);
-var isTransparent = new Types$14.Navbar.Option(1);
+var hasShadow = new Types$15.Navbar.Option(0);
+var isTransparent = new Types$15.Navbar.Option(1);
 
 
 var Item$2 = function (__exports) {
-  var isActive = __exports.isActive = new Types$14.Item.Option(1);
-  var isHoverable = __exports.isHoverable = new Types$14.Item.Option(2);
-  var isTab = __exports.isTab = new Types$14.Item.Option(0);
+  var isActive = __exports.isActive = new Types$15.Item.Option(1);
+  var isHoverable = __exports.isHoverable = new Types$15.Item.Option(2);
+  var isTab = __exports.isTab = new Types$15.Item.Option(0);
 
   var props_1 = __exports.props = function (props_2) {
-    return new Types$14.Item.Option(4, props_2);
+    return new Types$15.Item.Option(4, props_2);
   };
 
   var customClass_1 = __exports.customClass = function (arg0) {
-    return new Types$14.Item.Option(5, arg0);
+    return new Types$15.Item.Option(5, arg0);
   };
 
-  var hasDropdown = __exports.hasDropdown = new Types$14.Item.Option(3);
+  var hasDropdown = __exports.hasDropdown = new Types$15.Item.Option(3);
 
   var item$$1 = __exports.item = function (element, options, children) {
     var parseOptions = function parseOptions(result, opt) {
       if (opt.tag === 0) {
-        return new Types$14.Item.Options(true, result.IsActive, result.IsHoverable, result.HasDropdown, result.CustomClass, result.Props);
+        return new Types$15.Item.Options(true, result.IsActive, result.IsHoverable, result.HasDropdown, result.CustomClass, result.Props);
       } else if (opt.tag === 2) {
-        return new Types$14.Item.Options(result.IsTab, result.IsActive, true, result.HasDropdown, result.CustomClass, result.Props);
+        return new Types$15.Item.Options(result.IsTab, result.IsActive, true, result.HasDropdown, result.CustomClass, result.Props);
       } else if (opt.tag === 3) {
-        return new Types$14.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, true, result.CustomClass, result.Props);
+        return new Types$15.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, true, result.CustomClass, result.Props);
       } else if (opt.tag === 4) {
-        return new Types$14.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, result.HasDropdown, result.CustomClass, opt.data);
+        return new Types$15.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, result.HasDropdown, result.CustomClass, opt.data);
       } else if (opt.tag === 5) {
         var CustomClass = opt.data;
-        return new Types$14.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, result.HasDropdown, CustomClass, result.Props);
+        return new Types$15.Item.Options(result.IsTab, result.IsActive, result.IsHoverable, result.HasDropdown, CustomClass, result.Props);
       } else {
-        return new Types$14.Item.Options(result.IsTab, true, result.IsHoverable, result.HasDropdown, result.CustomClass, result.Props);
+        return new Types$15.Item.Options(result.IsTab, true, result.IsHoverable, result.HasDropdown, result.CustomClass, result.Props);
       }
     };
 
     var opts = function () {
-      var state = Types$14.Item.Options.Empty;
+      var state = Types$15.Item.Options.Empty;
       return function (list) {
         return fold$1(parseOptions, state, list);
       };
@@ -14042,30 +15169,30 @@ var Item$2 = function (__exports) {
   return __exports;
 }({});
 var Link = function (__exports) {
-  var isActive_1 = __exports.isActive = new Types$14.Link.Option(0);
+  var isActive_1 = __exports.isActive = new Types$15.Link.Option(0);
 
   var props_2 = __exports.props = function (props_3) {
-    return new Types$14.Link.Option(1, props_3);
+    return new Types$15.Link.Option(1, props_3);
   };
 
   var customClass_2 = __exports.customClass = function (arg0) {
-    return new Types$14.Link.Option(2, arg0);
+    return new Types$15.Link.Option(2, arg0);
   };
 
   var link = __exports.link = function (element, options, children) {
     var parseOptions = function parseOptions(result, opt) {
       if (opt.tag === 2) {
         var CustomClass = opt.data;
-        return new Types$14.Link.Options(result.IsActive, CustomClass, result.Props);
+        return new Types$15.Link.Options(result.IsActive, CustomClass, result.Props);
       } else if (opt.tag === 1) {
-        return new Types$14.Link.Options(result.IsActive, result.CustomClass, opt.data);
+        return new Types$15.Link.Options(result.IsActive, result.CustomClass, opt.data);
       } else {
-        return new Types$14.Link.Options(true, result.CustomClass, result.Props);
+        return new Types$15.Link.Options(true, result.CustomClass, result.Props);
       }
     };
 
     var opts = function () {
-      var state = Types$14.Link.Options.Empty;
+      var state = Types$15.Link.Options.Empty;
       return function (list) {
         return fold$1(parseOptions, state, list);
       };
@@ -14081,49 +15208,49 @@ var Link = function (__exports) {
   return __exports;
 }({});
 var Menu = function (__exports) {
-  var isActive_2 = __exports.isActive = new Types$14.Menu.Option(0);
+  var isActive_2 = __exports.isActive = new Types$15.Menu.Option(0);
 
   var props_3 = __exports.props = function (props_4) {
-    return new Types$14.Menu.Option(1, props_4);
+    return new Types$15.Menu.Option(1, props_4);
   };
 
   var customClass_3 = __exports.customClass = function (arg0) {
-    return new Types$14.Menu.Option(2, arg0);
+    return new Types$15.Menu.Option(2, arg0);
   };
 
   return __exports;
 }({});
 var Dropdown = function (__exports) {
-  var isActive_3 = __exports.isActive = new Types$14.Dropdown.Option(0);
-  var isBoxed = __exports.isBoxed = new Types$14.Dropdown.Option(1);
-  var isRight = __exports.isRight = new Types$14.Dropdown.Option(2);
+  var isActive_3 = __exports.isActive = new Types$15.Dropdown.Option(0);
+  var isBoxed = __exports.isBoxed = new Types$15.Dropdown.Option(1);
+  var isRight = __exports.isRight = new Types$15.Dropdown.Option(2);
 
   var props_4 = __exports.props = function (arg0) {
-    return new Types$14.Dropdown.Option(3, arg0);
+    return new Types$15.Dropdown.Option(3, arg0);
   };
 
   var customClass_4 = __exports.customClass = function (arg0) {
-    return new Types$14.Dropdown.Option(4, arg0);
+    return new Types$15.Dropdown.Option(4, arg0);
   };
 
   var dropdown = __exports.dropdown = function (element, options, children) {
     var parseOptions = function parseOptions(result, opt) {
       if (opt.tag === 1) {
-        return new Types$14.Dropdown.Options(result.IsActive, true, result.IsRight, result.Props, result.CustomClass);
+        return new Types$15.Dropdown.Options(result.IsActive, true, result.IsRight, result.Props, result.CustomClass);
       } else if (opt.tag === 2) {
-        return new Types$14.Dropdown.Options(result.IsActive, result.IsBoxed, true, result.Props, result.CustomClass);
+        return new Types$15.Dropdown.Options(result.IsActive, result.IsBoxed, true, result.Props, result.CustomClass);
       } else if (opt.tag === 4) {
         var CustomClass = opt.data;
-        return new Types$14.Dropdown.Options(result.IsActive, result.IsBoxed, result.IsRight, result.Props, CustomClass);
+        return new Types$15.Dropdown.Options(result.IsActive, result.IsBoxed, result.IsRight, result.Props, CustomClass);
       } else if (opt.tag === 3) {
-        return new Types$14.Dropdown.Options(result.IsActive, result.IsBoxed, result.IsRight, opt.data, result.CustomClass);
+        return new Types$15.Dropdown.Options(result.IsActive, result.IsBoxed, result.IsRight, opt.data, result.CustomClass);
       } else {
-        return new Types$14.Dropdown.Options(true, result.IsBoxed, result.IsRight, result.Props, result.CustomClass);
+        return new Types$15.Dropdown.Options(true, result.IsBoxed, result.IsRight, result.Props, result.CustomClass);
       }
     };
 
     var opts = function () {
-      var state = Types$14.Dropdown.Options.Empty;
+      var state = Types$15.Dropdown.Options.Empty;
       return function (list) {
         return fold$1(parseOptions, state, list);
       };
@@ -14183,19 +15310,19 @@ var End = function (__exports) {
 function navbar(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 2) {
-      return new Types$14.Navbar.Options(result.HasShadow, result.IsTransparent, result.CustomClass, opt.data);
+      return new Types$15.Navbar.Options(result.HasShadow, result.IsTransparent, result.CustomClass, opt.data);
     } else if (opt.tag === 1) {
-      return new Types$14.Navbar.Options(result.HasShadow, true, result.CustomClass, result.Props);
+      return new Types$15.Navbar.Options(result.HasShadow, true, result.CustomClass, result.Props);
     } else if (opt.tag === 3) {
       var CustomClass = opt.data;
-      return new Types$14.Navbar.Options(result.HasShadow, result.IsTransparent, CustomClass, result.Props);
+      return new Types$15.Navbar.Options(result.HasShadow, result.IsTransparent, CustomClass, result.Props);
     } else {
-      return new Types$14.Navbar.Options(true, result.IsTransparent, result.CustomClass, result.Props);
+      return new Types$15.Navbar.Options(true, result.IsTransparent, result.CustomClass, result.Props);
     }
   };
 
   var opts = function () {
-    var state = Types$14.Navbar.Options.Empty;
+    var state = Types$15.Navbar.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14283,18 +15410,18 @@ function divider(options, children) {
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
 
-var basic$5 = navbar(new List$1(), ofArray([brand_div(new List$1(), ofArray([item_a(ofArray([Item$2.props(ofArray([new Props.HTMLAttr(51, "#")]))]), ofArray([react_1("img", {
+var basic$6 = navbar(new List$1(), ofArray([brand_div(new List$1(), ofArray([item_a(ofArray([Item$2.props(ofArray([new Props.HTMLAttr(51, "#")]))]), ofArray([react_1("img", {
   src: "/logo.png"
 })]))])), item_a(ofArray([Item$2.hasDropdown, Item$2.isHoverable]), ofArray([link_a(new List$1(), ofArray(["Docs"])), dropdown_div(new List$1(), ofArray([item_a(new List$1(), ofArray(["Overwiew"])), item_a(new List$1(), ofArray(["Elements"])), divider(new List$1(), new List$1()), item_a(new List$1(), ofArray(["Components"]))]))])), end_div(new List$1(), ofArray([item_div(new List$1(), ofArray([button(ofArray([isSuccess]), ofArray(["Demo"]))]))]))]));
-function root$18(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$5, model.BasicViewer, function ($var1) {
+function root$19(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$6, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$19(0, arg0);
+      return new Msg$20(0, arg0);
     }($var1));
-  })), contentFromMarkdown("\n### Important\n\nIn bulma framework, some components of the navbar can either be rooted by `a` or a `div` element. In order, to provide you this choice we added suffix to some of the helpers:\n\n- item\n- brand\n- link\n- dropdown\n- end\n- start\n                        ")]));
+  })), contentFromMarkdown("\r\n### Important\r\n\r\nIn bulma framework, some components of the navbar can either be rooted by `a` or a `div` element. In order, to provide you this choice we added suffix to some of the helpers:\r\n\r\n- item\r\n- brand\r\n- link\r\n- dropdown\r\n- end\r\n- start\r\n                        ")]));
 }
 
-var Types$15 = function (__exports) {
+var Types$16 = function (__exports) {
   var IAlignment = __exports.IAlignment = function () {
     function IAlignment(tag, data) {
       babelHelpers.classCallCheck(this, IAlignment);
@@ -14478,22 +15605,22 @@ var Types$15 = function (__exports) {
 
   return __exports;
 }({});
-var isSmall$7 = new Types$15.Option(1, new ISize(0));
-var isMedium$8 = new Types$15.Option(1, new ISize(1));
-var isLarge$8 = new Types$15.Option(1, new ISize(2));
-var isCentered$2 = new Types$15.Option(0, new Types$15.IAlignment(0));
-var isRight$2 = new Types$15.Option(0, new Types$15.IAlignment(1));
+var isSmall$7 = new Types$16.Option(1, new ISize(0));
+var isMedium$8 = new Types$16.Option(1, new ISize(1));
+var isLarge$8 = new Types$16.Option(1, new ISize(2));
+var isCentered$2 = new Types$16.Option(0, new Types$16.IAlignment(0));
+var isRight$2 = new Types$16.Option(0, new Types$16.IAlignment(1));
 
 
 var Link$1 = function (__exports) {
-  var isCurrent = __exports.isCurrent = new Types$15.Link.Option(0);
+  var isCurrent = __exports.isCurrent = new Types$16.Link.Option(0);
 
   var customClass_1 = __exports.customClass = function (arg0) {
-    return new Types$15.Link.Option(1, arg0);
+    return new Types$16.Link.Option(1, arg0);
   };
 
   var props_1 = __exports.props = function (arg0) {
-    return new Types$15.Link.Option(2, arg0);
+    return new Types$16.Link.Option(2, arg0);
   };
 
   return __exports;
@@ -14502,19 +15629,19 @@ function pagination(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
       var Size = ofSize(opt.data);
-      return new Types$15.Options(result.Alignment, Size, result.CustomClass, result.Props);
+      return new Types$16.Options(result.Alignment, Size, result.CustomClass, result.Props);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$15.Options(result.Alignment, result.Size, CustomClass, result.Props);
+      return new Types$16.Options(result.Alignment, result.Size, CustomClass, result.Props);
     } else if (opt.tag === 3) {
-      return new Types$15.Options(result.Alignment, result.Size, result.CustomClass, opt.data);
+      return new Types$16.Options(result.Alignment, result.Size, result.CustomClass, opt.data);
     } else {
-      return new Types$15.Options(Types$15.ofAlignment(opt.data), result.Size, result.CustomClass, result.Props);
+      return new Types$16.Options(Types$16.ofAlignment(opt.data), result.Size, result.CustomClass, result.Props);
     }
   };
 
   var opts = function () {
-    var state = Types$15.Options.Empty;
+    var state = Types$16.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14556,16 +15683,16 @@ function link(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
       var CustomClass = opt.data;
-      return new Types$15.Link.Options(result.IsCurrent, CustomClass, result.Props);
+      return new Types$16.Link.Options(result.IsCurrent, CustomClass, result.Props);
     } else if (opt.tag === 2) {
-      return new Types$15.Link.Options(result.IsCurrent, result.CustomClass, opt.data);
+      return new Types$16.Link.Options(result.IsCurrent, result.CustomClass, opt.data);
     } else {
-      return new Types$15.Link.Options(true, result.CustomClass, result.Props);
+      return new Types$16.Link.Options(true, result.CustomClass, result.Props);
     }
   };
 
   var opts = function () {
-    var state = Types$15.Link.Options.Empty;
+    var state = Types$16.Link.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14604,26 +15731,328 @@ function list$1(options, children) {
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
 
-var basic$6 = pagination(new List$1(), ofArray([previous(new List$1(), ofArray(["Previous"])), next(new List$1(), ofArray(["Next page"])), list$1(new List$1(), ofArray([link(new List$1(), ofArray(["1"])), ellipsis(new List$1()), link(new List$1(), ofArray(["32"])), link(ofArray([Link$1.isCurrent]), ofArray(["33"])), link(new List$1(), ofArray(["34"])), ellipsis(new List$1()), link(new List$1(), ofArray(["77"]))]))]));
+var basic$7 = pagination(new List$1(), ofArray([previous(new List$1(), ofArray(["Previous"])), next(new List$1(), ofArray(["Next page"])), list$1(new List$1(), ofArray([link(new List$1(), ofArray(["1"])), ellipsis(new List$1()), link(new List$1(), ofArray(["32"])), link(ofArray([Link$1.isCurrent]), ofArray(["33"])), link(new List$1(), ofArray(["34"])), ellipsis(new List$1()), link(new List$1(), ofArray(["77"]))]))]));
 var aligment = pagination(ofArray([isCentered$2]), ofArray([previous(new List$1(), ofArray(["Previous"])), next(new List$1(), ofArray(["Next page"])), list$1(new List$1(), ofArray([link(new List$1(), ofArray(["1"])), ellipsis(new List$1()), link(new List$1(), ofArray(["32"])), link(ofArray([Link$1.isCurrent]), ofArray(["33"])), link(new List$1(), ofArray(["34"])), ellipsis(new List$1()), link(new List$1(), ofArray(["77"]))]))]));
 var size$1 = pagination(ofArray([isSmall$7]), ofArray([previous(new List$1(), ofArray(["Previous"])), next(new List$1(), ofArray(["Next page"])), list$1(new List$1(), ofArray([link(new List$1(), ofArray(["1"])), ellipsis(new List$1()), link(new List$1(), ofArray(["32"])), link(ofArray([Link$1.isCurrent]), ofArray(["33"])), link(new List$1(), ofArray(["34"])), ellipsis(new List$1()), link(new List$1(), ofArray(["77"]))]))]));
-function root$19(model, dispatch) {
-  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$6, model.BasicViewer, function ($var1) {
+function root$20(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$7, model.BasicViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$20(0, arg0);
+      return new Msg$21(0, arg0);
     }($var1));
-  })), docSection("\n\n### Alignment\n\nSupported size:\n\n* `Content.isCentered`\n* `Content.isRight`\n\nWhen you do not set the alignment, it's consider *left*.\n                        ", root$2(aligment, model.AlignmentViewer, function ($var2) {
+  })), docSection("\r\n\r\n### Alignment\r\n\r\nSupported size:\r\n\r\n* `Content.isCentered`\r\n* `Content.isRight`\r\n\r\nWhen you do not set the alignment, it's consider *left*.\r\n                        ", root$2(aligment, model.AlignmentViewer, function ($var2) {
     return dispatch(function (arg0_1) {
-      return new Msg$20(1, arg0_1);
+      return new Msg$21(1, arg0_1);
     }($var2));
-  })), docSection("\n### Size\n\nSupported size:\n\n* `Pagination.isSmall`\n* `Pagination.isMedium`\n* `Pagination.isLarge`\n\nWhen you do not set the size, it's consider *normal*.\n                        ", root$2(size$1, model.SizeViewer, function ($var3) {
+  })), docSection("\r\n### Size\r\n\r\nSupported size:\r\n\r\n* `Pagination.isSmall`\r\n* `Pagination.isMedium`\r\n* `Pagination.isLarge`\r\n\r\nWhen you do not set the size, it's consider *normal*.\r\n                        ", root$2(size$1, model.SizeViewer, function ($var3) {
     return dispatch(function (arg0_2) {
-      return new Msg$20(2, arg0_2);
+      return new Msg$21(2, arg0_2);
     }($var3));
   }))]));
 }
 
-var Types$16 = function (__exports) {
+var Types$17 = function (__exports) {
+  var IAlignment = __exports.IAlignment = function () {
+    function IAlignment(tag, data) {
+      babelHelpers.classCallCheck(this, IAlignment);
+      this.tag = tag;
+      this.data = data;
+    }
+
+    babelHelpers.createClass(IAlignment, [{
+      key: FSymbol.reflection,
+      value: function value() {
+        return {
+          type: "Elmish.Bulma.Components.Tabs.Types.IAlignment",
+          interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
+          cases: [["Center"], ["Right"]]
+        };
+      }
+    }, {
+      key: "Equals",
+      value: function Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
+    }, {
+      key: "CompareTo",
+      value: function CompareTo(other) {
+        return compareUnions(this, other) | 0;
+      }
+    }]);
+    return IAlignment;
+  }();
+
+  setType("Elmish.Bulma.Components.Tabs.Types.IAlignment", IAlignment);
+
+  var ofAlignment = __exports.ofAlignment = function (_arg1) {
+    if (_arg1.tag === 0) {
+      return "is-centered";
+    } else {
+      return "is-right";
+    }
+  };
+
+  var Option$$1 = __exports.Option = function () {
+    function Option$$1(tag, data) {
+      babelHelpers.classCallCheck(this, Option$$1);
+      this.tag = tag;
+      this.data = data;
+    }
+
+    babelHelpers.createClass(Option$$1, [{
+      key: FSymbol.reflection,
+      value: function value() {
+        return {
+          type: "Elmish.Bulma.Components.Tabs.Types.Option",
+          interfaces: ["FSharpUnion", "System.IEquatable"],
+          cases: [["Alignment", IAlignment], ["Size", ISize], ["IsBoxed"], ["IsToggle"], ["IsFullwidth"], ["CustomClass", "string"], ["Props", makeGeneric(List$1, {
+            T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+          })]]
+        };
+      }
+    }, {
+      key: "Equals",
+      value: function Equals(other) {
+        return this === other || this.tag === other.tag && equals(this.data, other.data);
+      }
+    }]);
+    return Option$$1;
+  }();
+
+  setType("Elmish.Bulma.Components.Tabs.Types.Option", Option$$1);
+
+  var Options = __exports.Options = function () {
+    function Options(alignment, size, isBoxed, isToggle, isFullwidth, customClass, props) {
+      babelHelpers.classCallCheck(this, Options);
+      this.Alignment = alignment;
+      this.Size = size;
+      this.IsBoxed = isBoxed;
+      this.IsToggle = isToggle;
+      this.IsFullwidth = isFullwidth;
+      this.CustomClass = customClass;
+      this.Props = props;
+    }
+
+    babelHelpers.createClass(Options, [{
+      key: FSymbol.reflection,
+      value: function value() {
+        return {
+          type: "Elmish.Bulma.Components.Tabs.Types.Options",
+          interfaces: ["FSharpRecord", "System.IEquatable"],
+          properties: {
+            Alignment: Option("string"),
+            Size: Option("string"),
+            IsBoxed: "boolean",
+            IsToggle: "boolean",
+            IsFullwidth: "boolean",
+            CustomClass: Option("string"),
+            Props: makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            })
+          }
+        };
+      }
+    }, {
+      key: "Equals",
+      value: function Equals(other) {
+        return equalsRecords(this, other);
+      }
+    }], [{
+      key: "Empty",
+      get: function get() {
+        var Alignment = null;
+        return new Options(Alignment, null, false, false, false, null, new List$1());
+      }
+    }]);
+    return Options;
+  }();
+
+  setType("Elmish.Bulma.Components.Tabs.Types.Options", Options);
+
+  var Tab = __exports.Tab = function (__exports) {
+    var Option$$1 = __exports.Option = function () {
+      function Option$$1(tag, data) {
+        babelHelpers.classCallCheck(this, Option$$1);
+        this.tag = tag;
+        this.data = data;
+      }
+
+      babelHelpers.createClass(Option$$1, [{
+        key: FSymbol.reflection,
+        value: function value() {
+          return {
+            type: "Elmish.Bulma.Components.Tabs.Types.Tab.Option",
+            interfaces: ["FSharpUnion", "System.IEquatable"],
+            cases: [["IsActive"], ["CustomClass", "string"], ["Props", makeGeneric(List$1, {
+              T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+            })]]
+          };
+        }
+      }, {
+        key: "Equals",
+        value: function Equals(other) {
+          return this === other || this.tag === other.tag && equals(this.data, other.data);
+        }
+      }]);
+      return Option$$1;
+    }();
+
+    setType("Elmish.Bulma.Components.Tabs.Types.Tab.Option", Option$$1);
+
+    var Options = __exports.Options = function () {
+      function Options(isActive, customClass, props) {
+        babelHelpers.classCallCheck(this, Options);
+        this.IsActive = isActive;
+        this.CustomClass = customClass;
+        this.Props = props;
+      }
+
+      babelHelpers.createClass(Options, [{
+        key: FSymbol.reflection,
+        value: function value() {
+          return {
+            type: "Elmish.Bulma.Components.Tabs.Types.Tab.Options",
+            interfaces: ["FSharpRecord", "System.IEquatable"],
+            properties: {
+              IsActive: "boolean",
+              CustomClass: Option("string"),
+              Props: makeGeneric(List$1, {
+                T: Interface("Fable.Helpers.React.Props.IHTMLProp")
+              })
+            }
+          };
+        }
+      }, {
+        key: "Equals",
+        value: function Equals(other) {
+          return equalsRecords(this, other);
+        }
+      }], [{
+        key: "Empty",
+        get: function get() {
+          return new Options(false, null, new List$1());
+        }
+      }]);
+      return Options;
+    }();
+
+    setType("Elmish.Bulma.Components.Tabs.Types.Tab.Options", Options);
+    return __exports;
+  }({});
+
+  return __exports;
+}({});
+var isSmall$8 = new Types$17.Option(1, new ISize(0));
+var isMedium$9 = new Types$17.Option(1, new ISize(1));
+var isLarge$9 = new Types$17.Option(1, new ISize(2));
+var isCentered$3 = new Types$17.Option(0, new Types$17.IAlignment(0));
+var isRight$3 = new Types$17.Option(0, new Types$17.IAlignment(1));
+var isBoxed = new Types$17.Option(2);
+var isToggle = new Types$17.Option(3);
+var isFullwidth = new Types$17.Option(4);
+
+
+var Tab = function (__exports) {
+  var isActive = __exports.isActive = new Types$17.Tab.Option(0);
+
+  var customClass_1 = __exports.customClass = function (arg0) {
+    return new Types$17.Tab.Option(1, arg0);
+  };
+
+  var props_1 = __exports.props = function (arg0) {
+    return new Types$17.Tab.Option(2, arg0);
+  };
+
+  return __exports;
+}({});
+function tabs(options, children) {
+  var parseOptions = function parseOptions(result, opt) {
+    if (opt.tag === 2) {
+      return new Types$17.Options(result.Alignment, result.Size, true, result.IsToggle, result.IsFullwidth, result.CustomClass, result.Props);
+    } else if (opt.tag === 3) {
+      return new Types$17.Options(result.Alignment, result.Size, result.IsBoxed, true, result.IsFullwidth, result.CustomClass, result.Props);
+    } else if (opt.tag === 4) {
+      return new Types$17.Options(result.Alignment, result.Size, result.IsBoxed, result.IsToggle, true, result.CustomClass, result.Props);
+    } else if (opt.tag === 1) {
+      var Size = ofSize(opt.data);
+      return new Types$17.Options(result.Alignment, Size, result.IsBoxed, result.IsToggle, result.IsFullwidth, result.CustomClass, result.Props);
+    } else if (opt.tag === 5) {
+      var CustomClass = opt.data;
+      return new Types$17.Options(result.Alignment, result.Size, result.IsBoxed, result.IsToggle, result.IsFullwidth, CustomClass, result.Props);
+    } else if (opt.tag === 6) {
+      return new Types$17.Options(result.Alignment, result.Size, result.IsBoxed, result.IsToggle, result.IsFullwidth, result.CustomClass, opt.data);
+    } else {
+      return new Types$17.Options(Types$17.ofAlignment(opt.data), result.Size, result.IsBoxed, result.IsToggle, result.IsFullwidth, result.CustomClass, result.Props);
+    }
+  };
+
+  var opts = function () {
+    var state = Types$17.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  }()(options);
+
+  return react_1("div", createObj(toList(delay(function () {
+    return append$1(singleton$1(classBaseList("tabs", ofArray([[opts.Alignment, function () {
+      return opts.Alignment != null;
+    }()], [opts.Size, function () {
+      return opts.Size != null;
+    }()], ["is-boxed", opts.IsBoxed], ["is-fullwidth", opts.IsFullwidth], ["is-toggle", opts.IsToggle]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1), react_1.apply(undefined, ["ul", {}].concat(babelHelpers.toConsumableArray(children))));
+}
+function tab(options, children) {
+  var parseOptions = function parseOptions(result, opt) {
+    if (opt.tag === 1) {
+      var CustomClass = opt.data;
+      return new Types$17.Tab.Options(result.IsActive, CustomClass, result.Props);
+    } else if (opt.tag === 2) {
+      return new Types$17.Tab.Options(result.IsActive, result.CustomClass, opt.data);
+    } else {
+      return new Types$17.Tab.Options(true, result.CustomClass, result.Props);
+    }
+  };
+
+  var opts = function () {
+    var state = Types$17.Tab.Options.Empty;
+    return function (list) {
+      return fold$1(parseOptions, state, list);
+    };
+  }()(options);
+
+  return react_1.apply(undefined, ["li", createObj(toList(delay(function () {
+    return append$1(singleton$1(classList(ofArray([[Bulma.Tabs.State.IsActive, opts.IsActive]]))), delay(function () {
+      return opts.Props;
+    }));
+  })), 1)].concat(babelHelpers.toConsumableArray(children)));
+}
+
+var basic$8 = tabs(new List$1(), ofArray([tab(ofArray([Tab.isActive]), ofArray([react_1("a", {}, "Fable")])), tab(new List$1(), ofArray([react_1("a", {}, "Elmish")])), tab(new List$1(), ofArray([react_1("a", {}, "Bulma")])), tab(new List$1(), ofArray([react_1("a", {}, "Hink")]))]));
+var alignment = tabs(ofArray([isCentered$3]), ofArray([tab(ofArray([Tab.isActive]), ofArray([react_1("a", {}, "Fable")])), tab(new List$1(), ofArray([react_1("a", {}, "Elmish")])), tab(new List$1(), ofArray([react_1("a", {}, "Bulma")])), tab(new List$1(), ofArray([react_1("a", {}, "Hink")]))]));
+var size$2 = tabs(ofArray([isLarge$9]), ofArray([tab(ofArray([Tab.isActive]), ofArray([react_1("a", {}, "Fable")])), tab(new List$1(), ofArray([react_1("a", {}, "Elmish")])), tab(new List$1(), ofArray([react_1("a", {}, "Bulma")])), tab(new List$1(), ofArray([react_1("a", {}, "Hink")]))]));
+var styles = tabs(ofArray([isFullwidth, isBoxed]), ofArray([tab(ofArray([Tab.isActive]), ofArray([react_1("a", {}, "Fable")])), tab(new List$1(), ofArray([react_1("a", {}, "Elmish")])), tab(new List$1(), ofArray([react_1("a", {}, "Bulma")])), tab(new List$1(), ofArray([react_1("a", {}, "Hink")]))]));
+function root$21(model, dispatch) {
+  return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(basic$8, model.BasicViewer, function ($var1) {
+    return dispatch(function (arg0) {
+      return new Msg$22(0, arg0);
+    }($var1));
+  })), docSection("### Alignment", root$2(alignment, model.AlignmentViewer, function ($var2) {
+    return dispatch(function (arg0_1) {
+      return new Msg$22(1, arg0_1);
+    }($var2));
+  })), docSection("### Size", root$2(size$2, model.SizeViewer, function ($var3) {
+    return dispatch(function (arg0_2) {
+      return new Msg$22(2, arg0_2);
+    }($var3));
+  })), docSection("### Styles", root$2(styles, model.StylesViewer, function ($var4) {
+    return dispatch(function (arg0_3) {
+      return new Msg$22(3, arg0_3);
+    }($var4));
+  }))]));
+}
+
+var Types$18 = function (__exports) {
   var Block = __exports.Block = function (__exports) {
     var Option$$1 = __exports.Option = function () {
       function Option$$1(tag, data) {
@@ -14769,14 +16198,14 @@ var Types$16 = function (__exports) {
   return __exports;
 }({});
 var Block = function (__exports) {
-  var isActive = __exports.isActive = new Types$16.Block.Option(1);
+  var isActive = __exports.isActive = new Types$18.Block.Option(1);
 
   var props = __exports.props = function (arg0) {
-    return new Types$16.Block.Option(0, arg0);
+    return new Types$18.Block.Option(0, arg0);
   };
 
   var customClass = __exports.customClass = function (arg0) {
-    return new Types$16.Block.Option(2, arg0);
+    return new Types$18.Block.Option(2, arg0);
   };
 
   return __exports;
@@ -14784,17 +16213,17 @@ var Block = function (__exports) {
 function block(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
-      return new Types$16.Block.Options(result.Props, result.CustomClass, true);
+      return new Types$18.Block.Options(result.Props, result.CustomClass, true);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$16.Block.Options(result.Props, CustomClass, result.IsActive);
+      return new Types$18.Block.Options(result.Props, CustomClass, result.IsActive);
     } else {
-      return new Types$16.Block.Options(opt.data, result.CustomClass, result.IsActive);
+      return new Types$18.Block.Options(opt.data, result.CustomClass, result.IsActive);
     }
   };
 
   var opts = function () {
-    var state = Types$16.Block.Options.Empty;
+    var state = Types$18.Block.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14811,17 +16240,17 @@ function block(options, children) {
 function checkbox(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
-      return new Types$16.Block.Options(result.Props, result.CustomClass, true);
+      return new Types$18.Block.Options(result.Props, result.CustomClass, true);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$16.Block.Options(result.Props, CustomClass, result.IsActive);
+      return new Types$18.Block.Options(result.Props, CustomClass, result.IsActive);
     } else {
-      return new Types$16.Block.Options(opt.data, result.CustomClass, result.IsActive);
+      return new Types$18.Block.Options(opt.data, result.CustomClass, result.IsActive);
     }
   };
 
   var opts = function () {
-    var state = Types$16.Block.Options.Empty;
+    var state = Types$18.Block.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14855,7 +16284,7 @@ function heading(options, children) {
     }));
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
-function tabs(options, children) {
+function tabs$1(options, children) {
   var opts = genericParse(options);
   return react_1.apply(undefined, ["div", createObj(toList(delay(function () {
     return append$1(singleton$1(classBaseList("panel-tabs", ofArray([[opts.CustomClass, function () {
@@ -14865,33 +16294,33 @@ function tabs(options, children) {
     }));
   })), 1)].concat(babelHelpers.toConsumableArray(children)));
 }
-var Tab = function (__exports) {
-  var isActive_1 = __exports.isActive = new Types$16.Tab.Option(1);
+var Tab$1 = function (__exports) {
+  var isActive_1 = __exports.isActive = new Types$18.Tab.Option(1);
 
   var props_1 = __exports.props = function (arg0) {
-    return new Types$16.Tab.Option(0, arg0);
+    return new Types$18.Tab.Option(0, arg0);
   };
 
   var customClass_1 = __exports.customClass = function (arg0) {
-    return new Types$16.Tab.Option(2, arg0);
+    return new Types$18.Tab.Option(2, arg0);
   };
 
   return __exports;
 }({});
-function tab(options, children) {
+function tab$1(options, children) {
   var parseOptions = function parseOptions(result, opt) {
     if (opt.tag === 1) {
-      return new Types$16.Tab.Options(result.Props, result.CustomClass, true);
+      return new Types$18.Tab.Options(result.Props, result.CustomClass, true);
     } else if (opt.tag === 2) {
       var CustomClass = opt.data;
-      return new Types$16.Tab.Options(result.Props, CustomClass, result.IsActive);
+      return new Types$18.Tab.Options(result.Props, CustomClass, result.IsActive);
     } else {
-      return new Types$16.Tab.Options(opt.data, result.CustomClass, result.IsActive);
+      return new Types$18.Tab.Options(opt.data, result.CustomClass, result.IsActive);
     }
   };
 
   var opts = function () {
-    var state = Types$16.Tab.Options.Empty;
+    var state = Types$18.Tab.Options.Empty;
     return function (list) {
       return fold$1(parseOptions, state, list);
     };
@@ -14918,22 +16347,22 @@ function icon$1(options, children) {
 
 var iconInteractive$3 = columns(new List$1(), ofArray([column(ofArray([Offset.is3, Width.is6]), ofArray([panel(new List$1(), ofArray([heading(new List$1(), ofArray(["Repositories"])), block(new List$1(), ofArray([Control.control(ofArray([Control.hasIconLeft]), ofArray([Input.input(ofArray([Input.isSmall, Input.typeIsText, Input.placeholder("Search")])), icon(ofArray([isSmall$1, isLeft]), ofArray([react_1("i", {
   className: "fa fa-search"
-})]))]))])), tabs(new List$1(), ofArray([tab(new List$1(), ofArray(["All"])), tab(ofArray([Tab.isActive]), ofArray(["Fable"])), tab(new List$1(), ofArray(["Elmish"])), tab(new List$1(), ofArray(["Bulma"]))])), block(ofArray([Block.isActive]), ofArray([icon$1(new List$1(), ofArray([react_1("i", {
+})]))]))])), tabs$1(new List$1(), ofArray([tab$1(new List$1(), ofArray(["All"])), tab$1(ofArray([Tab$1.isActive]), ofArray(["Fable"])), tab$1(new List$1(), ofArray(["Elmish"])), tab$1(new List$1(), ofArray(["Bulma"]))])), block(ofArray([Block.isActive]), ofArray([icon$1(new List$1(), ofArray([react_1("i", {
   className: "fa fa-book"
 })])), "Bulma"])), block(new List$1(), ofArray([icon$1(new List$1(), ofArray([react_1("i", {
   className: "fa fa-code-fork"
 })])), "Fable"])), checkbox(new List$1(), ofArray([react_1("input", {
   type: "checkbox"
 }), "I am a checkbox"])), block(new List$1(), ofArray([button(ofArray([isPrimary, isOutlined, isFullWidth]), ofArray(["Reset"]))]))]))]))]));
-function root$20(model, dispatch) {
+function root$22(model, dispatch) {
   return docPage(ofArray([contentFromMarkdown(model.Intro), docSection("", root$2(iconInteractive$3, model.PanelViewer, function ($var1) {
     return dispatch(function (arg0) {
-      return new Msg$12(0, arg0);
+      return new Msg$13(0, arg0);
     }($var1));
   }))]));
 }
 
-function root$21(model) {
+function root$23(model) {
   return contentFromMarkdown(model.Intro);
 }
 
@@ -14952,7 +16381,7 @@ function navButton(classy, href, faClass, txt) {
 var navButtons = react_1("span", {
   className: "nav-item block"
 }, navButton("twitter", "https://twitter.com/FableCompiler", "fa-twitter", "Twitter"), navButton("github", "https://github.com/MangelMaxime/Fable.Elmish.Bulma/", "fa-github", "Github"), navButton("github", "https://gitter.im/fable-compiler/Fable", "fa-comments", "Gitter"));
-var root$22 = react_1("div", {
+var root$24 = react_1("div", {
   className: "nav"
 }, react_1("div", {
   className: "nav-left"
@@ -16149,32 +17578,6 @@ var ProgramModule = function (__exports) {
  *
  * 
  */
-/**
- * WARNING: DO NOT manually require this module.
- * This is a replacement for `invariant(...)` used by the error code system
- * and will _only_ be required by the corresponding babel pass.
- * It always throws.
- */
-
-function reactProdInvariant$1(code) {
-  var argCount = arguments.length - 1;
-
-  var message = 'Minified React error #' + code + '; visit ' + 'http://facebook.github.io/react/docs/error-decoder.html?invariant=' + code;
-
-  for (var argIdx = 0; argIdx < argCount; argIdx++) {
-    message += '&args[]=' + encodeURIComponent(arguments[argIdx + 1]);
-  }
-
-  message += ' for the full message or use the non-minified dev environment' + ' for full errors and additional helpful warnings.';
-
-  var error = new Error(message);
-  error.name = 'Invariant Violation';
-  error.framesToPop = 1; // we don't care about reactProdInvariant's own frame
-
-  throw error;
-}
-
-var reactProdInvariant_1$2 = reactProdInvariant$1;
 
 function checkMask(value, bitmask) {
   return (value & bitmask) === bitmask;
@@ -16232,7 +17635,7 @@ var DOMPropertyInjection = {
     }
 
     for (var propName in Properties) {
-      !!DOMProperty.properties.hasOwnProperty(propName) ? reactProdInvariant_1$2('48', propName) : void 0;
+      !!DOMProperty.properties.hasOwnProperty(propName) ? invariant_1(false, 'injectDOMPropertyConfig(...): You\'re trying to inject DOM property \'%s\' which has already been injected. You may be accidentally injecting the same DOM property config twice, or you may be injecting two configs that have conflicting property names.', propName) : void 0;
 
       var lowerCased = propName.toLowerCase();
       var propConfig = Properties[propName];
@@ -16249,12 +17652,18 @@ var DOMPropertyInjection = {
         hasPositiveNumericValue: checkMask(propConfig, Injection.HAS_POSITIVE_NUMERIC_VALUE),
         hasOverloadedBooleanValue: checkMask(propConfig, Injection.HAS_OVERLOADED_BOOLEAN_VALUE)
       };
-      !(propertyInfo.hasBooleanValue + propertyInfo.hasNumericValue + propertyInfo.hasOverloadedBooleanValue <= 1) ? reactProdInvariant_1$2('50', propName) : void 0;
+      !(propertyInfo.hasBooleanValue + propertyInfo.hasNumericValue + propertyInfo.hasOverloadedBooleanValue <= 1) ? invariant_1(false, 'DOMProperty: Value can be one of boolean, overloaded boolean, or numeric value, but not a combination: %s', propName) : void 0;
+
+      {
+        DOMProperty.getPossibleStandardName[lowerCased] = propName;
+      }
 
       if (DOMAttributeNames.hasOwnProperty(propName)) {
         var attributeName = DOMAttributeNames[propName];
         propertyInfo.attributeName = attributeName;
-        
+        {
+          DOMProperty.getPossibleStandardName[attributeName] = propName;
+        }
       }
 
       if (DOMAttributeNamespaces.hasOwnProperty(propName)) {
@@ -16337,7 +17746,7 @@ var DOMProperty = {
    *
    * @type {Object}
    */
-  getPossibleStandardName: null,
+  getPossibleStandardName: { autofocus: 'autoFocus' },
 
   /**
    * All of the isCustomAttribute() functions that have been injected.
@@ -16462,7 +17871,7 @@ function precacheChildNodes(inst, node) {
       }
     }
     // We reached the end of the DOM children without finding an ID match.
-    reactProdInvariant_1$2('32', childID);
+    invariant_1(false, 'Unable to find element with ID %s.', childID);
   }
   inst._flags |= Flags.hasCachedChildNodes;
 }
@@ -16521,7 +17930,7 @@ function getInstanceFromNode(node) {
 function getNodeFromInstance(inst) {
   // Without this first invariant, passing a non-DOM-component triggers the next
   // invariant for a missing parent, which is super confusing.
-  !(inst._hostNode !== undefined) ? reactProdInvariant_1$2('33') : void 0;
+  !(inst._hostNode !== undefined) ? invariant_1(false, 'getNodeFromInstance: Invalid argument.') : void 0;
 
   if (inst._hostNode) {
     return inst._hostNode;
@@ -16531,7 +17940,7 @@ function getNodeFromInstance(inst) {
   var parents = [];
   while (!inst._hostNode) {
     parents.push(inst);
-    !inst._hostParent ? reactProdInvariant_1$2('34') : void 0;
+    !inst._hostParent ? invariant_1(false, 'React DOM tree root should always have a node reference.') : void 0;
     inst = inst._hostParent;
   }
 
@@ -16650,15 +18059,15 @@ function recomputePluginOrdering() {
   for (var pluginName in namesToPlugins) {
     var pluginModule = namesToPlugins[pluginName];
     var pluginIndex = eventPluginOrder.indexOf(pluginName);
-    !(pluginIndex > -1) ? reactProdInvariant_1$2('96', pluginName) : void 0;
+    !(pluginIndex > -1) ? invariant_1(false, 'EventPluginRegistry: Cannot inject event plugins that do not exist in the plugin ordering, `%s`.', pluginName) : void 0;
     if (EventPluginRegistry.plugins[pluginIndex]) {
       continue;
     }
-    !pluginModule.extractEvents ? reactProdInvariant_1$2('97', pluginName) : void 0;
+    !pluginModule.extractEvents ? invariant_1(false, 'EventPluginRegistry: Event plugins must implement an `extractEvents` method, but `%s` does not.', pluginName) : void 0;
     EventPluginRegistry.plugins[pluginIndex] = pluginModule;
     var publishedEvents = pluginModule.eventTypes;
     for (var eventName in publishedEvents) {
-      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ? reactProdInvariant_1$2('98', eventName, pluginName) : void 0;
+      !publishEventForPlugin(publishedEvents[eventName], pluginModule, eventName) ? invariant_1(false, 'EventPluginRegistry: Failed to publish event `%s` for plugin `%s`.', eventName, pluginName) : void 0;
     }
   }
 }
@@ -16672,7 +18081,7 @@ function recomputePluginOrdering() {
  * @private
  */
 function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
-  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ? reactProdInvariant_1$2('99', eventName) : void 0;
+  !!EventPluginRegistry.eventNameDispatchConfigs.hasOwnProperty(eventName) ? invariant_1(false, 'EventPluginHub: More than one plugin attempted to publish the same event name, `%s`.', eventName) : void 0;
   EventPluginRegistry.eventNameDispatchConfigs[eventName] = dispatchConfig;
 
   var phasedRegistrationNames = dispatchConfig.phasedRegistrationNames;
@@ -16700,11 +18109,18 @@ function publishEventForPlugin(dispatchConfig, pluginModule, eventName) {
  * @private
  */
 function publishRegistrationName(registrationName, pluginModule, eventName) {
-  !!EventPluginRegistry.registrationNameModules[registrationName] ? reactProdInvariant_1$2('100', registrationName) : void 0;
+  !!EventPluginRegistry.registrationNameModules[registrationName] ? invariant_1(false, 'EventPluginHub: More than one plugin attempted to publish the same registration name, `%s`.', registrationName) : void 0;
   EventPluginRegistry.registrationNameModules[registrationName] = pluginModule;
   EventPluginRegistry.registrationNameDependencies[registrationName] = pluginModule.eventTypes[eventName].dependencies;
 
-  
+  {
+    var lowerCasedName = registrationName.toLowerCase();
+    EventPluginRegistry.possibleRegistrationNames[lowerCasedName] = registrationName;
+
+    if (registrationName === 'onDoubleClick') {
+      EventPluginRegistry.possibleRegistrationNames.ondblclick = registrationName;
+    }
+  }
 }
 
 /**
@@ -16739,7 +18155,7 @@ var EventPluginRegistry = {
    * only in __DEV__.
    * @type {Object}
    */
-  possibleRegistrationNames: null,
+  possibleRegistrationNames: {},
   // Trust the developer to only use possibleRegistrationNames in __DEV__
 
   /**
@@ -16752,7 +18168,7 @@ var EventPluginRegistry = {
    * @see {EventPluginHub.injection.injectEventPluginOrder}
    */
   injectEventPluginOrder: function (injectedEventPluginOrder) {
-    !!eventPluginOrder ? reactProdInvariant_1$2('101') : void 0;
+    !!eventPluginOrder ? invariant_1(false, 'EventPluginRegistry: Cannot inject event plugin ordering more than once. You are likely trying to load more than one copy of React.') : void 0;
     // Clone the ordering so it cannot be dynamically mutated.
     eventPluginOrder = Array.prototype.slice.call(injectedEventPluginOrder);
     recomputePluginOrdering();
@@ -16776,7 +18192,7 @@ var EventPluginRegistry = {
       }
       var pluginModule = injectedNamesToPlugins[pluginName];
       if (!namesToPlugins.hasOwnProperty(pluginName) || namesToPlugins[pluginName] !== pluginModule) {
-        !!namesToPlugins[pluginName] ? reactProdInvariant_1$2('102', pluginName) : void 0;
+        !!namesToPlugins[pluginName] ? invariant_1(false, 'EventPluginRegistry: Cannot inject two different event plugins using the same name, `%s`.', pluginName) : void 0;
         namesToPlugins[pluginName] = pluginModule;
         isOrderingDirty = true;
       }
@@ -16843,7 +18259,14 @@ var EventPluginRegistry = {
       }
     }
 
-    
+    {
+      var possibleRegistrationNames = EventPluginRegistry.possibleRegistrationNames;
+      for (var lowerCasedName in possibleRegistrationNames) {
+        if (possibleRegistrationNames.hasOwnProperty(lowerCasedName)) {
+          delete possibleRegistrationNames[lowerCasedName];
+        }
+      }
+    }
   }
 };
 
@@ -16902,6 +18325,25 @@ var ReactErrorUtils = {
   }
 };
 
+{
+  /**
+   * To help development we can get better devtools integration by simulating a
+   * real browser event.
+   */
+  if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof document !== 'undefined' && typeof document.createEvent === 'function') {
+    var fakeNode = document.createElement('react');
+    ReactErrorUtils.invokeGuardedCallback = function (name, func, a) {
+      var boundFunc = func.bind(null, a);
+      var evtType = 'react-' + name;
+      fakeNode.addEventListener(evtType, boundFunc, false);
+      var evt = document.createEvent('Event');
+      evt.initEvent(evtType, false, false);
+      fakeNode.dispatchEvent(evt);
+      fakeNode.removeEventListener(evtType, boundFunc, false);
+    };
+  }
+}
+
 var ReactErrorUtils_1 = ReactErrorUtils;
 
 /**
@@ -16917,11 +18359,15 @@ var TreeTraversal;
 var injection = {
   injectComponentTree: function (Injected) {
     ComponentTree = Injected;
-    
+    {
+      warning_1(Injected && Injected.getNodeFromInstance && Injected.getInstanceFromNode, 'EventPluginUtils.injection.injectComponentTree(...): Injected ' + 'module is missing getNodeFromInstance or getInstanceFromNode.');
+    }
   },
   injectTreeTraversal: function (Injected) {
     TreeTraversal = Injected;
-    
+    {
+      warning_1(Injected && Injected.isAncestor && Injected.getLowestCommonAncestor, 'EventPluginUtils.injection.injectTreeTraversal(...): Injected ' + 'module is missing isAncestor or getLowestCommonAncestor.');
+    }
   }
 };
 
@@ -16934,6 +18380,22 @@ function isMoveish(topLevelType) {
 }
 function isStartish(topLevelType) {
   return topLevelType === 'topMouseDown' || topLevelType === 'topTouchStart';
+}
+
+var validateEventDispatches;
+{
+  validateEventDispatches = function (event) {
+    var dispatchListeners = event._dispatchListeners;
+    var dispatchInstances = event._dispatchInstances;
+
+    var listenersIsArr = Array.isArray(dispatchListeners);
+    var listenersLen = listenersIsArr ? dispatchListeners.length : dispatchListeners ? 1 : 0;
+
+    var instancesIsArr = Array.isArray(dispatchInstances);
+    var instancesLen = instancesIsArr ? dispatchInstances.length : dispatchInstances ? 1 : 0;
+
+    warning_1(instancesIsArr === listenersIsArr && instancesLen === listenersLen, 'EventPluginUtils: Invalid `event`.');
+  };
 }
 
 /**
@@ -16960,6 +18422,9 @@ function executeDispatch(event, simulated, listener, inst) {
 function executeDispatchesInOrder(event, simulated) {
   var dispatchListeners = event._dispatchListeners;
   var dispatchInstances = event._dispatchInstances;
+  {
+    validateEventDispatches(event);
+  }
   if (Array.isArray(dispatchListeners)) {
     for (var i = 0; i < dispatchListeners.length; i++) {
       if (event.isPropagationStopped()) {
@@ -16985,6 +18450,9 @@ function executeDispatchesInOrder(event, simulated) {
 function executeDispatchesInOrderStopAtTrueImpl(event) {
   var dispatchListeners = event._dispatchListeners;
   var dispatchInstances = event._dispatchInstances;
+  {
+    validateEventDispatches(event);
+  }
   if (Array.isArray(dispatchListeners)) {
     for (var i = 0; i < dispatchListeners.length; i++) {
       if (event.isPropagationStopped()) {
@@ -17023,9 +18491,12 @@ function executeDispatchesInOrderStopAtTrue(event) {
  * @return {*} The return value of executing the single dispatch.
  */
 function executeDirectDispatch(event) {
+  {
+    validateEventDispatches(event);
+  }
   var dispatchListener = event._dispatchListeners;
   var dispatchInstance = event._dispatchInstances;
-  !!Array.isArray(dispatchListener) ? reactProdInvariant_1$2('103') : void 0;
+  !!Array.isArray(dispatchListener) ? invariant_1(false, 'executeDirectDispatch(...): Invalid `event`.') : void 0;
   event.currentTarget = dispatchListener ? EventPluginUtils.getNodeFromInstance(dispatchInstance) : null;
   var res = dispatchListener ? dispatchListener(event) : null;
   event.currentTarget = null;
@@ -17096,7 +18567,7 @@ var EventPluginUtils_1 = EventPluginUtils;
  */
 
 function accumulateInto(current, next) {
-  !(next != null) ? reactProdInvariant_1$2('30') : void 0;
+  !(next != null) ? invariant_1(false, 'accumulateInto(...): Accumulated items must not be null or undefined.') : void 0;
 
   if (current == null) {
     return next;
@@ -17261,7 +18732,7 @@ var EventPluginHub = {
    * @param {function} listener The callback to store.
    */
   putListener: function (inst, registrationName, listener) {
-    !(typeof listener === 'function') ? reactProdInvariant_1$2('94', registrationName, typeof listener) : void 0;
+    !(typeof listener === 'function') ? invariant_1(false, 'Expected %s listener to be a function, instead got type %s', registrationName, typeof listener) : void 0;
 
     var key = getDictionaryKey(inst);
     var bankForRegistrationName = listenerBank[registrationName] || (listenerBank[registrationName] = {});
@@ -17385,7 +18856,7 @@ var EventPluginHub = {
     } else {
       forEachAccumulated_1(processingEventQueue, executeDispatchesAndReleaseTopLevel);
     }
-    !!eventQueue ? reactProdInvariant_1$2('95') : void 0;
+    !!eventQueue ? invariant_1(false, 'processEventQueue(): Additional events were enqueued while processing an event queue. Support for this has not yet been implemented.') : void 0;
     // This would be a good time to rethrow if any of the event handlers threw.
     ReactErrorUtils_1.rethrowCaughtError();
   },
@@ -17422,6 +18893,9 @@ function listenerAtPhase(inst, event, propagationPhase) {
  * "dispatch" object that pairs the event with the listener.
  */
 function accumulateDirectionalDispatches(inst, phase, event) {
+  {
+    warning_1(inst, 'Dispatching inst must not be null');
+  }
   var listener = listenerAtPhase(inst, event, phase);
   if (listener) {
     event._dispatchListeners = accumulateInto_1(event._dispatchListeners, listener);
@@ -17603,7 +19077,7 @@ var fourArgumentPooler$2 = function (a1, a2, a3, a4) {
 
 var standardReleaser$1 = function (instance) {
   var Klass = this;
-  !(instance instanceof Klass) ? reactProdInvariant_1$2('25') : void 0;
+  !(instance instanceof Klass) ? invariant_1(false, 'Trying to release an instance into a pool of a different type.') : void 0;
   instance.destructor();
   if (Klass.instancePool.length < Klass.poolSize) {
     Klass.instancePool.push(instance);
@@ -17741,6 +19215,9 @@ PooledClass_1$2.addPoolingTo(FallbackCompositionState);
 
 var FallbackCompositionState_1 = FallbackCompositionState;
 
+var didWarnForAddedNewProperty = false;
+var isProxySupported = typeof Proxy === 'function';
+
 var shouldBeReleasedProperties = ['dispatchConfig', '_targetInst', 'nativeEvent', 'isDefaultPrevented', 'isPropagationStopped', '_dispatchListeners', '_dispatchInstances'];
 
 /**
@@ -17781,6 +19258,13 @@ var EventInterface = {
  * @param {DOMEventTarget} nativeEventTarget Target node.
  */
 function SyntheticEvent(dispatchConfig, targetInst, nativeEvent, nativeEventTarget) {
+  {
+    // these have a getter/setter for warnings
+    delete this.nativeEvent;
+    delete this.preventDefault;
+    delete this.stopPropagation;
+  }
+
   this.dispatchConfig = dispatchConfig;
   this._targetInst = targetInst;
   this.nativeEvent = nativeEvent;
@@ -17789,6 +19273,9 @@ function SyntheticEvent(dispatchConfig, targetInst, nativeEvent, nativeEventTarg
   for (var propName in Interface) {
     if (!Interface.hasOwnProperty(propName)) {
       continue;
+    }
+    {
+      delete this[propName]; // this has a getter/setter for warnings
     }
     var normalize = Interface[propName];
     if (normalize) {
@@ -17873,18 +19360,45 @@ index(SyntheticEvent.prototype, {
     var Interface = this.constructor.Interface;
     for (var propName in Interface) {
       {
-        this[propName] = null;
+        Object.defineProperty(this, propName, getPooledWarningPropertyDefinition(propName, Interface[propName]));
       }
     }
     for (var i = 0; i < shouldBeReleasedProperties.length; i++) {
       this[shouldBeReleasedProperties[i]] = null;
     }
-    
+    {
+      Object.defineProperty(this, 'nativeEvent', getPooledWarningPropertyDefinition('nativeEvent', null));
+      Object.defineProperty(this, 'preventDefault', getPooledWarningPropertyDefinition('preventDefault', emptyFunction_1));
+      Object.defineProperty(this, 'stopPropagation', getPooledWarningPropertyDefinition('stopPropagation', emptyFunction_1));
+    }
   }
 });
 
 SyntheticEvent.Interface = EventInterface;
 
+{
+  if (isProxySupported) {
+    /*eslint-disable no-func-assign */
+    SyntheticEvent = new Proxy(SyntheticEvent, {
+      construct: function (target, args) {
+        return this.apply(target, Object.create(target.prototype), args);
+      },
+      apply: function (constructor, that, args) {
+        return new Proxy(constructor.apply(that, args), {
+          set: function (target, prop, value) {
+            if (prop !== 'isPersistent' && !target.constructor.Interface.hasOwnProperty(prop) && shouldBeReleasedProperties.indexOf(prop) === -1) {
+              warning_1(didWarnForAddedNewProperty || target.isPersistent(), "This synthetic event is reused for performance reasons. If you're " + "seeing this, you're adding a new property in the synthetic event object. " + 'The property is never released. See ' + 'https://fb.me/react-event-pooling for more information.');
+              didWarnForAddedNewProperty = true;
+            }
+            target[prop] = value;
+            return true;
+          }
+        });
+      }
+    });
+    /*eslint-enable no-func-assign */
+  }
+}
 /**
  * Helper to reduce boilerplate when creating subclasses.
  *
@@ -17911,6 +19425,40 @@ SyntheticEvent.augmentClass = function (Class, Interface) {
 PooledClass_1$2.addPoolingTo(SyntheticEvent, PooledClass_1$2.fourArgumentPooler);
 
 var SyntheticEvent_1 = SyntheticEvent;
+
+/**
+  * Helper to nullify syntheticEvent instance properties when destructing
+  *
+  * @param {object} SyntheticEvent
+  * @param {String} propName
+  * @return {object} defineProperty object
+  */
+function getPooledWarningPropertyDefinition(propName, getVal) {
+  var isFunction = typeof getVal === 'function';
+  return {
+    configurable: true,
+    set: set,
+    get: get
+  };
+
+  function set(val) {
+    var action = isFunction ? 'setting the method' : 'setting the property';
+    warn(action, 'This is effectively a no-op');
+    return val;
+  }
+
+  function get() {
+    var action = isFunction ? 'accessing the method' : 'accessing the property';
+    var result = isFunction ? 'This is a no-op function' : 'This is set to null';
+    warn(action, result);
+    return getVal;
+  }
+
+  function warn(action, result) {
+    var warningCondition = false;
+    warning_1(warningCondition, "This synthetic event is reused for performance reasons. If you're seeing this, " + "you're %s `%s` on a released/nullified synthetic event. %s. " + 'If you must keep the original synthetic event around, use event.persist(). ' + 'See https://fb.me/react-event-pooling for more information.', action, propName, result);
+  }
+}
 
 /**
  * @interface Event
@@ -18379,7 +19927,7 @@ var CallbackQueue = function () {
     var contexts = this._contexts;
     var arg = this._arg;
     if (callbacks && contexts) {
-      !(callbacks.length === contexts.length) ? reactProdInvariant_1$2('24') : void 0;
+      !(callbacks.length === contexts.length) ? invariant_1(false, 'Mismatched list of contexts in callback queue') : void 0;
       this._callbacks = null;
       this._contexts = null;
       for (var i = 0; i < callbacks.length; i++) {
@@ -18497,7 +20045,7 @@ var ReactOwner = {
    * @internal
    */
   addComponentAsRefTo: function (component, ref, owner) {
-    !isValidOwner(owner) ? reactProdInvariant_1$2('119') : void 0;
+    !isValidOwner(owner) ? invariant_1(false, 'addComponentAsRefTo(...): Only a ReactOwner can have refs. You might be adding a ref to a component that was not created inside a component\'s `render` method, or you have multiple copies of React loaded (details: https://fb.me/react-refs-must-have-owner).') : void 0;
     owner.attachRef(ref, component);
   },
 
@@ -18511,7 +20059,7 @@ var ReactOwner = {
    * @internal
    */
   removeComponentAsRefFrom: function (component, ref, owner) {
-    !isValidOwner(owner) ? reactProdInvariant_1$2('120') : void 0;
+    !isValidOwner(owner) ? invariant_1(false, 'removeComponentAsRefFrom(...): Only a ReactOwner can have refs. You might be removing a ref to a component that was not created inside a component\'s `render` method, or you have multiple copies of React loaded (details: https://fb.me/react-refs-must-have-owner).') : void 0;
     var ownerPublicInstance = owner.getPublicInstance();
     // Check that `component`'s owner is still alive and that `component` is still the current ref
     // because we do not want to detach the ref if another component stole it.
@@ -18596,6 +20144,14 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 var ReactRef_1 = ReactRef;
+
+{
+  var processingChildContext = false;
+
+  var warnInvalidSetState = function () {
+    warning_1(!processingChildContext, 'setState(...): Cannot call setState() inside getChildContext()');
+  };
+}
 
 var ReactInvalidSetStateWarningHook = {
   onBeginProcessingChildContext: function () {
@@ -18690,7 +20246,7 @@ function callHook(event, fn, context, arg1, arg2, arg3, arg4, arg5) {
   try {
     fn.call(context, arg1, arg2, arg3, arg4, arg5);
   } catch (e) {
-    void 0;
+    warning_1(didHookThrowForEvent[event], 'Exception thrown by hook while handling %s: %s', event, e + '\n' + e.stack);
     didHookThrowForEvent[event] = true;
   }
 }
@@ -18774,7 +20330,7 @@ function checkDebugID(debugID) {
     return;
   }
   if (!debugID) {
-    void 0;
+    warning_1(false, 'ReactDebugTool: debugID may not be empty.');
   }
 }
 
@@ -18783,7 +20339,7 @@ function beginLifeCycleTimer(debugID, timerType) {
     return;
   }
   if (currentTimerType && !lifeCycleTimerHasWarned) {
-    void 0;
+    warning_1(false, 'There is an internal error in the React performance measurement code. ' + 'Did not expect %s timer to start while %s timer is still in ' + 'progress for %s instance.', timerType, currentTimerType || 'no', debugID === currentTimerDebugID ? 'the same' : 'another');
     lifeCycleTimerHasWarned = true;
   }
   currentTimerStartTime = performanceNow_1();
@@ -18797,7 +20353,7 @@ function endLifeCycleTimer(debugID, timerType) {
     return;
   }
   if (currentTimerType !== timerType && !lifeCycleTimerHasWarned) {
-    void 0;
+    warning_1(false, 'There is an internal error in the React performance measurement code. ' + 'We did not expect %s timer to stop while %s timer is still in ' + 'progress for %s instance. Please report this as a bug in React.', timerType, currentTimerType || 'no', debugID === currentTimerDebugID ? 'the same' : 'another');
     lifeCycleTimerHasWarned = true;
   }
   if (isProfiling) {
@@ -19021,6 +20577,19 @@ if (/[?&]react_perf\b/.test(url)) {
   ReactDebugTool$1.beginProfiling();
 }
 
+var ReactDebugTool_1 = ReactDebugTool$1;
+
+// Trust the developer to only use ReactInstrumentation with a __DEV__ check
+
+var debugTool = null;
+
+{
+  var ReactDebugTool = ReactDebugTool_1;
+  debugTool = ReactDebugTool;
+}
+
+var ReactInstrumentation$1 = { debugTool: debugTool };
+
 /**
  * Helper to call ReactRef.attachRefs with this composite component, split out
  * to avoid allocations in the transaction mount-ready queue.
@@ -19043,9 +20612,19 @@ var ReactReconciler = {
    */
   mountComponent: function (internalInstance, transaction, hostParent, hostContainerInfo, context, parentDebugID) // 0 in production and for roots
   {
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onBeforeMountComponent(internalInstance._debugID, internalInstance._currentElement, parentDebugID);
+      }
+    }
     var markup = internalInstance.mountComponent(transaction, hostParent, hostContainerInfo, context, parentDebugID);
     if (internalInstance._currentElement && internalInstance._currentElement.ref != null) {
       transaction.getReactMountReady().enqueue(attachRefs, internalInstance);
+    }
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onMountComponent(internalInstance._debugID);
+      }
     }
     return markup;
   },
@@ -19065,9 +20644,18 @@ var ReactReconciler = {
    * @internal
    */
   unmountComponent: function (internalInstance, safely) {
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onBeforeUnmountComponent(internalInstance._debugID);
+      }
+    }
     ReactRef_1.detachRefs(internalInstance, internalInstance._currentElement);
     internalInstance.unmountComponent(safely);
-    
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onUnmountComponent(internalInstance._debugID);
+      }
+    }
   },
 
   /**
@@ -19096,6 +20684,12 @@ var ReactReconciler = {
       return;
     }
 
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onBeforeUpdateComponent(internalInstance._debugID, nextElement);
+      }
+    }
+
     var refsChanged = ReactRef_1.shouldUpdateRefs(prevElement, nextElement);
 
     if (refsChanged) {
@@ -19108,7 +20702,11 @@ var ReactReconciler = {
       transaction.getReactMountReady().enqueue(attachRefs, internalInstance);
     }
 
-    
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onUpdateComponent(internalInstance._debugID);
+      }
+    }
   },
 
   /**
@@ -19122,11 +20720,20 @@ var ReactReconciler = {
     if (internalInstance._updateBatchNumber !== updateBatchNumber) {
       // The component's enqueued batch number should always be the current
       // batch or the following one.
-      void 0;
+      warning_1(internalInstance._updateBatchNumber == null || internalInstance._updateBatchNumber === updateBatchNumber + 1, 'performUpdateIfNecessary: Unexpected batch number (current %s, ' + 'pending %s)', updateBatchNumber, internalInstance._updateBatchNumber);
       return;
     }
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onBeforeUpdateComponent(internalInstance._debugID, internalInstance._currentElement);
+      }
+    }
     internalInstance.performUpdateIfNecessary(transaction);
-    
+    {
+      if (internalInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onUpdateComponent(internalInstance._debugID);
+      }
+    }
   }
 };
 
@@ -19246,7 +20853,7 @@ var TransactionImpl = {
    */
   perform: function (method, scope, a, b, c, d, e, f) {
     /* eslint-enable space-before-function-paren */
-    !!this.isInTransaction() ? reactProdInvariant_1$2('27') : void 0;
+    !!this.isInTransaction() ? invariant_1(false, 'Transaction.perform(...): Cannot initialize a transaction when there is already an outstanding transaction.') : void 0;
     var errorThrown;
     var ret;
     try {
@@ -19310,7 +20917,7 @@ var TransactionImpl = {
    * invoked).
    */
   closeAll: function (startIndex) {
-    !this.isInTransaction() ? reactProdInvariant_1$2('28') : void 0;
+    !this.isInTransaction() ? invariant_1(false, 'Transaction.closeAll(): Cannot close transaction when none are open.') : void 0;
     var transactionWrappers = this.transactionWrappers;
     for (var i = startIndex; i < transactionWrappers.length; i++) {
       var wrapper = transactionWrappers[i];
@@ -19351,7 +20958,7 @@ var asapEnqueued = false;
 var batchingStrategy = null;
 
 function ensureInjected() {
-  !(ReactUpdates.ReactReconcileTransaction && batchingStrategy) ? reactProdInvariant_1$2('123') : void 0;
+  !(ReactUpdates.ReactReconcileTransaction && batchingStrategy) ? invariant_1(false, 'ReactUpdates: must inject a reconcile transaction class and batching strategy') : void 0;
 }
 
 var NESTED_UPDATES = {
@@ -19432,7 +21039,7 @@ function mountOrderComparator(c1, c2) {
 
 function runBatchedUpdates(transaction) {
   var len = transaction.dirtyComponentsLength;
-  !(len === dirtyComponents.length) ? reactProdInvariant_1$2('124', len, dirtyComponents.length) : void 0;
+  !(len === dirtyComponents.length) ? invariant_1(false, 'Expected flush transaction\'s stored dirty-components length (%s) to match dirty-components array length (%s).', len, dirtyComponents.length) : void 0;
 
   // Since reconciling a component higher in the owner hierarchy usually (not
   // always -- see shouldComponentUpdate()) will reconcile children, reconcile
@@ -19534,21 +21141,21 @@ function enqueueUpdate(component) {
  * if no updates are currently being performed.
  */
 function asap(callback, context) {
-  !batchingStrategy.isBatchingUpdates ? reactProdInvariant_1$2('125') : void 0;
+  !batchingStrategy.isBatchingUpdates ? invariant_1(false, 'ReactUpdates.asap: Can\'t enqueue an asap callback in a context whereupdates are not being batched.') : void 0;
   asapCallbackQueue.enqueue(callback, context);
   asapEnqueued = true;
 }
 
 var ReactUpdatesInjection = {
   injectReconcileTransaction: function (ReconcileTransaction) {
-    !ReconcileTransaction ? reactProdInvariant_1$2('126') : void 0;
+    !ReconcileTransaction ? invariant_1(false, 'ReactUpdates: must provide a reconcile transaction class') : void 0;
     ReactUpdates.ReactReconcileTransaction = ReconcileTransaction;
   },
 
   injectBatchingStrategy: function (_batchingStrategy) {
-    !_batchingStrategy ? reactProdInvariant_1$2('127') : void 0;
-    !(typeof _batchingStrategy.batchedUpdates === 'function') ? reactProdInvariant_1$2('128') : void 0;
-    !(typeof _batchingStrategy.isBatchingUpdates === 'boolean') ? reactProdInvariant_1$2('129') : void 0;
+    !_batchingStrategy ? invariant_1(false, 'ReactUpdates: must provide a batching strategy') : void 0;
+    !(typeof _batchingStrategy.batchedUpdates === 'function') ? invariant_1(false, 'ReactUpdates: must provide a batchedUpdates() function') : void 0;
+    !(typeof _batchingStrategy.isBatchingUpdates === 'boolean') ? invariant_1(false, 'ReactUpdates: must provide an isBatchingUpdates boolean attribute') : void 0;
     batchingStrategy = _batchingStrategy;
   }
 };
@@ -21000,13 +22607,13 @@ function toArray$2(obj) {
 
   // Some browsers builtin objects can report typeof 'function' (e.g. NodeList
   // in old versions of Safari).
-  !(!Array.isArray(obj) && (typeof obj === 'object' || typeof obj === 'function')) ? invariant_1(false) : void 0;
+  !(!Array.isArray(obj) && (typeof obj === 'object' || typeof obj === 'function')) ? invariant_1(false, 'toArray: Array-like object expected') : void 0;
 
-  !(typeof length === 'number') ? invariant_1(false) : void 0;
+  !(typeof length === 'number') ? invariant_1(false, 'toArray: Object needs a length property') : void 0;
 
-  !(length === 0 || length - 1 in obj) ? invariant_1(false) : void 0;
+  !(length === 0 || length - 1 in obj) ? invariant_1(false, 'toArray: Object should have keys for indices') : void 0;
 
-  !(typeof obj.callee !== 'function') ? invariant_1(false) : void 0;
+  !(typeof obj.callee !== 'function') ? invariant_1(false, 'toArray: Object can\'t be `arguments`. Use rest params ' + '(function(...args) {}) or Array.from() instead.') : void 0;
 
   // Old IE doesn't give collections access to hasOwnProperty. Assume inputs
   // without method will throw during the slice call and skip straight to the
@@ -21174,7 +22781,7 @@ svgElements.forEach(function (nodeName) {
  * @return {?array} Markup wrap configuration, if applicable.
  */
 function getMarkupWrap(nodeName) {
-  !!!dummyNode$1 ? invariant_1(false) : void 0;
+  !!!dummyNode$1 ? invariant_1(false, 'Markup wrapping node not initialized') : void 0;
   if (!markupWrap.hasOwnProperty(nodeName)) {
     nodeName = '*';
   }
@@ -21243,7 +22850,7 @@ function getNodeName(markup) {
  */
 function createNodesFromMarkup(markup, handleScript) {
   var node = dummyNode;
-  !!!dummyNode ? invariant_1(false) : void 0;
+  !!!dummyNode ? invariant_1(false, 'createNodesFromMarkup dummy not initialized') : void 0;
   var nodeName = getNodeName(markup);
 
   var wrap = nodeName && getMarkupWrap_1(nodeName);
@@ -21260,7 +22867,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
   var scripts = node.getElementsByTagName('script');
   if (scripts.length) {
-    !handleScript ? invariant_1(false) : void 0;
+    !handleScript ? invariant_1(false, 'createNodesFromMarkup(...): Unexpected <script> element rendered.') : void 0;
     createArrayFromMixed_1(scripts).forEach(handleScript);
   }
 
@@ -21283,9 +22890,9 @@ var Danger = {
    * @internal
    */
   dangerouslyReplaceNodeWithMarkup: function (oldChild, markup) {
-    !ExecutionEnvironment_1.canUseDOM ? reactProdInvariant_1$2('56') : void 0;
-    !markup ? reactProdInvariant_1$2('57') : void 0;
-    !(oldChild.nodeName !== 'HTML') ? reactProdInvariant_1$2('58') : void 0;
+    !ExecutionEnvironment_1.canUseDOM ? invariant_1(false, 'dangerouslyReplaceNodeWithMarkup(...): Cannot render markup in a worker thread. Make sure `window` and `document` are available globally before requiring React when unit testing or use ReactDOMServer.renderToString() for server rendering.') : void 0;
+    !markup ? invariant_1(false, 'dangerouslyReplaceNodeWithMarkup(...): Missing markup.') : void 0;
+    !(oldChild.nodeName !== 'HTML') ? invariant_1(false, 'dangerouslyReplaceNodeWithMarkup(...): Cannot replace markup of the <html> node. This is because browser quirks make this unreliable and/or slow. If you want to render to the root you must use server rendering. See ReactDOMServer.renderToString().') : void 0;
 
     if (typeof markup === 'string') {
       var newChild = createNodesFromMarkup_1(markup, emptyFunction_1)[0];
@@ -21388,10 +22995,38 @@ function replaceDelimitedText(openingComment, closingComment, stringText) {
     }
   }
 
-  
+  {
+    ReactInstrumentation$1.debugTool.onHostOperation({
+      instanceID: ReactDOMComponentTree_1.getInstanceFromNode(openingComment)._debugID,
+      type: 'replace text',
+      payload: stringText
+    });
+  }
 }
 
 var dangerouslyReplaceNodeWithMarkup = Danger_1.dangerouslyReplaceNodeWithMarkup;
+{
+  dangerouslyReplaceNodeWithMarkup = function (oldChild, markup, prevInstance) {
+    Danger_1.dangerouslyReplaceNodeWithMarkup(oldChild, markup);
+    if (prevInstance._debugID !== 0) {
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: prevInstance._debugID,
+        type: 'replace with',
+        payload: markup.toString()
+      });
+    } else {
+      var nextInstance = ReactDOMComponentTree_1.getInstanceFromNode(markup.node);
+      if (nextInstance._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onHostOperation({
+          instanceID: nextInstance._debugID,
+          type: 'mount',
+          payload: markup.toString()
+        });
+      }
+    }
+  };
+}
+
 /**
  * Operations for updating with DOM children.
  */
@@ -21408,28 +23043,65 @@ var DOMChildrenOperations = {
    * @internal
    */
   processUpdates: function (parentNode, updates) {
+    {
+      var parentNodeDebugID = ReactDOMComponentTree_1.getInstanceFromNode(parentNode)._debugID;
+    }
+
     for (var k = 0; k < updates.length; k++) {
       var update = updates[k];
       switch (update.type) {
         case 'INSERT_MARKUP':
           insertLazyTreeChildAt(parentNode, update.content, getNodeAfter(parentNode, update.afterNode));
-          
+          {
+            ReactInstrumentation$1.debugTool.onHostOperation({
+              instanceID: parentNodeDebugID,
+              type: 'insert child',
+              payload: {
+                toIndex: update.toIndex,
+                content: update.content.toString()
+              }
+            });
+          }
           break;
         case 'MOVE_EXISTING':
           moveChild(parentNode, update.fromNode, getNodeAfter(parentNode, update.afterNode));
-          
+          {
+            ReactInstrumentation$1.debugTool.onHostOperation({
+              instanceID: parentNodeDebugID,
+              type: 'move child',
+              payload: { fromIndex: update.fromIndex, toIndex: update.toIndex }
+            });
+          }
           break;
         case 'SET_MARKUP':
           setInnerHTML_1(parentNode, update.content);
-          
+          {
+            ReactInstrumentation$1.debugTool.onHostOperation({
+              instanceID: parentNodeDebugID,
+              type: 'replace children',
+              payload: update.content.toString()
+            });
+          }
           break;
         case 'TEXT_CONTENT':
           setTextContent_1(parentNode, update.content);
-          
+          {
+            ReactInstrumentation$1.debugTool.onHostOperation({
+              instanceID: parentNodeDebugID,
+              type: 'replace text',
+              payload: update.content.toString()
+            });
+          }
           break;
         case 'REMOVE_NODE':
           removeChild(parentNode, update.fromNode);
-          
+          {
+            ReactInstrumentation$1.debugTool.onHostOperation({
+              instanceID: parentNodeDebugID,
+              type: 'remove child',
+              payload: { fromIndex: update.fromIndex }
+            });
+          }
           break;
       }
     }
@@ -21654,7 +23326,64 @@ var CSSProperty = {
 
 var CSSProperty_1 = CSSProperty;
 
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * @typechecks
+ */
+
+var _hyphenPattern = /-(.)/g;
+
+/**
+ * Camelcases a hyphenated string, for example:
+ *
+ *   > camelize('background-color')
+ *   < "backgroundColor"
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function camelize(string) {
+  return string.replace(_hyphenPattern, function (_, character) {
+    return character.toUpperCase();
+  });
+}
+
+var camelize_1 = camelize;
+
+var msPattern = /^-ms-/;
+
+/**
+ * Camelcases a hyphenated CSS property name, for example:
+ *
+ *   > camelizeStyleName('background-color')
+ *   < "backgroundColor"
+ *   > camelizeStyleName('-moz-transition')
+ *   < "MozTransition"
+ *   > camelizeStyleName('-ms-transition')
+ *   < "msTransition"
+ *
+ * As Andi Smith suggests
+ * (http://www.andismith.com/blog/2012/02/modernizr-prefixed/), an `-ms` prefix
+ * is converted to lowercase `ms`.
+ *
+ * @param {string} string
+ * @return {string}
+ */
+function camelizeStyleName(string) {
+  return camelize_1(string.replace(msPattern, 'ms-'));
+}
+
+var camelizeStyleName_1 = camelizeStyleName;
+
 var isUnitlessNumber$1 = CSSProperty_1.isUnitlessNumber;
+var styleWarnings = {};
+
 /**
  * Convert a value into the proper css writable value. The style name `name`
  * should be logical (no hyphens), as specified
@@ -21687,6 +23416,28 @@ function dangerousStyleValue(name, value, component, isCustomProperty) {
   }
 
   if (typeof value === 'string') {
+    {
+      // Allow '0' to pass through without warning. 0 is already special and
+      // doesn't require units, so we don't need to warn about it.
+      if (component && value !== '0') {
+        var owner = component._currentElement._owner;
+        var ownerName = owner ? owner.getName() : null;
+        if (ownerName && !styleWarnings[ownerName]) {
+          styleWarnings[ownerName] = {};
+        }
+        var warned = false;
+        if (ownerName) {
+          var warnings = styleWarnings[ownerName];
+          warned = warnings[name];
+          if (!warned) {
+            warnings[name] = true;
+          }
+        }
+        if (!warned) {
+          warning_1(false, 'a `%s` tag (owner: `%s`) was passed a numeric string value ' + 'for CSS property `%s` (value: `%s`) which will be treated ' + 'as a unitless number in a future version of React.', component._currentElement.type, ownerName || 'unknown', name, value);
+        }
+      }
+    }
     value = value.trim();
   }
   return value + 'px';
@@ -21797,6 +23548,87 @@ if (ExecutionEnvironment_1.canUseDOM) {
   }
 }
 
+{
+  // 'msTransform' is correct, but the other prefixes should be capitalized
+  var badVendoredStyleNamePattern = /^(?:webkit|moz|o)[A-Z]/;
+
+  // style values shouldn't contain a semicolon
+  var badStyleValueWithSemicolonPattern = /;\s*$/;
+
+  var warnedStyleNames = {};
+  var warnedStyleValues = {};
+  var warnedForNaNValue = false;
+
+  var warnHyphenatedStyleName = function (name, owner) {
+    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+      return;
+    }
+
+    warnedStyleNames[name] = true;
+    warning_1(false, 'Unsupported style property %s. Did you mean %s?%s', name, camelizeStyleName_1(name), checkRenderMessage(owner));
+  };
+
+  var warnBadVendoredStyleName = function (name, owner) {
+    if (warnedStyleNames.hasOwnProperty(name) && warnedStyleNames[name]) {
+      return;
+    }
+
+    warnedStyleNames[name] = true;
+    warning_1(false, 'Unsupported vendor-prefixed style property %s. Did you mean %s?%s', name, name.charAt(0).toUpperCase() + name.slice(1), checkRenderMessage(owner));
+  };
+
+  var warnStyleValueWithSemicolon = function (name, value, owner) {
+    if (warnedStyleValues.hasOwnProperty(value) && warnedStyleValues[value]) {
+      return;
+    }
+
+    warnedStyleValues[value] = true;
+    warning_1(false, "Style property values shouldn't contain a semicolon.%s " + 'Try "%s: %s" instead.', checkRenderMessage(owner), name, value.replace(badStyleValueWithSemicolonPattern, ''));
+  };
+
+  var warnStyleValueIsNaN = function (name, value, owner) {
+    if (warnedForNaNValue) {
+      return;
+    }
+
+    warnedForNaNValue = true;
+    warning_1(false, '`NaN` is an invalid value for the `%s` css style property.%s', name, checkRenderMessage(owner));
+  };
+
+  var checkRenderMessage = function (owner) {
+    if (owner) {
+      var name = owner.getName();
+      if (name) {
+        return ' Check the render method of `' + name + '`.';
+      }
+    }
+    return '';
+  };
+
+  /**
+   * @param {string} name
+   * @param {*} value
+   * @param {ReactDOMComponent} component
+   */
+  var warnValidStyle = function (name, value, component) {
+    var owner;
+    if (component) {
+      owner = component._currentElement._owner;
+    }
+    if (name.indexOf('-') > -1) {
+      warnHyphenatedStyleName(name, owner);
+    } else if (badVendoredStyleNamePattern.test(name)) {
+      warnBadVendoredStyleName(name, owner);
+    } else if (badStyleValueWithSemicolonPattern.test(value)) {
+      warnStyleValueWithSemicolon(name, value, owner);
+    }
+
+    if (typeof value === 'number' && isNaN(value)) {
+      warnStyleValueIsNaN(name, value, owner);
+    }
+  };
+}
+
 /**
  * Operations for dealing with CSS properties.
  */
@@ -21822,6 +23654,11 @@ var CSSPropertyOperations = {
       }
       var isCustomProperty = styleName.indexOf('--') === 0;
       var styleValue = styles[styleName];
+      {
+        if (!isCustomProperty) {
+          warnValidStyle(styleName, styleValue, component);
+        }
+      }
       if (styleValue != null) {
         serialized += processStyleName(styleName) + ':';
         serialized += dangerousStyleValue_1(styleName, styleValue, component, isCustomProperty) + ';';
@@ -21839,12 +23676,25 @@ var CSSPropertyOperations = {
    * @param {ReactDOMComponent} component
    */
   setValueForStyles: function (node, styles, component) {
+    {
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: component._debugID,
+        type: 'update styles',
+        payload: styles
+      });
+    }
+
     var style = node.style;
     for (var styleName in styles) {
       if (!styles.hasOwnProperty(styleName)) {
         continue;
       }
       var isCustomProperty = styleName.indexOf('--') === 0;
+      {
+        if (!isCustomProperty) {
+          warnValidStyle(styleName, styles[styleName], component);
+        }
+      }
       var styleValue = dangerousStyleValue_1(styleName, styles[styleName], component, isCustomProperty);
       if (styleName === 'float' || styleName === 'cssFloat') {
         styleName = styleFloatAccessor;
@@ -21899,7 +23749,7 @@ function isAttributeNameSafe(attributeName) {
     return true;
   }
   illegalAttributeNameCache[attributeName] = true;
-  void 0;
+  warning_1(false, 'Invalid attribute name: `%s`', attributeName);
   return false;
 }
 
@@ -22012,7 +23862,15 @@ var DOMPropertyOperations = {
       return;
     }
 
-    
+    {
+      var payload = {};
+      payload[name] = value;
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: ReactDOMComponentTree_1.getInstanceFromNode(node)._debugID,
+        type: 'update attribute',
+        payload: payload
+      });
+    }
   },
 
   setValueForAttribute: function (node, name, value) {
@@ -22025,7 +23883,15 @@ var DOMPropertyOperations = {
       node.setAttribute(name, '' + value);
     }
 
-    
+    {
+      var payload = {};
+      payload[name] = value;
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: ReactDOMComponentTree_1.getInstanceFromNode(node)._debugID,
+        type: 'update attribute',
+        payload: payload
+      });
+    }
   },
 
   /**
@@ -22036,7 +23902,13 @@ var DOMPropertyOperations = {
    */
   deleteValueForAttribute: function (node, name) {
     node.removeAttribute(name);
-    
+    {
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: ReactDOMComponentTree_1.getInstanceFromNode(node)._debugID,
+        type: 'remove attribute',
+        payload: name
+      });
+    }
   },
 
   /**
@@ -22065,7 +23937,13 @@ var DOMPropertyOperations = {
       node.removeAttribute(name);
     }
 
-    
+    {
+      ReactInstrumentation$1.debugTool.onHostOperation({
+        instanceID: ReactDOMComponentTree_1.getInstanceFromNode(node)._debugID,
+        type: 'remove attribute',
+        payload: name
+      });
+    }
   }
 };
 
@@ -22490,9 +24368,9 @@ var ReactBrowserEventEmitter_1 = ReactBrowserEventEmitter;
  * 
  */
 
-var ReactPropTypesSecret$5 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+var ReactPropTypesSecret$4 = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
-var ReactPropTypesSecret_1$4 = ReactPropTypesSecret$5;
+var ReactPropTypesSecret_1$4 = ReactPropTypesSecret$4;
 
 var PropTypes = factory_1(React_1.isValidElement);
 
@@ -22510,16 +24388,16 @@ var hasReadOnlyValue = {
 };
 
 function _assertSingleLink(inputProps) {
-  !(inputProps.checkedLink == null || inputProps.valueLink == null) ? reactProdInvariant_1$2('87') : void 0;
+  !(inputProps.checkedLink == null || inputProps.valueLink == null) ? invariant_1(false, 'Cannot provide a checkedLink and a valueLink. If you want to use checkedLink, you probably don\'t want to use valueLink and vice versa.') : void 0;
 }
 function _assertValueLink(inputProps) {
   _assertSingleLink(inputProps);
-  !(inputProps.value == null && inputProps.onChange == null) ? reactProdInvariant_1$2('88') : void 0;
+  !(inputProps.value == null && inputProps.onChange == null) ? invariant_1(false, 'Cannot provide a valueLink and a value or onChange event. If you want to use value or onChange, you probably don\'t want to use valueLink.') : void 0;
 }
 
 function _assertCheckedLink(inputProps) {
   _assertSingleLink(inputProps);
-  !(inputProps.checked == null && inputProps.onChange == null) ? reactProdInvariant_1$2('89') : void 0;
+  !(inputProps.checked == null && inputProps.onChange == null) ? invariant_1(false, 'Cannot provide a checkedLink and a checked property or onChange event. If you want to use checked or onChange, you probably don\'t want to use checkedLink') : void 0;
 }
 
 var propTypes = {
@@ -22565,7 +24443,7 @@ var LinkedValueUtils = {
         loggedTypeFailures$2[error.message] = true;
 
         var addendum = getDeclarationErrorAddendum$2(owner);
-        void 0;
+        warning_1(false, 'Failed form propType: %s%s', error.message, addendum);
       }
     }
   },
@@ -22613,6 +24491,13 @@ var LinkedValueUtils = {
 };
 
 var LinkedValueUtils_1 = LinkedValueUtils;
+
+var didWarnValueLink = false;
+var didWarnCheckedLink = false;
+var didWarnValueDefaultValue = false;
+var didWarnCheckedDefaultChecked = false;
+var didWarnControlledToUncontrolled = false;
+var didWarnUncontrolledToControlled = false;
 
 function forceUpdateIfMounted() {
   if (this._rootNodeID) {
@@ -22670,6 +24555,29 @@ var ReactDOMInput = {
   },
 
   mountWrapper: function (inst, props) {
+    {
+      LinkedValueUtils_1.checkPropTypes('input', props, inst._currentElement._owner);
+
+      var owner = inst._currentElement._owner;
+
+      if (props.valueLink !== undefined && !didWarnValueLink) {
+        warning_1(false, '`valueLink` prop on `input` is deprecated; set `value` and `onChange` instead.');
+        didWarnValueLink = true;
+      }
+      if (props.checkedLink !== undefined && !didWarnCheckedLink) {
+        warning_1(false, '`checkedLink` prop on `input` is deprecated; set `value` and `onChange` instead.');
+        didWarnCheckedLink = true;
+      }
+      if (props.checked !== undefined && props.defaultChecked !== undefined && !didWarnCheckedDefaultChecked) {
+        warning_1(false, '%s contains an input of type %s with both checked and defaultChecked props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the checked prop, or the defaultChecked prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type);
+        didWarnCheckedDefaultChecked = true;
+      }
+      if (props.value !== undefined && props.defaultValue !== undefined && !didWarnValueDefaultValue) {
+        warning_1(false, '%s contains an input of type %s with both value and defaultValue props. ' + 'Input elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled input ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type);
+        didWarnValueDefaultValue = true;
+      }
+    }
+
     var defaultValue = props.defaultValue;
     inst._wrapperState = {
       initialChecked: props.checked != null ? props.checked : props.defaultChecked,
@@ -22683,6 +24591,21 @@ var ReactDOMInput = {
   updateWrapper: function (inst) {
     var props = inst._currentElement.props;
 
+    {
+      var controlled = isControlled(props);
+      var owner = inst._currentElement._owner;
+
+      if (!inst._wrapperState.controlled && controlled && !didWarnUncontrolledToControlled) {
+        warning_1(false, '%s is changing an uncontrolled input of type %s to be controlled. ' + 'Input elements should not switch from uncontrolled to controlled (or vice versa). ' + 'Decide between using a controlled or uncontrolled input ' + 'element for the lifetime of the component. More info: https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type);
+        didWarnUncontrolledToControlled = true;
+      }
+      if (inst._wrapperState.controlled && !controlled && !didWarnControlledToUncontrolled) {
+        warning_1(false, '%s is changing a controlled input of type %s to be uncontrolled. ' + 'Input elements should not switch from controlled to uncontrolled (or vice versa). ' + 'Decide between using a controlled or uncontrolled input ' + 'element for the lifetime of the component. More info: https://fb.me/react-controlled-components', owner && owner.getName() || 'A component', props.type);
+        didWarnControlledToUncontrolled = true;
+      }
+    }
+
+    // TODO: Shouldn't this be getChecked(props)?
     var checked = props.checked;
     if (checked != null) {
       DOMPropertyOperations_1.setValueForProperty(ReactDOMComponentTree_1.getNodeFromInstance(inst), 'checked', checked || false);
@@ -22820,7 +24743,7 @@ function _handleChange(event) {
       // That's probably okay; we don't support it just as we don't support
       // mixing React radio buttons with non-React ones.
       var otherInstance = ReactDOMComponentTree_1.getInstanceFromNode(otherNode);
-      !otherInstance ? reactProdInvariant_1$2('90') : void 0;
+      !otherInstance ? invariant_1(false, 'ReactDOMInput: Mixing React and non-React radio inputs with the same `name` is not supported.') : void 0;
       // If this is a controlled radio button group, forcing the input that
       // was previously checked to update will cause it to be come re-checked
       // as appropriate.
@@ -22833,6 +24756,7 @@ function _handleChange(event) {
 
 var ReactDOMInput_1 = ReactDOMInput;
 
+var didWarnValueLink$1 = false;
 var didWarnValueDefaultValue$1 = false;
 
 function updateOptionsIfPendingUpdateAndMounted() {
@@ -22844,6 +24768,45 @@ function updateOptionsIfPendingUpdateAndMounted() {
 
     if (value != null) {
       updateOptions(this, Boolean(props.multiple), value);
+    }
+  }
+}
+
+function getDeclarationErrorAddendum$3(owner) {
+  if (owner) {
+    var name = owner.getName();
+    if (name) {
+      return ' Check the render method of `' + name + '`.';
+    }
+  }
+  return '';
+}
+
+var valuePropNames = ['value', 'defaultValue'];
+
+/**
+ * Validation function for `value` and `defaultValue`.
+ * @private
+ */
+function checkSelectPropTypes(inst, props) {
+  var owner = inst._currentElement._owner;
+  LinkedValueUtils_1.checkPropTypes('select', props, owner);
+
+  if (props.valueLink !== undefined && !didWarnValueLink$1) {
+    warning_1(false, '`valueLink` prop on `select` is deprecated; set `value` and `onChange` instead.');
+    didWarnValueLink$1 = true;
+  }
+
+  for (var i = 0; i < valuePropNames.length; i++) {
+    var propName = valuePropNames[i];
+    if (props[propName] == null) {
+      continue;
+    }
+    var isArray = Array.isArray(props[propName]);
+    if (props.multiple && !isArray) {
+      warning_1(false, 'The `%s` prop supplied to <select> must be an array if ' + '`multiple` is true.%s', propName, getDeclarationErrorAddendum$3(owner));
+    } else if (!props.multiple && isArray) {
+      warning_1(false, 'The `%s` prop supplied to <select> must be a scalar ' + 'value if `multiple` is false.%s', propName, getDeclarationErrorAddendum$3(owner));
     }
   }
 }
@@ -22909,6 +24872,10 @@ var ReactDOMSelect = {
   },
 
   mountWrapper: function (inst, props) {
+    {
+      checkSelectPropTypes(inst, props);
+    }
+
     var value = LinkedValueUtils_1.getValue(props);
     inst._wrapperState = {
       pendingUpdate: false,
@@ -22919,7 +24886,7 @@ var ReactDOMSelect = {
     };
 
     if (props.value !== undefined && props.defaultValue !== undefined && !didWarnValueDefaultValue$1) {
-      void 0;
+      warning_1(false, 'Select elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled select ' + 'element and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
       didWarnValueDefaultValue$1 = true;
     }
   },
@@ -22984,7 +24951,7 @@ function flattenChildren(children) {
       content += child;
     } else if (!didWarnInvalidOptionChildren) {
       didWarnInvalidOptionChildren = true;
-      void 0;
+      warning_1(false, 'Only strings and numbers are supported as <option> children.');
     }
   });
 
@@ -22997,6 +24964,11 @@ function flattenChildren(children) {
 var ReactDOMOption = {
   mountWrapper: function (inst, props, hostParent) {
     // TODO (yungsters): Remove support for `selected` in <option>.
+    {
+      warning_1(props.selected == null, 'Use the `defaultValue` or `value` props on <select> instead of ' + 'setting `selected` on <option>.');
+    }
+
+    // Look up whether this option is 'selected'
     var selectValue = null;
     if (hostParent != null) {
       var selectParent = hostParent;
@@ -23067,6 +25039,9 @@ var ReactDOMOption = {
 
 var ReactDOMOption_1 = ReactDOMOption;
 
+var didWarnValueLink$2 = false;
+var didWarnValDefaultVal = false;
+
 function forceUpdateIfMounted$1() {
   if (this._rootNodeID) {
     // DOM component is still mounted; update
@@ -23091,7 +25066,7 @@ function forceUpdateIfMounted$1() {
  */
 var ReactDOMTextarea = {
   getHostProps: function (inst, props) {
-    !(props.dangerouslySetInnerHTML == null) ? reactProdInvariant_1$2('91') : void 0;
+    !(props.dangerouslySetInnerHTML == null) ? invariant_1(false, '`dangerouslySetInnerHTML` does not make sense on <textarea>.') : void 0;
 
     // Always set children to the same thing. In IE9, the selection range will
     // get reset if `textContent` is mutated.  We could add a check in setTextContent
@@ -23109,6 +25084,18 @@ var ReactDOMTextarea = {
   },
 
   mountWrapper: function (inst, props) {
+    {
+      LinkedValueUtils_1.checkPropTypes('textarea', props, inst._currentElement._owner);
+      if (props.valueLink !== undefined && !didWarnValueLink$2) {
+        warning_1(false, '`valueLink` prop on `textarea` is deprecated; set `value` and `onChange` instead.');
+        didWarnValueLink$2 = true;
+      }
+      if (props.value !== undefined && props.defaultValue !== undefined && !didWarnValDefaultVal) {
+        warning_1(false, 'Textarea elements must be either controlled or uncontrolled ' + '(specify either the value prop, or the defaultValue prop, but not ' + 'both). Decide between using a controlled or uncontrolled textarea ' + 'and remove one of these props. More info: ' + 'https://fb.me/react-controlled-components');
+        didWarnValDefaultVal = true;
+      }
+    }
+
     var value = LinkedValueUtils_1.getValue(props);
     var initialValue = value;
 
@@ -23118,9 +25105,12 @@ var ReactDOMTextarea = {
       // TODO (yungsters): Remove support for children content in <textarea>.
       var children = props.children;
       if (children != null) {
-        !(defaultValue == null) ? reactProdInvariant_1$2('92') : void 0;
+        {
+          warning_1(false, 'Use the `defaultValue` or `value` props instead of setting ' + 'children on <textarea>.');
+        }
+        !(defaultValue == null) ? invariant_1(false, 'If you supply `defaultValue` on a <textarea>, do not pass children.') : void 0;
         if (Array.isArray(children)) {
-          !(children.length <= 1) ? reactProdInvariant_1$2('93') : void 0;
+          !(children.length <= 1) ? invariant_1(false, '<textarea> can only have at most one child.') : void 0;
           children = children[0];
         }
 
@@ -23204,7 +25194,7 @@ var ReactComponentEnvironment = {
 
   injection: {
     injectEnvironment: function (environment) {
-      !!injected ? reactProdInvariant_1$2('104') : void 0;
+      !!injected ? invariant_1(false, 'ReactCompositeComponent: injectEnvironment() can only be called once.') : void 0;
       ReactComponentEnvironment.replaceNodeWithMarkup = environment.replaceNodeWithMarkup;
       ReactComponentEnvironment.processChildrenUpdates = environment.processChildrenUpdates;
       injected = true;
@@ -23273,7 +25263,7 @@ var ReactNodeTypes = {
         return ReactNodeTypes.HOST;
       }
     }
-    reactProdInvariant_1$2('26', node);
+    invariant_1(false, 'Unexpected node: %s', node);
   }
 };
 
@@ -23290,16 +25280,84 @@ var ReactNodeTypes_1 = ReactNodeTypes;
  * 
  */
 
-var ReactComponentTreeHook$3;
+var ReactPropTypeLocationNames$3 = {};
 
-if (typeof process !== 'undefined' && process.env && "production" === 'test') {
+{
+  ReactPropTypeLocationNames$3 = {
+    prop: 'prop',
+    context: 'context',
+    childContext: 'child context'
+  };
+}
+
+var ReactPropTypeLocationNames_1$2 = ReactPropTypeLocationNames$3;
+
+var ReactComponentTreeHook$4;
+
+if (typeof process !== 'undefined' && process.env && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook$3 = ReactComponentTreeHook_1;
+  ReactComponentTreeHook$4 = ReactComponentTreeHook_1;
 }
+
+var loggedTypeFailures$3 = {};
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?object} element The React element that is being type-checked
+ * @param {?number} debugID The React component instance that is being type-checked
+ * @private
+ */
+function checkReactTypeSpec$3(typeSpecs, values, location, componentName, element, debugID) {
+  for (var typeSpecName in typeSpecs) {
+    if (typeSpecs.hasOwnProperty(typeSpecName)) {
+      var error;
+      // Prop type validation may throw. In case they do, we don't want to
+      // fail the render phase where it didn't fail before. So we log it.
+      // After these have been cleaned up, we'll let them throw.
+      try {
+        // This is intentionally an invariant that gets caught. It's the same
+        // behavior as without this statement except with a better message.
+        !(typeof typeSpecs[typeSpecName] === 'function') ? invariant_1(false, '%s: %s type `%s` is invalid; it must be a function, usually from React.PropTypes.', componentName || 'React class', ReactPropTypeLocationNames_1$2[location], typeSpecName) : void 0;
+        error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret_1$4);
+      } catch (ex) {
+        error = ex;
+      }
+      warning_1(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', ReactPropTypeLocationNames_1$2[location], typeSpecName, typeof error);
+      if (error instanceof Error && !(error.message in loggedTypeFailures$3)) {
+        // Only monitor this failure once because there tends to be a lot of the
+        // same error.
+        loggedTypeFailures$3[error.message] = true;
+
+        var componentStackInfo = '';
+
+        {
+          if (!ReactComponentTreeHook$4) {
+            ReactComponentTreeHook$4 = ReactComponentTreeHook_1;
+          }
+          if (debugID !== null) {
+            componentStackInfo = ReactComponentTreeHook$4.getStackAddendumByID(debugID);
+          } else if (element !== null) {
+            componentStackInfo = ReactComponentTreeHook$4.getCurrentStackAddendum(element);
+          }
+        }
+
+        warning_1(false, 'Failed %s type: %s%s', location, error.message, componentStackInfo);
+      }
+    }
+  }
+}
+
+var checkReactTypeSpec_1$2 = checkReactTypeSpec$3;
 
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -23407,6 +25465,16 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 
 var shouldUpdateReactComponent_1 = shouldUpdateReactComponent;
 
+{
+  var checkReactTypeSpec$2 = checkReactTypeSpec_1$2;
+}
+
+
+
+
+
+
+
 var CompositeTypes = {
   ImpureClass: 0,
   PureClass: 1,
@@ -23422,7 +25490,10 @@ StatelessComponent.prototype.render = function () {
 };
 
 function warnIfInvalidElement(Component, element) {
-  
+  {
+    warning_1(element === null || element === false || React_1.isValidElement(element), '%s(...): A valid React element (or null) must be returned. You may have ' + 'returned undefined, an array or some other invalid object.', Component.displayName || Component.name || 'Component');
+    warning_1(!Component.childContextTypes, '%s(...): childContextTypes cannot be defined on a functional component.', Component.displayName || Component.name || 'Component');
+  }
 }
 
 function shouldConstruct(Component) {
@@ -23431,6 +25502,23 @@ function shouldConstruct(Component) {
 
 function isPureComponent(Component) {
   return !!(Component.prototype && Component.prototype.isPureReactComponent);
+}
+
+// Separated into a function to contain deoptimizations caused by try/finally.
+function measureLifeCyclePerf(fn, debugID, timerType) {
+  if (debugID === 0) {
+    // Top-level wrappers (see ReactMount) and empty components (see
+    // ReactDOMEmptyComponent) are invisible to hooks and devtools.
+    // Both are implementation details that should go away in the future.
+    return fn();
+  }
+
+  ReactInstrumentation$1.debugTool.onBeginLifeCycleTimer(debugID, timerType);
+  try {
+    return fn();
+  } finally {
+    ReactInstrumentation$1.debugTool.onEndLifeCycleTimer(debugID, timerType);
+  }
 }
 
 /**
@@ -23506,7 +25594,9 @@ var ReactCompositeComponent = {
     // ComponentWillUnmount shall only be called once
     this._calledComponentWillUnmount = false;
 
-    
+    {
+      this._warnedAboutRefsInRender = false;
+    }
   },
 
   /**
@@ -23544,7 +25634,7 @@ var ReactCompositeComponent = {
     if (!doConstruct && (inst == null || inst.render == null)) {
       renderedElement = inst;
       warnIfInvalidElement(Component, renderedElement);
-      !(inst === null || inst === false || React_1.isValidElement(inst)) ? reactProdInvariant_1$2('105', Component.displayName || Component.name || 'Component') : void 0;
+      !(inst === null || inst === false || React_1.isValidElement(inst)) ? invariant_1(false, '%s(...): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', Component.displayName || Component.name || 'Component') : void 0;
       inst = new StatelessComponent(Component);
       this._compositeType = CompositeTypes.StatelessFunctional;
     } else {
@@ -23555,6 +25645,21 @@ var ReactCompositeComponent = {
       }
     }
 
+    {
+      // This will throw later in _renderValidatedComponent, but add an early
+      // warning now to help debugging
+      if (inst.render == null) {
+        warning_1(false, '%s(...): No `render` method found on the returned component ' + 'instance: you may have forgotten to define `render`.', Component.displayName || Component.name || 'Component');
+      }
+
+      var propsMutated = inst.props !== publicProps;
+      var componentName = Component.displayName || Component.name || 'Component';
+
+      warning_1(inst.props === undefined || !propsMutated, '%s(...): When calling super() in `%s`, make sure to pass ' + "up the same props that your component's constructor was passed.", componentName, componentName);
+    }
+
+    // These should be set up in the constructor, but as a convenience for
+    // simpler class abstractions, we set them up after the fact.
     inst.props = publicProps;
     inst.context = publicContext;
     inst.refs = emptyObject_1;
@@ -23565,11 +25670,24 @@ var ReactCompositeComponent = {
     // Store a reference from the instance back to the internal representation
     ReactInstanceMap_1.set(inst, this);
 
+    {
+      // Since plain JS classes are defined without any special initialization
+      // logic, we can not catch common errors early. Therefore, we have to
+      // catch them here, at initialization time, instead.
+      warning_1(!inst.getInitialState || inst.getInitialState.isReactClassApproved || inst.state, 'getInitialState was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Did you mean to define a state property instead?', this.getName() || 'a component');
+      warning_1(!inst.getDefaultProps || inst.getDefaultProps.isReactClassApproved, 'getDefaultProps was defined on %s, a plain JavaScript class. ' + 'This is only supported for classes created using React.createClass. ' + 'Use a static property to define defaultProps instead.', this.getName() || 'a component');
+      warning_1(!inst.propTypes, 'propTypes was defined as an instance property on %s. Use a static ' + 'property to define propTypes instead.', this.getName() || 'a component');
+      warning_1(!inst.contextTypes, 'contextTypes was defined as an instance property on %s. Use a ' + 'static property to define contextTypes instead.', this.getName() || 'a component');
+      warning_1(typeof inst.componentShouldUpdate !== 'function', '%s has a method called ' + 'componentShouldUpdate(). Did you mean shouldComponentUpdate()? ' + 'The name is phrased as a question because the function is ' + 'expected to return a value.', this.getName() || 'A component');
+      warning_1(typeof inst.componentDidUnmount !== 'function', '%s has a method called ' + 'componentDidUnmount(). But there is no such lifecycle method. ' + 'Did you mean componentWillUnmount()?', this.getName() || 'A component');
+      warning_1(typeof inst.componentWillRecieveProps !== 'function', '%s has a method called ' + 'componentWillRecieveProps(). Did you mean componentWillReceiveProps()?', this.getName() || 'A component');
+    }
+
     var initialState = inst.state;
     if (initialState === undefined) {
       inst.state = initialState = null;
     }
-    !(typeof initialState === 'object' && !Array.isArray(initialState)) ? reactProdInvariant_1$2('106', this.getName() || 'ReactCompositeComponent') : void 0;
+    !(typeof initialState === 'object' && !Array.isArray(initialState)) ? invariant_1(false, '%s.state: must be set to an object or null', this.getName() || 'ReactCompositeComponent') : void 0;
 
     this._pendingStateQueue = null;
     this._pendingReplaceState = false;
@@ -23584,7 +25702,11 @@ var ReactCompositeComponent = {
 
     if (inst.componentDidMount) {
       {
-        transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
+        transaction.getReactMountReady().enqueue(function () {
+          measureLifeCyclePerf(function () {
+            return inst.componentDidMount();
+          }, _this._debugID, 'componentDidMount');
+        });
       }
     }
 
@@ -23593,7 +25715,12 @@ var ReactCompositeComponent = {
 
   _constructComponent: function (doConstruct, publicProps, publicContext, updateQueue) {
     {
-      return this._constructComponentWithoutOwner(doConstruct, publicProps, publicContext, updateQueue);
+      ReactCurrentOwner_1.current = this;
+      try {
+        return this._constructComponentWithoutOwner(doConstruct, publicProps, publicContext, updateQueue);
+      } finally {
+        ReactCurrentOwner_1.current = null;
+      }
     }
   },
 
@@ -23602,14 +25729,18 @@ var ReactCompositeComponent = {
 
     if (doConstruct) {
       {
-        return new Component(publicProps, publicContext, updateQueue);
+        return measureLifeCyclePerf(function () {
+          return new Component(publicProps, publicContext, updateQueue);
+        }, this._debugID, 'ctor');
       }
     }
 
     // This can still be an instance in case of factory components
     // but we'll count this as time spent rendering as the more common case.
     {
-      return Component(publicProps, publicContext, updateQueue);
+      return measureLifeCyclePerf(function () {
+        return Component(publicProps, publicContext, updateQueue);
+      }, this._debugID, 'render');
     }
   },
 
@@ -23641,9 +25772,15 @@ var ReactCompositeComponent = {
     var inst = this._instance;
 
     var debugID = 0;
+    {
+      debugID = this._debugID;
+    }
+
     if (inst.componentWillMount) {
       {
-        inst.componentWillMount();
+        measureLifeCyclePerf(function () {
+          return inst.componentWillMount();
+        }, debugID, 'componentWillMount');
       }
       // When mounting, calls to `setState` by `componentWillMount` will set
       // `this._pendingStateQueue` without triggering a re-render.
@@ -23664,6 +25801,13 @@ var ReactCompositeComponent = {
     this._renderedComponent = child;
 
     var markup = ReactReconciler_1.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), debugID);
+
+    {
+      if (debugID !== 0) {
+        var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+        ReactInstrumentation$1.debugTool.onSetChildren(debugID, childDebugIDs);
+      }
+    }
 
     return markup;
   },
@@ -23693,7 +25837,9 @@ var ReactCompositeComponent = {
         ReactErrorUtils_1.invokeGuardedCallback(name, inst.componentWillUnmount.bind(inst));
       } else {
         {
-          inst.componentWillUnmount();
+          measureLifeCyclePerf(function () {
+            return inst.componentWillUnmount();
+          }, this._debugID, 'componentWillUnmount');
         }
       }
     }
@@ -23763,6 +25909,12 @@ var ReactCompositeComponent = {
    */
   _processContext: function (context) {
     var maskedContext = this._maskContext(context);
+    {
+      var Component = this._currentElement.type;
+      if (Component.contextTypes) {
+        this._checkContextTypes(Component.contextTypes, maskedContext, 'context');
+      }
+    }
     return maskedContext;
   },
 
@@ -23778,14 +25930,22 @@ var ReactCompositeComponent = {
 
     if (inst.getChildContext) {
       {
-        childContext = inst.getChildContext();
+        ReactInstrumentation$1.debugTool.onBeginProcessingChildContext();
+        try {
+          childContext = inst.getChildContext();
+        } finally {
+          ReactInstrumentation$1.debugTool.onEndProcessingChildContext();
+        }
       }
     }
 
     if (childContext) {
-      !(typeof Component.childContextTypes === 'object') ? reactProdInvariant_1$2('107', this.getName() || 'ReactCompositeComponent') : void 0;
+      !(typeof Component.childContextTypes === 'object') ? invariant_1(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : void 0;
+      {
+        this._checkContextTypes(Component.childContextTypes, childContext, 'child context');
+      }
       for (var name in childContext) {
-        !(name in Component.childContextTypes) ? reactProdInvariant_1$2('108', this.getName() || 'ReactCompositeComponent', name) : void 0;
+        !(name in Component.childContextTypes) ? invariant_1(false, '%s.getChildContext(): key "%s" is not defined in childContextTypes.', this.getName() || 'ReactCompositeComponent', name) : void 0;
       }
       return index({}, currentContext, childContext);
     }
@@ -23801,7 +25961,9 @@ var ReactCompositeComponent = {
    * @private
    */
   _checkContextTypes: function (typeSpecs, values, location) {
-    
+    {
+      checkReactTypeSpec$2(typeSpecs, values, location, this.getName(), null, this._debugID);
+    }
   },
 
   receiveComponent: function (nextElement, transaction, nextContext) {
@@ -23847,7 +26009,7 @@ var ReactCompositeComponent = {
    */
   updateComponent: function (transaction, prevParentElement, nextParentElement, prevUnmaskedContext, nextUnmaskedContext) {
     var inst = this._instance;
-    !(inst != null) ? reactProdInvariant_1$2('136', this.getName() || 'ReactCompositeComponent') : void 0;
+    !(inst != null) ? invariant_1(false, 'Attempted to update component `%s` that has already been unmounted (or failed to mount).', this.getName() || 'ReactCompositeComponent') : void 0;
 
     var willReceive = false;
     var nextContext;
@@ -23873,7 +26035,9 @@ var ReactCompositeComponent = {
     // immediately reconciled instead of waiting for the next batch.
     if (willReceive && inst.componentWillReceiveProps) {
       {
-        inst.componentWillReceiveProps(nextProps, nextContext);
+        measureLifeCyclePerf(function () {
+          return inst.componentWillReceiveProps(nextProps, nextContext);
+        }, this._debugID, 'componentWillReceiveProps');
       }
     }
 
@@ -23883,13 +26047,19 @@ var ReactCompositeComponent = {
     if (!this._pendingForceUpdate) {
       if (inst.shouldComponentUpdate) {
         {
-          shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+          shouldUpdate = measureLifeCyclePerf(function () {
+            return inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+          }, this._debugID, 'shouldComponentUpdate');
         }
       } else {
         if (this._compositeType === CompositeTypes.PureClass) {
           shouldUpdate = !shallowEqual_1(prevProps, nextProps) || !shallowEqual_1(inst.state, nextState);
         }
       }
+    }
+
+    {
+      warning_1(shouldUpdate !== undefined, '%s.shouldComponentUpdate(): Returned undefined instead of a ' + 'boolean value. Make sure to return true or false.', this.getName() || 'ReactCompositeComponent');
     }
 
     this._updateBatchNumber = null;
@@ -23961,7 +26131,9 @@ var ReactCompositeComponent = {
 
     if (inst.componentWillUpdate) {
       {
-        inst.componentWillUpdate(nextProps, nextState, nextContext);
+        measureLifeCyclePerf(function () {
+          return inst.componentWillUpdate(nextProps, nextState, nextContext);
+        }, this._debugID, 'componentWillUpdate');
       }
     }
 
@@ -23975,7 +26147,9 @@ var ReactCompositeComponent = {
 
     if (hasComponentDidUpdate) {
       {
-        transaction.getReactMountReady().enqueue(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), inst);
+        transaction.getReactMountReady().enqueue(function () {
+          measureLifeCyclePerf(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), _this2._debugID, 'componentDidUpdate');
+        });
       }
     }
   },
@@ -23992,6 +26166,10 @@ var ReactCompositeComponent = {
     var nextRenderedElement = this._renderValidatedComponent();
 
     var debugID = 0;
+    {
+      debugID = this._debugID;
+    }
+
     if (shouldUpdateReactComponent_1(prevRenderedElement, nextRenderedElement)) {
       ReactReconciler_1.receiveComponent(prevComponentInstance, nextRenderedElement, transaction, this._processChildContext(context));
     } else {
@@ -24005,6 +26183,13 @@ var ReactCompositeComponent = {
       this._renderedComponent = child;
 
       var nextMarkup = ReactReconciler_1.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), debugID);
+
+      {
+        if (debugID !== 0) {
+          var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+          ReactInstrumentation$1.debugTool.onSetChildren(debugID, childDebugIDs);
+        }
+      }
 
       this._replaceNodeWithMarkup(oldHostNode, nextMarkup, prevComponentInstance);
     }
@@ -24027,7 +26212,18 @@ var ReactCompositeComponent = {
     var renderedElement;
 
     {
-      renderedElement = inst.render();
+      renderedElement = measureLifeCyclePerf(function () {
+        return inst.render();
+      }, this._debugID, 'render');
+    }
+
+    {
+      // We allow auto-mocks to proceed as if they're returning null.
+      if (renderedElement === undefined && inst.render._isMockFunction) {
+        // This is probably bad practice. Consider warning here and
+        // deprecating this convenience.
+        renderedElement = null;
+      }
     }
 
     return renderedElement;
@@ -24038,7 +26234,7 @@ var ReactCompositeComponent = {
    */
   _renderValidatedComponent: function () {
     var renderedElement;
-    if ("production" !== 'production' || this._compositeType !== CompositeTypes.StatelessFunctional) {
+    if ("development" !== 'production' || this._compositeType !== CompositeTypes.StatelessFunctional) {
       ReactCurrentOwner_1.current = this;
       try {
         renderedElement = this._renderValidatedComponentWithoutOwnerOrContext();
@@ -24050,7 +26246,7 @@ var ReactCompositeComponent = {
     }
     !(
     // TODO: An `isValidNode` function would probably be more appropriate
-    renderedElement === null || renderedElement === false || React_1.isValidElement(renderedElement)) ? reactProdInvariant_1$2('109', this.getName() || 'ReactCompositeComponent') : void 0;
+    renderedElement === null || renderedElement === false || React_1.isValidElement(renderedElement)) ? invariant_1(false, '%s.render(): A valid React element (or null) must be returned. You may have returned undefined, an array or some other invalid object.', this.getName() || 'ReactCompositeComponent') : void 0;
 
     return renderedElement;
   },
@@ -24065,8 +26261,12 @@ var ReactCompositeComponent = {
    */
   attachRef: function (ref, component) {
     var inst = this.getPublicInstance();
-    !(inst != null) ? reactProdInvariant_1$2('110') : void 0;
+    !(inst != null) ? invariant_1(false, 'Stateless function components cannot have refs.') : void 0;
     var publicComponentInstance = component.getPublicInstance();
+    {
+      var componentName = component && component.getName ? component.getName() : 'a component';
+      warning_1(publicComponentInstance != null || component._compositeType !== CompositeTypes.StatelessFunctional, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName());
+    }
     var refs = inst.refs === emptyObject_1 ? inst.refs = {} : inst.refs;
     refs[ref] = publicComponentInstance;
   },
@@ -24168,7 +26368,7 @@ var ReactHostComponentInjection = {
  * @return {function} The internal class constructor function.
  */
 function createInternalComponent(element) {
-  !genericComponentClass ? reactProdInvariant_1$2('111', element.type) : void 0;
+  !genericComponentClass ? invariant_1(false, 'There is no registered component for the tag %s', element.type) : void 0;
   return new genericComponentClass(element);
 }
 
@@ -24207,6 +26407,14 @@ var ReactHostComponent_1 = ReactHostComponent;
  *
  * 
  */
+
+var nextDebugID = 1;
+
+function getNextDebugID() {
+  return nextDebugID++;
+}
+
+var getNextDebugID_1 = getNextDebugID;
 
 // To avoid a cyclic dependency, we create the final class in this module
 var ReactCompositeComponentWrapper = function (element) {
@@ -24252,8 +26460,13 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
     var type = element.type;
     if (typeof type !== 'function' && typeof type !== 'string') {
       var info = '';
+      {
+        if (type === undefined || typeof type === 'object' && type !== null && Object.keys(type).length === 0) {
+          info += ' You likely forgot to export your component from the file ' + "it's defined in.";
+        }
+      }
       info += getDeclarationErrorAddendum$4(element._owner);
-      reactProdInvariant_1$2('130', type == null ? type : typeof type, info);
+      invariant_1(false, 'Element type is invalid: expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s', type == null ? type : typeof type, info);
     }
 
     // Special case string values
@@ -24275,11 +26488,30 @@ function instantiateReactComponent(node, shouldHaveDebugID) {
   } else if (typeof node === 'string' || typeof node === 'number') {
     instance = ReactHostComponent_1.createInstanceForText(node);
   } else {
-    reactProdInvariant_1$2('131', typeof node);
+    invariant_1(false, 'Encountered invalid React node of type %s', typeof node);
   }
 
+  {
+    warning_1(typeof instance.mountComponent === 'function' && typeof instance.receiveComponent === 'function' && typeof instance.getHostNode === 'function' && typeof instance.unmountComponent === 'function', 'Only React Components can be mounted.');
+  }
+
+  // These two fields are used by the DOM and ART diffing algorithms
+  // respectively. Instead of using expandos on components, we should be
+  // storing the state needed by the diffing algorithms elsewhere.
   instance._mountIndex = 0;
   instance._mountImage = null;
+
+  {
+    instance._debugID = shouldHaveDebugID ? getNextDebugID_1() : 0;
+  }
+
+  // Internal instances should fully constructed at this point, so they should
+  // not get any new fields added to them at this point.
+  {
+    if (Object.preventExtensions) {
+      Object.preventExtensions(instance);
+    }
+  }
 
   return instance;
 }
@@ -24408,6 +26640,19 @@ var SEPARATOR$1 = '.';
 var SUBSEPARATOR$1 = ':';
 
 /**
+ * This is inlined from ReactElement since this file is shared between
+ * isomorphic and renderers. We could extract this to a
+ *
+ */
+
+/**
+ * TODO: Test that a single child and an array with one item have the same key
+ * pattern.
+ */
+
+var didWarnAboutMaps$1 = false;
+
+/**
  * Generate a key string that identifies a component within a set.
  *
  * @param {*} component A component that could contain a manual key.
@@ -24476,6 +26721,18 @@ function traverseAllChildrenImpl$1(children, nameSoFar, callback, traverseContex
           subtreeCount += traverseAllChildrenImpl$1(child, nextName, callback, traverseContext);
         }
       } else {
+        {
+          var mapsAsChildrenAddendum = '';
+          if (ReactCurrentOwner_1.current) {
+            var mapsAsChildrenOwnerName = ReactCurrentOwner_1.current.getName();
+            if (mapsAsChildrenOwnerName) {
+              mapsAsChildrenAddendum = ' Check the render method of `' + mapsAsChildrenOwnerName + '`.';
+            }
+          }
+          warning_1(didWarnAboutMaps$1, 'Using Maps as children is not yet fully supported. It is an ' + 'experimental feature that might be removed. Convert it to a ' + 'sequence / iterable of keyed ReactElements instead.%s', mapsAsChildrenAddendum);
+          didWarnAboutMaps$1 = true;
+        }
+        // Iterator will provide entry [k,v] tuples rather than values.
         while (!(step = iterator.next()).done) {
           var entry = step.value;
           if (entry) {
@@ -24487,8 +26744,20 @@ function traverseAllChildrenImpl$1(children, nameSoFar, callback, traverseContex
       }
     } else if (type === 'object') {
       var addendum = '';
+      {
+        addendum = ' If you meant to render a collection of children, use an array ' + 'instead or wrap the object using createFragment(object) from the ' + 'React add-ons.';
+        if (children._isReactElement) {
+          addendum = " It looks like you're using an element created by a different " + 'version of React. Make sure to use only one copy of React.';
+        }
+        if (ReactCurrentOwner_1.current) {
+          var name = ReactCurrentOwner_1.current.getName();
+          if (name) {
+            addendum += ' Check the render method of `' + name + '`.';
+          }
+        }
+      }
       var childrenString = String(children);
-      reactProdInvariant_1$2('31', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
+      invariant_1(false, 'Objects are not valid as a React child (found: %s).%s', childrenString === '[object Object]' ? 'object with keys {' + Object.keys(children).join(', ') + '}' : childrenString, addendum);
     }
   }
 
@@ -24521,20 +26790,28 @@ function traverseAllChildren$2(children, callback, traverseContext) {
 
 var traverseAllChildren_1$2 = traverseAllChildren$2;
 
-var ReactComponentTreeHook$2;
+var ReactComponentTreeHook$3;
 
-if (typeof process !== 'undefined' && process.env && "production" === 'test') {
+if (typeof process !== 'undefined' && process.env && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook$2 = ReactComponentTreeHook_1;
+  ReactComponentTreeHook$3 = ReactComponentTreeHook_1;
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
   // We found a component instance.
   var keyUnique = childInstances[name] === undefined;
+  {
+    if (!ReactComponentTreeHook$3) {
+      ReactComponentTreeHook$3 = ReactComponentTreeHook_1;
+    }
+    if (!keyUnique) {
+      warning_1(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils_1$2.unescape(name), ReactComponentTreeHook$3.getStackAddendumByID(selfDebugID));
+    }
+  }
   if (child != null && keyUnique) {
     childInstances[name] = instantiateReactComponent_1(child, true);
   }
@@ -24562,7 +26839,9 @@ var ReactChildReconciler = {
     var childInstances = {};
 
     {
-      traverseAllChildren_1$2(nestedChildNodes, instantiateChild, childInstances);
+      traverseAllChildren_1$2(nestedChildNodes, function (childInsts, child, name) {
+        return instantiateChild(childInsts, child, name, selfDebugID);
+      }, childInstances);
     }
     return childInstances;
   },
@@ -24642,15 +26921,15 @@ var ReactChildReconciler = {
 
 var ReactChildReconciler_1 = ReactChildReconciler;
 
-var ReactComponentTreeHook$4;
+var ReactComponentTreeHook$5;
 
-if (typeof process !== 'undefined' && process.env && "production" === 'test') {
+if (typeof process !== 'undefined' && process.env && "development" === 'test') {
   // Temporary hack.
   // Inline requires don't work well with Jest:
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook$4 = ReactComponentTreeHook_1;
+  ReactComponentTreeHook$5 = ReactComponentTreeHook_1;
 }
 
 /**
@@ -24664,6 +26943,14 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
   if (traverseContext && typeof traverseContext === 'object') {
     var result = traverseContext;
     var keyUnique = result[name] === undefined;
+    {
+      if (!ReactComponentTreeHook$5) {
+        ReactComponentTreeHook$5 = ReactComponentTreeHook_1;
+      }
+      if (!keyUnique) {
+        warning_1(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils_1$2.unescape(name), ReactComponentTreeHook$5.getStackAddendumByID(selfDebugID));
+      }
+    }
     if (keyUnique && child != null) {
       result[name] = child;
     }
@@ -24682,7 +26969,9 @@ function flattenChildren$1(children, selfDebugID) {
   var result = {};
 
   {
-    traverseAllChildren_1$2(children, flattenSingleChildIntoContext, result);
+    traverseAllChildren_1$2(children, function (traverseContext, child, name) {
+      return flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID);
+    }, result);
   }
   return result;
 }
@@ -24802,6 +27091,30 @@ function processQueue(inst, updateQueue) {
   ReactComponentEnvironment_1.processChildrenUpdates(inst, updateQueue);
 }
 
+var setChildrenForInstrumentation = emptyFunction_1;
+{
+  var getDebugID = function (inst) {
+    if (!inst._debugID) {
+      // Check for ART-like instances. TODO: This is silly/gross.
+      var internal;
+      if (internal = ReactInstanceMap_1.get(inst)) {
+        inst = internal;
+      }
+    }
+    return inst._debugID;
+  };
+  setChildrenForInstrumentation = function (children) {
+    var debugID = getDebugID(this);
+    // TODO: React Native empty components are also multichild.
+    // This means they still get into this method but don't have _debugID.
+    if (debugID !== 0) {
+      ReactInstrumentation$1.debugTool.onSetChildren(debugID, children ? Object.keys(children).map(function (key) {
+        return children[key]._debugID;
+      }) : []);
+    }
+  };
+}
+
 /**
  * ReactMultiChild are capable of reconciling multiple children.
  *
@@ -24818,12 +27131,36 @@ var ReactMultiChild = {
    */
   Mixin: {
     _reconcilerInstantiateChildren: function (nestedChildren, transaction, context) {
+      {
+        var selfDebugID = getDebugID(this);
+        if (this._currentElement) {
+          try {
+            ReactCurrentOwner_1.current = this._currentElement._owner;
+            return ReactChildReconciler_1.instantiateChildren(nestedChildren, transaction, context, selfDebugID);
+          } finally {
+            ReactCurrentOwner_1.current = null;
+          }
+        }
+      }
       return ReactChildReconciler_1.instantiateChildren(nestedChildren, transaction, context);
     },
 
     _reconcilerUpdateChildren: function (prevChildren, nextNestedChildrenElements, mountImages, removedNodes, transaction, context) {
       var nextChildren;
       var selfDebugID = 0;
+      {
+        selfDebugID = getDebugID(this);
+        if (this._currentElement) {
+          try {
+            ReactCurrentOwner_1.current = this._currentElement._owner;
+            nextChildren = flattenChildren_1(nextNestedChildrenElements, selfDebugID);
+          } finally {
+            ReactCurrentOwner_1.current = null;
+          }
+          ReactChildReconciler_1.updateChildren(prevChildren, nextChildren, mountImages, removedNodes, transaction, this, this._hostContainerInfo, context, selfDebugID);
+          return nextChildren;
+        }
+      }
       nextChildren = flattenChildren_1(nextNestedChildrenElements, selfDebugID);
       ReactChildReconciler_1.updateChildren(prevChildren, nextChildren, mountImages, removedNodes, transaction, this, this._hostContainerInfo, context, selfDebugID);
       return nextChildren;
@@ -24847,10 +27184,17 @@ var ReactMultiChild = {
         if (children.hasOwnProperty(name)) {
           var child = children[name];
           var selfDebugID = 0;
+          {
+            selfDebugID = getDebugID(this);
+          }
           var mountImage = ReactReconciler_1.mountComponent(child, transaction, this, this._hostContainerInfo, context, selfDebugID);
           child._mountIndex = index++;
           mountImages.push(mountImage);
         }
+      }
+
+      {
+        setChildrenForInstrumentation.call(this, children);
       }
 
       return mountImages;
@@ -24868,7 +27212,7 @@ var ReactMultiChild = {
       ReactChildReconciler_1.unmountChildren(prevChildren, false);
       for (var name in prevChildren) {
         if (prevChildren.hasOwnProperty(name)) {
-          reactProdInvariant_1$2('118');
+          invariant_1(false, 'updateTextContent called on non-empty component.');
         }
       }
       // Set new text content.
@@ -24888,7 +27232,7 @@ var ReactMultiChild = {
       ReactChildReconciler_1.unmountChildren(prevChildren, false);
       for (var name in prevChildren) {
         if (prevChildren.hasOwnProperty(name)) {
-          reactProdInvariant_1$2('118');
+          invariant_1(false, 'updateTextContent called on non-empty component.');
         }
       }
       var updates = [makeSetMarkup(nextMarkup)];
@@ -24964,7 +27308,9 @@ var ReactMultiChild = {
       }
       this._renderedChildren = nextChildren;
 
-      
+      {
+        setChildrenForInstrumentation.call(this, nextChildren);
+      }
     },
 
     /**
@@ -25072,7 +27418,18 @@ function formatUnexpectedArgument(arg) {
 function getInternalInstanceReadyForUpdate(publicInstance, callerName) {
   var internalInstance = ReactInstanceMap_1.get(publicInstance);
   if (!internalInstance) {
+    {
+      var ctor = publicInstance.constructor;
+      // Only warn when we have a callerName. Otherwise we should be silent.
+      // We're probably calling from enqueueCallback. We don't want to warn
+      // there because we already warned for the corresponding lifecycle method.
+      warning_1(!callerName, '%s(...): Can only update a mounted or mounting component. ' + 'This usually means you called %s() on an unmounted component. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, ctor && (ctor.displayName || ctor.name) || 'ReactClass');
+    }
     return null;
+  }
+
+  {
+    warning_1(ReactCurrentOwner_1.current == null, '%s(...): Cannot update during an existing state transition (such as ' + "within `render` or another component's constructor). Render methods " + 'should be a pure function of props and state; constructor ' + 'side-effects are an anti-pattern, but can be moved to ' + '`componentWillMount`.', callerName);
   }
 
   return internalInstance;
@@ -25091,6 +27448,13 @@ var ReactUpdateQueue = {
    * @final
    */
   isMounted: function (publicInstance) {
+    {
+      var owner = ReactCurrentOwner_1.current;
+      if (owner !== null) {
+        warning_1(owner._warnedAboutRefsInRender, '%s is accessing isMounted inside its render() function. ' + 'render() should be a pure function of props and state. It should ' + 'never access something that requires stale data from the previous ' + 'render, such as refs. Move this logic to componentDidMount and ' + 'componentDidUpdate instead.', owner.getName() || 'A component');
+        owner._warnedAboutRefsInRender = true;
+      }
+    }
     var internalInstance = ReactInstanceMap_1.get(publicInstance);
     if (internalInstance) {
       // During componentWillMount and render this will still be null but after
@@ -25215,6 +27579,11 @@ var ReactUpdateQueue = {
    * @internal
    */
   enqueueSetState: function (publicInstance, partialState) {
+    {
+      ReactInstrumentation$1.debugTool.onSetState();
+      warning_1(partialState != null, 'setState(...): You passed an undefined or null state object; ' + 'instead, use forceUpdate().');
+    }
+
     var internalInstance = getInternalInstanceReadyForUpdate(publicInstance, 'setState');
 
     if (!internalInstance) {
@@ -25235,7 +27604,7 @@ var ReactUpdateQueue = {
   },
 
   validateCallback: function (callback, callerName) {
-    !(!callback || typeof callback === 'function') ? reactProdInvariant_1$2('122', callerName, formatUnexpectedArgument(callback)) : void 0;
+    !(!callback || typeof callback === 'function') ? invariant_1(false, '%s(...): Expected the last optional `callback` argument to be a function. Instead received: %s.', callerName, formatUnexpectedArgument(callback)) : void 0;
   }
 };
 
@@ -25248,7 +27617,10 @@ function _classCallCheck$1(instance, Constructor) { if (!(instance instanceof Co
 
 
 function warnNoop$1(publicInstance, callerName) {
-  
+  {
+    var constructor = publicInstance.constructor;
+    warning_1(false, '%s(...): Can only update a mounting component. ' + 'This usually means you called %s() outside componentWillMount() on the server. ' + 'This is a no-op. Please check the code for the %s component.', callerName, callerName, constructor && (constructor.displayName || constructor.name) || 'ReactClass');
+  }
 }
 
 /**
@@ -25371,6 +27743,13 @@ var ReactServerUpdateQueue_1 = ReactServerUpdateQueue;
  */
 var TRANSACTION_WRAPPERS$1 = [];
 
+{
+  TRANSACTION_WRAPPERS$1.push({
+    initialize: ReactInstrumentation$1.debugTool.onBeginFlush,
+    close: ReactInstrumentation$1.debugTool.onEndFlush
+  });
+}
+
 var noopCallbackQueue = {
   enqueue: function () {}
 };
@@ -25428,6 +27807,360 @@ PooledClass_1$2.addPoolingTo(ReactServerRenderingTransaction);
 
 var ReactServerRenderingTransaction_1 = ReactServerRenderingTransaction;
 
+var validateDOMNesting = emptyFunction_1;
+
+{
+  // This validation code was written based on the HTML5 parsing spec:
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+  //
+  // Note: this does not catch all invalid nesting, nor does it try to (as it's
+  // not clear what practical benefit doing so provides); instead, we warn only
+  // for cases where the parser will give a parse tree differing from what React
+  // intended. For example, <b><div></div></b> is invalid but we don't warn
+  // because it still parses correctly; we do warn for other cases like nested
+  // <p> tags where the beginning of the second element implicitly closes the
+  // first, causing a confusing mess.
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#special
+  var specialTags = ['address', 'applet', 'area', 'article', 'aside', 'base', 'basefont', 'bgsound', 'blockquote', 'body', 'br', 'button', 'caption', 'center', 'col', 'colgroup', 'dd', 'details', 'dir', 'div', 'dl', 'dt', 'embed', 'fieldset', 'figcaption', 'figure', 'footer', 'form', 'frame', 'frameset', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html', 'iframe', 'img', 'input', 'isindex', 'li', 'link', 'listing', 'main', 'marquee', 'menu', 'menuitem', 'meta', 'nav', 'noembed', 'noframes', 'noscript', 'object', 'ol', 'p', 'param', 'plaintext', 'pre', 'script', 'section', 'select', 'source', 'style', 'summary', 'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'title', 'tr', 'track', 'ul', 'wbr', 'xmp'];
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-scope
+  var inScopeTags = ['applet', 'caption', 'html', 'table', 'td', 'th', 'marquee', 'object', 'template',
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#html-integration-point
+  // TODO: Distinguish by namespace here -- for <title>, including it here
+  // errs on the side of fewer warnings
+  'foreignObject', 'desc', 'title'];
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#has-an-element-in-button-scope
+  var buttonScopeTags = inScopeTags.concat(['button']);
+
+  // https://html.spec.whatwg.org/multipage/syntax.html#generate-implied-end-tags
+  var impliedEndTags = ['dd', 'dt', 'li', 'option', 'optgroup', 'p', 'rp', 'rt'];
+
+  var emptyAncestorInfo = {
+    current: null,
+
+    formTag: null,
+    aTagInScope: null,
+    buttonTagInScope: null,
+    nobrTagInScope: null,
+    pTagInButtonScope: null,
+
+    listItemTagAutoclosing: null,
+    dlItemTagAutoclosing: null
+  };
+
+  var updatedAncestorInfo = function (oldInfo, tag, instance) {
+    var ancestorInfo = index({}, oldInfo || emptyAncestorInfo);
+    var info = { tag: tag, instance: instance };
+
+    if (inScopeTags.indexOf(tag) !== -1) {
+      ancestorInfo.aTagInScope = null;
+      ancestorInfo.buttonTagInScope = null;
+      ancestorInfo.nobrTagInScope = null;
+    }
+    if (buttonScopeTags.indexOf(tag) !== -1) {
+      ancestorInfo.pTagInButtonScope = null;
+    }
+
+    // See rules for 'li', 'dd', 'dt' start tags in
+    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+    if (specialTags.indexOf(tag) !== -1 && tag !== 'address' && tag !== 'div' && tag !== 'p') {
+      ancestorInfo.listItemTagAutoclosing = null;
+      ancestorInfo.dlItemTagAutoclosing = null;
+    }
+
+    ancestorInfo.current = info;
+
+    if (tag === 'form') {
+      ancestorInfo.formTag = info;
+    }
+    if (tag === 'a') {
+      ancestorInfo.aTagInScope = info;
+    }
+    if (tag === 'button') {
+      ancestorInfo.buttonTagInScope = info;
+    }
+    if (tag === 'nobr') {
+      ancestorInfo.nobrTagInScope = info;
+    }
+    if (tag === 'p') {
+      ancestorInfo.pTagInButtonScope = info;
+    }
+    if (tag === 'li') {
+      ancestorInfo.listItemTagAutoclosing = info;
+    }
+    if (tag === 'dd' || tag === 'dt') {
+      ancestorInfo.dlItemTagAutoclosing = info;
+    }
+
+    return ancestorInfo;
+  };
+
+  /**
+   * Returns whether
+   */
+  var isTagValidWithParent = function (tag, parentTag) {
+    // First, let's check if we're in an unusual parsing mode...
+    switch (parentTag) {
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inselect
+      case 'select':
+        return tag === 'option' || tag === 'optgroup' || tag === '#text';
+      case 'optgroup':
+        return tag === 'option' || tag === '#text';
+      // Strictly speaking, seeing an <option> doesn't mean we're in a <select>
+      // but
+      case 'option':
+        return tag === '#text';
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intd
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incaption
+      // No special behavior since these rules fall back to "in body" mode for
+      // all except special table nodes which cause bad parsing behavior anyway.
+
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intr
+      case 'tr':
+        return tag === 'th' || tag === 'td' || tag === 'style' || tag === 'script' || tag === 'template';
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intbody
+      case 'tbody':
+      case 'thead':
+      case 'tfoot':
+        return tag === 'tr' || tag === 'style' || tag === 'script' || tag === 'template';
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-incolgroup
+      case 'colgroup':
+        return tag === 'col' || tag === 'template';
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-intable
+      case 'table':
+        return tag === 'caption' || tag === 'colgroup' || tag === 'tbody' || tag === 'tfoot' || tag === 'thead' || tag === 'style' || tag === 'script' || tag === 'template';
+      // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inhead
+      case 'head':
+        return tag === 'base' || tag === 'basefont' || tag === 'bgsound' || tag === 'link' || tag === 'meta' || tag === 'title' || tag === 'noscript' || tag === 'noframes' || tag === 'style' || tag === 'script' || tag === 'template';
+      // https://html.spec.whatwg.org/multipage/semantics.html#the-html-element
+      case 'html':
+        return tag === 'head' || tag === 'body';
+      case '#document':
+        return tag === 'html';
+    }
+
+    // Probably in the "in body" parsing mode, so we outlaw only tag combos
+    // where the parsing rules cause implicit opens or closes to be added.
+    // https://html.spec.whatwg.org/multipage/syntax.html#parsing-main-inbody
+    switch (tag) {
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+        return parentTag !== 'h1' && parentTag !== 'h2' && parentTag !== 'h3' && parentTag !== 'h4' && parentTag !== 'h5' && parentTag !== 'h6';
+
+      case 'rp':
+      case 'rt':
+        return impliedEndTags.indexOf(parentTag) === -1;
+
+      case 'body':
+      case 'caption':
+      case 'col':
+      case 'colgroup':
+      case 'frame':
+      case 'head':
+      case 'html':
+      case 'tbody':
+      case 'td':
+      case 'tfoot':
+      case 'th':
+      case 'thead':
+      case 'tr':
+        // These tags are only valid with a few parents that have special child
+        // parsing rules -- if we're down here, then none of those matched and
+        // so we allow it only if we don't know what the parent is, as all other
+        // cases are invalid.
+        return parentTag == null;
+    }
+
+    return true;
+  };
+
+  /**
+   * Returns whether
+   */
+  var findInvalidAncestorForTag = function (tag, ancestorInfo) {
+    switch (tag) {
+      case 'address':
+      case 'article':
+      case 'aside':
+      case 'blockquote':
+      case 'center':
+      case 'details':
+      case 'dialog':
+      case 'dir':
+      case 'div':
+      case 'dl':
+      case 'fieldset':
+      case 'figcaption':
+      case 'figure':
+      case 'footer':
+      case 'header':
+      case 'hgroup':
+      case 'main':
+      case 'menu':
+      case 'nav':
+      case 'ol':
+      case 'p':
+      case 'section':
+      case 'summary':
+      case 'ul':
+      case 'pre':
+      case 'listing':
+      case 'table':
+      case 'hr':
+      case 'xmp':
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+        return ancestorInfo.pTagInButtonScope;
+
+      case 'form':
+        return ancestorInfo.formTag || ancestorInfo.pTagInButtonScope;
+
+      case 'li':
+        return ancestorInfo.listItemTagAutoclosing;
+
+      case 'dd':
+      case 'dt':
+        return ancestorInfo.dlItemTagAutoclosing;
+
+      case 'button':
+        return ancestorInfo.buttonTagInScope;
+
+      case 'a':
+        // Spec says something about storing a list of markers, but it sounds
+        // equivalent to this check.
+        return ancestorInfo.aTagInScope;
+
+      case 'nobr':
+        return ancestorInfo.nobrTagInScope;
+    }
+
+    return null;
+  };
+
+  /**
+   * Given a ReactCompositeComponent instance, return a list of its recursive
+   * owners, starting at the root and ending with the instance itself.
+   */
+  var findOwnerStack = function (instance) {
+    if (!instance) {
+      return [];
+    }
+
+    var stack = [];
+    do {
+      stack.push(instance);
+    } while (instance = instance._currentElement._owner);
+    stack.reverse();
+    return stack;
+  };
+
+  var didWarn = {};
+
+  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
+    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+    var parentInfo = ancestorInfo.current;
+    var parentTag = parentInfo && parentInfo.tag;
+
+    if (childText != null) {
+      warning_1(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null');
+      childTag = '#text';
+    }
+
+    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
+    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
+    var problematic = invalidParent || invalidAncestor;
+
+    if (problematic) {
+      var ancestorTag = problematic.tag;
+      var ancestorInstance = problematic.instance;
+
+      var childOwner = childInstance && childInstance._currentElement._owner;
+      var ancestorOwner = ancestorInstance && ancestorInstance._currentElement._owner;
+
+      var childOwners = findOwnerStack(childOwner);
+      var ancestorOwners = findOwnerStack(ancestorOwner);
+
+      var minStackLen = Math.min(childOwners.length, ancestorOwners.length);
+      var i;
+
+      var deepestCommon = -1;
+      for (i = 0; i < minStackLen; i++) {
+        if (childOwners[i] === ancestorOwners[i]) {
+          deepestCommon = i;
+        } else {
+          break;
+        }
+      }
+
+      var UNKNOWN = '(unknown)';
+      var childOwnerNames = childOwners.slice(deepestCommon + 1).map(function (inst) {
+        return inst.getName() || UNKNOWN;
+      });
+      var ancestorOwnerNames = ancestorOwners.slice(deepestCommon + 1).map(function (inst) {
+        return inst.getName() || UNKNOWN;
+      });
+      var ownerInfo = [].concat(
+      // If the parent and child instances have a common owner ancestor, start
+      // with that -- otherwise we just start with the parent's owners.
+      deepestCommon !== -1 ? childOwners[deepestCommon].getName() || UNKNOWN : [], ancestorOwnerNames, ancestorTag,
+      // If we're warning about an invalid (non-parent) ancestry, add '...'
+      invalidAncestor ? ['...'] : [], childOwnerNames, childTag).join(' > ');
+
+      var warnKey = !!invalidParent + '|' + childTag + '|' + ancestorTag + '|' + ownerInfo;
+      if (didWarn[warnKey]) {
+        return;
+      }
+      didWarn[warnKey] = true;
+
+      var tagDisplayName = childTag;
+      var whitespaceInfo = '';
+      if (childTag === '#text') {
+        if (/\S/.test(childText)) {
+          tagDisplayName = 'Text nodes';
+        } else {
+          tagDisplayName = 'Whitespace text nodes';
+          whitespaceInfo = " Make sure you don't have any extra whitespace between tags on " + 'each line of your source code.';
+        }
+      } else {
+        tagDisplayName = '<' + childTag + '>';
+      }
+
+      if (invalidParent) {
+        var info = '';
+        if (ancestorTag === 'table' && childTag === 'tr') {
+          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
+        }
+        warning_1(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info);
+      } else {
+        warning_1(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo);
+      }
+    }
+  };
+
+  validateDOMNesting.updatedAncestorInfo = updatedAncestorInfo;
+
+  // For testing
+  validateDOMNesting.isTagValidInContext = function (tag, ancestorInfo) {
+    ancestorInfo = ancestorInfo || emptyAncestorInfo;
+    var parentInfo = ancestorInfo.current;
+    var parentTag = parentInfo && parentInfo.tag;
+    return isTagValidWithParent(tag, parentTag) && !findInvalidAncestorForTag(tag, ancestorInfo);
+  };
+}
+
+var validateDOMNesting_1 = validateDOMNesting;
+
 var Flags$1 = ReactDOMComponentFlags_1;
 var deleteListener = EventPluginHub_1.deleteListener;
 var getNode = ReactDOMComponentTree_1.getNodeFromInstance;
@@ -25461,6 +28194,58 @@ function getDeclarationErrorAddendum$1(internalInstance) {
   return '';
 }
 
+function friendlyStringify(obj) {
+  if (typeof obj === 'object') {
+    if (Array.isArray(obj)) {
+      return '[' + obj.map(friendlyStringify).join(', ') + ']';
+    } else {
+      var pairs = [];
+      for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+          var keyEscaped = /^[a-z$_][\w$_]*$/i.test(key) ? key : JSON.stringify(key);
+          pairs.push(keyEscaped + ': ' + friendlyStringify(obj[key]));
+        }
+      }
+      return '{' + pairs.join(', ') + '}';
+    }
+  } else if (typeof obj === 'string') {
+    return JSON.stringify(obj);
+  } else if (typeof obj === 'function') {
+    return '[function object]';
+  }
+  // Differs from JSON.stringify in that undefined because undefined and that
+  // inf and nan don't become null
+  return String(obj);
+}
+
+var styleMutationWarning = {};
+
+function checkAndWarnForMutatedStyle(style1, style2, component) {
+  if (style1 == null || style2 == null) {
+    return;
+  }
+  if (shallowEqual_1(style1, style2)) {
+    return;
+  }
+
+  var componentName = component._tag;
+  var owner = component._currentElement._owner;
+  var ownerName;
+  if (owner) {
+    ownerName = owner.getName();
+  }
+
+  var hash = ownerName + '|' + componentName;
+
+  if (styleMutationWarning.hasOwnProperty(hash)) {
+    return;
+  }
+
+  styleMutationWarning[hash] = true;
+
+  warning_1(false, '`%s` was passed a style object that has previously been mutated. ' + 'Mutating `style` is deprecated. Consider cloning it beforehand. Check ' + 'the `render` %s. Previous style: %s. Mutated style: %s.', componentName, owner ? 'of `' + ownerName + '`' : 'using <' + componentName + '>', friendlyStringify(style1), friendlyStringify(style2));
+}
+
 /**
  * @param {object} component
  * @param {?object} props
@@ -25471,18 +28256,28 @@ function assertValidProps(component, props) {
   }
   // Note the use of `==` which checks for null or undefined.
   if (voidElementTags[component._tag]) {
-    !(props.children == null && props.dangerouslySetInnerHTML == null) ? reactProdInvariant_1$2('137', component._tag, component._currentElement._owner ? ' Check the render method of ' + component._currentElement._owner.getName() + '.' : '') : void 0;
+    !(props.children == null && props.dangerouslySetInnerHTML == null) ? invariant_1(false, '%s is a void element tag and must neither have `children` nor use `dangerouslySetInnerHTML`.%s', component._tag, component._currentElement._owner ? ' Check the render method of ' + component._currentElement._owner.getName() + '.' : '') : void 0;
   }
   if (props.dangerouslySetInnerHTML != null) {
-    !(props.children == null) ? reactProdInvariant_1$2('60') : void 0;
-    !(typeof props.dangerouslySetInnerHTML === 'object' && HTML in props.dangerouslySetInnerHTML) ? reactProdInvariant_1$2('61') : void 0;
+    !(props.children == null) ? invariant_1(false, 'Can only set one of `children` or `props.dangerouslySetInnerHTML`.') : void 0;
+    !(typeof props.dangerouslySetInnerHTML === 'object' && HTML in props.dangerouslySetInnerHTML) ? invariant_1(false, '`props.dangerouslySetInnerHTML` must be in the form `{__html: ...}`. Please visit https://fb.me/react-invariant-dangerously-set-inner-html for more information.') : void 0;
   }
-  !(props.style == null || typeof props.style === 'object') ? reactProdInvariant_1$2('62', getDeclarationErrorAddendum$1(component)) : void 0;
+  {
+    warning_1(props.innerHTML == null, 'Directly setting property `innerHTML` is not permitted. ' + 'For more information, lookup documentation on `dangerouslySetInnerHTML`.');
+    warning_1(props.suppressContentEditableWarning || !props.contentEditable || props.children == null, 'A component is `contentEditable` and contains `children` managed by ' + 'React. It is now your responsibility to guarantee that none of ' + 'those nodes are unexpectedly modified or duplicated. This is ' + 'probably not intentional.');
+    warning_1(props.onFocusIn == null && props.onFocusOut == null, 'React uses onFocus and onBlur instead of onFocusIn and onFocusOut. ' + 'All React events are normalized to bubble, so onFocusIn and onFocusOut ' + 'are not needed/supported by React.');
+  }
+  !(props.style == null || typeof props.style === 'object') ? invariant_1(false, 'The `style` prop expects a mapping from style properties to values, not a string. For example, style={{marginRight: spacing + \'em\'}} when using JSX.%s', getDeclarationErrorAddendum$1(component)) : void 0;
 }
 
 function enqueuePutListener(inst, registrationName, listener, transaction) {
   if (transaction instanceof ReactServerRenderingTransaction_1) {
     return;
+  }
+  {
+    // IE8 has no API for event capturing and the `onScroll` event doesn't
+    // bubble.
+    warning_1(registrationName !== 'onScroll' || isEventSupported_1('scroll', true), "This browser doesn't support the `onScroll` event");
   }
   var containerInfo = inst._hostContainerInfo;
   var isDocumentFragment = containerInfo._node && containerInfo._node.nodeType === DOC_FRAGMENT_TYPE;
@@ -25513,6 +28308,35 @@ function textareaPostMount() {
 function optionPostMount() {
   var inst = this;
   ReactDOMOption_1.postMountWrapper(inst);
+}
+
+var setAndValidateContentChildDev = emptyFunction_1;
+{
+  setAndValidateContentChildDev = function (content) {
+    var hasExistingContent = this._contentDebugID != null;
+    var debugID = this._debugID;
+    // This ID represents the inlined child that has no backing instance:
+    var contentDebugID = -debugID;
+
+    if (content == null) {
+      if (hasExistingContent) {
+        ReactInstrumentation$1.debugTool.onUnmountComponent(this._contentDebugID);
+      }
+      this._contentDebugID = null;
+      return;
+    }
+
+    validateDOMNesting_1(null, String(content), this, this._ancestorInfo);
+    this._contentDebugID = contentDebugID;
+    if (hasExistingContent) {
+      ReactInstrumentation$1.debugTool.onBeforeUpdateComponent(contentDebugID, content);
+      ReactInstrumentation$1.debugTool.onUpdateComponent(contentDebugID);
+    } else {
+      ReactInstrumentation$1.debugTool.onBeforeMountComponent(contentDebugID, content, debugID);
+      ReactInstrumentation$1.debugTool.onMountComponent(contentDebugID);
+      ReactInstrumentation$1.debugTool.onSetChildren(debugID, [contentDebugID]);
+    }
+  };
 }
 
 // There are so many media events, it makes sense to just
@@ -25551,9 +28375,9 @@ function trapBubbledEventsLocal() {
   var inst = this;
   // If a component renders to null or if another component fatals and causes
   // the state of the tree to be corrupted, `node` here can be null.
-  !inst._rootNodeID ? reactProdInvariant_1$2('63') : void 0;
+  !inst._rootNodeID ? invariant_1(false, 'Must be mounted to trap events') : void 0;
   var node = getNode(inst);
-  !node ? reactProdInvariant_1$2('64') : void 0;
+  !node ? invariant_1(false, 'trapBubbledEvent(...): Requires node to be rendered.') : void 0;
 
   switch (inst._tag) {
     case 'iframe':
@@ -25636,7 +28460,7 @@ var hasOwnProperty$2 = {}.hasOwnProperty;
 
 function validateDangerousTag(tag) {
   if (!hasOwnProperty$2.call(validatedTagCache, tag)) {
-    !VALID_TAG_REGEX.test(tag) ? reactProdInvariant_1$2('65', tag) : void 0;
+    !VALID_TAG_REGEX.test(tag) ? invariant_1(false, 'Invalid tag: %s', tag) : void 0;
     validatedTagCache[tag] = true;
   }
 }
@@ -25678,7 +28502,10 @@ function ReactDOMComponent(element) {
   this._wrapperState = null;
   this._topLevelWrapper = null;
   this._flags = 0;
-  
+  {
+    this._ancestorInfo = null;
+    setAndValidateContentChildDev.call(this, null);
+  }
 }
 
 ReactDOMComponent.displayName = 'ReactDOMComponent';
@@ -25764,6 +28591,21 @@ ReactDOMComponent.Mixin = {
       }
     }
     this._namespaceURI = namespaceURI;
+
+    {
+      var parentInfo;
+      if (hostParent != null) {
+        parentInfo = hostParent._ancestorInfo;
+      } else if (hostContainerInfo._tag) {
+        parentInfo = hostContainerInfo._ancestorInfo;
+      }
+      if (parentInfo) {
+        // parentInfo should always be present except for the top-level
+        // component when server rendering
+        validateDOMNesting_1(this._tag, null, this, parentInfo);
+      }
+      this._ancestorInfo = validateDOMNesting_1.updatedAncestorInfo(parentInfo, this._tag, this);
+    }
 
     var mountImage;
     if (transaction.useCreateElement) {
@@ -25869,6 +28711,10 @@ ReactDOMComponent.Mixin = {
       } else {
         if (propKey === STYLE) {
           if (propValue) {
+            {
+              // See `_updateDOMProperties`. style block
+              this._previousStyle = propValue;
+            }
             propValue = this._previousStyleCopy = index({}, props.style);
           }
           propValue = CSSPropertyOperations_1.createMarkupForStyles(propValue, this);
@@ -25924,7 +28770,9 @@ ReactDOMComponent.Mixin = {
       if (contentToUse != null) {
         // TODO: Validate that text is allowed as a child of this node
         ret = escapeTextContentForBrowser_1(contentToUse);
-        
+        {
+          setAndValidateContentChildDev.call(this, contentToUse);
+        }
       } else if (childrenToUse != null) {
         var mountImages = this.mountChildren(childrenToUse, transaction, context);
         ret = mountImages.join('');
@@ -25964,6 +28812,9 @@ ReactDOMComponent.Mixin = {
         // show within the textarea until it has been focused and blurred again.
         // https://github.com/facebook/react/issues/6731#issuecomment-254874553
         if (contentToUse !== '') {
+          {
+            setAndValidateContentChildDev.call(this, contentToUse);
+          }
           DOMLazyTree_1.queueText(lazyTree, contentToUse);
         }
       } else if (childrenToUse != null) {
@@ -26100,6 +28951,10 @@ ReactDOMComponent.Mixin = {
       }
       if (propKey === STYLE) {
         if (nextProp) {
+          {
+            checkAndWarnForMutatedStyle(this._previousStyleCopy, this._previousStyle, this);
+            this._previousStyle = nextProp;
+          }
           nextProp = this._previousStyleCopy = index({}, nextProp);
         } else {
           this._previousStyleCopy = null;
@@ -26178,20 +29033,30 @@ ReactDOMComponent.Mixin = {
       this.updateChildren(null, transaction, context);
     } else if (lastHasContentOrHtml && !nextHasContentOrHtml) {
       this.updateTextContent('');
-      
+      {
+        ReactInstrumentation$1.debugTool.onSetChildren(this._debugID, []);
+      }
     }
 
     if (nextContent != null) {
       if (lastContent !== nextContent) {
         this.updateTextContent('' + nextContent);
-        
+        {
+          setAndValidateContentChildDev.call(this, nextContent);
+        }
       }
     } else if (nextHtml != null) {
       if (lastHtml !== nextHtml) {
         this.updateMarkup('' + nextHtml);
       }
-      
+      {
+        ReactInstrumentation$1.debugTool.onSetChildren(this._debugID, []);
+      }
     } else if (nextChildren != null) {
+      {
+        setAndValidateContentChildDev.call(this, null);
+      }
+
       this.updateChildren(nextChildren, transaction, context);
     }
   },
@@ -26236,7 +29101,7 @@ ReactDOMComponent.Mixin = {
          * take advantage of React's reconciliation for styling and <title>
          * management. So we just document it and throw in dangerous cases.
          */
-        reactProdInvariant_1$2('66', this._tag);
+        invariant_1(false, '<%s> tried to unmount. Because of cross-browser quirks it is impossible to unmount some top-level components (eg <html>, <head>, and <body>) reliably and efficiently. To fix this, have a single top-level component that never unmounts render these elements.', this._tag);
         break;
     }
 
@@ -26247,7 +29112,9 @@ ReactDOMComponent.Mixin = {
     this._domID = 0;
     this._wrapperState = null;
 
-    
+    {
+      setAndValidateContentChildDev.call(this, null);
+    }
   },
 
   getPublicInstance: function () {
@@ -26307,8 +29174,8 @@ var ReactDOMEmptyComponent_1 = ReactDOMEmptyComponent;
  * different trees.
  */
 function getLowestCommonAncestor(instA, instB) {
-  !('_hostNode' in instA) ? reactProdInvariant_1$2('33') : void 0;
-  !('_hostNode' in instB) ? reactProdInvariant_1$2('33') : void 0;
+  !('_hostNode' in instA) ? invariant_1(false, 'getNodeFromInstance: Invalid argument.') : void 0;
+  !('_hostNode' in instB) ? invariant_1(false, 'getNodeFromInstance: Invalid argument.') : void 0;
 
   var depthA = 0;
   for (var tempA = instA; tempA; tempA = tempA._hostParent) {
@@ -26347,8 +29214,8 @@ function getLowestCommonAncestor(instA, instB) {
  * Return if A is an ancestor of B.
  */
 function isAncestor(instA, instB) {
-  !('_hostNode' in instA) ? reactProdInvariant_1$2('35') : void 0;
-  !('_hostNode' in instB) ? reactProdInvariant_1$2('35') : void 0;
+  !('_hostNode' in instA) ? invariant_1(false, 'isAncestor: Invalid argument.') : void 0;
+  !('_hostNode' in instB) ? invariant_1(false, 'isAncestor: Invalid argument.') : void 0;
 
   while (instB) {
     if (instB === instA) {
@@ -26363,7 +29230,7 @@ function isAncestor(instA, instB) {
  * Return the parent instance of the passed-in instance.
  */
 function getParentInstance(inst) {
-  !('_hostNode' in inst) ? reactProdInvariant_1$2('36') : void 0;
+  !('_hostNode' in inst) ? invariant_1(false, 'getParentInstance: Invalid argument.') : void 0;
 
   return inst._hostParent;
 }
@@ -26462,6 +29329,20 @@ index(ReactDOMTextComponent.prototype, {
    * @internal
    */
   mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+    {
+      var parentInfo;
+      if (hostParent != null) {
+        parentInfo = hostParent._ancestorInfo;
+      } else if (hostContainerInfo != null) {
+        parentInfo = hostContainerInfo._ancestorInfo;
+      }
+      if (parentInfo) {
+        // parentInfo should always be present except for the top-level
+        // component when server rendering
+        validateDOMNesting_1(null, this._stringText, this, parentInfo);
+      }
+    }
+
     var domID = hostContainerInfo._idCounter++;
     var openingValue = ' react-text: ' + domID + ' ';
     var closingValue = ' /react-text ';
@@ -26525,7 +29406,7 @@ index(ReactDOMTextComponent.prototype, {
       var openingComment = ReactDOMComponentTree_1.getNodeFromInstance(this);
       var node = openingComment.nextSibling;
       while (true) {
-        !(node != null) ? reactProdInvariant_1$2('67', this._domID) : void 0;
+        !(node != null) ? invariant_1(false, 'Missing closing comment for text component %s', this._domID) : void 0;
         if (node.nodeType === 8 && node.nodeValue === ' /react-text ') {
           this._closingComment = node;
           break;
@@ -26664,6 +29545,9 @@ var EventListener = {
         }
       };
     } else {
+      {
+        console.error('Attempted to listen to events during the capture phase on a ' + 'browser that does not support the capture phase. Your application ' + 'will not receive some events.');
+      }
       return {
         remove: emptyFunction_1
       };
@@ -27417,6 +30301,13 @@ var ON_DOM_READY_QUEUEING = {
  * each other.
  */
 var TRANSACTION_WRAPPERS$3 = [SELECTION_RESTORATION, EVENT_SUPPRESSION, ON_DOM_READY_QUEUEING];
+
+{
+  TRANSACTION_WRAPPERS$3.push({
+    initialize: ReactInstrumentation$1.debugTool.onBeginFlush,
+    close: ReactInstrumentation$1.debugTool.onEndFlush
+  });
+}
 
 /**
  * Currently:
@@ -28521,7 +31412,7 @@ var SimpleEventPlugin = {
         EventConstructor = SyntheticClipboardEvent_1;
         break;
     }
-    !EventConstructor ? reactProdInvariant_1$2('86', topLevelType) : void 0;
+    !EventConstructor ? invariant_1(false, 'SimpleEventPlugin: Unhandled event type, `%s`.', topLevelType) : void 0;
     var event = EventConstructor.getPooled(dispatchConfig, targetInst, nativeEvent, nativeEventTarget);
     EventPropagators_1.accumulateTwoPhaseDispatches(event);
     return event;
@@ -28618,6 +31509,9 @@ function ReactDOMContainerInfo(topLevelWrapper, node) {
     _tag: node ? node.nodeName.toLowerCase() : null,
     _namespaceURI: node ? node.namespaceURI : null
   };
+  {
+    info._ancestorInfo = node ? validateDOMNesting_1.updatedAncestorInfo(null, info._tag, null) : null;
+  }
   return info;
 }
 
@@ -28820,7 +31714,14 @@ function batchedMountComponentIntoNode(componentInstance, container, shouldReuse
  * @see {ReactMount.unmountComponentAtNode}
  */
 function unmountComponentFromNode(instance, container, safely) {
+  {
+    ReactInstrumentation$1.debugTool.onBeginFlush();
+  }
   ReactReconciler_1.unmountComponent(instance, safely);
+  {
+    ReactInstrumentation$1.debugTool.onEndFlush();
+  }
+
   if (container.nodeType === DOC_NODE_TYPE) {
     container = container.documentElement;
   }
@@ -28850,6 +31751,19 @@ function hasNonRootReactChild(container) {
 }
 
 /**
+ * True if the supplied DOM node is a React DOM element and
+ * it has been rendered by another copy of React.
+ *
+ * @param {?DOMElement} node The candidate DOM node.
+ * @return {boolean} True if the DOM has been rendered by another copy of React
+ * @internal
+ */
+function nodeIsRenderedByOtherInstance(container) {
+  var rootEl = getReactRootElementInContainer(container);
+  return !!(rootEl && isReactNode(rootEl) && !ReactDOMComponentTree_1.getInstanceFromNode(rootEl));
+}
+
+/**
  * True if the supplied DOM node is a valid node element.
  *
  * @param {?DOMElement} node The candidate DOM node.
@@ -28858,6 +31772,17 @@ function hasNonRootReactChild(container) {
  */
 function isValidContainer(node) {
   return !!(node && (node.nodeType === ELEMENT_NODE_TYPE$1 || node.nodeType === DOC_NODE_TYPE || node.nodeType === DOCUMENT_FRAGMENT_NODE_TYPE$1));
+}
+
+/**
+ * True if the supplied DOM node is a valid React node element.
+ *
+ * @param {?DOMElement} node The candidate DOM node.
+ * @return {boolean} True if the DOM is a valid React DOM node.
+ * @internal
+ */
+function isReactNode(node) {
+  return isValidContainer(node) && (node.hasAttribute(ROOT_ATTR_NAME) || node.hasAttribute(ATTR_NAME$1));
 }
 
 function getHostRootInstanceInContainer(container) {
@@ -28881,6 +31806,9 @@ var TopLevelWrapper = function () {
   this.rootID = topLevelRootCounter++;
 };
 TopLevelWrapper.prototype.isReactComponent = {};
+{
+  TopLevelWrapper.displayName = 'TopLevelWrapper';
+}
 TopLevelWrapper.prototype.render = function () {
   return this.props.child;
 };
@@ -28954,9 +31882,9 @@ var ReactMount = {
     // Various parts of our code (such as ReactCompositeComponent's
     // _renderValidatedComponent) assume that calls to render aren't nested;
     // verify that that's the case.
-    void 0;
+    warning_1(ReactCurrentOwner_1.current == null, '_renderNewRootComponent(): Render methods should be a pure function ' + 'of props and state; triggering nested component updates from ' + 'render is not allowed. If necessary, trigger nested updates in ' + 'componentDidUpdate. Check the render method of %s.', ReactCurrentOwner_1.current && ReactCurrentOwner_1.current.getName() || 'ReactCompositeComponent');
 
-    !isValidContainer(container) ? reactProdInvariant_1$2('37') : void 0;
+    !isValidContainer(container) ? invariant_1(false, '_registerComponent(...): Target container is not a DOM element.') : void 0;
 
     ReactBrowserEventEmitter_1.ensureScrollValueMonitoring();
     var componentInstance = instantiateReactComponent_1(nextElement, false);
@@ -28987,15 +31915,16 @@ var ReactMount = {
    * @return {ReactComponent} Component instance rendered in `container`.
    */
   renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
-    !(parentComponent != null && ReactInstanceMap_1.has(parentComponent)) ? reactProdInvariant_1$2('38') : void 0;
+    !(parentComponent != null && ReactInstanceMap_1.has(parentComponent)) ? invariant_1(false, 'parentComponent must be a valid React Component') : void 0;
     return ReactMount._renderSubtreeIntoContainer(parentComponent, nextElement, container, callback);
   },
 
   _renderSubtreeIntoContainer: function (parentComponent, nextElement, container, callback) {
     ReactUpdateQueue_1.validateCallback(callback, 'ReactDOM.render');
-    !React_1.isValidElement(nextElement) ? reactProdInvariant_1$2('39', typeof nextElement === 'string' ? " Instead of passing a string like 'div', pass " + "React.createElement('div') or <div />." : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' : nextElement != null && nextElement.props !== undefined ? ' This may be caused by unintentionally loading two independent ' + 'copies of React.' : '') : void 0;
+    !React_1.isValidElement(nextElement) ? invariant_1(false, 'ReactDOM.render(): Invalid component element.%s', typeof nextElement === 'string' ? " Instead of passing a string like 'div', pass " + "React.createElement('div') or <div />." : typeof nextElement === 'function' ? ' Instead of passing a class like Foo, pass ' + 'React.createElement(Foo) or <Foo />.' : // Check if it quacks like an element
+    nextElement != null && nextElement.props !== undefined ? ' This may be caused by unintentionally loading two independent ' + 'copies of React.' : '') : void 0;
 
-    void 0;
+    warning_1(!container || !container.tagName || container.tagName.toUpperCase() !== 'BODY', 'render(): Rendering components directly into document.body is ' + 'discouraged, since its children are often manipulated by third-party ' + 'scripts and browser extensions. This may lead to subtle ' + 'reconciliation issues. Try rendering into a container element created ' + 'for your app.');
 
     var nextWrappedElement = React_1.createElement(TopLevelWrapper, {
       child: nextElement
@@ -29029,6 +31958,21 @@ var ReactMount = {
     var reactRootElement = getReactRootElementInContainer(container);
     var containerHasReactMarkup = reactRootElement && !!internalGetID(reactRootElement);
     var containerHasNonRootReactChild = hasNonRootReactChild(container);
+
+    {
+      warning_1(!containerHasNonRootReactChild, 'render(...): Replacing React-rendered children with a new root ' + 'component. If you intended to update the children of this node, ' + 'you should instead have the existing children update their state ' + 'and render the new components instead of calling ReactDOM.render.');
+
+      if (!containerHasReactMarkup || reactRootElement.nextSibling) {
+        var rootElementSibling = reactRootElement;
+        while (rootElementSibling) {
+          if (internalGetID(rootElementSibling)) {
+            warning_1(false, 'render(): Target node has markup rendered by React, but there ' + 'are unrelated nodes as well. This is most commonly caused by ' + 'white-space inserted around server-rendered markup.');
+            break;
+          }
+          rootElementSibling = rootElementSibling.nextSibling;
+        }
+      }
+    }
 
     var shouldReuseMarkup = containerHasReactMarkup && !prevComponent && !containerHasNonRootReactChild;
     var component = ReactMount._renderNewRootComponent(nextWrappedElement, container, shouldReuseMarkup, nextContext)._renderedComponent.getPublicInstance();
@@ -29068,9 +32012,13 @@ var ReactMount = {
     // _renderValidatedComponent) assume that calls to render aren't nested;
     // verify that that's the case. (Strictly speaking, unmounting won't cause a
     // render but we still don't expect to be in a render call here.)
-    void 0;
+    warning_1(ReactCurrentOwner_1.current == null, 'unmountComponentAtNode(): Render methods should be a pure function ' + 'of props and state; triggering nested component updates from render ' + 'is not allowed. If necessary, trigger nested updates in ' + 'componentDidUpdate. Check the render method of %s.', ReactCurrentOwner_1.current && ReactCurrentOwner_1.current.getName() || 'ReactCompositeComponent');
 
-    !isValidContainer(container) ? reactProdInvariant_1$2('40') : void 0;
+    !isValidContainer(container) ? invariant_1(false, 'unmountComponentAtNode(...): Target container is not a DOM element.') : void 0;
+
+    {
+      warning_1(!nodeIsRenderedByOtherInstance(container), "unmountComponentAtNode(): The node you're attempting to unmount " + 'was rendered by another copy of React.');
+    }
 
     var prevComponent = getTopLevelWrapperInContainer(container);
     if (!prevComponent) {
@@ -29081,6 +32029,10 @@ var ReactMount = {
       // Check if the container itself is a React root node.
       var isContainerReactRoot = container.nodeType === 1 && container.hasAttribute(ROOT_ATTR_NAME);
 
+      {
+        warning_1(!containerHasNonRootReactChild, "unmountComponentAtNode(): The node you're attempting to unmount " + 'was rendered by React and is not a top-level container. %s', isContainerReactRoot ? 'You may have accidentally passed in a React root node instead ' + 'of its container.' : 'Instead, have the parent component update its state and ' + 'rerender in order to remove this component.');
+      }
+
       return false;
     }
     delete instancesByReactRootID[prevComponent._instance.rootID];
@@ -29089,7 +32041,7 @@ var ReactMount = {
   },
 
   _mountImageIntoNode: function (markup, container, instance, shouldReuseMarkup, transaction) {
-    !isValidContainer(container) ? reactProdInvariant_1$2('41') : void 0;
+    !isValidContainer(container) ? invariant_1(false, 'mountComponentIntoNode(...): Target container is not valid.') : void 0;
 
     if (shouldReuseMarkup) {
       var rootElement = getReactRootElementInContainer(container);
@@ -29104,16 +32056,37 @@ var ReactMount = {
         rootElement.setAttribute(ReactMarkupChecksum_1.CHECKSUM_ATTR_NAME, checksum);
 
         var normalizedMarkup = markup;
+        {
+          // because rootMarkup is retrieved from the DOM, various normalizations
+          // will have occurred which will not be present in `markup`. Here,
+          // insert markup into a <div> or <iframe> depending on the container
+          // type to perform the same normalizations before comparing.
+          var normalizer;
+          if (container.nodeType === ELEMENT_NODE_TYPE$1) {
+            normalizer = document.createElement('div');
+            normalizer.innerHTML = markup;
+            normalizedMarkup = normalizer.innerHTML;
+          } else {
+            normalizer = document.createElement('iframe');
+            document.body.appendChild(normalizer);
+            normalizer.contentDocument.write(markup);
+            normalizedMarkup = normalizer.contentDocument.documentElement.outerHTML;
+            document.body.removeChild(normalizer);
+          }
+        }
+
         var diffIndex = firstDifferenceIndex(normalizedMarkup, rootMarkup);
         var difference = ' (client) ' + normalizedMarkup.substring(diffIndex - 20, diffIndex + 20) + '\n (server) ' + rootMarkup.substring(diffIndex - 20, diffIndex + 20);
 
-        !(container.nodeType !== DOC_NODE_TYPE) ? reactProdInvariant_1$2('42', difference) : void 0;
+        !(container.nodeType !== DOC_NODE_TYPE) ? invariant_1(false, 'You\'re trying to render a component to the document using server rendering but the checksum was invalid. This usually means you rendered a different component type or props on the client from the one on the server, or your render() methods are impure. React cannot handle this case due to cross-browser quirks by rendering at the document root. You should look for environment dependent code in your components and ensure the props are the same client and server side:\n%s', difference) : void 0;
 
-        
+        {
+          warning_1(false, 'React attempted to reuse markup in a container but the ' + 'checksum was invalid. This generally means that you are ' + 'using server rendering and the markup generated on the ' + 'server was not what the client was expecting. React injected ' + 'new markup to compensate which works but you have lost many ' + 'of the benefits of server rendering. Instead, figure out ' + 'why the markup being generated is different on the client ' + 'or server:\n%s', difference);
+        }
       }
     }
 
-    !(container.nodeType !== DOC_NODE_TYPE) ? reactProdInvariant_1$2('43') : void 0;
+    !(container.nodeType !== DOC_NODE_TYPE) ? invariant_1(false, 'You\'re trying to render a component to the document but you didn\'t use server rendering. We can\'t do this without using server rendering due to cross-browser quirks. See ReactDOMServer.renderToString() for server rendering.') : void 0;
 
     if (transaction.useCreateElement) {
       while (container.lastChild) {
@@ -29125,7 +32098,16 @@ var ReactMount = {
       ReactDOMComponentTree_1.precacheNode(instance, container.firstChild);
     }
 
-    
+    {
+      var hostNode = ReactDOMComponentTree_1.getInstanceFromNode(container.firstChild);
+      if (hostNode._debugID !== 0) {
+        ReactInstrumentation$1.debugTool.onHostOperation({
+          instanceID: hostNode._debugID,
+          type: 'mount',
+          payload: markup.toString()
+        });
+      }
+    }
   }
 };
 
@@ -29168,6 +32150,13 @@ var getHostComponentFromComposite_1 = getHostComponentFromComposite;
  * @return {?DOMElement} The root node of this element.
  */
 function findDOMNode(componentOrElement) {
+  {
+    var owner = ReactCurrentOwner_1.current;
+    if (owner !== null) {
+      warning_1(owner._warnedAboutRefsInRender, '%s is accessing findDOMNode inside its render(). ' + 'render() should be a pure function of props and state. It should ' + 'never access something that requires stale data from the previous ' + 'render, such as refs. Move this logic to componentDidMount and ' + 'componentDidUpdate instead.', owner.getName() || 'A component');
+      owner._warnedAboutRefsInRender = true;
+    }
+  }
   if (componentOrElement == null) {
     return null;
   }
@@ -29182,15 +32171,212 @@ function findDOMNode(componentOrElement) {
   }
 
   if (typeof componentOrElement.render === 'function') {
-    reactProdInvariant_1$2('44');
+    invariant_1(false, 'findDOMNode was called on an unmounted component.');
   } else {
-    reactProdInvariant_1$2('45', Object.keys(componentOrElement));
+    invariant_1(false, 'Element appears to be neither ReactComponent nor DOMNode (keys: %s)', Object.keys(componentOrElement));
   }
 }
 
 var findDOMNode_1 = findDOMNode;
 
 var renderSubtreeIntoContainer = ReactMount_1.renderSubtreeIntoContainer;
+
+{
+  var reactProps = {
+    children: true,
+    dangerouslySetInnerHTML: true,
+    key: true,
+    ref: true,
+
+    autoFocus: true,
+    defaultValue: true,
+    valueLink: true,
+    defaultChecked: true,
+    checkedLink: true,
+    innerHTML: true,
+    suppressContentEditableWarning: true,
+    onFocusIn: true,
+    onFocusOut: true
+  };
+  var warnedProperties = {};
+
+  var validateProperty = function (tagName, name, debugID) {
+    if (DOMProperty_1.properties.hasOwnProperty(name) || DOMProperty_1.isCustomAttribute(name)) {
+      return true;
+    }
+    if (reactProps.hasOwnProperty(name) && reactProps[name] || warnedProperties.hasOwnProperty(name) && warnedProperties[name]) {
+      return true;
+    }
+    if (EventPluginRegistry_1.registrationNameModules.hasOwnProperty(name)) {
+      return true;
+    }
+    warnedProperties[name] = true;
+    var lowerCasedName = name.toLowerCase();
+
+    // data-* attributes should be lowercase; suggest the lowercase version
+    var standardName = DOMProperty_1.isCustomAttribute(lowerCasedName) ? lowerCasedName : DOMProperty_1.getPossibleStandardName.hasOwnProperty(lowerCasedName) ? DOMProperty_1.getPossibleStandardName[lowerCasedName] : null;
+
+    var registrationName = EventPluginRegistry_1.possibleRegistrationNames.hasOwnProperty(lowerCasedName) ? EventPluginRegistry_1.possibleRegistrationNames[lowerCasedName] : null;
+
+    if (standardName != null) {
+      warning_1(false, 'Unknown DOM property %s. Did you mean %s?%s', name, standardName, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+      return true;
+    } else if (registrationName != null) {
+      warning_1(false, 'Unknown event handler property %s. Did you mean `%s`?%s', name, registrationName, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+      return true;
+    } else {
+      // We were unable to guess which prop the user intended.
+      // It is likely that the user was just blindly spreading/forwarding props
+      // Components should be careful to only render valid props/attributes.
+      // Warning will be invoked in warnUnknownProperties to allow grouping.
+      return false;
+    }
+  };
+}
+
+var warnUnknownProperties = function (debugID, element) {
+  var unknownProps = [];
+  for (var key in element.props) {
+    var isValid = validateProperty(element.type, key, debugID);
+    if (!isValid) {
+      unknownProps.push(key);
+    }
+  }
+
+  var unknownPropString = unknownProps.map(function (prop) {
+    return '`' + prop + '`';
+  }).join(', ');
+
+  if (unknownProps.length === 1) {
+    warning_1(false, 'Unknown prop %s on <%s> tag. Remove this prop from the element. ' + 'For details, see https://fb.me/react-unknown-prop%s', unknownPropString, element.type, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+  } else if (unknownProps.length > 1) {
+    warning_1(false, 'Unknown props %s on <%s> tag. Remove these props from the element. ' + 'For details, see https://fb.me/react-unknown-prop%s', unknownPropString, element.type, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+  }
+};
+
+function handleElement(debugID, element) {
+  if (element == null || typeof element.type !== 'string') {
+    return;
+  }
+  if (element.type.indexOf('-') >= 0 || element.props.is) {
+    return;
+  }
+  warnUnknownProperties(debugID, element);
+}
+
+var ReactDOMUnknownPropertyHook$1 = {
+  onBeforeMountComponent: function (debugID, element) {
+    handleElement(debugID, element);
+  },
+  onBeforeUpdateComponent: function (debugID, element) {
+    handleElement(debugID, element);
+  }
+};
+
+var ReactDOMUnknownPropertyHook_1 = ReactDOMUnknownPropertyHook$1;
+
+var didWarnValueNull = false;
+
+function handleElement$1(debugID, element) {
+  if (element == null) {
+    return;
+  }
+  if (element.type !== 'input' && element.type !== 'textarea' && element.type !== 'select') {
+    return;
+  }
+  if (element.props != null && element.props.value === null && !didWarnValueNull) {
+    warning_1(false, '`value` prop on `%s` should not be null. ' + 'Consider using the empty string to clear the component or `undefined` ' + 'for uncontrolled components.%s', element.type, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+
+    didWarnValueNull = true;
+  }
+}
+
+var ReactDOMNullInputValuePropHook$1 = {
+  onBeforeMountComponent: function (debugID, element) {
+    handleElement$1(debugID, element);
+  },
+  onBeforeUpdateComponent: function (debugID, element) {
+    handleElement$1(debugID, element);
+  }
+};
+
+var ReactDOMNullInputValuePropHook_1 = ReactDOMNullInputValuePropHook$1;
+
+var warnedProperties$1 = {};
+var rARIA = new RegExp('^(aria)-[' + DOMProperty_1.ATTRIBUTE_NAME_CHAR + ']*$');
+
+function validateProperty$1(tagName, name, debugID) {
+  if (warnedProperties$1.hasOwnProperty(name) && warnedProperties$1[name]) {
+    return true;
+  }
+
+  if (rARIA.test(name)) {
+    var lowerCasedName = name.toLowerCase();
+    var standardName = DOMProperty_1.getPossibleStandardName.hasOwnProperty(lowerCasedName) ? DOMProperty_1.getPossibleStandardName[lowerCasedName] : null;
+
+    // If this is an aria-* attribute, but is not listed in the known DOM
+    // DOM properties, then it is an invalid aria-* attribute.
+    if (standardName == null) {
+      warnedProperties$1[name] = true;
+      return false;
+    }
+    // aria-* attributes should be lowercase; suggest the lowercase version.
+    if (name !== standardName) {
+      warning_1(false, 'Unknown ARIA attribute %s. Did you mean %s?%s', name, standardName, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+      warnedProperties$1[name] = true;
+      return true;
+    }
+  }
+
+  return true;
+}
+
+function warnInvalidARIAProps(debugID, element) {
+  var invalidProps = [];
+
+  for (var key in element.props) {
+    var isValid = validateProperty$1(element.type, key, debugID);
+    if (!isValid) {
+      invalidProps.push(key);
+    }
+  }
+
+  var unknownPropString = invalidProps.map(function (prop) {
+    return '`' + prop + '`';
+  }).join(', ');
+
+  if (invalidProps.length === 1) {
+    warning_1(false, 'Invalid aria prop %s on <%s> tag. ' + 'For details, see https://fb.me/invalid-aria-prop%s', unknownPropString, element.type, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+  } else if (invalidProps.length > 1) {
+    warning_1(false, 'Invalid aria props %s on <%s> tag. ' + 'For details, see https://fb.me/invalid-aria-prop%s', unknownPropString, element.type, ReactComponentTreeHook_1.getStackAddendumByID(debugID));
+  }
+}
+
+function handleElement$2(debugID, element) {
+  if (element == null || typeof element.type !== 'string') {
+    return;
+  }
+  if (element.type.indexOf('-') >= 0 || element.props.is) {
+    return;
+  }
+
+  warnInvalidARIAProps(debugID, element);
+}
+
+var ReactDOMInvalidARIAHook$1 = {
+  onBeforeMountComponent: function (debugID, element) {
+    {
+      handleElement$2(debugID, element);
+    }
+  },
+  onBeforeUpdateComponent: function (debugID, element) {
+    {
+      handleElement$2(debugID, element);
+    }
+  }
+};
+
+var ReactDOMInvalidARIAHook_1 = ReactDOMInvalidARIAHook$1;
 
 ReactDefaultInjection.inject();
 
@@ -29227,6 +32413,52 @@ if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ !== 'undefined' && typeof __REACT_DEVT
     Mount: ReactMount_1,
     Reconciler: ReactReconciler_1
   });
+}
+
+{
+  var ExecutionEnvironment = ExecutionEnvironment_1;
+  if (ExecutionEnvironment.canUseDOM && window.top === window.self) {
+    // First check if devtools is not installed
+    if (typeof __REACT_DEVTOOLS_GLOBAL_HOOK__ === 'undefined') {
+      // If we're in Chrome or Firefox, provide a download link if not installed.
+      if (navigator.userAgent.indexOf('Chrome') > -1 && navigator.userAgent.indexOf('Edge') === -1 || navigator.userAgent.indexOf('Firefox') > -1) {
+        // Firefox does not have the issue with devtools loaded over file://
+        var showFileUrlMessage = window.location.protocol.indexOf('http') === -1 && navigator.userAgent.indexOf('Firefox') === -1;
+        console.debug('Download the React DevTools ' + (showFileUrlMessage ? 'and use an HTTP server (instead of a file: URL) ' : '') + 'for a better development experience: ' + 'https://fb.me/react-devtools');
+      }
+    }
+
+    var testFunc = function testFn() {};
+    warning_1((testFunc.name || testFunc.toString()).indexOf('testFn') !== -1, "It looks like you're using a minified copy of the development build " + 'of React. When deploying React apps to production, make sure to use ' + 'the production build which skips development warnings and is faster. ' + 'See https://fb.me/react-minification for more details.');
+
+    // If we're in IE8, check to see if we are in compatibility mode and provide
+    // information on preventing compatibility mode
+    var ieCompatibilityMode = document.documentMode && document.documentMode < 8;
+
+    warning_1(!ieCompatibilityMode, 'Internet Explorer is running in compatibility mode; please add the ' + 'following tag to your HTML to prevent this from happening: ' + '<meta http-equiv="X-UA-Compatible" content="IE=edge" />');
+
+    var expectedFeatures = [
+    // shims
+    Array.isArray, Array.prototype.every, Array.prototype.forEach, Array.prototype.indexOf, Array.prototype.map, Date.now, Function.prototype.bind, Object.keys, String.prototype.trim];
+
+    for (var i = 0; i < expectedFeatures.length; i++) {
+      if (!expectedFeatures[i]) {
+        warning_1(false, 'One or more ES5 shims expected by React are not available: ' + 'https://fb.me/react-warning-polyfills');
+        break;
+      }
+    }
+  }
+}
+
+{
+  var ReactInstrumentation = ReactInstrumentation$1;
+  var ReactDOMUnknownPropertyHook = ReactDOMUnknownPropertyHook_1;
+  var ReactDOMNullInputValuePropHook = ReactDOMNullInputValuePropHook_1;
+  var ReactDOMInvalidARIAHook = ReactDOMInvalidARIAHook_1;
+
+  ReactInstrumentation.debugTool.addHook(ReactDOMUnknownPropertyHook);
+  ReactInstrumentation.debugTool.addHook(ReactDOMNullInputValuePropHook);
+  ReactInstrumentation.debugTool.addHook(ReactDOMInvalidARIAHook);
 }
 
 var ReactDOM_1 = ReactDOM;
@@ -29368,434 +32600,6 @@ function withReact(placeholderId, program) {
 
   return new Program(program.init, program.update, program.subscribe, program.view, setState, program.onError);
 }
-
-var Observer = function () {
-    function Observer(onNext, onError, onCompleted) {
-        classCallCheck(this, Observer);
-
-        this.OnNext = onNext;
-        this.OnError = onError || function (e) {
-            return;
-        };
-        this.OnCompleted = onCompleted || function () {
-            return;
-        };
-    }
-
-    createClass$2(Observer, [{
-        key: FSymbol.reflection,
-        value: function value() {
-            return { interfaces: ["System.IObserver"] };
-        }
-    }]);
-    return Observer;
-}();
-
-var Observable = function () {
-    function Observable(subscribe) {
-        classCallCheck(this, Observable);
-
-        this.Subscribe = subscribe;
-    }
-
-    createClass$2(Observable, [{
-        key: FSymbol.reflection,
-        value: function value() {
-            return { interfaces: ["System.IObservable"] };
-        }
-    }]);
-    return Observable;
-}();
-
-
-function add$5(callback, source) {
-    source.Subscribe(new Observer(callback));
-}
-
-var Event$1 = function () {
-    function Event(_subscriber, delegates) {
-        classCallCheck(this, Event);
-
-        this._subscriber = _subscriber;
-        this.delegates = delegates || new Array();
-    }
-
-    createClass$2(Event, [{
-        key: "Add",
-        value: function Add(f) {
-            this._addHandler(f);
-        }
-        // IEvent<T> methods
-
-    }, {
-        key: "Trigger",
-        value: function Trigger(value) {
-            iterate$1(function (f) {
-                return f(value);
-            }, this.delegates);
-        }
-        // IDelegateEvent<T> methods
-
-    }, {
-        key: "AddHandler",
-        value: function AddHandler(handler) {
-            if (this._dotnetDelegates == null) {
-                this._dotnetDelegates = new Map();
-            }
-            var f = function f(x) {
-                return handler(null, x);
-            };
-            this._dotnetDelegates.set(handler, f);
-            this._addHandler(f);
-        }
-    }, {
-        key: "RemoveHandler",
-        value: function RemoveHandler(handler) {
-            if (this._dotnetDelegates != null) {
-                var f = this._dotnetDelegates.get(handler);
-                if (f != null) {
-                    this._dotnetDelegates.delete(handler);
-                    this._removeHandler(f);
-                }
-            }
-        }
-        // IObservable<T> methods
-
-    }, {
-        key: "Subscribe",
-        value: function Subscribe(arg) {
-            return typeof arg === "function" ? this._subscribeFromCallback(arg) : this._subscribeFromObserver(arg);
-        }
-    }, {
-        key: "_addHandler",
-        value: function _addHandler(f) {
-            this.delegates.push(f);
-        }
-    }, {
-        key: "_removeHandler",
-        value: function _removeHandler(f) {
-            var index = this.delegates.indexOf(f);
-            if (index > -1) {
-                this.delegates.splice(index, 1);
-            }
-        }
-    }, {
-        key: "_subscribeFromObserver",
-        value: function _subscribeFromObserver(observer) {
-            var _this = this;
-
-            if (this._subscriber) {
-                return this._subscriber(observer);
-            }
-            var callback = observer.OnNext;
-            this._addHandler(callback);
-            return createDisposable(function () {
-                return _this._removeHandler(callback);
-            });
-        }
-    }, {
-        key: "_subscribeFromCallback",
-        value: function _subscribeFromCallback(callback) {
-            var _this2 = this;
-
-            this._addHandler(callback);
-            return createDisposable(function () {
-                return _this2._removeHandler(callback);
-            });
-        }
-    }, {
-        key: "Publish",
-        get: function get$$1() {
-            return this;
-        }
-    }]);
-    return Event;
-}();
-
-var NotificationProgramEvent = function () {
-  function NotificationProgramEvent(notif) {
-    babelHelpers.classCallCheck(this, NotificationProgramEvent);
-    this.notif = notif;
-  }
-
-  babelHelpers.createClass(NotificationProgramEvent, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.NotificationProgramEvent",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          notif: Interface("Fable.Import.React.ReactElement")
-        }
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return equalsRecords(this, other);
-    }
-  }]);
-  return NotificationProgramEvent;
-}();
-setType("Elmish.Bulma.Elements.Notification.NotificationProgramEvent", NotificationProgramEvent);
-var Notification = function () {
-  function Notification(id, view) {
-    babelHelpers.classCallCheck(this, Notification);
-    this.id = id | 0;
-    this.view = view;
-  }
-
-  babelHelpers.createClass(Notification, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.Notification",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          id: "number",
-          view: Interface("Fable.Import.React.ReactElement")
-        }
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return equalsRecords(this, other);
-    }
-  }]);
-  return Notification;
-}();
-setType("Elmish.Bulma.Elements.Notification.Notification", Notification);
-var Notifiable = function () {
-  function Notifiable(tag, data) {
-    babelHelpers.classCallCheck(this, Notifiable);
-    this.tag = tag;
-    this.data = data;
-  }
-
-  babelHelpers.createClass(Notifiable, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.Notifiable",
-        interfaces: ["FSharpUnion", "System.IEquatable"],
-        cases: [["AddNewNotification", Interface("Fable.Import.React.ReactElement")], ["UserMsg", GenericParam("msg")]]
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-  }]);
-  return Notifiable;
-}();
-setType("Elmish.Bulma.Elements.Notification.Notifiable", Notifiable);
-var NotificationModel = function () {
-  function NotificationModel(notifications, userModel) {
-    babelHelpers.classCallCheck(this, NotificationModel);
-    this.notifications = notifications;
-    this.userModel = userModel;
-  }
-
-  babelHelpers.createClass(NotificationModel, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.NotificationModel",
-        interfaces: ["FSharpRecord", "System.IEquatable"],
-        properties: {
-          notifications: makeGeneric(List$1, {
-            T: Notification
-          }),
-          userModel: GenericParam("model")
-        }
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return equalsRecords(this, other);
-    }
-  }]);
-  return NotificationModel;
-}();
-setType("Elmish.Bulma.Elements.Notification.NotificationModel", NotificationModel);
-var Option$1 = function () {
-  function Option$$1(tag, data) {
-    babelHelpers.classCallCheck(this, Option$$1);
-    this.tag = tag;
-    this.data = data;
-  }
-
-  babelHelpers.createClass(Option$$1, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.Option",
-        interfaces: ["FSharpUnion", "System.IEquatable", "System.IComparable"],
-        cases: [["Level", ILevelAndColor], ["Closable"]]
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return this === other || this.tag === other.tag && equals(this.data, other.data);
-    }
-  }, {
-    key: "CompareTo",
-    value: function CompareTo(other) {
-      return compareUnions(this, other) | 0;
-    }
-  }]);
-  return Option$$1;
-}();
-setType("Elmish.Bulma.Elements.Notification.Option", Option$1);
-var Options = function () {
-  function Options(level, hasDeleteButton) {
-    babelHelpers.classCallCheck(this, Options);
-    this.level = level;
-    this.hasDeleteButton = hasDeleteButton;
-  }
-
-  babelHelpers.createClass(Options, [{
-    key: FSymbol.reflection,
-    value: function value() {
-      return {
-        type: "Elmish.Bulma.Elements.Notification.Options",
-        interfaces: ["FSharpRecord", "System.IEquatable", "System.IComparable"],
-        properties: {
-          level: ILevelAndColor,
-          hasDeleteButton: "boolean"
-        }
-      };
-    }
-  }, {
-    key: "Equals",
-    value: function Equals(other) {
-      return equalsRecords(this, other);
-    }
-  }, {
-    key: "CompareTo",
-    value: function CompareTo(other) {
-      return compareRecords(this, other) | 0;
-    }
-  }], [{
-    key: "Empty",
-    get: function get() {
-      return new Options(new ILevelAndColor(0), false);
-    }
-  }]);
-  return Options;
-}();
-setType("Elmish.Bulma.Elements.Notification.Options", Options);
-function notification(options, properties, children) {
-  var parseOptions = function parseOptions(options_1, result) {
-    if (options_1.tail == null) {
-      return result;
-    } else {
-      return function ($var1) {
-        return parseOptions(options_1.tail, $var1);
-      }(options_1.head.tag === 1 ? new Options(result.level, true) : new Options(options_1.head.data, result.hasDeleteButton));
-    }
-  };
-
-  var opts = parseOptions(options, Options.Empty);
-  var closeArea = toList(delay(function () {
-    return opts.hasDeleteButton ? singleton$1(react_1("button", {
-      className: "delete"
-    })) : empty();
-  }));
-  var className = new Props.HTMLAttr(22, "notification " + opts.level);
-  return react_1.apply(undefined, ["div", createObj(new List$1(className, properties), 1)].concat(babelHelpers.toConsumableArray(append(closeArea, children))));
-}
-function defaultNotificationArea(notifications) {
-  return react_1.apply(undefined, ["div", createObj(ofArray([["style", {
-    position: "fixed",
-    width: 500,
-    top: 55,
-    right: 25,
-    zIndex: 100
-  }]]), 1)].concat(babelHelpers.toConsumableArray(map(function (x) {
-    return x.view;
-  }, notifications))));
-}
-var onNotificationEvent = new Event$1();
-var Cmd$1 = function (__exports) {
-  var NotifiedEvent = __exports.NotifiedEvent = "NotifiedEvent";
-
-  var newNotification = __exports.newNotification = function (notif) {
-    return ofArray([function (_arg1) {
-      onNotificationEvent.Trigger(new NotificationProgramEvent(notif));
-    }]);
-  };
-
-  return __exports;
-}({});
-var Program$1 = function (__exports) {
-  var toNotifiable = __exports.toNotifiable = function (notificationArea, program) {
-    var map$$1 = function map$$1(tupledArg) {
-      return [tupledArg[0], Cmd.map(function (arg0) {
-        return new Notifiable(1, arg0);
-      }, tupledArg[1])];
-    };
-
-    var update = function update(msg, model) {
-      if (msg.tag === 0) {
-        var notification_1 = new Notification(function () {
-          var copyOfStruct = now();
-          return millisecond(copyOfStruct) | 0;
-        }(), msg.data);
-        return [new NotificationModel(new List$1(notification_1, model.notifications), model.userModel), new List$1()];
-      } else {
-        var patternInput = program.update(msg.data, model.userModel);
-        return [new NotificationModel(model.notifications, patternInput[0]), Cmd.map(function (arg0_1) {
-          return new Notifiable(1, arg0_1);
-        }, patternInput[1])];
-      }
-    };
-
-    var view = function view(model_1, dispatch) {
-      return react_1("div", {}, notificationArea(model_1.notifications), program.view(model_1.userModel, function ($var2) {
-        return dispatch(function (arg0_2) {
-          return new Notifiable(1, arg0_2);
-        }($var2));
-      }));
-    };
-
-    var newNotificationRecieved = function newNotificationRecieved(dispatch_1) {
-      add$5(function (evt) {
-        dispatch_1(new Notifiable(0, evt.notif));
-      }, onNotificationEvent.Publish);
-    };
-
-    var subs = function subs(model_2) {
-      return Cmd.batch(ofArray([ofArray([newNotificationRecieved]), Cmd.map(function (arg0_3) {
-        return new Notifiable(1, arg0_3);
-      }, program.subscribe(model_2.userModel))]));
-    };
-
-    var init = function init(args) {
-      var patternInput_1 = program.init(args);
-      return [new NotificationModel(new List$1(), patternInput_1[0]), Cmd.batch(ofArray([Cmd.map(function (arg0_4) {
-        return new Notifiable(1, arg0_4);
-      }, patternInput_1[1])]))];
-    };
-
-    var setState = CurriedLambda(function (model_3) {
-      return function ($var4) {
-        return function (value) {
-          value;
-        }(function ($var3) {
-          return view(model_3, $var3);
-        }($var4));
-      };
-    });
-    return new Program(init, update, subs, view, setState, program.onError);
-  };
-
-  return __exports;
-}({});
 
 var Navigable = function () {
   function Navigable(tag, data) {
@@ -30350,98 +33154,113 @@ function update$10(msg, model) {
   }
 }
 
-var typeCode = "\r\n```fsharp\r\n    Heading.h1 [ ]\r\n        [ str \"Title\" ]\r\n    Heading.h2 [ Heading.isSubtitle ]\r\n        [ str \"Subtitle\" ]\r\n```\r\n    ";
-var sizeCode$3 = "\r\n```fsharp\r\nHeading.h1 [ ]\r\n    [ str \"Title 1\" ]\r\nHeading.h2 [ ]\r\n    [ str \"Title 2\" ]\r\nHeading.h3 [ ]\r\n    [ str \"Title 3\" ]\r\nHeading.h4 [ ]\r\n    [ str \"Title 3\" ]\r\nHeading.h5 [ ]\r\n    [ str \"Title 5\" ]\r\nHeading.h6 [ ]\r\n    [ str \"Title 6\" ]\r\nHeading.h1 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 1\" ]\r\nHeading.h2 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 2\" ]\r\nHeading.h3 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 3\" ]\r\nHeading.h4 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 4\" ]\r\nHeading.h5 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 5\" ]\r\nHeading.h6 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 6\" ]\r\n```\r\n    ";
+var basic$9 = "\r\n```fsharp\r\n    Notification.notification [ ]\r\n        [ str \"I am a notification\" ]\r\n```\r\n    ";
+var color$2 = "\r\n```fsharp\r\n    Notification.notification [ Notification.isSuccess ]\r\n        [ str \"I am a notification with some colors\" ]\r\n```\r\n    ";
+var _delete$3 = "\r\n```fsharp\r\n    Notification.notification [ Notification.isDanger ]\r\n        [ Notification.delete [ ] [ ]\r\n          str \"I am a notification with some colors and a delete button\" ]\r\n```\r\n    ";
 function init$11() {
-  return new Model$11("\r\n# Title\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/title/)*\r\n        ", init$2(typeCode), init$2(sizeCode$3));
+  return new Model$11("\r\n# Notification\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/notification/)*\r\n        ", init$2(basic$9), init$2(color$2), init$2(_delete$3));
 }
+var notificationRoot = notification(ofArray([isSuccess$3]), ofArray(["I am a global notification"]));
 function update$11(msg, model) {
   if (msg.tag === 1) {
-    var patternInput = update$2(msg.data, model.SizeViewer);
-    return [new Model$11(model.Intro, model.TypeViewer, patternInput[0]), Cmd.map(function (arg0) {
+    var patternInput = update$2(msg.data, model.ColorViewer);
+    return [new Model$11(model.Intro, model.BasicViewer, patternInput[0], model.DeleteViewer), Cmd.map(function (arg0) {
       return new Msg$11(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    var patternInput_1 = update$2(msg.data, model.DeleteViewer);
+    return [new Model$11(model.Intro, model.BasicViewer, model.ColorViewer, patternInput_1[0]), Cmd.map(function (arg0_1) {
+      return new Msg$11(2, arg0_1);
+    }, patternInput_1[1])];
+  } else {
+    var patternInput_2 = update$2(msg.data, model.BasicViewer);
+    return [new Model$11(model.Intro, patternInput_2[0], model.ColorViewer, model.DeleteViewer), Cmd.map(function (arg0_2) {
+      return new Msg$11(0, arg0_2);
+    }, patternInput_2[1])];
+  }
+}
+
+var typeCode = "\r\n```fsharp\r\n    Heading.h1 [ ]\r\n        [ str \"Title\" ]\r\n    Heading.h2 [ Heading.isSubtitle ]\r\n        [ str \"Subtitle\" ]\r\n```\r\n    ";
+var sizeCode$3 = "\r\n```fsharp\r\nHeading.h1 [ ]\r\n    [ str \"Title 1\" ]\r\nHeading.h2 [ ]\r\n    [ str \"Title 2\" ]\r\nHeading.h3 [ ]\r\n    [ str \"Title 3\" ]\r\nHeading.h4 [ ]\r\n    [ str \"Title 3\" ]\r\nHeading.h5 [ ]\r\n    [ str \"Title 5\" ]\r\nHeading.h6 [ ]\r\n    [ str \"Title 6\" ]\r\nHeading.h1 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 1\" ]\r\nHeading.h2 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 2\" ]\r\nHeading.h3 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 3\" ]\r\nHeading.h4 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 4\" ]\r\nHeading.h5 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 5\" ]\r\nHeading.h6 [ Heading.isSubtitle ]\r\n    [ str \"Subtitle 6\" ]\r\n```\r\n    ";
+function init$12() {
+  return new Model$12("\r\n# Title\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/elements/title/)*\r\n        ", init$2(typeCode), init$2(sizeCode$3));
+}
+function update$12(msg, model) {
+  if (msg.tag === 1) {
+    var patternInput = update$2(msg.data, model.SizeViewer);
+    return [new Model$12(model.Intro, model.TypeViewer, patternInput[0]), Cmd.map(function (arg0) {
+      return new Msg$12(1, arg0);
     }, patternInput[1])];
   } else {
     var patternInput_1 = update$2(msg.data, model.TypeViewer);
-    return [new Model$11(model.Intro, patternInput_1[0], model.SizeViewer), Cmd.map(function (arg0_1) {
-      return new Msg$11(0, arg0_1);
+    return [new Model$12(model.Intro, patternInput_1[0], model.SizeViewer), Cmd.map(function (arg0_1) {
+      return new Msg$12(0, arg0_1);
     }, patternInput_1[1])];
   }
 }
 
 var iconCode$2 = "\r\n```fsharp\r\nPanel.panel\r\n    [ Panel.heading [ str \"Repositories\"]\r\n      Panel.block [ ]\r\n        [ Control.control [ Control.hasIconLeft ]\r\n            [ Input.input [ Input.isSmall\r\n                            Input.typeIsText\r\n                            Input.placeholder \"Search\" ]\r\n              Icon.icon [ Icon.isSmall\r\n                          Icon.isLeft ]\r\n                        [ i [ ClassName \"fa fa-search\" ] [ ] ] ] ]\r\n      Panel.tabs\r\n        [ Panel.tab [ ] [ str \"All\" ]\r\n          Panel.tab [ Panel.Tab.isActive ] [ str \"Fable\" ]\r\n          Panel.tab [ ] [ str \"Elmish\" ]\r\n          Panel.tab [ ] [ str \"Bulma\" ] ]\r\n      Panel.block [ Panel.Block.isActive ]\r\n        [ Panel.icon [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n          str \"Bulma\" ]\r\n      Panel.block [ ]\r\n        [ Panel.icon [ i [ ClassName \"fa fa-code-fork\" ] [ ] ]\r\n          str \"Fable\" ]\r\n      Panel.checkbox [ ]\r\n        [ input [ Type \"checkbox\" ]\r\n          str \"I am a checkbox\" ]\r\n      Panel.block [ ]\r\n        [ Button.button [ Button.isPrimary\r\n                          Button.isOutlined\r\n                          Button.isFullWidth ]\r\n                        [ str \"Reset\" ] ] ]\r\n```\r\n    ";
-function init$12() {
-  return new Model$12("\r\n# Panel\r\n\r\nA composable **panel**, for compact controls\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/panel/)*\r\n        ", init$2(iconCode$2));
-}
-function update$12(msg, model) {
-  var patternInput = update$2(msg.data, model.PanelViewer);
-  return [new Model$12(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
-    return new Msg$12(0, arg0);
-  }, patternInput[1])];
-}
-
-var iconCode$3 = "\r\n```fsharp\r\n    Level.level [ ]\r\n        [ Level.left [ ]\r\n            [ Level.item [ ]\r\n                [ Heading.h5 [ Heading.isSubtitle ]\r\n                    [ strong [ ] [ str \"123\"]\r\n                      str \" posts\" ] ]\r\n              Level.item [ ]\r\n                [ Field.field [ Field.hasAddonsLeft ]\r\n                    [ Control.control [ ]\r\n                        [ Input.input [ Input.typeIsText\r\n                                        Input.placeholder \"Find a post\" ] ]\r\n                      Control.control [ ]\r\n                        [ Button.button [ ]\r\n                            [ str \"Search\" ] ] ] ] ]\r\n          Level.right [ ]\r\n            [ Level.item [ ]\r\n                [ a [ ] [ str \"All\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Published\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Drafts\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Deleted\" ] ]\r\n              Level.item [ ]\r\n                [ Button.button [ Button.isSuccess ] [ str \"New\" ] ] ] ]\r\n```\r\n    ";
 function init$13() {
-  return new Model$13("\r\n# Level\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/level/)*\r\n        ", init$2(iconCode$3));
+  return new Model$13("\r\n# Panel\r\n\r\nA composable **panel**, for compact controls\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/panel/)*\r\n        ", init$2(iconCode$2));
 }
 function update$13(msg, model) {
-  var patternInput = update$2(msg.data, model.BoxViewer);
+  var patternInput = update$2(msg.data, model.PanelViewer);
   return [new Model$13(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
     return new Msg$13(0, arg0);
   }, patternInput[1])];
 }
 
-var basic$7 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
-var alignmentCenter$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
-var icons$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n                  str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n                  str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-thumbs-up\" ] [ ] ]\r\n                  str \"Elmish\" ] ] ]\r\n```\r\n    ";
-var size$2 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isLarge ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
-var separator$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.hasSucceedsSeparator ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var iconCode$3 = "\r\n```fsharp\r\n    Level.level [ ]\r\n        [ Level.left [ ]\r\n            [ Level.item [ ]\r\n                [ Heading.h5 [ Heading.isSubtitle ]\r\n                    [ strong [ ] [ str \"123\"]\r\n                      str \" posts\" ] ]\r\n              Level.item [ ]\r\n                [ Field.field [ Field.hasAddonsLeft ]\r\n                    [ Control.control [ ]\r\n                        [ Input.input [ Input.typeIsText\r\n                                        Input.placeholder \"Find a post\" ] ]\r\n                      Control.control [ ]\r\n                        [ Button.button [ ]\r\n                            [ str \"Search\" ] ] ] ] ]\r\n          Level.right [ ]\r\n            [ Level.item [ ]\r\n                [ a [ ] [ str \"All\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Published\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Drafts\" ] ]\r\n              Level.item [ ]\r\n                [ a [ ] [ str \"Deleted\" ] ]\r\n              Level.item [ ]\r\n                [ Button.button [ Button.isSuccess ] [ str \"New\" ] ] ] ]\r\n```\r\n    ";
 function init$14() {
-  return new Model$14("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$7), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$2), init$2(separator$1));
+  return new Model$14("\r\n# Level\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/level/)*\r\n        ", init$2(iconCode$3));
 }
 function update$14(msg, model) {
+  var patternInput = update$2(msg.data, model.BoxViewer);
+  return [new Model$14(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$14(0, arg0);
+  }, patternInput[1])];
+}
+
+var basic$10 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var alignmentCenter$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var icons$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-home\" ] [ ] ]\r\n                  str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-book\" ] [ ] ]\r\n                  str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ]\r\n                [ Icon.icon [ Icon.isSmall ]\r\n                    [ i [ ClassName \"fa fa-thumbs-up\" ] [ ] ]\r\n                  str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var size$3 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.isLarge ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+var separator$1 = "\r\n```fsharp\r\n    Breadcrumb.breadcrumb [ Breadcrumb.hasSucceedsSeparator ]\r\n        [ Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"F#\" ] ]\r\n          Breadcrumb.item [ ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Breadcrumb.item [ Breadcrumb.Item.isActive ]\r\n            [ a [ ] [ str \"Elmish\" ] ] ]\r\n```\r\n    ";
+function init$15() {
+  return new Model$15("\r\n# Breadcrumb\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*\r\n        ", init$2(basic$10), init$2(alignmentCenter$1), init$2(icons$1), init$2(size$3), init$2(separator$1));
+}
+function update$15(msg, model) {
   if (msg.tag === 1) {
     var patternInput = update$2(msg.data, model.AlignmentCenterViewer);
-    return [new Model$14(model.Intro, model.BasicViewer, patternInput[0], model.IconViewer, model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0) {
-      return new Msg$14(1, arg0);
+    return [new Model$15(model.Intro, model.BasicViewer, patternInput[0], model.IconViewer, model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0) {
+      return new Msg$15(1, arg0);
     }, patternInput[1])];
   } else if (msg.tag === 2) {
     var patternInput_1 = update$2(msg.data, model.IconViewer);
-    return [new Model$14(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, patternInput_1[0], model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0_1) {
-      return new Msg$14(2, arg0_1);
+    return [new Model$15(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, patternInput_1[0], model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0_1) {
+      return new Msg$15(2, arg0_1);
     }, patternInput_1[1])];
   } else if (msg.tag === 3) {
     var patternInput_2 = update$2(msg.data, model.SizeViewer);
-    return [new Model$14(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, model.IconViewer, patternInput_2[0], model.SeparatorViewer), Cmd.map(function (arg0_2) {
-      return new Msg$14(3, arg0_2);
+    return [new Model$15(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, model.IconViewer, patternInput_2[0], model.SeparatorViewer), Cmd.map(function (arg0_2) {
+      return new Msg$15(3, arg0_2);
     }, patternInput_2[1])];
   } else if (msg.tag === 4) {
     var patternInput_3 = update$2(msg.data, model.SeparatorViewer);
-    return [new Model$14(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, model.IconViewer, model.SizeViewer, patternInput_3[0]), Cmd.map(function (arg0_3) {
-      return new Msg$14(4, arg0_3);
+    return [new Model$15(model.Intro, model.BasicViewer, model.AlignmentCenterViewer, model.IconViewer, model.SizeViewer, patternInput_3[0]), Cmd.map(function (arg0_3) {
+      return new Msg$15(4, arg0_3);
     }, patternInput_3[1])];
   } else {
     var patternInput_4 = update$2(msg.data, model.BasicViewer);
-    return [new Model$14(model.Intro, patternInput_4[0], model.AlignmentCenterViewer, model.IconViewer, model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0_4) {
-      return new Msg$14(0, arg0_4);
+    return [new Model$15(model.Intro, patternInput_4[0], model.AlignmentCenterViewer, model.IconViewer, model.SizeViewer, model.SeparatorViewer), Cmd.map(function (arg0_4) {
+      return new Msg$15(0, arg0_4);
     }, patternInput_4[1])];
   }
 }
 
-var basic$8 = "\r\n```fsharp\r\n    Card.card [ ]\r\n        [ Card.header [ ]\r\n            [ Card.Header.title [ ]\r\n                [ str \"Component\" ]\r\n              Card.Header.icon [ ]\r\n                [ i [ ClassName \"fa fa-angle-down\" ] [ ] ] ]\r\n          Card.content [ ]\r\n            [ Content.content [ ]\r\n                [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\" ] ]\r\n          Card.footer [ ]\r\n            [ Card.Footer.item [ ]\r\n                [ str \"Save\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Edit\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Delete\" ] ] ]\r\n```\r\n    ";
-function init$15() {
-  return new Model$15("\r\n# Card\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/card/)*\r\n        ", init$2(basic$8));
-}
-function update$15(msg, model) {
-  var patternInput = update$2(msg.data, model.BasicViewer);
-  return [new Model$15(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
-    return new Msg$15(0, arg0);
-  }, patternInput[1])];
-}
-
-var basic$9 = "\r\n```fsharp\r\n    Media.media [ ]\r\n        [ Media.left [ ]\r\n            [ Image.image [ Image.is64x64 ]\r\n                [ img [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ] ]\r\n          Media.content [ ]\r\n            [ Field.field [ ]\r\n                [ Control.control [ ]\r\n                    [ textarea [ ClassName \"textarea\"\r\n                                 Placeholder \"Add a message ...\" ]\r\n                               [ ] ] ]\r\n              Level.level [ ]\r\n                [ Level.left [ ]\r\n                    [ Level.item [ ]\r\n                        [ Button.button [ Button.isInfo ]\r\n                            [ str \"Submit\" ] ] ]\r\n                  Level.right [ ]\r\n                    [ Level.item [ ]\r\n                        [ str \"Press Ctrl + Enter to submit\" ] ] ] ] ]\r\n```\r\n    ";
+var basic$11 = "\r\n```fsharp\r\n    Card.card [ ]\r\n        [ Card.header [ ]\r\n            [ Card.Header.title [ ]\r\n                [ str \"Component\" ]\r\n              Card.Header.icon [ ]\r\n                [ i [ ClassName \"fa fa-angle-down\" ] [ ] ] ]\r\n          Card.content [ ]\r\n            [ Content.content [ ]\r\n                [ str \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.\" ] ]\r\n          Card.footer [ ]\r\n            [ Card.Footer.item [ ]\r\n                [ str \"Save\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Edit\" ]\r\n              Card.Footer.item [ ]\r\n                [ str \"Delete\" ] ] ]\r\n```\r\n    ";
 function init$16() {
-  return new Model$16("\r\n# Media\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/media-object/)*\r\n        ", init$2(basic$9));
+  return new Model$16("\r\n# Card\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/card/)*\r\n        ", init$2(basic$11));
 }
 function update$16(msg, model) {
   var patternInput = update$2(msg.data, model.BasicViewer);
@@ -30450,9 +33269,9 @@ function update$16(msg, model) {
   }, patternInput[1])];
 }
 
-var basic$10 = "\r\n```fsharp\r\n    let menuItem label isActive =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n               [ str label ] ]\r\n\r\n    let subMenu label isActive children =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n                     [ str label ]\r\n             ul [ ] children ]\r\n\r\n    Menu.menu [ ]\r\n        [ Menu.label [ ] [ str \"General\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Dashboard\" false\r\n              menuItem \"Customers\" false ]\r\n          Menu.label [ ] [ str \"Administration\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Team Settings\" false\r\n              subMenu \"Manage your Team\" true\r\n                [ menuItem \"Members\" false\r\n                  menuItem \"Plugins\" false\r\n                  menuItem \"Add a member\" false ] ]\r\n          Menu.label [ ] [ str \"Transactions\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Payments\" false\r\n              menuItem \"Transfers\" false\r\n              menuItem \"Balance\" false ] ]\r\n```\r\n    ";
+var basic$12 = "\r\n```fsharp\r\n    Media.media [ ]\r\n        [ Media.left [ ]\r\n            [ Image.image [ Image.is64x64 ]\r\n                [ img [ Src \"https://dummyimage.com/64x64/7a7a7a/fff\" ] ] ]\r\n          Media.content [ ]\r\n            [ Field.field [ ]\r\n                [ Control.control [ ]\r\n                    [ textarea [ ClassName \"textarea\"\r\n                                 Placeholder \"Add a message ...\" ]\r\n                               [ ] ] ]\r\n              Level.level [ ]\r\n                [ Level.left [ ]\r\n                    [ Level.item [ ]\r\n                        [ Button.button [ Button.isInfo ]\r\n                            [ str \"Submit\" ] ] ]\r\n                  Level.right [ ]\r\n                    [ Level.item [ ]\r\n                        [ str \"Press Ctrl + Enter to submit\" ] ] ] ] ]\r\n```\r\n    ";
 function init$17() {
-  return new Model$17("\r\n# Menu\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/menu/)*\r\n        ", init$2(basic$10));
+  return new Model$17("\r\n# Media\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/media-object/)*\r\n        ", init$2(basic$12));
 }
 function update$17(msg, model) {
   var patternInput = update$2(msg.data, model.BasicViewer);
@@ -30461,75 +33280,117 @@ function update$17(msg, model) {
   }, patternInput[1])];
 }
 
-var basic$11 = "\n```fsharp\n    Navbar.navbar [ ]\n        [ Navbar.brand_div [ ]\n            [ Navbar.item_a[ Navbar.Item.props [ Href \"#\" ] ]\n                [ img [ Src \"/logo.png\" ] ] ]\n          Navbar.item_a [ Navbar.Item.hasDropdown\n                          Navbar.Item.isHoverable ]\n\n            [ Navbar.link_a [ ]\n                [ str \"Docs\" ]\n              Navbar.dropdown_div [ ]\n                [ Navbar.item_a [ ]\n                    [ str \"Overwiew\" ]\n                  Navbar.item_a [ ]\n                    [ str \"Elements\" ]\n                  Navbar.divider [ ] [ ]\n                  Navbar.item_a [ ]\n                    [ str \"Components\" ] ] ]\n          Navbar.end_div [ ]\n            [ Navbar.item_div [ ]\n                [ Button.button [ Button.isSuccess ]\n                    [ str \"Demo\" ] ] ] ]\n```\n    ";
+var basic$13 = "\r\n```fsharp\r\n    let menuItem label isActive =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n               [ str label ] ]\r\n\r\n    let subMenu label isActive children =\r\n        li []\r\n           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]\r\n                     [ str label ]\r\n             ul [ ] children ]\r\n\r\n    Menu.menu [ ]\r\n        [ Menu.label [ ] [ str \"General\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Dashboard\" false\r\n              menuItem \"Customers\" false ]\r\n          Menu.label [ ] [ str \"Administration\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Team Settings\" false\r\n              subMenu \"Manage your Team\" true\r\n                [ menuItem \"Members\" false\r\n                  menuItem \"Plugins\" false\r\n                  menuItem \"Add a member\" false ] ]\r\n          Menu.label [ ] [ str \"Transactions\" ]\r\n          Menu.list [ ]\r\n            [ menuItem \"Payments\" false\r\n              menuItem \"Transfers\" false\r\n              menuItem \"Balance\" false ] ]\r\n```\r\n    ";
 function init$18() {
-  return new Model$19("\n# Navbar\n\n*[Bulma documentation](http://bulma.io/documentation/components/navbar/)*\n        ", init$2(basic$11));
+  return new Model$18("\r\n# Menu\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/menu/)*\r\n        ", init$2(basic$13));
 }
 function update$18(msg, model) {
   var patternInput = update$2(msg.data, model.BasicViewer);
-  return [new Model$19(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
-    return new Msg$19(0, arg0);
+  return [new Model$18(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$18(0, arg0);
   }, patternInput[1])];
 }
 
-var basic$12 = "\n```fsharp\n    Pagination.pagination [ ]\n        [ Pagination.previous [ ]\n            [ str \"Previous\" ]\n          Pagination.next [ ]\n            [ str \"Next page\" ]\n          Pagination.list [ ]\n            [ Pagination.link [ ]\n                [ str \"1\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"32\" ]\n              Pagination.link [ Pagination.Link.isCurrent ]\n                [ str \"33\" ]\n              Pagination.link [ ]\n                [ str \"34\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"77\" ] ] ]\n```\n    ";
-var alignment = "\n```fsharp\n    Pagination.pagination [ Pagination.isCentered ]\n        [ Pagination.previous [ ]\n            [ str \"Previous\" ]\n          Pagination.next [ ]\n            [ str \"Next page\" ]\n          Pagination.list [ ]\n            [ Pagination.link [ ]\n                [ str \"1\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"32\" ]\n              Pagination.link [ Pagination.Link.isCurrent ]\n                [ str \"33\" ]\n              Pagination.link [ ]\n                [ str \"34\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"77\" ] ] ]\n```\n    ";
-var size$3 = "\n```fsharp\n    Pagination.pagination [  Pagination.isSmall]\n        [ Pagination.previous [ ]\n            [ str \"Previous\" ]\n          Pagination.next [ ]\n            [ str \"Next page\" ]\n          Pagination.list [ ]\n            [ Pagination.link [ ]\n                [ str \"1\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"32\" ]\n              Pagination.link [ Pagination.Link.isCurrent ]\n                [ str \"33\" ]\n              Pagination.link [ ]\n                [ str \"34\" ]\n              Pagination.ellipsis [ ]\n              Pagination.link [ ]\n                [ str \"77\" ] ] ]\n```\n    ";
+var basic$14 = "\r\n```fsharp\r\n    Navbar.navbar [ ]\r\n        [ Navbar.brand_div [ ]\r\n            [ Navbar.item_a[ Navbar.Item.props [ Href \"#\" ] ]\r\n                [ img [ Src \"/logo.png\" ] ] ]\r\n          Navbar.item_a [ Navbar.Item.hasDropdown\r\n                          Navbar.Item.isHoverable ]\r\n\r\n            [ Navbar.link_a [ ]\r\n                [ str \"Docs\" ]\r\n              Navbar.dropdown_div [ ]\r\n                [ Navbar.item_a [ ]\r\n                    [ str \"Overwiew\" ]\r\n                  Navbar.item_a [ ]\r\n                    [ str \"Elements\" ]\r\n                  Navbar.divider [ ] [ ]\r\n                  Navbar.item_a [ ]\r\n                    [ str \"Components\" ] ] ]\r\n          Navbar.end_div [ ]\r\n            [ Navbar.item_div [ ]\r\n                [ Button.button [ Button.isSuccess ]\r\n                    [ str \"Demo\" ] ] ] ]\r\n```\r\n    ";
 function init$19() {
-  return new Model$20("\n# Pagination\n\n*[Bulma documentation](http://bulma.io/documentation/components/pagination/)*\n        ", init$2(basic$12), init$2(alignment), init$2(size$3));
+  return new Model$20("\r\n# Navbar\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/navbar/)*\r\n        ", init$2(basic$14));
 }
 function update$19(msg, model) {
+  var patternInput = update$2(msg.data, model.BasicViewer);
+  return [new Model$20(model.Intro, patternInput[0]), Cmd.map(function (arg0) {
+    return new Msg$20(0, arg0);
+  }, patternInput[1])];
+}
+
+var basic$15 = "\r\n```fsharp\r\n    Pagination.pagination [ ]\r\n        [ Pagination.previous [ ]\r\n            [ str \"Previous\" ]\r\n          Pagination.next [ ]\r\n            [ str \"Next page\" ]\r\n          Pagination.list [ ]\r\n            [ Pagination.link [ ]\r\n                [ str \"1\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"32\" ]\r\n              Pagination.link [ Pagination.Link.isCurrent ]\r\n                [ str \"33\" ]\r\n              Pagination.link [ ]\r\n                [ str \"34\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"77\" ] ] ]\r\n```\r\n    ";
+var alignment$1 = "\r\n```fsharp\r\n    Pagination.pagination [ Pagination.isCentered ]\r\n        [ Pagination.previous [ ]\r\n            [ str \"Previous\" ]\r\n          Pagination.next [ ]\r\n            [ str \"Next page\" ]\r\n          Pagination.list [ ]\r\n            [ Pagination.link [ ]\r\n                [ str \"1\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"32\" ]\r\n              Pagination.link [ Pagination.Link.isCurrent ]\r\n                [ str \"33\" ]\r\n              Pagination.link [ ]\r\n                [ str \"34\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"77\" ] ] ]\r\n```\r\n    ";
+var size$4 = "\r\n```fsharp\r\n    Pagination.pagination [  Pagination.isSmall]\r\n        [ Pagination.previous [ ]\r\n            [ str \"Previous\" ]\r\n          Pagination.next [ ]\r\n            [ str \"Next page\" ]\r\n          Pagination.list [ ]\r\n            [ Pagination.link [ ]\r\n                [ str \"1\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"32\" ]\r\n              Pagination.link [ Pagination.Link.isCurrent ]\r\n                [ str \"33\" ]\r\n              Pagination.link [ ]\r\n                [ str \"34\" ]\r\n              Pagination.ellipsis [ ]\r\n              Pagination.link [ ]\r\n                [ str \"77\" ] ] ]\r\n```\r\n    ";
+function init$20() {
+  return new Model$21("\r\n# Pagination\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/pagination/)*\r\n        ", init$2(basic$15), init$2(alignment$1), init$2(size$4));
+}
+function update$20(msg, model) {
   if (msg.tag === 1) {
     var patternInput = update$2(msg.data, model.BasicViewer);
-    return [new Model$20(model.Intro, model.BasicViewer, patternInput[0], model.SizeViewer), Cmd.map(function (arg0) {
-      return new Msg$20(1, arg0);
+    return [new Model$21(model.Intro, model.BasicViewer, patternInput[0], model.SizeViewer), Cmd.map(function (arg0) {
+      return new Msg$21(1, arg0);
     }, patternInput[1])];
   } else if (msg.tag === 2) {
     var patternInput_1 = update$2(msg.data, model.BasicViewer);
-    return [new Model$20(model.Intro, model.BasicViewer, model.AlignmentViewer, patternInput_1[0]), Cmd.map(function (arg0_1) {
-      return new Msg$20(2, arg0_1);
+    return [new Model$21(model.Intro, model.BasicViewer, model.AlignmentViewer, patternInput_1[0]), Cmd.map(function (arg0_1) {
+      return new Msg$21(2, arg0_1);
     }, patternInput_1[1])];
   } else {
     var patternInput_2 = update$2(msg.data, model.BasicViewer);
-    return [new Model$20(model.Intro, patternInput_2[0], model.AlignmentViewer, model.SizeViewer), Cmd.map(function (arg0_2) {
-      return new Msg$20(0, arg0_2);
+    return [new Model$21(model.Intro, patternInput_2[0], model.AlignmentViewer, model.SizeViewer), Cmd.map(function (arg0_2) {
+      return new Msg$21(0, arg0_2);
     }, patternInput_2[1])];
   }
 }
 
-var basic$13 = "\r\n```fsharp\r\n    Message.message [ ]\r\n        [ Message.header [ ]\r\n            [ str \"Nunc finibus ligula et semper suscipit\"\r\n              Delete.delete [ ]\r\n                [ ] ]\r\n          Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
-var color$1 = "\r\n```fsharp\r\n    div [ ]\r\n        [ Message.message [ Message.isInfo ]\r\n            [ Message.header [ ]\r\n                [ str \"Nunc finibus ligula et semper suscipit\"\r\n                  Delete.delete [ ]\r\n                    [ ] ]\r\n              Message.body [ ]\r\n                [ str loremText ] ]\r\n          Message.message [ Message.isDanger ]\r\n            [ Message.header [ ]\r\n                [ str \"Nunc finibus ligula et semper suscipit\"\r\n                  Delete.delete [ ]\r\n                    [ ] ]\r\n              Message.body [ ]\r\n                [ str loremText ] ] ]\r\n```\r\n    ";
-var sizes$1 = "\r\n```fsharp\r\n    Message.message [ Message.isSmall ]\r\n        [ Message.header [ ]\r\n            [ str \"Nunc finibus ligula et semper suscipit\"\r\n              Delete.delete [ ]\r\n                [ ] ]\r\n          Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
-var bodyOnly$1 = "\r\n```fsharp\r\n    Message.message [ ]\r\n        [ Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
-function init$20() {
-  return new Model$18("\r\n# Message\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/message/)*\r\n        ", init$2(basic$13), init$2(color$1), init$2(sizes$1), init$2(bodyOnly$1));
+var iconCode$4 = "\r\n```fsharp\r\n    Tabs.tabs [ ]\r\n        [ Tabs.tab [ Tabs.Tab.isActive ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Elmish\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Bulma\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Hink\" ] ] ]\r\n```\r\n    ";
+var alignment$2 = "\r\n```fsharp\r\n    Tabs.tabs [ Tabs.isCentered ]\r\n        [ Tabs.tab [ Tabs.Tab.isActive ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Elmish\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Bulma\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Hink\" ] ] ]\r\n```\r\n    ";
+var size$5 = "\r\n```fsharp\r\n    Tabs.tabs [ Tabs.isLarge ]\r\n        [ Tabs.tab [ Tabs.Tab.isActive ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Elmish\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Bulma\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Hink\" ] ] ]\r\n```\r\n    ";
+var styles$1 = "\r\n```fsharp\r\n    Tabs.tabs [ Tabs.isFullwidth\r\n                Tabs.isBoxed ]\r\n        [ Tabs.tab [ Tabs.Tab.isActive ]\r\n            [ a [ ] [ str \"Fable\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Elmish\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Bulma\" ] ]\r\n          Tabs.tab [ ]\r\n            [ a [ ] [ str \"Hink\" ] ] ]\r\n```\r\n    ";
+function init$21() {
+  return new Model$22("\r\n# Tabs\r\n\r\nSimple responsive horizontal navigation **tabs**, with different styles\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/tabs/)*\r\n        ", init$2(iconCode$4), init$2(alignment$2), init$2(size$5), init$2(styles$1));
 }
-function update$20(msg, model) {
+function update$21(msg, model) {
   if (msg.tag === 1) {
-    var patternInput = update$2(msg.data, model.ColorViewer);
-    return [new Model$18(model.Intro, model.BasicViewer, patternInput[0], model.SizeViewer, model.BodyOnlyViewer), Cmd.map(function (arg0) {
-      return new Msg$18(1, arg0);
+    var patternInput = update$2(msg.data, model.AlignmentViewer);
+    return [new Model$22(model.Intro, model.BasicViewer, patternInput[0], model.SizeViewer, model.StylesViewer), Cmd.map(function (arg0) {
+      return new Msg$22(1, arg0);
     }, patternInput[1])];
   } else if (msg.tag === 2) {
     var patternInput_1 = update$2(msg.data, model.SizeViewer);
-    return [new Model$18(model.Intro, model.BasicViewer, model.ColorViewer, patternInput_1[0], model.BodyOnlyViewer), Cmd.map(function (arg0_1) {
-      return new Msg$18(2, arg0_1);
+    return [new Model$22(model.Intro, model.BasicViewer, model.AlignmentViewer, patternInput_1[0], model.StylesViewer), Cmd.map(function (arg0_1) {
+      return new Msg$22(2, arg0_1);
     }, patternInput_1[1])];
   } else if (msg.tag === 3) {
-    var patternInput_2 = update$2(msg.data, model.BodyOnlyViewer);
-    return [new Model$18(model.Intro, model.BasicViewer, model.ColorViewer, model.SizeViewer, patternInput_2[0]), Cmd.map(function (arg0_2) {
-      return new Msg$18(3, arg0_2);
+    var patternInput_2 = update$2(msg.data, model.StylesViewer);
+    return [new Model$22(model.Intro, model.BasicViewer, model.AlignmentViewer, model.SizeViewer, patternInput_2[0]), Cmd.map(function (arg0_2) {
+      return new Msg$22(3, arg0_2);
     }, patternInput_2[1])];
   } else {
     var patternInput_3 = update$2(msg.data, model.BasicViewer);
-    return [new Model$18(model.Intro, patternInput_3[0], model.ColorViewer, model.SizeViewer, model.BodyOnlyViewer), Cmd.map(function (arg0_3) {
-      return new Msg$18(0, arg0_3);
+    return [new Model$22(model.Intro, patternInput_3[0], model.AlignmentViewer, model.SizeViewer, model.StylesViewer), Cmd.map(function (arg0_3) {
+      return new Msg$22(0, arg0_3);
     }, patternInput_3[1])];
   }
 }
 
-function init$21() {
-  return new Model$21("\r\n# Fable.Elmish.Bulma\r\n\r\nProvide a wrapper around [Bulma](http://bulma.io/) for [Elmish](https://fable-elmish.github.io/).\r\n\r\nThis website isn't intended into providing a full documentation of Bulma.\r\n\r\nIt's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fable.Elmish.Bulma itself.\r\n\r\n---\r\n\r\n## How to install ?\r\n\r\nAdd `Fable.Elmish.Bulma` dependence into your paket files.\r\n\r\n```\r\n// paket.denpendencies\r\nnuget Fable.Elmish.Bulma\r\n\r\n// paket.reference\r\nFable.Elmish.Bulma\r\n```\r\n\r\nRun `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.\r\n\r\nYou are ready to start using Fable.Elmish.Bulma. You can confirm it by trying to open `Elmish.Bulma` namespace.\r\n\r\n```fsharp\r\nopen Elmish.Bulma\r\n```\r\n\r\n## Architecture\r\n\r\nFable.Elmish.Bulma has been designed to provide the best experience over the Bulma CSS framework.\r\nTo archieve this goal, we assume the user to follow some conventions.\r\n\r\nAlways open the \"global\" module and not the lower module of the hierachie. For example, if you want to use the Button element you should follow this code:\r\n\r\n```fsharp\r\nopen Elmish.Bulma.Elements\r\n\r\nButton.button [ Button.isSmall ]\r\n    [ str \"A button\" ]\r\n```\r\n\r\nEvery function follow the \"React DSL\":\r\n\r\n1. Name of the element\r\n2. List of properties\r\n3. Children\r\n\r\nFable.Elmish.Bulma do not only provide wrappers around Bulma but also intellisense the classes provied.\r\n\r\nFor example, here is how to access the \"is-hidden\" class.\r\n\r\n```fsharp\r\n\r\nopen Elmish.Bulma.BulmaClasses\r\n\r\nBulma.Properties.Visibility.IsHidden\r\n\r\n```\r\n\r\nAll the compoments documented into this website, are available into the library.\r\n\r\n   ");
+var basic$16 = "\r\n```fsharp\r\n    Message.message [ ]\r\n        [ Message.header [ ]\r\n            [ str \"Nunc finibus ligula et semper suscipit\"\r\n              Delete.delete [ ]\r\n                [ ] ]\r\n          Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
+var color$3 = "\r\n```fsharp\r\n    div [ ]\r\n        [ Message.message [ Message.isInfo ]\r\n            [ Message.header [ ]\r\n                [ str \"Nunc finibus ligula et semper suscipit\"\r\n                  Delete.delete [ ]\r\n                    [ ] ]\r\n              Message.body [ ]\r\n                [ str loremText ] ]\r\n          Message.message [ Message.isDanger ]\r\n            [ Message.header [ ]\r\n                [ str \"Nunc finibus ligula et semper suscipit\"\r\n                  Delete.delete [ ]\r\n                    [ ] ]\r\n              Message.body [ ]\r\n                [ str loremText ] ] ]\r\n```\r\n    ";
+var sizes$1 = "\r\n```fsharp\r\n    Message.message [ Message.isSmall ]\r\n        [ Message.header [ ]\r\n            [ str \"Nunc finibus ligula et semper suscipit\"\r\n              Delete.delete [ ]\r\n                [ ] ]\r\n          Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
+var bodyOnly$1 = "\r\n```fsharp\r\n    Message.message [ ]\r\n        [ Message.body [ ]\r\n            [ str loremText ] ]\r\n```\r\n    ";
+function init$22() {
+  return new Model$19("\r\n# Message\r\n\r\n*[Bulma documentation](http://bulma.io/documentation/components/message/)*\r\n        ", init$2(basic$16), init$2(color$3), init$2(sizes$1), init$2(bodyOnly$1));
+}
+function update$22(msg, model) {
+  if (msg.tag === 1) {
+    var patternInput = update$2(msg.data, model.ColorViewer);
+    return [new Model$19(model.Intro, model.BasicViewer, patternInput[0], model.SizeViewer, model.BodyOnlyViewer), Cmd.map(function (arg0) {
+      return new Msg$19(1, arg0);
+    }, patternInput[1])];
+  } else if (msg.tag === 2) {
+    var patternInput_1 = update$2(msg.data, model.SizeViewer);
+    return [new Model$19(model.Intro, model.BasicViewer, model.ColorViewer, patternInput_1[0], model.BodyOnlyViewer), Cmd.map(function (arg0_1) {
+      return new Msg$19(2, arg0_1);
+    }, patternInput_1[1])];
+  } else if (msg.tag === 3) {
+    var patternInput_2 = update$2(msg.data, model.BodyOnlyViewer);
+    return [new Model$19(model.Intro, model.BasicViewer, model.ColorViewer, model.SizeViewer, patternInput_2[0]), Cmd.map(function (arg0_2) {
+      return new Msg$19(3, arg0_2);
+    }, patternInput_2[1])];
+  } else {
+    var patternInput_3 = update$2(msg.data, model.BasicViewer);
+    return [new Model$19(model.Intro, patternInput_3[0], model.ColorViewer, model.SizeViewer, model.BodyOnlyViewer), Cmd.map(function (arg0_3) {
+      return new Msg$19(0, arg0_3);
+    }, patternInput_3[1])];
+  }
+}
+
+function init$23() {
+  return new Model$23("\r\n# Fable.Elmish.Bulma\r\n\r\nProvide a wrapper around [Bulma](http://bulma.io/) for [Elmish](https://fable-elmish.github.io/).\r\n\r\nThis website isn't intended into providing a full documentation of Bulma.\r\n\r\nIt's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fable.Elmish.Bulma itself.\r\n\r\n---\r\n\r\n## How to install ?\r\n\r\nAdd `Fable.Elmish.Bulma` dependence into your paket files.\r\n\r\n```\r\n// paket.denpendencies\r\nnuget Fable.Elmish.Bulma\r\n\r\n// paket.reference\r\nFable.Elmish.Bulma\r\n```\r\n\r\nRun `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.\r\n\r\nYou are ready to start using Fable.Elmish.Bulma. You can confirm it by trying to open `Elmish.Bulma` namespace.\r\n\r\n```fsharp\r\nopen Elmish.Bulma\r\n```\r\n\r\n## Architecture\r\n\r\nFable.Elmish.Bulma has been designed to provide the best experience over the Bulma CSS framework.\r\nTo archieve this goal, we assume the user to follow some conventions.\r\n\r\nAlways open the \"global\" module and not the lower module of the hierachie. For example, if you want to use the Button element you should follow this code:\r\n\r\n```fsharp\r\nopen Elmish.Bulma.Elements\r\n\r\nButton.button [ Button.isSmall ]\r\n    [ str \"A button\" ]\r\n```\r\n\r\nEvery function follow the \"React DSL\":\r\n\r\n1. Name of the element\r\n2. List of properties\r\n3. Children\r\n\r\nFable.Elmish.Bulma do not only provide wrappers around Bulma but also intellisense the classes provied.\r\n\r\nFor example, here is how to access the \"is-hidden\" class.\r\n\r\n```fsharp\r\n\r\nopen Elmish.Bulma.BulmaClasses\r\n\r\nBulma.Properties.Visibility.IsHidden\r\n\r\n```\r\n\r\nAll the compoments documented into this website, are available into the library.\r\n\r\n   ");
 }
 
 var pageParser = function () {
@@ -30599,65 +33460,77 @@ var pageParser = function () {
     return function (state_10) {
       return collect(parseAfter_10, parseBefore_10(state_10));
     };
-  }()), map_1(new Page(2, new Components(0)), function () {
-    var parseBefore_11 = s("components");
-    var parseAfter_11 = s("panel");
+  }()), map_1(new Page(1, new Elements(11)), function () {
+    var parseBefore_11 = s("elements");
+    var parseAfter_11 = s("notification");
     return function (state_11) {
       return collect(parseAfter_11, parseBefore_11(state_11));
     };
-  }()), map_1(new Page(2, new Components(1)), function () {
+  }()), map_1(new Page(2, new Components(0)), function () {
     var parseBefore_12 = s("components");
-    var parseAfter_12 = s("level");
+    var parseAfter_12 = s("panel");
     return function (state_12) {
       return collect(parseAfter_12, parseBefore_12(state_12));
     };
-  }()), map_1(new Page(2, new Components(2)), function () {
+  }()), map_1(new Page(2, new Components(1)), function () {
     var parseBefore_13 = s("components");
-    var parseAfter_13 = s("breadcrumb");
+    var parseAfter_13 = s("level");
     return function (state_13) {
       return collect(parseAfter_13, parseBefore_13(state_13));
     };
-  }()), map_1(new Page(2, new Components(3)), function () {
+  }()), map_1(new Page(2, new Components(2)), function () {
     var parseBefore_14 = s("components");
-    var parseAfter_14 = s("card");
+    var parseAfter_14 = s("breadcrumb");
     return function (state_14) {
       return collect(parseAfter_14, parseBefore_14(state_14));
     };
-  }()), map_1(new Page(2, new Components(4)), function () {
+  }()), map_1(new Page(2, new Components(3)), function () {
     var parseBefore_15 = s("components");
-    var parseAfter_15 = s("media");
+    var parseAfter_15 = s("card");
     return function (state_15) {
       return collect(parseAfter_15, parseBefore_15(state_15));
     };
-  }()), map_1(new Page(2, new Components(5)), function () {
+  }()), map_1(new Page(2, new Components(4)), function () {
     var parseBefore_16 = s("components");
-    var parseAfter_16 = s("menu");
+    var parseAfter_16 = s("media");
     return function (state_16) {
       return collect(parseAfter_16, parseBefore_16(state_16));
     };
-  }()), map_1(new Page(2, new Components(6)), function () {
+  }()), map_1(new Page(2, new Components(5)), function () {
     var parseBefore_17 = s("components");
-    var parseAfter_17 = s("message");
+    var parseAfter_17 = s("menu");
     return function (state_17) {
       return collect(parseAfter_17, parseBefore_17(state_17));
     };
-  }()), map_1(new Page(2, new Components(7)), function () {
+  }()), map_1(new Page(2, new Components(6)), function () {
     var parseBefore_18 = s("components");
-    var parseAfter_18 = s("navbar");
+    var parseAfter_18 = s("message");
     return function (state_18) {
       return collect(parseAfter_18, parseBefore_18(state_18));
     };
-  }()), map_1(new Page(2, new Components(8)), function () {
+  }()), map_1(new Page(2, new Components(7)), function () {
     var parseBefore_19 = s("components");
-    var parseAfter_19 = s("pagination");
+    var parseAfter_19 = s("navbar");
     return function (state_19) {
       return collect(parseAfter_19, parseBefore_19(state_19));
     };
-  }()), map_1(new Page(0), function (state_20) {
-    return top(state_20);
+  }()), map_1(new Page(2, new Components(8)), function () {
+    var parseBefore_20 = s("components");
+    var parseAfter_20 = s("pagination");
+    return function (state_20) {
+      return collect(parseAfter_20, parseBefore_20(state_20));
+    };
+  }()), map_1(new Page(2, new Components(9)), function () {
+    var parseBefore_21 = s("components");
+    var parseAfter_21 = s("tabs");
+    return function (state_21) {
+      return collect(parseAfter_21, parseBefore_21(state_21));
+    };
+  }()), map_1(new Page(0), function (state_22) {
+    return top(state_22);
   })]);
-  return function (state_21) {
-    return oneOf(parsers, state_21);
+  return function (state_23) {
+    return oneOf(parsers, state_23);
   };
 }();
 function urlUpdate(result, model) {
@@ -30669,168 +33542,180 @@ function urlUpdate(result, model) {
   }
 }
 function init(result) {
-  var elements = new ElementsModel(init$1(), init$3(), init$4(), init$5(), init$6(), init$7(), init$8(), init$9(), init$10(), init$11());
-  var components = new ComponentsModel(init$12(), init$13(), init$14(), init$15(), init$16(), init$17(), init$18(), init$19(), init$20());
-  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$21(), elements, components));
+  var elements = new ElementsModel(init$1(), init$3(), init$4(), init$5(), init$6(), init$7(), init$8(), init$9(), init$10(), init$11(), init$12());
+  var components = new ComponentsModel(init$13(), init$14(), init$15(), init$16(), init$17(), init$18(), init$19(), init$20(), init$21(), init$22());
+  var patternInput = urlUpdate(result, new Model$2(new Page(0), init$23(), elements, components));
   return [patternInput[0], Cmd.batch(ofArray([patternInput[1]]))];
 }
 function update(msg, model) {
   if (msg.tag === 1) {
-    return [model, Cmd.none()];
-  } else if (msg.tag === 2) {
-    var patternInput = update$1(msg.data, model.Elements.Box);
+    var patternInput = update$3(msg.data, model.Elements.Button);
     return [function () {
-      var Elements$$1 = new ElementsModel(patternInput[0], model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements$$1 = new ElementsModel(model.Elements.Box, patternInput[0], model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements$$1, model.Components);
     }(), Cmd.map(function (arg0) {
-      return new Msg$2(2, arg0);
+      return new Msg$2(1, arg0);
     }, patternInput[1])];
-  } else if (msg.tag === 3) {
-    var patternInput_1 = update$3(msg.data, model.Elements.Button);
+  } else if (msg.tag === 2) {
+    var patternInput_1 = update$4(msg.data, model.Elements.Content);
     return [function () {
-      var Elements_1 = new ElementsModel(model.Elements.Box, patternInput_1[0], model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_1 = new ElementsModel(model.Elements.Box, model.Elements.Button, patternInput_1[0], model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_1, model.Components);
     }(), Cmd.map(function (arg0_1) {
-      return new Msg$2(3, arg0_1);
+      return new Msg$2(2, arg0_1);
     }, patternInput_1[1])];
-  } else if (msg.tag === 4) {
-    var patternInput_2 = update$4(msg.data, model.Elements.Content);
+  } else if (msg.tag === 3) {
+    var patternInput_2 = update$5(msg.data, model.Elements.Delete);
     return [function () {
-      var Elements_2 = new ElementsModel(model.Elements.Box, model.Elements.Button, patternInput_2[0], model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_2 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, patternInput_2[0], model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_2, model.Components);
     }(), Cmd.map(function (arg0_2) {
-      return new Msg$2(4, arg0_2);
+      return new Msg$2(3, arg0_2);
     }, patternInput_2[1])];
-  } else if (msg.tag === 5) {
-    var patternInput_3 = update$5(msg.data, model.Elements.Delete);
+  } else if (msg.tag === 4) {
+    var patternInput_3 = update$6(msg.data, model.Elements.Icon);
     return [function () {
-      var Elements_3 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, patternInput_3[0], model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_3 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, patternInput_3[0], model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_3, model.Components);
     }(), Cmd.map(function (arg0_3) {
-      return new Msg$2(5, arg0_3);
+      return new Msg$2(4, arg0_3);
     }, patternInput_3[1])];
-  } else if (msg.tag === 6) {
-    var patternInput_4 = update$6(msg.data, model.Elements.Icon);
+  } else if (msg.tag === 5) {
+    var patternInput_4 = update$7(msg.data, model.Elements.Image);
     return [function () {
-      var Elements_4 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, patternInput_4[0], model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_4 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, patternInput_4[0], model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_4, model.Components);
     }(), Cmd.map(function (arg0_4) {
-      return new Msg$2(6, arg0_4);
+      return new Msg$2(5, arg0_4);
     }, patternInput_4[1])];
-  } else if (msg.tag === 7) {
-    var patternInput_5 = update$7(msg.data, model.Elements.Image);
+  } else if (msg.tag === 6) {
+    var patternInput_5 = update$8(msg.data, model.Elements.Progress);
     return [function () {
-      var Elements_5 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, patternInput_5[0], model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_5 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, patternInput_5[0], model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_5, model.Components);
     }(), Cmd.map(function (arg0_5) {
-      return new Msg$2(7, arg0_5);
+      return new Msg$2(6, arg0_5);
     }, patternInput_5[1])];
-  } else if (msg.tag === 8) {
-    var patternInput_6 = update$8(msg.data, model.Elements.Progress);
+  } else if (msg.tag === 7) {
+    var patternInput_6 = update$9(msg.data, model.Elements.Table);
     return [function () {
-      var Elements_6 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, patternInput_6[0], model.Elements.Table, model.Elements.Tag, model.Elements.Title);
+      var Elements_6 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, patternInput_6[0], model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_6, model.Components);
     }(), Cmd.map(function (arg0_6) {
-      return new Msg$2(8, arg0_6);
+      return new Msg$2(7, arg0_6);
     }, patternInput_6[1])];
-  } else if (msg.tag === 9) {
-    var patternInput_7 = update$9(msg.data, model.Elements.Table);
+  } else if (msg.tag === 8) {
+    var patternInput_7 = update$10(msg.data, model.Elements.Tag);
     return [function () {
-      var Elements_7 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, patternInput_7[0], model.Elements.Tag, model.Elements.Title);
+      var Elements_7 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, patternInput_7[0], model.Elements.Notification, model.Elements.Title);
       return new Model$2(model.CurrentPage, model.Home, Elements_7, model.Components);
     }(), Cmd.map(function (arg0_7) {
-      return new Msg$2(9, arg0_7);
+      return new Msg$2(8, arg0_7);
     }, patternInput_7[1])];
   } else if (msg.tag === 10) {
-    var patternInput_8 = update$10(msg.data, model.Elements.Tag);
+    var patternInput_8 = update$12(msg.data, model.Elements.Title);
     return [function () {
-      var Elements_8 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, patternInput_8[0], model.Elements.Title);
+      var Elements_8 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, patternInput_8[0]);
       return new Model$2(model.CurrentPage, model.Home, Elements_8, model.Components);
     }(), Cmd.map(function (arg0_8) {
       return new Msg$2(10, arg0_8);
     }, patternInput_8[1])];
   } else if (msg.tag === 11) {
-    var patternInput_9 = update$11(msg.data, model.Elements.Title);
+    var patternInput_9 = update$13(msg.data, model.Components.Panel);
     return [function () {
-      var Elements_9 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, patternInput_9[0]);
-      return new Model$2(model.CurrentPage, model.Home, Elements_9, model.Components);
+      var Components$$1 = new ComponentsModel(patternInput_9[0], model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components$$1);
     }(), Cmd.map(function (arg0_9) {
       return new Msg$2(11, arg0_9);
     }, patternInput_9[1])];
   } else if (msg.tag === 12) {
-    var patternInput_10 = update$12(msg.data, model.Components.Panel);
+    var patternInput_10 = update$14(msg.data, model.Components.Level);
     return [function () {
-      var Components$$1 = new ComponentsModel(patternInput_10[0], model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components$$1);
+      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_10[0], model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_1);
     }(), Cmd.map(function (arg0_10) {
       return new Msg$2(12, arg0_10);
     }, patternInput_10[1])];
   } else if (msg.tag === 13) {
-    var patternInput_11 = update$13(msg.data, model.Components.Level);
+    var patternInput_11 = update$15(msg.data, model.Components.Breadcrumb);
     return [function () {
-      var Components_1 = new ComponentsModel(model.Components.Panel, patternInput_11[0], model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_1);
+      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_11[0], model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_2);
     }(), Cmd.map(function (arg0_11) {
       return new Msg$2(13, arg0_11);
     }, patternInput_11[1])];
   } else if (msg.tag === 14) {
-    var patternInput_12 = update$14(msg.data, model.Components.Breadcrumb);
+    var patternInput_12 = update$16(msg.data, model.Components.Card);
     return [function () {
-      var Components_2 = new ComponentsModel(model.Components.Panel, model.Components.Level, patternInput_12[0], model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_2);
+      var Components_3 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, patternInput_12[0], model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_3);
     }(), Cmd.map(function (arg0_12) {
       return new Msg$2(14, arg0_12);
     }, patternInput_12[1])];
   } else if (msg.tag === 15) {
-    var patternInput_13 = update$15(msg.data, model.Components.Card);
+    var patternInput_13 = update$17(msg.data, model.Components.Media);
     return [function () {
-      var Components_3 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, patternInput_13[0], model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_3);
+      var Components_4 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, patternInput_13[0], model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_4);
     }(), Cmd.map(function (arg0_13) {
       return new Msg$2(15, arg0_13);
     }, patternInput_13[1])];
   } else if (msg.tag === 16) {
-    var patternInput_14 = update$16(msg.data, model.Components.Media);
+    var patternInput_14 = update$18(msg.data, model.Components.Menu);
     return [function () {
-      var Components_4 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, patternInput_14[0], model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_4);
+      var Components_5 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, patternInput_14[0], model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_5);
     }(), Cmd.map(function (arg0_14) {
       return new Msg$2(16, arg0_14);
     }, patternInput_14[1])];
   } else if (msg.tag === 17) {
-    var patternInput_15 = update$17(msg.data, model.Components.Menu);
+    var patternInput_15 = update$22(msg.data, model.Components.Message);
     return [function () {
-      var Components_5 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, patternInput_15[0], model.Components.Navbar, model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_5);
+      var Components_6 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, model.Components.Tabs, patternInput_15[0]);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_6);
     }(), Cmd.map(function (arg0_15) {
       return new Msg$2(17, arg0_15);
     }, patternInput_15[1])];
   } else if (msg.tag === 18) {
-    var patternInput_16 = update$20(msg.data, model.Components.Message);
+    var patternInput_16 = update$19(msg.data, model.Components.Navbar);
     return [function () {
-      var Components_6 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, patternInput_16[0]);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_6);
+      var Components_7 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, patternInput_16[0], model.Components.Pagination, model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_7);
     }(), Cmd.map(function (arg0_16) {
       return new Msg$2(18, arg0_16);
     }, patternInput_16[1])];
   } else if (msg.tag === 19) {
-    var patternInput_17 = update$18(msg.data, model.Components.Navbar);
+    var patternInput_17 = update$20(msg.data, model.Components.Pagination);
     return [function () {
-      var Components_7 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, patternInput_17[0], model.Components.Pagination, model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_7);
+      var Components_8 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, patternInput_17[0], model.Components.Tabs, model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_8);
     }(), Cmd.map(function (arg0_17) {
       return new Msg$2(19, arg0_17);
     }, patternInput_17[1])];
   } else if (msg.tag === 20) {
-    var patternInput_18 = update$19(msg.data, model.Components.Pagination);
+    var patternInput_18 = update$21(msg.data, model.Components.Tabs);
     return [function () {
-      var Components_8 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, patternInput_18[0], model.Components.Message);
-      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_8);
+      var Components_9 = new ComponentsModel(model.Components.Panel, model.Components.Level, model.Components.Breadcrumb, model.Components.Card, model.Components.Media, model.Components.Menu, model.Components.Navbar, model.Components.Pagination, patternInput_18[0], model.Components.Message);
+      return new Model$2(model.CurrentPage, model.Home, model.Elements, Components_9);
     }(), Cmd.map(function (arg0_18) {
       return new Msg$2(20, arg0_18);
     }, patternInput_18[1])];
+  } else if (msg.tag === 9) {
+    var patternInput_19 = update$11(msg.data, model.Elements.Notification);
+    return [function () {
+      var Elements_9 = new ElementsModel(model.Elements.Box, model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, patternInput_19[0], model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_9, model.Components);
+    }(), Cmd.map(function (arg0_19) {
+      return new Msg$2(9, arg0_19);
+    }, patternInput_19[1])];
   } else {
-    return [model, Cmd$1.newNotification(notification(new List$1(), new List$1(), ofArray(["coucou"])))];
+    var patternInput_20 = update$1(msg.data, model.Elements.Box);
+    return [function () {
+      var Elements_10 = new ElementsModel(patternInput_20[0], model.Elements.Button, model.Elements.Content, model.Elements.Delete, model.Elements.Icon, model.Elements.Image, model.Elements.Progress, model.Elements.Table, model.Elements.Tag, model.Elements.Notification, model.Elements.Title);
+      return new Model$2(model.CurrentPage, model.Home, Elements_10, model.Components);
+    }(), Cmd.map(function (arg0_20) {
+      return new Msg$2(0, arg0_20);
+    }, patternInput_20[1])];
   }
 }
 
@@ -30845,7 +33730,7 @@ function menuItem(label$$1, page, currentPage) {
   return react_1("li", {}, react_1("a", createObj(ofArray([classList(ofArray([["is-active", page.Equals(currentPage)]])), new Props.HTMLAttr(51, toHash(page))]), 1), label$$1));
 }
 function menu(currentPage) {
-  return menu$1(new List$1(), ofArray([list(new List$1(), ofArray([menuItem("Home", new Page(0), currentPage)])), label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage), menuItem("Card", new Page(2, new Components(3)), currentPage), menuItem("Media", new Page(2, new Components(4)), currentPage), menuItem("Menu", new Page(2, new Components(5)), currentPage), menuItem("Navbar", new Page(2, new Components(7)), currentPage), menuItem("Pagination", new Page(2, new Components(8)), currentPage), menuItem("Message", new Page(2, new Components(6)), currentPage)]))]));
+  return menu$1(new List$1(), ofArray([list(new List$1(), ofArray([menuItem("Home", new Page(0), currentPage)])), label(new List$1(), ofArray(["Elements"])), list(new List$1(), ofArray([menuItem("Button", new Page(1, new Elements(0)), currentPage), menuItem("Icon", new Page(1, new Elements(1)), currentPage), menuItem("Image", new Page(1, new Elements(7)), currentPage), menuItem("Title", new Page(1, new Elements(2)), currentPage), menuItem("Delete", new Page(1, new Elements(3)), currentPage), menuItem("Progress", new Page(1, new Elements(8)), currentPage), menuItem("Box", new Page(1, new Elements(4)), currentPage), menuItem("Content", new Page(1, new Elements(5)), currentPage), menuItem("Table", new Page(1, new Elements(9)), currentPage), menuItem("Notification", new Page(1, new Elements(11)), currentPage), menuItem("Tag", new Page(1, new Elements(6)), currentPage)])), label(new List$1(), ofArray(["Components"])), list(new List$1(), ofArray([menuItem("Panel", new Page(2, new Components(0)), currentPage), menuItem("Level", new Page(2, new Components(1)), currentPage), menuItem("Breadcrumb", new Page(2, new Components(2)), currentPage), menuItem("Card", new Page(2, new Components(3)), currentPage), menuItem("Media", new Page(2, new Components(4)), currentPage), menuItem("Menu", new Page(2, new Components(5)), currentPage), menuItem("Navbar", new Page(2, new Components(7)), currentPage), menuItem("Pagination", new Page(2, new Components(8)), currentPage), menuItem("Tabs", new Page(2, new Components(9)), currentPage), menuItem("Message", new Page(2, new Components(6)), currentPage)]))]));
 }
 var header = react_1("div", {
   className: "hero is-primary"
@@ -30862,124 +33747,136 @@ function root(model, dispatch) {
       if (_arg1.data.tag === 4) {
         return root$1(model.Elements.Box, function ($var1) {
           return dispatch(function (arg0) {
-            return new Msg$2(2, arg0);
+            return new Msg$2(0, arg0);
           }($var1));
         });
       } else if (_arg1.data.tag === 0) {
         return root$3(model.Elements.Button, function ($var2) {
           return dispatch(function (arg0_1) {
-            return new Msg$2(3, arg0_1);
+            return new Msg$2(1, arg0_1);
           }($var2));
         });
       } else if (_arg1.data.tag === 5) {
         return root$4(model.Elements.Content, function ($var3) {
           return dispatch(function (arg0_2) {
-            return new Msg$2(4, arg0_2);
+            return new Msg$2(2, arg0_2);
           }($var3));
         });
       } else if (_arg1.data.tag === 3) {
         return root$5(model.Elements.Delete, function ($var4) {
           return dispatch(function (arg0_3) {
-            return new Msg$2(5, arg0_3);
+            return new Msg$2(3, arg0_3);
           }($var4));
         });
       } else if (_arg1.data.tag === 1) {
         return root$6(model.Elements.Icon, function ($var5) {
           return dispatch(function (arg0_4) {
-            return new Msg$2(6, arg0_4);
+            return new Msg$2(4, arg0_4);
           }($var5));
         });
       } else if (_arg1.data.tag === 7) {
         return root$7(model.Elements.Image, function ($var6) {
           return dispatch(function (arg0_5) {
-            return new Msg$2(7, arg0_5);
+            return new Msg$2(5, arg0_5);
           }($var6));
         });
       } else if (_arg1.data.tag === 8) {
         return root$8(model.Elements.Progress, function ($var7) {
           return dispatch(function (arg0_6) {
-            return new Msg$2(8, arg0_6);
+            return new Msg$2(6, arg0_6);
           }($var7));
         });
       } else if (_arg1.data.tag === 9) {
         return root$9(model.Elements.Table, function ($var8) {
           return dispatch(function (arg0_7) {
-            return new Msg$2(9, arg0_7);
+            return new Msg$2(7, arg0_7);
           }($var8));
         });
       } else if (_arg1.data.tag === 6) {
         return root$10(model.Elements.Tag, function ($var9) {
           return dispatch(function (arg0_8) {
-            return new Msg$2(10, arg0_8);
+            return new Msg$2(8, arg0_8);
           }($var9));
         });
       } else if (_arg1.data.tag === 2) {
         return root$11(model.Elements.Title, function ($var10) {
           return dispatch(function (arg0_9) {
-            return new Msg$2(11, arg0_9);
+            return new Msg$2(10, arg0_9);
           }($var10));
         });
+      } else if (_arg1.data.tag === 11) {
+        return root$12(model.Elements.Notification, function ($var11) {
+          return dispatch(function (arg0_10) {
+            return new Msg$2(9, arg0_10);
+          }($var11));
+        });
       } else {
-        return react_1("div", {});
+        throw new Error("C:\\Users\\mange\\Workspace\\Github\\MangelMaxime\\Fable.Elmish.Bulma\\docs\\src\\App.fs", 84, 18);
       }
     } else if (_arg1.tag === 2) {
       if (_arg1.data.tag === 1) {
-        return root$12(model.Components.Level, function ($var11) {
-          return dispatch(function (arg0_10) {
-            return new Msg$2(13, arg0_10);
-          }($var11));
-        });
-      } else if (_arg1.data.tag === 2) {
-        return root$13(model.Components.Breadcrumb, function ($var12) {
+        return root$13(model.Components.Level, function ($var12) {
           return dispatch(function (arg0_11) {
-            return new Msg$2(14, arg0_11);
+            return new Msg$2(12, arg0_11);
           }($var12));
         });
-      } else if (_arg1.data.tag === 3) {
-        return root$14(model.Components.Card, function ($var13) {
+      } else if (_arg1.data.tag === 2) {
+        return root$14(model.Components.Breadcrumb, function ($var13) {
           return dispatch(function (arg0_12) {
-            return new Msg$2(15, arg0_12);
+            return new Msg$2(13, arg0_12);
           }($var13));
         });
-      } else if (_arg1.data.tag === 4) {
-        return root$15(model.Components.Media, function ($var14) {
+      } else if (_arg1.data.tag === 3) {
+        return root$15(model.Components.Card, function ($var14) {
           return dispatch(function (arg0_13) {
-            return new Msg$2(16, arg0_13);
+            return new Msg$2(14, arg0_13);
           }($var14));
         });
-      } else if (_arg1.data.tag === 5) {
-        return root$16(model.Components.Menu, function ($var15) {
+      } else if (_arg1.data.tag === 4) {
+        return root$16(model.Components.Media, function ($var15) {
           return dispatch(function (arg0_14) {
-            return new Msg$2(17, arg0_14);
+            return new Msg$2(15, arg0_14);
           }($var15));
         });
-      } else if (_arg1.data.tag === 6) {
-        return root$17(model.Components.Message, function ($var16) {
+      } else if (_arg1.data.tag === 5) {
+        return root$17(model.Components.Menu, function ($var16) {
           return dispatch(function (arg0_15) {
-            return new Msg$2(18, arg0_15);
+            return new Msg$2(16, arg0_15);
           }($var16));
         });
-      } else if (_arg1.data.tag === 7) {
-        return root$18(model.Components.Navbar, function ($var17) {
+      } else if (_arg1.data.tag === 6) {
+        return root$18(model.Components.Message, function ($var17) {
           return dispatch(function (arg0_16) {
-            return new Msg$2(19, arg0_16);
+            return new Msg$2(17, arg0_16);
           }($var17));
         });
-      } else if (_arg1.data.tag === 8) {
-        return root$19(model.Components.Pagination, function ($var18) {
+      } else if (_arg1.data.tag === 7) {
+        return root$19(model.Components.Navbar, function ($var18) {
           return dispatch(function (arg0_17) {
-            return new Msg$2(20, arg0_17);
+            return new Msg$2(18, arg0_17);
           }($var18));
         });
-      } else {
-        return root$20(model.Components.Panel, function ($var19) {
+      } else if (_arg1.data.tag === 8) {
+        return root$20(model.Components.Pagination, function ($var19) {
           return dispatch(function (arg0_18) {
-            return new Msg$2(12, arg0_18);
+            return new Msg$2(19, arg0_18);
           }($var19));
+        });
+      } else if (_arg1.data.tag === 9) {
+        return root$21(model.Components.Tabs, function ($var20) {
+          return dispatch(function (arg0_19) {
+            return new Msg$2(20, arg0_19);
+          }($var20));
+        });
+      } else {
+        return root$22(model.Components.Panel, function ($var21) {
+          return dispatch(function (arg0_20) {
+            return new Msg$2(11, arg0_20);
+          }($var21));
         });
       }
     } else {
-      return root$21(model.Home);
+      return root$23(model.Home);
     }
   };
 
@@ -30987,7 +33884,7 @@ function root(model, dispatch) {
     className: "navbar-bg"
   }, react_1("div", {
     className: "container"
-  }, root$22)), header, react_1("div", {
+  }, root$24)), header, react_1("div", {
     className: "section"
   }, react_1("div", {
     className: "container"
@@ -30999,11 +33896,7 @@ function root(model, dispatch) {
     className: "column"
   }, pageHtml(model.CurrentPage))))));
 }
-ProgramModule.run(withReact("elmish-app", function (program) {
-  return Program$1.toNotifiable(function (notifications) {
-    return defaultNotificationArea(notifications);
-  }, program);
-}(ProgramModule$1.toNavigable(function (location) {
+ProgramModule.run(withReact("elmish-app", ProgramModule$1.toNavigable(function (location) {
   return parseHash(pageParser, location);
 }, function (result, model) {
   return urlUpdate(result, model);
@@ -31013,7 +33906,7 @@ ProgramModule.run(withReact("elmish-app", function (program) {
   return update(msg, model_1);
 }, function (model_2, dispatch) {
   return root(model_2, dispatch);
-})))));
+}))));
 
 exports.options = options;
 exports.menuItem = menuItem;
