@@ -9,6 +9,7 @@ open Types
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
+            map (Fulma FulmaPage.Introduction ) (s "fulma")
             // Layouts
             map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")
@@ -43,6 +44,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Modal)) (s "fulma" </> s "components" </> s "modal")
             map (Fulma (Component Dropdown)) (s "fulma" </> s "components" </> s "dropdown")
             // Fulma Extension
+            map (FulmaExtensions FulmaExtensionsPage.Introduction ) (s "fulma-extensions")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")

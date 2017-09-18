@@ -6,6 +6,9 @@ open Global
 
 let root fulmaExtensionsPage model dispatch =
     match fulmaExtensionsPage with
+    | FulmaExtensionsPage.Introduction ->
+        FulmaExtensions.Introduction.View.root
+
     | Calendar ->
         FulmaExtensions.Calendar.View.root model.Calendar (CalendarMsg >> dispatch)
 

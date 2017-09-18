@@ -42,11 +42,13 @@ type FulmaPage =
     | Element of Elements
     | Component of Components
     | Layout of Layouts
+    | Introduction
 
 type FulmaExtensionsPage =
     | Calendar
     | Tooltip
     | Divider
+    | Introduction
 
 type Page =
     | Home
@@ -58,6 +60,7 @@ let toHash page =
     | Home -> "#home"
     | Fulma pageType ->
         match pageType with
+        | FulmaPage.Introduction -> "#fulma"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
@@ -96,6 +99,7 @@ let toHash page =
             | Dropdown ->"#fulma/components/dropdown"
     | FulmaExtensions pageType ->
         match pageType with
+        | FulmaExtensionsPage.Introduction -> "#fulma-extensions"
         | Calendar -> "#fulma-extensions/calendar"
         | Tooltip -> "#fulma-extensions/tooltip"
         | Divider -> "#fulma-extensions/divider"

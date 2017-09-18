@@ -46,6 +46,8 @@ let menuFulma currentPage subModel dispatch =
 
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
+        [ menuItem "Introduction" (Fulma FulmaPage.Introduction) currentPage ]
+      Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName layoutsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Layouts) |> dispatch ) ]
@@ -103,6 +105,8 @@ let menuFulma currentPage subModel dispatch =
 let menuFulmaExtensions currentPage subModel dispatch =
     [ Menu.label [ ] [ str "Fulma.Extensions" ]
       Menu.list [ ]
+        [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
+      Menu.list [ ]
         [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage
           menuItem "Divider" (FulmaExtensions Divider) currentPage ] ]
@@ -110,6 +114,6 @@ let menuFulmaExtensions currentPage subModel dispatch =
 let root model dispatch =
     Menu.menu [ ]
         [ yield Menu.list [ ]
-                    [ menuItem "Home" Home model.CurrentPage ]
+                    [ menuItem "Introduction" Home model.CurrentPage ]
           yield! menuFulma model.CurrentPage model.Fulma dispatch
           yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch ]
