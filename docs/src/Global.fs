@@ -50,10 +50,15 @@ type FulmaExtensionsPage =
     | Divider
     | Introduction
 
+type FulmaElmishPage =
+    | Introduction
+    | DatePicker
+
 type Page =
     | Home
     | Fulma of FulmaPage
     | FulmaExtensions of FulmaExtensionsPage
+    | FulmaElmish of FulmaElmishPage
 
 let toHash page =
     match page with
@@ -103,3 +108,7 @@ let toHash page =
         | Calendar -> "#fulma-extensions/calendar"
         | Tooltip -> "#fulma-extensions/tooltip"
         | Divider -> "#fulma-extensions/divider"
+    | FulmaElmish pageType ->
+        match pageType with
+        | FulmaElmishPage.Introduction -> "#fulma-elmish"
+        | FulmaElmishPage.DatePicker -> "#fulma-elmish/date-picker"

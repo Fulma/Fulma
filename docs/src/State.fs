@@ -48,6 +48,9 @@ let pageParser : Parser<Page -> Page, Page> =
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")
+            // Fulma Elmish
+            map (FulmaElmish FulmaElmishPage.Introduction) (s "fulma-elmish")
+            map (FulmaElmish FulmaElmishPage.DatePicker) (s "fulma-elmish" </> s "date-picker")
             map Home top ]
 
 let urlUpdate (result : Option<Page>) model =
@@ -66,7 +69,8 @@ let init result =
                            Menu = Menu.State.init Home
                            Home = Home.State.init ()
                            Fulma = Fulma.Dispatcher.State.init ()
-                           FulmaExtensions = FulmaExtensions.Dispatcher.State.init () }
+                           FulmaExtensions = FulmaExtensions.Dispatcher.State.init ()
+                           FulmaElmish = FulmaElmish.Dispatcher.State.init () }
 
     model, Cmd.batch [ cmd ]
 
@@ -86,3 +90,7 @@ let update msg model =
     | FulmaExtensionsMsg msg ->
         let (fulmaExtensions, fulmaExtensionsMsg) = FulmaExtensions.Dispatcher.State.update msg model.FulmaExtensions
         { model with FulmaExtensions = fulmaExtensions }, Cmd.map FulmaExtensionsMsg fulmaExtensionsMsg
+
+    | FulmaElmishMsg msg ->
+        let (fulmaElmish, fulmaElmishMsg) = FulmaElmish.Dispatcher.State.update msg model.FulmaElmish
+        { model with FulmaElmish = fulmaElmish }, Cmd.map FulmaElmishMsg fulmaElmishMsg

@@ -111,9 +111,17 @@ let menuFulmaExtensions currentPage subModel dispatch =
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage
           menuItem "Divider" (FulmaExtensions Divider) currentPage ] ]
 
+let menuFulmaElmish currentPage dispatch =
+    [ Menu.label [ ] [ str "Fulma.Elmish" ]
+      Menu.list [ ]
+        [ menuItem "Introduction" (FulmaElmish FulmaElmishPage.Introduction) currentPage ]
+      Menu.list [ ]
+        [ menuItem "Date picker" (FulmaElmish DatePicker) currentPage ] ]
+
 let root model dispatch =
     Menu.menu [ ]
         [ yield Menu.list [ ]
                     [ menuItem "Introduction" Home model.CurrentPage ]
           yield! menuFulma model.CurrentPage model.Fulma dispatch
-          yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch ]
+          yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch
+          yield! menuFulmaElmish model.CurrentPage dispatch ]

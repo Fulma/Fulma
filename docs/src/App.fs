@@ -38,6 +38,8 @@ let root model dispatch =
             Fulma.Dispatcher.View.root fulmaPage model.Fulma (FulmaMsg >> dispatch)
         | FulmaExtensions fulmaExtensionsPage ->
             FulmaExtensions.Dispatcher.View.root fulmaExtensionsPage model.FulmaExtensions (FulmaExtensionsMsg >> dispatch)
+        | FulmaElmish fulmaElmishPage ->
+            FulmaElmish.Dispatcher.View.root fulmaElmishPage model.FulmaElmish (FulmaElmishMsg >> dispatch)
 
     div []
         [ div [ ClassName "navbar-bg" ]

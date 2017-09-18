@@ -130,6 +130,15 @@
         <Compile Include="src/FulmaExtensions/Dispatcher/Types.fs" />
         <Compile Include="src/FulmaExtensions/Dispatcher/State.fs" />
         <Compile Include="src/FulmaExtensions/Dispatcher/View.fs" />
+    <!-- FulmaElmish -->
+        <Compile Include="src/FulmaElmish/DatePicker/Types.fs" />
+        <Compile Include="src/FulmaElmish/DatePicker/State.fs" />
+        <Compile Include="src/FulmaElmish/DatePicker/View.fs" />
+        <Compile Include="src/FulmaElmish/Introduction/View.fs" />
+        <!-- Dispatcher need to be latest of the group -->
+        <Compile Include="src/FulmaElmish/Dispatcher/Types.fs" />
+        <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />
+        <Compile Include="src/FulmaElmish/Dispatcher/View.fs" />
     <!-- Home -->
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />
