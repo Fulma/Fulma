@@ -11,7 +11,7 @@
 
 | Framework | Versions |
 |---|---|
-| Bulma.io | 0.5.0 |
+| Bulma.io | 0.5.2 |
 | FontAwesome | 4.7.0 |
 
 ### Fulma.Extensions
@@ -19,7 +19,7 @@
 | Fulma Module | Npm package | Versions |
 |---|---|---|
 | Calendar | bulma-calendar | 0.0.1 |
-| Tooltip | bulma-tooltip | 0.0.1 |
+| Tooltip | bulma-tooltip | 0.0.4 |
 | Divider | bulma-divider | 0.0.1 |
 
 
