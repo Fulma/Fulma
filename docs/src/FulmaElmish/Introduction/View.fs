@@ -21,41 +21,22 @@ Provide ready to use *elmish components*.
 
 ## How to install ?
 
-Add `Fulma.Extensions` denpendencies into your paket files.
+Add `Fulma.Elmish` denpendencies into your paket files.
 
 ```
 // paket.denpendencies
-nuget Fulma
-nuget Fulma.Extensions
+nuget Fulma.Elmish
 
 // paket.reference
-Fulma
-Fulma.Extensions
+Fulma.Elmish
 ```
 
 Run `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.
 
-You are ready to start using Fulma. You can confirm it by trying to open `Fulma` namespace.
+You are ready to start using Fulma.Elmish. You can confirm it by trying to open `Fulma.Elmish` namespace.
 
 ```fsharp
-open Fulma
-open Fulma.Extensions
-```
-
-You will also need to provide the sass files of the extensions.
-
-The recommanded way to do that is to include them via `yarn`.
-
-`yarn add -D bulma bulma-calendar`
-
-And then add a reference to them into your `main.sass` file.
-
-```sass
-// main.sass
-
-@import './node_modules/bulma/bulma'
-
-@import "./node_modules/bulma-calendar/calendar.sass"
+open Fulma.Elmish
 ```
 
         """

@@ -34,6 +34,7 @@ let root model dispatch =
     let pageHtml =
         function
         | Home -> Home.View.root model.Home
+        | Migration -> Migration.View.root
         | Fulma fulmaPage ->
             Fulma.Dispatcher.View.root fulmaPage model.Fulma (FulmaMsg >> dispatch)
         | FulmaExtensions fulmaExtensionsPage ->

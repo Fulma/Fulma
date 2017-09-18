@@ -9,6 +9,7 @@ open Types
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
+            map Migration (s "migration")
             map (Fulma FulmaPage.Introduction ) (s "fulma")
             // Layouts
             map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
