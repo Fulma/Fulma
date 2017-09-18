@@ -1,3 +1,9 @@
+### 1.0.0-beta-001
+
+* Beta is ready for #FableConf ! ! !
+* Implements `File` element
+* Fix `Field.customClass` && `Field.props` type
+
 ### 0.2.0-beta-004
 
 * Implement `Container`

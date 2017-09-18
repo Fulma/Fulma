@@ -19,7 +19,8 @@
 | Fulma Module | Npm package | Versions |
 |---|---|---|
 | Calendar | bulma-calendar | 0.0.1 |
-| Tooltip | bulma-tooltip | 0.0.1|
+| Tooltip | bulma-tooltip | 0.0.1 |
+| Divider | bulma-divider | 0.0.1 |
 
 
 Contributing

@@ -444,8 +444,8 @@ module Form =
         // Layout
         let isHorizontal = Layout Horizontal
         // Extra
-        let customClass = CustomClass
-        let props = Props
+        let customClass = Types.CustomClass
+        let props = Types.Props
 
         let internal field element options children =
             let parseOptions (result : Options) =
@@ -763,3 +763,199 @@ module Form =
                   if opts.Name.IsSome then
                     yield Name opts.Name.Value :> IHTMLProp
                   yield! opts.Props ]
+
+    module File =
+
+        module Types =
+
+            type IState =
+                | Focused
+                | Active
+                | Hovered
+
+            let ofState =
+                function
+                | Focused -> Bulma.Form.File.State.IsFocused
+                | Active -> Bulma.Form.File.State.IsActive
+                | Hovered -> Bulma.Form.File.State.IsHovered
+
+            type ISize =
+                | Small
+                | Medium
+                | Large
+                | Fullwidth
+
+            let ofSize =
+                function
+                | Small -> Bulma.Form.File.Size.IsSmall
+                | Medium -> Bulma.Form.File.Size.IsMedium
+                | Large -> Bulma.Form.File.Size.IsLarge
+                | Fullwidth -> Bulma.Form.File.Size.IsFullwidth
+
+            type IAlignment =
+                | Centered
+                | Right
+
+            let ofAlignment =
+                function
+                | Centered -> Bulma.Form.File.Alignment.IsCentered
+                | Right -> Bulma.Form.File.Alignment.IsRight
+
+            type Option =
+                | CustomClass of string
+                | Props of IHTMLProp list
+                | State of IState
+                | Size of ISize
+                | Alignment of IAlignment
+                | IsBoxed
+                | HasName
+                | Color of ILevelAndColor
+
+            type Options =
+                { CustomClass : string option
+                  Props : IHTMLProp list
+                  State : string option
+                  Size : string option
+                  Alignment : string option
+                  IsBoxed : bool
+                  Color : string option
+                  HasName : bool}
+
+                static member Empty =
+                    { CustomClass = None
+                      Props = []
+                      State = None
+                      Size = None
+                      Alignment = None
+                      IsBoxed = false
+                      Color = None
+                      HasName = false }
+
+        open Types
+
+        // State
+        let isFocused = State Focused
+        let isActive = State Active
+        let isHovered = State Hovered
+        // Size
+        let isSmall = Size Small
+        let isMedium = Size Medium
+        let isLarge = Size Large
+        let isFullwidth = Size Fullwidth
+        // Colors
+        let isBlack = IsBlack
+        let isDark = IsDark
+        let isLight = IsLight
+        let isWhite = IsWhite
+        let isPrimary = IsPrimary
+        let isInfo = IsInfo
+        let isSuccess = IsSuccess
+        let isWarning = IsWarning
+        let isDanger = IsDanger
+        // Alignment
+        let isRight = Alignment Right
+        let isCentered = Alignment Centered
+        // Extra
+        let customClass = CustomClass
+        let props = Props
+        let isBoxed = IsBoxed
+        let hasName = HasName
+
+        let file (options : Option list) children =
+            let parseOptions (result : Options) option =
+                match option with
+                | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+                | Props props -> { result with Props = props }
+                | State state -> { result with State = ofState state |> Some }
+                | Size size -> { result with Size = ofSize size |> Some }
+                | Alignment alignment -> { result with Alignment = ofAlignment alignment |> Some }
+                | Color color -> { result with Color = ofLevelAndColor color |> Some }
+                | IsBoxed -> { result with IsBoxed = true }
+                | HasName -> { result with HasName = true }
+
+            let opts = options |> List.fold parseOptions Options.Empty
+
+            div [ yield classBaseList Bulma.Form.File.Container
+                                    [ opts.CustomClass.Value, opts.CustomClass.IsSome
+                                      opts.State.Value, opts.State.IsSome
+                                      opts.Size.Value, opts.Size.IsSome
+                                      opts.Alignment.Value, opts.Alignment.IsSome
+                                      opts.Color.Value, opts.Color.IsSome
+                                      Bulma.Form.File.IsBoxed, opts.IsBoxed
+                                      Bulma.Form.File.HasName, opts.HasName ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        module Cta =
+            let props = GenericOption.Props
+            let customClass = GenericOption.CustomClass
+
+        module Name =
+            let props = GenericOption.Props
+            let customClass = GenericOption.CustomClass
+
+        module Icon =
+            let props = GenericOption.Props
+            let customClass = GenericOption.CustomClass
+
+        module Label =
+            let props = GenericOption.Props
+            let customClass = GenericOption.CustomClass
+
+        module Input =
+            let props = GenericOption.Props
+            let customClass = GenericOption.CustomClass
+
+        let cta (options : GenericOption list) children =
+            let opts = genericParse options
+
+            span
+                [ yield classBaseList
+                            Bulma.Form.File.Cta
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        let name (options : GenericOption list) children =
+            let opts = genericParse options
+
+            span
+                [ yield classBaseList
+                            Bulma.Form.File.Name
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        let icon (options : GenericOption list) children =
+            let opts = genericParse options
+
+            span
+                [ yield classBaseList
+                            Bulma.Form.File.Icon
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        let internal label element (options : GenericOption list) children =
+            let opts = genericParse options
+
+            element
+                [ yield classBaseList
+                            Bulma.Form.File.Label
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children
+
+        let label_label = label Fable.Helpers.React.label
+
+        let label_span = label span
+
+        let input (options : GenericOption list) =
+            let opts = genericParse options
+
+            input
+                [ yield classBaseList
+                            Bulma.Form.File.Input
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props
+                  yield Type "file" :> IHTMLProp ]

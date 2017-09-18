@@ -22,15 +22,15 @@
     "bulma": "^0.5.2",
     "bulma-badge": "^0.0.3",
     "bulma-calendar": "^0.0.1",
-    "bulma-checkradio": "^0.0.4",
+    "bulma-checkradio": "^0.0.5",
     "bulma-divider": "^0.0.1",
     "bulma-pageloader": "^0.0.2",
     "bulma-pricingtable": "^0.0.2",
     "bulma-ribbon": "^0.0.1",
-    "bulma-slider": "^0.0.1",
-    "bulma-steps": "^0.0.1",
-    "bulma-switch": "^0.0.2",
-    "bulma-timeline": "^0.0.2",
+    "bulma-slider": "^0.0.2",
+    "bulma-steps": "^0.0.2",
+    "bulma-switch": "^0.0.3",
+    "bulma-timeline": "^0.0.3",
     "bulma-tooltip": "^0.0.4",
     "css-loader": "^0.28.7",
     "fable-loader": "^1.1.2",
@@ -39,7 +39,7 @@
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "webpack": "^3.5.6",
-    "webpack-dev-server": "^2.7.1"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
   }
 }

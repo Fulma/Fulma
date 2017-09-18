@@ -68,6 +68,18 @@ let iconCode =
                         [ Radio.input [ Radio.Input.name "answer" ]
                           str "No" ] ] ]
 
+           Field.field_div [ ]
+                [ File.file [ File.hasName ]
+                    [ File.label_label [ ]
+                        [ File.input [ ]
+                          File.cta [ ]
+                            [ File.icon [ ]
+                                [ Icon.faIcon [ ] Fa.Upload ]
+                              File.label_span [ ]
+                                [ str "Choose a file..." ] ]
+                          File.name [ ]
+                            [ str "License agreement.pdf" ] ] ] ]
+
            Field.field_div [ Field.isGrouped ]
                 [ Control.control_div [ ]
                     [ Button.button [ Button.isPrimary ]

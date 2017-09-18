@@ -276,7 +276,6 @@ module BulmaClasses =
             module File =
                 let [<Literal>] Container = "file"
                 let Color = levelAndColor
-                let [<Literal>] HasName = "has-name"
                 let [<Literal>] Cta = "file-cta"
                 let [<Literal>] Name = "file-name"
                 let [<Literal>] Icon = "file-icon"
@@ -295,7 +294,7 @@ module BulmaClasses =
                     let [<Literal>] IsCentered = "is-centered"
                     let [<Literal>] IsRight = "is-right"
                 let [<Literal>] IsBoxed = "is-boxed"
-
+                let [<Literal>] HasName = "has-name"
             module Input =
                 let [<Literal>] Container = "input"
                 let Color = levelAndColor
