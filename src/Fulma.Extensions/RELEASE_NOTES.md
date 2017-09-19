@@ -1,3 +1,8 @@
+### 0.1.0-beta-006
+
+* Update Fable-React deps
+* Implements `PageLoader`
+
 ### 0.1.0-beta-005
 
 * Test release with projet reference

@@ -49,6 +49,7 @@ type FulmaExtensionsPage =
     | Tooltip
     | Divider
     | Introduction
+    | PageLoader
 
 type FulmaElmishPage =
     | Introduction
@@ -109,6 +110,7 @@ let toHash page =
         | FulmaExtensionsPage.Introduction -> "#fulma-extensions"
         | Calendar -> "#fulma-extensions/calendar"
         | Tooltip -> "#fulma-extensions/tooltip"
+        | PageLoader -> "#fulma-extensions/pageloader"
         | Divider -> "#fulma-extensions/divider"
     | FulmaElmish pageType ->
         match pageType with

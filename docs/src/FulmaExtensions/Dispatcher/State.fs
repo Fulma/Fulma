@@ -6,7 +6,8 @@ open Types
 let init() =
     { Calendar = FulmaExtensions.Calendar.State.init ()
       Tooltip = FulmaExtensions.Tooltip.State.init ()
-      Divider = FulmaExtensions.Divider.State.init () }
+      Divider = FulmaExtensions.Divider.State.init ()
+      PageLoader = FulmaExtensions.PageLoader.State.init () }
 
 let update msg model =
     match msg with
@@ -21,3 +22,7 @@ let update msg model =
     | DividerMsg msg ->
         let (divider, dividerMsg) = FulmaExtensions.Divider.State.update msg model.Divider
         { model with Divider = divider }, Cmd.map DividerMsg dividerMsg
+
+    | PageLoaderMsg msg ->
+            let (pageLoader, pageLoaderMsg) = FulmaExtensions.PageLoader.State.update msg model.PageLoader
+            { model with PageLoader = pageLoader }, Cmd.map PageLoaderMsg pageLoaderMsg

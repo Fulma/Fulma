@@ -48,6 +48,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (FulmaExtensions FulmaExtensionsPage.Introduction ) (s "fulma-extensions")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")
+            map (FulmaExtensions PageLoader) (s "fulma-extensions" </> s "pageloader")
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")
             // Fulma Elmish
             map (FulmaElmish FulmaElmishPage.Introduction) (s "fulma-elmish")

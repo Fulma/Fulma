@@ -20,6 +20,7 @@
 | Calendar | bulma-calendar | 0.0.1 |
 | Tooltip | bulma-tooltip | 0.0.4 |
 | Divider | bulma-divider | 0.0.1 |
+| PageLoader | bulma-pageloader | 0.0.2 |
 
 
 Contributing

@@ -17,3 +17,6 @@ let root fulmaExtensionsPage model dispatch =
 
     | Divider ->
         FulmaExtensions.Divider.View.root model.Divider (DividerMsg >> dispatch)
+
+    | PageLoader ->
+        FulmaExtensions.PageLoader.View.root model.PageLoader (PageLoaderMsg >> dispatch)
