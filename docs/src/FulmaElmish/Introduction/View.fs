@@ -21,17 +21,9 @@ Provide ready to use *elmish components*.
 
 ## How to install ?
 
-Add `Fulma.Elmish` denpendencies into your paket files.
+Add `Fulma.Elmish` denpendencies into your paket files: `paket add Fulma.Elmish --project <your project>`
 
-```
-// paket.denpendencies
-nuget Fulma.Elmish
-
-// paket.reference
-Fulma.Elmish
-```
-
-Run `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.
+Then `dotnet restore` on your `*.fsproj` file.
 
 You are ready to start using Fulma.Elmish. You can confirm it by trying to open `Fulma.Elmish` namespace.
 

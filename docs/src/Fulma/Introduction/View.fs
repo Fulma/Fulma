@@ -25,17 +25,9 @@ It's only serve as a documentation of the wrapper and also test that the wrapper
 
 ## How to install ?
 
-Add `Fulma` dependence into your paket files.
+Add `Fulma` dependence into your paket files: `paket add Fulma --project <your project>`
 
-```
-// paket.denpendencies
-nuget Fulma
-
-// paket.reference
-Fulma
-```
-
-Run `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.
+Then `dotnet restore` on your `*.fsproj` file.
 
 You are ready to start using Fulma. You can confirm it by trying to open `Fulma` namespace.
 

@@ -21,19 +21,9 @@ Provide a wrapper around [bulma extensions](http://bulma.io/extensions/).
 
 ## How to install ?
 
-Add `Fulma.Extensions` denpendencies into your paket files.
+Add `Fulma.Extensions` denpendencies into your paket files: `paket add Fulma.Extensions --project <your project>`
 
-```
-// paket.denpendencies
-nuget Fulma
-nuget Fulma.Extensions
-
-// paket.reference
-Fulma
-Fulma.Extensions
-```
-
-Run `paket.exe update` at your project root and then `dotnet restore` on your `*.fsproj` file.
+Then `dotnet restore` on your `*.fsproj` file.
 
 You are ready to start using Fulma. You can confirm it by trying to open `Fulma` namespace.
 

@@ -41,7 +41,7 @@ Now, you should see a lot of errors telling you `Fable.Elmish.Bulma namespace or
 
 Replace `open Fable.Elmish.Bulma.*` with `open Fulma.*`.
 
-This rules should work for most of the open statement, however please not `open Fable.Elmish.Bulma.Grids` should be replace with `open Fulma.Layouts`.
+This rules should work for most of the open statement, however please note `open Fable.Elmish.Bulma.Grids` should be replace with `open Fulma.Layouts`.
 
 We also took the oppurtunity to **remove** the `Nav` module as this element will be removed in the next version of Bulma. You should use `Navbar` as a replacement.
 
