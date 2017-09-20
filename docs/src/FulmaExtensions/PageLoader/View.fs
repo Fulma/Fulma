@@ -21,7 +21,7 @@ let basicInteractive (model:Model) (dispatch:Msg->unit) =
             [ ]
           Content.content [ ]
             [ p [ ]
-                [ str "Click on a button to display a loader for 2 sec" ] ]
+                [ str "Click on a button to display a loader for 3 sec" ] ]
           div [ ClassName "block" ]
             [
                 Button.button [ Button.isBlack

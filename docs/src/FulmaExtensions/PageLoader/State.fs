@@ -55,7 +55,7 @@ let init() =
 
 let fakeNetworkRequest _ =
     async {
-        do! Async.Sleep 2000
+        do! Async.Sleep 3000
     }
 
 let update msg model =
