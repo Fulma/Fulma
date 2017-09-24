@@ -67,7 +67,7 @@ Ex:
 
 ```
 Column.Width.is3
-Column.Width.Dekstop.is6
+Column.Width.Desktop.is6
 Column.Width.Mobile.isFull
 ```
 
@@ -77,7 +77,7 @@ Ex:
 
 ```
 Column.Offset.is3
-Column.Offset.Dekstop.is6
+Column.Offset.Desktop.is6
 Column.Offset.Mobile.isFull
 ```
                         """
