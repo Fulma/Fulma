@@ -13,12 +13,17 @@ open System
 
 module View =
 
-    let onFocus (config : Config<'Msg>) state currentDate dispatch =
-        config.OnChange
-            ({ state with InputFocused = true
-                          ForceClose = false }, currentDate)
-            |> dispatch
+    let isCalendarDisplayed state =
+        state.InputFocused && not (state.AutoClose && state.ForceClose)
 
+    let onFocus (config : Config<'Msg>) state currentDate dispatch =
+        // If the calendar is already displayed don't dispatch a new onFocus message
+        // This is needed because we register to both onClick and onFocus event
+        if not(isCalendarDisplayed state) then
+            config.OnChange
+                ({ state with InputFocused = true
+                              ForceClose = false }, currentDate)
+                |> dispatch
 
     let onChange (config : Config<'Msg>) state currentDate dispatch =
         config.OnChange
@@ -59,8 +64,7 @@ module View =
                                     [ str (date.Day.ToString()) ] ]
             } |> Seq.toList
 
-        Box.box' [ Box.props [ Style [ Position "absolute"
-                                       MaxWidth "450px" ] ] ]
+        Box.box' [ Box.props [ Style config.DatePickerStyle ] ]
                  [ Calendar.calendar [ Calendar.props [ OnMouseDown (fun ev -> ev.preventDefault()) ]
                                                    ]
                                      [ Calendar.Nav.nav [ ]
@@ -100,8 +104,9 @@ module View =
             [ yield Input.input [ Input.typeIsText
                                   Input.props [ Value dateTxt
                                                 OnFocus (fun _ -> onFocus config state currentDate dispatch)
+                                                OnClick (fun _ -> onFocus config state currentDate dispatch)
                                                 // TODO: Implement something to trigger onChange only if the value actually change
                                                 OnBlur (fun _ -> let newState = { state with InputFocused = false }
                                                                  onChange config newState currentDate dispatch) ] ]
-              if state.InputFocused && not (state.AutoClose && state.ForceClose) then
+              if isCalendarDisplayed state then
                 yield calendar config state currentDate dispatch ]

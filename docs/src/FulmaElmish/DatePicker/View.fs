@@ -14,8 +14,7 @@ open Fulma.Components
 open Fable.PowerPack
 
 let pickerConfig : DatePicker.Types.Config<Msg> =
-    { OnChange = DatePickerChanged
-      Local = Date.Local.french }
+    DatePicker.Types.defaultConfig DatePickerChanged
 
 let root model dispatch =
     let datePickerView =
@@ -88,10 +87,17 @@ let update msg model =
 ```fsharp
 // Configuration passed to the components
 let pickerConfig : DatePicker.Types.Config<Msg> =
-    { OnChange = DatePickerChanged // Message to dispatch when a new date is selected
-      Local = Date.Local.french } // Local used to generated the calendar
+    DatePicker.Types.defaultConfig DatePickerChanged
 
 let root model dispatch =
     DatePicker.View.root pickerConfig model.DatePickerState model.CurrentDate dispatch
 ```
+
+## Config option
+
+Here is the different options you can set in the Config element:
+
+- `OnChange : State * (DateTime option) -> 'Msg`: Message to dispatch when a new date is selected
+- `Local : Date.Local.Localization`: Local used to generated the calendar
+- `DatePickerStyle : ICSSProp list`: Inline style used to display the calendar box
                         """ ]

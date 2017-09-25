@@ -2,6 +2,7 @@ namespace Fulma.Elmish.DatePicker
 
 open System
 open Fable.PowerPack
+open Fable.Helpers.React.Props
 
 module Types =
 
@@ -23,7 +24,14 @@ module Types =
 
     type Config<'Msg> =
         { OnChange : State * (DateTime option) -> 'Msg
-          Local : Date.Local.Localization }
+          Local : Date.Local.Localization
+          DatePickerStyle : ICSSProp list }
+
+    let defaultConfig onChangeMsg =
+        { OnChange = onChangeMsg
+          Local = Date.Local.english
+          DatePickerStyle = [ Position "absolute"
+                              MaxWidth "450px" ] }
 
     type Msg =
         | NoOp
