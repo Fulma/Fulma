@@ -1,10 +1,9 @@
-module Home.State
+module Home.View
 
-open Elmish
-open Types
+open Fable.Core
 
-let init() : Model =
-    { Intro =
+let root _ =
+    Render.contentFromMarkdown
         """
 # Fulma
 
@@ -18,7 +17,4 @@ Fulma is divided into 3 projects:
 - [Fulma.Extensions](#fulma-extensions), which provde you wrapper on top of Bulma extensions
 - [Fulma.Elmish](#fulma-elmish), which provide you ready to use "elmish component" like a date picker.
 
-   """}
-
-let update msg model : Model =
-    model
+        """
