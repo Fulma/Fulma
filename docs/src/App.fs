@@ -50,7 +50,7 @@ let root model dispatch =
                     [ div [ ClassName "columns" ]
                           [ div [ ClassName "column is-2" ]
                                 [ Menu.View.root model.Menu (MenuMsg >> dispatch) ]
-                            div [ ClassName "column" ] [ Elmish.React.Common.lazyView pageHtml model.CurrentPage ] ] ] ] ]
+                            div [ ClassName "column" ] [ pageHtml model.CurrentPage ] ] ] ] ]
 
 open Elmish.React
 open Elmish.Debug
