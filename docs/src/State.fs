@@ -69,7 +69,6 @@ let init result =
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
                            Menu = Menu.State.init Home
-                           Home = Home.State.init ()
                            Fulma = Fulma.Dispatcher.State.init ()
                            FulmaExtensions = FulmaExtensions.Dispatcher.State.init ()
                            FulmaElmish = FulmaElmish.Dispatcher.State.init () }

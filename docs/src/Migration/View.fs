@@ -1,13 +1,8 @@
 module Migration.View
 
 open Fable.Core
-open Fable.Core.JsInterop
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fulma.Elements
-open Fulma.Components
 
-let root =
+let root _ =
     Render.contentFromMarkdown
         """
 # Migration guide from Fable.Elmish.Bulma
@@ -52,4 +47,4 @@ This rules should work for most of the open statement, however please note `open
 ### Any issues ?
 
 If you have any issues porting your project please [open an issue](https://github.com/MangelMaxime/Fulma/issues) so we can help you and prevent others users to be alone with it :).
-        """
+       """

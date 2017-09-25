@@ -1,13 +1,8 @@
 module Fulma.Introduction.View
 
 open Fable.Core
-open Fable.Core.JsInterop
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fulma.Elements
-open Fulma.Components
 
-let root =
+let root _ =
     Render.contentFromMarkdown
         """
 # Fulma
