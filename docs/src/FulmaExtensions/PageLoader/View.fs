@@ -14,7 +14,9 @@ open Fable.Import.Browser
 
 
 let basicInteractive (model:Model) (dispatch:Msg->unit) =
-    div [ ]
+    // Here we force React to redraw this section when coming from another page
+    // This prevent the visual bug effect on the page loader
+    div [ Key "page-loader-force-full-redraw" ]
         [ PageLoader.pageLoader [ yield PageLoader.Types.Color model.Color
                                   if model.IsLoading then
                                     yield PageLoader.isActive ]
