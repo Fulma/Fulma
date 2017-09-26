@@ -110,6 +110,7 @@
         <Compile Include="src/Fulma/Elements/Form/Types.fs" />
         <Compile Include="src/Fulma/Elements/Form/State.fs" />
         <Compile Include="src/Fulma/Elements/Form/View.fs" />
+        <Compile Include="src/Fulma/Versions/View.fs" />
         <Compile Include="src/Fulma/Introduction/View.fs" />
         <!-- Dispatcher need to be latest of the group -->
         <Compile Include="src/Fulma/Dispatcher/Types.fs" />

@@ -43,6 +43,7 @@ type FulmaPage =
     | Component of Components
     | Layout of Layouts
     | Introduction
+    | Versions
 
 type FulmaExtensionsPage =
     | Calendar
@@ -69,6 +70,7 @@ let toHash page =
     | Fulma pageType ->
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
+        | Versions -> "#fulma/versions"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"

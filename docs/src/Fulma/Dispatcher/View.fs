@@ -7,6 +7,7 @@ open Global
 let root fulmaPage model dispatch =
     match fulmaPage with
     | FulmaPage.Introduction -> Fulma.Introduction.View.root ()
+    | FulmaPage.Versions -> Fulma.Versions.View.root ()
     | Element element ->
         match element with
         | Elements.Box -> Elements.Box.View.root model.Elements.Box (BoxMsg >> dispatch)
