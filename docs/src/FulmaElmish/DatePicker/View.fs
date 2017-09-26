@@ -14,7 +14,13 @@ open Fulma.Components
 open Fable.PowerPack
 
 let pickerConfig : DatePicker.Types.Config<Msg> =
-    DatePicker.Types.defaultConfig DatePickerChanged
+    let defaultConfig = DatePicker.Types.defaultConfig DatePickerChanged
+
+    { defaultConfig with DatePickerStyle = [ Position "absolute"
+                                             MaxWidth "450px"
+                                             // Fix calendar display for Ipad browsers (Safari, Chrome)
+                                             // See #56: https://github.com/MangelMaxime/Fulma/issues/56#issuecomment-332186559
+                                             ZIndex 10. ] }
 
 let root model dispatch =
     let datePickerView =
