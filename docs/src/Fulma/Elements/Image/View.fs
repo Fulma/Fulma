@@ -27,4 +27,4 @@ let root model dispatch =
                         (Viewer.View.root fixedInteractive model.FixedViewer (FixedViewerMsg >> dispatch))
                      Render.docSection
                         "### Responsive images with ratio"
-                        (Viewer.View.root responsiveInteractive model.FixedViewer (FixedViewerMsg >> dispatch)) ]
+                        (Viewer.View.root responsiveInteractive model.ResponsiveViewer (ResponsiveViewerMsg >> dispatch)) ]
