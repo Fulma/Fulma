@@ -56,13 +56,13 @@ let menuFulma currentPage subModel dispatch =
                          Icon.faIcon [ ] layoutsIcon ]
                if subModel.IsLayoutExpanded then
                     yield ul [ ]
-                             [ menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage
-                               menuItem "Hero" (Fulma (Layout Layouts.Hero)) currentPage
+                             [ menuItem "Columns" (Fulma (Layout Layouts.Columns)) currentPage
+                               menuItem "Container" (Fulma (Layout Layouts.Container)) currentPage
                                menuItem "Footer" (Fulma (Layout Layouts.Footer)) currentPage
-                               menuItem "Section" (Fulma (Layout Layouts.Section)) currentPage
+                               menuItem "Hero" (Fulma (Layout Layouts.Hero)) currentPage
                                menuItem "Level" (Fulma (Layout Layouts.Level)) currentPage
-                               menuItem "Tile" (Fulma (Layout Layouts.Tile)) currentPage
-                               menuItem "Columns" (Fulma (Layout Layouts.Columns)) currentPage ] ] ]
+                               menuItem "Section" (Fulma (Layout Layouts.Section)) currentPage
+                               menuItem "Tile" (Fulma (Layout Layouts.Tile)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName elementsClass
@@ -71,18 +71,18 @@ let menuFulma currentPage subModel dispatch =
                          Icon.faIcon [ ] elementsIcon ]
                if subModel.IsElementsExpanded then
                     yield ul [ ]
-                             [ menuItem "Button" (Fulma (Element Elements.Button)) currentPage
+                             [ menuItem "Box" (Fulma (Element Elements.Box)) currentPage
+                               menuItem "Button" (Fulma (Element Elements.Button)) currentPage
+                               menuItem "Content" (Fulma (Element Elements.Content))  currentPage
+                               menuItem "Delete" (Fulma (Element Elements.Delete)) currentPage
+                               menuItem "Form" (Fulma (Element Elements.Form)) currentPage
                                menuItem "Icon" (Fulma (Element Elements.Icon)) currentPage
                                menuItem "Image" (Fulma (Element Elements.Image)) currentPage
-                               menuItem "Title" (Fulma (Element Elements.Title)) currentPage
-                               menuItem "Delete" (Fulma (Element Elements.Delete)) currentPage
-                               menuItem "Progress" (Fulma (Element Elements.Progress))  currentPage
-                               menuItem "Box" (Fulma (Element Elements.Box)) currentPage
-                               menuItem "Content" (Fulma (Element Elements.Content))  currentPage
-                               menuItem "Table" (Fulma (Element Elements.Table)) currentPage
-                               menuItem "Form" (Fulma (Element Elements.Form)) currentPage
                                menuItem "Notification" (Fulma (Element Elements.Notification)) currentPage
-                               menuItem "Tag" (Fulma (Element Elements.Tag)) currentPage ] ] ]
+                               menuItem "Progress" (Fulma (Element Elements.Progress))  currentPage
+                               menuItem "Table" (Fulma (Element Elements.Table)) currentPage
+                               menuItem "Tag" (Fulma (Element Elements.Tag)) currentPage
+                               menuItem "Title" (Fulma (Element Elements.Title)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName componentsClass
@@ -91,17 +91,17 @@ let menuFulma currentPage subModel dispatch =
                          Icon.faIcon [ ] componentsIcon ]
                if subModel.IsComponentsExpanded then
                     yield ul [ ]
-                             [ menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
-                               menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage
+                             [ menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage
                                menuItem "Card" (Fulma (Component Components.Card)) currentPage
+                               menuItem "Dropdown" (Fulma (Component Components.Dropdown)) currentPage
                                menuItem "Media" (Fulma (Component Components.Media)) currentPage
                                menuItem "Menu" (Fulma (Component Components.Menu)) currentPage
+                               menuItem "Message" (Fulma (Component Components.Message)) currentPage
+                               menuItem "Modal" (Fulma (Component Components.Modal)) currentPage
                                menuItem "Navbar" (Fulma (Component Components.Navbar)) currentPage
                                menuItem "Pagination" (Fulma (Component Components.Pagination)) currentPage
-                               menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage
-                               menuItem "Message" (Fulma (Component Components.Message)) currentPage
-                               menuItem "Dropdown" (Fulma (Component Components.Dropdown)) currentPage
-                               menuItem "Modal" (Fulma (Component Components.Modal)) currentPage ] ] ] ]
+                               menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
+                               menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage ] ] ] ]
 
 let menuFulmaExtensions currentPage subModel dispatch =
     [ Menu.label [ ] [ str "Fulma.Extensions" ]
@@ -109,9 +109,9 @@ let menuFulmaExtensions currentPage subModel dispatch =
         [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
       Menu.list [ ]
         [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage
-          menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage
           menuItem "Divider" (FulmaExtensions Divider) currentPage
-          menuItem "Page-loader" (FulmaExtensions PageLoader) currentPage ] ]
+          menuItem "Page-loader" (FulmaExtensions PageLoader) currentPage
+          menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
 
 let menuFulmaElmish currentPage dispatch =
     [ Menu.label [ ] [ str "Fulma.Elmish" ]
