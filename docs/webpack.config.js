@@ -21,8 +21,6 @@ var commonPlugins = [
     })
 ];
 
-
-
 var isProduction = process.argv.indexOf("-p") >= 0;
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
 
@@ -30,15 +28,21 @@ var plugins = isProduction
     ? commonPlugins
     : commonPlugins.concat([
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
+        new webpack.NamedModulesPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            minChunks: Infinity
+        }),
     ]);
 
 module.exports = {
     devtool: false,
-    entry: resolve('./docs.fsproj'),
+    entry: {
+        main: resolve('./docs.fsproj')
+    },
     output: {
         path: resolve('./public'),
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
     plugins: plugins,
     resolve: {
@@ -46,7 +50,8 @@ module.exports = {
             "react": "preact-compat",
             "react-dom": "preact-compat"
         },
-        modules: [resolve("../node_modules/")]
+        modules: [resolve("../node_modules/")],
+        symlinks: false
     },
     devServer: {
         contentBase: resolve('./public/'),
