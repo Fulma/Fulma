@@ -1,7 +1,7 @@
 source https://www.nuget.org/api/v2
 storage:none
 
-nuget Fable.Core
+nuget Fable.Core prerelease
 nuget Fable.Elmish
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
@@ -9,7 +9,7 @@ nuget Fable.Elmish.Debugger
 nuget Fable.PowerPack prerelease
 nuget Fable.React
 
-clitool dotnet-fable
+clitool dotnet-fable 1.3.0-beta-001
 
 group Build
 framework: net46
