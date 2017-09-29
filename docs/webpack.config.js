@@ -12,8 +12,26 @@ var babelOptions = fableUtils.resolveBabelOptions({
     plugins: ["transform-runtime"]
 });
 
+var commonPlugins = [
+    new HtmlWebpackPlugin({
+        filename: resolve('./public/index.html'),
+        template: resolve('./index.html'),
+        hash: true,
+        minify: isProduction ? {} : false
+    })
+];
+
+
+
 var isProduction = process.argv.indexOf("-p") >= 0;
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
+
+var plugins = isProduction
+    ? commonPlugins
+    : commonPlugins.concat([
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
+    ]);
 
 module.exports = {
     devtool: isProduction ? false : "source-map",
@@ -22,14 +40,7 @@ module.exports = {
         path: resolve('./public'),
         filename: 'bundle.js'
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: resolve('./public/index.html'),
-            template: resolve('./index.html'),
-            hash: true,
-            minify: isProduction ? {} : false
-        })
-    ],
+    plugins: plugins,
     resolve: {
         alias: {
             "react": "preact-compat",
@@ -73,9 +84,5 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             }
         ]
-    },
-    plugins: isProduction ? [] : [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin()
-    ]
+    }
 };
