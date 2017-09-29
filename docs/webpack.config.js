@@ -34,7 +34,7 @@ var plugins = isProduction
     ]);
 
 module.exports = {
-    devtool: isProduction ? false : "source-map",
+    devtool: false,
     entry: resolve('./docs.fsproj'),
     output: {
         path: resolve('./public'),
