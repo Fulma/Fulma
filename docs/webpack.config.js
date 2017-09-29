@@ -39,7 +39,9 @@ module.exports = {
     },
     devServer: {
         contentBase: resolve('./public/'),
-        port: 8080
+        port: 8080,
+        hot: true,
+        inline: true
     },
     module: {
         rules: [
@@ -71,5 +73,9 @@ module.exports = {
                 use: ['style-loader', 'css-loader']
             }
         ]
-    }
+    },
+    plugins: isProduction ? [] : [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin()
+    ]
 };
