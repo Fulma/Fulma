@@ -11,8 +11,8 @@ let basic =
             [ Image.image [ Image.is64x64 ]
                 [ img [ Src "https://dummyimage.com/64x64/7a7a7a/fff" ] ] ]
           Media.content [ ]
-            [ Field.field [ ]
-                [ Control.control [ ]
+            [ Field.field_div [ ]
+                [ Control.control_div [ ]
                     [ textarea [ ClassName "textarea"
                                  Placeholder "Add a message ..." ]
                                [ ] ] ]
