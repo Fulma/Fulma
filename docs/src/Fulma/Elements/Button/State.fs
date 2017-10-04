@@ -108,11 +108,11 @@ let disabled =
 let icons =
     """
 ```fsharp
-    Button.button [ ] [ Icon.faIcon [ ] Fa.Bold ]
-    Button.button [ ] [ Icon.faIcon [ ] Fa.Italic ]
-    Button.button [ ] [ Icon.faIcon [ ] Fa.Underline ]
+    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Bold ] ]
+    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Italic ] ]
+    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Underline ] ]
     Button.button [ Button.isDanger
-                    Button.isOutlined ] [ str "Danger" ]
+                  Button.isOutlined ] [ str "Danger" ]
 ```
     """
 

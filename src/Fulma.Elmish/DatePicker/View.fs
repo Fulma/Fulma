@@ -73,14 +73,14 @@ module View =
                                                                Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
                                                                                                                     ForceClose = false }
                                                                                         onChange config newState currentDate dispatch) ]
-                                                             [ Icon.faIcon [ ] (Fa.Custom "fa-chevron-left") ] ]
+                                                             [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronLeft ] ] ]
                                            str (Date.Format.localFormat config.Local state.ReferenceDate "MMMM yyyy")
                                            Calendar.Nav.right [ ]
                                              [ Button.button [ Button.isLink
                                                                Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
                                                                                                                     ForceClose = false }
                                                                                         onChange config newState currentDate dispatch) ]
-                                                             [ Icon.faIcon [ ] (Fa.Custom "fa-chevron-right") ] ] ]
+                                                             [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronRight ] ] ] ]
                                        div [ ]
                                            [ Calendar.header [ ]
                                                  [ Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Sunday ]

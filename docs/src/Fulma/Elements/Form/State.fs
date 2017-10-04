@@ -20,8 +20,8 @@ let iconCode =
                                         Control.hasIconRight ]
                     [ Input.text [ Input.isSuccess
                                    Input.defaultValue "Maxime" ]
-                      Icon.faIcon [ Icon.isSmall; Icon.isLeft ] Fa.User
-                      Icon.faIcon [ Icon.isSmall; Icon.isRight ] Fa.Check ]
+                      Icon.faIcon [ Icon.isSmall; Icon.isLeft ] [ Fa.icon Fa.I.User ]
+                      Icon.faIcon [ Icon.isSmall; Icon.isRight ] [ Fa.icon Fa.I.Check ] ]
                   Help.help [ Help.isSuccess ]
                     [ str "This username is available" ] ]
 
@@ -32,8 +32,8 @@ let iconCode =
                                         Control.hasIconRight ]
                     [ Input.email [ Input.isDanger
                                     Input.defaultValue "hello@" ]
-                      Icon.faIcon [ Icon.isSmall; Icon.isLeft ] Fa.Envelope
-                      Icon.faIcon [ Icon.isSmall; Icon.isRight ] Fa.Warning ]
+                      Icon.faIcon [ Icon.isSmall; Icon.isLeft ] [ Fa.icon Fa.I.Envelope ]
+                      Icon.faIcon [ Icon.isSmall; Icon.isRight ] [ Fa.icon Fa.I.Warning ] ]
                   Help.help [ Help.isDanger ]
                     [ str "This email is invalid" ] ]
 
@@ -74,7 +74,7 @@ let iconCode =
                         [ File.input [ ]
                           File.cta [ ]
                             [ File.icon [ ]
-                                [ Icon.faIcon [ ] Fa.Upload ]
+                                [ Icon.faIcon [ ] [ Fa.icon Fa.I.Upload ] ]
                               File.label_span [ ]
                                 [ str "Choose a file..." ] ]
                           File.name [ ]

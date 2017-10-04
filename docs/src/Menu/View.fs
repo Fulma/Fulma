@@ -21,28 +21,28 @@ let menuFulma currentPage subModel dispatch =
         if not subModel.IsElementsExpanded then
             match currentPage with
             | Fulma (Element _) ->
-                "menu-group is-active", Fa.AngleDown
-            | _ -> "menu-group", Fa.AngleDown
+                "menu-group is-active", Fa.I.AngleDown
+            | _ -> "menu-group", Fa.I.AngleDown
         else
-            "menu-group", Fa.AngleUp
+            "menu-group", Fa.I.AngleUp
 
     let (componentsClass, componentsIcon) =
         if not subModel.IsComponentsExpanded then
             match currentPage with
             | Fulma (Component _) ->
-                "menu-group is-active", Fa.AngleDown
-            | _ -> "menu-group", Fa.AngleDown
+                "menu-group is-active", Fa.I.AngleDown
+            | _ -> "menu-group", Fa.I.AngleDown
         else
-            "menu-group", Fa.AngleUp
+            "menu-group", Fa.I.AngleUp
 
     let (layoutsClass, layoutsIcon) =
         if not subModel.IsLayoutExpanded then
             match currentPage with
             | Fulma (Layout _) ->
-                "menu-group is-active", Fa.AngleDown
-            | _ -> "menu-group", Fa.AngleDown
+                "menu-group is-active", Fa.I.AngleDown
+            | _ -> "menu-group", Fa.I.AngleDown
         else
-            "menu-group", Fa.AngleUp
+            "menu-group", Fa.I.AngleUp
 
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
@@ -53,7 +53,7 @@ let menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName layoutsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Layouts) |> dispatch ) ]
                        [ span [ ] [ str "Layouts" ]
-                         Icon.faIcon [ ] layoutsIcon ]
+                         Icon.faIcon [ ] [ Fa.icon layoutsIcon ] ]
                if subModel.IsLayoutExpanded then
                     yield ul [ ]
                              [ menuItem "Columns" (Fulma (Layout Layouts.Columns)) currentPage
@@ -68,7 +68,7 @@ let menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName elementsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Elements) |> dispatch ) ]
                        [ span [ ] [ str "Elements" ]
-                         Icon.faIcon [ ] elementsIcon ]
+                         Icon.faIcon [ ] [ Fa.icon elementsIcon ] ]
                if subModel.IsElementsExpanded then
                     yield ul [ ]
                              [ menuItem "Box" (Fulma (Element Elements.Box)) currentPage
@@ -88,7 +88,7 @@ let menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName componentsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Components) |> dispatch ) ]
                        [ span [ ] [ str "Components" ]
-                         Icon.faIcon [ ] componentsIcon ]
+                         Icon.faIcon [ ] [ Fa.icon componentsIcon ] ]
                if subModel.IsComponentsExpanded then
                     yield ul [ ]
                              [ menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage

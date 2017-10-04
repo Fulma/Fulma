@@ -11,7 +11,7 @@ let basic =
             [ Button.button [ ]
                 [ span [ ]
                     [ str "Dropdown" ]
-                  Icon.faIcon [ Icon.isSmall ] Fa.AngleDown ] ]
+                  Icon.faIcon [ Icon.isSmall ] Fa.I.AngleDown ] ]
           Dropdown.menu [ ]
             [ Dropdown.content [ ]
                 [ Dropdown.item [ ] [ str "Item n°1" ]
