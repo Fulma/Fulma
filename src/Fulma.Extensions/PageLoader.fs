@@ -70,4 +70,4 @@ module PageLoader =
                     [ opts.CustomClass.Value, opts.CustomClass.IsSome
                       Classes.IsActive , opts.IsActive ] :> IHTMLProp
               yield! opts.Props ]
-            [ ]
+            children
