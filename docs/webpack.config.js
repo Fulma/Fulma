@@ -12,34 +12,52 @@ var babelOptions = fableUtils.resolveBabelOptions({
     plugins: ["transform-runtime"]
 });
 
+var commonPlugins = [
+    new HtmlWebpackPlugin({
+        filename: resolve('./public/index.html'),
+        template: resolve('./index.html'),
+        hash: true,
+        minify: isProduction ? {} : false
+    })
+];
+
 var isProduction = process.argv.indexOf("-p") >= 0;
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
 
+var plugins = isProduction
+    ? commonPlugins
+    : commonPlugins.concat([
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "manifest",
+            minChunks: Infinity
+        }),
+    ]);
+
 module.exports = {
-    devtool: isProduction ? false : "source-map",
-    entry: resolve('./docs.fsproj'),
+    devtool: false,
+    entry: {
+        main: resolve('./docs.fsproj')
+    },
     output: {
         path: resolve('./public'),
-        filename: 'bundle.js'
+        filename: '[name].js'
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: resolve('./public/index.html'),
-            template: resolve('./index.html'),
-            hash: true,
-            minify: isProduction ? {} : false
-        })
-    ],
+    plugins: plugins,
     resolve: {
         alias: {
             "react": "preact-compat",
             "react-dom": "preact-compat"
         },
-        modules: [resolve("../node_modules/")]
+        modules: [resolve("../node_modules/")],
+        symlinks: false
     },
     devServer: {
         contentBase: resolve('./public/'),
-        port: 8080
+        port: 8080,
+        hot: true,
+        inline: true
     },
     module: {
         rules: [
@@ -49,7 +67,8 @@ module.exports = {
                     loader: "fable-loader",
                     options: {
                         babel: babelOptions,
-                        define: isProduction ? [] : ["DEBUG"]
+                        define: isProduction ? [] : ["DEBUG"],
+                        extra: { optimizeWatch: true }
                     }
                 }
             },

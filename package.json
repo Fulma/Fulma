@@ -33,13 +33,13 @@
     "bulma-timeline": "^0.0.3",
     "bulma-tooltip": "^0.0.4",
     "css-loader": "^0.28.7",
-    "fable-loader": "^1.1.2",
+    "fable-loader": "^1.1.3",
     "fable-utils": "^1.0.6",
     "html-webpack-plugin": "^2.30.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.8.2"
+    "webpack-dev-server": "^2.9.1"
   }
 }
