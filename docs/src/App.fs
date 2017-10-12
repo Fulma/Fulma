@@ -13,7 +13,7 @@ open Global
 open Types
 
 // Bulma + Docs site css
-importSideEffects "../sass/main.sass"
+importSideEffects "../scss/main.scss"
 // Prism css
 importSideEffects "../css/prism.min.css"
 

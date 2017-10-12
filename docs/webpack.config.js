@@ -17,7 +17,10 @@ console.log("Bundling for " + (isProduction ? "production" : "development") + ".
 
 module.exports = {
     devtool: isProduction ? false : "source-map",
-    entry: resolve('./docs.fsproj'),
+    entry: [
+        "babel-polyfill",
+        resolve('./docs.fsproj'),
+    ],
     output: {
         path: resolve('./public'),
         filename: 'bundle.js'
@@ -62,7 +65,7 @@ module.exports = {
                 },
             },
             {
-                test: /\.sass$/,
+                test: /\.s(a|c)ss$/,
                 use: ["style-loader", "css-loader", "sass-loader"]
             },
             {

@@ -1,0 +1,134 @@
+@import "./../../node_modules/bulma/sass/utilities/initial-variables";
+
+// Bulma customization
+$body-size: 14px;
+
+// Colors
+$dark-blue: #2D3947;
+$primary: $dark-blue;
+
+@import '../node_modules/bulma/bulma';
+
+@import "../node_modules/bulma-badge/badge.sass";
+@import "../node_modules/bulma-calendar/calendar.sass";
+@import "../node_modules/bulma-checkradio/checkradio.sass";
+@import "../node_modules/bulma-divider/divider.sass";
+@import "../node_modules/bulma-pageloader/pageloader.sass";
+@import "../node_modules/bulma-pricingtable/pricing-table.sass";
+@import "../node_modules/bulma-ribbon/ribbon.sass";
+@import "../node_modules/bulma-slider/slider.sass";
+@import "../node_modules/bulma-steps/steps.sass";
+@import "../node_modules/bulma-switch/switch.sass";
+@import "../node_modules/bulma-timeline/timeline.sass";
+@import "../node_modules/bulma-tooltip/tooltip.sass";
+
+
+@import "./callout";
+@import "./prism";
+
+.navbar-bg {
+    background-color: $dark-blue;
+    .nav {
+        background-color: $dark-blue;
+    }
+    .title {
+        color: white;
+        font-weight: 600;
+    }
+}
+
+.twitter {
+    color: #55acee !important; // Override bulma
+    border-color: #55acee;
+}
+
+
+.github {
+    color: $black !important; // Override bulma
+    border-color: black;
+}
+
+.block > * {
+    margin: 0 5px;
+}
+
+
+// Needed otherwise iframes show a disabled scrollbar
+html,
+body {
+    overflow-y: show;
+    overflow-x: hidden;
+}
+
+.hero-body {
+    padding: 1rem;
+}
+
+
+// Override bulma .number class for prismjs classes
+.number {
+    align-items: center;
+    background-color: $background;
+    border-radius: 290486px;
+    display: inline;
+    font-size: 1em;
+    // height: 2em;
+    justify-content: center;
+    margin-right: 0em;
+    min-width: 2.5em;
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+}
+
+// Fix delete size
+// See https://github.com/jgthms/bulma/issues/781
+// .delete
+//     max-height: inherit
+//     max-width: inherit
+//     min-height: inherit
+//     min-width: inherit
+
+a {
+    &:not([class]) {
+        color: #028fcc;
+            &:hover {
+            color: #2d3947;
+        }
+    }
+}
+
+.menu-group {
+    .icon {
+        float: right;
+        &,
+        &.is-small,
+        &.is-medium,
+        &.is-large {
+            height: 1.5em;
+            width: 1.5em;
+        }
+
+        &:first-child:not(:last-child) {
+            margin-left: calc(-0.375em - 1px);
+            margin-right: 0.1875em;
+        }
+
+        &:last-child:not(:first-child) {
+            margin-left: 0.1875em;
+            margin-right: calc(-0.375em - 1px);
+        }
+
+        &:first-child:last-child {
+            margin-left: calc(-0.375em - 1px);
+            margin-right: calc(-0.375em - 1px)
+        }
+    }
+}
+
+// Fix Bulma radio & checkbox margin
+// Seems to be a problem with React
+input[type="checkbox"],
+input[type="radio"] {
+    margin-right: 0.5em;
+}
