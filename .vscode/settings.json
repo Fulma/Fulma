@@ -15,7 +15,10 @@
         "**/bower_components": true,
         "**/packages": true,
         "**/paket-files": true,
-        "**/artifacts": true
+        "**/artifacts": true,
+        "**/bundles.js": true,
+        "**/bundles.js.map": true,
+        "**/temp": true
     },
     "files.trimFinalNewlines": true,
     "files.trimTrailingWhitespace": true

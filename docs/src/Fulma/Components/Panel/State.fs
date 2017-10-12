@@ -6,26 +6,26 @@ open Types
 let iconCode =
     """
 ```fsharp
-Panel.panel
-    [ Panel.heading [ str "Repositories"]
+  Panel.panel [ ]
+    [ Panel.heading [ ] [ str "Repositories"]
       Panel.block [ ]
-        [ Control.control [ Control.hasIconLeft ]
+        [ Control.control_div [ Control.hasIconLeft ]
             [ Input.input [ Input.isSmall
                             Input.typeIsText
                             Input.placeholder "Search" ]
               Icon.icon [ Icon.isSmall
                           Icon.isLeft ]
                         [ i [ ClassName "fa fa-search" ] [ ] ] ] ]
-      Panel.tabs
+      Panel.tabs [ ]
         [ Panel.tab [ ] [ str "All" ]
           Panel.tab [ Panel.Tab.isActive ] [ str "Fable" ]
           Panel.tab [ ] [ str "Elmish" ]
           Panel.tab [ ] [ str "Bulma" ] ]
       Panel.block [ Panel.Block.isActive ]
-        [ Panel.icon [ i [ ClassName "fa fa-book" ] [ ] ]
+        [ Panel.icon [ ] [ i [ ClassName "fa fa-book" ] [ ] ]
           str "Bulma" ]
       Panel.block [ ]
-        [ Panel.icon [ i [ ClassName "fa fa-code-fork" ] [ ] ]
+        [ Panel.icon [ ] [ i [ ClassName "fa fa-code-fork" ] [ ] ]
           str "Fable" ]
       Panel.checkbox [ ]
         [ input [ Type "checkbox" ]

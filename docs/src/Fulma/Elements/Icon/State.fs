@@ -6,14 +6,15 @@ open Types
 let iconCode =
     """
 ```fsharp
-    Icon.icon [ Icon.isSmall ]
-        [ i [ ClassName "fa fa-home" ] [ ] ]
-    Icon.icon [ ]
-        [ i [ ClassName "fa fa-home" ] [ ] ]
-    Icon.icon [ Icon.isMedium ]
-        [ i [ ClassName "fa fa-home" ] [ ] ]
-    Icon.icon [ Icon.isLarge ]
-        [ i [ ClassName "fa fa-home" ] [ ] ]
+    div [ ClassName "block" ]
+        [ Icon.icon [ Icon.isSmall ]
+            [ i [ ClassName "fa fa-home" ] [ ] ]
+          Icon.icon [ ]
+            [ i [ ClassName "fa fa-lg fa-home" ] [ ] ]
+          Icon.icon [ Icon.isMedium ]
+            [ i [ ClassName "fa fa-2x fa-home" ] [ ] ]
+          Icon.icon [ Icon.isLarge ]
+            [ i [ ClassName "fa fa-3x fa-home" ] [ ] ] ]
 ```
     """
 
