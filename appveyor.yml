@@ -1,9 +1,6 @@
 build:
     verbosity: detailed
 
-cache:
-    - "%LOCALAPPDATA%\\Yarn"
-
 image: Visual Studio 2017
 
 build_script:
