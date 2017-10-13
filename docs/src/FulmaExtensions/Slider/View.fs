@@ -11,15 +11,13 @@ open Fulma.Extra.FontAwesome
 
 let colorInteractive =
     div [ ClassName "block" ]
-                      [
-                        Slider.slider [ Slider.step 10.
+                      [ Slider.slider [ Slider.step 10.
                                         Slider.defaultValue 40. ] [ ]
                         Slider.slider [ Slider.isPrimary ] [ ]
                         Slider.slider [ Slider.isInfo ] [ ]
                         Slider.slider [ Slider.isSuccess ] [ ]
                         Slider.slider [ Slider.isWarning ] [ ]
-                        Slider.slider [ Slider.isDanger ] [ ]
-                      ]
+                        Slider.slider [ Slider.isDanger ] [ ] ]
 
 let sizeInteractive =
     div [ ClassName "block" ]
@@ -44,14 +42,12 @@ let stylesInteractive =
 
 let stateInteractive =
     div [ ClassName "block" ]
-        [ Slider.slider [  Slider.isDisabled ] [ ]
-        ]
+        [ Slider.slider [  Slider.isDisabled ] [ ] ]
 
 let eventInteractive model dispatch =
     div [ ClassName "block" ]
-        [ Slider.slider [ Slider.onChange (fun x -> dispatch (Change (x.currentTarget?value |> sprintf "%O" |> int)))  ] [ ]
-          div [] [ str (sprintf "%i" model.Value) ]
-        ]
+        [ Slider.slider [ Slider.onChange (fun x -> dispatch (Change (x.currentTarget?value |> sprintf "%O" |> int))) ] [ ]
+          div [ ] [ str (sprintf "%i" model.Value) ] ]
 
 let root model dispatch =
     Render.docPage [    Render.contentFromMarkdown model.Intro
@@ -81,7 +77,7 @@ The following helper help you control the behavior of your slider:
 - `Slider.value`: Force the value of the slider. You will need to update this value yourself if you want the slider to move.
 - `Slider.step`: control the step of the slider. Ex: If you set it to 10, it will increment 10 by 10
 - `Slider.min`: minimal value
-- `Slider.max`: maxime value
+- `Slider.max`: maximal value
                             """
                             (div [] []) // No view for now
                         Render.docSection

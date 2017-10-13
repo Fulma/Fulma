@@ -1,3 +1,7 @@
+### next
+
+* Add slider extension support, by https://github.com/evilz
+
 ### 0.1.0-beta-006
 
 * Update Fable-React deps

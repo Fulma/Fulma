@@ -49,7 +49,7 @@ $primary: $dark-blue;
 }
 
 .block > * {
-    margin: 0 5px;
+    margin-right: 5px !important; // !important needed to over slider margin
 }
 
 
