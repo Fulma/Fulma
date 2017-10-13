@@ -6,33 +6,33 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
 open Fulma.Elements
-open Fulma.Grids
+open Fulma.Layouts
 open Fulma.Extensions
 open Fulma.Extra.FontAwesome
 
-let inlineBlockInteractive = 
+let inlineBlockInteractive =
     Columns.columns [ ]
-        [ 
+        [
             Column.column [ ]
                 [ div [ ClassName "block" ]
-                      [ 
+                      [
                         b [] [str "Block"]
                         Switch.switch [ ] [ str "One" ]
                         Switch.switch [ ] [ str "Two" ]
-                        
+
                         b [] [str "Inline"]
                         div [ ClassName "field"] [
                             yield! Switch.switchInline [ ] [ str "One " ]
                             yield! Switch.switchInline [ ] [ str "Two " ]
                         ]
-                      ] 
+                      ]
                 ]
-            
+
         ]
 
 let colorInteractive =
     Columns.columns [ ]
-        [ 
+        [
             Column.column [ ]
                 [
                     div   [ ClassName "block" ]
@@ -62,15 +62,15 @@ let sizeInteractive =
         [ Switch.switch [ Switch.isChecked; Switch.isSmall ] [ str "Small" ]
           Switch.switch [ Switch.isChecked ] [ str "Normal" ]
           Switch.switch [ Switch.isChecked; Switch.isMedium ] [ str "Medium" ]
-          Switch.switch [ Switch.isChecked; Switch.isLarge ] [ str "Large" ] 
+          Switch.switch [ Switch.isChecked; Switch.isLarge ] [ str "Large" ]
         ]
-            
 
-        
+
+
 
 let stylesInteractive =
     Columns.columns [ ]
-            [ 
+            [
               Column.column [ ]
                 [
                     div [ ClassName "block" ]
@@ -106,7 +106,7 @@ let stylesInteractive =
                 ]
 
             ]
-          
+
 
 let stateInteractive =
     div [ ClassName "block" ]
@@ -115,33 +115,33 @@ let stateInteractive =
           Switch.switch [ ] [ str "Unchecked" ]
           Switch.switch [ Switch.isChecked;] [ str "checked" ]
         ]
-          
+
 
 
 let eventInteractive model dispatch =
     let state = not model.IsChecked
-    
+
     div [ ClassName "block" ]
-        [ Switch.switch 
+        [ Switch.switch
             [
-                if model.IsChecked then yield Switch.isChecked;  
+                if model.IsChecked then yield Switch.isChecked;
                 yield Switch.onChange (fun x -> dispatch (Change state))
-            ] 
+            ]
             [ str  (sprintf "%A" model.IsChecked) ]
-        
-          Switch.switch 
-            [ 
-                if model.IsChecked then yield Switch.isChecked;  
+
+          Switch.switch
+            [
+                if model.IsChecked then yield Switch.isChecked;
                 yield Switch.onChange (fun x -> dispatch (Change state))
-            ] 
+            ]
             [ str  (if model.IsChecked then ":p" else ":'(") ]
-        
-          Switch.switch 
-            [ 
-                if model.IsChecked then yield Switch.isChecked;  
+
+          Switch.switch
+            [
+                if model.IsChecked then yield Switch.isChecked;
                 yield Switch.onChange (fun x -> dispatch (Change state))
-            ] 
-            [ (if model.IsChecked then Icon.faIcon [ ] Fa.Plane else Icon.faIcon [ ] Fa.Rocket) ]
+            ]
+            [ (if model.IsChecked then Icon.faIcon [ ] [ Fa.icon Fa.I.Plane ] else Icon.faIcon [ ] [ Fa.icon Fa.I.Rocket ]) ]
         ]
 
 let root model dispatch =
@@ -161,11 +161,11 @@ let root model dispatch =
 The switch can be **rounded, outlined or both**.
                             """
                             (Viewer.View.root stylesInteractive model.CircleViewer (CircleViewerMsg >> dispatch))
-                     
-                        Render.docSection 
+
+                        Render.docSection
                             "### States"
                             (Viewer.View.root stateInteractive model.StateViewer (StateViewerMsg >> dispatch))
-                        
+
                         Render.docSection
                             "### Event handler"
                             (Viewer.View.root (eventInteractive model dispatch) model.EventViewer (EventViewerMsg >> dispatch))
