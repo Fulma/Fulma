@@ -185,22 +185,12 @@ We provide convenience functions for **[Font Awesome](http://fontawesome.io/)**.
 
 You need the next `open` statement to access the FontAwesome convenience functions.
 
-All the examples below use Font Awesome.
-
 ```fsharp
     open Fulma.Elements
     open Fulma.Extra.FontAwesome
 ```
 
-
-### Container And Icon Sizes
-
-Bulma Icon element is a container for any type of icon font.
-
-When you create the element, you set it in the first group of options, which are usual Fulma properties available: size, position, CSS class, HTML props.
-In the second group of options you control the Font Awesome options: icon displayed, icon size
-
-Look at the code for more details.
+All the examples below use Font Awesome.
                         """
                         (Viewer.View.root containerSizes model.IconViewer (IconViewerMsg >> dispatch))
                      Render.docSection
