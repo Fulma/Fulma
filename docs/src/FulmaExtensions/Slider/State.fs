@@ -64,6 +64,28 @@ let intro =
 The **Slider** can have different colors, sizes and states.
 
 *[Documentation](https://wikiki.github.io/bulma-extensions/slider)*
+
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-slider`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-slider@0.0.2`</td>
+        </tr>
+    </tbody>
+<table>
         """
 
 

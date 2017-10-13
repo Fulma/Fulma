@@ -9,14 +9,14 @@ let inlineBlockCode =
     // Block
     Switch.switch [ ] [ str "One" ]
     Switch.switch [ ] [ str "Two" ]
-    
+
     // Inline
     div [ ClassName "field"] [
         yield! Switch.switchInline [ ] [ str "One " ]
         yield! Switch.switchInline [ ] [ str "Two " ]
     ]
 ```
-    """ 
+    """
 let colorCode =
     """
 ```fsharp
@@ -51,7 +51,7 @@ let circleCode =
 Switch.switch [ Switch.isChecked; Switch.isRounded ] [ str "Rounded" ]
 Switch.switch [ Switch.isChecked; Switch.isOutlined ] [ str "Outline" ]
 Switch.switch [ Switch.isChecked; Switch.isRounded; Switch.isOutlined ] [ str "Both" ]
-                          
+
 ```
     """
 
@@ -79,11 +79,11 @@ let eventCode =
     """
 ```fsharp
     // For registering a change event, we can use the Switch.onChange helper
-    Switch.switch 
+    Switch.switch
             [
-                if model.IsChecked then yield Switch.isChecked;  
+                if model.IsChecked then yield Switch.isChecked;
                 yield Switch.onChange (fun x -> dispatch (Change state))
-            ] 
+            ]
             [ str  (sprintf "%A" model.IsChecked) ]
 
 ```
@@ -96,8 +96,35 @@ let intro =
 The **Switch** can have different colors, sizes and states.
 
 *[Documentation](https://wikiki.github.io/bulma-extensions/switch)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-switch`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-switch@0.0.3`</td>
+        </tr>
+    </tbody>
+<table>
         """
 
+let rtlCode =
+    """
+```fsharp
+    Switch.switch [ Switch.isRtl ] "Label is on the left"
+```
+    """
 
 let init() =
     { InlineBlockViewer = Viewer.State.init inlineBlockCode
@@ -106,6 +133,7 @@ let init() =
       CircleViewer = Viewer.State.init circleCode
       StateViewer = Viewer.State.init stateCode
       EventViewer = Viewer.State.init eventCode
+      RtlViewer = Viewer.State.init rtlCode
       Intro = intro
       IsChecked = false
     }
@@ -130,5 +158,8 @@ let update msg model =
     | EventViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.EventViewer
         { model with EventViewer = viewer }, Cmd.map EventViewerMsg viewerMsg
-    | Change state -> 
+    | RtlViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.RtlViewer
+        { model with RtlViewer = viewer }, Cmd.map RtlViewerMsg viewerMsg
+    | Change state ->
         { model with IsChecked = state }, Cmd.none

@@ -7,14 +7,16 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
+open Fulma.Elements.Form
 
 module Switch =
 
-    module Styles =
+    module Classes =
         let [<Literal>] Switch = "switch"
         let [<Literal>] IsRounded = "is-rounded"
         let [<Literal>] IsOutlined = "is-outlined"
-
+        let [<Literal>] IsThin = "is-thin"
+        let [<Literal>] IsRtl = "is-rtl"
 
     module Types =
         type Option =
@@ -22,19 +24,19 @@ module Switch =
             | Size of ISize
             | IsOutlined
             | IsRounded
+            | IsThin
+            | IsRtl
             | IsChecked of bool
-            | IsDisabled of bool
-            | Value of string // String ???
-            | Label of string
+            | IsDisabled
             | Props of IHTMLProp list
             | OnChange of (React.FormEvent -> unit)
             | CustomClass of string
-            | ComponentId of string
-            
+
         let ofStyles style =
             match style with
-            | IsOutlined -> Styles.IsOutlined
-            | IsRounded -> Styles.IsRounded
+            | IsOutlined -> Classes.IsOutlined
+            | IsRounded -> Classes.IsRounded
+            | IsThin -> Classes.IsThin
             | value -> failwithf "%A isn't a valid style value" value
 
 
@@ -46,8 +48,8 @@ module Switch =
               IsRounded : bool
               IsChecked : bool
               IsDisabled : bool
-              Value : string
-              Label : string
+              IsRtl : bool
+              IsThin : bool
               Props : IHTMLProp list
               CustomClass : string option
               OnChange : (React.FormEvent -> unit) option
@@ -59,8 +61,8 @@ module Switch =
                   IsRounded = false
                   IsChecked = false
                   IsDisabled = false
-                  Value = ""
-                  Label = ""
+                  IsRtl = false
+                  IsThin = false
                   Props = []
                   CustomClass = None
                   OnChange = None
@@ -74,12 +76,14 @@ module Switch =
     let isLarge = Size IsLarge
 
     // States
-    let isChecked =  IsChecked true
-    let isDisabled = IsDisabled true
+    let isChecked = IsChecked
+    let isDisabled = IsDisabled
 
-    // Styles
+    // Classes
     let isOutlined = IsOutlined
     let isRounded = IsRounded
+    let isThin = IsThin
+    let isRtl = IsRtl
 
 
     // Levels and colors
@@ -95,15 +99,14 @@ module Switch =
 
     // Label and Value
     let value data  = Value data
-    let text s = Label s
 
     // Extra
     let props props = Props props
     let customClass = CustomClass
-    
+
     let onChange cb = OnChange cb
 
-    let switchInline (options : Option list) children =
+    let switchInline (options : Option list) txt =
 
         let parseOptions (result: Options) opt =
             match opt with
@@ -112,42 +115,38 @@ module Switch =
             | IsOutlined -> { result with IsOutlined  = true }
             | IsRounded -> { result with IsRounded  = true }
             | IsChecked state -> { result with IsChecked = state }
-            | IsDisabled state -> { result with IsDisabled = state }
-            | Value value -> { result with Value = value }
-            | Label label -> { result with Label = label } 
+            | IsDisabled -> { result with IsDisabled = true }
+            | IsRtl -> { result with IsRtl = true }
+            | IsThin -> { result with IsThin = true }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnChange cb -> { result with OnChange = cb |> Some }
-            | ComponentId customId -> {result with ComponentId = customId }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        [ input 
-            [ yield classBaseList
-                (Helpers.generateClassName Styles.Switch [ opts.Level; opts.Size; ])
-                 [ Styles.IsOutlined, opts.IsOutlined
-                   Styles.IsRounded, opts.IsRounded
+        [ input
+            [ yield classBaseList Classes.Switch
+                 [ opts.Level.Value, opts.Level.IsSome
+                   opts.Size.Value, opts.Size.IsSome
+                   Classes.IsOutlined, opts.IsOutlined
+                   Classes.IsRounded, opts.IsRounded
+                   Classes.IsThin, opts.IsThin
+                   Classes.IsRtl, opts.IsRtl
                    opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               if opts.OnChange.IsSome then
-                yield Checked opts.IsChecked :> IHTMLProp
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
+                yield Checked opts.IsChecked :> IHTMLProp
               else
                 yield DefaultChecked opts.IsChecked :> IHTMLProp
-              yield! opts.Props 
+              yield! opts.Props
               yield Type "checkbox" :> IHTMLProp
               yield Id opts.ComponentId :> IHTMLProp
-              yield Disabled opts.IsDisabled :> IHTMLProp
+              yield Disabled opts.IsDisabled :> IHTMLProp ]
 
-            ]
+          label [ HtmlFor opts.ComponentId ]
+                [ str txt ] ]
 
-          label [ HtmlFor opts.ComponentId ] 
-                [ match children with
-                      | [] -> yield str opts.Label
-                      | _ -> yield! children
 
-                ]
-        ]
-
-    
-    let switch (options : Option list) children =
-        div [ ClassName "field" ] (switchInline options children)
+    let switch (options : Option list) txt =
+        Field.field_div [ ]
+            (switchInline options txt)
