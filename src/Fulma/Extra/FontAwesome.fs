@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma.Elements.Icon
+open Fulma.Common
 
 module FontAwesome =
 
@@ -896,6 +897,7 @@ module FontAwesome =
                 | Color         of IColor
                 | Icon          of IFontAwesomeIcon
                 | Animation     of IAnimation
+                | IsLi
 
             type StackParentOption =
                 | ParentSize of IIconSize
@@ -957,6 +959,7 @@ module FontAwesome =
                     Rotation    : string option
                     Flip        : string option
                     Color       : string option
+                    IsLi        : bool
                 }
                 with
                     static member Empty =
@@ -969,6 +972,7 @@ module FontAwesome =
                             Rotation    = None
                             Flip        = None
                             Color       = None
+                            IsLi        = false
                         }
 
             type StackParentOptions =
@@ -1013,6 +1017,7 @@ module FontAwesome =
         let flipHorizontal               = IconOption.Flip Horizontal
         let flipVertical                 = IconOption.Flip Vertical
         let colorInverse                 = IconOption.Color Inverse
+        let isLi                         = IconOption.IsLi
 
         //Stack Child Functions
         module Child =
@@ -1065,6 +1070,7 @@ module FontAwesome =
                     | Flip f        -> { result with Rotation   = ofFlip f              |> Some }
                     | Color i       -> { result with Color      = ofColor i             |> Some }
                     | Animation a   -> { result with Animation  = ofAnimation a         |> Some }
+                    | IsLi          -> { result with IsLi       = false }
 
             faOptions |> List.fold parseOptions IconOptions.Empty
 
@@ -1088,12 +1094,12 @@ module FontAwesome =
             icon options
                 [ displayIcon "fa " opts ]
 
-        let inline faUl children = ul [ ClassName "fa-ul" ] children
+        let fa_ul (options: GenericOption list) children =
+            let opts = genericParse options
 
-        let faLi (faOptions: IconOption list) (children: Fable.Import.React.ReactElement list) =
-            let opts = toIconOptions faOptions
-            li [ ]
-                [
-                    yield displayIcon "fa-li fa " opts
-                    yield! children
-                ]
+            ul
+                [ yield classBaseList
+                            "fa-ul"
+                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+                  yield! opts.Props ]
+                children

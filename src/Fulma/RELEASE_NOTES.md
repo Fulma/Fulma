@@ -1,3 +1,7 @@
+### next
+
+* BREAKING CHANGE: Fix icons display and implement Font Awesome helpers, by https://github.com/EdouardM
+
 ### 1.0.0-beta-001
 
 * Beta is ready for #FableConf ! ! !
