@@ -11,39 +11,31 @@ open Fulma.Extra.FontAwesome
 //Display modification of container size with Bulma options
 let containerSizes =
     div [ ClassName "block" ]
-        [ Icon.icon [ Icon.isSmall ]
-            [ i [ ClassName "fa fa-home" ] [ ] ]
-          Icon.icon [ ]
-            [ i [ ClassName "fa fa-lg fa-home" ] [ ] ]
-          Icon.icon [ Icon.isMedium ]
-            [ i [ ClassName "fa fa-2x fa-home" ] [ ] ]
-          Icon.icon [ Icon.isLarge ]
-            [ i [ ClassName "fa fa-3x fa-home" ] [ ] ] ]
+        [ //faIcon creates one Fulma icon element containing one Font Awesome icon
+          Icon.faIcon [ // First group of Options: Usual fulma properties available: size, class
+                        // Icon container size set to small in Fulma
+                        Icon.isSmall;
+                        // Custom class to set background color to yellow to display container
+                        Icon.customClass "icon-size" ]
+                        //Second group of Options: Font Awesome options
+                        [ //Display one Font Awesome Icon available in the Fa.I namespace
+                          Fa.icon Fa.I.Home ]
 
-            Icon.faIcon [
-                            //No setting for Icon container size = Normal size
-                            //...
-                            Icon.customClass "icon-size"
-                        ] [ Fa.icon Fa.I.Home ]
+          Icon.faIcon [ //No setting for Icon container size = Normal size
+                        //...
+                        Icon.customClass "icon-size" ]
+                      [ Fa.icon Fa.I.Home ]
 
-            Icon.faIcon [
-                            Icon.isMedium;
-                            Icon.customClass "icon-size"
-                        ] [
-                            Fa.icon Fa.I.Home
-                            //Makes the Icon 33% larger
-                            Fa.faLg
-                        ]
-
-            Icon.faIcon [
-                            Icon.isLarge;
-                            Icon.customClass "icon-size"
-                        ] [
-                            Fa.icon Fa.I.Home
-                            //Makes the Icon 2x times larger
-                            Fa.fa2x
-                        ]
-        ]
+          Icon.faIcon [ Icon.isMedium
+                        Icon.customClass "icon-size" ]
+                      [ Fa.icon Fa.I.Home
+                        //Makes the Icon 33% larger
+                        Fa.faLg ]
+          Icon.faIcon [ Icon.isLarge
+                        Icon.customClass "icon-size" ]
+                      [ Fa.icon Fa.I.Home
+                        //Makes the Icon 2x times larger
+                        Fa.fa2x ] ]
 
 //Diplay Font Awesome Rotation & Flip
 let iconRotationFlip =
