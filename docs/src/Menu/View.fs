@@ -109,9 +109,9 @@ let menuFulmaExtensions currentPage subModel dispatch =
         [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
       Menu.list [ ]
         [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage
-          menuItem "Slider" (FulmaExtensions Slider) currentPage
           menuItem "Divider" (FulmaExtensions Divider) currentPage
           menuItem "Page-loader" (FulmaExtensions PageLoader) currentPage
+          menuItem "Slider" (FulmaExtensions Slider) currentPage
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
 
 let menuFulmaElmish currentPage dispatch =

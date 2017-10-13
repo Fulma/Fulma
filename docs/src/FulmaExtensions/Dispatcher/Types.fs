@@ -5,7 +5,6 @@ type Model =
       PageLoader : FulmaExtensions.PageLoader.Types.Model
       Tooltip : FulmaExtensions.Tooltip.Types.Model
       Divider : FulmaExtensions.Divider.Types.Model
-      PageLoader : FulmaExtensions.PageLoader.Types.Model
       Slider : FulmaExtensions.Slider.Types.Model }
 
 type Msg =
