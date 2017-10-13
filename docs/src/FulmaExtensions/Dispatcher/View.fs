@@ -20,3 +20,6 @@ let root fulmaExtensionsPage model dispatch =
 
     | PageLoader ->
         FulmaExtensions.PageLoader.View.root model.PageLoader (PageLoaderMsg >> dispatch)
+
+    | Slider ->
+        FulmaExtensions.Slider.View.root model.Slider (SliderMsg >> dispatch)

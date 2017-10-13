@@ -18,6 +18,7 @@
         <Compile Include="Calendar.fs" />
         <Compile Include="Divider.fs" />
         <Compile Include="PageLoader.fs" />
+        <Compile Include="Slider.fs" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
