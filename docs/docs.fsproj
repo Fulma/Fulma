@@ -3,17 +3,16 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <!-- Libs -->
+    <ProjectReference Include="../src/Fulma.Elmish/Fulma.Elmish.fsproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="src/Libs/Fable.Import.Marked.fs" />
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
-    <!-- Global to the app -->
     <Compile Include="src/Global.fs" />
     <Compile Include="src/Render.fs" />
-    <!-- Viewer -->
     <Compile Include="src/Viewer/Types.fs" />
     <Compile Include="src/Viewer/State.fs" />
     <Compile Include="src/Viewer/View.fs" />
-    <!-- Menu -->
     <Compile Include="src/Menu/Types.fs" />
     <Compile Include="src/Menu/State.fs" />
     <Compile Include="src/Menu/View.fs" />
@@ -147,18 +146,11 @@
     <Compile Include="src/Home/Types.fs" />
     <Compile Include="src/Home/State.fs" />
     <Compile Include="src/Home/View.fs" />
-    <!-- Navigation -->
     <Compile Include="src/Migration/View.fs" />
-    <!-- Navbar -->
     <Compile Include="src/Navbar/View.fs" />
-    <!-- App -->
     <Compile Include="src/Types.fs" />
     <Compile Include="src/State.fs" />
     <Compile Include="src/App.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- <ProjectReference Include="../src/Fulma/Fulma.fsproj" /> -->
-    <ProjectReference Include="../src/Fulma.Elmish/Fulma.Elmish.fsproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
