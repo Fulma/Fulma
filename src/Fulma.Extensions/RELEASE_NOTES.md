@@ -1,6 +1,7 @@
 ### next
 
-* Add slider extension support, by https://github.com/evilz
+* Add slider extension support
+* Add switch extension support
 
 ### 0.1.0-beta-006
 

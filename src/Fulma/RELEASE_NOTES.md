@@ -1,6 +1,6 @@
 ### next
 
-* BREAKING CHANGE: Fix icons display and implement Font Awesome helpers, by https://github.com/EdouardM
+* BREAKING CHANGE: Fix icons display and implement Font Awesome helpers
 
 ### 1.0.0-beta-001
 
