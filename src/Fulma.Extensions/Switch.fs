@@ -106,7 +106,7 @@ module Switch =
 
     let onChange cb = OnChange cb
 
-    let switchInline (options : Option list) txt =
+    let switchInline (options : Option list) children =
 
         let parseOptions (result: Options) opt =
             match opt with
@@ -144,9 +144,9 @@ module Switch =
               yield Disabled opts.IsDisabled :> IHTMLProp ]
 
           label [ HtmlFor opts.ComponentId ]
-                [ str txt ] ]
+                children ]
 
 
-    let switch (options : Option list) txt =
+    let switch (options : Option list) children =
         Field.field_div [ ]
-            (switchInline options txt)
+            (switchInline options children)
