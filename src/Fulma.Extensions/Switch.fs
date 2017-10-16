@@ -66,7 +66,7 @@ module Switch =
                   Props = []
                   CustomClass = None
                   OnChange = None
-                  ComponentId = System.Guid.NewGuid() |> sprintf "%O" }
+                  ComponentId = System.Guid.NewGuid().ToString() }
 
     open Types
 
