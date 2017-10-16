@@ -37,7 +37,7 @@ module Switch =
             | IsOutlined -> Classes.IsOutlined
             | IsRounded -> Classes.IsRounded
             | IsThin -> Classes.IsThin
-            | value -> failwithf "%A isn't a valid style value" value
+            | value -> string value + " isn't a valid style value"
 
 
         type ComponentId = string

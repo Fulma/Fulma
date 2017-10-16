@@ -52,7 +52,7 @@ module Slider =
         let ofStyles style =
             match style with
             | IsCircle -> Classes.IsCircle
-            | value -> failwithf "%A isn't a valid style value" value
+            | value -> string value + " isn't a valid style value"
 
 
         type ComponentId = string
@@ -85,7 +85,7 @@ module Slider =
                   Props = []
                   CustomClass = None
                   OnChange = None
-                  ComponentId = System.Guid.NewGuid() |> sprintf "%O" }
+                  ComponentId = System.Guid.NewGuid().ToString() }
 
     open Types
 

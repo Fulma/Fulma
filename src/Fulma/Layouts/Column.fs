@@ -512,8 +512,9 @@ module Column =
                 { result with WideScreenpOffset = ofOffset (screen, offset) |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
-            | x -> failwithf "Error when parsing column option %A" x
-
+            | x ->
+                Fable.Import.JS.console.warn("Error when parsing column option " + string x)
+                result
 
         let opts = options |> List.fold parseOptions Options.Empty
 

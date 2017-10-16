@@ -49,7 +49,7 @@ module Button =
             | IsOutlined -> Bulma.Button.Styles.IsOutlined
             | IsInverted -> Bulma.Button.Styles.IsInverted
             | IsLink -> Bulma.Button.Styles.IsLink
-            | value -> failwithf "%A isn't a valid style value" value
+            | value -> string value + " isn't a valid style value"
 
         let ofState state =
             match state with
