@@ -11,17 +11,17 @@ open Fulma.BulmaClasses
 
 let basic =
     div [ ClassName "block" ]
-        [ Button.button [ Button.props [ Tooltip.dataTooltip "Top tooltip" ]
-                          Button.customClass Tooltip.ClassName ]
+        [ Button.button_div [ Button.props [ Tooltip.dataTooltip "Top tooltip" ]
+                              Button.customClass Tooltip.ClassName ]
             [ str "Top tooltip" ]
-          Button.button [ Button.props [ Tooltip.dataTooltip "Left tooltip" ]
-                          Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipLeft) ]
+          Button.button_div [ Button.props [ Tooltip.dataTooltip "Left tooltip" ]
+                              Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipLeft) ]
             [ str "Left tooltip" ]
-          Button.button [ Button.props [ Tooltip.dataTooltip "Right tooltip" ]
-                          Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipRight) ]
+          Button.button_div [ Button.props [ Tooltip.dataTooltip "Right tooltip" ]
+                              Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipRight) ]
             [ str "Right tooltip" ]
-          Button.button [ Button.props [ Tooltip.dataTooltip "Bottom tooltip" ]
-                          Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipBottom) ]
+          Button.button_div [ Button.props [ Tooltip.dataTooltip "Bottom tooltip" ]
+                              Button.customClass (Tooltip.ClassName ++ Tooltip.IsTooltipBottom) ]
             [ str "Bottom tooltip" ] ]
 
 

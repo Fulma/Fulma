@@ -26,24 +26,24 @@ let basicInteractive (model:Model) (dispatch:Msg->unit) =
                 [ str "Click on a button to display a loader for 3 sec" ] ]
           div [ ClassName "block" ]
             [
-                Button.button [ Button.isBlack
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsBlack))] [ str "Show loader" ]
-                Button.button [ Button.isDanger
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsDanger))] [ str "Show loader" ]
-                Button.button [ Button.isDark
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsDark))] [ str "Show loader" ]
-                Button.button [ Button.isInfo
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsInfo))] [ str "Show loader" ]
-                Button.button [ Button.isLight
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsLight))] [ str "Show loader" ]
-                Button.button [ Button.isPrimary
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsPrimary))] [ str "Show loader" ]
-                Button.button [ Button.isSuccess
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsSuccess))] [ str "Show loader" ]
-                Button.button [ Button.isWarning
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsWarning))] [ str "Show loader" ]
-                Button.button [ Button.isWhite
-                                Button.onClick (fun _ -> dispatch (IsLoadingMsg IsWhite))] [ str "Show loader" ] ] ]
+                Button.button_div [ Button.isBlack
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsBlack))] [ str "Show loader" ]
+                Button.button_div [ Button.isDanger
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsDanger))] [ str "Show loader" ]
+                Button.button_div [ Button.isDark
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsDark))] [ str "Show loader" ]
+                Button.button_div [ Button.isInfo
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsInfo))] [ str "Show loader" ]
+                Button.button_div [ Button.isLight
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsLight))] [ str "Show loader" ]
+                Button.button_div [ Button.isPrimary
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsPrimary))] [ str "Show loader" ]
+                Button.button_div [ Button.isSuccess
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsSuccess))] [ str "Show loader" ]
+                Button.button_div [ Button.isWarning
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsWarning))] [ str "Show loader" ]
+                Button.button_div [ Button.isWhite
+                                    Button.onClick (fun _ -> dispatch (IsLoadingMsg IsWhite))] [ str "Show loader" ] ] ]
 
 let root model dispatch =
     Render.docPage [    Render.contentFromMarkdown model.Intro

@@ -30,7 +30,7 @@ let basic =
                     [ str "Components" ] ] ]
           Navbar.end_div [ ]
             [ Navbar.item_div [ ]
-                [ Button.button [ Button.isSuccess ]
+                [ Button.button_div [ Button.isSuccess ]
                     [ str "Demo" ] ] ] ]
 
 let colors =
@@ -55,7 +55,7 @@ let colors =
                         [ str "Components" ] ] ]
               Navbar.end_div [ ]
                 [ Navbar.item_div [ ]
-                    [ Button.button [ Button.isSuccess ]
+                    [ Button.button_div [ Button.isSuccess ]
                         [ str "Demo" ] ] ] ]
 
     div [ ]

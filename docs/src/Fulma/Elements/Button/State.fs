@@ -6,27 +6,27 @@ open Types
 let colorCode =
     """
 ```fsharp
-    Button.button [ ] [ str "Button" ]
-    Button.button [ Button.isWhite ] [ str "White" ]
-    Button.button [ Button.isLight ] [ str "Light" ]
-    Button.button [ Button.isDark ] [ str "Dark" ]
-    Button.button [ Button.isBlack ] [ str "Black" ]
-    Button.button [ Button.isLink ] [ str "Link" ]
-    Button.button [ Button.isPrimary ] [ str "Primary" ]
-    Button.button [ Button.isInfo ] [ str "Info" ]
-    Button.button [ Button.isSuccess ] [ str "Success" ]
-    Button.button [ Button.isWarning ] [ str "Warning" ]
-    Button.button [ Button.isDanger ] [ str "Danger" ]
+    Button.button_div [ ] [ str "Button" ]
+    Button.button_div [ Button.isWhite ] [ str "White" ]
+    Button.button_div [ Button.isLight ] [ str "Light" ]
+    Button.button_div [ Button.isDark ] [ str "Dark" ]
+    Button.button_div [ Button.isBlack ] [ str "Black" ]
+    Button.button_div [ Button.isLink ] [ str "Link" ]
+    Button.button_div [ Button.isPrimary ] [ str "Primary" ]
+    Button.button_div [ Button.isInfo ] [ str "Info" ]
+    Button.button_div [ Button.isSuccess ] [ str "Success" ]
+    Button.button_div [ Button.isWarning ] [ str "Warning" ]
+    Button.button_div [ Button.isDanger ] [ str "Danger" ]
 ```
     """
 
 let sizeCode =
     """
 ```fsharp
-    Button.button [ Button.isSmall ] [ str "Small" ]
-    Button.button [ ] [ str "Normal" ]
-    Button.button [ Button.isMedium ] [ str "Medium" ]
-    Button.button [ Button.isLarge ] [ str "Large" ]
+    Button.button_div [ Button.isSmall ] [ str "Small" ]
+    Button.button_div [ ] [ str "Normal" ]
+    Button.button_div [ Button.isMedium ] [ str "Medium" ]
+    Button.button_div [ Button.isLarge ] [ str "Large" ]
 ```
     """
 
@@ -34,32 +34,32 @@ let sizeCode =
 let outlinedCode =
     """
 ```fsharp
-    Button.button [ Button.isOutlined ] [ str "Outlined" ]
-    Button.button [ Button.isSuccess; Button.isOutlined ] [ str "Outlined" ]
-    Button.button [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
-    Button.button [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
-    Button.button [ Button.isDanger;  Button.isOutlined ] [ str "Outlined" ]
+    Button.button_div [ Button.isOutlined ] [ str "Outlined" ]
+    Button.button_div [ Button.isSuccess; Button.isOutlined ] [ str "Outlined" ]
+    Button.button_div [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
+    Button.button_div [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
+    Button.button_div [ Button.isDanger;  Button.isOutlined ] [ str "Outlined" ]
 ```
     """
 
 let mixedStyleCode =
     """
 ```fsharp
-    Button.button [ Button.isInverted ] [ str "Inverted" ]
-    Button.button [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
-    Button.button [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
-    Button.button [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
+    Button.button_div [ Button.isInverted ] [ str "Inverted" ]
+    Button.button_div [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
+    Button.button_div [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
+    Button.button_div [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
 ```
     """
 
 let stateCode =
     """
 ```fsharp
-    Button.button [ ] [ str "Normal" ]
-    Button.button [ Button.isSuccess; Button.isHovered ] [ str "Hover" ]
-    Button.button [ Button.isWarning; Button.isFocused ] [ str "Focus" ]
-    Button.button [ Button.isInfo; Button.isActive ] [ str "Active" ]
-    Button.button [ Button.isBlack; Button.isLoading ] [ str "Loading" ]
+    Button.button_div [ ] [ str "Normal" ]
+    Button.button_div [ Button.isSuccess; Button.isHovered ] [ str "Hover" ]
+    Button.button_div [ Button.isWarning; Button.isFocused ] [ str "Focus" ]
+    Button.button_div [ Button.isInfo; Button.isActive ] [ str "Active" ]
+    Button.button_div [ Button.isBlack; Button.isLoading ] [ str "Loading" ]
 ```
     """
 
@@ -67,22 +67,22 @@ let extraCode =
     """
 ```fsharp
     // For registering a click event, we can use the Button.onClick helper
-    Button.button [ Button.onClick (fun _ -> dispatch Click) ]
-                  [ str buttonTxt ]
+    Button.button_div [ Button.onClick (fun _ -> dispatch Click) ]
+                      [ str buttonTxt ]
     // Or we can pass any IProps via Button.props
     // Equivalent of the Button.onClick
-    Button.button [ Button.props [ OnClick (fun _ -> dispatch Click) ] ]
-                  [ str buttonTxt ]
+    Button.button_div [ Button.props [ OnClick (fun _ -> dispatch Click) ] ]
+                      [ str buttonTxt ]
     // Disabled button
-    Button.button [ Button.props [ Disabled true ] ]
-                  [ str "Fixed width" ]
+    Button.button_div [ Button.props [ Disabled true ] ]
+                      [ str "Fixed width" ]
 ```
     """
 
 let staticView =
     """
 ```fsharp
-    Button.button [ Button.isStatic ]
+    Button.button_div [ Button.isStatic ]
         [ str "Static" ]
 ```
     """
@@ -90,29 +90,29 @@ let staticView =
 let disabled =
     """
 ```fsharp
-    Button.button [ Button.isDisabled
-                    Button.isLink ] [ str "Link" ]
-    Button.button [ Button.isDisabled
-                    Button.isPrimary ] [ str "Primary" ]
-    Button.button [ Button.isDisabled
-                    Button.isInfo ] [ str "Info" ]
-    Button.button [ Button.isDisabled
-                    Button.isSuccess ] [ str "Success" ]
-    Button.button [ Button.isDisabled
-                    Button.isWarning ] [ str "Warning" ]
-    Button.button [ Button.isDisabled
-                    Button.isDanger ] [ str "Danger" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isLink ] [ str "Link" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isPrimary ] [ str "Primary" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isInfo ] [ str "Info" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isSuccess ] [ str "Success" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isWarning ] [ str "Warning" ]
+    Button.button_div [ Button.isDisabled
+                        Button.isDanger ] [ str "Danger" ]
 ```
     """
 
 let icons =
     """
 ```fsharp
-    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Bold ] ]
-    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Italic ] ]
-    Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Underline ] ]
-    Button.button [ Button.isDanger
-                  Button.isOutlined ] [ str "Danger" ]
+    Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Bold ] ]
+    Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Italic ] ]
+    Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Underline ] ]
+    Button.button_div [ Button.isDanger
+                        Button.isOutlined ] [ str "Danger" ]
 ```
     """
 

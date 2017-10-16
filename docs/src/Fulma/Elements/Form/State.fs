@@ -82,10 +82,10 @@ let iconCode =
 
            Field.field_div [ Field.isGrouped ]
                 [ Control.control_div [ ]
-                    [ Button.button [ Button.isPrimary ]
+                    [ Button.button_div [ Button.isPrimary ]
                         [ str "Submit" ] ]
                   Control.control_div [ ]
-                    [ Button.button [ Button.isLink ]
+                    [ Button.button_div [ Button.isLink ]
                         [ str "Cancel" ] ] ] ]
 ```
     """

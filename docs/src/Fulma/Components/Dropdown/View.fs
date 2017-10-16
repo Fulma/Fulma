@@ -12,7 +12,7 @@ open Fulma.Extra.FontAwesome
 let basic =
     Dropdown.dropdown [ Dropdown.isHoverable ]
         [ div [ ]
-            [ Button.button [ ]
+            [ Button.button_div [ ]
                 [ span [ ]
                     [ str "Dropdown" ]
                   Icon.faIcon [ Icon.isSmall ] [ Fa.icon Fa.I.AngleDown ] ] ]

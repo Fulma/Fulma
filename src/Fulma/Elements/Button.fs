@@ -117,7 +117,7 @@ module Button =
     let customClass = CustomClass
     let onClick cb = OnClick cb
 
-    let button (options : Option list) children =
+    let internal button (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list) children =
         let parseOptions (result: Options) opt =
             match opt with
             | Option.Level level -> { result with Level = ofLevelAndColor level |> Some }
@@ -133,7 +133,7 @@ module Button =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        a
+        element
             [ yield classBaseList
                 (Helpers.generateClassName Bulma.Button.Container [ opts.Level; opts.Size; opts.State ])
                  [ Bulma.Button.Styles.IsOutlined, opts.IsOutlined
@@ -146,3 +146,9 @@ module Button =
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
               yield! opts.Props ]
             children
+
+    let button_a (options : Option list) children =
+        button a options children
+
+    let button_div (options : Option list) children =
+        button div options children

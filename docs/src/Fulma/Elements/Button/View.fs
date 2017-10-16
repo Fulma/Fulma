@@ -14,49 +14,49 @@ let colorInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Button.button [ ] [ str "Button" ]
-                    Button.button [ Button.isWhite ] [ str "White" ]
-                    Button.button [ Button.isLight ] [ str "Light" ]
-                    Button.button [ Button.isDark ] [ str "Dark" ]
-                    Button.button [ Button.isBlack ] [ str "Black" ] ] ]
+                  [ Button.button_div [ ] [ str "Button" ]
+                    Button.button_div [ Button.isWhite ] [ str "White" ]
+                    Button.button_div [ Button.isLight ] [ str "Light" ]
+                    Button.button_div [ Button.isDark ] [ str "Dark" ]
+                    Button.button_div [ Button.isBlack ] [ str "Black" ] ] ]
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Button.button [ Button.isLink ] [ str "Link" ]
-                    Button.button [ Button.isPrimary ] [ str "Primary" ]
-                    Button.button [ Button.isInfo ] [ str "Info" ]
-                    Button.button [ Button.isSuccess ] [ str "Success" ]
-                    Button.button [ Button.isWarning ] [ str "Warning" ]
-                    Button.button [ Button.isDanger ] [ str "Danger" ] ] ] ]
+                  [ Button.button_div [ Button.isLink ] [ str "Link" ]
+                    Button.button_div [ Button.isPrimary ] [ str "Primary" ]
+                    Button.button_div [ Button.isInfo ] [ str "Info" ]
+                    Button.button_div [ Button.isSuccess ] [ str "Success" ]
+                    Button.button_div [ Button.isWarning ] [ str "Warning" ]
+                    Button.button_div [ Button.isDanger ] [ str "Danger" ] ] ] ]
 
 let sizeInteractive =
     div [ ClassName "block" ]
-        [ Button.button [ Button.isSmall ] [ str "Small" ]
-          Button.button [ ] [ str "Normal" ]
-          Button.button [ Button.isMedium ] [ str "Medium" ]
-          Button.button [ Button.isLarge ] [ str "Large" ] ]
+        [ Button.button_div [ Button.isSmall ] [ str "Small" ]
+          Button.button_div [ ] [ str "Normal" ]
+          Button.button_div [ Button.isMedium ] [ str "Medium" ]
+          Button.button_div [ Button.isLarge ] [ str "Large" ] ]
 
 let outlinedInteractive =
     div [ ClassName "block" ]
-        [ Button.button [ Button.isOutlined ] [ str "Outlined" ]
-          Button.button [ Button.isSuccess; Button.isOutlined ] [ str "Outlined" ]
-          Button.button [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
-          Button.button [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
-          Button.button [ Button.isDanger;  Button.isOutlined ] [ str "Outlined" ] ]
+        [ Button.button_div [ Button.isOutlined ] [ str "Outlined" ]
+          Button.button_div [ Button.isSuccess; Button.isOutlined ] [ str "Outlined" ]
+          Button.button_div [ Button.isPrimary; Button.isOutlined ] [ str "Outlined" ]
+          Button.button_div [ Button.isInfo; Button.isOutlined ] [ str "Outlined" ]
+          Button.button_div [ Button.isDanger;  Button.isOutlined ] [ str "Outlined" ] ]
 
 let mixedStyleInteractive =
     div [ ClassName "callout is-primary block" ]
-        [ Button.button [ Button.isInverted ] [ str "Inverted" ]
-          Button.button [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
-          Button.button [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
-          Button.button [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ] ]
+        [ Button.button_div [ Button.isInverted ] [ str "Inverted" ]
+          Button.button_div [ Button.isSuccess; Button.isInverted ] [ str "Inverted" ]
+          Button.button_div [ Button.isDanger; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ]
+          Button.button_div [ Button.isInfo; Button.isInverted; Button.isOutlined ] [ str "Invert Outlined" ] ]
 
 let stateInteractive =
     div [ ClassName "block" ]
-        [ Button.button [ ] [ str "Normal" ]
-          Button.button [ Button.isSuccess; Button.isHovered ] [ str "Hover" ]
-          Button.button [ Button.isWarning; Button.isFocused ] [ str "Focus" ]
-          Button.button [ Button.isInfo; Button.isActive ] [ str "Active" ]
-          Button.button [ Button.isBlack; Button.isLoading ] [ str "Loading" ] ]
+        [ Button.button_div [ ] [ str "Normal" ]
+          Button.button_div [ Button.isSuccess; Button.isHovered ] [ str "Hover" ]
+          Button.button_div [ Button.isWarning; Button.isFocused ] [ str "Focus" ]
+          Button.button_div [ Button.isInfo; Button.isActive ] [ str "Active" ]
+          Button.button_div [ Button.isBlack; Button.isLoading ] [ str "Loading" ] ]
 
 let extraInteractive model dispatch =
     let buttonTxt =
@@ -66,37 +66,37 @@ let extraInteractive model dispatch =
             sprintf "Clicked: %i times." model.ClickCount
 
     div [ ClassName "block" ]
-        [ Button.button [ Button.onClick (fun _ -> dispatch Click) ]
-                        [ str buttonTxt ]
-          Button.button [ Button.props [ Disabled true ] ]
-                        [ str "Disabled via props" ] ]
+        [ Button.button_div [ Button.onClick (fun _ -> dispatch Click) ]
+                            [ str buttonTxt ]
+          Button.button_div [ Button.props [ Disabled true ] ]
+                            [ str "Disabled via props" ] ]
 
 let staticView =
-    Button.button [ Button.isStatic ]
+    Button.button_div [ Button.isStatic ]
         [ str "Static" ]
 
 let disabled =
     div [ ClassName "block" ]
-        [ Button.button [ Button.isDisabled
-                          Button.isLink ] [ str "Link" ]
-          Button.button [ Button.isDisabled
-                          Button.isPrimary ] [ str "Primary" ]
-          Button.button [ Button.isDisabled
-                          Button.isInfo ] [ str "Info" ]
-          Button.button [ Button.isDisabled
-                          Button.isSuccess ] [ str "Success" ]
-          Button.button [ Button.isDisabled
-                          Button.isWarning ] [ str "Warning" ]
-          Button.button [ Button.isDisabled
-                          Button.isDanger ] [ str "Danger" ] ]
+        [ Button.button_div [ Button.isDisabled
+                              Button.isLink ] [ str "Link" ]
+          Button.button_div [ Button.isDisabled
+                              Button.isPrimary ] [ str "Primary" ]
+          Button.button_div [ Button.isDisabled
+                              Button.isInfo ] [ str "Info" ]
+          Button.button_div [ Button.isDisabled
+                              Button.isSuccess ] [ str "Success" ]
+          Button.button_div [ Button.isDisabled
+                              Button.isWarning ] [ str "Warning" ]
+          Button.button_div [ Button.isDisabled
+                              Button.isDanger ] [ str "Danger" ] ]
 
 let icons =
     div [ ClassName "block" ]
-        [ Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Bold ] ]
-          Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Italic ] ]
-          Button.button [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Underline ] ]
-          Button.button [ Button.isDanger
-                          Button.isOutlined ] [ str "Danger" ] ]
+        [ Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Bold ] ]
+          Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Italic ] ]
+          Button.button_div [ ] [ Icon.faIcon [ ] [ Fa.icon Fa.I.Underline ] ]
+          Button.button_div [ Button.isDanger
+                              Button.isOutlined ] [ str "Danger" ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
