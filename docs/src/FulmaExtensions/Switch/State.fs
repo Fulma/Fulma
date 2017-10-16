@@ -134,7 +134,7 @@ The **Switch** can have different colors, sizes and states.
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-switch@0.0.3`</td>
+            <td>`yarn add bulma bulma-switch@0.0.4`</td>
         </tr>
     </tbody>
 <table>

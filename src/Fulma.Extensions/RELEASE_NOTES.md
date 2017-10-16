@@ -2,6 +2,7 @@
 
 * Add slider extension support
 * Add switch extension support
+* Add checkradio extension support
 
 ### 0.1.0-beta-006
 
