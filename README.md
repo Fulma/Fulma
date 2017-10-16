@@ -21,7 +21,7 @@
 | Tooltip | bulma-tooltip | 0.0.4 |
 | Divider | bulma-divider | 0.0.1 |
 | PageLoader | bulma-pageloader | 0.0.2 |
-| Switch | bulma-switch | 0.0.3 |
+| Switch | bulma-switch | 0.0.4 |
 | Slider | bulma-slider | 0.0.2 |
 
 

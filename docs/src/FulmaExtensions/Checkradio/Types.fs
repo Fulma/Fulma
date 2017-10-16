@@ -8,6 +8,7 @@ type Model =
       CircleViewer : Viewer.Types.Model
       StateViewer : Viewer.Types.Model
       EventViewer : Viewer.Types.Model
+      RtlViewer : Viewer.Types.Model
       IsChecked : bool
     }
 
@@ -18,5 +19,5 @@ type Msg =
     | CircleViewerMsg of Viewer.Types.Msg
     | StateViewerMsg of Viewer.Types.Msg
     | EventViewerMsg of Viewer.Types.Msg
-    | Change of bool 
-
+    | RtlViewerMsg of Viewer.Types.Msg
+    | Change of bool
