@@ -3,6 +3,7 @@ namespace Fulma.Extensions
 open Fulma.BulmaClasses
 open Fulma.Common
 
+[<RequireQualifiedAccess>]
 module Calendar =
 
     module Classes =

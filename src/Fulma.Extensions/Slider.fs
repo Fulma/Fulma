@@ -7,6 +7,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Core.JsInterop
 
+[<RequireQualifiedAccess>]
 module Slider =
 
     module Classes =

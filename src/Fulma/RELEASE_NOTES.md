@@ -1,6 +1,9 @@
 ### next
 
 * BREAKING CHANGE: Fix icons display and implement Font Awesome helpers
+* Fix #61: Add `is-fullwidth` support for Table element
+* Fix #59: Add color support for the navbar compoenent
+* Fix #67: Enforce DSL synthax with [<RequireQualifiedAccess>] attribute
 
 ### 1.0.0-beta-001
 

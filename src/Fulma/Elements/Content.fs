@@ -6,6 +6,7 @@ open Fable.Core
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+[<RequireQualifiedAccess>]
 module Content =
     module Types =
         type Option =

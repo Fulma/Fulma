@@ -4,11 +4,12 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Elements.Icon
+open Fulma.Elements
 open Fulma.Common
 
 module FontAwesome =
 
+    [<RequireQualifiedAccess>]
     module Fa =
         module I =
             type IFontAwesomeIcon =
@@ -1091,7 +1092,7 @@ module FontAwesome =
 
         let faIcon (options : Fulma.Elements.Icon.Types.Option list) (faOptions: IconOption list) =
             let opts = toIconOptions faOptions
-            icon options
+            Icon.icon options
                 [ displayIcon "fa " opts ]
 
         let fa_ul (options: GenericOption list) children =

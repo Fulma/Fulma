@@ -5,6 +5,7 @@ open Fulma.BulmaClasses
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+[<RequireQualifiedAccess>]
 module Notification =
 
     module Types =

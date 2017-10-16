@@ -9,6 +9,7 @@ open Fable.Helpers.React.Props
 open Fable.Import
 open System
 
+[<RequireQualifiedAccess>]
 module Navbar =
 
     module Types =

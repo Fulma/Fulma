@@ -7,6 +7,7 @@ open Fable.Import.React
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+[<RequireQualifiedAccess>]
 module Button =
     module Types =
         type ISize =

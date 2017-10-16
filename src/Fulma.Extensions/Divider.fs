@@ -6,6 +6,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+[<RequireQualifiedAccess>]
 module Divider =
 
     module Classes =

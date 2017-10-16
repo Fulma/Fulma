@@ -8,6 +8,8 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 module Form =
+
+    [<RequireQualifiedAccess>]
     module Control =
         module Types =
             type IHasIcon =
@@ -72,6 +74,7 @@ module Form =
         let control_p = control p
         let control_div = control div
 
+    [<RequireQualifiedAccess>]
     module Label =
         module Types =
             type Option =
@@ -117,6 +120,7 @@ module Form =
                   yield! opts.Props ]
                 children
 
+    [<RequireQualifiedAccess>]
     module Select =
         module Types =
             type ISize =
@@ -212,7 +216,7 @@ module Form =
                   yield! opts.Props ]
                 children
 
-
+    [<RequireQualifiedAccess>]
     module Input =
         module Types =
             type IInputType =
@@ -364,6 +368,7 @@ module Form =
         let tel options = input (Type Tel :: options)
         let color options = input (Type IInputType.Color :: options)
 
+    [<RequireQualifiedAccess>]
     module Field =
         module Types =
             type IHasAddons =
@@ -503,6 +508,7 @@ module Form =
                   yield! opts.Props ]
                 children
 
+    [<RequireQualifiedAccess>]
     module Help =
 
         module Types =
@@ -551,6 +557,7 @@ module Form =
                 yield! opts.Props ]
               children
 
+    [<RequireQualifiedAccess>]
     module Textarea =
         module Types =
 
@@ -681,6 +688,7 @@ module Form =
                        yield! opts.Props ]
                 children
 
+    [<RequireQualifiedAccess>]
     module Checkbox =
         let props = GenericOption.Props
         let customClass = GenericOption.CustomClass
@@ -707,6 +715,7 @@ module Form =
                   yield Type "checkbox" :> IHTMLProp
                   yield! opts.Props ]
 
+    [<RequireQualifiedAccess>]
     module Radio =
 
         module Types =
@@ -764,6 +773,7 @@ module Form =
                     yield Name opts.Name.Value :> IHTMLProp
                   yield! opts.Props ]
 
+    [<RequireQualifiedAccess>]
     module File =
 
         module Types =

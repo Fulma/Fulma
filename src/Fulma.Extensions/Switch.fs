@@ -9,6 +9,7 @@ open Fable.Helpers.React.Props
 open Fable.Import
 open Fulma.Elements.Form
 
+[<RequireQualifiedAccess>]
 module Switch =
 
     module Classes =

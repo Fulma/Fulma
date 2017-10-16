@@ -6,6 +6,7 @@ open Fable.Import.React
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+[<RequireQualifiedAccess>]
 module Delete =
     module Types =
         type Option =

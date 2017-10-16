@@ -6,6 +6,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma.Common
 
+[<RequireQualifiedAccess>]
 module Box =
 
     let customClass cls = CustomClass cls

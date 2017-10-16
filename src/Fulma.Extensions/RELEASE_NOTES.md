@@ -3,6 +3,7 @@
 * Add slider extension support
 * Add switch extension support
 * Add checkradio extension support
+* Fix #67: Enforce DSL synthax with [<RequireQualifiedAccess>] attribute
 
 ### 0.1.0-beta-006
 
