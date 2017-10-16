@@ -51,17 +51,17 @@ let circleCode =
                     Switch.isRounded
                     Switch.isPrimary ] [ str "Checkbox" ]
 
-// Thin
+    // Thin
     Switch.switch [ Switch.isChecked true
                     Switch.isThin
                     Switch.isPrimary ] [ str "Checkbox" ]
 
-// Outlined
+    // Outlined
     Switch.switch [ Switch.isChecked true
                     Switch.isOutlined
                     Switch.isPrimary ] [ str "Checkbox" ]
 
-// Mixed
+    // Mixed
     Switch.switch [ Switch.isChecked true
                     Switch.isRounded
                     Switch.isOutlined
@@ -83,8 +83,8 @@ let mixedStyleCode =
 let stateCode =
     """
 ```fsharp
-    Switch.switch [ Switch.isDisabled ] [ str "Disabled" ]
-    Switch.switch [ Switch.isDisabled; Switch.isChecked true ] [ str "Disabled & Checked" ]
+    Switch.switch [ Switch.isDisabled true ] [ str "Disabled" ]
+    Switch.switch [ Switch.isDisabled true; Switch.isChecked true ] [ str "Disabled & Checked" ]
     Switch.switch [ ] [ str "Unchecked" ]
     Switch.switch [ Switch.isChecked true ] [ str "checked" ]
 ```

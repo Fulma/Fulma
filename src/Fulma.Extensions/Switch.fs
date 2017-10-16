@@ -27,7 +27,7 @@ module Switch =
             | IsThin
             | IsRtl
             | IsChecked of bool
-            | IsDisabled
+            | IsDisabled of bool
             | Props of IHTMLProp list
             | OnChange of (React.FormEvent -> unit)
             | CustomClass of string
@@ -115,7 +115,7 @@ module Switch =
             | IsOutlined -> { result with IsOutlined  = true }
             | IsRounded -> { result with IsRounded  = true }
             | IsChecked state -> { result with IsChecked = state }
-            | IsDisabled -> { result with IsDisabled = true }
+            | IsDisabled state -> { result with IsDisabled = state }
             | IsRtl -> { result with IsRtl = true }
             | IsThin -> { result with IsThin = true }
             | Props props -> { result with Props = props }

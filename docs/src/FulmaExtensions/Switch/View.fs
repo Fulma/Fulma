@@ -61,7 +61,7 @@ let stylesInteractive =
             [ div [ ClassName "block" ]
                   [ Switch.switch [ Switch.isChecked true
                                     Switch.isRounded
-                                    Switch.isDisabled ] [ str "Disabled" ]
+                                    Switch.isDisabled true ] [ str "Disabled" ]
                     Switch.switch [ Switch.isChecked true
                                     Switch.isRounded
                                     Switch.isPrimary ] [ str "Checkbox" ]
@@ -81,7 +81,7 @@ let stylesInteractive =
             [ div [ ClassName "block" ]
                   [ Switch.switch [ Switch.isChecked true
                                     Switch.isThin
-                                    Switch.isDisabled ] [ str "Disabled" ]
+                                    Switch.isDisabled true ] [ str "Disabled" ]
                     Switch.switch [ Switch.isChecked true
                                     Switch.isThin
                                     Switch.isPrimary ] [ str "Checkbox" ]
@@ -101,7 +101,7 @@ let stylesInteractive =
             [ div [ ClassName "block" ]
                   [ Switch.switch [ Switch.isChecked true
                                     Switch.isOutlined
-                                    Switch.isDisabled ] [ str "Disabled" ]
+                                    Switch.isDisabled true ] [ str "Disabled" ]
                     Switch.switch [ Switch.isChecked true
                                     Switch.isOutlined
                                     Switch.isPrimary ] [ str "Checkbox" ]
@@ -122,7 +122,7 @@ let stylesInteractive =
                   [ Switch.switch [ Switch.isChecked true
                                     Switch.isRounded
                                     Switch.isOutlined
-                                    Switch.isDisabled ] [ str "Disabled" ]
+                                    Switch.isDisabled true ] [ str "Disabled" ]
                     Switch.switch [ Switch.isChecked true
                                     Switch.isRounded
                                     Switch.isOutlined
@@ -147,8 +147,8 @@ let stylesInteractive =
 
 let stateInteractive =
     div [ ClassName "block" ]
-        [ Switch.switch [ Switch.isDisabled ] [ str "Disabled" ]
-          Switch.switch [ Switch.isDisabled; Switch.isChecked true ] [ str "Disabled & Checked" ]
+        [ Switch.switch [ Switch.isDisabled true ] [ str "Disabled" ]
+          Switch.switch [ Switch.isDisabled true; Switch.isChecked true ] [ str "Disabled & Checked" ]
           Switch.switch [ ] [ str "Unchecked" ]
           Switch.switch [ Switch.isChecked true ] [ str "checked" ] ]
 
