@@ -13,6 +13,7 @@ module Table =
             | IsStripped
             | IsFullwidth
             | IsNarrow
+            | IsFullWidth
             | CustomClass of string
             | Props of IHTMLProp list
 
@@ -21,6 +22,7 @@ module Table =
               IsStripped : bool
               IsFullwidth : bool
               IsNarrow : bool
+              IsFullWidth : bool
               CustomClass : string option
               Props : IHTMLProp list }
             static member Empty =
@@ -50,6 +52,7 @@ module Table =
             | IsStripped -> { result with IsStripped = true }
             | IsFullwidth -> { result with IsFullwidth = true }
             | IsNarrow -> { result with IsNarrow = true }
+            | IsFullWidth -> { result with IsFullWidth = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 

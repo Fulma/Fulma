@@ -608,6 +608,7 @@ module BulmaClasses =
               let [<Literal>] IsFullwidth = "is-fullwidth"
             module Spacing =
                 let [<Literal>] IsNarrow = "is-narrow"
+                let [<Literal>] IsFullWidth = "is-fullwidth"
 
         module Tag =
           let [<Literal>] Container = "tag"
