@@ -604,6 +604,7 @@ module BulmaClasses =
             module Style =
               let [<Literal>] IsBordered = "is-bordered"
               let [<Literal>] IsStripped = "is-stripped "
+              let [<Literal>] IsFullwidth = "is-fullwidth"
             module Spacing =
                 let [<Literal>] IsNarrow = "is-narrow"
 

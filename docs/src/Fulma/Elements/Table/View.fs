@@ -66,6 +66,7 @@ There is three modifiers:
 - `Table.isBordered`
 - `Table.isNarrow`
 - `Table.isStripped`
+- `Table.isFullwidth`
 
 You can apply any combination of this three.
                         """

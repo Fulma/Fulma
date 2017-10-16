@@ -10,6 +10,7 @@ module Table =
         type TableOption =
             | IsBordered
             | IsStripped
+            | IsFullwidth
             | IsNarrow
             | CustomClass of string
             | Props of IHTMLProp list
@@ -17,6 +18,7 @@ module Table =
         type TableOptions =
             { IsBordered : bool
               IsStripped : bool
+              IsFullwidth : bool
               IsNarrow : bool
               CustomClass : string option
               Props : IHTMLProp list }
@@ -24,6 +26,7 @@ module Table =
                 { IsBordered = false
                   IsStripped = false
                   IsNarrow = false
+                  IsFullwidth = false
                   CustomClass = None
                   Props = [] }
 
@@ -32,6 +35,7 @@ module Table =
     // Styling
     let isBordered = IsBordered
     let isStripped = IsStripped
+    let isFullwidth = IsFullwidth
     // Spacing
     let isNarrow = IsNarrow
     // Extra
@@ -43,6 +47,7 @@ module Table =
             function
             | IsBordered -> { result with IsBordered = true }
             | IsStripped -> { result with IsStripped = true }
+            | IsFullwidth -> { result with IsFullwidth = true }
             | IsNarrow -> { result with IsNarrow = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
@@ -51,6 +56,7 @@ module Table =
         table
             [ yield classBaseList Bulma.Table.Container [ Bulma.Table.Style.IsBordered, opts.IsBordered
                                                           Bulma.Table.Style.IsStripped, opts.IsStripped
+                                                          Bulma.Table.Style.IsFullwidth, opts.IsFullwidth
                                                           Bulma.Table.Spacing.IsNarrow, opts.IsNarrow
                                                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
               yield! opts.Props ]
