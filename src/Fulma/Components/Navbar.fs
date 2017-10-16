@@ -16,6 +16,7 @@ module Navbar =
         module Navbar =
 
             type Option =
+                | Level of ILevelAndColor
                 | HasShadow
                 | IsTransparent
                 | Props of IHTMLProp list
@@ -23,12 +24,14 @@ module Navbar =
 
             type Options =
                 { HasShadow : bool
+                  Level : string option
                   IsTransparent : bool
                   CustomClass : string option
                   Props : IHTMLProp list }
 
                 static member Empty =
                     { HasShadow = false
+                      Level = None
                       IsTransparent = false
                       CustomClass = None
                       Props = [] }
@@ -126,6 +129,17 @@ module Navbar =
     let isTransparent = Navbar.IsTransparent
     let props props = Navbar.Props props
     let customClass = Navbar.CustomClass
+
+    // Levels and colors
+    let isBlack = Navbar.Level IsBlack
+    let isDark = Navbar.Level IsDark
+    let isLight = Navbar.Level IsLight
+    let isWhite = Navbar.Level IsWhite
+    let isPrimary = Navbar.Level IsPrimary
+    let isInfo = Navbar.Level IsInfo
+    let isSuccess = Navbar.Level IsSuccess
+    let isWarning = Navbar.Level IsWarning
+    let isDanger = Navbar.Level IsDanger
 
     module Item =
         let isActive = Item.IsActive
@@ -241,12 +255,14 @@ module Navbar =
             | Navbar.Props props -> { result with Props = props }
             | Navbar.IsTransparent -> { result with IsTransparent = true }
             | Navbar.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Navbar.Level level -> { result with Level = ofLevelAndColor level |> Some }
 
         let opts = options |> List.fold parseOptions Navbar.Options.Empty
 
         nav [ yield (classBaseList Bulma.Navbar.Container
                                    [ Bulma.Navbar.Style.HasShadow, opts.HasShadow
                                      opts.CustomClass.Value, opts.CustomClass.IsSome
+                                     opts.Level.Value, opts.Level.IsSome
                                      Bulma.Navbar.Style.IsTransparent, opts.IsTransparent]) :> IHTMLProp
               yield! opts.Props ]
             children

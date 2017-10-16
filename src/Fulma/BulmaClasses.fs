@@ -455,6 +455,7 @@ module BulmaClasses =
             let [<Literal>] Divider = "navbar-divider"
             let [<Literal>] Start = "navbar-start"
             let [<Literal>] End = "navbar-end"
+            let Color = levelAndColor
             module Item =
                 let [<Literal>] Container = "navbar-item"
                 let [<Literal>] IsHoverable = "is-hoverable"
