@@ -135,6 +135,9 @@
     <Compile Include="src/FulmaExtensions/Switch/Types.fs" />
     <Compile Include="src/FulmaExtensions/Switch/State.fs" />
     <Compile Include="src/FulmaExtensions/Switch/View.fs" />
+    <Compile Include="src/FulmaExtensions/Checkradio/Types.fs" />
+    <Compile Include="src/FulmaExtensions/Checkradio/State.fs" />
+    <Compile Include="src/FulmaExtensions/Checkradio/View.fs" />
     <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/FulmaExtensions/Dispatcher/Types.fs" />
     <Compile Include="src/FulmaExtensions/Dispatcher/State.fs" />

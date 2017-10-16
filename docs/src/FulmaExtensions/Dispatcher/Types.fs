@@ -2,6 +2,7 @@ module FulmaExtensions.Dispatcher.Types
 
 type Model =
     { Calendar : FulmaExtensions.Calendar.Types.Model
+      Checkradio : FulmaExtensions.Checkradio.Types.Model
       PageLoader : FulmaExtensions.PageLoader.Types.Model
       Tooltip : FulmaExtensions.Tooltip.Types.Model
       Divider : FulmaExtensions.Divider.Types.Model
@@ -9,6 +10,7 @@ type Model =
       Switch : FulmaExtensions.Switch.Types.Model }
 
 type Msg =
+    | CheckradioMsg of FulmaExtensions.Checkradio.Types.Msg
     | CalendarMsg of FulmaExtensions.Calendar.Types.Msg
     | TooltipMsg of FulmaExtensions.Tooltip.Types.Msg
     | SwitchMsg of FulmaExtensions.Switch.Types.Msg

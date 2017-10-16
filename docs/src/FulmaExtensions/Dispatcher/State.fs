@@ -5,6 +5,7 @@ open Types
 
 let init() =
     { Calendar = FulmaExtensions.Calendar.State.init ()
+      Checkradio = FulmaExtensions.Checkradio.State.init ()
       Tooltip = FulmaExtensions.Tooltip.State.init ()
       Divider = FulmaExtensions.Divider.State.init ()
       PageLoader = FulmaExtensions.PageLoader.State.init ()
@@ -16,6 +17,9 @@ let update msg model =
     | CalendarMsg msg ->
         let (calendar, calendarMsg) = FulmaExtensions.Calendar.State.update msg model.Calendar
         { model with Calendar = calendar }, Cmd.map CalendarMsg calendarMsg
+    | CheckradioMsg msg ->
+        let (checkradio, checkradioMsg) = FulmaExtensions.Checkradio.State.update msg model.Checkradio
+        { model with Checkradio = checkradio }, Cmd.map CheckradioMsg checkradioMsg
 
     | TooltipMsg msg ->
         let (tooltip, tooltipMsg) = FulmaExtensions.Tooltip.State.update msg model.Tooltip
