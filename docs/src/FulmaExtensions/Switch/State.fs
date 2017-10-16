@@ -11,35 +11,34 @@ let inlineBlockCode =
     Switch.switch [ ] [ str "Two" ]
 
     // Inline
-    div [ ClassName "field"] [
-        yield! Switch.switchInline [ ] [ str "One " ]
-        yield! Switch.switchInline [ ] [ str "Two " ]
-    ]
+    Field.field_div [ ]
+    [ yield! Switch.switchInline [ ] [ str "One" ]
+      yield! Switch.switchInline [ ] [ str "Two" ] ]
 ```
     """
 let colorCode =
     """
 ```fsharp
-    Switch.switch [ Switch.isChecked;  ] [ str "Default" ]
-    Switch.switch [ Switch.isChecked; Switch.isWhite ] [ str "White" ]
-    Switch.switch [ Switch.isChecked; Switch.isLight ] [ str "Light" ]
-    Switch.switch [ Switch.isChecked; Switch.isDark ] [ str "Dark" ]
-    Switch.switch [ Switch.isChecked; Switch.isBlack ] [ str "Black" ]
-    Switch.switch [ Switch.isChecked; Switch.isPrimary ] [ str "Primary" ]
-    Switch.switch [ Switch.isChecked; Switch.isInfo ] [ str "Info" ]
-    Switch.switch [ Switch.isChecked; Switch.isSuccess ] [ str "Success" ]
-    Switch.switch [ Switch.isChecked; Switch.isWarning ] [ str "Warning" ]
-    Switch.switch [ Switch.isChecked; Switch.isDanger ] [ str "Danger" ]
+    Switch.switch [ Switch.isChecked true ] [ str "Default" ]
+    Switch.switch [ Switch.isChecked true; Switch.isWhite ] [ str "White" ]
+    Switch.switch [ Switch.isChecked true; Switch.isLight ] [ str "Light" ]
+    Switch.switch [ Switch.isChecked true; Switch.isDark ] [ str "Dark" ]
+    Switch.switch [ Switch.isChecked true; Switch.isBlack ] [ str "Black" ]
+    Switch.switch [ Switch.isChecked true; Switch.isPrimary ] [ str "Primary" ]
+    Switch.switch [ Switch.isChecked true; Switch.isInfo ] [ str "Info" ]
+    Switch.switch [ Switch.isChecked true; Switch.isSuccess ] [ str "Success" ]
+    Switch.switch [ Switch.isChecked true; Switch.isWarning ] [ str "Warning" ]
+    Switch.switch [ Switch.isChecked true; Switch.isDanger ] [ str "Danger" ]
 ```
     """
 
 let sizeCode =
     """
 ```fsharp
-Switch.switch [ Switch.isSmall ] [ str "Small" ]
-Switch.switch [ ] [ str "Normal" ]
-Switch.switch [ Switch.isMedium ] [ str "Medium" ]
-Switch.switch [ Switch.isLarge ] [ str "Large" ]
+    Switch.switch [ Switch.isChecked true; Switch.isSmall ] [ str "Small" ]
+    Switch.switch [ Switch.isChecked true ] [ str "Normal" ]
+    Switch.switch [ Switch.isChecked true; Switch.isMedium ] [ str "Medium" ]
+    Switch.switch [ Switch.isChecked true; Switch.isLarge ] [ str "Large" ]
 ```
     """
 
@@ -47,10 +46,26 @@ Switch.switch [ Switch.isLarge ] [ str "Large" ]
 let circleCode =
     """
 ```fsharp
+    // Rounded
+    Switch.switch [ Switch.isChecked true
+                    Switch.isRounded
+                    Switch.isPrimary ] [ str "Checkbox" ]
 
-Switch.switch [ Switch.isChecked; Switch.isRounded ] [ str "Rounded" ]
-Switch.switch [ Switch.isChecked; Switch.isOutlined ] [ str "Outline" ]
-Switch.switch [ Switch.isChecked; Switch.isRounded; Switch.isOutlined ] [ str "Both" ]
+// Thin
+    Switch.switch [ Switch.isChecked true
+                    Switch.isThin
+                    Switch.isPrimary ] [ str "Checkbox" ]
+
+// Outlined
+    Switch.switch [ Switch.isChecked true
+                    Switch.isOutlined
+                    Switch.isPrimary ] [ str "Checkbox" ]
+
+// Mixed
+    Switch.switch [ Switch.isChecked true
+                    Switch.isRounded
+                    Switch.isOutlined
+                    Switch.isPrimary ] [ str "Checkbox" ]
 
 ```
     """
@@ -68,24 +83,30 @@ let mixedStyleCode =
 let stateCode =
     """
 ```fsharp
-    Switch.switch [  Switch.isDisabled ] [ str "Disabled" ]
-    Switch.switch [  Switch.isDisabled; Checkradio.isChecked ] [ str "Disabled & Checked" ]
+    Switch.switch [ Switch.isDisabled ] [ str "Disabled" ]
+    Switch.switch [ Switch.isDisabled; Switch.isChecked true ] [ str "Disabled & Checked" ]
     Switch.switch [ ] [ str "Unchecked" ]
-    Switch.switch [ Switch.isChecked;] [ str "checked" ]
+    Switch.switch [ Switch.isChecked true ] [ str "checked" ]
 ```
     """
 
 let eventCode =
     """
 ```fsharp
+    let newState = not model.IsChecked
+
     // For registering a change event, we can use the Switch.onChange helper
     Switch.switch
-            [
-                if model.IsChecked then yield Switch.isChecked;
-                yield Switch.onChange (fun x -> dispatch (Change state))
-            ]
-            [ str  (sprintf "%A" model.IsChecked) ]
-
+        [ Switch.isChecked model.IsChecked
+          Switch.onChange (fun x -> dispatch (Change newState)) ]
+        [ str (sprintf "%A" model.IsChecked) ]
+    Switch.switch
+        [ Switch.isChecked model.IsChecked
+          Switch.onChange (fun x -> dispatch (Change newState)) ]
+        [ if model.IsChecked then
+            yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
+          else
+            yield Icon.faIcon [ ] [ Fa.icon Fa.I.Times ] ]
 ```
     """
 

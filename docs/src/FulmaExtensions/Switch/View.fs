@@ -155,16 +155,16 @@ let stateInteractive =
 
 
 let eventInteractive model dispatch =
-    let state = not model.IsChecked
+    let newState = not model.IsChecked
 
     div [ ClassName "block" ]
         [ Switch.switch
             [ Switch.isChecked model.IsChecked
-              Switch.onChange (fun x -> dispatch (Change state)) ]
+              Switch.onChange (fun x -> dispatch (Change newState)) ]
             [ str (sprintf "%A" model.IsChecked) ]
           Switch.switch
             [ Switch.isChecked model.IsChecked
-              Switch.onChange (fun x -> dispatch (Change state)) ]
+              Switch.onChange (fun x -> dispatch (Change newState)) ]
             [ if model.IsChecked then
                 yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
               else
