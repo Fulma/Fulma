@@ -6,7 +6,7 @@ nuget Fable.Elmish
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
 nuget Fable.Elmish.Debugger
-nuget Fable.PowerPack prerelease
+nuget Fable.PowerPack
 nuget Fable.React
 
 clitool dotnet-fable
