@@ -146,7 +146,9 @@ let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
                                     versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
 
 Target "PublishNugets" (fun _ ->
-    !! "src/**/*.fsproj"
+    !! "src/Fulma/Fulma.fsproj"
+    ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
+    ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
     |> Seq.iter(fun s ->
         let projFile = s
         let projDir = IO.Path.GetDirectoryName(projFile)
