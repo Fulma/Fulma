@@ -8,7 +8,7 @@ let basic =
 ```fsharp
     Dropdown.dropdown [ Dropdown.isHoverable ]
         [ div [ ]
-            [ Button.button_div [ ]
+            [ Button.button_a [ ]
                 [ span [ ]
                     [ str "Dropdown" ]
                   Icon.faIcon [ Icon.isSmall ] Fa.I.AngleDown ] ]

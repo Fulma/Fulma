@@ -31,9 +31,9 @@ let card =
               Modal.Card.body [ ]
                 [ content ]
               Modal.Card.foot [ ]
-                [ Button.button_div [ Button.isSuccess ]
+                [ Button.button_a [ Button.isSuccess ]
                     [ str "Save changes" ]
-                  Button.button_div [ ]
+                  Button.button_a [ ]
                     [ str "Cancel" ] ] ] ]
 ```
     """

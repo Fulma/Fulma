@@ -69,17 +69,17 @@ module View =
                                                    ]
                                      [ Calendar.Nav.nav [ ]
                                          [ Calendar.Nav.left [ ]
-                                             [ Button.button_div [ Button.isLink
-                                                                   Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
-                                                                                                                        ForceClose = false }
-                                                                                            onChange config newState currentDate dispatch) ]
+                                             [ Button.button_a [ Button.isLink
+                                                                 Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
+                                                                                                                      ForceClose = false }
+                                                                                          onChange config newState currentDate dispatch) ]
                                                              [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronLeft ] ] ]
                                            str (Date.Format.localFormat config.Local state.ReferenceDate "MMMM yyyy")
                                            Calendar.Nav.right [ ]
-                                             [ Button.button_div [ Button.isLink
-                                                                   Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
-                                                                                                                        ForceClose = false }
-                                                                                            onChange config newState currentDate dispatch) ]
+                                             [ Button.button_a [ Button.isLink
+                                                                 Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
+                                                                                                                      ForceClose = false }
+                                                                                          onChange config newState currentDate dispatch) ]
                                                              [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronRight ] ] ] ]
                                        div [ ]
                                            [ Calendar.header [ ]

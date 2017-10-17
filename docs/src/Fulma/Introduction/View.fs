@@ -40,7 +40,7 @@ For example, if you want to use the Button element you will need to use `open Fu
 ```fsharp
 open Fulma.Elements
 
-Button.button_div [ Button.isSmall ]
+Button.button_a [ Button.isSmall ]
     [ str "A button" ]
 ```
 
@@ -59,13 +59,13 @@ Every element providing by Fulma will have at least 2 specials helpers:
 - `customClass` allow you to add a custom class to an element
 
     ```fsharp
-        Button.button_div [ Button.customClass "my-custom-button" ]
+        Button.button_a [ Button.customClass "my-custom-button" ]
             [ str "I am a button" ]
     ```
 - `props`:
 
     ```fsharp
-        Button.button_div [ Button.props [ OnClick (fun _ -> printfn "The button has been clicked") ] ]
+        Button.button_a [ Button.props [ OnClick (fun _ -> printfn "The button has been clicked") ] ]
             [ str "I am a button" ]
     ```
 

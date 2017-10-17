@@ -45,7 +45,7 @@ let basicModal model dispatch =
                         Modal.Close.onClick (fun _ -> dispatch ToggleBasicModal) ] [ ] ]
 
 let basic dispatch =
-    Button.button_div [ Button.onClick (fun _ -> dispatch ToggleBasicModal)]
+    Button.button_a [ Button.onClick (fun _ -> dispatch ToggleBasicModal)]
         [ str "Show modal" ]
 
 let cardModal model dispatch =
@@ -60,13 +60,13 @@ let cardModal model dispatch =
               Modal.Card.body [ ]
                 [ content ]
               Modal.Card.foot [ ]
-                [ Button.button_div [ Button.isSuccess ]
+                [ Button.button_a [ Button.isSuccess ]
                     [ str "Save changes" ]
-                  Button.button_div [ ]
+                  Button.button_a [ ]
                     [ str "Cancel" ] ] ] ]
 
 let card dispatch =
-    Button.button_div [ Button.onClick (fun _ -> dispatch ToggleCardModal)]
+    Button.button_a [ Button.onClick (fun _ -> dispatch ToggleCardModal)]
         [ str "Show modal" ]
 
 let root model dispatch =

@@ -18,7 +18,7 @@ let iconCode =
                         [ Input.input [ Input.typeIsText
                                         Input.placeholder "Find a post" ] ]
                       Control.control_div [ ]
-                        [ Button.button_div [ ]
+                        [ Button.button_a [ ]
                             [ str "Search" ] ] ] ] ]
           Level.right [ ]
             [ Level.item [ ]
@@ -30,7 +30,7 @@ let iconCode =
               Level.item [ ]
                 [ a [ ] [ str "Deleted" ] ]
               Level.item [ ]
-                [ Button.button_div [ Button.isSuccess ] [ str "New" ] ] ] ]
+                [ Button.button_a [ Button.isSuccess ] [ str "New" ] ] ] ]
 ```
     """
 

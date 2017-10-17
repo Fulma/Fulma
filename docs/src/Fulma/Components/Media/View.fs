@@ -24,7 +24,7 @@ let basic =
               Level.level [ ]
                 [ Level.left [ ]
                     [ Level.item [ ]
-                        [ Button.button_div [ Button.isInfo ]
+                        [ Button.button_a [ Button.isInfo ]
                             [ str "Submit" ] ] ]
                   Level.right [ ]
                     [ Level.item [ ]

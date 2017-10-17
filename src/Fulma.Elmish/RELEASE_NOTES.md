@@ -1,6 +1,6 @@
 ### next
 
-* Update to support latest version of Fulma. (Use `Button.button_div` instead of `Button.button`)
+* Update to support latest version of Fulma. (Use `Button.button_a` instead of `Button.button`)
 
 ### 0.1.0-beta-002
 

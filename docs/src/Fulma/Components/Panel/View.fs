@@ -39,9 +39,9 @@ let iconInteractive =
                     [ input [ Type "checkbox" ]
                       str "I am a checkbox" ]
                   Panel.block [ ]
-                    [ Button.button_div [ Button.isPrimary
-                                          Button.isOutlined
-                                          Button.isFullWidth ]
+                    [ Button.button_a [ Button.isPrimary
+                                        Button.isOutlined
+                                        Button.isFullWidth ]
                                     [ str "Reset" ] ] ] ] ]
 
 

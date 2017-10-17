@@ -163,11 +163,11 @@ let fontAwesomeIcons =
 
 let composeButtons =
     div [ ClassName "block" ]
-        [ Button.button_div [ Button.isDanger ]
+        [ Button.button_a [ Button.isDanger ]
                         [ Icon.faIcon [ ]
                                       [ Fa.icon Fa.I.Trash; Fa.faLg ]
                           span [] [ str "  Delete" ] ]
-          Button.button_div [ Button.isInfo ]
+          Button.button_a [ Button.isInfo ]
                         [ Icon.faIcon [ ]
                                       [ Fa.icon Fa.I.User; Fa.fw ]
                           span [] [ str "User" ] ] ]

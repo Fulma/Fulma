@@ -86,10 +86,10 @@ let iconInteractive =
 
            Field.field_div [ Field.isGrouped ]
                 [ Control.control_div [ ]
-                    [ Button.button_div [ Button.isPrimary ]
+                    [ Button.button_a [ Button.isPrimary ]
                         [ str "Submit" ] ]
                   Control.control_div [ ]
-                    [ Button.button_div [ Button.isLink ]
+                    [ Button.button_a [ Button.isLink ]
                         [ str "Cancel" ] ] ] ]
 
 let root model dispatch =

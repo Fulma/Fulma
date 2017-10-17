@@ -165,14 +165,14 @@ let stackedIconsCode =
 let composeButtonsCode =
     """
 ```fsharp
-    Button.button_div [ Button.isDanger ]
-                  [ Icon.faIcon [ ]
+    Button.button_a [ Button.isDanger ]
+                    [ Icon.faIcon [ ]
                                 [ Fa.icon Fa.I.Trash; Fa.faLg ]
-                    span [ ] [ str "  Delete" ] ]
-    Button.button_div [ Button.isInfo ]
-                  [ Icon.faIcon [ ]
+                      span [ ] [ str "  Delete" ] ]
+    Button.button_a [ Button.isInfo ]
+                    [ Icon.faIcon [ ]
                                 [ Fa.icon Fa.I.User; Fa.fw ]
-                    span [ ] [ str "User" ] ]
+                      span [ ] [ str "User" ] ]
 ```
     """
 
