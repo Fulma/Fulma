@@ -1,4 +1,4 @@
-### next
+### 0.1.0-beta-003
 
 * Update to support latest version of Fulma. (Use `Button.button_a` instead of `Button.button`)
 * Update to use stable version of Fable.PowerPack 1.3.0

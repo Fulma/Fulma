@@ -1,11 +1,10 @@
-### next
+### 1.0.0-beta-003
 
 * BREAKING CHANGE: Fix icons display and implement Font Awesome helpers
 * Fix #61: Add `is-fullwidth` support for Table element
-* Fix #59: Add color support for the navbar compoenent
+* Fix #59: Add color support for the navbar component
 * Fix #67: Enforce DSL synthax with `[<RequireQualifiedAccess>]` attribute
-* BREAKING CHANGE: Fix #70: Make button support different elements. To have the same behavior as before, replace: `Button.button` with `Button.button_a`
-
+* BREAKING CHANGE: Fix #70: Make button support different elements. To have the same behavior as before replace `Button.button` with `Button.button_a`
 
 ### 1.0.0-beta-001
 

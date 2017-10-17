@@ -1,4 +1,4 @@
-### next
+### 0.1.0-beta-007
 
 * Add slider extension support
 * Add switch extension support
