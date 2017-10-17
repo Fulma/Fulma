@@ -154,6 +154,7 @@
     <!-- Home -->
     <Compile Include="src/Home/View.fs" />
     <Compile Include="src/Migration/View.fs" />
+    <Compile Include="src/Showcase/View.fs" />
     <Compile Include="src/Navbar/View.fs" />
     <Compile Include="src/Types.fs" />
     <Compile Include="src/State.fs" />

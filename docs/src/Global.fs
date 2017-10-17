@@ -62,6 +62,7 @@ type FulmaElmishPage =
 type Page =
     | Home
     | Migration
+    | Showcase
     | Fulma of FulmaPage
     | FulmaExtensions of FulmaExtensionsPage
     | FulmaElmish of FulmaElmishPage
@@ -70,6 +71,7 @@ let toHash page =
     match page with
     | Home -> "#home"
     | Migration -> "#migration"
+    | Showcase -> "#showcase"
     | Fulma pageType ->
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
