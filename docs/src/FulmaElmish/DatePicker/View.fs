@@ -30,7 +30,7 @@ let root model dispatch =
         match model.CurrentDate with
         | Some date ->
             Date.Format.format date "dddd, MMMM dd, yyyy"
-            |> sprintf "The selected date is: %s"
+            |> (fun dateStr -> "The selected date is: " + dateStr)
             |> str
 
         | None ->

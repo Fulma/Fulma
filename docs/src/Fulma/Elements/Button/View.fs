@@ -63,7 +63,7 @@ let extraInteractive model dispatch =
         if model.ClickCount = 0 then
             "Click me !"
         else
-            sprintf "Clicked: %i times." model.ClickCount
+            "Clicked: " + string model.ClickCount + "times."
 
     div [ ClassName "block" ]
         [ Button.button_a [ Button.onClick (fun _ -> dispatch Click) ]

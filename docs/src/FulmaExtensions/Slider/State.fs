@@ -51,8 +51,8 @@ let eventCode =
     """
 ```fsharp
     // For registering a change event, we can use the Slider.onChange helper
-    Slider.slider [ Slider.onChange (fun x -> dispatch (Change (x.currentTarget?value |> sprintf "%O" |> int)))  ] [ ]
-    div [] [ str (sprintf "%i" model.Value) ]
+    Slider.slider [ Slider.onChange (fun x -> dispatch (Change (unbox<int> x.currentTarget?value)))  ] [ ]
+    div [] [ str (string model.Value) ]
 
 ```
     """

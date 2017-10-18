@@ -161,7 +161,7 @@ let eventInteractive model dispatch =
         [ Checkradio.checkbox
             [ Checkradio.isChecked model.IsChecked
               Checkradio.onChange (fun x -> dispatch (Change newState)) ]
-            [ str  (sprintf "%A" model.IsChecked) ]
+            [ str  (string model.IsChecked) ]
 
           Checkradio.checkbox
                 [ Checkradio.isChecked model.IsChecked

@@ -161,7 +161,7 @@ let eventInteractive model dispatch =
         [ Switch.switch
             [ Switch.isChecked model.IsChecked
               Switch.onChange (fun x -> dispatch (Change newState)) ]
-            [ str (sprintf "%A" model.IsChecked) ]
+            [ str (string model.IsChecked) ]
           Switch.switch
             [ Switch.isChecked model.IsChecked
               Switch.onChange (fun x -> dispatch (Change newState)) ]

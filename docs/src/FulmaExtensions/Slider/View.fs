@@ -46,8 +46,8 @@ let stateInteractive =
 
 let eventInteractive model dispatch =
     div [ ClassName "block" ]
-        [ Slider.slider [ Slider.onChange (fun x -> dispatch (Change (x.currentTarget?value |> sprintf "%O" |> int))) ] [ ]
-          div [ ] [ str (sprintf "%i" model.Value) ] ]
+        [ Slider.slider [ Slider.onChange (fun x -> dispatch (Change (unbox<int> x.currentTarget?value))) ] [ ]
+          div [ ] [ str (string model.Value) ] ]
 
 let root model dispatch =
     Render.docPage [    Render.contentFromMarkdown model.Intro

@@ -50,8 +50,8 @@ NUGET
       Fable.Core (>= 1.2.4) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
-    Fable.React (1.2)
-      Fable.Core (>= 1.1.15) - restriction: >= netstandard1.6
+    Fable.React (1.2.1)
+      Fable.Core (>= 1.2.4) - restriction: >= netstandard1.6
       Fable.Import.Browser (>= 0.1) - restriction: >= netstandard1.6
       FSharp.Core (>= 4.2.3) - restriction: >= netstandard1.6
     FSharp.Compiler.Service (14.0.2) - restriction: >= netcoreapp2.0
