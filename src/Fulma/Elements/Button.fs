@@ -193,7 +193,7 @@ module Button =
             yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
           yield! opts.Props ]
 
-    let button_a (options : IAnchorOption list) children =
+    let button_a (options : 'T list when 'T :> IAnchorOption) children =
         let parseOptions (result: AnchorOptions) (opt : IAnchorOption) =
             match opt with
             | :? Option as genericOption -> { result with GenericOption = parseGenericOptions result.GenericOption genericOption }
@@ -219,7 +219,7 @@ module Button =
             (genericPropsGenerator opts)
             children
 
-    let button_input (options : IInputOption list) =
+    let button_input (options : 'T list when 'T :> IInputOption) =
         let parseOptions (result: InputOptions) (opt : IInputOption) =
             match opt with
             | :? Option as genericOption -> { result with GenericOption = parseGenericOptions result.GenericOption genericOption }

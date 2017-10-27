@@ -1,3 +1,7 @@
+### 1.0.0-beta-004
+
+* Fix #73: Use static type constraint for the `Button` DSL
+
 ### 1.0.0-beta-003
 
 * BREAKING CHANGE: Fix icons display and implement Font Awesome helpers
