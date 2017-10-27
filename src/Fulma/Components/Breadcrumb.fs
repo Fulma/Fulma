@@ -122,14 +122,7 @@ module Breadcrumb =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        let className =
-            [ if opts.IsActive then
-                yield Bulma.Breadcrumb.State.IsActive
-              if opts.CustomClass.IsSome then
-                yield opts.CustomClass.Value
-            ] |> String.concat " "
-
-
-        li [ yield ClassName className :>  IHTMLProp
+        li [ yield Helpers.classes "" [opts.CustomClass]
+                        [Bulma.Breadcrumb.State.IsActive, opts.IsActive]
              yield! opts.Props ]
             children

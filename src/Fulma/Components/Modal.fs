@@ -103,19 +103,13 @@ module Modal =
 
     let background (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Modal.Background
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Modal.Background [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let content (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Modal.Content
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Modal.Content [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     module Card =
 
@@ -140,40 +134,25 @@ module Modal =
 
         let card (options: GenericOption list) children =
             let opts = genericParse options
-
-            div [ yield classBaseList Bulma.Modal.Card.Container
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Modal.Card.Container [opts.CustomClass] []
+            div (class'::opts.Props) children
 
         let head (options: GenericOption list) children =
             let opts = genericParse options
-
-            header [ yield classBaseList Bulma.Modal.Card.Head
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                     yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Modal.Card.Head [opts.CustomClass] []
+            header (class'::opts.Props) children
 
         let foot (options: GenericOption list) children =
             let opts = genericParse options
-
-            footer [ yield classBaseList Bulma.Modal.Card.Foot
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                     yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Modal.Card.Foot [opts.CustomClass] []
+            footer (class'::opts.Props) children
 
         let title (options: GenericOption list) children =
             let opts = genericParse options
-
-            div [ yield classBaseList Bulma.Modal.Card.Title
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Modal.Card.Title [opts.CustomClass] []
+            div (class'::opts.Props) children
 
         let body (options: GenericOption list) children =
             let opts = genericParse options
-
-            section [ yield classBaseList Bulma.Modal.Card.Body
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Modal.Card.Body [opts.CustomClass] []
+            section (class'::opts.Props) children

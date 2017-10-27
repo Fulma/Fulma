@@ -13,32 +13,20 @@ module Media =
 
     let media (options: GenericOption list) children =
         let opts = genericParse options
-
-        article [ yield classBaseList Bulma.Media.Container
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Media.Container [opts.CustomClass] []
+        article (class'::opts.Props) children
 
     let left (options: GenericOption list) children =
         let opts = genericParse options
-
-        figure [ yield classBaseList Bulma.Media.Left
-                                     [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                 yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Media.Left [opts.CustomClass] []
+        figure (class'::opts.Props) children
 
     let right (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Media.Right
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Media.Right [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let content (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Media.Content
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Media.Content [opts.CustomClass] []
+        div (class'::opts.Props) children

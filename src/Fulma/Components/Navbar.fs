@@ -126,29 +126,29 @@ module Navbar =
 
     // Helpers definitions
 
-    let hasShadow = Navbar.HasShadow
-    let isTransparent = Navbar.IsTransparent
-    let props props = Navbar.Props props
-    let customClass = Navbar.CustomClass
+    let inline hasShadow<'T> = Navbar.HasShadow
+    let inline isTransparent<'T> = Navbar.IsTransparent
+    let inline props props = Navbar.Props props
+    let inline customClass x = Navbar.CustomClass x
 
     // Levels and colors
-    let isBlack = Navbar.Level IsBlack
-    let isDark = Navbar.Level IsDark
-    let isLight = Navbar.Level IsLight
-    let isWhite = Navbar.Level IsWhite
-    let isPrimary = Navbar.Level IsPrimary
-    let isInfo = Navbar.Level IsInfo
-    let isSuccess = Navbar.Level IsSuccess
-    let isWarning = Navbar.Level IsWarning
-    let isDanger = Navbar.Level IsDanger
+    let inline isBlack<'T> = Navbar.Level IsBlack
+    let inline isDark<'T> = Navbar.Level IsDark
+    let inline isLight<'T> = Navbar.Level IsLight
+    let inline isWhite<'T> = Navbar.Level IsWhite
+    let inline isPrimary<'T> = Navbar.Level IsPrimary
+    let inline isInfo<'T> = Navbar.Level IsInfo
+    let inline isSuccess<'T> = Navbar.Level IsSuccess
+    let inline isWarning<'T> = Navbar.Level IsWarning
+    let inline isDanger<'T> = Navbar.Level IsDanger
 
     module Item =
-        let isActive = Item.IsActive
-        let isHoverable = Item.IsHoverable
-        let isTab = Item.IsTab
-        let props props = Item.Props props
-        let customClass = Item.CustomClass
-        let hasDropdown = Item.HasDropdown
+        let inline isActive<'T> = Item.IsActive
+        let inline isHoverable<'T> = Item.IsHoverable
+        let inline isTab<'T> = Item.IsTab
+        let inline props props = Item.Props props
+        let inline customClass x = Item.CustomClass x
+        let inline hasDropdown<'T> = Item.HasDropdown
 
 
         let item element options children =
@@ -173,9 +173,9 @@ module Navbar =
                 children
 
     module Link =
-        let isActive = Link.IsActive
-        let props props = Link.Props props
-        let customClass = Link.CustomClass
+        let inline isActive<'T> = Link.IsActive
+        let inline props props = Link.Props props
+        let inline customClass x = Link.CustomClass x
 
         let link element (options : Link.Option list) children =
             let parseOptions (result : Link.Options) opt =
@@ -192,16 +192,16 @@ module Navbar =
                 children
 
     module Menu =
-        let isActive = Menu.IsActive
-        let props props = Menu.Props props
-        let customClass = Menu.CustomClass
+        let inline isActive<'T> = Menu.IsActive
+        let inline props props = Menu.Props props
+        let inline customClass x = Menu.CustomClass x
 
     module Dropdown =
-        let isActive = Dropdown.IsActive
-        let isBoxed = Dropdown.IsBoxed
-        let isRight = Dropdown.IsRight
-        let props = Dropdown.Props
-        let customClass = Dropdown.CustomClass
+        let inline isActive<'T> = Dropdown.IsActive
+        let inline isBoxed<'T> = Dropdown.IsBoxed
+        let inline isRight<'T> = Dropdown.IsRight
+        let inline props props = Dropdown.Props props
+        let inline customClass x = Dropdown.CustomClass x
 
         let dropdown element (options : Dropdown.Option list) children =
             let parseOptions (result : Dropdown.Options) opt =
@@ -224,30 +224,21 @@ module Navbar =
     module Brand =
         let brand element (options: GenericOption list) children =
             let opts = genericParse options
-
-            element [ yield classBaseList Bulma.Navbar.Brand
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Navbar.Brand [opts.CustomClass] []
+            element (class'::opts.Props) children
 
     module Start =
         let start element (options: GenericOption list) children =
             let opts = genericParse options
-
-            element [ yield classBaseList Bulma.Navbar.Start
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Navbar.Start [opts.CustomClass] []
+            element (class'::opts.Props) children
 
     module End =
 
         let ``end`` element (options: GenericOption list) children =
             let opts = genericParse options
-
-            element [ yield classBaseList Bulma.Navbar.End
-                                      [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Navbar.End [opts.CustomClass] []
+            element (class'::opts.Props) children
 
     let navbar (options : Navbar.Option list) children =
         let parseOptions (result: Navbar.Options ) opt =
@@ -268,23 +259,23 @@ module Navbar =
               yield! opts.Props ]
             children
 
-    let link_a = Link.link a
-    let link_div = Link.link div
+    let inline link_a x y = Link.link a x y
+    let inline link_div x y = Link.link div x y
 
-    let item_a = Item.item a
-    let item_div = Item.item div
+    let inline item_a x y = Item.item a x y
+    let inline item_div x y = Item.item div x y
 
-    let dropdown_a = Dropdown.dropdown a
-    let dropdown_div = Dropdown.dropdown div
+    let inline dropdown_a x y = Dropdown.dropdown a x y
+    let inline dropdown_div x y = Dropdown.dropdown div x y
 
-    let brand_a = Brand.brand a
-    let brand_div = Brand.brand div
+    let inline brand_a x y = Brand.brand a x y
+    let inline brand_div x y = Brand.brand div x y
 
-    let start_a = Start.start a
-    let start_div = Start.start div
+    let inline start_a x y = Start.start a x y
+    let inline start_div x y = Start.start div x y
 
-    let end_a = End.``end`` a
-    let end_div = End.``end`` div
+    let inline end_a x y = End.``end`` a x y
+    let inline end_div x y = End.``end`` div x y
 
     let menu options children =
         let parseOptions (result: Menu.Options ) opt =
@@ -304,24 +295,15 @@ module Navbar =
 
     let burger (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Navbar.Burger
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Navbar.Burger [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let content (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Navbar.Content
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Navbar.Content [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let divider (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Navbar.Divider
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Navbar.Divider [opts.CustomClass] []
+        div (class'::opts.Props) children

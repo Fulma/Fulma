@@ -33,27 +33,18 @@ module Menu =
 
     let menu (options: GenericOption list) children =
         let opts = genericParse options
-
-        aside [ yield classBaseList Bulma.Menu.Container
-                                    [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                yield! opts.Props ]
-              children
+        let class' = Helpers.classes Bulma.Menu.Container [opts.CustomClass] []
+        aside (class'::opts.Props) children
 
     let label (options: GenericOption list) children =
         let opts = genericParse options
-
-        p [ yield classBaseList Bulma.Menu.Label
-                                [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-          children
+        let class' = Helpers.classes Bulma.Menu.Label [opts.CustomClass] []
+        p (class'::opts.Props) children
 
     let list (options: GenericOption list) children =
         let opts = genericParse options
-
-        ul [ yield classBaseList Bulma.Menu.List
-                                 [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-             yield! opts.Props ]
-           children
+        let class' = Helpers.classes Bulma.Menu.List [opts.CustomClass] []
+        ul (class'::opts.Props) children
 
     module Item =
         let isActive = Item.IsActive
@@ -70,11 +61,12 @@ module Menu =
             | Item.OnClick cb -> { result with OnClick = cb |> Some }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
+        let class' =
+            [Bulma.Menu.State.IsActive, opts.IsActive]
+            |> Helpers.classes Bulma.Menu.List [opts.CustomClass]
+        let attrs =
+            match opts.OnClick with
+            | Some handler -> class'::(upcast DOMAttr.OnClick handler)::opts.Props
+            | None -> class'::opts.Props
 
-        li [ ]
-           [ a [ yield classList [ Bulma.Menu.State.IsActive, opts.IsActive
-                                   opts.CustomClass.Value, opts.CustomClass.IsSome ] :>  IHTMLProp
-                 if opts.OnClick.IsSome then
-                    yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-                 yield! opts.Props ]
-               children ]
+        li [ ] [ a attrs children ]

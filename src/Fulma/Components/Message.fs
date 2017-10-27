@@ -64,16 +64,11 @@ module Message =
 
     let header (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Message.Header
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Message.Header [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let body (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Message.Body [opts.CustomClass] []
+        div (class'::opts.Props) children
 
-        div [ yield classBaseList Bulma.Message.Body
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children

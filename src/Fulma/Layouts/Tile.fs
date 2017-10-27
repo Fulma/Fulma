@@ -106,11 +106,10 @@ module Tile =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        div [ yield classBaseList Bulma.Grid.Tile.Container
-                                    [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                                      Bulma.Grid.Tile.IsVertical, opts.IsVertical
-                                      opts.Context.Value, opts.Context.IsSome
-                                      opts.Size.Value, opts.Size.IsSome ] :> IHTMLProp
+        div [ yield Helpers.classes
+                        Bulma.Grid.Tile.Container
+                        [opts.CustomClass; opts.Context; opts.Size]
+                        [Bulma.Grid.Tile.IsVertical, opts.IsVertical]
               yield! opts.Props ]
             children
 
