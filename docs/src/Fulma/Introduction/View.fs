@@ -33,7 +33,7 @@ open Fulma
 ## Architecture
 
 Fulma has been designed to provide the best experience over the Bulma CSS framework.
-To archieve this goal, Fulma prevents you to open lower module of the hierarchie.
+To achieve this goal, Fulma prevents you to open lower module of the hierarchy.
 
 For example, if you want to use the Button element you will need to use `open Fulma.Elements` and not `open Fulma.Elements.Button`.
 
