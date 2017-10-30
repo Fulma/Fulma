@@ -76,24 +76,24 @@ module Tile =
 
     open Types
 
-    let isChild = Context IsChild
-    let isParent = Context IsParent
-    let isAncestor = Context IsAncestor
-    let is1 = Size Is1
-    let is2 = Size Is2
-    let is3 = Size Is3
-    let is4 = Size Is4
-    let is5 = Size Is5
-    let is6 = Size Is6
-    let is7 = Size Is7
-    let is8 = Size Is8
-    let is9 = Size Is9
-    let is10 = Size Is10
-    let is11 = Size Is11
-    let is12 = Size Is12
-    let isVertical = IsVertical
-    let customClass = CustomClass
-    let props = Props
+    let inline isChild<'T> = Context IsChild
+    let inline isParent<'T> = Context IsParent
+    let inline isAncestor<'T> = Context IsAncestor
+    let inline is1<'T> = Size Is1
+    let inline is2<'T> = Size Is2
+    let inline is3<'T> = Size Is3
+    let inline is4<'T> = Size Is4
+    let inline is5<'T> = Size Is5
+    let inline is6<'T> = Size Is6
+    let inline is7<'T> = Size Is7
+    let inline is8<'T> = Size Is8
+    let inline is9<'T> = Size Is9
+    let inline is10<'T> = Size Is10
+    let inline is11<'T> = Size Is11
+    let inline is12<'T> = Size Is12
+    let inline isVertical<'T> = IsVertical
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     let tile (options: Option list) children =
         let parseOptions (result: Options) =

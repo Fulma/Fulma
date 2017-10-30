@@ -64,23 +64,23 @@ module Image =
     open Types
 
     // Sizes
-    let is16x16 = Size Is16x16
-    let is24x24 = Size Is24x24
-    let is32x32 = Size Is32x32
-    let is48x48 = Size Is48x48
-    let is64x64 = Size Is64x64
-    let is96x96 = Size Is96x96
-    let is128x128 = Size Is128x128
+    let inline is16x16<'T> = Size Is16x16
+    let inline is24x24<'T> = Size Is24x24
+    let inline is32x32<'T> = Size Is32x32
+    let inline is48x48<'T> = Size Is48x48
+    let inline is64x64<'T> = Size Is64x64
+    let inline is96x96<'T> = Size Is96x96
+    let inline is128x128<'T> = Size Is128x128
     // Ratios
-    let isSquare = Ratio IsSquare
-    let is1by1 = Ratio Is1by1
-    let is4by3 = Ratio Is4by3
-    let is3by2 = Ratio Is3by2
-    let is16by9 = Ratio Is16by9
-    let is2by1 = Ratio Is2by1
+    let inline isSquare<'T> = Ratio IsSquare
+    let inline is1by1<'T> = Ratio Is1by1
+    let inline is4by3<'T> = Ratio Is4by3
+    let inline is3by2<'T> = Ratio Is3by2
+    let inline is16by9<'T> = Ratio Is16by9
+    let inline is2by1<'T> = Ratio Is2by1
     // Extra
-    let customClass = CustomClass
-    let props = Props
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     let image options children =
         let parseOptions (result : Options) =

@@ -34,14 +34,14 @@ module Table =
     open Types
 
     // Styling
-    let isBordered = IsBordered
-    let isStripped = IsStripped
-    let isFullwidth = IsFullwidth
+    let inline isBordered<'T> = IsBordered
+    let inline isStripped<'T> = IsStripped
+    let inline isFullwidth<'T> = IsFullwidth
     // Spacing
-    let isNarrow = IsNarrow
+    let inline isNarrow<'T> = IsNarrow
     // Extra
-    let customClass = CustomClass
-    let props = Props
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     let table options children =
         let parseOptions (result : TableOptions) =
@@ -54,15 +54,14 @@ module Table =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
-        table
-            [ yield classBaseList Bulma.Table.Container [ Bulma.Table.Style.IsBordered, opts.IsBordered
-                                                          Bulma.Table.Style.IsStripped, opts.IsStripped
-                                                          Bulma.Table.Style.IsFullwidth, opts.IsFullwidth
-                                                          Bulma.Table.Spacing.IsNarrow, opts.IsNarrow
-                                                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Table.Container [opts.CustomClass]
+                        [ Bulma.Table.Style.IsBordered, opts.IsBordered
+                          Bulma.Table.Style.IsStripped, opts.IsStripped
+                          Bulma.Table.Style.IsFullwidth, opts.IsFullwidth
+                          Bulma.Table.Spacing.IsNarrow, opts.IsNarrow ]
+
+        table (class'::opts.Props) children
 
     module Row =
         // Row
-        let isSelected = ClassName Bulma.Table.Row.State.IsSelected
+        let inline isSelected<'T> = ClassName Bulma.Table.Row.State.IsSelected

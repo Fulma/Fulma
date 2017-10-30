@@ -40,20 +40,20 @@ module PageLoader =
     open Types
 
 
-    let isActive = IsActive
+    let inline isActive<'T> = IsActive
     // Colors
-    let isBlack = Color IsBlack
-    let isDark = Color IsDark
-    let isLight = Color IsLight
-    let isWhite = Color IsWhite
-    let isPrimary = Color IsPrimary
-    let isInfo = Color IsInfo
-    let isSuccess = Color IsSuccess
-    let isWarning = Color IsWarning
-    let isDanger = Color IsDanger
+    let inline isBlack<'T> = Color IsBlack
+    let inline isDark<'T> = Color IsDark
+    let inline isLight<'T> = Color IsLight
+    let inline isWhite<'T> = Color IsWhite
+    let inline isPrimary<'T> = Color IsPrimary
+    let inline isInfo<'T> = Color IsInfo
+    let inline isSuccess<'T> = Color IsSuccess
+    let inline isWarning<'T> = Color IsWarning
+    let inline isDanger<'T> = Color IsDanger
     // Extra
-    let props props = Props props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let pageLoader (options : Option list) children =
 
@@ -65,10 +65,6 @@ module PageLoader =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield classBaseList
-                    (Helpers.generateClassName Classes.PageLoader  [ opts.Color])
-                    [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                      Classes.IsActive , opts.IsActive ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let className = Helpers.generateClassName Classes.PageLoader  [ opts.Color]
+        let class' = Helpers.classes className [opts.CustomClass] [Classes.IsActive, opts.IsActive]
+        div (class'::opts.Props) children

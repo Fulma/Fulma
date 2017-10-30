@@ -140,56 +140,49 @@ module Button =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
-    let isFullWidth = Size IsFullWidth
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
+    let inline isFullWidth<'T> = Size IsFullWidth
     // States
-    let isHovered = State IsHovered
-    let isFocused = State IsFocused
-    let isActive = State IsActive
-    let isLoading = State IsLoading
-    let isStatic = State IsStatic
-    let isDisabled = IsDisabled
+    let inline isHovered<'T> = State IsHovered
+    let inline isFocused<'T> = State IsFocused
+    let inline isActive<'T> = State IsActive
+    let inline isLoading<'T> = State IsLoading
+    let inline isStatic<'T> = State IsStatic
+    let inline isDisabled<'T> = IsDisabled
     // Styles
-    let isOutlined = IsOutlined
-    let isInverted = IsInverted
-    let isLink = IsLink
+    let inline isOutlined<'T> = IsOutlined
+    let inline isInverted<'T> = IsInverted
+    let inline isLink<'T> = IsLink
     // Levels and colors
-    let isBlack = Level IsBlack
-    let isDark = Level IsDark
-    let isLight = Level IsLight
-    let isWhite = Level IsWhite
-    let isPrimary = Level IsPrimary
-    let isInfo = Level IsInfo
-    let isSuccess = Level IsSuccess
-    let isWarning = Level IsWarning
-    let isDanger = Level IsDanger
+    let inline isBlack<'T> = Level IsBlack
+    let inline isDark<'T> = Level IsDark
+    let inline isLight<'T> = Level IsLight
+    let inline isWhite<'T> = Level IsWhite
+    let inline isPrimary<'T> = Level IsPrimary
+    let inline isInfo<'T> = Level IsInfo
+    let inline isSuccess<'T> = Level IsSuccess
+    let inline isWarning<'T> = Level IsWarning
+    let inline isDanger<'T> = Level IsDanger
     // Extra
-    let props props = Props props
-    let customClass = CustomClass
-    let onClick cb = OnClick cb
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
+    let inline onClick cb = OnClick cb
 
     // Anchor only
-    let href = AnchorOnlyOption.Href
+    let inline href x = AnchorOnlyOption.Href x
 
     // Input only
-    let typeIsSubmit = InputOnlyOption.Type "reset"
-    let typeIsReset = InputOnlyOption.Type "submit"
-    let value = InputOnlyOption.Value
+    let inline typeIsSubmit<'T> = InputOnlyOption.Type "reset"
+    let inline typeIsReset<'T> = InputOnlyOption.Type "submit"
+    let inline value x = InputOnlyOption.Value x
 
     let genericPropsGenerator opts =
-        [ yield classBaseList Bulma.Button.Container
-             [ Bulma.Button.Styles.IsOutlined, opts.IsOutlined
-               Bulma.Button.Styles.IsInverted, opts.IsInverted
-               Bulma.Button.Styles.IsLink, opts.IsLink
-               opts.Level.Value, opts.Level.IsSome
-               opts.Size.Value, opts.Size.IsSome
-               opts.State.Value, opts.State.IsSome
-               opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+        [ yield Helpers.classes Bulma.Button.Container [opts.Level; opts.Size; opts.State; opts.CustomClass] [Bulma.Button.Styles.IsOutlined, opts.IsOutlined; Bulma.Button.Styles.IsInverted, opts.IsInverted; Bulma.Button.Styles.IsLink, opts.IsLink]
           if opts.IsDisabled then
             yield Disabled true :> IHTMLProp
-          if opts.OnClick.IsSome then
+          if Option.isSome opts.OnClick then
             yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
           yield! opts.Props ]
 
@@ -207,7 +200,7 @@ module Button =
         let anchorOpts = options |> List.fold parseOptions AnchorOptions.Empty
 
         a
-            [ if anchorOpts.Href.IsSome then
+            [ if Option.isSome anchorOpts.Href then
                 yield HTMLAttr.Href anchorOpts.Href.Value :> IHTMLProp
               yield! genericPropsGenerator anchorOpts.GenericOption ]
             children
@@ -234,8 +227,8 @@ module Button =
         let inputOpts = options |> List.fold parseOptions InputOptions.Empty
 
         input
-            [ if inputOpts.Type.IsSome then
+            [ if Option.isSome inputOpts.Type then
                 yield HTMLAttr.Type inputOpts.Type.Value :> IHTMLProp
-              if inputOpts.Value.IsSome then
+              if Option.isSome inputOpts.Value then
                 yield HTMLAttr.Value inputOpts.Value.Value :> IHTMLProp
               yield! genericPropsGenerator inputOpts.GenericOption ]

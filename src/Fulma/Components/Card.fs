@@ -11,8 +11,8 @@ open Fable.Import
 [<RequireQualifiedAccess>]
 module Card =
 
-    let customClass = CustomClass
-    let props = Props
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     let card (options: GenericOption list) children =
         let opts = genericParse options
@@ -36,8 +36,8 @@ module Card =
 
     module Header =
 
-        let customClass = CustomClass
-        let props = Props
+        let inline customClass x = CustomClass x
+        let inline props x = Props x
 
         let icon (options: GenericOption list) children =
             let opts = genericParse options
@@ -51,8 +51,8 @@ module Card =
 
     module Footer =
 
-        let customClass = CustomClass
-        let props = Props
+        let inline customClass x = CustomClass x
+        let inline props x = Props x
 
         let item (options: GenericOption list) children =
             let opts = genericParse options

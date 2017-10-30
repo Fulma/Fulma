@@ -66,21 +66,21 @@ module Tabs =
 
     open Types
 
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
-    let isCentered = Alignment Center
-    let isRight = Alignment Right
-    let isBoxed = IsBoxed
-    let isToggle = IsToggle
-    let isFullwidth = IsFullwidth
-    let customClass = CustomClass
-    let props = Props
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
+    let inline isCentered<'T> = Alignment Center
+    let inline isRight<'T> = Alignment Right
+    let inline isBoxed<'T> = IsBoxed
+    let inline isToggle<'T> = IsToggle
+    let inline isFullwidth<'T> = IsFullwidth
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     module Tab =
         let isActive= Tab.IsActive
-        let customClass = Tab.CustomClass
-        let props = Tab.Props
+        let inline customClass x = Tab.CustomClass x
+        let inline props x = Tab.Props x
 
     let tabs (options: Option list) children =
         let parseOptions (result: Options) opt =
@@ -94,12 +94,7 @@ module Tabs =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        div [ yield (classBaseList Bulma.Tabs.Container
-                                    [ opts.Alignment.Value, opts.Alignment.IsSome
-                                      opts.Size.Value, opts.Size.IsSome
-                                      Bulma.Tabs.Style.IsBoxed, opts.IsBoxed
-                                      Bulma.Tabs.Style.IsFullwidth, opts.IsFullwidth
-                                      Bulma.Tabs.Style.IsToggle, opts.IsToggle ]) :> IHTMLProp
+        div [ yield Helpers.classes Bulma.Tabs.Container [opts.Alignment; opts.Size] [Bulma.Tabs.Style.IsBoxed, opts.IsBoxed; Bulma.Tabs.Style.IsFullwidth, opts.IsFullwidth; Bulma.Tabs.Style.IsToggle, opts.IsToggle]
               yield! opts.Props ]
             [ ul [ ]
                  children ]

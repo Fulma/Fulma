@@ -51,7 +51,7 @@ module Form =
         let inline customClass x = CustomClass x
         let inline props x = Props x
 
-        let internal control element options children =
+        let control element options children =
             let parseOptions (result : Options) =
                 function
                 | HasIcon Left -> { result with HasIconLeft = Bulma.Form.Control.HasIcon.Left |> Some }
@@ -67,7 +67,7 @@ module Form =
                                                                                opts.CustomClass ]
 
             element
-                [ yield (classBaseList cls [ Bulma.Form.Control.State.IsLoading, opts.IsLoading ]) :> IHTMLProp
+                [ yield Helpers.classes cls [] [Bulma.Form.Control.State.IsLoading, opts.IsLoading]
                   yield! opts.Props ]
                 children
 
@@ -116,7 +116,7 @@ module Form =
             let opts = options |> List.fold parseOptions Options.Empty
             label
                 [ yield ClassName(Helpers.generateClassName Bulma.Form.Label.Container [ opts.Size; opts.CustomClass ]) :> IHTMLProp
-                  if opts.HtmlFor.IsSome then yield HtmlFor opts.HtmlFor.Value :> IHTMLProp
+                  if Option.isSome opts.HtmlFor then yield HtmlFor opts.HtmlFor.Value :> IHTMLProp
                   yield! opts.Props ]
                 children
 
@@ -207,14 +207,8 @@ module Form =
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
 
             let opts = options |> List.fold parseOptions Options.Empty
-
-            div [ yield classBaseList Bulma.Form.Select.Container
-                                         [ opts.Size.Value, opts.Size.IsSome
-                                           opts.State.Value, opts.State.IsSome
-                                           opts.Color.Value, opts.Color.IsSome
-                                           opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Form.Select.Container [opts.Size; opts.State; opts.Color; opts.CustomClass] []
+            div (class'::opts.Props) children
 
     [<RequireQualifiedAccess>]
     module Input =
@@ -345,12 +339,12 @@ module Form =
                 ([ yield ClassName className :> IHTMLProp
                    yield Props.Disabled opts.Disabled :> IHTMLProp
                    yield Props.Type opts.Type :> IHTMLProp
-                   if opts.Id.IsSome then yield Props.Id opts.Id.Value :> IHTMLProp
-                   if opts.Value.IsSome then yield Props.Value opts.Value.Value :> IHTMLProp
+                   if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
+                   if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
 
-                   if opts.DefaultValue.IsSome then
+                   if Option.isSome opts.DefaultValue then
                        yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
-                   if opts.Placeholder.IsSome then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]
+                   if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]
                  @ opts.Props)
 
         // Alias to create input already typed
@@ -452,7 +446,7 @@ module Form =
         let inline customClass x = Types.CustomClass x
         let inline props x = Types.Props x
 
-        let internal field element options children =
+        let field element options children =
             let parseOptions (result : Options) =
                 function
                 | HasAddons hasAddons -> { result with HasAddons = ofHasAddons hasAddons |> Some }
@@ -665,17 +659,12 @@ module Form =
 
             let opts = options |> List.fold parseOptions Options.Empty
 
-            textarea [ yield classBaseList Bulma.Form.TextArea.Container
-                                           [ opts.Color.Value, opts.Color.IsSome
-                                             opts.CustomClass.Value, opts.CustomClass.IsSome
-                                             opts.Size.Value, opts.Size.IsSome
-                                             opts.State.Value, opts.State.IsSome
-                                             Bulma.Form.TextArea.HasFixedSize, opts.HasFixedSize ] :> IHTMLProp
+            textarea [ yield Helpers.classes Bulma.Form.TextArea.Container [opts.Color; opts.CustomClass; opts.Size; opts.State] [Bulma.Form.TextArea.HasFixedSize, opts.HasFixedSize]
                        yield Props.Disabled opts.Disabled :> IHTMLProp
-                       if opts.Id.IsSome then yield Props.Id opts.Id.Value :> IHTMLProp
-                       if opts.Value.IsSome then yield Props.Value opts.Value.Value :> IHTMLProp
-                       if opts.DefaultValue.IsSome then yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
-                       if opts.Placeholder.IsSome then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp
+                       if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
+                       if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
+                       if Option.isSome opts.DefaultValue then yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
+                       if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp
                        yield! opts.Props ]
                 children
 
@@ -728,7 +717,7 @@ module Form =
         let radio (options : GenericOption list) children =
             let opts = genericParse options
             let class' = Helpers.classes Bulma.Form.Radio [opts.CustomClass] []
-            label (class'::opts.Props)
+            label (class'::opts.Props) children
 
         module Input =
             let inline props x = Input.Props x
@@ -863,17 +852,8 @@ module Form =
                 | HasName -> { result with HasName = true }
 
             let opts = options |> List.fold parseOptions Options.Empty
-
-            div [ yield classBaseList Bulma.Form.File.Container
-                                    [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                                      opts.State.Value, opts.State.IsSome
-                                      opts.Size.Value, opts.Size.IsSome
-                                      opts.Alignment.Value, opts.Alignment.IsSome
-                                      opts.Color.Value, opts.Color.IsSome
-                                      Bulma.Form.File.IsBoxed, opts.IsBoxed
-                                      Bulma.Form.File.HasName, opts.HasName ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Form.File.Container [opts.CustomClass; opts.State; opts.Size; opts.Alignment; opts.Color] [Bulma.Form.File.IsBoxed, opts.IsBoxed; Bulma.Form.File.HasName, opts.HasName]
+            div (class'::opts.Props) children
 
         module Cta =
             let inline props x = GenericOption.Props x
@@ -910,7 +890,7 @@ module Form =
             let class' = Helpers.classes Bulma.Form.File.Icon [opts.CustomClass] []
             span (class'::opts.Props) children
 
-        let internal label element (options : GenericOption list) children =
+        let label element (options : GenericOption list) children =
             let opts = genericParse options
             let class' = Helpers.classes Bulma.Form.File.Label [opts.CustomClass] []
             element (class'::opts.Props) children

@@ -35,10 +35,10 @@ module Divider =
 
     open Types
 
-    let IsVertical = IsVertical
-    let label s = Label s
-    let props props = Props props
-    let customClass = CustomClass
+    let inline IsVertical<'T> = IsVertical
+    let inline label s = Label s
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let divider (options : Option list) children =
 
@@ -51,9 +51,9 @@ module Divider =
 
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield classList [ Classes.Divider, not opts.IsVertical
-                                Classes.IsVertical, opts.IsVertical
-                                opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              if opts.Label.IsSome then yield Data("content", opts.Label.Value)
-              yield! opts.Props ] [ ]
+        let class' = Helpers.classes "" [opts.CustomClass] [Classes.Divider, not opts.IsVertical; Classes.IsVertical, opts.IsVertical]
+        let attrs =
+            match opts.Label with
+            | Some label -> class'::(Data("content", label))::opts.Props
+            | None -> class'::opts.Props
+        div attrs [ ]

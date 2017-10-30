@@ -42,11 +42,11 @@ module Container =
 
     open Types
 
-    let props = Props
-    let customClass = CustomClass
-    let isFluid = IsFluid
-    let isWideScreen = Breakpoint Widescreen
-    let isFullHD = Breakpoint FullHD
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
+    let inline isFluid<'T> = IsFluid
+    let inline isWideScreen<'T> = Breakpoint Widescreen
+    let inline isFullHD<'T> = Breakpoint FullHD
 
     let container (options: Option list) children =
         let parseOptions (result: Options ) opt =
@@ -57,11 +57,7 @@ module Container =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield classBaseList
-                        Bulma.Container.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          Bulma.Container.IsFluid, opts.IsFluid
-                          opts.Breakpoint.Value, opts.Breakpoint.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Container.Container
+                        [opts.Breakpoint; opts.CustomClass]
+                        [Bulma.Container.IsFluid, opts.IsFluid]
+        div (class'::opts.Props) children

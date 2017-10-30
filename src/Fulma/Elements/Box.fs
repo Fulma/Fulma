@@ -10,7 +10,7 @@ open Fulma.Common
 module Box =
 
     let customClass cls = CustomClass cls
-    let props props = Props props
+    let inline props x = Props x
 
     let box' (options: GenericOption list) children =
         let opts = genericParse options

@@ -33,19 +33,19 @@ module Message =
 
     open Types
 
-    let isBlack = Color IsBlack
-    let isDark = Color IsDark
-    let isLight = Color IsLight
-    let isWhite = Color IsWhite
-    let isPrimary = Color IsPrimary
-    let isInfo = Color IsInfo
-    let isSuccess = Color IsSuccess
-    let isWarning = Color IsWarning
-    let isDanger = Color IsDanger
+    let inline isBlack<'T> = Color IsBlack
+    let inline isDark<'T> = Color IsDark
+    let inline isLight<'T> = Color IsLight
+    let inline isWhite<'T> = Color IsWhite
+    let inline isPrimary<'T> = Color IsPrimary
+    let inline isInfo<'T> = Color IsInfo
+    let inline isSuccess<'T> = Color IsSuccess
+    let inline isWarning<'T> = Color IsWarning
+    let inline isDanger<'T> = Color IsDanger
 
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
 
     let message options children =
         let parseOptions (result: Options ) opt =
@@ -71,4 +71,3 @@ module Message =
         let opts = genericParse options
         let class' = Helpers.classes Bulma.Message.Body [opts.CustomClass] []
         div (class'::opts.Props) children
-

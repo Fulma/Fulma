@@ -50,10 +50,10 @@ module Level =
     open Types
 
     module Level =
-        let isMobile = Level.IsMobile
+        let inline isMobile<'T> = Level.IsMobile
         // Extra
-        let props = Level.Props
-        let customClass = Level.CustomClass
+        let inline props x = Level.Props x
+        let inline customClass x = Level.CustomClass x
 
     let level (options : Level.Option list) children =
         let parseOptions (result: Level.Options ) opt =
@@ -63,46 +63,39 @@ module Level =
             | Level.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Level.Options.Empty
+        let class' = Helpers.classes Bulma.Level.Container [opts.CustomClass]
+                        [ Bulma.Level.Mobile.IsHorizontal, opts.IsMobile ]
 
-        nav [ yield classBaseList
-                        Bulma.Level.Container
-                        [ Bulma.Level.Mobile.IsHorizontal, opts.IsMobile
-                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        nav (class'::opts.Props) children
 
-    let props = GenericOption.Props
-    let customClass = GenericOption.CustomClass
+    let inline props x = GenericOption.Props x
+    let inline customClass x = GenericOption.CustomClass x
 
     let left (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Level.Left [opts.CustomClass] []
 
-        div [ yield classBaseList Bulma.Level.Left
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     let right (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Level.Right [opts.CustomClass] []
 
-        div [ yield classBaseList Bulma.Level.Right
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     module Item =
-        let hasTextCentered = Item.HasTextCentered
+        let inline hasTextCentered<'T> = Item.HasTextCentered
         // Extra
-        let props = Item.Props
-        let customClass = Item.CustomClass
+        let inline props x = Item.Props x
+        let inline customClass x = Item.CustomClass x
 
     module Heading =
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
     module Title =
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
@@ -112,26 +105,19 @@ module Level =
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
+        let class' = Helpers.classes Bulma.Level.Item.Container [opts.CustomClass]
+                        [ Bulma.Level.Item.HasTextCentered, opts.HasTextCentered ]
 
-        nav [ yield classBaseList
-                        Bulma.Level.Item.Container
-                        [ Bulma.Level.Item.HasTextCentered, opts.HasTextCentered
-                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        nav (class'::opts.Props) children
 
     let heading (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Level.Item.Heading [opts.CustomClass] []
 
-        p [ yield classBaseList Bulma.Level.Item.Heading
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-          children
+        p (class'::opts.Props) children
 
     let title (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Level.Item.Title [opts.CustomClass] []
 
-        p [ yield classBaseList Bulma.Level.Item.Title
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-          children
+        p (class'::opts.Props) children

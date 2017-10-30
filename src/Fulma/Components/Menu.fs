@@ -47,10 +47,10 @@ module Menu =
         ul (class'::opts.Props) children
 
     module Item =
-        let isActive = Item.IsActive
-        let props = Item.Props
-        let customClass = Item.CustomClass
-        let onClick = Item.OnClick
+        let inline isActive<'T> = Item.IsActive
+        let inline props x = Item.Props x
+        let inline customClass x = Item.CustomClass x
+        let inline onClick x = Item.OnClick x
 
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =

@@ -62,18 +62,18 @@ module Columns =
     open Types
 
     // Alignment
-    let isCentered = Alignment IsCentered
-    let isVCentered = Alignment IsVCentered
+    let inline isCentered<'T> = Alignment IsCentered
+    let inline isVCentered<'T> = Alignment IsVCentered
     // Display
-    let onMobile = Display Mobile
-    let onDesktopOnly = Display DesktopOnly
+    let inline onMobile<'T> = Display Mobile
+    let inline onDesktopOnly<'T> = Display DesktopOnly
     // Spacing
-    let isMultiline = Spacing IsMultiline
-    let isGapless = Spacing IsGapless
-    let isGrid = Spacing IsGrid
+    let inline isMultiline<'T> = Spacing IsMultiline
+    let inline isGapless<'T> = Spacing IsGapless
+    let inline isGrid<'T> = Spacing IsGrid
     // Extra
-    let customClass = CustomClass
-    let props = Props
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     let columns (options: Option list) children =
         let parseOptions (result: Options) =

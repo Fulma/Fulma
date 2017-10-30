@@ -26,12 +26,12 @@ module Content =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Extra
-    let props = Props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let content (options : Option list) children =
         let parseOption (result : Options) opt =
@@ -42,9 +42,6 @@ module Content =
 
         let opts = options |> List.fold parseOption Options.Empty
         div
-            [ yield classBaseList
-                        Bulma.Content.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          opts.Size.Value, opts.Size.IsSome ] :> IHTMLProp
+            [ yield Helpers.classes Bulma.Content.Container [opts.CustomClass; opts.Size] []
               yield! opts.Props ]
             children

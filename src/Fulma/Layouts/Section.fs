@@ -39,10 +39,10 @@ module Section =
 
     open Types
 
-    let props = Props
-    let customClass = CustomClass
-    let isMedium = IsMedium
-    let isLarge = IsLarge
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
+    let inline isMedium<'T> = IsMedium
+    let inline isLarge<'T> = IsLarge
 
     let section (options: Option list) children =
         let parseOptions (result: Options ) opt =
@@ -52,10 +52,6 @@ module Section =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let class' = Helpers.classes Bulma.Section.Container [opts.CustomClass; opts.Spacing] []
 
-        section [ yield classBaseList
-                        Bulma.Section.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          opts.Spacing.Value, opts.Spacing.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-            children
+        section (class'::opts.Props) children

@@ -67,7 +67,7 @@ module Common =
             |> String.concat " "
 
         let classes std (options : string option list) (booleans: (string * bool) list) =
-            let std = ("", options) ||> List.fold (fun complete opt ->
+            let std = (std, options) ||> List.fold (fun complete opt ->
                 match opt with Some name -> complete + " " + name | None -> complete)
             (std, booleans) ||> List.fold (fun complete (name, flag) ->
                 if flag then complete + " " + name else complete)

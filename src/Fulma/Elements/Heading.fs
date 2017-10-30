@@ -49,19 +49,19 @@ module Heading =
     open Types
 
     //Types
-    let isSubtitle = IsSubtitle
+    let inline isSubtitle<'T> = IsSubtitle
     // Sizes
-    let is1 = Size Is1
-    let is2 = Size Is2
-    let is3 = Size Is3
-    let is4 = Size Is4
-    let is5 = Size Is5
-    let is6 = Size Is6
+    let inline is1<'T> = Size Is1
+    let inline is2<'T> = Size Is2
+    let inline is3<'T> = Size Is3
+    let inline is4<'T> = Size Is4
+    let inline is5<'T> = Size Is5
+    let inline is6<'T> = Size Is6
     // Spacing
-    let isSpaced = IsSpaced
+    let inline isSpaced<'T> = IsSpaced
     // Extra
-    let props = Props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let internal title (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list)
         (children) =

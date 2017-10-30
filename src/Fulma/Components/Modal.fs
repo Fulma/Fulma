@@ -50,25 +50,25 @@ module Modal =
 
     open Types
 
-    let isActive = IsActive
-    let props = Props
-    let customClass = CustomClass
+    let inline isActive<'T> = IsActive
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     module Background =
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
     module Content =
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
     module Close =
-        let isSmall = Close.Size IsSmall
-        let isMedium = Close.Size IsMedium
-        let isLarge = Close.Size IsLarge
-        let onClick = Close.OnClick
-        let props = Close.Props
-        let customClass = Close.CustomClass
+        let inline isSmall<'T> = Close.Size IsSmall
+        let inline isMedium<'T> = Close.Size IsMedium
+        let inline isLarge<'T> = Close.Size IsLarge
+        let inline onClick x = Close.OnClick x
+        let inline props x = Close.Props x
+        let inline customClass x = Close.CustomClass x
 
     let modal options children =
         let parseOptions (result: Options ) opt =
@@ -93,13 +93,13 @@ module Modal =
             | Close.OnClick cb -> { result with OnClick = Some cb }
 
         let opts = options |> List.fold parseOptions Close.Options.Empty
+        let class' = Helpers.classes Bulma.Modal.Close.Container [opts.Size] []
+        let opts =
+            match opts.OnClick with
+            | Some v -> class'::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
+            | None -> class'::opts.Props
 
-        button [ yield (classBaseList Bulma.Modal.Close.Container
-                                   [ opts.Size.Value, opts.Size.IsSome ] ) :> IHTMLProp
-                 if opts.OnClick.IsSome then
-                    yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-                 yield! opts.Props ]
-            children
+        button opts children
 
     let background (options: GenericOption list) children =
         let opts = genericParse options
@@ -113,24 +113,24 @@ module Modal =
 
     module Card =
 
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
         module Head =
-            let props = GenericOption.Props
-            let customClass = GenericOption.CustomClass
+            let inline props x = GenericOption.Props x
+            let inline customClass x = GenericOption.CustomClass x
 
         module Foot =
-            let props = GenericOption.Props
-            let customClass = GenericOption.CustomClass
+            let inline props x = GenericOption.Props x
+            let inline customClass x = GenericOption.CustomClass x
 
         module Title =
-            let props = GenericOption.Props
-            let customClass = GenericOption.CustomClass
+            let inline props x = GenericOption.Props x
+            let inline customClass x = GenericOption.CustomClass x
 
         module Body =
-            let props = GenericOption.Props
-            let customClass = GenericOption.CustomClass
+            let inline props x = GenericOption.Props x
+            let inline customClass x = GenericOption.CustomClass x
 
         let card (options: GenericOption list) children =
             let opts = genericParse options

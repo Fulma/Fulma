@@ -162,15 +162,14 @@ module Navbar =
                 | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 
             let opts = options |> List.fold parseOptions Item.Options.Empty
+            let class' =
+                Helpers.classes Bulma.Navbar.Item.Container [opts.CustomClass]
+                    [ Bulma.Navbar.Item.State.IsActive, opts.IsActive
+                      Bulma.Navbar.Item.Style.IsTab, opts.IsTab
+                      Bulma.Navbar.Item.IsHoverable, opts.IsHoverable
+                      Bulma.Navbar.Item.Style.HasDropdown, opts.HasDropdown ]
 
-            element [ yield (classBaseList Bulma.Navbar.Item.Container
-                                      [ Bulma.Navbar.Item.State.IsActive, opts.IsActive
-                                        Bulma.Navbar.Item.Style.IsTab, opts.IsTab
-                                        Bulma.Navbar.Item.IsHoverable, opts.IsHoverable
-                                        Bulma.Navbar.Item.Style.HasDropdown, opts.HasDropdown
-                                        opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            element (class'::opts.Props) children
 
     module Link =
         let inline isActive<'T> = Link.IsActive
@@ -185,11 +184,8 @@ module Navbar =
                 | Link.Props props -> { result with Props = props}
 
             let opts = options |> List.fold parseOptions Link.Options.Empty
-
-            element [ yield (classBaseList Bulma.Navbar.Link.Container
-                                       [ Bulma.Navbar.Link.State.IsActive, opts.IsActive ]) :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Navbar.Link.Container [] [Bulma.Navbar.Link.State.IsActive, opts.IsActive]
+            element (class'::opts.Props) children
 
     module Menu =
         let inline isActive<'T> = Menu.IsActive
@@ -213,13 +209,8 @@ module Navbar =
                 | Dropdown.Props props -> { result with Props = props}
 
             let opts = options |> List.fold parseOptions Dropdown.Options.Empty
-
-            element [ yield (classBaseList Bulma.Navbar.Dropdown.Container
-                                       [ Bulma.Navbar.Dropdown.IsBoxed, opts.IsBoxed
-                                         Bulma.Navbar.Dropdown.IsRight, opts.IsRight
-                                         Bulma.Navbar.Dropdown.State.IsActive, opts.IsActive ]) :> IHTMLProp
-                      yield! opts.Props ]
-                children
+            let class' = Helpers.classes Bulma.Navbar.Dropdown.Container [] [Bulma.Navbar.Dropdown.IsBoxed, opts.IsBoxed; Bulma.Navbar.Dropdown.IsRight, opts.IsRight; Bulma.Navbar.Dropdown.State.IsActive, opts.IsActive]
+            element (class'::opts.Props) children
 
     module Brand =
         let brand element (options: GenericOption list) children =
@@ -250,14 +241,12 @@ module Navbar =
             | Navbar.Level level -> { result with Level = ofLevelAndColor level |> Some }
 
         let opts = options |> List.fold parseOptions Navbar.Options.Empty
+        let class' =
+            Helpers.classes Bulma.Navbar.Container [opts.CustomClass; opts.Level]
+               [ Bulma.Navbar.Style.HasShadow, opts.HasShadow
+                 Bulma.Navbar.Style.IsTransparent, opts.IsTransparent]
 
-        nav [ yield (classBaseList Bulma.Navbar.Container
-                                   [ Bulma.Navbar.Style.HasShadow, opts.HasShadow
-                                     opts.CustomClass.Value, opts.CustomClass.IsSome
-                                     opts.Level.Value, opts.Level.IsSome
-                                     Bulma.Navbar.Style.IsTransparent, opts.IsTransparent]) :> IHTMLProp
-              yield! opts.Props ]
-            children
+        nav (class'::opts.Props) children
 
     let inline link_a x y = Link.link a x y
     let inline link_div x y = Link.link div x y
@@ -285,12 +274,11 @@ module Navbar =
             | Menu.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
+        let class' =
+            Helpers.classes Bulma.Navbar.Menu.Container [opts.CustomClass]
+                [Bulma.Navbar.Menu.State.IsActive, opts.IsActive]
 
-        div [ yield (classBaseList Bulma.Navbar.Menu.Container
-                                    [ Bulma.Navbar.Menu.State.IsActive, opts.IsActive
-                                      opts.CustomClass.Value, opts.CustomClass.IsSome ]) :> IHTMLProp
-              yield! opts.Props ]
-              children
+        div (class'::opts.Props) children
 
 
     let burger (options: GenericOption list) children =
