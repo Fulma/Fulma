@@ -37,15 +37,15 @@ module Icon =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Position
-    let isLeft = Position Left
-    let isRight = Position Right
+    let inline isLeft<'T> = Position Left
+    let inline isRight<'T> = Position Right
     // Extra
-    let props = Props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let icon options children =
         let parseOptions (result : Options) option =

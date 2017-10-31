@@ -37,20 +37,20 @@ module Tag =
     open Types
 
     // Size
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Colors
-    let isBlack = Color IsBlack
-    let isDark = Color IsDark
-    let isLight = Color IsLight
-    let isWhite = Color IsWhite
-    let isPrimary = Color IsPrimary
-    let isInfo = Color IsInfo
-    let isSuccess = Color IsSuccess
-    let isWarning = Color IsWarning
-    let isDanger = Color IsDanger
-    let props props = Props props
-    let customClass = CustomClass
+    let inline isBlack<'T> = Color IsBlack
+    let inline isDark<'T> = Color IsDark
+    let inline isLight<'T> = Color IsLight
+    let inline isWhite<'T> = Color IsWhite
+    let inline isPrimary<'T> = Color IsPrimary
+    let inline isInfo<'T> = Color IsInfo
+    let inline isSuccess<'T> = Color IsSuccess
+    let inline isWarning<'T> = Color IsWarning
+    let inline isDanger<'T> = Color IsDanger
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let tag (options : Option list) children =
         let parseOption (result : Options) opt =

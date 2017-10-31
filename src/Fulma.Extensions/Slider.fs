@@ -91,38 +91,38 @@ module Slider =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
-    let isFullWidth = Size IsFullWidth
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
+    let inline isFullWidth<'T> = Size IsFullWidth
 
     // States
-    let isDisabled = IsDisabled
+    let inline isDisabled<'T> = IsDisabled
 
     // Styles
-    let isCircle = IsCircle
+    let inline isCircle<'T> = IsCircle
 
 
     // Levels and colors
-    let isBlack = Level IsBlack
-    let isDark = Level IsDark
-    let isLight = Level IsLight
-    let isWhite = Level IsWhite
-    let isPrimary = Level IsPrimary
-    let isInfo = Level IsInfo
-    let isSuccess = Level IsSuccess
-    let isWarning = Level IsWarning
-    let isDanger = Level IsDanger
+    let inline isBlack<'T> = Level IsBlack
+    let inline isDark<'T> = Level IsDark
+    let inline isLight<'T> = Level IsLight
+    let inline isWhite<'T> = Level IsWhite
+    let inline isPrimary<'T> = Level IsPrimary
+    let inline isInfo<'T> = Level IsInfo
+    let inline isSuccess<'T> = Level IsSuccess
+    let inline isWarning<'T> = Level IsWarning
+    let inline isDanger<'T> = Level IsDanger
 
-    let value = Value
-    let defaultValue = DefaultValue
-    let min = Min
-    let max = Max
-    let step = Step
+    let inline value x = Value x
+    let inline defaultValue x = DefaultValue x
+    let inline min x = Min x
+    let inline max x = Max x
+    let inline step x = Step x
 
     // Extra
-    let props = Props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let onChange cb = OnChange cb
 
@@ -147,13 +147,12 @@ module Slider =
             | DefaultValue value -> { result with DefaultValue = Some value }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let className = Helpers.generateClassName Classes.Slider [ opts.Level; opts.Size]
+        let class' = Helpers.classes className [opts.CustomClass] [Classes.IsCircle, opts.IsCircle]
 
         input
-            [ yield classBaseList
-                (Helpers.generateClassName Classes.Slider [ opts.Level; opts.Size; ])
-                 [ Classes.IsCircle, opts.IsCircle
-                   opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              if opts.OnChange.IsSome then
+            [ yield class'
+              if Option.isSome opts.OnChange then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
               yield! opts.Props
               yield Type "range" :> IHTMLProp
@@ -161,14 +160,14 @@ module Slider =
               yield Disabled opts.IsDisabled :> IHTMLProp
               if opts.IsVertical then
                 yield !!("orient", "vertical")
-              if opts.Value.IsSome then
+              if Option.isSome opts.Value then
                 yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
-              if opts.Step.IsSome then
+              if Option.isSome opts.Step then
                 yield HTMLAttr.Step (string opts.Step.Value) :> IHTMLProp
-              if opts.Min.IsSome then
+              if Option.isSome opts.Min then
                 yield HTMLAttr.Min (string opts.Min.Value) :> IHTMLProp
-              if opts.Max.IsSome then
+              if Option.isSome opts.Max then
                 yield HTMLAttr.Max (string opts.Max.Value) :> IHTMLProp
-              if opts.DefaultValue.IsSome then
+              if Option.isSome opts.DefaultValue then
                 yield HTMLAttr.DefaultValue (string opts.DefaultValue.Value) :> IHTMLProp
             ]

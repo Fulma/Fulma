@@ -53,28 +53,28 @@ module Dropdown =
 
     open Types
 
-    let customClass = CustomClass
-    let props = Props
-    let isActive = IsActive
-    let isHoverable = IsHoverable
-    let isRight = IsRight
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
+    let inline isActive<'T> = IsActive
+    let inline isHoverable<'T> = IsHoverable
+    let inline isRight<'T> = IsRight
 
     module Menu =
-        let customClass = CustomClass
-        let props = Props
+        let inline customClass x = CustomClass x
+        let inline props x = Props x
 
     module Content =
-        let customClass = CustomClass
-        let props = Props
+        let inline customClass x = CustomClass x
+        let inline props x = Props x
 
     module Divider =
-        let customClass = CustomClass
-        let props = Props
+        let inline customClass x = CustomClass x
+        let inline props x = Props x
 
     module Item =
-        let customClass = Item.CustomClass
-        let props = Item.Props
-        let isActive = Item.IsActive
+        let inline customClass x = Item.CustomClass x
+        let inline props x = Item.Props x
+        let inline isActive<'T> = Item.IsActive
 
     let dropdown (options: Option list) children =
         let parseOptions (result : Options) =
@@ -86,38 +86,28 @@ module Dropdown =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let class' =
+            [ Bulma.Dropdown.Alignment.IsRight, opts.IsRight
+              Bulma.Dropdown.State.IsActive, opts.IsActive
+              Bulma.Dropdown.State.IsHoverable, opts.IsHoverable ]
+            |> Helpers.classes Bulma.Dropdown.Container [opts.CustomClass]
 
-        div [ yield classBaseList
-                        Bulma.Dropdown.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          Bulma.Dropdown.Alignment.IsRight, opts.IsRight
-                          Bulma.Dropdown.State.IsActive, opts.IsActive
-                          Bulma.Dropdown.State.IsHoverable, opts.IsHoverable ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     let menu (options: GenericOption list) children =
         let opts = genericParse options
-        div [ yield classBaseList
-                        Bulma.Dropdown.Menu
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Dropdown.Menu [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        div [ yield classBaseList
-                        Bulma.Dropdown.Content
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Dropdown.Content [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let divider (options: GenericOption list) =
         let opts = genericParse options
-        hr [ yield classBaseList
-                        Bulma.Dropdown.Divider
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-             yield! opts.Props ]
+        let class' = Helpers.classes Bulma.Dropdown.Divider [opts.CustomClass] []
+        hr (class'::opts.Props)
 
     let item (options: Item.Option list) children =
         let parseOptions (result : Item.Options) =
@@ -127,10 +117,8 @@ module Dropdown =
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
+        let class' =
+            [ Bulma.Dropdown.Item.State.IsActive, opts.IsActive ]
+            |> Helpers.classes Bulma.Dropdown.Item.Container [opts.CustomClass]
 
-        a [ yield classBaseList
-                      Bulma.Dropdown.Item.Container
-                      [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                        Bulma.Dropdown.Item.State.IsActive, opts.IsActive ] :> IHTMLProp
-            yield! opts.Props ]
-            children
+        a (class'::opts.Props) children

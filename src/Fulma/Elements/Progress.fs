@@ -35,24 +35,24 @@ module Progress =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Levels and colors
-    let isBlack = Color IsBlack
-    let isDark = Color IsDark
-    let isLight = Color IsLight
-    let isWhite = Color IsWhite
-    let isPrimary = Color IsPrimary
-    let isInfo = Color IsInfo
-    let isSuccess = Color IsSuccess
-    let isWarning = Color IsWarning
-    let isDanger = Color IsDanger
+    let inline isBlack<'T> = Color IsBlack
+    let inline isDark<'T> = Color IsDark
+    let inline isLight<'T> = Color IsLight
+    let inline isWhite<'T> = Color IsWhite
+    let inline isPrimary<'T> = Color IsPrimary
+    let inline isInfo<'T> = Color IsInfo
+    let inline isSuccess<'T> = Color IsSuccess
+    let inline isWarning<'T> = Color IsWarning
+    let inline isDanger<'T> = Color IsDanger
     // Extra
-    let props props = Props props
-    let value v = Value v
-    let max m = Max m
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline value v = Value v
+    let inline max m = Max m
+    let inline customClass x = CustomClass x
 
     let progress options children =
         let parseOptions (result : Options) =
@@ -68,6 +68,6 @@ module Progress =
         progress
             [ yield ClassName (Helpers.generateClassName Bulma.Progress.Container [ opts.Size; opts.Color; opts.CustomClass ]) :> IHTMLProp
               yield! opts.Props
-              if opts.Value.IsSome then yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
-              if opts.Max.IsSome then yield HTMLAttr.Max (float opts.Max.Value) :> IHTMLProp ]
+              if Option.isSome opts.Value then yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
+              if Option.isSome opts.Max then yield HTMLAttr.Max (float opts.Max.Value) :> IHTMLProp ]
             children

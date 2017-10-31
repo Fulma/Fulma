@@ -807,11 +807,11 @@ module FontAwesome =
                 | [<CompiledName("fa-youtube-square")>] YoutubeSquare
                 interface  IFontAwesomeIcon
 
-            let Tags = unbox<IFontAwesomeIcon> "fa-tags"
-            let ``500px`` = unbox<IFontAwesomeIcon> "fa-500px"
+            let inline Tags<'T> = unbox<IFontAwesomeIcon> "fa-tags"
+            let inline ``500px``<'T> = unbox<IFontAwesomeIcon> "fa-500px"
 
             // Work around if an icon class is not defined
-            let Custom (iconClass: string) = unbox<IFontAwesomeIcon> iconClass
+            let inline Custom (iconClass: string) = unbox<IFontAwesomeIcon> iconClass
 
         module Classes =
             module IconSizes =
@@ -1032,7 +1032,7 @@ module FontAwesome =
             let faLg      = StackParentOption.ParentSize FaLarge
     module Icon =
         open Fa.Types
-        let inline stackChild (faOptions: StackChildOption list ) =
+        let internal stackChild (faOptions: StackChildOption list ) =
             let parseOptions (result: StackChildOptions) (option: StackChildOption) =
                     match option with
                     | ChildSize s               -> { result with Size   = ofChildSize  s       |> Some }
@@ -1040,25 +1040,15 @@ module FontAwesome =
                     | ChildIcon faIcon          -> { result with Icon   = unbox<string> faIcon |> Some }
 
             let opts = faOptions |> List.fold parseOptions StackChildOptions.Empty
+            i [Helpers.classes "fa" [opts.Icon; opts.Size; opts.Color] []] []
 
-            i [ classBaseList "fa " [
-                                    opts.Icon.Value, opts.Icon.IsSome
-                                    opts.Size.Value, opts.Size.IsSome
-                                    opts.Color.Value, opts.Color.IsSome
-                                    ]
-             ] [ ]
+        let internal stackParent (faOptions: StackParentOption list) children =
+            let parseOptions (result: StackParentOptions) (option: StackParentOption) =
+                    match option with
+                    | ParentSize s        -> { result with Size   = ofSize s  |> Some }
 
-        let inline stackParent
-            (faOptions: StackParentOption list )
-            children =
-                let parseOptions (result: StackParentOptions) (option: StackParentOption) =
-                        match option with
-                        | ParentSize s        -> { result with Size   = ofSize s  |> Some }
-
-                let opts = faOptions |> List.fold parseOptions StackParentOptions.Empty
-
-                span [ classBaseList "fa-stack " [ opts.Size.Value, opts.Size.IsSome ] ] children
-
+            let opts = faOptions |> List.fold parseOptions StackParentOptions.Empty
+            span [Helpers.classes "fa-stack" [opts.Size] []] children
 
         let internal toIconOptions (faOptions: IconOption list) =
             let parseOptions (result: IconOptions) (option: IconOption) =
@@ -1078,17 +1068,10 @@ module FontAwesome =
 
         //Logic used to display one icon alone or as one item in an unordered list:
         let internal displayIcon baseClass  (opts: IconOptions) =
-                i [ classBaseList baseClass [
-                                                opts.Icon.Value, opts.Icon.IsSome
-                                                opts.Size.Value, opts.Size.IsSome
-                                                opts.Border.Value, opts.Border.IsSome
-                                                opts.Pull.Value, opts.Pull.IsSome
-                                                opts.Animation.Value, opts.Animation.IsSome
-                                                opts.Rotation.Value, opts.Rotation.IsSome
-                                                opts.Flip.Value, opts.Flip.IsSome
-                                                opts.Color.Value, opts.Color.IsSome
-                                            ]
-                  ] [ ]
+            i [ Helpers.classes baseClass
+                    [ opts.Icon; opts.Size; opts.Border
+                      opts.Pull; opts.Animation; opts.Rotation
+                      opts.Flip; opts.Color ] [] ] []
 
         let faIcon (options : Fulma.Elements.Icon.Types.Option list) (faOptions: IconOption list) =
             let opts = toIconOptions faOptions
@@ -1097,10 +1080,5 @@ module FontAwesome =
 
         let fa_ul (options: GenericOption list) children =
             let opts = genericParse options
-
-            ul
-                [ yield classBaseList
-                            "fa-ul"
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            let class' = Helpers.classes "fa-ul" [opts.CustomClass] []
+            ul (class'::opts.Props) children

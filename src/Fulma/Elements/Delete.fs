@@ -29,13 +29,13 @@ module Delete =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Extra props
-    let props props = Props props
-    let customClass = CustomClass
-    let onClick cb = OnClick cb
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
+    let inline onClick cb = OnClick cb
 
     let delete (options : Option list) children =
         let parseOption (result : Options) opt =
@@ -49,6 +49,6 @@ module Delete =
         a [ yield ClassName (Helpers.generateClassName
                                 Bulma.Delete.Container [ opts.Size; opts.CustomClass ]) :> IHTMLProp
             yield! opts.Props
-            if opts.OnClick.IsSome then
+            if Option.isSome opts.OnClick then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp ]
             children

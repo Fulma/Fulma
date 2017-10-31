@@ -127,8 +127,8 @@ module BulmaClasses =
 
     module Bulma =
         module Modifiers =
-              let Size = standardSize
-              let Color = levelAndColor
+              let inline Size<'T> = standardSize
+              let inline Color<'T> = levelAndColor
         module Box =
             let [<Literal>] Container = "box"
         module Button =
@@ -138,7 +138,7 @@ module BulmaClasses =
                 let [<Literal>] IsMedium = "is-medium"
                 let [<Literal>] IsLarge = "is-large "
                 let [<Literal>] IsFullwidth = "is-fullwidth"
-            let Color = levelAndColor
+            let inline Color<'T> = levelAndColor
             module State =
                   let [<Literal>] IsHovered = "is-hovered"
                   let [<Literal>] IsFocused = "is-focus"
@@ -167,7 +167,7 @@ module BulmaClasses =
                 let [<Literal>] Succeeds = "has-succeeds-separator"
             module State =
                 let [<Literal>] IsActive = "is-active"
-            let Size = standardSize
+            let inline Size<'T> = standardSize
 
         module Dropdown =
             let [<Literal>] Container = "dropdown"
@@ -198,11 +198,11 @@ module BulmaClasses =
 
         module Content =
             let [<Literal>] Container = "content"
-            let Size = standardSize
+            let inline Size<'T> = standardSize
 
         module Delete  =
             let [<Literal>] Container = "delete"
-            let Size = standardSize
+            let inline Size<'T> = standardSize
 
         module Form =
 
@@ -237,7 +237,7 @@ module BulmaClasses =
 
             module TextArea =
                 let [<Literal>] Container = "textarea"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
                 module State =
                     let [<Literal>] IsDisabled = "is-disabled"
                     let [<Literal>] IsLoading = "is-loading"
@@ -256,11 +256,11 @@ module BulmaClasses =
 
             module Label =
                 let [<Literal>] Container = "label"
-                let Size = standardSize
+                let inline Size<'T> = standardSize
 
             module Select =
                 let [<Literal>] Container = "select"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
                 module State =
                     let [<Literal>] IsDisabled = "is-disabled"
                     let [<Literal>] IsLoading = "is-loading"
@@ -275,7 +275,7 @@ module BulmaClasses =
 
             module File =
                 let [<Literal>] Container = "file"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
                 let [<Literal>] Cta = "file-cta"
                 let [<Literal>] Name = "file-name"
                 let [<Literal>] Icon = "file-icon"
@@ -297,7 +297,7 @@ module BulmaClasses =
                 let [<Literal>] HasName = "has-name"
             module Input =
                 let [<Literal>] Container = "input"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
                 module State =
                     let [<Literal>] IsFocused = "is-focused"
                     let [<Literal>] IsActive = "is-active"
@@ -312,7 +312,7 @@ module BulmaClasses =
 
             module Help =
                 let [<Literal>] Container = "help"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
 
         module Grid =
             module Columns =
@@ -329,20 +329,20 @@ module BulmaClasses =
                     let [<Literal>] OnlyDesktop = "only-desktop"
             module Column =
                 let [<Literal>] Container = "column"
-                let Width = generateColumnSize ""
-                let Offset = generateColumnOffset ""
+                let inline Width<'T> = generateColumnSize ""
+                let inline Offset<'T> = generateColumnOffset ""
                 module Desktop =
-                    let Width = generateColumnSize "-desktop"
-                    let Offset = generateColumnOffset "-desktop"
+                    let inline Width<'T> = generateColumnSize "-desktop"
+                    let inline Offset<'T> = generateColumnOffset "-desktop"
                 module Mobile =
-                    let Width = generateColumnSize "-mobile"
-                    let Offset = generateColumnOffset "-mobule"
+                    let inline Width<'T> = generateColumnSize "-mobile"
+                    let inline Offset<'T> = generateColumnOffset "-mobule"
                 module Tablet =
-                    let Width = generateColumnSize "-tablet"
-                    let Offset = generateColumnOffset "-tablet"
+                    let inline Width<'T> = generateColumnSize "-tablet"
+                    let inline Offset<'T> = generateColumnOffset "-tablet"
                 module WideScreen =
-                    let Width = generateColumnSize "-widescreen"
-                    let Offset = generateColumnOffset "-widescreen"
+                    let inline Width<'T> = generateColumnSize "-widescreen"
+                    let inline Offset<'T> = generateColumnOffset "-widescreen"
 
             module Tile =
                 let [<Literal>] Container = "tile"
@@ -370,7 +370,7 @@ module BulmaClasses =
             module Position =
                   let [<Literal>] Left = "is-left"
                   let [<Literal>] Right = "is-right"
-            let Size = standardSize
+            let inline Size<'T> = standardSize
 
         module Image =
             let [<Literal>] Container = "image"
@@ -407,7 +407,7 @@ module BulmaClasses =
             let [<Literal>] Label = "menu-label"
             let [<Literal>] List = "menu-list"
 
-            let State = genericIsActiveState
+            let inline State<'T> = genericIsActiveState
 
         module Media =
             let [<Literal>] Container = "media"
@@ -421,17 +421,17 @@ module BulmaClasses =
             let [<Literal>] Container = "message"
             let [<Literal>] Header = "message-header"
             let [<Literal>] Body = "message-body"
-            let Color = levelAndColor
+            let inline Color<'T> = levelAndColor
 
         module Modal =
             let [<Literal>] Container = "modal"
             let [<Literal>] Background = "modal-background"
             let [<Literal>] Content = "modal-content"
-            let State = genericIsActiveState
+            let inline State<'T> = genericIsActiveState
 
             module Close =
                 let [<Literal>] Container = "modal-close"
-                let Size = standardSize
+                let inline Size<'T> = standardSize
 
             module Card =
                 let [<Literal>] Container = "modal-card"
@@ -455,23 +455,23 @@ module BulmaClasses =
             let [<Literal>] Divider = "navbar-divider"
             let [<Literal>] Start = "navbar-start"
             let [<Literal>] End = "navbar-end"
-            let Color = levelAndColor
+            let inline Color<'T> = levelAndColor
             module Item =
                 let [<Literal>] Container = "navbar-item"
                 let [<Literal>] IsHoverable = "is-hoverable"
-                let State = genericIsActiveState
+                let inline State<'T> = genericIsActiveState
                 module Style =
                     let [<Literal>] HasDropdown = "has-dropdown"
                     let [<Literal>] IsTab = "is-tab"
             module Menu =
                 let [<Literal>] Container = "navbar-menu"
-                let State = genericIsActiveState
+                let inline State<'T> = genericIsActiveState
             module Link =
                 let [<Literal>] Container = "navbar-link"
-                let State = genericIsActiveState
+                let inline State<'T> = genericIsActiveState
             module Dropdown =
                 let [<Literal>] Container = "navbar-dropdown"
-                let State = genericIsActiveState
+                let inline State<'T> = genericIsActiveState
                 let [<Literal>] IsBoxed = "is-boxed"
                 let [<Literal>] IsRight = "is-right"
             module Style =
@@ -480,7 +480,7 @@ module BulmaClasses =
 
         module Notification =
             let [<Literal>] Container = "notification"
-            let Color = levelAndColor
+            let inline Color<'T> = levelAndColor
             module Delete =
                 let [<Literal>] Container = "delete"
 
@@ -501,8 +501,8 @@ module BulmaClasses =
 
         module Tabs =
             let [<Literal>] Container = "tabs"
-            let State = genericIsActiveState
-            let Size = standardSize
+            let inline State<'T> = genericIsActiveState
+            let inline Size<'T> = standardSize
             module Alignment =
                 let [<Literal>] Center = "is-centered"
                 let [<Literal>] Right = "is-right"
@@ -518,7 +518,7 @@ module BulmaClasses =
             let [<Literal>] Link = "pagination-link"
             let [<Literal>] Ellipsis = "pagination-ellipsis"
             let [<Literal>] List = "pagination-list"
-            let Size = standardSize
+            let inline Size<'T> = standardSize
             module Alignment =
                 let [<Literal>] Center = "is-centered"
                 let [<Literal>] Right = "is-right"
@@ -540,21 +540,21 @@ module BulmaClasses =
                 let [<Literal>] IsMarginless = "is-marginless"
                 let [<Literal>] IsPaddingless = "is-paddingless"
             module Display =
-                let IsBlock = generateDisplayType "block"
-                let IsFlex = generateDisplayType "flex"
-                let IsInline = generateDisplayType "inline"
-                let IsInlineBox = generateDisplayType "inline-block"
-                let IsInlineFlex = generateDisplayType "inline-flex"
+                let inline IsBlock<'T> = generateDisplayType "block"
+                let inline IsFlex<'T> = generateDisplayType "flex"
+                let inline IsInline<'T> = generateDisplayType "inline"
+                let inline IsInlineBox<'T> = generateDisplayType "inline-block"
+                let inline IsInlineFlex<'T> = generateDisplayType "inline-flex"
             module Visibility =
-                let IsHidden = generateDisplayType "hidden"
+                let inline IsHidden<'T> = generateDisplayType "hidden"
             module Interaction =
                 let [<Literal>] IsUnselectable = "is-unselectable"
 
 
         module Progress =
             let [<Literal>] Container = "progress"
-            let Size = standardSize
-            let Color = levelAndColor
+            let inline Size<'T> = standardSize
+            let inline Color<'T> = levelAndColor
 
         module Heading =
             let [<Literal>] Title = "title"
@@ -589,7 +589,7 @@ module BulmaClasses =
                 let [<Literal>] IsLarge = "is-large"
                 let [<Literal>] IsHalfHeight = "is-halfheight"
                 let [<Literal>] IsFullHeight = "is-fullheight"
-            let Color = levelAndColor
+            let inline Color<'T> = levelAndColor
 
         module Section =
             let [<Literal>] Container = "section"
@@ -615,4 +615,4 @@ module BulmaClasses =
           module Size =
             let [<Literal>] IsMedium = "is-medium"
             let [<Literal>] IsLarge = "is-large"
-          let Color = levelAndColor
+          let inline Color<'T> = levelAndColor

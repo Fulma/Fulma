@@ -63,10 +63,15 @@ module Common =
 
     module Helpers =
         let inline generateClassName baseClass (values : string option list) =
-            baseClass :: (values
-                          |> List.filter (fun x -> x.IsSome)
-                          |> List.map (fun x -> x.Value))
+            baseClass :: (values |> List.choose id)
             |> String.concat " "
+
+        let classes std (options : string option list) (booleans: (string * bool) list) =
+            let std = (std, options) ||> List.fold (fun complete opt ->
+                match opt with Some name -> complete + " " + name | None -> complete)
+            (std, booleans) ||> List.fold (fun complete (name, flag) ->
+                if flag then complete + " " + name else complete)
+            |> ClassName :> IHTMLProp
 
     [<Pojo>]
     type DangerousInnerHtml =

@@ -76,20 +76,20 @@ module Breadcrumb =
     open Types
 
     // Size
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
     // Alignement
-    let isCentered = Alignment IsCentered
-    let isRight = Alignment IsRight
+    let inline isCentered<'T> = Alignment IsCentered
+    let inline isRight<'T> = Alignment IsRight
     // Separator
-    let hasArrowSeparator = Separator Arrow
-    let hasBulletSeparator = Separator Bullet
-    let hasDotSeparator = Separator Dot
-    let hasSucceedsSeparator = Separator Succeeds
+    let inline hasArrowSeparator<'T> = Separator Arrow
+    let inline hasBulletSeparator<'T> = Separator Bullet
+    let inline hasDotSeparator<'T> = Separator Dot
+    let inline hasSucceedsSeparator<'T> = Separator Succeeds
     // Extra
-    let props = Props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let breadcrumb options children =
         let parseOptions result =
@@ -109,9 +109,9 @@ module Breadcrumb =
 
     module Item =
 
-        let isActive = Item.IsActive
-        let props = Item.Props
-        let customClass = Item.CustomClass
+        let inline isActive<'T> = Item.IsActive
+        let inline props x = Item.Props x
+        let inline customClass x = Item.CustomClass x
 
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
@@ -122,14 +122,7 @@ module Breadcrumb =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        let className =
-            [ if opts.IsActive then
-                yield Bulma.Breadcrumb.State.IsActive
-              if opts.CustomClass.IsSome then
-                yield opts.CustomClass.Value
-            ] |> String.concat " "
-
-
-        li [ yield ClassName className :>  IHTMLProp
+        li [ yield Helpers.classes "" [opts.CustomClass]
+                        [Bulma.Breadcrumb.State.IsActive, opts.IsActive]
              yield! opts.Props ]
             children

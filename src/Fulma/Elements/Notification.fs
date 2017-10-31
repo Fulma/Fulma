@@ -29,22 +29,22 @@ module Notification =
     open Types
 
     // Levels and colors
-    let isBlack = Level IsBlack
-    let isDark = Level IsDark
-    let isLight = Level IsLight
-    let isWhite = Level IsWhite
-    let isPrimary = Level IsPrimary
-    let isInfo = Level IsInfo
-    let isSuccess = Level IsSuccess
-    let isWarning = Level IsWarning
-    let isDanger = Level IsDanger
+    let inline isBlack<'T> = Level IsBlack
+    let inline isDark<'T> = Level IsDark
+    let inline isLight<'T> = Level IsLight
+    let inline isWhite<'T> = Level IsWhite
+    let inline isPrimary<'T> = Level IsPrimary
+    let inline isInfo<'T> = Level IsInfo
+    let inline isSuccess<'T> = Level IsSuccess
+    let inline isWarning<'T> = Level IsWarning
+    let inline isDanger<'T> = Level IsDanger
     // Extra
-    let props props = Props props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     module Delete =
-        let props = GenericOption.Props
-        let customClass = GenericOption.CustomClass
+        let inline props x = GenericOption.Props x
+        let inline customClass x = GenericOption.CustomClass x
 
     let notification (options : Option list) children =
         let parseOptions (result : Options) opt =
@@ -54,19 +54,13 @@ module Notification =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield (classBaseList Bulma.Notification.Container
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                              opts.Level.Value, opts.Level.IsSome ]) :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Notification.Container [opts.CustomClass; opts.Level] []
+        div (class'::opts.Props) children
 
     let delete (options: GenericOption list) children =
         let opts = genericParse options
 
         button
-            [ yield classBaseList
-                        Bulma.Notification.Delete.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+            [ yield Helpers.classes Bulma.Notification.Delete.Container [opts.CustomClass] []
               yield! opts.Props ]
             children

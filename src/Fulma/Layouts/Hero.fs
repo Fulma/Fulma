@@ -50,24 +50,24 @@ module Hero =
     open Types
 
     // Sizes
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
-    let isHalfHeight = Size IsHalfHeight
-    let isFullHeight = Size IsFullHeight
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
+    let inline isHalfHeight<'T> = Size IsHalfHeight
+    let inline isFullHeight<'T> = Size IsFullHeight
     // Style
-    let isBold = IsBold
+    let inline isBold<'T> = IsBold
     // Colors
-    let isBlack = Color IsBlack
-    let isDark = Color IsDark
-    let isLight = Color IsLight
-    let isWhite = Color IsWhite
-    let isPrimary = Color IsPrimary
-    let isInfo = Color IsInfo
-    let isSuccess = Color IsSuccess
-    let isWarning = Color IsWarning
-    let isDanger = Color IsDanger
+    let inline isBlack<'T> = Color IsBlack
+    let inline isDark<'T> = Color IsDark
+    let inline isLight<'T> = Color IsLight
+    let inline isWhite<'T> = Color IsWhite
+    let inline isPrimary<'T> = Color IsPrimary
+    let inline isInfo<'T> = Color IsInfo
+    let inline isSuccess<'T> = Color IsSuccess
+    let inline isWarning<'T> = Color IsWarning
+    let inline isDanger<'T> = Color IsDanger
     // Extra
-    let props props = Props props
+    let inline props x = Props x
     let customClass cls = CustomClass cls
 
     let hero (options : Option list) children =
@@ -80,78 +80,52 @@ module Hero =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        section [ yield classBaseList
-                        Bulma.Hero.Container
-                        [ Bulma.Hero.Style.IsBold, opts.IsBold
-                          opts.Color.Value , opts.Color.IsSome
-                          opts.Size.Value, opts.Size.IsSome
-                          opts.CustomClass.Value, opts.CustomClass.IsSome
-                         ] :> IHTMLProp
-                  yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Container
+                        [opts.Color; opts.Size; opts.CustomClass]
+                        [Bulma.Hero.Style.IsBold, opts.IsBold]
+        section (class'::opts.Props) children
 
     module Head =
-        let props props = GenericOption.Props props
+        let inline props x = GenericOption.Props x
         let customClass cls = GenericOption.CustomClass cls
 
     module Body =
-        let props props = GenericOption.Props props
+        let inline props x = GenericOption.Props x
         let customClass cls = GenericOption.CustomClass cls
 
     module Foot =
-        let props props = GenericOption.Props props
+        let inline props x = GenericOption.Props x
         let customClass cls = GenericOption.CustomClass cls
 
     module Video =
-        let props props = GenericOption.Props props
+        let inline props x = GenericOption.Props x
         let customClass cls = GenericOption.CustomClass cls
 
     module Buttons =
-        let props props = GenericOption.Props props
+        let inline props x = GenericOption.Props x
         let customClass cls = GenericOption.CustomClass cls
 
     let head (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList
-                        Bulma.Hero.Head
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Head [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let body (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList
-                        Bulma.Hero.Body
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Body [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let foot (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList
-                        Bulma.Hero.Foot
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Foot [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let video (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList
-                        Bulma.Hero.Video.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Video.Container [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let buttons (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList
-                        Bulma.Hero.Buttons.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Hero.Buttons.Container [opts.CustomClass] []
+        div (class'::opts.Props) children

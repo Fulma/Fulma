@@ -31,14 +31,14 @@ module Calendar =
 
                 module Item =
                     let [<Literal>] Container = "date-item"
-                    let State = genericIsActiveState
+                    let inline State<'T> = genericIsActiveState
                     let [<Literal>] IsToday = "is-today"
 
             let [<Literal>] Events = "calendar-events"
 
             module Event =
                 let [<Literal>] Container = "calendar-event"
-                let Color = levelAndColor
+                let inline Color<'T> = levelAndColor
 
     open Fable.Helpers.React
     open Fable.Helpers.React.Props
@@ -130,34 +130,34 @@ module Calendar =
     open Fulma.Common
     open Types
 
-    let customClass = CustomClass
-    let props = Props
-    let isLarge = IsLarge
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
+    let inline isLarge<'T> = IsLarge
 
     module Event =
-        let customClass = Event.CustomClass
-        let props = Event.Props
-        let isBlack = Event.Color IsBlack
-        let isDark = Event.Color IsDark
-        let isLight = Event.Color IsLight
-        let isWhite = Event.Color IsWhite
-        let isPrimary = Event.Color IsPrimary
-        let isInfo = Event.Color IsInfo
-        let isSuccess = Event.Color IsSuccess
-        let isWarning = Event.Color IsWarning
-        let isDanger = Event.Color IsDanger
+        let inline customClass x = Event.CustomClass x
+        let inline props x = Event.Props x
+        let inline isBlack<'T> = Event.Color IsBlack
+        let inline isDark<'T> = Event.Color IsDark
+        let inline isLight<'T> = Event.Color IsLight
+        let inline isWhite<'T> = Event.Color IsWhite
+        let inline isPrimary<'T> = Event.Color IsPrimary
+        let inline isInfo<'T> = Event.Color IsInfo
+        let inline isSuccess<'T> = Event.Color IsSuccess
+        let inline isWarning<'T> = Event.Color IsWarning
+        let inline isDanger<'T> = Event.Color IsDanger
 
     module Header =
-        let customClass = GenericOption.CustomClass
-        let props = GenericOption.Props
+        let inline customClass x = GenericOption.CustomClass x
+        let inline props x = GenericOption.Props x
 
     module Body =
-        let customClass = GenericOption.CustomClass
-        let props = GenericOption.Props
+        let inline customClass x = GenericOption.CustomClass x
+        let inline props x = GenericOption.Props x
 
     module Events =
-        let customClass = GenericOption.CustomClass
-        let props = GenericOption.Props
+        let inline customClass x = GenericOption.CustomClass x
+        let inline props x = GenericOption.Props x
 
     let calendar (options : Option list) children =
         let parseOptions (result: Options) opt =
@@ -167,57 +167,43 @@ module Calendar =
             | IsLarge -> { result with IsLarge = true }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let class' =
+            [ Classes.Calendar.Size.IsLarge, opts.IsLarge ]
+            |> Helpers.classes Classes.Calendar.Container [opts.CustomClass]
 
-        div [ yield classBaseList
-                        Classes.Calendar.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          Classes.Calendar.Size.IsLarge, opts.IsLarge ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     let header (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Classes.Calendar.Header [opts.CustomClass] []
 
-        div
-            [ yield classBaseList
-                        Classes.Calendar.Header
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     let body (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Classes.Calendar.Body [opts.CustomClass] []
 
-        div
-            [ yield classBaseList
-                        Classes.Calendar.Body
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     let events (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Classes.Calendar.Events [opts.CustomClass] []
 
-        div
-            [ yield classBaseList
-                        Classes.Calendar.Events
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     module Date =
-        let customClass = Date.CustomClass
-        let props = Date.Props
-        let isDisabled = Date.IsDisabled
-        let isRange = Date.Range Date.IRange.Standard
-        let isRangeStart = Date.Range Date.IRange.Start
-        let isRangeEnd =Date.Range Date.IRange.End
+        let inline customClass x = Date.CustomClass x
+        let inline props x = Date.Props x
+        let inline isDisabled<'T> = Date.IsDisabled
+        let inline isRange<'T> = Date.Range Date.IRange.Standard
+        let inline isRangeStart<'T> = Date.Range Date.IRange.Start
+        let inline isRangeEnd<'T> = Date.Range Date.IRange.End
 
         module Item =
-            let customClass = Item.CustomClass
-            let props = Item.Props
-            let isToday = Item.IsToday
-            let isActive = Item.IsActive
+            let inline customClass x = Item.CustomClass x
+            let inline props x = Item.Props x
+            let inline isToday<'T> = Item.IsToday
+            let inline isActive<'T> = Item.IsActive
 
         let date (options : Date.Option list) children =
             let parseOptions (result: Date.Options) opt =
@@ -228,14 +214,11 @@ module Calendar =
                 | Date.IsDisabled -> { result with IsDisabled = true }
 
             let opts = options |> List.fold parseOptions Date.Options.Empty
+            let class' =
+                [ Classes.Calendar.Date.IsDisabled, opts.IsDisabled ]
+                |> Helpers.classes Classes.Calendar.Date.Container [opts.CustomClass; opts.Range]
 
-            div [ yield classBaseList
-                            Classes.Calendar.Date.Container
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                              opts.Range.Value, opts.Range.IsSome
-                              Classes.Calendar.Date.IsDisabled, opts.IsDisabled ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            div (class'::opts.Props) children
 
         let item (options : Item.Option list) children =
             let parseOptions (result: Item.Options) opt =
@@ -246,14 +229,12 @@ module Calendar =
                 | Item.IsToday -> { result with IsToday = true }
 
             let opts = options |> List.fold parseOptions Item.Options.Empty
+            let class' =
+                [ Classes.Calendar.Date.Item.IsToday, opts.IsToday
+                  Classes.Calendar.Date.Item.State.IsActive, opts.IsActive ]
+                |> Helpers.classes Classes.Calendar.Date.Item.Container [opts.CustomClass]
 
-            button [ yield classBaseList
-                            Classes.Calendar.Date.Item.Container
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                              Classes.Calendar.Date.Item.IsToday, opts.IsToday
-                              Classes.Calendar.Date.Item.State.IsActive, opts.IsActive ] :> IHTMLProp
-                     yield! opts.Props ]
-                children
+            button (class'::opts.Props) children
 
     let event (options : Event.Option list) children =
         let parseOptions (result: Event.Options) opt =
@@ -263,52 +244,36 @@ module Calendar =
             | Event.Color color -> { result with Color = ofLevelAndColor color |> Some }
 
         let opts = options |> List.fold parseOptions Event.Options.Empty
+        let class' = Helpers.classes Classes.Calendar.Event.Container [opts.CustomClass; opts.Color] []
 
-        div [ yield classBaseList
-                        Classes.Calendar.Event.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                          opts.Color.Value, opts.Color.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children
 
     module Nav =
-        let customClass = GenericOption.CustomClass
-        let props = GenericOption.Props
+        let inline customClass x = GenericOption.CustomClass x
+        let inline props x = GenericOption.Props x
 
         module Left =
-            let customClass = GenericOption.CustomClass
-            let props = GenericOption.Props
+            let inline customClass x = GenericOption.CustomClass x
+            let inline props x = GenericOption.Props x
 
         module Right =
-            let customClass = GenericOption.CustomClass
-            let props = GenericOption.Props
+            let inline customClass x = GenericOption.CustomClass x
+            let inline props x = GenericOption.Props x
 
         let nav (options: GenericOption list) children =
             let opts = genericParse options
+            let class' = Helpers.classes Classes.Calendar.Nav.Container [opts.CustomClass] []
 
-            div
-                [ yield classBaseList
-                            Classes.Calendar.Nav.Container
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            div (class'::opts.Props) children
 
         let left (options: GenericOption list) children =
             let opts = genericParse options
+            let class' = Helpers.classes Classes.Calendar.Nav.Left [opts.CustomClass] []
 
-            div
-                [ yield classBaseList
-                            Classes.Calendar.Nav.Left
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            div (class'::opts.Props) children
 
         let right (options: GenericOption list) children =
             let opts = genericParse options
+            let class' = Helpers.classes Classes.Calendar.Nav.Right [opts.CustomClass] []
 
-            div
-                [ yield classBaseList
-                            Classes.Calendar.Nav.Right
-                            [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                  yield! opts.Props ]
-                children
+            div (class'::opts.Props) children

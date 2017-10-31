@@ -51,9 +51,9 @@ module Panel =
 
 
     module Block =
-        let isActive = Block.IsActive
-        let props = Block.Props
-        let customClass = Block.CustomClass
+        let inline isActive<'T> = Block.IsActive
+        let inline props x = Block.Props x
+        let inline customClass x = Block.CustomClass x
 
     let block (options : Block.Option list) children =
         let parseOptions (result: Block.Options ) opt =
@@ -64,13 +64,8 @@ module Panel =
 
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-
-        div [ yield classBaseList
-                        Bulma.Panel.Block.Container
-                        [ Bulma.Panel.Block.State.IsActive, opts.IsActive
-                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Block.Container [opts.CustomClass] [Bulma.Panel.Block.State.IsActive, opts.IsActive]
+        div (class'::opts.Props) children
 
     let checkbox (options : Block.Option list) children =
         let parseOptions (result: Block.Options ) opt =
@@ -80,42 +75,28 @@ module Panel =
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-
-        label [ yield classBaseList
-                        Bulma.Panel.Block.Container
-                        [ Bulma.Panel.Block.State.IsActive, opts.IsActive
-                          opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-                yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Block.Container [opts.CustomClass] [Bulma.Panel.Block.State.IsActive, opts.IsActive]
+        label (class'::opts.Props) children
 
     let panel (options: GenericOption list) children =
         let opts = genericParse options
-
-        nav [ yield classBaseList Bulma.Panel.Container
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Container [opts.CustomClass] []
+        nav (class'::opts.Props) children
 
     let heading (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Panel.Heading
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Heading [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     let tabs (options: GenericOption list) children =
         let opts = genericParse options
-
-        div [ yield classBaseList Bulma.Panel.Tabs.Container
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Tabs.Container [opts.CustomClass] []
+        div (class'::opts.Props) children
 
     module Tab =
-        let isActive = Tab.IsActive
-        let props = Tab.Props
-        let customClass = Tab.CustomClass
+        let inline isActive<'T> = Tab.IsActive
+        let inline props x = Tab.Props x
+        let inline customClass x = Tab.CustomClass x
 
     let tab (options: Tab.Option list) children =
         let parseOptions (result: Tab.Options ) opt =
@@ -125,16 +106,10 @@ module Panel =
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
-
-        a [ yield classList [ Bulma.Panel.Tabs.Tab.State.IsActive, opts.IsActive
-                              opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-          children
+        let class' = Helpers.classes "" [opts.CustomClass] [Bulma.Panel.Tabs.Tab.State.IsActive, opts.IsActive]
+        a (class'::opts.Props) children
 
     let icon (options: GenericOption list) children =
         let opts = genericParse options
-
-        span [ yield classBaseList Bulma.Panel.Block.Icon
-                                   [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-               yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Panel.Block.Icon [opts.CustomClass] []
+        span (class'::opts.Props) children

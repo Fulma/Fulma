@@ -9,14 +9,10 @@ open Fable.Helpers.React.Props
 module Footer =
 
     let customClass cls = CustomClass cls
-    let props props = Props props
+    let inline props x = Props x
 
     let footer (options: GenericOption list) children =
         let opts = genericParse options
+        let class' = Helpers.classes Bulma.Footer.Container [opts.CustomClass] []
 
-        div
-            [ yield classBaseList
-                        Bulma.Footer.Container
-                        [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              yield! opts.Props ]
-            children
+        div (class'::opts.Props) children

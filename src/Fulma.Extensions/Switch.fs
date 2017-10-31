@@ -72,38 +72,38 @@ module Switch =
     open Types
 
     // Sizes
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
 
     // States
-    let isChecked = IsChecked
-    let isDisabled = IsDisabled
+    let inline isChecked<'T> = IsChecked
+    let inline isDisabled<'T> = IsDisabled
 
     // Classes
-    let isOutlined = IsOutlined
-    let isRounded = IsRounded
-    let isThin = IsThin
-    let isRtl = IsRtl
+    let inline isOutlined<'T> = IsOutlined
+    let inline isRounded<'T> = IsRounded
+    let inline isThin<'T> = IsThin
+    let inline isRtl<'T> = IsRtl
 
 
     // Levels and colors
-    let isBlack = Level IsBlack
-    let isDark = Level IsDark
-    let isLight = Level IsLight
-    let isWhite = Level IsWhite
-    let isPrimary = Level IsPrimary
-    let isInfo = Level IsInfo
-    let isSuccess = Level IsSuccess
-    let isWarning = Level IsWarning
-    let isDanger = Level IsDanger
+    let inline isBlack<'T> = Level IsBlack
+    let inline isDark<'T> = Level IsDark
+    let inline isLight<'T> = Level IsLight
+    let inline isWhite<'T> = Level IsWhite
+    let inline isPrimary<'T> = Level IsPrimary
+    let inline isInfo<'T> = Level IsInfo
+    let inline isSuccess<'T> = Level IsSuccess
+    let inline isWarning<'T> = Level IsWarning
+    let inline isDanger<'T> = Level IsDanger
 
     // Label and Value
     let value data  = Value data
 
     // Extra
-    let props props = Props props
-    let customClass = CustomClass
+    let inline props x = Props x
+    let inline customClass x = CustomClass x
 
     let onChange cb = OnChange cb
 
@@ -126,15 +126,8 @@ module Switch =
         let opts = options |> List.fold parseOptions Options.Empty
 
         [ input
-            [ yield classBaseList Classes.Switch
-                 [ opts.Level.Value, opts.Level.IsSome
-                   opts.Size.Value, opts.Size.IsSome
-                   Classes.IsOutlined, opts.IsOutlined
-                   Classes.IsRounded, opts.IsRounded
-                   Classes.IsThin, opts.IsThin
-                   Classes.IsRtl, opts.IsRtl
-                   opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-              if opts.OnChange.IsSome then
+            [ yield Helpers.classes Classes.Switch [opts.Level; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
+              if Option.isSome opts.OnChange then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
                 yield Checked opts.IsChecked :> IHTMLProp
               else

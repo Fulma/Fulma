@@ -57,18 +57,18 @@ module Pagination =
 
     open Types
 
-    let isSmall = Size IsSmall
-    let isMedium = Size IsMedium
-    let isLarge = Size IsLarge
-    let isCentered = Alignment Center
-    let isRight = Alignment Right
-    let customClass = CustomClass
-    let props = Props
+    let inline isSmall<'T> = Size IsSmall
+    let inline isMedium<'T> = Size IsMedium
+    let inline isLarge<'T> = Size IsLarge
+    let inline isCentered<'T> = Alignment Center
+    let inline isRight<'T> = Alignment Right
+    let inline customClass x = CustomClass x
+    let inline props x = Props x
 
     module Link =
-        let isCurrent = Link.IsCurrent
-        let customClass = Link.CustomClass
-        let props = Link.Props
+        let inline isCurrent<'T> = Link.IsCurrent
+        let inline customClass x = Link.CustomClass x
+        let inline props x = Link.Props x
 
     let pagination (options: Option list) children =
         let parseOptions (result: Options) opt =
@@ -87,19 +87,13 @@ module Pagination =
 
     let previous (options: GenericOption list) children =
         let opts = genericParse options
-
-        a [ yield classBaseList Bulma.Pagination.Previous
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Pagination.Previous [opts.CustomClass] []
+        a (class'::opts.Props) children
 
     let next (options: GenericOption list) children =
         let opts = genericParse options
-
-        a [ yield classBaseList Bulma.Pagination.Next
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-            yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Pagination.Next [opts.CustomClass] []
+        a (class'::opts.Props) children
 
     let link (options: Link.Option list) children =
         let parseOptions (result: Link.Options) opt =
@@ -111,9 +105,7 @@ module Pagination =
         let opts = options |> List.fold parseOptions Link.Options.Empty
 
         li [ ]
-           [ a [ yield classBaseList Bulma.Pagination.Link
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome
-                                    Bulma.Pagination.State.IsCurrent, opts.IsCurrent ] :> IHTMLProp
+           [ a [ yield Helpers.classes Bulma.Pagination.Link [opts.CustomClass] [Bulma.Pagination.State.IsCurrent, opts.IsCurrent]
                  yield! opts.Props ]
                children ]
 
@@ -121,16 +113,12 @@ module Pagination =
         let opts = genericParse options
 
         li [ ]
-           [ span [ yield classBaseList Bulma.Pagination.Ellipsis
-                                  [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
+           [ span [ yield Helpers.classes Bulma.Pagination.Ellipsis [opts.CustomClass] []
                     yield! opts.Props
                     yield (DangerouslySetInnerHTML { __html = "&hellip;" }) :> IHTMLProp ]
                   [ ] ]
 
     let list (options: GenericOption list) children =
         let opts = genericParse options
-
-        ul [ yield classBaseList Bulma.Pagination.List
-                                 [ opts.CustomClass.Value, opts.CustomClass.IsSome ] :> IHTMLProp
-             yield! opts.Props ]
-            children
+        let class' = Helpers.classes Bulma.Pagination.List [opts.CustomClass] []
+        ul (class'::opts.Props) children
