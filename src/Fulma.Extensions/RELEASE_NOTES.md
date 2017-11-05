@@ -1,3 +1,7 @@
+### 1.0.0-beta-007
+
+* Don't access Value member in options (update to support future version of Fable)
+
 ### 0.1.0-beta-007
 
 * Add slider extension support

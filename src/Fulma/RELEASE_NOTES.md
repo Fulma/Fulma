@@ -1,3 +1,7 @@
+### 1.0.0-beta-005
+
+* Don't access Value member in options (update to support future version of Fable)
+
 ### 1.0.0-beta-004
 
 * Fix #73: Use static type constraint for the `Button` DSL
