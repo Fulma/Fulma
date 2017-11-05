@@ -174,8 +174,8 @@ module Button =
     let inline href x = AnchorOnlyOption.Href x
 
     // Input only
-    let inline typeIsSubmit<'T> = InputOnlyOption.Type "reset"
-    let inline typeIsReset<'T> = InputOnlyOption.Type "submit"
+    let inline typeIsSubmit<'T> = InputOnlyOption.Type "submit"
+    let inline typeIsReset<'T> = InputOnlyOption.Type "reset"
     let inline value x = InputOnlyOption.Value x
 
     let genericPropsGenerator opts =
