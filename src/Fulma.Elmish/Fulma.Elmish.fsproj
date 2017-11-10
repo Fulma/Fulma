@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <Description>Helpers around Bulma for Elmish apps</Description>
@@ -16,7 +15,9 @@
     <ItemGroup>
         <Compile Include="DatePicker/Types.fs" />
         <Compile Include="DatePicker/View.fs" />
-    </ItemGroup>
+    <Compile Include="TimePicker/Types.fs" />
+    <Compile Include="TimePicker/View.fs" />
+  </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma.Extensions/Fulma.Extensions.fsproj" />
     </ItemGroup>

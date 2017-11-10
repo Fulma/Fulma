@@ -1,10 +1,8 @@
-namespace Fulma.Elmish.DatePicker
+module Fulma.Elmish.DatePicker.Types
 
 open System
 open Fable.PowerPack
 open Fable.Helpers.React.Props
-
-module Types =
 
     type State =
         { Today : DateTime option
