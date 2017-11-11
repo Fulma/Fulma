@@ -1,51 +1,58 @@
-namespace Fulma.Elmish
+namespace Fulma.Elmish.TimePicker
 
+open System
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.BulmaClasses
-open System
+
+open Fable.PowerPack
 
 //https://github.com/phoenixwong/vue2-timepicker/blob/master/src/vue-timepicker.vue
 
-module TimePicker =
+module Types =
 
-    module Types =
+    module TimePicker =
 
-        module TimePicker =
+        type Option =
+            | Props of IHTMLProp list
+            | CustomClass of string
 
-            type Option =
-                | Props of IHTMLProp list
-                | CustomClass of string
-
-            type Options =
+        type Options =
+            {
+                Props : IHTMLProp list
+                CustomClass : string option
+            }
+            static member Empty =
                 {
-                    Props : IHTMLProp list
-                    CustomClass : string option
+                    Props = []
+                    CustomClass = None
                 }
-                static member Empty =
-                    {
-                        Props = []
-                        CustomClass = None
-                    }
 
-        type Format =
-            | HHmm
-            static member Default = HHmm
+    type Format =
+        | HHmm
+        static member Default = HHmm
 
-        type State =
-            {
-                MinuteInterval : int
-                SecondInterval : int
-                Format: Format
-            }
+    type State =
+        {
+            MinuteInterval : int
+            SecondInterval : int
+            Format: Format
+        }
 
-        type Config<'Msg> =
-            {
-                OnChange  : State * (DateTime option) -> 'Msg
-            }
+    let defaultState =
+        {
+            MinuteInterval = 0
+            SecondInterval = 0
+            Format = Format.Default
+        }
 
-        type Msg =
-            | NoOp
+    type Config<'Msg> =
+        {
+            OnChange  : State * (DateTime option) -> 'Msg
+            Local : Date.Local.Localization
+        }
 
-        type Model  = { CurrentTime : DateTime  }
+    type Msg =
+        | NoOp
+
+    type Model  = { CurrentTime : DateTime  }
 
