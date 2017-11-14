@@ -16,7 +16,7 @@ Provide ready to use *elmish components*.
 
 ## How to install ?
 
-Add `Fulma.Elmish` denpendencies into your paket files: `paket add Fulma.Elmish --project <your project>`
+Add `Fulma.Elmish` dependencies into your paket files: `paket add Fulma.Elmish --project <your project>`
 
 Then `dotnet restore` on your `*.fsproj` file.
 
