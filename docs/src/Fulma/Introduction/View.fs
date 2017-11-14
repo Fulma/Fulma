@@ -20,7 +20,7 @@ It's only serve as a documentation of the wrapper and also test that the wrapper
 
 ## How to install ?
 
-Add `Fulma` dependence into your paket files: `paket add Fulma --project <your project>`
+Add `Fulma` dependency into your paket files: `paket add Fulma --project <your project>`
 
 Then `dotnet restore` on your `*.fsproj` file.
 
