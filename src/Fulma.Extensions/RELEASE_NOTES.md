@@ -1,13 +1,6 @@
-### 1.0.0-beta-007
-
-* Don't access Value member in options (update to support future version of Fable)
-
 ### 0.1.0-beta-007
 
-* Add slider extension support
-* Add switch extension support
-* Add checkradio extension support
-* Fix #67: Enforce DSL synthax with `[<RequireQualifiedAccess>]` attribute
+* DOT NOT PUBLISH THIS VERSION IS A TEST FOR NUSPEC BUG REPRODUCTION
 
 ### 0.1.0-beta-006
 
