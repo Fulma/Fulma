@@ -129,10 +129,10 @@ let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
 
     if needsPublishing versionRegex releaseNotes projFile then
         let projDir = Path.GetDirectoryName(projFile)
-        let nugetKey =
-            match environVarOrNone "NUGET_KEY" with
-            | Some nugetKey -> nugetKey
-            | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
+        // let nugetKey =
+        //     match environVarOrNone "NUGET_KEY" with
+        //     | Some nugetKey -> nugetKey
+        //     | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
         runDotnet projDir (sprintf "pack -c Release /p:Version=%s /p:PackageReleaseNotes=\"%s\"" releaseNotes.NugetVersion (toPackageReleaseNotes releaseNotes.Notes))
         // Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
         // |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
