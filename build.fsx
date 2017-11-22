@@ -133,17 +133,17 @@ let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
             match environVarOrNone "NUGET_KEY" with
             | Some nugetKey -> nugetKey
             | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
-        runDotnet projDir (sprintf "pack -c Release /p:Version=%s /p:PackageReleaseNotes=\"%s\"" releaseNotes.NugetVersion (toPackageReleaseNotes releaseNotes.Notes))
+        (versionRegex, projFile)
+        ||> Util.replaceLines (fun line _ ->
+                                    versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
+        runDotnet projDir (sprintf "pack -c Release /p:PackageReleaseNotes=\"%s\"" (toPackageReleaseNotes releaseNotes.Notes))
         Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
         |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
         |> (fun nupkg ->
             (Path.GetFullPath nupkg, nugetKey)
             ||> sprintf "nuget push %s -s nuget.org -k %s"
             |> DotNetCli.RunCommand id)
-        // After successful publishing, update the project file
-        (versionRegex, projFile)
-        ||> Util.replaceLines (fun line _ ->
-                                    versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
+
 
 Target "PublishNugets" (fun _ ->
     !! "src/Fulma/Fulma.fsproj"
