@@ -19,13 +19,15 @@ let pickerConfig : TimePicker.Types.Config<Msg> =
 
 let root model dispatch =
     let timePickerView =
-        TimePicker.View.root pickerConfig model.TimePickerState dispatch
+        TimePicker.View.root pickerConfig model.TimePickerState model.CurrentTime dispatch
 
-    let dateText =
+    let timeText =
         match model.CurrentTime with
         | Some time ->
-            Date.Format.format time "dddd, MMMM dd, yyyy"
-            |> sprintf "The selected date is: %s"
+            let date = new System.DateTime(time.Ticks)
+
+            Fable.PowerPack.Date.Format.format date "hhm:mm tt"
+            |> sprintf "The selected time is: %s"
             |> str
 
         | None ->
@@ -53,7 +55,7 @@ This special requirement is due to how react manage input `value` and `defaultVa
                                 [ Column.column [ ]
                                     [ timePickerView ]
                                   Column.column [ ]
-                                    [ dateText ] ] ] ]
+                                    [ timeText ] ] ] ]
                      Render.contentFromMarkdown
                         """
 Here is the minimal code needed to include the datepicker components into your application.

@@ -58,6 +58,7 @@ let pageParser : Parser<Page -> Page, Page> =
             // Fulma Elmish
             map (FulmaElmish FulmaElmishPage.Introduction) (s "fulma-elmish")
             map (FulmaElmish FulmaElmishPage.DatePicker) (s "fulma-elmish" </> s "date-picker")
+            map (FulmaElmish FulmaElmishPage.TimePicker) (s "fulma-elmish" </> s "time-picker")
             map (Fulma FulmaPage.Introduction ) top ]
 
 let urlUpdate (result : Option<Page>) model =

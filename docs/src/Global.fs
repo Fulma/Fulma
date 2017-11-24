@@ -58,6 +58,7 @@ type FulmaExtensionsPage =
 type FulmaElmishPage =
     | Introduction
     | DatePicker
+    | TimePicker
 
 type Page =
     | Home
@@ -126,3 +127,4 @@ let toHash page =
         match pageType with
         | FulmaElmishPage.Introduction -> "#fulma-elmish"
         | FulmaElmishPage.DatePicker -> "#fulma-elmish/date-picker"
+        | FulmaElmishPage.TimePicker -> "#fulma-elmish/time-picker"

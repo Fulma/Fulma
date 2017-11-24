@@ -3,12 +3,13 @@ module FulmaElmish.TimePicker.State
 open Elmish
 open Types
 open Fulma.Elmish
+open TimePicker.Types
 open System
 
 
 let init () =
     {
-        TimePickerState = { TimePicker.Types.defaultState }
+        TimePickerState = { TimePicker.Types.defaultState with Format = Format.HHmm }
         CurrentTime = None
     }
 

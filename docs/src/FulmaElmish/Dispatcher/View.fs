@@ -11,3 +11,6 @@ let root fulmaElmishPage model dispatch =
 
     | DatePicker ->
         FulmaElmish.DatePicker.View.root model.DatePicker (DatePickerMsg >> dispatch)
+
+    | TimePicker ->
+        FulmaElmish.TimePicker.View.root model.TimePicker (TimePickerMsg >> dispatch)

@@ -14,8 +14,8 @@
     <Compile Include="src/Viewer/State.fs" />
     <Compile Include="src/Viewer/View.fs" />
     <Compile Include="src/Menu/Types.fs" />
-    <Compile Include="src/Menu/State.fs" />
     <Compile Include="src/Menu/View.fs" />
+    <Compile Include="src/Menu/State.fs" />
     <!-- Layouts -->
     <Compile Include="src/Fulma/Layout/Container/Types.fs" />
     <Compile Include="src/Fulma/Layout/Container/State.fs" />
@@ -147,14 +147,16 @@
     <Compile Include="src/FulmaElmish/DatePicker/State.fs" />
     <Compile Include="src/FulmaElmish/DatePicker/View.fs" />
     <Compile Include="src/FulmaElmish/Introduction/View.fs" />
-        <Compile Include="src/FulmaElmish/TimePicker/Types.fs" />
-        <Compile Include="src/FulmaElmish/TimePicker/State.fs" />
-        <Compile Include="src/FulmaElmish/TimePicker/View.fs" />
+    <Compile Include="src/FulmaElmish/TimePicker/Types.fs" />
+    <Compile Include="src/FulmaElmish/TimePicker/State.fs" />
+    <Compile Include="src/FulmaElmish/TimePicker/View.fs" />
     <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/FulmaElmish/Dispatcher/Types.fs" />
     <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />
     <Compile Include="src/FulmaElmish/Dispatcher/View.fs" />
     <!-- Home -->
+    <Compile Include="src/Home/Types.fs" />
+    <Compile Include="src/Home/State.fs" />
     <Compile Include="src/Home/View.fs" />
     <Compile Include="src/Migration/View.fs" />
     <Compile Include="src/Showcase/View.fs" />

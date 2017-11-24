@@ -121,7 +121,10 @@ let menuFulmaElmish currentPage dispatch =
       Menu.list [ ]
         [ menuItem "Introduction" (FulmaElmish FulmaElmishPage.Introduction) currentPage ]
       Menu.list [ ]
-        [ menuItem "Date picker" (FulmaElmish DatePicker) currentPage ] ]
+        [
+            menuItem "Date picker" (FulmaElmish DatePicker) currentPage
+            menuItem "Time picker" (FulmaElmish TimePicker) currentPage
+        ] ]
 
 let root model dispatch =
     Menu.menu [ ]

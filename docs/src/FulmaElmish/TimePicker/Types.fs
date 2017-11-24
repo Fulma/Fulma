@@ -5,7 +5,7 @@ open System
 
 type Model =
     { TimePickerState : TimePicker.Types.State
-      CurrentTime : DateTime option }
+      CurrentTime : TimeSpan option }
 
 type Msg =
-    | TimePickerChanged of TimePicker.Types.State * (DateTime option)
+    | TimePickerChanged of TimePicker.Types.State * (TimeSpan option)
