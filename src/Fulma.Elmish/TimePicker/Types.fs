@@ -28,8 +28,29 @@ module Types =
                 }
 
     type Format =
-        | HHmm
+        | HHmm  //24 hours
+        //12 hours with hours & minutes with padding (on 2 characters)
+        | HHmmA
+        //12 hours with hours & minutes without padding
+        | Hma
+        //With Seconds
+        | HHmmss
         static member Default = HHmm
+
+
+    type TimePeriod =
+        | AM
+        | PM
+        with
+            member x.upperCaseString() =
+                match x with
+                | AM -> "AM"
+                | PM -> "PM"
+            member x.lowerCaseString() =
+                match x with
+                | AM -> "am"
+                | PM -> "pm"
+            override x.ToString() = x.upperCaseString()
 
     type State =
         {
@@ -47,12 +68,12 @@ module Types =
 
     type Config<'Msg> =
         {
-            OnChange  : State * (DateTime option) -> 'Msg
+            OnChange  : State * (TimeSpan option) -> 'Msg
             Local : Date.Local.Localization
         }
 
     type Msg =
         | NoOp
 
-    type Model  = { CurrentTime : DateTime  }
+    type Model  = { CurrentTime : DateTime }
 
