@@ -68,8 +68,8 @@ module Types =
 
     type Config<'Msg> =
         {
-            OnChange  : State * (TimeSpan option) -> 'Msg
-            Local : Date.Local.Localization
+            OnChange    : State * (TimeSpan option) -> 'Msg
+            OnClear     : State * (TimeSpan option) -> 'Msg
         }
 
     type Msg =

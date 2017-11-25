@@ -4,6 +4,8 @@ open Fulma.Elmish.TimePicker.Types
 open System
 open Fulma.Components
 open Fulma.Elements
+open Fulma.Common
+open Fulma.Extra.FontAwesome
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -14,6 +16,7 @@ open Fable.Helpers.React.Props
 open Fable.Helpers.React.Props
 open Fable.Import.JS
 open Fable.AST.Babel
+open Fulma.Elements.Button
 
 //Helpers to format hour from Fable.Powerpack.Date:
 //https://github.com/fable-compiler/fable-powerpack/blob/master/src/Date/Format.fs
@@ -61,6 +64,25 @@ let onChange (config : Config<'Msg>) currentTime state dispatch =
         (state, currentTime)
         |> dispatch
 
+let onClear (config: Config<'Msg>) state dispatch =
+    config.OnClear
+        (state, None)
+        |> dispatch
+
+let clearIcon
+    (config: Config<'Msg>)
+    (state: State)
+    (currentTime: TimeSpan option)
+    dispatch   =
+        Button.button [
+            Button.props [ OnClick (fun _ -> onClear config state dispatch ) ]
+        ] [
+            Icon.faIcon [
+                Icon.isRight
+                Icon.isSmall
+            ] Fa.Times
+        ]
+
 let selectOption
     updateTime
     (config: Config<'Msg>)
@@ -68,11 +90,13 @@ let selectOption
     (currentTime: TimeSpan option)
     (value: int)
     dispatch   =
+
     option [
-        Value (string value)
-        OnClick(fun _ ->
-            let time = updateTime currentTime value
-            onChange config (Some time) state dispatch)
+        if currentTime = None && value = 0 then yield (Selected true) :> IHTMLProp
+        yield Value (string value) :> IHTMLProp
+        yield OnClick(fun _ ->
+                    let time = updateTime currentTime value
+                    onChange config (Some time) state dispatch) :> IHTMLProp
     ]
         [ str (formatStr state.Format value) ]
 
@@ -185,8 +209,6 @@ let levelItems
     | HHmmA | Hma ->
         [ hourOptions; minuteOptions; periodOptions ] |> List.map toLevelItem
 
-
-
 let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) dispatch =
     let timeTxt =
         let period  = Option.map getTimePeriod currentTime
@@ -196,11 +218,15 @@ let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) di
 
     Dropdown.dropdown [
             Dropdown.isHoverable
-            Dropdown.props [ Style [ CSSProp.Width "10em" ] ]
+            Dropdown.props [ Style [ CSSProp.Width "500px" ]
+                            ]
              ]
-        [ div [ ]
+        [ div [ Style [ CSSProp.MaxWidth "10em" ] ]
             [
-                Input.input [
+                Level.level[ ]
+                    [ Level.left [ ]
+                        [ yield Level.item [] [
+                            Input.input [
                                 Input.defaultValue timeTxt
                                 Input.props [
                                         ReadOnly true
@@ -209,13 +235,18 @@ let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) di
                                             CSSProp.Height "2.2em"
                                             CSSProp.Padding "0.3em"
                                             CSSProp.FontSize "1em"
-                                         ] ]
+                                        ] ]
                             ]
+                          ]
+                          if currentTime.IsSome then
+                            yield Level.item [] [ clearIcon config state currentTime dispatch ]
+                        ]
+                    ]
             ]
-          Dropdown.menu [ ]
+          Dropdown.menu [ Props [ Style [ CSSProp.Padding "0" ] ] ]
             [   Dropdown.content [ ]
                     [
-                        Level.level[ Level.Level.props [ Style [ CSSProp.Width "10em" ] ] ]
+                        Level.level[ ]
                             [ Level.left [ ]
                                 [ yield! levelItems config state currentTime dispatch ]
                             ]
