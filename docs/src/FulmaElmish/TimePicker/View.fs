@@ -15,7 +15,7 @@ open Fable.PowerPack
 
 let pickerConfig : TimePicker.Types.Config<Msg> =
     { OnChange = TimePickerChanged
-      Local = Date.Local.french }
+      OnClear = TimePickerCleared }
 
 let root model dispatch =
     let timePickerView =
@@ -26,7 +26,8 @@ let root model dispatch =
         | Some time ->
             let date = new System.DateTime(time.Ticks)
 
-            Fable.PowerPack.Date.Format.format date "hhm:mm tt"
+            //http://fable.io/fable-powerpack/posts/date_format.html
+            Fable.PowerPack.Date.Format.format date "hh:mm tt"
             |> sprintf "The selected time is: %s"
             |> str
 

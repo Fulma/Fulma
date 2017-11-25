@@ -9,3 +9,4 @@ type Model =
 
 type Msg =
     | TimePickerChanged of TimePicker.Types.State * (TimeSpan option)
+    | TimePickerCleared of TimePicker.Types.State * (TimeSpan option)

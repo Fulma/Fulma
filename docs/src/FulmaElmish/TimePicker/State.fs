@@ -18,3 +18,5 @@ let update msg model =
     | TimePickerChanged (newState, time) ->
         { model with TimePickerState = newState
                      CurrentTime = time }, Cmd.none
+    | TimePickerCleared (newState, time) ->
+         { model with TimePickerState = newState; CurrentTime = time }, Cmd.none
