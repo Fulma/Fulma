@@ -10,6 +10,8 @@ open Fulma.Extra.FontAwesome
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
+open Fable.PowerPack.Date
+
 open Fulma.Elements.Form
 open Fulma.Layouts
 open Fable.Helpers.React.Props
@@ -17,6 +19,8 @@ open Fable.Helpers.React.Props
 open Fable.Import.JS
 open Fable.AST.Babel
 open Fulma.Elements.Button
+
+let log (input: string) = Fable.Import.Browser.console.log( input )
 
 //Helpers to format hour from Fable.Powerpack.Date:
 //https://github.com/fable-compiler/fable-powerpack/blob/master/src/Date/Format.fs
@@ -35,29 +39,14 @@ let formatPeriod =
     | _     -> Option.defaultValue AM >> (fun p -> p.upperCaseString() )
 
 let formatTimeTxt format (time: TimeSpan) (period: TimePeriod option) =
+    let date = new System.DateTime(time.Ticks)
     match format with
-    | HHmm ->
-        sprintf "%s:%s"
-        <| formatStr HHmm time.Hours
-        <| formatStr HHmm time.Minutes
-
-    | Hma ->
-        sprintf "%s:%s %s"
-        <| formatStr Hma time.Hours
-        <| formatStr Hma time.Minutes
-        <| formatPeriod Hma period
-
-    | HHmmA ->
-        sprintf "%s:%s %s"
-        <| formatStr HHmmA time.Hours
-        <| formatStr HHmmA time.Minutes
-        <| formatPeriod HHmmA period
-
-    | HHmmss ->
-        sprintf "%s:%s:%s"
-        <| formatStr HHmmss time.Hours
-        <| formatStr HHmmss time.Minutes
-        <| formatStr HHmmss time.Seconds
+    //Format Hour with Fable Powerpack:
+    //http://fable.io/fable-powerpack/posts/date_format.html
+    | HHmm   -> Format.format date "HH:mm"
+    | Hma    -> Format.format date "h:m t"
+    | HHmmA  -> Format.format date "hh:mm tt"
+    | HHmmss -> Format.format date "HH:mm:ss"
 
 let onChange (config : Config<'Msg>) currentTime state dispatch =
     config.OnChange
@@ -82,6 +71,30 @@ let clearIcon
                 Icon.isSmall
             ] Fa.Times
         ]
+
+let hintOption
+    buildHintText
+    (state: State) =
+    let hintText = buildHintText state.Format
+    option [ (Disabled true) :> IHTMLProp ] [ str hintText ]
+
+let hourHintOption =
+    hintOption (
+        function
+        | HHmm | HHmmss | HHmmA-> "HH"
+        | Hma -> "H" )
+
+let minuteHintOption =
+    hintOption (
+        function
+        | HHmm | HHmmss | HHmmA-> "mm"
+        | Hma -> "m" )
+
+let secondHintOption =
+    hintOption (
+        function
+        | HHmmss -> "ss"
+        | _ -> "ss" )
 
 let selectOption
     updateTime
@@ -130,31 +143,40 @@ let hourRangeOptions
     (state: State)
     (currentTime: TimeSpan option)
     dispatch =
-    match state.Format with
-      | HHmm | HHmmss ->
-        [ for i in 0..23 -> hourOption config state currentTime i dispatch ]
-      | HHmmA | Hma ->
-        [ for i in 0..11 -> hourOption config state currentTime i dispatch ]
+    let hint = hourHintOption state
+    let hourOptions =
+        match state.Format with
+          | HHmm | HHmmss ->
+            [ for i in 0..23 -> hourOption config state currentTime i dispatch ]
+          | HHmmA | Hma ->
+            [ for i in 0..11 -> hourOption config state currentTime i dispatch ]
+    hint::hourOptions
 
 let minuteRangeOptions
     (config: Config<'Msg>)
     (state: State)
     (currentTime: TimeSpan option)
     dispatch  =
-        if state.MinuteInterval <> 0 then
-            [ for i in 0 .. state.MinuteInterval .. 59 -> minuteOption config state currentTime i dispatch ]
-        else
-            [ for i in 0..59 -> minuteOption config state currentTime i dispatch ]
+        let hint = minuteHintOption state
+        let minuteOptions =
+            if state.MinuteInterval > 0 then
+                [ for i in 0 .. state.MinuteInterval .. 59 -> minuteOption config state currentTime i dispatch ]
+            else
+                [ for i in 0..59 -> minuteOption config state currentTime i dispatch ]
+        hint::minuteOptions
 
 let secondRangeOptions
     (config: Config<'Msg>)
     (state: State)
     (currentTime: TimeSpan option)
     dispatch  =
-        if state.SecondInterval <> 0 then
-            [ for i in 0 .. state.SecondInterval .. 59 -> secondOption config state currentTime i dispatch ]
-        else
-            [ for i in 0..59 -> secondOption config state currentTime i dispatch ]
+        let hint = secondHintOption state
+        let secondOptions =
+            if state.SecondInterval > 0 then
+                [ for i in 0 .. state.SecondInterval .. 59 -> secondOption config state currentTime i dispatch ]
+            else
+                [ for i in 0..59 -> secondOption config state currentTime i dispatch ]
+        hint::secondOptions
 
 let getTimePeriod (time:TimeSpan) =
         if time.Hours > 12 then PM else AM
@@ -182,7 +204,7 @@ let periodRangeOptions
     |> List.map (fun p ->
         option [
             Value <| p.ToString()
-            OnClick(fun _ ->
+            OnClick (fun _ ->
                 let time = updatePeriod p currentTime
                 onChange config (Some time) state dispatch)
         ] [ str <| formatPeriod state.Format (Some p) ])
@@ -198,8 +220,11 @@ let levelItems
     let periodOptions = periodRangeOptions config state currentTime dispatch
     let toLevelItem options =
         Level.item [ ]
-            [ Select.select []
-                [ select [ ] options ] ]
+            [ Select.select [
+                    Select.props [ ]
+            ]
+                [ select [ ]
+                            options ] ]
 
     match state.Format with
     | HHmm      ->
@@ -217,9 +242,10 @@ let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) di
         formatTimeTxt  state.Format time period
 
     Dropdown.dropdown [
-            Dropdown.isHoverable
-            Dropdown.props [ Style [ CSSProp.Width "500px" ]
-                            ]
+            if state.ShowDropdown then yield Dropdown.isActive
+            yield Dropdown.props [
+                    Style [ CSSProp.Width "500px" ]
+                    ]
              ]
         [ div [ Style [ CSSProp.MaxWidth "10em" ] ]
             [
@@ -228,17 +254,16 @@ let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) di
                         [ yield Level.item [] [
                             Input.input [
                                 Input.defaultValue timeTxt
+
                                 Input.props [
                                         ReadOnly true
-                                        Style [
-                                            CSSProp.Width "10em"
-                                            CSSProp.Height "2.2em"
-                                            CSSProp.Padding "0.3em"
-                                            CSSProp.FontSize "1em"
-                                        ] ]
+                                        OnClick (fun _ ->
+                                                       let newState = { state with ShowDropdown = not (state.ShowDropdown) }
+                                                       onChange config currentTime newState dispatch)
+                                        Style [ CSSProp.Width "10em" ] ]
                             ]
                           ]
-                          if currentTime.IsSome then
+                          if currentTime.IsSome && not state.ShowDropdown then
                             yield Level.item [] [ clearIcon config state currentTime dispatch ]
                         ]
                     ]
