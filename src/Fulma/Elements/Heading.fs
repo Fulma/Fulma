@@ -89,4 +89,4 @@ module Heading =
     let h4 (options : Option list) = title h4 (is4 :: options)
     let h5 (options : Option list) = title h5 (is5 :: options)
     let h6 (options : Option list) = title h6 (is6 :: options)
-    let p = title p
+    let p opts children = title p opts children
