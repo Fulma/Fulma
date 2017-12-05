@@ -148,8 +148,8 @@
     <Compile Include="src/FulmaElmish/DatePicker/View.fs" />
     <Compile Include="src/FulmaElmish/Introduction/View.fs" />
     <Compile Include="src/FulmaElmish/TimePicker/Types.fs" />
-    <Compile Include="src/FulmaElmish/TimePicker/State.fs" />
     <Compile Include="src/FulmaElmish/TimePicker/View.fs" />
+    <Compile Include="src/FulmaElmish/TimePicker/State.fs" />
     <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/FulmaElmish/Dispatcher/Types.fs" />
     <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />

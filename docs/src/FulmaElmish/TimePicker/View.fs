@@ -32,23 +32,15 @@ let root model dispatch =
             |> str
 
         | None ->
-            str "Please select a date"
+            str "Please select a time"
 
     Render.docPage [ Render.contentFromMarkdown
                         """
-# Date picker
+# Time picker
 
-A ready to use date picker.
-
-This component is based on [Fulma.Extensions.Calendar](#fulma-extensions/calendar).
+A ready to use time picker all built with Fulma.
 
 ---
-
-**Important**, for now this components works best when using [preact](https://preactjs.com/) instead of [react](https://facebook.github.io/react/)
-
-**Preact**, is really easy to switch over. See the [migration guide](https://preactjs.com/guide/switching-to-preact).
-
-This special requirement is due to how react manage input `value` and `defaultValue` (aka *Uncontrolled components*)
                         """
                      Card.card [ ]
                         [ Card.content [ ]
@@ -59,42 +51,75 @@ This special requirement is due to how react manage input `value` and `defaultVa
                                     [ timeText ] ] ] ]
                      Render.contentFromMarkdown
                         """
-Here is the minimal code needed to include the datepicker components into your application.
+
+Here is the minimal code needed to include the time picker component into your application.
 
 *Types.fs*
 ```fsharp
 type Model =
-    { DatePickerState : DatePicker.Types.State // Store the state of the date picker into your model
-      CurrentDate : DateTime option } // Current date selected
+    type Model =
+    { TimePickerState : TimePicker.Types.State  // Carry the time picker state in your model
+      CurrentTime : TimeSpan option }           // Current time selected
 
 type Msg =
-    // Message dispatch when a new date is selected
-    | DatePickerChanged of DatePicker.Types.State * (DateTime option)
+    | TimePickerChanged of TimePicker.Types.State * (TimeSpan option) // When time picker changes
+    | TimePickerCleared of TimePicker.Types.State * (TimeSpan option) // Optionally define another message to map to the exposed config
+
 ```
 
 *Update.fs*
+In initialisation you can set the following available options of the time picker:
+- Format: format of time displayed.
+    Formats are complying with the formatting used in the [Fable.Powerpack.Date page](http://fable.io/fable-powerpack/posts/date_format.html).
+    The available choices are:
+    - HHmm
+    - HHmmt
+    - HHmmtt
+    - HHmmss
+    - HHmmsst
+    - HHmmsstt
+    - Hm
+    - Hmt
+    - Hmtt
+    - Hms
+    - Hmst
+    - Hmstt
+
+- Minute Interval: an integer between 1 and 60
+- Second Interval: an integer between 1 and 60
+
+
 ```fsharp
-let init() =
-    { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true }
-      CurrentDate = None }
+let init () =
+    {
+        TimePickerState = { TimePicker.Types.defaultState
+                                with
+                                    Format = Format.HHmm
+                                    MinuteInterval = 10
+                                    SecondInterval = 10
+                        }
+        CurrentTime = None
+    }
 
 let update msg model =
     match msg with
-    | DatePickerChanged (newState, date) ->
-        // Store the new state and the selected date
-        { model with DatePickerState = newState
-                     CurrentDate = date }, Cmd.none
+    | TimePickerChanged (newState, time) ->
+        { model with TimePickerState = newState
+                     CurrentTime = time }, Cmd.none
+    | TimePickerCleared (newState, time) ->
+         { model with TimePickerState = newState; CurrentTime = time }, Cmd.none
 
 ```
 
 *View.fs*
 ```fsharp
 // Configuration passed to the components
-let pickerConfig : DatePicker.Types.Config<Msg> =
-    { OnChange = DatePickerChanged // Message to dispatch when a new date is selected
-      Local = Date.Local.french } // Local used to generated the calendar
+let pickerConfig : TimePicker.Types.Config<Msg> =
+    { OnChange = TimePickerChanged
+      OnClear = TimePickerCleared }
 
 let root model dispatch =
-    DatePicker.View.root pickerConfig model.DatePickerState model.CurrentDate dispatch
+        TimePicker.View.root pickerConfig model.TimePickerState model.CurrentTime dispatch
+
 ```
                         """ ]

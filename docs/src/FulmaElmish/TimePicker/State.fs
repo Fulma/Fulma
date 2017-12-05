@@ -9,7 +9,13 @@ open System
 
 let init () =
     {
-        TimePickerState = { TimePicker.Types.defaultState with Format = Format.HHmm }
+        TimePickerState = {
+                            TimePicker.Types.defaultState
+                                with
+                                    Format = Format.HHmm
+                                    MinuteInterval = 10
+                                    SecondInterval = 10
+                            }
         CurrentTime = None
     }
 
