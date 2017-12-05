@@ -22,31 +22,49 @@ open Fulma.Elements.Button
 
 let log (input: string) = Fable.Import.Browser.console.log( input )
 
+let (|ValidInterval|_|) =
+        function
+        | i when i < 60 && i >= 1 -> Some i
+        | _ -> None
+
+let validateInterval listName =
+    function
+    | ValidInterval i   -> Interval i
+    | n                 ->
+        log <| sprintf "[Time Picker] The value %d for %s-interval is invalid.\nIt must be between 1 and 60. Defaulted value: 1" n listName
+        Interval 1
+
+
 //Helpers to format hour from Fable.Powerpack.Date:
 //https://github.com/fable-compiler/fable-powerpack/blob/master/src/Date/Format.fs
 let inline padWithN n c = (fun (x: string) -> x.PadLeft(n, c)) << string
 let internal padWith = padWithN 2
 
-let formatStr =
+let formatOptionTxt =
     function
-    | HHmm | HHmmss | HHmmA -> padWith '0'
-    | Hma  -> string
+    | HHmm  | HHmmt | HHmmtt | HHmmss   | HHmmsst   | HHmmsstt  -> padWith '0'
+    | Hm    | Hmt   | Hmtt   | Hms      | Hmst      | Hmstt     -> string
 
-let formatPeriod =
-    function
-    | Hma   -> Option.defaultValue AM  >> (fun p -> p.lowerCaseString() )
-    | HHmmA -> Option.defaultValue AM >> (fun p -> p.upperCaseString() )
-    | _     -> Option.defaultValue AM >> (fun p -> p.upperCaseString() )
+let formatPeriodTxt =
+    Option.defaultValue AM  >> (fun p -> p.ToString() )
 
-let formatTimeTxt format (time: TimeSpan) (period: TimePeriod option) =
+let formatTimeTxt format (time: TimeSpan) =
     let date = new System.DateTime(time.Ticks)
     match format with
     //Format Hour with Fable Powerpack:
     //http://fable.io/fable-powerpack/posts/date_format.html
-    | HHmm   -> Format.format date "HH:mm"
-    | Hma    -> Format.format date "h:m t"
-    | HHmmA  -> Format.format date "hh:mm tt"
-    | HHmmss -> Format.format date "HH:mm:ss"
+    | HHmm      -> Format.format date "HH:mm"
+    | HHmmt     -> Format.format date "hh:mm t"
+    | HHmmtt    -> Format.format date "hh:mm tt"
+    | HHmmss    -> Format.format date "HH:mm:ss"
+    | HHmmsst   -> Format.format date "hh:mm:ss t"
+    | HHmmsstt  -> Format.format date "hh:mm:ss tt"
+    | Hm        -> Format.format date "H:m"
+    | Hmt       -> Format.format date "h:m t"
+    | Hmtt      -> Format.format date "h:m tt"
+    | Hms       -> Format.format date "H:m:s"
+    | Hmst      -> Format.format date "h:m:s t"
+    | Hmstt     -> Format.format date "h:m:s tt"
 
 let onChange (config : Config<'Msg>) currentTime state dispatch =
     config.OnChange
@@ -63,14 +81,30 @@ let clearIcon
     (state: State)
     (currentTime: TimeSpan option)
     dispatch   =
+        let buttonStyle =
+            Style [
+                     Border "none"
+                     Position "absolute"
+                     Overflow "hidden"
+                     Outline "none"
+                     FlexFlow "column nowrap"
+                     Display "flex"
+                     Top 0
+                     Right 0
+                     Bottom 0
+                     BackgroundColor "Transparent" ]
+
         Button.button [
-            Button.props [ OnClick (fun _ -> onClear config state dispatch ) ]
-        ] [
-            Icon.faIcon [
-                Icon.isRight
-                Icon.isSmall
-            ] Fa.Times
-        ]
+            Button.props [
+                OnClick (fun _ -> onClear config state dispatch )
+                buttonStyle
+            ]
+            ] [
+                Icon.faIcon [
+                    Icon.isSmall
+                    Icon.isRight
+                ] Fa.Times
+            ]
 
 let hintOption
     buildHintText
@@ -81,19 +115,19 @@ let hintOption
 let hourHintOption =
     hintOption (
         function
-        | HHmm | HHmmss | HHmmA-> "HH"
-        | Hma -> "H" )
+        | HHmm | HHmmt  | HHmmtt    | HHmmss    | HHmmsst   | HHmmsstt  -> "HH"
+        | Hm   | Hmt    | Hmtt      | Hms       | Hmst      | Hmstt     -> "H" )
 
 let minuteHintOption =
     hintOption (
         function
-        | HHmm | HHmmss | HHmmA-> "mm"
-        | Hma -> "m" )
+        | HHmm | HHmmt  | HHmmtt    | HHmmss    | HHmmsst   | HHmmsstt  -> "mm"
+        | Hm   | Hmt    | Hmtt      | Hms       | Hmst      | Hmstt     -> "m")
 
 let secondHintOption =
     hintOption (
         function
-        | HHmmss -> "ss"
+        | HHmmss | HHmmsst | HHmmsstt -> "ss"
         | _ -> "ss" )
 
 let selectOption
@@ -111,7 +145,7 @@ let selectOption
                     let time = updateTime currentTime value
                     onChange config (Some time) state dispatch) :> IHTMLProp
     ]
-        [ str (formatStr state.Format value) ]
+        [ str (formatOptionTxt state.Format value) ]
 
 let hourOption (config: Config<'Msg>) =
     selectOption (fun (time: TimeSpan option) h ->
@@ -146,10 +180,10 @@ let hourRangeOptions
     let hint = hourHintOption state
     let hourOptions =
         match state.Format with
-          | HHmm | HHmmss ->
-            [ for i in 0..23 -> hourOption config state currentTime i dispatch ]
-          | HHmmA | Hma ->
-            [ for i in 0..11 -> hourOption config state currentTime i dispatch ]
+            | HHmm | HHmmss | Hm | Hms ->
+                [ for i in 0..23 -> hourOption config state currentTime i dispatch ]
+            | HHmmsst | HHmmsstt | HHmmtt | HHmmt | Hmtt | Hmt | Hmstt | Hmst ->
+                [ for i in 0..11 -> hourOption config state currentTime i dispatch ]
     hint::hourOptions
 
 let minuteRangeOptions
@@ -159,10 +193,10 @@ let minuteRangeOptions
     dispatch  =
         let hint = minuteHintOption state
         let minuteOptions =
-            if state.MinuteInterval > 0 then
-                [ for i in 0 .. state.MinuteInterval .. 59 -> minuteOption config state currentTime i dispatch ]
-            else
-                [ for i in 0..59 -> minuteOption config state currentTime i dispatch ]
+            let (Interval interval) = validateInterval "minute" state.MinuteInterval
+
+            [ for i in 0 .. interval .. 59 -> minuteOption config state currentTime i dispatch ]
+
         hint::minuteOptions
 
 let secondRangeOptions
@@ -172,10 +206,10 @@ let secondRangeOptions
     dispatch  =
         let hint = secondHintOption state
         let secondOptions =
-            if state.SecondInterval > 0 then
-                [ for i in 0 .. state.SecondInterval .. 59 -> secondOption config state currentTime i dispatch ]
-            else
-                [ for i in 0..59 -> secondOption config state currentTime i dispatch ]
+            let (Interval interval) = validateInterval "second" state.SecondInterval
+
+            [ for i in 0 .. interval .. 59 -> secondOption config state currentTime i dispatch ]
+
         hint::secondOptions
 
 let getTimePeriod (time:TimeSpan) =
@@ -207,7 +241,7 @@ let periodRangeOptions
             OnClick (fun _ ->
                 let time = updatePeriod p currentTime
                 onChange config (Some time) state dispatch)
-        ] [ str <| formatPeriod state.Format (Some p) ])
+        ] [ str <| formatPeriodTxt (Some p) ])
 
 let levelItems
     (config: Config<'Msg>)
@@ -219,62 +253,60 @@ let levelItems
     let secondOptions = secondRangeOptions config state currentTime dispatch
     let periodOptions = periodRangeOptions config state currentTime dispatch
     let toLevelItem options =
-        Level.item [ ]
-            [ Select.select [
-                    Select.props [ ]
+        Level.item [ Level.Item.hasTextCentered ]
+            [ Select.select [ ]
+                [ select [] options ]
             ]
-                [ select [ ]
-                            options ] ]
 
     match state.Format with
-    | HHmm      ->
-        [ hourOptions; minuteOptions ] |> List.map toLevelItem
-    | HHmmss    ->
-        [ hourOptions; minuteOptions; secondOptions ] |> List.map toLevelItem
-    | HHmmA | Hma ->
-        [ hourOptions; minuteOptions; periodOptions ] |> List.map toLevelItem
+    | Hm    | HHmm                              -> [ hourOptions; minuteOptions ] |> List.map toLevelItem
+    | Hms   | HHmmss                            -> [ hourOptions; minuteOptions; secondOptions ] |> List.map toLevelItem
+    | HHmmt | HHmmtt    | Hmt     | Hmtt        -> [ hourOptions; minuteOptions; periodOptions ] |> List.map toLevelItem
+    | Hmst  | Hmstt     | HHmmsst | HHmmsstt    -> [ hourOptions; minuteOptions; secondOptions; periodOptions ] |> List.map toLevelItem
+
+let timePickerWidth =
+    function
+    | Hm    | HHmm                              -> Style [ Width "12em" ]
+    | Hms   | HHmmss                            -> Style [ Width "18em" ]
+    | HHmmt | HHmmtt    | Hmt     | Hmtt        -> Style [ Width "18em" ]
+    | Hmst  | Hmstt     | HHmmsst | HHmmsstt    -> Style [ Width "24em" ]
+
 
 let root (config: Config<'Msg>) (state: State) (currentTime: TimeSpan option) dispatch =
     let timeTxt =
-        let period  = Option.map getTimePeriod currentTime
         let zeroTime = TimeSpan(0,0,0,0)
         let time = Option.defaultValue zeroTime currentTime
-        formatTimeTxt  state.Format time period
+        formatTimeTxt  state.Format time
 
     Dropdown.dropdown [
             if state.ShowDropdown then yield Dropdown.isActive
-            yield Dropdown.props [
-                    Style [ CSSProp.Width "500px" ]
-                    ]
              ]
-        [ div [ Style [ CSSProp.MaxWidth "10em" ] ]
+        [ div [ Style [ ] ]
             [
-                Level.level[ ]
-                    [ Level.left [ ]
-                        [ yield Level.item [] [
-                            Input.input [
-                                Input.defaultValue timeTxt
+                Control.control_div [ ]
+                    [
 
+                      yield Input.input [
+                                Input.defaultValue timeTxt
                                 Input.props [
                                         ReadOnly true
                                         OnClick (fun _ ->
                                                        let newState = { state with ShowDropdown = not (state.ShowDropdown) }
                                                        onChange config currentTime newState dispatch)
-                                        Style [ CSSProp.Width "10em" ] ]
+                                        timePickerWidth state.Format ]
                             ]
-                          ]
-                          if currentTime.IsSome && not state.ShowDropdown then
-                            yield Level.item [] [ clearIcon config state currentTime dispatch ]
-                        ]
+
+                      if currentTime.IsSome && not state.ShowDropdown then
+                            yield clearIcon config state currentTime dispatch
                     ]
             ]
-          Dropdown.menu [ Props [ Style [ CSSProp.Padding "0" ] ] ]
-            [   Dropdown.content [ ]
+          Dropdown.menu [ Props [ Style [
+                                    Top "2.2em"
+                                    Position "absolute" ] ] ]
+            [   Dropdown.content [ Props [ timePickerWidth state.Format ] ]
                     [
                         Level.level[ ]
-                            [ Level.left [ ]
                                 [ yield! levelItems config state currentTime dispatch ]
-                            ]
                     ]
             ]
         ]

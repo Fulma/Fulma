@@ -6,35 +6,23 @@ open Fable.Helpers.React.Props
 
 open Fable.PowerPack
 
-//https://github.com/phoenixwong/vue2-timepicker/blob/master/src/vue-timepicker.vue
+//Heavily inspired by: https://github.com/phoenixwong/vue2-timepicker/blob/master/src/vue-timepicker.vue
 
 module Types =
 
-    module TimePicker =
-
-        type Option =
-            | Props of IHTMLProp list
-            | CustomClass of string
-
-        type Options =
-            {
-                Props : IHTMLProp list
-                CustomClass : string option
-            }
-            static member Empty =
-                {
-                    Props = []
-                    CustomClass = None
-                }
-
     type Format =
-        | HHmm  //24 hours
-        //12 hours with hours & minutes with padding (on 2 characters)
-        | HHmmA
-        //12 hours with hours & minutes without padding
-        | Hma
-        //With Seconds
-        | HHmmss
+        | HHmm      //24 hours with hous & minutes
+        | HHmmt     //12 hours and AM/PM period one character with hours & minutes
+        | HHmmtt
+        | HHmmss    //24 hours with hous & minutes & seconds
+        | HHmmsst
+        | HHmmsstt
+        | Hm
+        | Hmt
+        | Hmtt
+        | Hms
+        | Hmst
+        | Hmstt
         static member Default = HHmm
 
 
@@ -42,28 +30,27 @@ module Types =
         | AM
         | PM
         with
-            member x.upperCaseString() =
+            override x.ToString() =
                 match x with
                 | AM -> "AM"
                 | PM -> "PM"
-            member x.lowerCaseString() =
-                match x with
-                | AM -> "am"
-                | PM -> "pm"
-            override x.ToString() = x.upperCaseString()
+
+    type Interval = Interval of int
 
     type State =
         {
             MinuteInterval : int
             SecondInterval : int
             Format: Format
+            ShowDropdown : bool
         }
 
     let defaultState =
         {
-            MinuteInterval = 0
-            SecondInterval = 0
+            MinuteInterval = 1
+            SecondInterval = 1
             Format = Format.Default
+            ShowDropdown = false
         }
 
     type Config<'Msg> =
