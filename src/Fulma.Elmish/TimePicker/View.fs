@@ -18,7 +18,7 @@ open Fable.Helpers.React.Props
 open Fable.Helpers.React.Props
 open Fable.Import.JS
 open Fable.AST.Babel
-open Fulma.Elements.Button
+open Fulma.Elements
 
 let log (input: string) = Fable.Import.Browser.console.log( input )
 
@@ -94,7 +94,7 @@ let clearIcon
                      Bottom 0
                      BackgroundColor "Transparent" ]
 
-        Button.button [
+        Button.button_btn [
             Button.props [
                 OnClick (fun _ -> onClear config state dispatch )
                 buttonStyle
@@ -103,7 +103,7 @@ let clearIcon
                 Icon.faIcon [
                     Icon.isSmall
                     Icon.isRight
-                ] Fa.Times
+                ] [ Fa.icon Fa.I.Times ]
             ]
 
 let hintOption
