@@ -54,7 +54,7 @@ let modifierInteractive =
 
 let modifierFullWitdth =
     Table.table [ Table.isBordered
-                  Table.isFullWidth
+                  Table.isFullwidth
                   Table.isStripped ]
         [ thead [ ]
             [ tr [ ]
@@ -87,11 +87,10 @@ let root model dispatch =
 There are four modifiers:
 - `Table.isBordered`
 - `Table.isStripped`
-- `Table.isFullwidth`
 
 and 2 options for table spacing:
 - `Table.isNarrow`
-- `Table.isFullWidth`
+- `Table.isFullwidth`
 
 You can apply any combination of the first two modifiers and one of option for spacing.
 Below is displayed one table with narrow spacing:
@@ -99,6 +98,6 @@ Below is displayed one table with narrow spacing:
                         (Viewer.View.root modifierInteractive model.ModifierViewer (ModifierViewerMsg >> dispatch))
                      Render.docSection
                         """
-Below is displayed one example of table with fullwidth spacing:
+Below is displayed one example of table with fullwidth spacing. The table fills the full width of its parent component:
                         """
                         (Viewer.View.root modifierFullWitdth model.ModifierFullWidth (ModifierFullWidthMsg >> dispatch)) ]
