@@ -14,11 +14,6 @@ open Fable.PowerPack.Date
 
 open Fulma.Elements.Form
 open Fulma.Layouts
-open Fable.Helpers.React.Props
-open Fable.Helpers.React.Props
-open Fable.Import.JS
-open Fable.AST.Babel
-open Fulma.Elements
 
 let log (input: string) = Fable.Import.Browser.console.log( input )
 
