@@ -108,7 +108,7 @@ module Level =
         let class' = Helpers.classes Bulma.Level.Item.Container [opts.CustomClass]
                         [ Bulma.Level.Item.HasTextCentered, opts.HasTextCentered ]
 
-        nav (class'::opts.Props) children
+        div (class'::opts.Props) children
 
     let heading (options: GenericOption list) children =
         let opts = genericParse options
