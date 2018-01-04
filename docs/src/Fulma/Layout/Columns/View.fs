@@ -5,34 +5,35 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Layouts
 
 let iconInteractive =
     Columns.columns [ ]
-        [ Column.column [ Column.Width.is6 ]
+        [ Column.column [ Column.Width (Column.All, Column.Is6) ]
             [ Columns.columns [ ]
                 [ Column.column [ ]
-                    [ Notification.notification [ Notification.isSuccess ]
+                    [ Notification.notification [ Notification.Color IsSuccess ]
                         [ str "Column n°1" ] ] ]
-              Columns.columns [ Columns.isGapless ]
+              Columns.columns [ Columns.IsGapless ]
                 [ Column.column [ ]
-                    [ Notification.notification [ Notification.isInfo ]
+                    [ Notification.notification [ Notification.Color IsInfo ]
                         [ str "Column n°1.1" ] ]
                   Column.column [ ]
-                    [ Notification.notification [ Notification.isWarning ]
+                    [ Notification.notification [ Notification.Color IsWarning ]
                         [ str "Column n°1.2" ] ]
                   Column.column [ ]
-                    [ Notification.notification [ Notification.isDanger ]
+                    [ Notification.notification [ Notification.Color IsDanger ]
                         [ str "Column n°1.3" ] ] ] ]
           Column.column [ ]
             [ Columns.columns [ ]
                 [ Column.column [ ]
-                    [ Notification.notification [ Notification.isLight ]
+                    [ Notification.notification [ Notification.Color IsLight ]
                         [ str "Column n°2" ] ] ]
-              Columns.columns [ Columns.isCentered ]
-                [ Column.column [ Column.Width.is7 ]
-                    [ Notification.notification [ Notification.isBlack ]
+              Columns.columns [ Columns.IsCentered ]
+                [ Column.column [ Column.Width (Column.All, Column.Is7) ]
+                    [ Notification.notification [ Notification.Color IsBlack ]
                         [ str "Column n°2.1" ] ] ] ] ]
 
 let root model dispatch =

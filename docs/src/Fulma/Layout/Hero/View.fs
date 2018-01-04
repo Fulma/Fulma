@@ -1,12 +1,9 @@
 module Layouts.Hero.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Layouts
-open Fulma.Elements.Form
 open Fulma.Elements
 open Fulma.Components
 open Fulma.BulmaClasses
@@ -14,19 +11,19 @@ open Fulma.BulmaClasses
 let iconInteractive =
     Hero.hero [ ]
         [ Hero.body [ ]
-            [ Container.container [ Container.isFluid ]
+            [ Container.container [ Container.IsFluid ]
                 [ Heading.h1 [ ]
                     [ str "Header" ]
-                  Heading.h2 [ Heading.isSubtitle ]
+                  Heading.h2 [ Heading.IsSubtitle ]
                     [ str "Subtitle" ] ] ] ]
 
 let centered =
-    Hero.hero [ Hero.isSuccess
-                Hero.isMedium ]
+    Hero.hero [ Hero.Color IsSuccess
+                Hero.IsMedium ]
         [ Hero.head [ ]
-            [ Tabs.tabs [ Tabs.isBoxed
-                          Tabs.isCentered ]
-                [ Tabs.tab [ Tabs.Tab.isActive ]
+            [ Tabs.tabs [ Tabs.IsBoxed
+                          Tabs.IsCentered ]
+                [ Tabs.tab [ Tabs.Tab.Active true ]
                     [ a [ ] [ str "Fable" ] ]
                   Tabs.tab [ ]
                     [ a [ ] [ str "Elmish" ] ]
@@ -35,11 +32,11 @@ let centered =
                   Tabs.tab [ ]
                     [ a [ ] [ str "Hink" ] ] ] ]
           Hero.body [ ]
-            [ Container.container [ Container.isFluid
-                                    Container.customClass Bulma.Properties.Alignment.HasTextCentered ]
+            [ Container.container [ Container.IsFluid
+                                    Container.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
                 [ Heading.h1 [ ]
                     [ str "Header" ]
-                  Heading.h2 [ Heading.isSubtitle ]
+                  Heading.h2 [ Heading.IsSubtitle ]
                     [ str "Subtitle" ] ] ] ]
 
 let root model dispatch =

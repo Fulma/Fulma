@@ -1,7 +1,6 @@
 namespace Fulma.Extensions
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -15,126 +14,64 @@ module Slider =
             let [<Literal>] IsCircle = "is-circle"
             let [<Literal>] IsFullwidth = "is-fullwidth"
 
+    type Option =
+        | Color of IColor
+        | Size of ISize
+        | IsFullWidth
+        | IsCircle
+        | Disabled of bool
+        | Props of IHTMLProp list
+        | OnChange of (React.FormEvent -> unit)
+        | CustomClass of string
+        | ComponentId of string
+        | Min of float
+        | Max of float
+        | Step of float
+        | Value of float
+        | DefaultValue of float
+        | IsVertical
 
-    module Types =
+    type internal ComponentId = string
+    type internal Options =
+        { Color : string option
+          Size : string option
+          IsCircle : bool
+          IsDisabled : bool
+          Value : float option
+          DefaultValue : float option
+          Min : float option
+          Max : float option
+          Step : float option
+          IsVertical : bool
+          Props : IHTMLProp list
+          CustomClass : string option
+          OnChange : (React.FormEvent -> unit) option
+          ComponentId: string }
+        static member Empty =
+            { Color = None
+              Size = None
+              IsCircle = false
+              IsDisabled = false
+              DefaultValue = None
+              Value = None
+              Min = None
+              Max = None
+              Step = None
+              IsVertical = false
+              Props = []
+              CustomClass = None
+              OnChange = None
+              ComponentId = System.Guid.NewGuid().ToString() }
 
-        type ISize =
-            | IsSmall
-            | IsMedium
-            | IsLarge
-            | IsFullWidth
-            | Nothing
-
-
-        type Option =
-            | Level of ILevelAndColor
-            | Size of ISize
-            | IsCircle
-            | IsDisabled
-            | Props of IHTMLProp list
-            | OnChange of (React.FormEvent -> unit)
-            | CustomClass of string
-            | ComponentId of string
-            | Min of float
-            | Max of float
-            | Step of float
-            | Value of float
-            | DefaultValue of float
-            | IsVertical
-
-        let ofSize size =
-            match size with
-            | IsSmall -> Bulma.Modifiers.Size.IsSmall
-            | IsMedium -> Bulma.Modifiers.Size.IsMedium
-            | IsLarge -> Bulma.Modifiers.Size.IsLarge
-            | IsFullWidth -> Classes.IsFullwidth
-            | ISize.Nothing -> ""
-
-        let ofStyles style =
-            match style with
-            | IsCircle -> Classes.IsCircle
-            | value -> string value + " isn't a valid style value"
-
-
-        type ComponentId = string
-        type Options =
-            { Level : string option
-              Size : string option
-              IsCircle : bool
-              IsDisabled : bool
-              Value : float option
-              DefaultValue : float option
-              Min : float option
-              Max : float option
-              Step : float option
-              IsVertical : bool
-              Props : IHTMLProp list
-              CustomClass : string option
-              OnChange : (React.FormEvent -> unit) option
-              ComponentId: string }
-            static member Empty =
-                { Level = None
-                  Size = None
-                  IsCircle = false
-                  IsDisabled = false
-                  DefaultValue = None
-                  Value = None
-                  Min = None
-                  Max = None
-                  Step = None
-                  IsVertical = false
-                  Props = []
-                  CustomClass = None
-                  OnChange = None
-                  ComponentId = System.Guid.NewGuid().ToString() }
-
-    open Types
-
-    // Sizes
-    let inline isSmall<'T> = Size IsSmall
-    let inline isMedium<'T> = Size IsMedium
-    let inline isLarge<'T> = Size IsLarge
-    let inline isFullWidth<'T> = Size IsFullWidth
-
-    // States
-    let inline isDisabled<'T> = IsDisabled
-
-    // Styles
-    let inline isCircle<'T> = IsCircle
-
-
-    // Levels and colors
-    let inline isBlack<'T> = Level IsBlack
-    let inline isDark<'T> = Level IsDark
-    let inline isLight<'T> = Level IsLight
-    let inline isWhite<'T> = Level IsWhite
-    let inline isPrimary<'T> = Level IsPrimary
-    let inline isInfo<'T> = Level IsInfo
-    let inline isSuccess<'T> = Level IsSuccess
-    let inline isWarning<'T> = Level IsWarning
-    let inline isDanger<'T> = Level IsDanger
-
-    let inline value x = Value x
-    let inline defaultValue x = DefaultValue x
-    let inline min x = Min x
-    let inline max x = Max x
-    let inline step x = Step x
-
-    // Extra
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
-
-    let onChange cb = OnChange cb
-
-    let slider (options : Option list) children =
-
+    let slider (options : Option list) =
 
         let parseOptions (result: Options) opt =
             match opt with
-            | Option.Level level -> { result with Level = ofLevelAndColor level |> Some }
+            | Option.Color color -> { result with Color = ofColor color |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
+            | IsFullWidth -> { result with Size = Classes.IsFullwidth |> Some }
             | IsCircle -> { result with IsCircle  = true }
-            | IsDisabled -> { result with IsDisabled = true }
+            | Disabled state -> { result with IsDisabled = state }
             | Value value -> { result with Value = Some value }
             | Min min -> { result with Min = Some min }
             | Max max -> { result with Max = Some max }
@@ -147,17 +84,19 @@ module Slider =
             | DefaultValue value -> { result with DefaultValue = Some value }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let className = Helpers.generateClassName Classes.Slider [ opts.Level; opts.Size]
-        let class' = Helpers.classes className [opts.CustomClass] [Classes.IsCircle, opts.IsCircle]
+        let classes = Helpers.classes
+                        Classes.Slider
+                        [ opts.CustomClass; opts.Color; opts.Size ]
+                        [ Classes.IsCircle, opts.IsCircle ]
 
         input
-            [ yield class'
+            [ yield classes
               if Option.isSome opts.OnChange then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
               yield! opts.Props
               yield Type "range" :> IHTMLProp
               yield Id opts.ComponentId :> IHTMLProp
-              yield Disabled opts.IsDisabled :> IHTMLProp
+              yield HTMLAttr.Disabled opts.IsDisabled :> IHTMLProp
               if opts.IsVertical then
                 yield !!("orient", "vertical")
               if Option.isSome opts.Value then

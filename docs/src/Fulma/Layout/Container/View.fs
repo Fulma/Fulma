@@ -9,7 +9,7 @@ open Fulma.Elements
 open Fulma.Layouts
 
 let basic =
-    Container.container [ Container.isFluid ]
+    Container.container [ Container.IsFluid ]
         [ Content.content [ ]
             [ h1 [ ] [str "Hello World"]
               p [ ]

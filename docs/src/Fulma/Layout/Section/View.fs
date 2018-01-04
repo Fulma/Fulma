@@ -1,22 +1,16 @@
 module Layouts.Section.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
 open Fulma.Layouts
-open Fulma.Elements.Form
 open Fulma.Elements
-open Fulma.Components
-open Fulma.BulmaClasses
 
 let basic =
     Section.section [ ]
-        [ Container.container [ Container.isFluid ]
+        [ Container.container [ Container.IsFluid ]
             [ Heading.h1 [ ]
                 [ str "Section" ]
-              Heading.h2 [ Heading.isSubtitle ]
+              Heading.h2 [ Heading.IsSubtitle ]
                 [ str "A simple container to divide your page into sections" ] ] ]
 
 let root model dispatch =

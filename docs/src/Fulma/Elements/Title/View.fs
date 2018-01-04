@@ -1,9 +1,6 @@
 module Elements.Title.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
 open Fulma.Elements
 
@@ -11,7 +8,7 @@ let simpleInteractive =
     div [ ]
         [ Heading.h1 [ ]
             [ str "Title" ]
-          Heading.h2 [ Heading.isSubtitle ]
+          Heading.h2 [ Heading.IsSubtitle ]
             [ str "Subtitle" ] ]
 
 
@@ -29,17 +26,17 @@ let sizeInteractive =
             [ str "Title 5" ]
           Heading.h6 [ ]
             [ str "Title 6" ]
-          Heading.h1 [ Heading.isSubtitle ]
+          Heading.h1 [ Heading.IsSubtitle ]
             [ str "Subtitle 1" ]
-          Heading.h2 [ Heading.isSubtitle ]
+          Heading.h2 [ Heading.IsSubtitle ]
             [ str "Subtitle 2" ]
-          Heading.h3 [ Heading.isSubtitle ]
+          Heading.h3 [ Heading.IsSubtitle ]
             [ str "Subtitle 3" ]
-          Heading.h4 [ Heading.isSubtitle ]
+          Heading.h4 [ Heading.IsSubtitle ]
             [ str "Subtitle 4" ]
-          Heading.h5 [ Heading.isSubtitle ]
+          Heading.h5 [ Heading.IsSubtitle ]
             [ str "Subtitle 5" ]
-          Heading.h6 [ Heading.isSubtitle ]
+          Heading.h6 [ Heading.IsSubtitle ]
             [ str "Subtitle 6" ] ]
 
 let root model dispatch =

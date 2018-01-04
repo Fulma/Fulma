@@ -1,42 +1,41 @@
 module Elements.Tag.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 
 let colorInteractive =
     div [ ClassName "block" ]
         [ Tag.tag [ ] [ str "Default" ]
-          Tag.tag [ Tag.isWhite ] [ str "White" ]
-          Tag.tag [ Tag.isLight ] [ str "Light" ]
-          Tag.tag [ Tag.isDark ] [ str "Dark" ]
-          Tag.tag [ Tag.isBlack ] [ str "Black" ]
-          Tag.tag [ Tag.isPrimary ] [ str "Primary" ]
-          Tag.tag [ Tag.isInfo ] [ str "Info" ]
-          Tag.tag [ Tag.isSuccess ] [ str "Success" ]
-          Tag.tag [ Tag.isWarning ] [ str "Warning" ]
-          Tag.tag [ Tag.isDanger ] [ str "Danger" ] ]
+          Tag.tag [ Tag.Color IsWhite ] [ str "White" ]
+          Tag.tag [ Tag.Color IsLight ] [ str "Light" ]
+          Tag.tag [ Tag.Color IsDark ] [ str "Dark" ]
+          Tag.tag [ Tag.Color IsBlack ] [ str "Black" ]
+          Tag.tag [ Tag.Color IsPrimary ] [ str "Primary" ]
+          Tag.tag [ Tag.Color IsInfo ] [ str "Info" ]
+          Tag.tag [ Tag.Color IsSuccess ] [ str "Success" ]
+          Tag.tag [ Tag.Color IsWarning ] [ str "Warning" ]
+          Tag.tag [ Tag.Color IsDanger ] [ str "Danger" ] ]
 
 let sizeInteractive =
     div [ ClassName "block" ]
         [ Tag.tag [ ] [ str "Normal" ]
-          Tag.tag [ Tag.isPrimary; Tag.isMedium ] [ str "Medium" ]
-          Tag.tag [ Tag.isInfo; Tag.isLarge ] [ str "Large" ] ]
+          Tag.tag [ Tag.Color IsPrimary; Tag.Size IsMedium ] [ str "Medium" ]
+          Tag.tag [ Tag.Color IsInfo; Tag.Size IsLarge ] [ str "Large" ] ]
 
 let nestedDeleteStyleInteractive =
     div [ ClassName "block" ]
-        [ Tag.tag [ Tag.isDark ]
+        [ Tag.tag [ Tag.Color IsDark ]
             [ str "With delete"
-              Delete.delete [ Delete.isSmall ] [ ] ]
-          Tag.tag [ Tag.isMedium ]
+              Delete.delete [ Delete.Size IsSmall ] [ ] ]
+          Tag.tag [ Tag.Size IsMedium ]
             [ str "With delete"
               Delete.delete [ ] [ ] ]
-          Tag.tag [ Tag.isWarning; Tag.isLarge ]
+          Tag.tag [ Tag.Color IsWarning; Tag.Size IsLarge ]
             [ str "With delete"
-              Delete.delete [ Delete.isLarge ] [ ] ] ]
+              Delete.delete [ Delete.Size IsLarge ] [ ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro

@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Layouts
@@ -13,7 +14,7 @@ open Fulma.Elements.Form
 
 let basic =
     Tabs.tabs [ ]
-        [ Tabs.tab [ Tabs.Tab.isActive ]
+        [ Tabs.tab [ Tabs.Tab.Active true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -23,8 +24,8 @@ let basic =
             [ a [ ] [ str "Hink" ] ] ]
 
 let alignment =
-    Tabs.tabs [ Tabs.isCentered ]
-        [ Tabs.tab [ Tabs.Tab.isActive ]
+    Tabs.tabs [ Tabs.IsCentered ]
+        [ Tabs.tab [ Tabs.Tab.Active true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -34,8 +35,8 @@ let alignment =
             [ a [ ] [ str "Hink" ] ] ]
 
 let size =
-    Tabs.tabs [ Tabs.isLarge ]
-        [ Tabs.tab [ Tabs.Tab.isActive ]
+    Tabs.tabs [ Tabs.Size IsLarge ]
+        [ Tabs.tab [ Tabs.Tab.Active true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -45,9 +46,9 @@ let size =
             [ a [ ] [ str "Hink" ] ] ]
 
 let styles =
-    Tabs.tabs [ Tabs.isFullwidth
-                Tabs.isBoxed ]
-        [ Tabs.tab [ Tabs.Tab.isActive ]
+    Tabs.tabs [ Tabs.IsFullwidth
+                Tabs.IsBoxed ]
+        [ Tabs.tab [ Tabs.Tab.Active true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]

@@ -54,7 +54,7 @@ This special requirement is due to how react manage input `value` and `defaultVa
                         """
                      Card.card [ ]
                         [ Card.content [ ]
-                            [ Columns.columns [ Columns.isVCentered ]
+                            [ Columns.columns [ Columns.IsVCentered ]
                                 [ Column.column [ ]
                                     [ datePickerView ]
                                   Column.column [ ]

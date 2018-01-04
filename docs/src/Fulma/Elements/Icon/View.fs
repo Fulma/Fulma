@@ -1,22 +1,21 @@
 module Elements.Icon.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 
 let icon =
     div [ ClassName "block" ]
-        [ Icon.icon [ Icon.isSmall ]
+        [ Icon.icon [ Icon.Size IsSmall ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
           Icon.icon [ ]
             [ i [ ClassName "fa fa-lg fa-home" ] [ ] ]
-          Icon.icon [ Icon.isMedium ]
+          Icon.icon [ Icon.Size IsMedium ]
             [ i [ ClassName "fa fa-2x fa-home" ] [ ] ]
-          Icon.icon [ Icon.isLarge ]
+          Icon.icon [ Icon.Size IsLarge ]
             [ i [ ClassName "fa fa-3x fa-home" ] [ ] ] ]
 
 //Display modification of container size with Bulma options
@@ -25,25 +24,25 @@ let containerSizes =
         [ //faIcon creates one Fulma icon element containing one Font Awesome icon
           Icon.faIcon [ // First group of Options: Usual fulma properties available: size, class
                         // Icon container size set to small in Fulma
-                        Icon.isSmall;
+                        Icon.Size IsSmall;
                         // Custom class to set background color to yellow to display container
-                        Icon.customClass "icon-size" ]
+                        Icon.CustomClass "icon-size" ]
                         //Second group of Options: Font Awesome options
                         [ //Display one Font Awesome Icon available in the Fa.I namespace
                           Fa.icon Fa.I.Home ]
 
           Icon.faIcon [ //No setting for Icon container size = Normal size
                         //...
-                        Icon.customClass "icon-size" ]
+                        Icon.CustomClass "icon-size" ]
                       [ Fa.icon Fa.I.Home ]
 
-          Icon.faIcon [ Icon.isMedium
-                        Icon.customClass "icon-size" ]
+          Icon.faIcon [ Icon.Size IsMedium
+                        Icon.CustomClass "icon-size" ]
                       [ Fa.icon Fa.I.Home
                         //Makes the Icon 33% larger
                         Fa.faLg ]
-          Icon.faIcon [ Icon.isLarge
-                        Icon.customClass "icon-size" ]
+          Icon.faIcon [ Icon.Size IsLarge
+                        Icon.CustomClass "icon-size" ]
                       [ Fa.icon Fa.I.Home
                         //Makes the Icon 2x times larger
                         Fa.fa2x ] ]
@@ -53,12 +52,12 @@ let iconRotationFlip =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
-                  [ Icon.faIcon [ Icon.isMedium ]
+                  [ Icon.faIcon [ Icon.Size IsMedium ]
                                 [ Fa.icon Fa.I.Shield
                                   Fa.faLg  ]
                     str "No Rotation" ]
                li [ ]
-                  [ Icon.faIcon [ Icon.isMedium ]
+                  [ Icon.faIcon [ Icon.Size IsMedium ]
                                 [ Fa.icon Fa.I.Shield
                                   //Rotate 90 degrees
                                   Fa.rotate90
@@ -66,21 +65,21 @@ let iconRotationFlip =
                                   Fa.faLg  ]
                     str "90 degrees rotation" ]
                li [ ]
-                  [ Icon.faIcon [ Icon.isMedium ]
+                  [ Icon.faIcon [ Icon.Size IsMedium ]
                                 [ Fa.icon Fa.I.Shield
                                   //Rotation 180 degrees
                                   Fa.rotate180
                                   Fa.faLg ]
                     str "180 degrees rotation" ]
                li [ ]
-                  [ Icon.faIcon [ Icon.isMedium ]
+                  [ Icon.faIcon [ Icon.Size IsMedium ]
                                 [ Fa.icon Fa.I.Shield
                                   //Flip Horizontal
                                   Fa.flipHorizontal
                                   Fa.faLg ]
                     str "Horizontal flip" ]
                li [ ]
-                  [ Icon.faIcon [ Icon.isMedium ]
+                  [ Icon.faIcon [ Icon.Size IsMedium ]
                                 [ Fa.icon Fa.I.Shield
                                   //Flip Vertical
                                   Fa.flipVertical
@@ -92,7 +91,7 @@ let iconAnimations =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
-                  [ Icon.faIcon [ Icon.isLarge ]
+                  [ Icon.faIcon [ Icon.Size IsLarge ]
                                 [ //Animations work well on Spinner
                                   Fa.icon Fa.I.Spinner
                                   //Pulse Animation
@@ -101,7 +100,7 @@ let iconAnimations =
                                   Fa.fa2x ]
                     str "Pulse animation" ]
                li [ ]
-                  [ Icon.faIcon [ Icon.isLarge ]
+                  [ Icon.faIcon [ Icon.Size IsLarge ]
                                 [ //Animations work well wit Cog
                                   Fa.icon Fa.I.Cog
                                   //Spin animation
@@ -156,18 +155,18 @@ let borderPulledIcons =
 
 let fontAwesomeIcons =
     div [ ClassName "block" ]
-        [ Icon.faIcon [ Icon.isSmall ] [ Fa.icon Fa.I.Home ]
+        [ Icon.faIcon [ Icon.Size IsSmall ] [ Fa.icon Fa.I.Home ]
           Icon.faIcon [ ] [ Fa.icon Fa.I.Tags; Fa.faLg ]
-          Icon.faIcon [ Icon.isMedium ] [ Fa.icon Fa.I.``500px``; Fa.fa2x ]
-          Icon.faIcon [ Icon.isLarge ] [ Fa.icon Fa.I.Android; Fa.fa3x ] ]
+          Icon.faIcon [ Icon.Size IsMedium ] [ Fa.icon Fa.I.``500px``; Fa.fa2x ]
+          Icon.faIcon [ Icon.Size IsLarge ] [ Fa.icon Fa.I.Android; Fa.fa3x ] ]
 
 let composeButtons =
     div [ ClassName "block" ]
-        [ Button.button_a [ Button.isDanger ]
+        [ Button.button [ Button.Color IsDanger ]
                         [ Icon.faIcon [ ]
                                       [ Fa.icon Fa.I.Trash; Fa.faLg ]
                           span [] [ str "  Delete" ] ]
-          Button.button_a [ Button.isInfo ]
+          Button.button [ Button.Color IsInfo ]
                         [ Icon.faIcon [ ]
                                       [ Fa.icon Fa.I.User; Fa.fw ]
                           span [] [ str "User" ] ] ]

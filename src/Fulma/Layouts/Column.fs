@@ -1,492 +1,488 @@
 namespace Fulma.Layouts
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Column =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "column"
 
-        type ISize =
-            | IsOneQuarter
-            | IsOneThird
-            | IsHalf
-            | IsTwoThirds
-            | IsThreeQuarters
-            | Is1
-            | Is2
-            | Is3
-            | Is4
-            | Is5
-            | Is6
-            | Is7
-            | Is8
-            | Is9
-            | Is10
-            | Is11
-            | IsNarrow
-            | IsFull
+        module All =
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter"
+                let [<Literal>] IsOneThird = "is-one-third"
+                let [<Literal>] IsHalf = "is-half"
+                let [<Literal>] IsTwoThirds = "is-two-third"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters"
+                let [<Literal>] Is1 = "is-1"
+                let [<Literal>] Is2 = "is-2"
+                let [<Literal>] Is3 = "is-3"
+                let [<Literal>] Is4 = "is-4"
+                let [<Literal>] Is5 = "is-5"
+                let [<Literal>] Is6 = "is-6"
+                let [<Literal>] Is7 = "is-7"
+                let [<Literal>] Is8 = "is-8"
+                let [<Literal>] Is9 = "is-9"
+                let [<Literal>] Is10 = "is-10"
+                let [<Literal>] Is11 = "is-11"
+                let [<Literal>] IsNarrow = "is-narrow"
+                let [<Literal>] IsFull = "is-full"
 
-        type IScreen =
-            | All
-            | Desktop
-            | Tablet
-            | Mobile
-            | WideScreen
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter"
+                let [<Literal>] IsOneThird = "is-offset-one-third"
+                let [<Literal>] IsHalf = "is-offset-half"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters"
+                let [<Literal>] Is1 = "is-offset-1"
+                let [<Literal>] Is2 = "is-offset-2"
+                let [<Literal>] Is3 = "is-offset-3"
+                let [<Literal>] Is4 = "is-offset-4"
+                let [<Literal>] Is5 = "is-offset-5"
+                let [<Literal>] Is6 = "is-offset-6"
+                let [<Literal>] Is7 = "is-offset-7"
+                let [<Literal>] Is8 = "is-offset-8"
+                let [<Literal>] Is9 = "is-offset-9"
+                let [<Literal>] Is10 = "is-offset-10"
+                let [<Literal>] Is11 = "is-offset-11"
+                let [<Literal>] IsNarrow = "is-offset-narrow"
+                let [<Literal>] IsFull = "is-offset-full"
 
-        type Option =
-            | Width of IScreen * ISize
-            | Offset of IScreen * ISize
-            | CustomClass of string
-            | Props of IHTMLProp list
+        module Desktop =
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-desktop"
+                let [<Literal>] IsOneThird = "is-one-third-desktop"
+                let [<Literal>] IsHalf = "is-half-desktop"
+                let [<Literal>] IsTwoThirds = "is-two-third-desktop"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-desktop"
+                let [<Literal>] Is1 = "is-1-desktop"
+                let [<Literal>] Is2 = "is-2-desktop"
+                let [<Literal>] Is3 = "is-3-desktop"
+                let [<Literal>] Is4 = "is-4-desktop"
+                let [<Literal>] Is5 = "is-5-desktop"
+                let [<Literal>] Is6 = "is-6-desktop"
+                let [<Literal>] Is7 = "is-7-desktop"
+                let [<Literal>] Is8 = "is-8-desktop"
+                let [<Literal>] Is9 = "is-9-desktop"
+                let [<Literal>] Is10 = "is-10-desktop"
+                let [<Literal>] Is11 = "is-11-desktop"
+                let [<Literal>] IsNarrow = "is-narrow-desktop"
+                let [<Literal>] IsFull = "is-full-desktop"
 
-        let ofWidth =
-            function
-            | All, size ->
-                match size with
-                | IsOneQuarter -> Bulma.Grid.Column.Width.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Width.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Width.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Width.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Width.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Width.Is1
-                | Is2 -> Bulma.Grid.Column.Width.Is2
-                | Is3 -> Bulma.Grid.Column.Width.Is3
-                | Is4 -> Bulma.Grid.Column.Width.Is4
-                | Is5 -> Bulma.Grid.Column.Width.Is5
-                | Is6 -> Bulma.Grid.Column.Width.Is6
-                | Is7 -> Bulma.Grid.Column.Width.Is7
-                | Is8 -> Bulma.Grid.Column.Width.Is8
-                | Is9 -> Bulma.Grid.Column.Width.Is9
-                | Is10 -> Bulma.Grid.Column.Width.Is10
-                | Is11 -> Bulma.Grid.Column.Width.Is11
-                | IsNarrow -> Bulma.Grid.Column.Width.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Width.IsFull
-            | Desktop, size ->
-                match size with
-                | IsOneQuarter -> Bulma.Grid.Column.Desktop.Width.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Desktop.Width.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Desktop.Width.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Desktop.Width.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Desktop.Width.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Desktop.Width.Is1
-                | Is2 -> Bulma.Grid.Column.Desktop.Width.Is2
-                | Is3 -> Bulma.Grid.Column.Desktop.Width.Is3
-                | Is4 -> Bulma.Grid.Column.Desktop.Width.Is4
-                | Is5 -> Bulma.Grid.Column.Desktop.Width.Is5
-                | Is6 -> Bulma.Grid.Column.Desktop.Width.Is6
-                | Is7 -> Bulma.Grid.Column.Desktop.Width.Is7
-                | Is8 -> Bulma.Grid.Column.Desktop.Width.Is8
-                | Is9 -> Bulma.Grid.Column.Desktop.Width.Is9
-                | Is10 -> Bulma.Grid.Column.Desktop.Width.Is10
-                | Is11 -> Bulma.Grid.Column.Desktop.Width.Is11
-                | IsNarrow -> Bulma.Grid.Column.Desktop.Width.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Desktop.Width.IsFull
-            | Tablet, size ->
-                match size with
-                | IsOneQuarter -> Bulma.Grid.Column.Tablet.Width.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Tablet.Width.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Tablet.Width.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Tablet.Width.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Tablet.Width.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Tablet.Width.Is1
-                | Is2 -> Bulma.Grid.Column.Tablet.Width.Is2
-                | Is3 -> Bulma.Grid.Column.Tablet.Width.Is3
-                | Is4 -> Bulma.Grid.Column.Tablet.Width.Is4
-                | Is5 -> Bulma.Grid.Column.Tablet.Width.Is5
-                | Is6 -> Bulma.Grid.Column.Tablet.Width.Is6
-                | Is7 -> Bulma.Grid.Column.Tablet.Width.Is7
-                | Is8 -> Bulma.Grid.Column.Tablet.Width.Is8
-                | Is9 -> Bulma.Grid.Column.Tablet.Width.Is9
-                | Is10 -> Bulma.Grid.Column.Tablet.Width.Is10
-                | Is11 -> Bulma.Grid.Column.Tablet.Width.Is11
-                | IsNarrow -> Bulma.Grid.Column.Tablet.Width.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Tablet.Width.IsFull
-            | Mobile, size ->
-                match size with
-                | IsOneQuarter -> Bulma.Grid.Column.Mobile.Width.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Mobile.Width.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Mobile.Width.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Mobile.Width.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Mobile.Width.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Mobile.Width.Is1
-                | Is2 -> Bulma.Grid.Column.Mobile.Width.Is2
-                | Is3 -> Bulma.Grid.Column.Mobile.Width.Is3
-                | Is4 -> Bulma.Grid.Column.Mobile.Width.Is4
-                | Is5 -> Bulma.Grid.Column.Mobile.Width.Is5
-                | Is6 -> Bulma.Grid.Column.Mobile.Width.Is6
-                | Is7 -> Bulma.Grid.Column.Mobile.Width.Is7
-                | Is8 -> Bulma.Grid.Column.Mobile.Width.Is8
-                | Is9 -> Bulma.Grid.Column.Mobile.Width.Is9
-                | Is10 -> Bulma.Grid.Column.Mobile.Width.Is10
-                | Is11 -> Bulma.Grid.Column.Mobile.Width.Is11
-                | IsNarrow -> Bulma.Grid.Column.Mobile.Width.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Mobile.Width.IsFull
-            | WideScreen, size ->
-                match size with
-                | IsOneQuarter -> Bulma.Grid.Column.WideScreen.Width.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.WideScreen.Width.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.WideScreen.Width.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.WideScreen.Width.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.WideScreen.Width.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.WideScreen.Width.Is1
-                | Is2 -> Bulma.Grid.Column.WideScreen.Width.Is2
-                | Is3 -> Bulma.Grid.Column.WideScreen.Width.Is3
-                | Is4 -> Bulma.Grid.Column.WideScreen.Width.Is4
-                | Is5 -> Bulma.Grid.Column.WideScreen.Width.Is5
-                | Is6 -> Bulma.Grid.Column.WideScreen.Width.Is6
-                | Is7 -> Bulma.Grid.Column.WideScreen.Width.Is7
-                | Is8 -> Bulma.Grid.Column.WideScreen.Width.Is8
-                | Is9 -> Bulma.Grid.Column.WideScreen.Width.Is9
-                | Is10 -> Bulma.Grid.Column.WideScreen.Width.Is10
-                | Is11 -> Bulma.Grid.Column.WideScreen.Width.Is11
-                | IsNarrow -> Bulma.Grid.Column.WideScreen.Width.IsNarrow
-                | IsFull -> Bulma.Grid.Column.WideScreen.Width.IsFull
-
-        let ofOffset =
-            function
-            | All, offset ->
-                match offset with
-                | IsOneQuarter -> Bulma.Grid.Column.Offset.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Offset.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Offset.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Offset.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Offset.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Offset.Is1
-                | Is2 -> Bulma.Grid.Column.Offset.Is2
-                | Is3 -> Bulma.Grid.Column.Offset.Is3
-                | Is4 -> Bulma.Grid.Column.Offset.Is4
-                | Is5 -> Bulma.Grid.Column.Offset.Is5
-                | Is6 -> Bulma.Grid.Column.Offset.Is6
-                | Is7 -> Bulma.Grid.Column.Offset.Is7
-                | Is8 -> Bulma.Grid.Column.Offset.Is8
-                | Is9 -> Bulma.Grid.Column.Offset.Is9
-                | Is10 -> Bulma.Grid.Column.Offset.Is10
-                | Is11 -> Bulma.Grid.Column.Offset.Is11
-                | IsNarrow -> Bulma.Grid.Column.Offset.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Offset.IsFull
-            | Desktop, offset ->
-                match offset with
-                | IsOneQuarter -> Bulma.Grid.Column.Desktop.Offset.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Desktop.Offset.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Desktop.Offset.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Desktop.Offset.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Desktop.Offset.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Desktop.Offset.Is1
-                | Is2 -> Bulma.Grid.Column.Desktop.Offset.Is2
-                | Is3 -> Bulma.Grid.Column.Desktop.Offset.Is3
-                | Is4 -> Bulma.Grid.Column.Desktop.Offset.Is4
-                | Is5 -> Bulma.Grid.Column.Desktop.Offset.Is5
-                | Is6 -> Bulma.Grid.Column.Desktop.Offset.Is6
-                | Is7 -> Bulma.Grid.Column.Desktop.Offset.Is7
-                | Is8 -> Bulma.Grid.Column.Desktop.Offset.Is8
-                | Is9 -> Bulma.Grid.Column.Desktop.Offset.Is9
-                | Is10 -> Bulma.Grid.Column.Desktop.Offset.Is10
-                | Is11 -> Bulma.Grid.Column.Desktop.Offset.Is11
-                | IsNarrow -> Bulma.Grid.Column.Desktop.Offset.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Desktop.Offset.IsFull
-            | Tablet, offset ->
-                match offset with
-                | IsOneQuarter -> Bulma.Grid.Column.Tablet.Offset.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Tablet.Offset.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Tablet.Offset.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Tablet.Offset.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Tablet.Offset.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Tablet.Offset.Is1
-                | Is2 -> Bulma.Grid.Column.Tablet.Offset.Is2
-                | Is3 -> Bulma.Grid.Column.Tablet.Offset.Is3
-                | Is4 -> Bulma.Grid.Column.Tablet.Offset.Is4
-                | Is5 -> Bulma.Grid.Column.Tablet.Offset.Is5
-                | Is6 -> Bulma.Grid.Column.Tablet.Offset.Is6
-                | Is7 -> Bulma.Grid.Column.Tablet.Offset.Is7
-                | Is8 -> Bulma.Grid.Column.Tablet.Offset.Is8
-                | Is9 -> Bulma.Grid.Column.Tablet.Offset.Is9
-                | Is10 -> Bulma.Grid.Column.Tablet.Offset.Is10
-                | Is11 -> Bulma.Grid.Column.Tablet.Offset.Is11
-                | IsNarrow -> Bulma.Grid.Column.Tablet.Offset.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Tablet.Offset.IsFull
-            | Mobile, offset ->
-                match offset with
-                | IsOneQuarter -> Bulma.Grid.Column.Mobile.Offset.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.Mobile.Offset.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.Mobile.Offset.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.Mobile.Offset.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.Mobile.Offset.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.Mobile.Offset.Is1
-                | Is2 -> Bulma.Grid.Column.Mobile.Offset.Is2
-                | Is3 -> Bulma.Grid.Column.Mobile.Offset.Is3
-                | Is4 -> Bulma.Grid.Column.Mobile.Offset.Is4
-                | Is5 -> Bulma.Grid.Column.Mobile.Offset.Is5
-                | Is6 -> Bulma.Grid.Column.Mobile.Offset.Is6
-                | Is7 -> Bulma.Grid.Column.Mobile.Offset.Is7
-                | Is8 -> Bulma.Grid.Column.Mobile.Offset.Is8
-                | Is9 -> Bulma.Grid.Column.Mobile.Offset.Is9
-                | Is10 -> Bulma.Grid.Column.Mobile.Offset.Is10
-                | Is11 -> Bulma.Grid.Column.Mobile.Offset.Is11
-                | IsNarrow -> Bulma.Grid.Column.Mobile.Offset.IsNarrow
-                | IsFull -> Bulma.Grid.Column.Mobile.Offset.IsFull
-            | WideScreen, offset ->
-                match offset with
-                | IsOneQuarter -> Bulma.Grid.Column.WideScreen.Offset.IsOneQuarter
-                | IsOneThird -> Bulma.Grid.Column.WideScreen.Offset.IsOneThird
-                | IsHalf -> Bulma.Grid.Column.WideScreen.Offset.IsHalf
-                | IsTwoThirds -> Bulma.Grid.Column.WideScreen.Offset.IsTwoThirds
-                | IsThreeQuarters -> Bulma.Grid.Column.WideScreen.Offset.IsThreeQuarters
-                | Is1 -> Bulma.Grid.Column.WideScreen.Offset.Is1
-                | Is2 -> Bulma.Grid.Column.WideScreen.Offset.Is2
-                | Is3 -> Bulma.Grid.Column.WideScreen.Offset.Is3
-                | Is4 -> Bulma.Grid.Column.WideScreen.Offset.Is4
-                | Is5 -> Bulma.Grid.Column.WideScreen.Offset.Is5
-                | Is6 -> Bulma.Grid.Column.WideScreen.Offset.Is6
-                | Is7 -> Bulma.Grid.Column.WideScreen.Offset.Is7
-                | Is8 -> Bulma.Grid.Column.WideScreen.Offset.Is8
-                | Is9 -> Bulma.Grid.Column.WideScreen.Offset.Is9
-                | Is10 -> Bulma.Grid.Column.WideScreen.Offset.Is10
-                | Is11 -> Bulma.Grid.Column.WideScreen.Offset.Is11
-                | IsNarrow -> Bulma.Grid.Column.WideScreen.Offset.IsNarrow
-                | IsFull -> Bulma.Grid.Column.WideScreen.Offset.IsFull
-
-        type Options =
-            { Width : string option
-              Offset : string option
-              DesktopWidth : string option
-              DesktopOffset : string option
-              TabletpWidth : string option
-              TabletpOffset : string option
-              MobileWidth : string option
-              MobileOffset : string option
-              WideScreenpWidth : string option
-              WideScreenpOffset : string option
-              CustomClass : string option
-              Props : IHTMLProp list }
-            static member Empty =
-                { Width = None
-                  Offset = None
-                  DesktopWidth = None
-                  DesktopOffset = None
-                  TabletpWidth = None
-                  TabletpOffset = None
-                  MobileWidth = None
-                  MobileOffset = None
-                  WideScreenpWidth = None
-                  WideScreenpOffset = None
-                  CustomClass = None
-                  Props = [] }
-
-    open Types
-
-
-    module Width =
-
-        module Dekstop =
-            let inline isOneQuarter<'T> = Width (Desktop, IsOneQuarter)
-            let inline isOneThird<'T> = Width (Desktop, IsOneThird)
-            let inline isHalf<'T> = Width (Desktop, IsHalf)
-            let inline isTwoThirds<'T> = Width (Desktop, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Width (Desktop, IsThreeQuarters)
-            let inline is1<'T> = Width (Desktop, Is1)
-            let inline is2<'T> = Width (Desktop, Is2)
-            let inline is3<'T> = Width (Desktop, Is3)
-            let inline is4<'T> = Width (Desktop, Is4)
-            let inline is5<'T> = Width (Desktop, Is5)
-            let inline is6<'T> = Width (Desktop, Is6)
-            let inline is7<'T> = Width (Desktop, Is7)
-            let inline is8<'T> = Width (Desktop, Is8)
-            let inline is9<'T> = Width (Desktop, Is9)
-            let inline is10<'T> = Width (Desktop, Is10)
-            let inline is11<'T> = Width (Desktop, Is11)
-            let inline isNarrow<'T> = Width (Desktop, IsNarrow)
-            let inline isFull<'T> = Width (Desktop, IsFull)
-
-        module WideScreen =
-            let inline isOneQuarter<'T> = Width (WideScreen, IsOneQuarter)
-            let inline isOneThird<'T> = Width (WideScreen, IsOneThird)
-            let inline isHalf<'T> = Width (WideScreen, IsHalf)
-            let inline isTwoThirds<'T> = Width (WideScreen, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Width (WideScreen, IsThreeQuarters)
-            let inline is1<'T> = Width (WideScreen, Is1)
-            let inline is2<'T> = Width (WideScreen, Is2)
-            let inline is3<'T> = Width (WideScreen, Is3)
-            let inline is4<'T> = Width (WideScreen, Is4)
-            let inline is5<'T> = Width (WideScreen, Is5)
-            let inline is6<'T> = Width (WideScreen, Is6)
-            let inline is7<'T> = Width (WideScreen, Is7)
-            let inline is8<'T> = Width (WideScreen, Is8)
-            let inline is9<'T> = Width (WideScreen, Is9)
-            let inline is10<'T> = Width (WideScreen, Is10)
-            let inline is11<'T> = Width (WideScreen, Is11)
-            let inline isNarrow<'T> = Width (WideScreen, IsNarrow)
-            let inline isFull<'T> = Width (WideScreen, IsFull)
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-desktop"
+                let [<Literal>] IsOneThird = "is-offset-one-third-desktop"
+                let [<Literal>] IsHalf = "is-offset-half-desktop"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-desktop"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-desktop"
+                let [<Literal>] Is1 = "is-offset-1-desktop"
+                let [<Literal>] Is2 = "is-offset-2-desktop"
+                let [<Literal>] Is3 = "is-offset-3-desktop"
+                let [<Literal>] Is4 = "is-offset-4-desktop"
+                let [<Literal>] Is5 = "is-offset-5-desktop"
+                let [<Literal>] Is6 = "is-offset-6-desktop"
+                let [<Literal>] Is7 = "is-offset-7-desktop"
+                let [<Literal>] Is8 = "is-offset-8-desktop"
+                let [<Literal>] Is9 = "is-offset-9-desktop"
+                let [<Literal>] Is10 = "is-offset-10-desktop"
+                let [<Literal>] Is11 = "is-offset-11-desktop"
+                let [<Literal>] IsNarrow = "is-offset-narrow-desktop"
+                let [<Literal>] IsFull = "is-offset-full-desktop"
 
         module Mobile =
-            let inline isOneQuarter<'T> = Width (Mobile, IsOneQuarter)
-            let inline isOneThird<'T> = Width (Mobile, IsOneThird)
-            let inline isHalf<'T> = Width (Mobile, IsHalf)
-            let inline isTwoThirds<'T> = Width (Mobile, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Width (Mobile, IsThreeQuarters)
-            let inline is1<'T> = Width (Mobile, Is1)
-            let inline is2<'T> = Width (Mobile, Is2)
-            let inline is3<'T> = Width (Mobile, Is3)
-            let inline is4<'T> = Width (Mobile, Is4)
-            let inline is5<'T> = Width (Mobile, Is5)
-            let inline is6<'T> = Width (Mobile, Is6)
-            let inline is7<'T> = Width (Mobile, Is7)
-            let inline is8<'T> = Width (Mobile, Is8)
-            let inline is9<'T> = Width (Mobile, Is9)
-            let inline is10<'T> = Width (Mobile, Is10)
-            let inline is11<'T> = Width (Mobile, Is11)
-            let inline isNarrow<'T> = Width (Mobile, IsNarrow)
-            let inline isFull<'T> = Width (Mobile, IsFull)
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-mobile"
+                let [<Literal>] IsOneThird = "is-one-third-mobile"
+                let [<Literal>] IsHalf = "is-half-mobile"
+                let [<Literal>] IsTwoThirds = "is-two-third-mobile"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-mobile"
+                let [<Literal>] Is1 = "is-1-mobile"
+                let [<Literal>] Is2 = "is-2-mobile"
+                let [<Literal>] Is3 = "is-3-mobile"
+                let [<Literal>] Is4 = "is-4-mobile"
+                let [<Literal>] Is5 = "is-5-mobile"
+                let [<Literal>] Is6 = "is-6-mobile"
+                let [<Literal>] Is7 = "is-7-mobile"
+                let [<Literal>] Is8 = "is-8-mobile"
+                let [<Literal>] Is9 = "is-9-mobile"
+                let [<Literal>] Is10 = "is-10-mobile"
+                let [<Literal>] Is11 = "is-11-mobile"
+                let [<Literal>] IsNarrow = "is-narrow-mobile"
+                let [<Literal>] IsFull = "is-full-mobile"
+
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-mobile"
+                let [<Literal>] IsOneThird = "is-offset-one-third-mobile"
+                let [<Literal>] IsHalf = "is-offset-half-mobile"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-mobile"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-mobile"
+                let [<Literal>] Is1 = "is-offset-1-mobile"
+                let [<Literal>] Is2 = "is-offset-2-mobile"
+                let [<Literal>] Is3 = "is-offset-3-mobile"
+                let [<Literal>] Is4 = "is-offset-4-mobile"
+                let [<Literal>] Is5 = "is-offset-5-mobile"
+                let [<Literal>] Is6 = "is-offset-6-mobile"
+                let [<Literal>] Is7 = "is-offset-7-mobile"
+                let [<Literal>] Is8 = "is-offset-8-mobile"
+                let [<Literal>] Is9 = "is-offset-9-mobile"
+                let [<Literal>] Is10 = "is-offset-10-mobile"
+                let [<Literal>] Is11 = "is-offset-11-mobile"
+                let [<Literal>] IsNarrow = "is-offset-narrow-mobile"
+                let [<Literal>] IsFull = "is-offset-full-mobile"
 
         module Tablet =
-            let inline isOneQuarter<'T> = Width (Tablet, IsOneQuarter)
-            let inline isOneThird<'T> = Width (Tablet, IsOneThird)
-            let inline isHalf<'T> = Width (Tablet, IsHalf)
-            let inline isTwoThirds<'T> = Width (Tablet, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Width (Tablet, IsThreeQuarters)
-            let inline is1<'T> = Width (Tablet, Is1)
-            let inline is2<'T> = Width (Tablet, Is2)
-            let inline is3<'T> = Width (Tablet, Is3)
-            let inline is4<'T> = Width (Tablet, Is4)
-            let inline is5<'T> = Width (Tablet, Is5)
-            let inline is6<'T> = Width (Tablet, Is6)
-            let inline is7<'T> = Width (Tablet, Is7)
-            let inline is8<'T> = Width (Tablet, Is8)
-            let inline is9<'T> = Width (Tablet, Is9)
-            let inline is10<'T> = Width (Tablet, Is10)
-            let inline is11<'T> = Width (Tablet, Is11)
-            let inline isNarrow<'T> = Width (Tablet, IsNarrow)
-            let inline isFull<'T> = Width (Tablet, IsFull)
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-tablet"
+                let [<Literal>] IsOneThird = "is-one-third-tablet"
+                let [<Literal>] IsHalf = "is-half-tablet"
+                let [<Literal>] IsTwoThirds = "is-two-third-tablet"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-tablet"
+                let [<Literal>] Is1 = "is-1-tablet"
+                let [<Literal>] Is2 = "is-2-tablet"
+                let [<Literal>] Is3 = "is-3-tablet"
+                let [<Literal>] Is4 = "is-4-tablet"
+                let [<Literal>] Is5 = "is-5-tablet"
+                let [<Literal>] Is6 = "is-6-tablet"
+                let [<Literal>] Is7 = "is-7-tablet"
+                let [<Literal>] Is8 = "is-8-tablet"
+                let [<Literal>] Is9 = "is-9-tablet"
+                let [<Literal>] Is10 = "is-10-tablet"
+                let [<Literal>] Is11 = "is-11-tablet"
+                let [<Literal>] IsNarrow = "is-narrow-tablet"
+                let [<Literal>] IsFull = "is-full-tablet"
 
-        let inline isOneQuarter<'T> = Width (All, IsOneQuarter)
-        let inline isOneThird<'T> = Width (All, IsOneThird)
-        let inline isHalf<'T> = Width (All, IsHalf)
-        let inline isTwoThirds<'T> = Width (All, IsTwoThirds)
-        let inline isThreeQuarters<'T> = Width (All, IsThreeQuarters)
-        let inline is1<'T> = Width (All, Is1)
-        let inline is2<'T> = Width (All, Is2)
-        let inline is3<'T> = Width (All, Is3)
-        let inline is4<'T> = Width (All, Is4)
-        let inline is5<'T> = Width (All, Is5)
-        let inline is6<'T> = Width (All, Is6)
-        let inline is7<'T> = Width (All, Is7)
-        let inline is8<'T> = Width (All, Is8)
-        let inline is9<'T> = Width (All, Is9)
-        let inline is10<'T> = Width (All, Is10)
-        let inline is11<'T> = Width (All, Is11)
-        let inline isNarrow<'T> = Width (All, IsNarrow)
-        let inline isFull<'T> = Width (All, IsFull)
-
-    module Offset =
-
-        module Dekstop =
-            let inline isOneQuarter<'T> = Offset (Desktop, IsOneQuarter)
-            let inline isOneThird<'T> = Offset (Desktop, IsOneThird)
-            let inline isHalf<'T> = Offset (Desktop, IsHalf)
-            let inline isTwoThirds<'T> = Offset (Desktop, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Offset (Desktop, IsThreeQuarters)
-            let inline is1<'T> = Offset (Desktop, Is1)
-            let inline is2<'T> = Offset (Desktop, Is2)
-            let inline is3<'T> = Offset (Desktop, Is3)
-            let inline is4<'T> = Offset (Desktop, Is4)
-            let inline is5<'T> = Offset (Desktop, Is5)
-            let inline is6<'T> = Offset (Desktop, Is6)
-            let inline is7<'T> = Offset (Desktop, Is7)
-            let inline is8<'T> = Offset (Desktop, Is8)
-            let inline is9<'T> = Offset (Desktop, Is9)
-            let inline is10<'T> = Offset (Desktop, Is10)
-            let inline is11<'T> = Offset (Desktop, Is11)
-            let inline isNarrow<'T> = Offset (Desktop, IsNarrow)
-            let inline isFull<'T> = Offset (Desktop, IsFull)
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-tablet"
+                let [<Literal>] IsOneThird = "is-offset-one-third-tablet"
+                let [<Literal>] IsHalf = "is-offset-half-tablet"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-tablet"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-tablet"
+                let [<Literal>] Is1 = "is-offset-1-tablet"
+                let [<Literal>] Is2 = "is-offset-2-tablet"
+                let [<Literal>] Is3 = "is-offset-3-tablet"
+                let [<Literal>] Is4 = "is-offset-4-tablet"
+                let [<Literal>] Is5 = "is-offset-5-tablet"
+                let [<Literal>] Is6 = "is-offset-6-tablet"
+                let [<Literal>] Is7 = "is-offset-7-tablet"
+                let [<Literal>] Is8 = "is-offset-8-tablet"
+                let [<Literal>] Is9 = "is-offset-9-tablet"
+                let [<Literal>] Is10 = "is-offset-10-tablet"
+                let [<Literal>] Is11 = "is-offset-11-tablet"
+                let [<Literal>] IsNarrow = "is-offset-narrow-tablet"
+                let [<Literal>] IsFull = "is-offset-full-tablet"
 
         module WideScreen =
-            let inline isOneQuarter<'T> = Offset (WideScreen, IsOneQuarter)
-            let inline isOneThird<'T> = Offset (WideScreen, IsOneThird)
-            let inline isHalf<'T> = Offset (WideScreen, IsHalf)
-            let inline isTwoThirds<'T> = Offset (WideScreen, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Offset (WideScreen, IsThreeQuarters)
-            let inline is1<'T> = Offset (WideScreen, Is1)
-            let inline is2<'T> = Offset (WideScreen, Is2)
-            let inline is3<'T> = Offset (WideScreen, Is3)
-            let inline is4<'T> = Offset (WideScreen, Is4)
-            let inline is5<'T> = Offset (WideScreen, Is5)
-            let inline is6<'T> = Offset (WideScreen, Is6)
-            let inline is7<'T> = Offset (WideScreen, Is7)
-            let inline is8<'T> = Offset (WideScreen, Is8)
-            let inline is9<'T> = Offset (WideScreen, Is9)
-            let inline is10<'T> = Offset (WideScreen, Is10)
-            let inline is11<'T> = Offset (WideScreen, Is11)
-            let inline isNarrow<'T> = Offset (WideScreen, IsNarrow)
-            let inline isFull<'T> = Offset (WideScreen, IsFull)
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-widescreen"
+                let [<Literal>] IsOneThird = "is-one-third-widescreen"
+                let [<Literal>] IsHalf = "is-half-widescreen"
+                let [<Literal>] IsTwoThirds = "is-two-third-widescreen"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-widescreen"
+                let [<Literal>] Is1 = "is-1-widescreen"
+                let [<Literal>] Is2 = "is-2-widescreen"
+                let [<Literal>] Is3 = "is-3-widescreen"
+                let [<Literal>] Is4 = "is-4-widescreen"
+                let [<Literal>] Is5 = "is-5-widescreen"
+                let [<Literal>] Is6 = "is-6-widescreen"
+                let [<Literal>] Is7 = "is-7-widescreen"
+                let [<Literal>] Is8 = "is-8-widescreen"
+                let [<Literal>] Is9 = "is-9-widescreen"
+                let [<Literal>] Is10 = "is-10-widescreen"
+                let [<Literal>] Is11 = "is-11-widescreen"
+                let [<Literal>] IsNarrow = "is-narrow-widescreen"
+                let [<Literal>] IsFull = "is-full-widescreen"
 
-        module Mobile =
-            let inline isOneQuarter<'T> = Offset (Mobile, IsOneQuarter)
-            let inline isOneThird<'T> = Offset (Mobile, IsOneThird)
-            let inline isHalf<'T> = Offset (Mobile, IsHalf)
-            let inline isTwoThirds<'T> = Offset (Mobile, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Offset (Mobile, IsThreeQuarters)
-            let inline is1<'T> = Offset (Mobile, Is1)
-            let inline is2<'T> = Offset (Mobile, Is2)
-            let inline is3<'T> = Offset (Mobile, Is3)
-            let inline is4<'T> = Offset (Mobile, Is4)
-            let inline is5<'T> = Offset (Mobile, Is5)
-            let inline is6<'T> = Offset (Mobile, Is6)
-            let inline is7<'T> = Offset (Mobile, Is7)
-            let inline is8<'T> = Offset (Mobile, Is8)
-            let inline is9<'T> = Offset (Mobile, Is9)
-            let inline is10<'T> = Offset (Mobile, Is10)
-            let inline is11<'T> = Offset (Mobile, Is11)
-            let inline isNarrow<'T> = Offset (Mobile, IsNarrow)
-            let inline isFull<'T> = Offset (Mobile, IsFull)
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-widescreen"
+                let [<Literal>] IsOneThird = "is-offset-one-third-widescreen"
+                let [<Literal>] IsHalf = "is-offset-half-widescreen"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-widescreen"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-widescreen"
+                let [<Literal>] Is1 = "is-offset-1-widescreen"
+                let [<Literal>] Is2 = "is-offset-2-widescreen"
+                let [<Literal>] Is3 = "is-offset-3-widescreen"
+                let [<Literal>] Is4 = "is-offset-4-widescreen"
+                let [<Literal>] Is5 = "is-offset-5-widescreen"
+                let [<Literal>] Is6 = "is-offset-6-widescreen"
+                let [<Literal>] Is7 = "is-offset-7-widescreen"
+                let [<Literal>] Is8 = "is-offset-8-widescreen"
+                let [<Literal>] Is9 = "is-offset-9-widescreen"
+                let [<Literal>] Is10 = "is-offset-10-widescreen"
+                let [<Literal>] Is11 = "is-offset-11-widescreen"
+                let [<Literal>] IsNarrow = "is-offset-narrow-widescreen"
+                let [<Literal>] IsFull = "is-offset-full-widescreen"
 
-        module Tablet =
-            let inline isOneQuarter<'T> = Offset (Tablet, IsOneQuarter)
-            let inline isOneThird<'T> = Offset (Tablet, IsOneThird)
-            let inline isHalf<'T> = Offset (Tablet, IsHalf)
-            let inline isTwoThirds<'T> = Offset (Tablet, IsTwoThirds)
-            let inline isThreeQuarters<'T> = Offset (Tablet, IsThreeQuarters)
-            let inline is1<'T> = Offset (Tablet, Is1)
-            let inline is2<'T> = Offset (Tablet, Is2)
-            let inline is3<'T> = Offset (Tablet, Is3)
-            let inline is4<'T> = Offset (Tablet, Is4)
-            let inline is5<'T> = Offset (Tablet, Is5)
-            let inline is6<'T> = Offset (Tablet, Is6)
-            let inline is7<'T> = Offset (Tablet, Is7)
-            let inline is8<'T> = Offset (Tablet, Is8)
-            let inline is9<'T> = Offset (Tablet, Is9)
-            let inline is10<'T> = Offset (Tablet, Is10)
-            let inline is11<'T> = Offset (Tablet, Is11)
-            let inline isNarrow<'T> = Offset (Tablet, IsNarrow)
-            let inline isFull<'T> = Offset (Tablet, IsFull)
 
-        let inline isOneQuarter<'T> = Offset (All, IsOneQuarter)
-        let inline isOneThird<'T> = Offset (All, IsOneThird)
-        let inline isHalf<'T> = Offset (All, IsHalf)
-        let inline isTwoThirds<'T> = Offset (All, IsTwoThirds)
-        let inline isThreeQuarters<'T> = Offset (All, IsThreeQuarters)
-        let inline is1<'T> = Offset (All, Is1)
-        let inline is2<'T> = Offset (All, Is2)
-        let inline is3<'T> = Offset (All, Is3)
-        let inline is4<'T> = Offset (All, Is4)
-        let inline is5<'T> = Offset (All, Is5)
-        let inline is6<'T> = Offset (All, Is6)
-        let inline is7<'T> = Offset (All, Is7)
-        let inline is8<'T> = Offset (All, Is8)
-        let inline is9<'T> = Offset (All, Is9)
-        let inline is10<'T> = Offset (All, Is10)
-        let inline is11<'T> = Offset (All, Is11)
-        let inline isNarrow<'T> = Offset (All, IsNarrow)
-        let inline isFull<'T> = Offset (All, IsFull)
 
-    // Extra
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
+
+    type ISize =
+        | IsOneQuarter
+        | IsOneThird
+        | IsHalf
+        | IsTwoThirds
+        | IsThreeQuarters
+        | Is1
+        | Is2
+        | Is3
+        | Is4
+        | Is5
+        | Is6
+        | Is7
+        | Is8
+        | Is9
+        | Is10
+        | Is11
+        | IsNarrow
+        | IsFull
+
+    type IScreen =
+        | All
+        | Desktop
+        | Tablet
+        | Mobile
+        | WideScreen
+
+    type Option =
+        | Width of IScreen * ISize
+        | Offset of IScreen * ISize
+        | CustomClass of string
+        | Props of IHTMLProp list
+
+    let internal ofWidth =
+        function
+        | All, size ->
+            match size with
+            | IsOneQuarter -> Classes.All.Width.IsOneQuarter
+            | IsOneThird -> Classes.All.Width.IsOneThird
+            | IsHalf -> Classes.All.Width.IsHalf
+            | IsTwoThirds -> Classes.All.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.All.Width.IsThreeQuarters
+            | Is1 -> Classes.All.Width.Is1
+            | Is2 -> Classes.All.Width.Is2
+            | Is3 -> Classes.All.Width.Is3
+            | Is4 -> Classes.All.Width.Is4
+            | Is5 -> Classes.All.Width.Is5
+            | Is6 -> Classes.All.Width.Is6
+            | Is7 -> Classes.All.Width.Is7
+            | Is8 -> Classes.All.Width.Is8
+            | Is9 -> Classes.All.Width.Is9
+            | Is10 -> Classes.All.Width.Is10
+            | Is11 -> Classes.All.Width.Is11
+            | IsNarrow -> Classes.All.Width.IsNarrow
+            | IsFull -> Classes.All.Width.IsFull
+        | Desktop, size ->
+            match size with
+            | IsOneQuarter -> Classes.Desktop.Width.IsOneQuarter
+            | IsOneThird -> Classes.Desktop.Width.IsOneThird
+            | IsHalf -> Classes.Desktop.Width.IsHalf
+            | IsTwoThirds -> Classes.Desktop.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.Desktop.Width.IsThreeQuarters
+            | Is1 -> Classes.Desktop.Width.Is1
+            | Is2 -> Classes.Desktop.Width.Is2
+            | Is3 -> Classes.Desktop.Width.Is3
+            | Is4 -> Classes.Desktop.Width.Is4
+            | Is5 -> Classes.Desktop.Width.Is5
+            | Is6 -> Classes.Desktop.Width.Is6
+            | Is7 -> Classes.Desktop.Width.Is7
+            | Is8 -> Classes.Desktop.Width.Is8
+            | Is9 -> Classes.Desktop.Width.Is9
+            | Is10 -> Classes.Desktop.Width.Is10
+            | Is11 -> Classes.Desktop.Width.Is11
+            | IsNarrow -> Classes.Desktop.Width.IsNarrow
+            | IsFull -> Classes.Desktop.Width.IsFull
+        | Tablet, size ->
+            match size with
+            | IsOneQuarter -> Classes.Tablet.Width.IsOneQuarter
+            | IsOneThird -> Classes.Tablet.Width.IsOneThird
+            | IsHalf -> Classes.Tablet.Width.IsHalf
+            | IsTwoThirds -> Classes.Tablet.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.Tablet.Width.IsThreeQuarters
+            | Is1 -> Classes.Tablet.Width.Is1
+            | Is2 -> Classes.Tablet.Width.Is2
+            | Is3 -> Classes.Tablet.Width.Is3
+            | Is4 -> Classes.Tablet.Width.Is4
+            | Is5 -> Classes.Tablet.Width.Is5
+            | Is6 -> Classes.Tablet.Width.Is6
+            | Is7 -> Classes.Tablet.Width.Is7
+            | Is8 -> Classes.Tablet.Width.Is8
+            | Is9 -> Classes.Tablet.Width.Is9
+            | Is10 -> Classes.Tablet.Width.Is10
+            | Is11 -> Classes.Tablet.Width.Is11
+            | IsNarrow -> Classes.Tablet.Width.IsNarrow
+            | IsFull -> Classes.Tablet.Width.IsFull
+        | Mobile, size ->
+            match size with
+            | IsOneQuarter -> Classes.Mobile.Width.IsOneQuarter
+            | IsOneThird -> Classes.Mobile.Width.IsOneThird
+            | IsHalf -> Classes.Mobile.Width.IsHalf
+            | IsTwoThirds -> Classes.Mobile.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.Mobile.Width.IsThreeQuarters
+            | Is1 -> Classes.Mobile.Width.Is1
+            | Is2 -> Classes.Mobile.Width.Is2
+            | Is3 -> Classes.Mobile.Width.Is3
+            | Is4 -> Classes.Mobile.Width.Is4
+            | Is5 -> Classes.Mobile.Width.Is5
+            | Is6 -> Classes.Mobile.Width.Is6
+            | Is7 -> Classes.Mobile.Width.Is7
+            | Is8 -> Classes.Mobile.Width.Is8
+            | Is9 -> Classes.Mobile.Width.Is9
+            | Is10 -> Classes.Mobile.Width.Is10
+            | Is11 -> Classes.Mobile.Width.Is11
+            | IsNarrow -> Classes.Mobile.Width.IsNarrow
+            | IsFull -> Classes.Mobile.Width.IsFull
+        | WideScreen, size ->
+            match size with
+            | IsOneQuarter -> Classes.WideScreen.Width.IsOneQuarter
+            | IsOneThird -> Classes.WideScreen.Width.IsOneThird
+            | IsHalf -> Classes.WideScreen.Width.IsHalf
+            | IsTwoThirds -> Classes.WideScreen.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.WideScreen.Width.IsThreeQuarters
+            | Is1 -> Classes.WideScreen.Width.Is1
+            | Is2 -> Classes.WideScreen.Width.Is2
+            | Is3 -> Classes.WideScreen.Width.Is3
+            | Is4 -> Classes.WideScreen.Width.Is4
+            | Is5 -> Classes.WideScreen.Width.Is5
+            | Is6 -> Classes.WideScreen.Width.Is6
+            | Is7 -> Classes.WideScreen.Width.Is7
+            | Is8 -> Classes.WideScreen.Width.Is8
+            | Is9 -> Classes.WideScreen.Width.Is9
+            | Is10 -> Classes.WideScreen.Width.Is10
+            | Is11 -> Classes.WideScreen.Width.Is11
+            | IsNarrow -> Classes.WideScreen.Width.IsNarrow
+            | IsFull -> Classes.WideScreen.Width.IsFull
+
+    let internal ofOffset =
+        function
+        | All, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.All.Offset.IsOneQuarter
+            | IsOneThird -> Classes.All.Offset.IsOneThird
+            | IsHalf -> Classes.All.Offset.IsHalf
+            | IsTwoThirds -> Classes.All.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.All.Offset.IsThreeQuarters
+            | Is1 -> Classes.All.Offset.Is1
+            | Is2 -> Classes.All.Offset.Is2
+            | Is3 -> Classes.All.Offset.Is3
+            | Is4 -> Classes.All.Offset.Is4
+            | Is5 -> Classes.All.Offset.Is5
+            | Is6 -> Classes.All.Offset.Is6
+            | Is7 -> Classes.All.Offset.Is7
+            | Is8 -> Classes.All.Offset.Is8
+            | Is9 -> Classes.All.Offset.Is9
+            | Is10 -> Classes.All.Offset.Is10
+            | Is11 -> Classes.All.Offset.Is11
+            | IsNarrow -> Classes.All.Offset.IsNarrow
+            | IsFull -> Classes.All.Offset.IsFull
+        | Desktop, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.Desktop.Offset.IsOneQuarter
+            | IsOneThird -> Classes.Desktop.Offset.IsOneThird
+            | IsHalf -> Classes.Desktop.Offset.IsHalf
+            | IsTwoThirds -> Classes.Desktop.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.Desktop.Offset.IsThreeQuarters
+            | Is1 -> Classes.Desktop.Offset.Is1
+            | Is2 -> Classes.Desktop.Offset.Is2
+            | Is3 -> Classes.Desktop.Offset.Is3
+            | Is4 -> Classes.Desktop.Offset.Is4
+            | Is5 -> Classes.Desktop.Offset.Is5
+            | Is6 -> Classes.Desktop.Offset.Is6
+            | Is7 -> Classes.Desktop.Offset.Is7
+            | Is8 -> Classes.Desktop.Offset.Is8
+            | Is9 -> Classes.Desktop.Offset.Is9
+            | Is10 -> Classes.Desktop.Offset.Is10
+            | Is11 -> Classes.Desktop.Offset.Is11
+            | IsNarrow -> Classes.Desktop.Offset.IsNarrow
+            | IsFull -> Classes.Desktop.Offset.IsFull
+        | Tablet, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.Tablet.Offset.IsOneQuarter
+            | IsOneThird -> Classes.Tablet.Offset.IsOneThird
+            | IsHalf -> Classes.Tablet.Offset.IsHalf
+            | IsTwoThirds -> Classes.Tablet.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.Tablet.Offset.IsThreeQuarters
+            | Is1 -> Classes.Tablet.Offset.Is1
+            | Is2 -> Classes.Tablet.Offset.Is2
+            | Is3 -> Classes.Tablet.Offset.Is3
+            | Is4 -> Classes.Tablet.Offset.Is4
+            | Is5 -> Classes.Tablet.Offset.Is5
+            | Is6 -> Classes.Tablet.Offset.Is6
+            | Is7 -> Classes.Tablet.Offset.Is7
+            | Is8 -> Classes.Tablet.Offset.Is8
+            | Is9 -> Classes.Tablet.Offset.Is9
+            | Is10 -> Classes.Tablet.Offset.Is10
+            | Is11 -> Classes.Tablet.Offset.Is11
+            | IsNarrow -> Classes.Tablet.Offset.IsNarrow
+            | IsFull -> Classes.Tablet.Offset.IsFull
+        | Mobile, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.Mobile.Offset.IsOneQuarter
+            | IsOneThird -> Classes.Mobile.Offset.IsOneThird
+            | IsHalf -> Classes.Mobile.Offset.IsHalf
+            | IsTwoThirds -> Classes.Mobile.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.Mobile.Offset.IsThreeQuarters
+            | Is1 -> Classes.Mobile.Offset.Is1
+            | Is2 -> Classes.Mobile.Offset.Is2
+            | Is3 -> Classes.Mobile.Offset.Is3
+            | Is4 -> Classes.Mobile.Offset.Is4
+            | Is5 -> Classes.Mobile.Offset.Is5
+            | Is6 -> Classes.Mobile.Offset.Is6
+            | Is7 -> Classes.Mobile.Offset.Is7
+            | Is8 -> Classes.Mobile.Offset.Is8
+            | Is9 -> Classes.Mobile.Offset.Is9
+            | Is10 -> Classes.Mobile.Offset.Is10
+            | Is11 -> Classes.Mobile.Offset.Is11
+            | IsNarrow -> Classes.Mobile.Offset.IsNarrow
+            | IsFull -> Classes.Mobile.Offset.IsFull
+        | WideScreen, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.WideScreen.Offset.IsOneQuarter
+            | IsOneThird -> Classes.WideScreen.Offset.IsOneThird
+            | IsHalf -> Classes.WideScreen.Offset.IsHalf
+            | IsTwoThirds -> Classes.WideScreen.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.WideScreen.Offset.IsThreeQuarters
+            | Is1 -> Classes.WideScreen.Offset.Is1
+            | Is2 -> Classes.WideScreen.Offset.Is2
+            | Is3 -> Classes.WideScreen.Offset.Is3
+            | Is4 -> Classes.WideScreen.Offset.Is4
+            | Is5 -> Classes.WideScreen.Offset.Is5
+            | Is6 -> Classes.WideScreen.Offset.Is6
+            | Is7 -> Classes.WideScreen.Offset.Is7
+            | Is8 -> Classes.WideScreen.Offset.Is8
+            | Is9 -> Classes.WideScreen.Offset.Is9
+            | Is10 -> Classes.WideScreen.Offset.Is10
+            | Is11 -> Classes.WideScreen.Offset.Is11
+            | IsNarrow -> Classes.WideScreen.Offset.IsNarrow
+            | IsFull -> Classes.WideScreen.Offset.IsFull
+
+    type internal Options =
+        { Width : string option
+          Offset : string option
+          DesktopWidth : string option
+          DesktopOffset : string option
+          TabletpWidth : string option
+          TabletpOffset : string option
+          MobileWidth : string option
+          MobileOffset : string option
+          WideScreenpWidth : string option
+          WideScreenpOffset : string option
+          CustomClass : string option
+          Props : IHTMLProp list }
+        static member Empty =
+            { Width = None
+              Offset = None
+              DesktopWidth = None
+              DesktopOffset = None
+              TabletpWidth = None
+              TabletpOffset = None
+              MobileWidth = None
+              MobileOffset = None
+              WideScreenpWidth = None
+              WideScreenpOffset = None
+              CustomClass = None
+              Props = [] }
 
     let column (options : Option list) children =
         let parseOptions (result: Options) =
@@ -518,18 +514,18 @@ module Column =
                 result
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield ClassName ( Helpers.generateClassName Bulma.Grid.Column.Container
-                                                    [ opts.Width
-                                                      opts.Offset
-                                                      opts.DesktopWidth
-                                                      opts.DesktopOffset
-                                                      opts.MobileWidth
-                                                      opts.MobileOffset
-                                                      opts.TabletpWidth
-                                                      opts.TabletpOffset
-                                                      opts.WideScreenpWidth
-                                                      opts.WideScreenpOffset
-                                                      opts.CustomClass ] ) :> IHTMLProp
-              yield! opts.Props ]
-            children
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Width
+                          opts.Offset
+                          opts.DesktopWidth
+                          opts.DesktopOffset
+                          opts.MobileWidth
+                          opts.MobileOffset
+                          opts.TabletpWidth
+                          opts.TabletpOffset
+                          opts.WideScreenpWidth
+                          opts.WideScreenpOffset
+                          opts.CustomClass ]
+                        [ ]
+        div (classes::opts.Props) children

@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
 open Fulma.Layouts
@@ -20,151 +21,149 @@ let inlineBlockInteractive =
                   Switch.switch [ ] [ str "Two" ]
 
                   b [] [str "Inline"]
-                  Field.field_div [ ]
+                  Field.field [ ]
                       [ yield! Switch.switchInline [ ] [ str "One" ]
                         yield! Switch.switchInline [ ] [ str "Two" ] ] ] ] ]
 
 let rtl =
-    Switch.switch [ Switch.isRtl ] [ str "Label is on the left" ]
+    Switch.switch [ Switch.IsRtl ] [ str "Label is on the left" ]
 
 
 let colorInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true ] [ str "Default" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isWhite ] [ str "White" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isLight ] [ str "Light" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isDark ] [ str "Dark" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isBlack ] [ str "Black" ] ] ]
+                  [ Switch.switch [ Switch.Checked true ] [ str "Default" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsWhite ] [ str "White" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsLight ] [ str "Light" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsDark ] [ str "Dark" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsBlack ] [ str "Black" ] ] ]
 
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true; Switch.isPrimary ] [ str "Primary" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isInfo ] [ str "Info" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isSuccess ] [ str "Success" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isWarning ] [ str "Warning" ]
-                    Switch.switch [ Switch.isChecked true; Switch.isDanger ] [ str "Danger" ] ] ] ]
+                  [ Switch.switch [ Switch.Checked true; Switch.Color IsPrimary ] [ str "Primary" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsInfo ] [ str "Info" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsSuccess ] [ str "Success" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsWarning ] [ str "Warning" ]
+                    Switch.switch [ Switch.Checked true; Switch.Color IsDanger ] [ str "Danger" ] ] ] ]
 
 
 let sizeInteractive =
     div [ ClassName "block" ]
-        [ Switch.switch [ Switch.isChecked true; Switch.isSmall ] [ str "Small" ]
-          Switch.switch [ Switch.isChecked true ] [ str "Normal" ]
-          Switch.switch [ Switch.isChecked true; Switch.isMedium ] [ str "Medium" ]
-          Switch.switch [ Switch.isChecked true; Switch.isLarge ] [ str "Large" ] ]
+        [ Switch.switch [ Switch.Checked true; Switch.Size IsSmall ] [ str "Small" ]
+          Switch.switch [ Switch.Checked true ] [ str "Normal" ]
+          Switch.switch [ Switch.Checked true; Switch.Size IsMedium ] [ str "Medium" ]
+          Switch.switch [ Switch.Checked true; Switch.Size IsLarge ] [ str "Large" ] ]
 
 
 let stylesInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isDisabled true ] [ str "Disabled" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isPrimary ] [ str "Checkbox" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isSuccess ] [ str "Checkbox - success" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isWarning ] [ str "Checkbox - warning" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isDanger ] [ str "Checkbox - danger" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isInfo ] [ str "Checkbox - info" ] ] ]
+                  [ Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Disabled true ] [ str "Disabled" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Color IsPrimary ] [ str "Checkbox" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Color IsSuccess ] [ str "Checkbox - success" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Color IsWarning ] [ str "Checkbox - warning" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Color IsDanger ] [ str "Checkbox - danger" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.Color IsInfo ] [ str "Checkbox - info" ] ] ]
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isDisabled true ] [ str "Disabled" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isPrimary ] [ str "Checkbox" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isSuccess ] [ str "Checkbox - success" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isWarning ] [ str "Checkbox - warning" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isDanger ] [ str "Checkbox - danger" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isThin
-                                    Switch.isInfo ] [ str "Checkbox - info" ] ] ]
+                  [ Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Disabled true ] [ str "Disabled" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Color IsPrimary ] [ str "Checkbox" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Color IsSuccess ] [ str "Checkbox - success" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Color IsWarning ] [ str "Checkbox - warning" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Color IsDanger ] [ str "Checkbox - danger" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsThin
+                                    Switch.Color IsInfo ] [ str "Checkbox - info" ] ] ]
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isDisabled true ] [ str "Disabled" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isPrimary ] [ str "Checkbox" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isSuccess ] [ str "Checkbox - success" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isWarning ] [ str "Checkbox - warning" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isDanger ] [ str "Checkbox - danger" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isOutlined
-                                    Switch.isInfo ] [ str "Checkbox - info" ] ] ]
+                  [ Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Disabled true ] [ str "Disabled" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Color IsPrimary ] [ str "Checkbox" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Color IsSuccess ] [ str "Checkbox - success" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Color IsWarning ] [ str "Checkbox - warning" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Color IsDanger ] [ str "Checkbox - danger" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsOutlined
+                                    Switch.Color IsInfo ] [ str "Checkbox - info" ] ] ]
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isDisabled true ] [ str "Disabled" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isPrimary ] [ str "Checkbox" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isSuccess ] [ str "Checkbox - success" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isWarning ] [ str "Checkbox - warning" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isDanger ] [ str "Checkbox - danger" ]
-                    Switch.switch [ Switch.isChecked true
-                                    Switch.isRounded
-                                    Switch.isOutlined
-                                    Switch.isInfo ] [ str "Checkbox - info" ] ] ] ]
+                  [ Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Disabled true ] [ str "Disabled" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Color IsPrimary ] [ str "Checkbox" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Color IsSuccess ] [ str "Checkbox - success" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Color IsWarning ] [ str "Checkbox - warning" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Color IsDanger ] [ str "Checkbox - danger" ]
+                    Switch.switch [ Switch.Checked true
+                                    Switch.IsRounded
+                                    Switch.IsOutlined
+                                    Switch.Color IsInfo ] [ str "Checkbox - info" ] ] ] ]
 
 
 let stateInteractive =
     div [ ClassName "block" ]
-        [ Switch.switch [ Switch.isDisabled true ] [ str "Disabled" ]
-          Switch.switch [ Switch.isDisabled true; Switch.isChecked true ] [ str "Disabled & Checked" ]
+        [ Switch.switch [ Switch.Disabled true ] [ str "Disabled" ]
+          Switch.switch [ Switch.Disabled true; Switch.Checked true ] [ str "Disabled & Checked" ]
           Switch.switch [ ] [ str "Unchecked" ]
-          Switch.switch [ Switch.isChecked true ] [ str "checked" ] ]
-
-
+          Switch.switch [ Switch.Checked true ] [ str "checked" ] ]
 
 let eventInteractive model dispatch =
     let newState = not model.IsChecked
 
     div [ ClassName "block" ]
         [ Switch.switch
-            [ Switch.isChecked model.IsChecked
-              Switch.onChange (fun x -> dispatch (Change newState)) ]
+            [ Switch.Checked model.IsChecked
+              Switch.OnChange (fun x -> dispatch (Change newState)) ]
             [ str (string model.IsChecked) ]
           Switch.switch
-            [ Switch.isChecked model.IsChecked
-              Switch.onChange (fun x -> dispatch (Change newState)) ]
+            [ Switch.Checked model.IsChecked
+              Switch.OnChange (fun x -> dispatch (Change newState)) ]
             [ if model.IsChecked then
                 yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
               else

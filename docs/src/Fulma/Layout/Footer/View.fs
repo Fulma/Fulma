@@ -12,7 +12,7 @@ open Fulma.BulmaClasses
 
 let basic =
     Footer.footer [ ]
-        [ Content.content [ Content.customClass Bulma.Properties.Alignment.HasTextCentered ]
+        [ Content.content [ Content.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
             [ h1 [ ]
                  [ str "Fulma" ]
               p [ ]

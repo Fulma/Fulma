@@ -1,26 +1,24 @@
 module Components.Dropdown.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Extra.FontAwesome
 
 let basic =
-    Dropdown.dropdown [ Dropdown.isHoverable ]
+    Dropdown.dropdown [ Dropdown.IsHoverable ]
         [ div [ ]
-            [ Button.button_a [ ]
+            [ Button.button [ ]
                 [ span [ ]
                     [ str "Dropdown" ]
-                  Icon.faIcon [ Icon.isSmall ] [ Fa.icon Fa.I.AngleDown ] ] ]
+                  Icon.faIcon [ Icon.Size IsSmall ] [ Fa.icon Fa.I.AngleDown ] ] ]
           Dropdown.menu [ ]
             [ Dropdown.content [ ]
                 [ Dropdown.item [ ] [ str "Item n°1" ]
                   Dropdown.item [ ] [ str "Item n°2" ]
-                  Dropdown.item [ Dropdown.Item.isActive ] [ str "Item n°3" ]
+                  Dropdown.item [ Dropdown.Item.Active true ] [ str "Item n°3" ]
                   Dropdown.item [ ] [ str "Item n°4" ]
                   Dropdown.divider [ ]
                   Dropdown.item [ ] [ str "Item n°5" ] ] ] ]

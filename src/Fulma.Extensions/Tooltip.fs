@@ -1,7 +1,5 @@
 namespace Fulma.Extensions
 
-open Fulma.BulmaClasses
-open Fulma.Common
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]

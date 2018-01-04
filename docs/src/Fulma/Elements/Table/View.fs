@@ -20,7 +20,7 @@ let simpleInteractive =
                  [ td [ ] [ str "Maxime" ]
                    td [ ] [ str "Mangel" ]
                    td [ ] [ str "28/02/1992" ] ]
-              tr [ Table.Row.isSelected ]
+              tr [ ClassName "is-selected" ]
                  [ td [ ] [ str "Jane" ]
                    td [ ] [ str "Doe" ]
                    td [ ] [ str "21/07/1987" ] ]
@@ -30,9 +30,9 @@ let simpleInteractive =
                    td [ ] [ str "11/07/1978" ] ] ] ]
 
 let modifierInteractive =
-    Table.table [ Table.isBordered
-                  Table.isNarrow
-                  Table.isStripped ]
+    Table.table [ Table.IsBordered
+                  Table.IsNarrow
+                  Table.IsStripped ]
         [ thead [ ]
             [ tr [ ]
                  [ th [ ] [ str "Firstname" ]
@@ -43,7 +43,7 @@ let modifierInteractive =
                 [ td [ ] [ str "Maxime" ]
                   td [ ] [ str "Mangel" ]
                   td [ ] [ str "28/02/1992" ] ]
-              tr [ Table.Row.isSelected ]
+              tr [ ClassName "is-selected" ]
                  [ td [ ] [ str "Jane" ]
                    td [ ] [ str "Doe" ]
                    td [ ] [ str "21/07/1987" ] ]
@@ -53,9 +53,9 @@ let modifierInteractive =
                    td [ ] [ str "11/07/1978" ] ] ] ]
 
 let modifierFullWitdth =
-    Table.table [ Table.isBordered
-                  Table.isFullwidth
-                  Table.isStripped ]
+    Table.table [ Table.IsBordered
+                  Table.IsFullwidth
+                  Table.IsStripped ]
         [ thead [ ]
             [ tr [ ]
                  [ th [ ] [ str "Firstname" ]
@@ -66,7 +66,7 @@ let modifierFullWitdth =
                 [ td [ ] [ str "Maxime" ]
                   td [ ] [ str "Mangel" ]
                   td [ ] [ str "28/02/1992" ] ]
-              tr [ Table.Row.isSelected ]
+              tr [ ClassName "is-selected" ]
                  [ td [ ] [ str "Jane" ]
                    td [ ] [ str "Doe" ]
                    td [ ] [ str "21/07/1987" ] ]

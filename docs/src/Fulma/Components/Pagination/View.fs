@@ -1,13 +1,9 @@
 module Components.Pagination.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
-open Fulma.BulmaClasses
+open Fulma
 open Fulma.Components
-open Fulma.Elements
 
 let basic =
     Pagination.pagination [ ]
@@ -21,7 +17,7 @@ let basic =
               Pagination.ellipsis [ ]
               Pagination.link [ ]
                 [ str "32" ]
-              Pagination.link [ Pagination.Link.isCurrent ]
+              Pagination.link [ Pagination.Link.Current true ]
                 [ str "33" ]
               Pagination.link [ ]
                 [ str "34" ]
@@ -30,7 +26,7 @@ let basic =
                 [ str "77" ] ] ]
 
 let aligment =
-    Pagination.pagination [ Pagination.isCentered ]
+    Pagination.pagination [ Pagination.IsCentered ]
         [ Pagination.previous [ ]
             [ str "Previous" ]
           Pagination.next [ ]
@@ -41,7 +37,7 @@ let aligment =
               Pagination.ellipsis [ ]
               Pagination.link [ ]
                 [ str "32" ]
-              Pagination.link [ Pagination.Link.isCurrent ]
+              Pagination.link [ Pagination.Link.Current true ]
                 [ str "33" ]
               Pagination.link [ ]
                 [ str "34" ]
@@ -50,7 +46,7 @@ let aligment =
                 [ str "77" ] ] ]
 
 let size =
-    Pagination.pagination [  Pagination.isSmall]
+    Pagination.pagination [  Pagination.Size IsSmall]
         [ Pagination.previous [ ]
             [ str "Previous" ]
           Pagination.next [ ]
@@ -61,7 +57,7 @@ let size =
               Pagination.ellipsis [ ]
               Pagination.link [ ]
                 [ str "32" ]
-              Pagination.link [ Pagination.Link.isCurrent ]
+              Pagination.link [ Pagination.Link.Current true ]
                 [ str "33" ]
               Pagination.link [ ]
                 [ str "34" ]

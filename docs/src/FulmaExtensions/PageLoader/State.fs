@@ -2,9 +2,7 @@ module FulmaExtensions.PageLoader.State
 
 open Elmish
 open Types
-open Fable.Import.Browser
-open Fulma.Common
-
+open Fulma
 
 let normalCode =
     """

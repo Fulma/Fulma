@@ -1,18 +1,15 @@
 namespace Fulma.Elements
 
-open Fulma.BulmaClasses
-open Fable.Core
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fulma.Common
+open Fulma
 
 [<RequireQualifiedAccess>]
 module Box =
 
-    let customClass cls = CustomClass cls
-    let inline props x = Props x
+    module Classes =
+        let [<Literal>] Container = "box"
 
     let box' (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Box.Container [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
+        div (classes::opts.Props) children

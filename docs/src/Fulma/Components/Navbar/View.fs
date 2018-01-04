@@ -1,67 +1,64 @@
 module Components.Navbar.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
-open Fulma.BulmaClasses
+open Fulma
 open Fulma.Components
 open Fulma.Elements
 
 let basic =
     Navbar.navbar [ ]
-        [ Navbar.brand_div [ ]
-            [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
+        [ Navbar.Brand.div [ ]
+            [ Navbar.Item.a [ Navbar.Item.Props [ Href "#" ] ]
                 [ img [ Style [ Width "2.5em" ] // Force svg display
                         Src "/assets/logo_transparent.svg" ] ] ]
-          Navbar.item_a [ Navbar.Item.hasDropdown
-                          Navbar.Item.isHoverable ]
-
-            [ Navbar.link_a [ ]
+          Navbar.Item.a  [ Navbar.Item.HasDropdown
+                           Navbar.Item.IsHoverable ]
+            [ Navbar.Link.a [ ]
                 [ str "Docs" ]
-              Navbar.dropdown_div [ ]
-                [ Navbar.item_a [ ]
+              Navbar.Dropdown.div [ ]
+                [ Navbar.Item.a [ ]
                     [ str "Overwiew" ]
-                  Navbar.item_a [ ]
+                  Navbar.Item.a [ ]
                     [ str "Elements" ]
                   Navbar.divider [ ] [ ]
-                  Navbar.item_a [ ]
+                  Navbar.Item.a [ ]
                     [ str "Components" ] ] ]
-          Navbar.end_div [ ]
-            [ Navbar.item_div [ ]
-                [ Button.button_a [ Button.isSuccess ]
+          Navbar.End.div [ ]
+            [ Navbar.Item.div [ ]
+                [ Button.button [ Button.Color IsSuccess ]
                     [ str "Demo" ] ] ] ]
 
 let colors =
     let navbarWithColor color =
-        Navbar.navbar [ color ]
-            [ Navbar.brand_div [ ]
-                [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
+        Navbar.navbar [ Navbar.Color color ]
+            [ Navbar.Brand.div [ ]
+                [ Navbar.Item.a [ Navbar.Item.Props [ Href "#" ] ]
                     [ img [ Style [ Width "2.5em" ] // Force svg display
                             Src "/assets/logo_transparent.svg" ] ] ]
-              Navbar.item_a [ Navbar.Item.hasDropdown
-                              Navbar.Item.isHoverable ]
+              Navbar.Item.a [ Navbar.Item.HasDropdown
+                              Navbar.Item.IsHoverable ]
 
-                [ Navbar.link_a [ ]
+                [ Navbar.Link.a [ ]
                     [ str "Docs" ]
-                  Navbar.dropdown_div [ ]
-                    [ Navbar.item_a [ ]
+                  Navbar.Dropdown.div [ ]
+                    [ Navbar.Item.a [ ]
                         [ str "Overwiew" ]
-                      Navbar.item_a [ ]
+                      Navbar.Item.a [ ]
                         [ str "Elements" ]
                       Navbar.divider [ ] [ ]
-                      Navbar.item_a [ ]
+                      Navbar.Item.a [ ]
                         [ str "Components" ] ] ]
-              Navbar.end_div [ ]
-                [ Navbar.item_div [ ]
-                    [ Button.button_a [ Button.isSuccess ]
+              Navbar.End.div [ ]
+                [ Navbar.Item.div [ ]
+                    [ Button.button [ Button.Color IsSuccess ]
                         [ str "Demo" ] ] ] ]
 
     div [ ]
-        [ navbarWithColor Navbar.isDanger
+        [ navbarWithColor IsDanger
           br [ ]
-          navbarWithColor Navbar.isInfo ]
+          navbarWithColor IsInfo ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro

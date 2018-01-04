@@ -1,102 +1,71 @@
 namespace Fulma.Layouts
 
 open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
 module Columns =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "columns"
+        module Alignment =
+            let [<Literal>] IsCentered = "is-centered"
+            let [<Literal>] IsVCentered = "is-vcentered"
+        module Spacing =
+            let [<Literal>] IsMultiline = "is-multiline"
+            let [<Literal>] IsGapless = "is-gapless"
+            let [<Literal>] IsGrid = "is-grid"
+        module Display =
+            let [<Literal>] OnMobile = "on-mobile"
+            let [<Literal>] OnlyDesktop = "only-desktop"
 
-        type IDisplay =
-            | Mobile
-            | DesktopOnly
+    type Option =
+        | IsCentered
+        | IsVCentered
+        | IsMultiline
+        | IsGapless
+        | IsGrid
+        | Mobile
+        | DesktopOnly
+        | CustomClass of string
+        | Props of IHTMLProp list
 
-        type ISpacing =
-            | IsMultiline
-            | IsGapless
-            | IsGrid
-
-        type IAlignement =
-            | IsCentered
-            | IsVCentered
-
-        type Option =
-            | Display of IDisplay
-            | Spacing of ISpacing
-            | Alignment of IAlignement
-            | CustomClass of string
-            | Props of IHTMLProp list
-
-        let ofAlignment =
-            function
-            | IsCentered -> Bulma.Grid.Columns.Alignment.IsCentered
-            | IsVCentered -> Bulma.Grid.Columns.Alignment.IsVCentered
-
-        let ofSpacing =
-            function
-            | IsMultiline -> Bulma.Grid.Columns.Spacing.IsMultiline
-            | IsGapless -> Bulma.Grid.Columns.Spacing.IsGapless
-            | IsGrid -> Bulma.Grid.Columns.Spacing.IsGrid
-
-        let ofDisplay =
-            function
-            | Mobile -> Bulma.Grid.Columns.Display.OnMobile
-            | DesktopOnly -> Bulma.Grid.Columns.Display.OnlyDesktop
-
-        type Options =
-            { Display : string option
-              Spacing : string option
-              Alignment : string option
-              CustomClass : string option
-              Props : IHTMLProp list }
-            static member Empty =
-                { Display = None
-                  Spacing = None
-                  Alignment = None
-                  CustomClass = None
-                  Props = [] }
-
-    open Types
-
-    // Alignment
-    let inline isCentered<'T> = Alignment IsCentered
-    let inline isVCentered<'T> = Alignment IsVCentered
-    // Display
-    let inline onMobile<'T> = Display Mobile
-    let inline onDesktopOnly<'T> = Display DesktopOnly
-    // Spacing
-    let inline isMultiline<'T> = Spacing IsMultiline
-    let inline isGapless<'T> = Spacing IsGapless
-    let inline isGrid<'T> = Spacing IsGrid
-    // Extra
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
+    type internal Options =
+        { Display : string option
+          Spacing : string option
+          Alignment : string option
+          CustomClass : string option
+          Props : IHTMLProp list }
+        static member Empty =
+            { Display = None
+              Spacing = None
+              Alignment = None
+              CustomClass = None
+              Props = [] }
 
     let columns (options: Option list) children =
         let parseOptions (result: Options) =
             function
-            | Display display ->
-                { result with Display = ofDisplay display |> Some }
-
-            | Spacing spacing ->
-                { result with Spacing = ofSpacing spacing |> Some }
-
-            | Alignment alignment ->
-                { result with Alignment = ofAlignment alignment |> Some }
-
+            | IsCentered -> { result with Alignment = Classes.Alignment.IsCentered |> Some }
+            | IsVCentered -> { result with Alignment = Classes.Alignment.IsVCentered |> Some }
+            | IsMultiline -> { result with Spacing = Classes.Spacing.IsMultiline |> Some }
+            | IsGapless -> { result with Spacing = Classes.Spacing.IsGapless |> Some }
+            | IsGrid -> { result with Spacing = Classes.Spacing.IsGrid |> Some }
+            | Mobile -> { result with Display = Classes.Display.OnMobile |> Some }
+            | DesktopOnly -> { result with Display = Classes.Display.OnlyDesktop |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Alignment
+                          opts.Display
+                          opts.Spacing
+                          opts.CustomClass ]
+                        [ ]
 
-        div [ yield ClassName ( Helpers.generateClassName Bulma.Grid.Columns.Container
-                                                    [ opts.Alignment
-                                                      opts.Display
-                                                      opts.Spacing
-                                                      opts.CustomClass ] ) :> IHTMLProp
-              yield! opts.Props ]
+        div (classes::opts.Props)
             children

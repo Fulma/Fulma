@@ -5,48 +5,48 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Extensions
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 
 let colorInteractive =
     div [ ClassName "block" ]
-                      [ Slider.slider [ Slider.step 10.
-                                        Slider.defaultValue 40. ] [ ]
-                        Slider.slider [ Slider.isPrimary ] [ ]
-                        Slider.slider [ Slider.isInfo ] [ ]
-                        Slider.slider [ Slider.isSuccess ] [ ]
-                        Slider.slider [ Slider.isWarning ] [ ]
-                        Slider.slider [ Slider.isDanger ] [ ] ]
+                      [ Slider.slider [ Slider.Step 10.
+                                        Slider.DefaultValue 40. ]
+                        Slider.slider [ Slider.Color IsPrimary ]
+                        Slider.slider [ Slider.Color IsInfo ]
+                        Slider.slider [ Slider.Color IsSuccess ]
+                        Slider.slider [ Slider.Color IsWarning ]
+                        Slider.slider [ Slider.Color IsDanger ] ]
 
 let sizeInteractive =
     div [ ClassName "block" ]
-        [ Slider.slider [ Slider.isSmall ] [ ]
-          Slider.slider [ ] [ ]
-          Slider.slider [ Slider.isMedium ] [ ]
-          Slider.slider [ Slider.isLarge ] [ ]
+        [ Slider.slider [ Slider.Size IsSmall ]
+          Slider.slider [ ]
+          Slider.slider [ Slider.Size IsMedium ]
+          Slider.slider [ Slider.Size IsLarge ]
           br []
           br []
-          Slider.slider [ Slider.isFullWidth ] [ ]
+          Slider.slider [ Slider.IsFullWidth ]
         ]
 
 let stylesInteractive =
     div [ ClassName "block" ]
-        [  Slider.slider [ Slider.isCircle; Slider.isDisabled ] [ ]
-           Slider.slider [ Slider.isCircle; Slider.isPrimary ] [ ]
-           Slider.slider [ Slider.isCircle; Slider.isSuccess ] [ ]
-           Slider.slider [ Slider.isCircle; Slider.isWarning ] [ ]
-           Slider.slider [ Slider.isCircle; Slider.isDanger ] [ ]
-           Slider.slider [ Slider.isCircle; Slider.isInfo ] [ ]
-        ]
+        [ Slider.slider [ Slider.IsCircle; Slider.Disabled true ]
+          Slider.slider [ Slider.IsCircle; Slider.Color IsPrimary ]
+          Slider.slider [ Slider.IsCircle; Slider.Color IsSuccess ]
+          Slider.slider [ Slider.IsCircle; Slider.Color IsWarning ]
+          Slider.slider [ Slider.IsCircle; Slider.Color IsDanger ]
+          Slider.slider [ Slider.IsCircle; Slider.Color IsInfo ] ]
 
 let stateInteractive =
     div [ ClassName "block" ]
-        [ Slider.slider [  Slider.isDisabled ] [ ] ]
+        [ Slider.slider [  Slider.Disabled true ] ]
 
 let eventInteractive model dispatch =
     div [ ClassName "block" ]
-        [ Slider.slider [ Slider.onChange (fun x -> dispatch (Change (unbox<int> x.currentTarget?value))) ] [ ]
+        [ Slider.slider [ Slider.OnChange (fun x -> dispatch (Change (unbox<int> x.currentTarget?value))) ]
           div [ ] [ str (string model.Value) ] ]
 
 let root model dispatch =

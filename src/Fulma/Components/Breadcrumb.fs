@@ -1,117 +1,94 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Breadcrumb =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "breadcrumb"
+        module Alignment =
+            let [<Literal>] IsCentered = "is-centered"
+            let [<Literal>] IsRight = "is-right"
+        module Separator =
+            /// Alias for: has-arrow-separator
+            let [<Literal>] Arrow = "has-arrow-separator"
+            /// Alias for: has-bullet-separator
+            let [<Literal>] Bullet = "has-bullet-separator"
+            /// Alias for: has-dot-separator
+            let [<Literal>] Dot = "has-dot-separator"
+            /// Alias for: has-succeeds-separator
+            let [<Literal>] Succeeds = "has-succeeds-separator"
+        module State =
+            let [<Literal>] IsActive = "is-active"
 
-        type IAlignment =
-            | IsCentered
-            | IsRight
+    type Option =
+        | IsCentered
+        | IsRight
+        // Separators
+        | HasArrowSeparator
+        | HasBulletSeparator
+        | HasDotSeparator
+        | HasSucceedsSeparator
+        | Size of ISize
+        | Props of IHTMLProp list
+        | CustomClass of string
 
-        type ISeparator =
-            | Arrow
-            | Bullet
-            | Dot
-            | Succeeds
+    type internal Options =
+        { Props : IHTMLProp list
+          Alignment : string option
+          Separator : string option
+          Size : string option
+          CustomClass : string option }
 
-        let ofAlignment =
-            function
-            | IsCentered -> Bulma.Breadcrumb.Alignment.IsCentered
-            | IsRight -> Bulma.Breadcrumb.Alignment.IsRight
-
-        let ofSeparator =
-            function
-            | Arrow -> Bulma.Breadcrumb.Separator.Arrow
-            | Bullet -> Bulma.Breadcrumb.Separator.Bullet
-            | Dot -> Bulma.Breadcrumb.Separator.Dot
-            | Succeeds -> Bulma.Breadcrumb.Separator.Succeeds
-
-        type Option =
-            | Alignment of IAlignment
-            | Separator of ISeparator
-            | Size of ISize
-            | Props of IHTMLProp list
-            | CustomClass of string
-
-        type Options =
-            { Props : IHTMLProp list
-              Alignment : string option
-              Separator : string option
-              Size : string option
-              CustomClass : string option }
-
-            static member Empty =
-                { Props = []
-                  Alignment = None
-                  Separator = None
-                  Size = None
-                  CustomClass = None }
-
-        module Item =
-
-            type Option =
-                | IsActive
-                | Props of IHTMLProp list
-                | CustomClass of string
-
-            type Options =
-                { Props : IHTMLProp list
-                  IsActive : bool
-                  CustomClass : string option }
-
-                static member Empty =
-                    { Props = []
-                      IsActive = false
-                      CustomClass = None }
-
-    open Types
-
-    // Size
-    let inline isSmall<'T> = Size IsSmall
-    let inline isMedium<'T> = Size IsMedium
-    let inline isLarge<'T> = Size IsLarge
-    // Alignement
-    let inline isCentered<'T> = Alignment IsCentered
-    let inline isRight<'T> = Alignment IsRight
-    // Separator
-    let inline hasArrowSeparator<'T> = Separator Arrow
-    let inline hasBulletSeparator<'T> = Separator Bullet
-    let inline hasDotSeparator<'T> = Separator Dot
-    let inline hasSucceedsSeparator<'T> = Separator Succeeds
-    // Extra
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
+        static member Empty =
+            { Props = []
+              Alignment = None
+              Separator = None
+              Size = None
+              CustomClass = None }
 
     let breadcrumb options children =
         let parseOptions result =
             function
-            | Alignment alignment -> { result with Alignment = ofAlignment alignment |> Some }
-            | Separator separator -> { result with Separator = ofSeparator separator |> Some }
+            | IsCentered -> { result with Alignment = Classes.Alignment.IsCentered |> Some }
+            | IsRight -> { result with Alignment = Classes.Alignment.IsRight |> Some }
+            // Separators
+            | HasArrowSeparator -> { result with Separator = Classes.Separator.Arrow |> Some }
+            | HasBulletSeparator -> { result with Separator = Classes.Separator.Bullet |> Some }
+            | HasDotSeparator -> { result with Separator = Classes.Separator.Dot |> Some }
+            | HasSucceedsSeparator -> { result with Separator = Classes.Separator.Succeeds |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Alignment; opts.Separator; opts.Size; opts.CustomClass ]
+                        [ ]
 
-        nav [ yield ClassName (Helpers.generateClassName Bulma.Breadcrumb.Container
-                                [ opts.Alignment; opts.Separator; opts.Size; opts.CustomClass ]) :> IHTMLProp
-              yield! opts.Props ]
+        nav (classes::opts.Props)
             [ ul [ ] children ]
 
     module Item =
 
-        let inline isActive<'T> = Item.IsActive
-        let inline props x = Item.Props x
-        let inline customClass x = Item.CustomClass x
+        type Option =
+            | IsActive
+            | Props of IHTMLProp list
+            | CustomClass of string
+
+        type internal Options =
+            { Props : IHTMLProp list
+              IsActive : bool
+              CustomClass : string option }
+
+            static member Empty =
+                { Props = []
+                  IsActive = false
+                  CustomClass = None }
 
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
@@ -122,7 +99,7 @@ module Breadcrumb =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        li [ yield Helpers.classes "" [opts.CustomClass]
-                        [Bulma.Breadcrumb.State.IsActive, opts.IsActive]
+        li [ yield Helpers.classes "" [ opts.CustomClass ]
+                        [ Classes.State.IsActive, opts.IsActive ]
              yield! opts.Props ]
             children

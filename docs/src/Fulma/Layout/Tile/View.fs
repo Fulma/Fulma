@@ -1,18 +1,16 @@
 module Layouts.Tile.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Layouts
 
-
 let iconInteractive =
     Tile.ancestor [ ]
-        [ Tile.parent [ Tile.isVertical
-                        Tile.is4 ]
+        [ Tile.parent [ Tile.IsVertical
+                        Tile.Size Tile.Is4 ]
             [ Tile.child [ ]
                 [ Box.box' [ ]
                     [ Heading.p [ ]
@@ -28,7 +26,7 @@ let iconInteractive =
             ]
           Tile.parent [ ]
             [ Tile.child [ ]
-                [ Box.box' [ Box.props [ Style [ Height "100%" ] ] ]
+                [ Box.box' [ Common.Props [ Style [ Height "100%" ] ] ]
                     [ Heading.p [ ]
                         [ str "Tile n°3" ]
                       p [ ]

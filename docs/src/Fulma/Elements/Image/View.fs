@@ -9,15 +9,15 @@ open Fulma.Elements
 
 let fixedInteractive =
     div [ ClassName "block" ]
-        [ Image.image [ Image.is64x64 ]
+        [ Image.image [ Image.Is64x64 ]
             [ img [ Src "https://dummyimage.com/64x64/7a7a7a/fff" ] ]
           br [ ]
-          Image.image [ Image.is128x128 ]
+          Image.image [ Image.Is128x128 ]
             [ img [ Src "https://dummyimage.com/128x128/7a7a7a/fff" ] ] ]
 
 let responsiveInteractive =
     div [ ClassName "block" ]
-        [ Image.image [ Image.is2by1 ]
+        [ Image.image [ Image.Is2by1 ]
             [ img [ Src "https://dummyimage.com/640x320/7a7a7a/fff" ] ] ]
 
 let root model dispatch =

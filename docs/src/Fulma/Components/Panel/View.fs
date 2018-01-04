@@ -1,10 +1,9 @@
 module Components.Panel.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Layouts
@@ -12,24 +11,23 @@ open Fulma.Elements.Form
 
 let iconInteractive =
     Columns.columns [ ]
-        [ Column.column [ Column.Offset.is3
-                          Column.Width.is6 ]
+        [ Column.column [ Column.Offset (Column.All, Column.Is3)
+                          Column.Width (Column.All, Column.Is6) ]
             [ Panel.panel [ ]
                 [ Panel.heading [ ] [ str "Repositories"]
                   Panel.block [ ]
-                    [ Control.control_div [ Control.hasIconLeft ]
-                        [ Input.input [ Input.isSmall
-                                        Input.typeIsText
-                                        Input.placeholder "Search" ]
-                          Icon.icon [ Icon.isSmall
-                                      Icon.isLeft ]
+                    [ Control.control [ Control.HasIconLeft ]
+                        [ Input.text [ Input.Size IsSmall
+                                       Input.Placeholder "Search" ]
+                          Icon.icon [ Icon.Size IsSmall
+                                      Icon.IsLeft ]
                                     [ i [ ClassName "fa fa-search" ] [ ] ] ] ]
                   Panel.tabs [ ]
                     [ Panel.tab [ ] [ str "All" ]
-                      Panel.tab [ Panel.Tab.isActive ] [ str "Fable" ]
+                      Panel.tab [ Panel.Tab.Active true ] [ str "Fable" ]
                       Panel.tab [ ] [ str "Elmish" ]
                       Panel.tab [ ] [ str "Bulma" ] ]
-                  Panel.block [ Panel.Block.isActive ]
+                  Panel.block [ Panel.Block.Active true ]
                     [ Panel.icon [ ] [ i [ ClassName "fa fa-book" ] [ ] ]
                       str "Bulma" ]
                   Panel.block [ ]
@@ -39,9 +37,9 @@ let iconInteractive =
                     [ input [ Type "checkbox" ]
                       str "I am a checkbox" ]
                   Panel.block [ ]
-                    [ Button.button_a [ Button.isPrimary
-                                        Button.isOutlined
-                                        Button.isFullWidth ]
+                    [ Button.button [ Button.Color IsPrimary
+                                      Button.IsOutlined
+                                      Button.IsFullwidth ]
                                     [ str "Reset" ] ] ] ] ]
 
 

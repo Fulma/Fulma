@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
 open Fulma.Layouts
@@ -20,72 +21,72 @@ let inlineBlockInteractive =
                     Checkradio.checkbox [ ] [ str "Two" ]
 
                     b [] [str "Inline"]
-                    Field.field_div [ ]
+                    Field.field [ ]
                         [ yield! Checkradio.checkboxInline [ ] [ str "One " ]
                           yield! Checkradio.checkboxInline [ ] [ str "Two " ] ] ] ]
 
           Column.column [ ]
             [ div [ ClassName "block" ]
                   [ b [] [str "Block"]
-                    Checkradio.radio [ Checkradio.name "block" ] [ str "One" ]
-                    Checkradio.radio [ Checkradio.name "block"  ] [ str "Two" ]
+                    Checkradio.radio [ Checkradio.Name "block" ] [ str "One" ]
+                    Checkradio.radio [ Checkradio.Name "block"  ] [ str "Two" ]
 
                     b [] [str "Inline"]
-                    Field.field_div [ ]
-                        [ yield! Checkradio.radioInline [ Checkradio.name "inline" ] [ str "One" ]
-                          yield! Checkradio.radioInline [ Checkradio.name "inline" ] [ str "Two " ] ] ] ] ]
+                    Field.field [ ]
+                        [ yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "One" ]
+                          yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "Two " ] ] ] ] ]
 
 let rtl =
     Columns.columns [ ]
         [ Column.column [ ]
-            [ Checkradio.checkbox [ Checkradio.isRtl ] [ str "Label is on the left" ] ]
+            [ Checkradio.checkbox [ Checkradio.IsRtl ] [ str "Label is on the left" ] ]
 
           Column.column [ ]
-            [ Checkradio.radio [ Checkradio.isRtl ] [ str "Label is on the left" ] ] ]
+            [ Checkradio.radio [ Checkradio.IsRtl ] [ str "Label is on the left" ] ] ]
 
 let colorInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
-            [ Checkradio.checkbox [ Checkradio.isChecked true ] [ str "Checkbox" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isWhite ] [ str "White" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isLight ] [ str "Light" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isDark ] [ str "Dark" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlack ] [ str "Black" ] ]
+            [ Checkradio.checkbox [ Checkradio.Checked true ] [ str "Checkbox" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsWhite ] [ str "White" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsLight ] [ str "Light" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsDark ] [ str "Dark" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsBlack ] [ str "Black" ] ]
 
           Column.column [ ]
-            [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isPrimary ] [ str "Primary" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isInfo ] [ str "Info" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isSuccess ] [ str "Success" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isWarning ] [ str "Warning" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isDanger ] [ str "Danger" ] ]
+            [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsPrimary ] [ str "Primary" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsInfo ] [ str "Info" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsSuccess ] [ str "Success" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsWarning ] [ str "Warning" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsDanger ] [ str "Danger" ] ]
 
           Column.column [ ]
-            [ Checkradio.radio [ Checkradio.isChecked true; Checkradio.name "rad" ] [ str "Checkbox" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isWhite; Checkradio.name "rad" ] [ str "White" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isLight; Checkradio.name "rad" ] [ str "Light" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isDark; Checkradio.name "rad" ] [ str "Dark" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isBlack; Checkradio.name "rad" ] [ str "Black" ] ]
+            [ Checkradio.radio [ Checkradio.Checked true; Checkradio.Name "rad" ] [ str "Checkbox" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsWhite; Checkradio.Name "rad" ] [ str "White" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsLight; Checkradio.Name "rad" ] [ str "Light" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsDark; Checkradio.Name "rad" ] [ str "Dark" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsBlack; Checkradio.Name "rad" ] [ str "Black" ] ]
 
           Column.column [ ]
-            [ Checkradio.radio [ Checkradio.isChecked true; Checkradio.isPrimary ; Checkradio.name "rad1" ] [ str "Primary" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isInfo; Checkradio.name "rad1" ] [ str "Info" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isSuccess; Checkradio.name "rad1" ] [ str "Success" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isWarning; Checkradio.name "rad1" ] [ str "Warning" ]
-              Checkradio.radio [ Checkradio.isChecked true; Checkradio.isDanger; Checkradio.name "rad1" ] [ str "Danger" ] ] ]
+            [ Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsPrimary ; Checkradio.Name "rad1" ] [ str "Primary" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsInfo; Checkradio.Name "rad1" ] [ str "Info" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsSuccess; Checkradio.Name "rad1" ] [ str "Success" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsWarning; Checkradio.Name "rad1" ] [ str "Warning" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsDanger; Checkradio.Name "rad1" ] [ str "Danger" ] ] ]
 
 let sizeInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
-            [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isSmall ] [ str "Small" ]
-              Checkradio.checkbox [ Checkradio.isChecked true ] [ str "Normal" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isMedium ] [ str "Medium" ]
-              Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isLarge ] [ str "Large" ] ]
+            [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Size IsSmall ] [ str "Small" ]
+              Checkradio.checkbox [ Checkradio.Checked true ] [ str "Normal" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Size IsMedium ] [ str "Medium" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Size IsLarge ] [ str "Large" ] ]
 
           Column.column [ ]
-            [ Checkradio.radio [ Checkradio.name "rSize"; Checkradio.isSmall ] [ str "Small" ]
-              Checkradio.radio [ Checkradio.name "rSize";] [ str "Normal" ]
-              Checkradio.radio [ Checkradio.name "rSize"; Checkradio.isMedium ] [ str "Medium" ]
-              Checkradio.radio [ Checkradio.name "rSize"; Checkradio.isLarge ] [ str "Large" ] ] ]
+            [ Checkradio.radio [ Checkradio.Name "rSize"; Checkradio.Size IsSmall ] [ str "Small" ]
+              Checkradio.radio [ Checkradio.Name "rSize";] [ str "Normal" ]
+              Checkradio.radio [ Checkradio.Name "rSize"; Checkradio.Size IsMedium ] [ str "Medium" ]
+              Checkradio.radio [ Checkradio.Name "rSize"; Checkradio.Size IsLarge ] [ str "Large" ] ] ]
 
 let stylesInteractive =
     div [ ]
@@ -94,78 +95,78 @@ let stylesInteractive =
           br [ ]
           Columns.columns [ ]
               [ Column.column [ ]
-                  [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle; Checkradio.isDisabled true ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle;  ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle; Checkradio.isPrimary ] [ str "Primary" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle; Checkradio.isDanger ] [ str "Danger" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle; Checkradio.isInfo ] [ str "Info" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isCircle; Checkradio.isWarning ] [ str "Warning" ] ]
+                  [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle; Checkradio.Disabled true ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle;  ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle; Checkradio.Color IsPrimary ] [ str "Primary" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle; Checkradio.Color IsDanger ] [ str "Danger" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle; Checkradio.Color IsInfo ] [ str "Info" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.IsCircle; Checkradio.Color IsWarning ] [ str "Warning" ] ]
 
                 Column.column [ ]
-                  [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder; Checkradio.isDisabled true ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder;  ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder; Checkradio.isPrimary ] [ str "Primary" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder; Checkradio.isDanger ] [ str "Danger" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder; Checkradio.isInfo ] [ str "Info" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasNoBorder; Checkradio.isWarning ] [ str "Warning" ] ]
+                  [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder; Checkradio.Disabled true ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder;  ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder; Checkradio.Color IsPrimary ] [ str "Primary" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder; Checkradio.Color IsDanger ] [ str "Danger" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder; Checkradio.Color IsInfo ] [ str "Info" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasNoBorder; Checkradio.Color IsWarning ] [ str "Warning" ] ]
 
                 // Hide the isBlock display for now as the display is bad: https://github.com/Wikiki/bulma-checkradio/issues/10
                 // Column.column [ ]
-                //   [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock; Checkradio.isDisabled true ] [ str "Checkbox" ]
-                //     Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock;  ] [ str "Checkbox" ]
-                //     Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock; Checkradio.isPrimary ] [ str "Primary" ]
-                //     Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock; Checkradio.isDanger ] [ str "Danger" ]
-                //     Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock; Checkradio.isInfo ] [ str "Info" ]
-                //     Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.isBlock; Checkradio.isWarning ] [ str "Warning" ] ]
+                //   [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock; Checkradio.Disabled true ] [ str "Checkbox" ]
+                //     Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock;  ] [ str "Checkbox" ]
+                //     Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock; Checkradio.isPrimary ] [ str "Primary" ]
+                //     Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock; Checkradio.isDanger ] [ str "Danger" ]
+                //     Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock; Checkradio.isInfo ] [ str "Info" ]
+                //     Checkradio.checkbox [ Checkradio.Checked true; Checkradio.isBlock; Checkradio.isWarning ] [ str "Warning" ] ]
 
                 Column.column [ ]
-                  [ Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isDisabled true ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor;  ] [ str "Checkbox" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isPrimary ] [ str "Primary" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isDanger ] [ str "Danger" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isInfo ] [ str "Info" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isWarning ] [ str "Warning" ] ] ]
+                  [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Disabled true ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor;  ] [ str "Checkbox" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsPrimary ] [ str "Primary" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsDanger ] [ str "Danger" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsInfo ] [ str "Info" ]
+                    Checkradio.checkbox [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsWarning ] [ str "Warning" ] ] ]
 
           b [ ]
             [ str "Radio" ]
           br [ ]
           Columns.columns [ ]
               [ Column.column [ ]
-                  [ Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isDisabled true ] [ str "Checkbox" ]
-                    Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor;  ] [ str "Checkbox" ]
-                    Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isPrimary ] [ str "Primary" ]
-                    Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isDanger ] [ str "Danger" ]
-                    Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isInfo ] [ str "Info" ]
-                    Checkradio.radio [ Checkradio.isChecked true; Checkradio.hasBackgroundColor; Checkradio.isWarning ] [ str "Warning" ] ] ] ]
+                  [ Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Disabled true ] [ str "Checkbox" ]
+                    Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor;  ] [ str "Checkbox" ]
+                    Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsPrimary ] [ str "Primary" ]
+                    Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsDanger ] [ str "Danger" ]
+                    Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsInfo ] [ str "Info" ]
+                    Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsWarning ] [ str "Warning" ] ] ] ]
 
 let stateInteractive =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Checkradio.checkbox [ Checkradio.isDisabled true ] [ str "Disabled" ]
-                    Checkradio.checkbox [ Checkradio.isDisabled true; Checkradio.isChecked true ] [ str "Disabled & Checked" ]
+                  [ Checkradio.checkbox [ Checkradio.Disabled true ] [ str "Disabled" ]
+                    Checkradio.checkbox [ Checkradio.Disabled true; Checkradio.Checked true ] [ str "Disabled & Checked" ]
                     Checkradio.checkbox [ ] [ str "Unchecked" ]
-                    Checkradio.checkbox [ Checkradio.isChecked true;] [ str "Checked" ] ] ]
+                    Checkradio.checkbox [ Checkradio.Checked true;] [ str "Checked" ] ] ]
 
           Column.column [ ]
             [ div [ ClassName "block" ]
-                  [ Checkradio.radio [ Checkradio.isDisabled true ] [ str "Disabled" ]
-                    Checkradio.radio [ Checkradio.isDisabled true; Checkradio.isChecked true ] [ str "Disabled & Checked" ]
+                  [ Checkradio.radio [ Checkradio.Disabled true ] [ str "Disabled" ]
+                    Checkradio.radio [ Checkradio.Disabled true; Checkradio.Checked true ] [ str "Disabled & Checked" ]
                     Checkradio.radio [ ] [ str "Unchecked" ]
-                    Checkradio.radio [ Checkradio.isChecked true;] [ str "Checked" ] ] ] ]
+                    Checkradio.radio [ Checkradio.Checked true;] [ str "Checked" ] ] ] ]
 
 let eventInteractive model dispatch =
     let newState = not model.IsChecked
 
     div [ ClassName "block" ]
         [ Checkradio.checkbox
-            [ Checkradio.isChecked model.IsChecked
-              Checkradio.onChange (fun x -> dispatch (Change newState)) ]
+            [ Checkradio.Checked model.IsChecked
+              Checkradio.OnChange (fun x -> dispatch (Change newState)) ]
             [ str  (string model.IsChecked) ]
 
           Checkradio.checkbox
-                [ Checkradio.isChecked model.IsChecked
-                  Checkradio.onChange (fun x -> dispatch (Change newState)) ]
+                [ Checkradio.Checked model.IsChecked
+                  Checkradio.OnChange (fun x -> dispatch (Change newState)) ]
                 [ if model.IsChecked then
                     yield Icon.faIcon [ ] [ Fa.icon Fa.I.Plane ]
                   else

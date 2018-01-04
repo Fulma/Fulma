@@ -5,6 +5,7 @@ open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 
 let basic =
@@ -12,11 +13,11 @@ let basic =
         [ str "I am a notification" ]
 
 let color =
-    Notification.notification [ Notification.isSuccess ]
+    Notification.notification [ Notification.Color IsSuccess ]
         [ str "I am a notification with some colors" ]
 
 let delete =
-    Notification.notification [ Notification.isDanger ]
+    Notification.notification [ Notification.Color IsDanger ]
         [ Notification.delete [ ] [ ]
           str "I am a notification with some colors and a delete button" ]
 

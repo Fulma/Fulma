@@ -1,12 +1,10 @@
 module Components.Modal.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
-open Fulma.Elements.Form
 open Fulma.Components
 
 let content =
@@ -35,38 +33,36 @@ let content =
                      Maecenas vestibulum interdum commodo." ] ]
 
 let basicModal model dispatch =
-    Modal.modal [ if model.ShowBasicModal then
-                    yield Modal.isActive ]
-        [ Modal.background [ Modal.Background.props [ OnClick (fun _ -> dispatch ToggleBasicModal) ] ] [ ]
+    Modal.modal [ Modal.Active model.ShowBasicModal ]
+        [ Modal.background [ Props [ OnClick (fun _ -> dispatch ToggleBasicModal) ] ] [ ]
           Modal.content [ ]
             [ Box.box' [ ]
                 [ content ] ]
-          Modal.close [ Modal.Close.isLarge
-                        Modal.Close.onClick (fun _ -> dispatch ToggleBasicModal) ] [ ] ]
+          Modal.close [ Modal.Close.Size IsLarge
+                        Modal.Close.OnClick (fun _ -> dispatch ToggleBasicModal) ] [ ] ]
 
 let basic dispatch =
-    Button.button_a [ Button.onClick (fun _ -> dispatch ToggleBasicModal)]
+    Button.button [ Button.OnClick (fun _ -> dispatch ToggleBasicModal)]
         [ str "Show modal" ]
 
 let cardModal model dispatch =
-    Modal.modal [ if model.ShowCardModal then
-                    yield Modal.isActive ]
-        [ Modal.background [ Modal.Background.props [ OnClick (fun _ -> dispatch ToggleCardModal) ] ] [ ]
+    Modal.modal [ Modal.Active model.ShowCardModal ]
+        [ Modal.background [ Props [ OnClick (fun _ -> dispatch ToggleCardModal) ] ] [ ]
           Modal.Card.card [ ]
             [ Modal.Card.head [ ]
                 [ Modal.Card.title [ ]
                     [ str "Modal title" ]
-                  Delete.delete [ Delete.onClick (fun _ -> dispatch ToggleCardModal ) ] [ ] ]
+                  Delete.delete [ Delete.OnClick (fun _ -> dispatch ToggleCardModal ) ] [ ] ]
               Modal.Card.body [ ]
                 [ content ]
               Modal.Card.foot [ ]
-                [ Button.button_a [ Button.isSuccess ]
+                [ Button.button [ Button.Color IsSuccess ]
                     [ str "Save changes" ]
-                  Button.button_a [ ]
+                  Button.button [ ]
                     [ str "Cancel" ] ] ] ]
 
 let card dispatch =
-    Button.button_a [ Button.onClick (fun _ -> dispatch ToggleCardModal)]
+    Button.button [ Button.OnClick (fun _ -> dispatch ToggleCardModal)]
         [ str "Show modal" ]
 
 let root model dispatch =

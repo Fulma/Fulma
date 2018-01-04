@@ -1,24 +1,17 @@
 module Components.Menu.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
-open Fulma.Elements
-open Fulma.Elements.Form
 open Fulma.Components
-open Fulma.BulmaClasses
 
 let menuItem label isActive =
-    li []
-       [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]
-           [ str label ] ]
+    Menu.item [ Menu.Item.Active isActive ]
+       [ str label ]
 
 let subMenu label isActive children =
-    li []
-       [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]
-                 [ str label ]
+    li [ ]
+       [ Menu.item [ Menu.Item.Active isActive ]
+            [ str label ]
          ul [ ] children ]
 
 let basic =

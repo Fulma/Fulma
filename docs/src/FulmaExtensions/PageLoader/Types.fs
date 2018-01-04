@@ -1,14 +1,14 @@
 module FulmaExtensions.PageLoader.Types
-open Fulma.Common
+open Fulma
 
 type Model =
     { Intro : string
       Viewer : Viewer.Types.Model
       IsLoading : bool
-      Color : ILevelAndColor }
+      Color : IColor }
 
 type Msg =
     | ViewerMsg of Viewer.Types.Msg
-    | IsLoadingMsg of ILevelAndColor
+    | IsLoadingMsg of IColor
     | FakeRequestSuccess of unit
     | FakeRequestError of exn

@@ -1,47 +1,46 @@
 namespace Fulma.Elements
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
 module Table =
-    module Types =
-        type TableOption =
-            | IsBordered
-            | IsStripped
-            | IsFullwidth
-            | IsNarrow
-            | CustomClass of string
-            | Props of IHTMLProp list
 
-        type TableOptions =
-            { IsBordered : bool
-              IsStripped : bool
-              IsFullwidth : bool
-              IsNarrow : bool
-              CustomClass : string option
-              Props : IHTMLProp list }
-            static member Empty =
-                { IsBordered = false
-                  IsStripped = false
-                  IsNarrow = false
-                  IsFullwidth = false
-                  CustomClass = None
-                  Props = [] }
+    module Classes =
+        let [<Literal>] Container = "table"
+        module Row =
+            module State =
+                let [<Literal>] IsSelected = "is-selected"
+        module Style =
+          let [<Literal>] IsBordered = "is-bordered"
+          let [<Literal>] IsStripped = "is-stripped "
+          let [<Literal>] IsFullwidth = "is-fullwidth"
+        module Spacing =
+            let [<Literal>] IsNarrow = "is-narrow"
 
-    open Types
+    type TableOption =
+        | IsBordered
+        | IsStripped
+        | IsFullwidth
+        | IsNarrow
+        | CustomClass of string
+        | Props of IHTMLProp list
 
-    // Styling
-    let inline isBordered<'T> = IsBordered
-    let inline isStripped<'T> = IsStripped
-    let inline isFullwidth<'T> = IsFullwidth
-    // Spacing
-    let inline isNarrow<'T> = IsNarrow
-    // Extra
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
+    type private TableOptions =
+        { IsBordered : bool
+          IsStripped : bool
+          IsFullwidth : bool
+          IsNarrow : bool
+          CustomClass : string option
+          Props : IHTMLProp list }
+        static member Empty =
+            { IsBordered = false
+              IsStripped = false
+              IsNarrow = false
+              IsFullwidth = false
+              CustomClass = None
+              Props = [] }
 
     let table options children =
         let parseOptions (result : TableOptions) =
@@ -54,14 +53,10 @@ module Table =
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
-        let class' = Helpers.classes Bulma.Table.Container [opts.CustomClass]
-                        [ Bulma.Table.Style.IsBordered, opts.IsBordered
-                          Bulma.Table.Style.IsStripped, opts.IsStripped
-                          Bulma.Table.Style.IsFullwidth, opts.IsFullwidth
-                          Bulma.Table.Spacing.IsNarrow, opts.IsNarrow ]
+        let classes = Helpers.classes Classes.Container [opts.CustomClass]
+                        [ Classes.Style.IsBordered, opts.IsBordered
+                          Classes.Style.IsStripped, opts.IsStripped
+                          Classes.Style.IsFullwidth, opts.IsFullwidth
+                          Classes.Spacing.IsNarrow, opts.IsNarrow ]
 
-        table (class'::opts.Props) children
-
-    module Row =
-        // Row
-        let inline isSelected<'T> = ClassName Bulma.Table.Row.State.IsSelected
+        table (classes::opts.Props) children

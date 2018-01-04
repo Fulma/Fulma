@@ -1,10 +1,9 @@
 module Viewer.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Components
 open Fulma.Elements
 
@@ -32,7 +31,7 @@ let root interactiveView model dispatch =
     Card.card [ ]
         [ yield Card.content [ ] [ interactiveView ]
           yield Card.footer
-            [ Card.Footer.props [ OnClick (fun _ -> eventToTrigger |> dispatch) ] ]
+            [ Common.Props [ OnClick (fun _ -> eventToTrigger |> dispatch) ] ]
             [ footerItemIcon
               footerItemText
               footerItemIcon ]

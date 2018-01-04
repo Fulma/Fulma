@@ -1,7 +1,6 @@
 namespace Fulma.Layouts
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
@@ -11,49 +10,51 @@ open Fable.Import
 [<RequireQualifiedAccess>]
 module Level =
 
-    module Types =
-
-        module Level =
-
-            type Option =
-                | Props of IHTMLProp list
-                | IsMobile
-                | CustomClass of string
-
-            type Options =
-                { Props : IHTMLProp list
-                  IsMobile : bool
-                  CustomClass : string option }
-
-                static member Empty =
-                    { Props = []
-                      IsMobile = false
-                      CustomClass = None }
-
+    module Classes =
+        let [<Literal>] Container = "level"
+        let [<Literal>] Left = "level-left"
+        let [<Literal>] Right = "level-right"
         module Item =
-
-            type Option =
-                | Props of IHTMLProp list
-                | HasTextCentered
-                | CustomClass of string
-
-            type Options =
-                { Props : IHTMLProp list
-                  HasTextCentered : bool
-                  CustomClass : string option }
-
-                static member Empty =
-                    { Props = []
-                      HasTextCentered = false
-                      CustomClass = None }
-
-    open Types
+            let [<Literal>] Container = "level-item"
+            let [<Literal>] HasTextCentered = "has-text-centered"
+            let [<Literal>] Heading = "heading"
+            let [<Literal>] Title = "title"
+        module Mobile =
+            let [<Literal>] IsHorizontal = "is-mobile"
 
     module Level =
-        let inline isMobile<'T> = Level.IsMobile
-        // Extra
-        let inline props x = Level.Props x
-        let inline customClass x = Level.CustomClass x
+
+        type Option =
+            | Props of IHTMLProp list
+            | IsMobile
+            | CustomClass of string
+
+        type internal Options =
+            { Props : IHTMLProp list
+              IsMobile : bool
+              CustomClass : string option }
+
+            static member Empty =
+                { Props = []
+                  IsMobile = false
+                  CustomClass = None }
+
+    module Item =
+
+        type Option =
+            | Props of IHTMLProp list
+            | HasTextCentered
+            | CustomClass of string
+
+        type internal Options =
+            { Props : IHTMLProp list
+              HasTextCentered : bool
+              CustomClass : string option }
+
+            static member Empty =
+                { Props = []
+                  HasTextCentered = false
+                  CustomClass = None }
 
     let level (options : Level.Option list) children =
         let parseOptions (result: Level.Options ) opt =
@@ -63,39 +64,19 @@ module Level =
             | Level.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Level.Options.Empty
-        let class' = Helpers.classes Bulma.Level.Container [opts.CustomClass]
-                        [ Bulma.Level.Mobile.IsHorizontal, opts.IsMobile ]
-
-        nav (class'::opts.Props) children
-
-    let inline props x = GenericOption.Props x
-    let inline customClass x = GenericOption.CustomClass x
+        let classes = Helpers.classes Classes.Container [opts.CustomClass]
+                        [ Classes.Mobile.IsHorizontal, opts.IsMobile ]
+        nav (classes::opts.Props) children
 
     let left (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Level.Left [opts.CustomClass] []
-
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Left [opts.CustomClass] []
+        div (classes::opts.Props) children
 
     let right (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Level.Right [opts.CustomClass] []
-
-        div (class'::opts.Props) children
-
-    module Item =
-        let inline hasTextCentered<'T> = Item.HasTextCentered
-        // Extra
-        let inline props x = Item.Props x
-        let inline customClass x = Item.CustomClass x
-
-    module Heading =
-        let inline props x = GenericOption.Props x
-        let inline customClass x = GenericOption.CustomClass x
-
-    module Title =
-        let inline props x = GenericOption.Props x
-        let inline customClass x = GenericOption.CustomClass x
+        let classes = Helpers.classes Classes.Right [opts.CustomClass] []
+        div (classes::opts.Props) children
 
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
@@ -105,19 +86,16 @@ module Level =
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
-        let class' = Helpers.classes Bulma.Level.Item.Container [opts.CustomClass]
-                        [ Bulma.Level.Item.HasTextCentered, opts.HasTextCentered ]
-
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Item.Container [opts.CustomClass]
+                        [ Classes.Item.HasTextCentered, opts.HasTextCentered ]
+        div (classes::opts.Props) children
 
     let heading (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Level.Item.Heading [opts.CustomClass] []
-
-        p (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Item.Heading [opts.CustomClass] []
+        p (classes::opts.Props) children
 
     let title (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Level.Item.Title [opts.CustomClass] []
-
-        p (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Item.Title [opts.CustomClass] []
+        p (classes::opts.Props) children

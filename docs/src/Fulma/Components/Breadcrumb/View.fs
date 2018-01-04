@@ -1,10 +1,9 @@
 module Components.Breadcrumb.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 open Fulma.Components
 
@@ -14,52 +13,52 @@ let basic =
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.isActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
             [ a [ ] [ str "Fable.React" ] ] ]
 
 let alignmentCenter =
-    Breadcrumb.breadcrumb [ Breadcrumb.isCentered ]
+    Breadcrumb.breadcrumb [ Breadcrumb.IsCentered ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.isActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let icons =
     Breadcrumb.breadcrumb [ ]
         [ Breadcrumb.item [ ]
             [ a [ ]
-                [ Icon.icon [ Icon.isSmall ]
+                [ Icon.icon [ Icon.Size IsSmall ]
                     [ i [ ClassName "fa fa-home" ] [ ] ]
                   str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ]
-                [ Icon.icon [ Icon.isSmall ]
+                [ Icon.icon [ Icon.Size IsSmall ]
                     [ i [ ClassName "fa fa-book" ] [ ] ]
                   str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.isActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
             [ a [ ]
-                [ Icon.icon [ Icon.isSmall ]
+                [ Icon.icon [ Icon.Size IsSmall ]
                     [ i [ ClassName "fa fa-thumbs-up" ] [ ] ]
                   str "Elmish" ] ] ]
 
 let size =
-    Breadcrumb.breadcrumb [ Breadcrumb.isLarge ]
+    Breadcrumb.breadcrumb [ Breadcrumb.Size IsLarge ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.isActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let separator =
-    Breadcrumb.breadcrumb [ Breadcrumb.hasSucceedsSeparator ]
+    Breadcrumb.breadcrumb [ Breadcrumb.HasSucceedsSeparator ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.isActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let root model dispatch =

@@ -1,10 +1,8 @@
 module Layouts.Level.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Layouts
 open Fulma.Elements.Form
 open Fulma.Elements
@@ -13,16 +11,15 @@ let iconInteractive =
     Level.level [ ]
         [ Level.left [ ]
             [ Level.item [ ]
-                [ Heading.h5 [ Heading.isSubtitle ]
+                [ Heading.h5 [ Heading.IsSubtitle ]
                     [ strong [ ] [ str "123"]
                       str " posts" ] ]
               Level.item [ ]
-                [ Field.field_div [ Field.hasAddons ]
-                    [ Control.control_div [ ]
-                        [ Input.input [ Input.typeIsText
-                                        Input.placeholder "Find a post" ] ]
-                      Control.control_div [ ]
-                        [ Button.button_a [ ]
+                [ Field.field [ Field.HasAddons ]
+                    [ Control.control [ ]
+                        [ Input.text [ Input.Placeholder "Find a post" ] ]
+                      Control.control [ ]
+                        [ Button.button [ ]
                             [ str "Search" ] ] ] ] ]
           Level.right [ ]
             [ Level.item [ ]
@@ -34,19 +31,19 @@ let iconInteractive =
               Level.item [ ]
                 [ a [ ] [ str "Deleted" ] ]
               Level.item [ ]
-                [ Button.button_a [ Button.isSuccess ] [ str "New" ] ] ] ]
+                [ Button.button [ Button.Color IsSuccess ] [ str "New" ] ] ] ]
 
 let centered =
     Level.level [ ]
-        [ Level.item [ Level.Item.hasTextCentered ]
+        [ Level.item [ Level.Item.HasTextCentered ]
             [ div [ ]
                 [ Level.heading [ ] [ str "Stars" ]
                   Level.title [ ] [ str "1,010" ] ] ]
-          Level.item [ Level.Item.hasTextCentered ]
+          Level.item [ Level.Item.HasTextCentered ]
             [ div [ ]
                 [ Level.heading [ ] [ str "Forks" ]
                   Level.title [ ] [ str "127" ] ] ]
-          Level.item [ Level.Item.hasTextCentered ]
+          Level.item [ Level.Item.HasTextCentered ]
             [ div [ ]
                 [ Level.heading [ ] [ str "Watchers" ]
                   Level.title [ ] [ str "66" ] ] ] ]

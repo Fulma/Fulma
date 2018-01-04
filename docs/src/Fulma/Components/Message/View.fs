@@ -1,12 +1,9 @@
 module Components.Message.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
-open Fulma.Elements.Form
 open Fulma.Components
 
 let loremText =
@@ -23,14 +20,14 @@ let basic =
 
 let color =
     div [ ]
-        [ Message.message [ Message.isInfo ]
+        [ Message.message [ Message.Color IsInfo ]
             [ Message.header [ ]
                 [ str "Nunc finibus ligula et semper suscipit"
                   Delete.delete [ ]
                     [ ] ]
               Message.body [ ]
                 [ str loremText ] ]
-          Message.message [ Message.isDanger ]
+          Message.message [ Message.Color IsDanger ]
             [ Message.header [ ]
                 [ str "Nunc finibus ligula et semper suscipit"
                   Delete.delete [ ]
@@ -39,7 +36,7 @@ let color =
                 [ str loremText ] ] ]
 
 let sizes =
-    Message.message [ Message.isSmall ]
+    Message.message [ Message.Size IsSmall ]
         [ Message.header [ ]
             [ str "Nunc finibus ligula et semper suscipit"
               Delete.delete [ ]

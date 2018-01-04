@@ -1,13 +1,9 @@
 module Elements.Content.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
-open Fulma.Layouts
-
 
 let contentInteractive =
     Content.content [ ]
@@ -35,7 +31,7 @@ let contentInteractive =
                      Maecenas vestibulum interdum commodo." ] ]
 
 let sizeInteractive =
-    Content.content [ Content.isSmall ]
+    Content.content [ Content.Size IsSmall ]
         [ h1 [ ] [str "Hello World"]
           p [ ]
             [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit.

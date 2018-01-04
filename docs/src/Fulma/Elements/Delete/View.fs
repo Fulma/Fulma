@@ -1,27 +1,26 @@
 module Elements.Delete.View
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types
+open Fulma
 open Fulma.Elements
 
 let demoInteractive =
     div [ ClassName "block" ]
         [ Delete.delete
-            [ Delete.isSmall ] [ ]
+            [ Delete.Size IsSmall ] [ ]
           Delete.delete
             [ ] [ ]
           Delete.delete
-            [ Delete.isMedium ] [ ]
+            [ Delete.Size IsMedium ] [ ]
           Delete.delete
-            [ Delete.isLarge ] [ ] ]
+            [ Delete.Size IsLarge ] [ ] ]
 
 let extraInteractive model dispatch =
     div [ ClassName "block" ]
         [ yield Delete.delete
-                    [ Delete.onClick (fun _ -> Click |> dispatch) ] [ ]
+                    [ Delete.OnClick (fun _ -> Click |> dispatch) ] [ ]
           if model.Clicked then
             yield br []
             yield str "You clicked the delete button" ]
