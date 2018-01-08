@@ -24,7 +24,7 @@ let navButtons =
 
 let root =
     Navbar.navbar [ Navbar.Color IsPrimary ]
-        [ Navbar.Start.a [ ]
+        [ Navbar.Start.div [ ]
             [ Navbar.Brand.div [ ]
                 [ Heading.h1 [ ]
                     [ img [ Src "assets/mini_logo.svg"
