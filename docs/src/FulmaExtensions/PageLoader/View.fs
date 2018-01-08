@@ -13,7 +13,7 @@ let basicInteractive (model:Model) (dispatch:Msg->unit) =
     // This prevent the visual bug effect on the page loader
     div [ Key "page-loader-force-full-redraw" ]
         [ PageLoader.pageLoader [ PageLoader.Color model.Color
-                                  PageLoader.Active model.IsLoading ]
+                                  PageLoader.IsActive model.IsLoading ]
             [ ]
           Content.content [ ]
             [ p [ ]

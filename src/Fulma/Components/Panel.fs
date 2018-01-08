@@ -27,7 +27,7 @@ module Panel =
 
         type Option =
             | Props of IHTMLProp list
-            | Active of bool
+            | IsActive of bool
             | CustomClass of string
 
         type internal Options =
@@ -44,7 +44,7 @@ module Panel =
 
         type Option =
             | Props of IHTMLProp list
-            | Active of bool
+            | IsActive of bool
             | CustomClass of string
 
         type internal Options =
@@ -61,7 +61,7 @@ module Panel =
         let parseOptions (result: Block.Options ) opt =
             match opt with
             | Block.Props props -> { result with Props = props }
-            | Block.Active state -> { result with IsActive = state }
+            | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
 
 
@@ -73,7 +73,7 @@ module Panel =
         let parseOptions (result: Block.Options ) opt =
             match opt with
             | Block.Props props -> { result with Props = props }
-            | Block.Active state -> { result with IsActive = state }
+            | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
@@ -99,7 +99,7 @@ module Panel =
         let parseOptions (result: Tab.Options ) opt =
             match opt with
             | Tab.Props props -> { result with Props = props }
-            | Tab.Active state -> { result with IsActive = state }
+            | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty

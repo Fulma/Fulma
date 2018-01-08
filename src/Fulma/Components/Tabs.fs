@@ -51,7 +51,7 @@ module Tabs =
     module Tab =
 
         type Option =
-            | Active of bool
+            | IsActive of bool
             | CustomClass of string
             | Props of IHTMLProp list
 
@@ -91,7 +91,7 @@ module Tabs =
     let tab (options: Tab.Option list) children =
         let parseOptions (result: Tab.Options) opt =
             match opt with
-            | Tab.Active state -> { result with IsActive = state }
+            | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Tab.Props props -> { result with Props = props }
 

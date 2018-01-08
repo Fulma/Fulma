@@ -13,7 +13,7 @@ let basic =
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Fable.React" ] ] ]
 
 let alignmentCenter =
@@ -22,7 +22,7 @@ let alignmentCenter =
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let icons =
@@ -37,7 +37,7 @@ let icons =
                 [ Icon.icon [ Icon.Size IsSmall ]
                     [ i [ ClassName "fa fa-book" ] [ ] ]
                   str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ]
                 [ Icon.icon [ Icon.Size IsSmall ]
                     [ i [ ClassName "fa fa-thumbs-up" ] [ ] ]
@@ -49,7 +49,7 @@ let size =
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let separator =
@@ -58,7 +58,7 @@ let separator =
             [ a [ ] [ str "F#" ] ]
           Breadcrumb.item [ ]
             [ a [ ] [ str "Fable" ] ]
-          Breadcrumb.item [ Breadcrumb.Item.IsActive ]
+          Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
 let root model dispatch =

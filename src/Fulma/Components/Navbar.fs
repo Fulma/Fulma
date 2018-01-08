@@ -65,7 +65,7 @@ module Navbar =
     module Menu =
 
         type Option =
-            | Active of bool
+            | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
 
@@ -83,7 +83,7 @@ module Navbar =
 
         type Option =
             | IsTab
-            | Active of bool
+            | IsActive of bool
             | IsHoverable
             | HasDropdown
             | Props of IHTMLProp list
@@ -108,7 +108,7 @@ module Navbar =
         let internal item element options children =
             let parseOptions (result: Options ) opt =
                 match opt with
-                | Active state -> { result with IsActive = state }
+                | IsActive state -> { result with IsActive = state }
                 | IsTab -> { result with IsTab = true }
                 | IsHoverable -> { result with IsHoverable = true }
                 | HasDropdown -> { result with HasDropdown = true }
@@ -131,7 +131,7 @@ module Navbar =
     module Link =
 
         type Option =
-            | Active of bool
+            | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
 
@@ -148,7 +148,7 @@ module Navbar =
         let internal link element (options : Option list) children =
             let parseOptions (result : Options) opt =
                 match opt with
-                | Active state -> { result with IsActive = state }
+                | IsActive state -> { result with IsActive = state }
                 | CustomClass customClass -> { result with CustomClass = Some customClass}
                 | Props props -> { result with Props = props}
 
@@ -162,7 +162,7 @@ module Navbar =
     module Dropdown =
 
         type Option =
-            | Active of bool
+            | IsActive of bool
             | IsBoxed
             | IsRight
             | Props of IHTMLProp list
@@ -185,7 +185,7 @@ module Navbar =
         let internal dropdown element (options : Option list) children =
             let parseOptions (result : Options) opt =
                 match opt with
-                | Active state -> { result with IsActive = state }
+                | IsActive state -> { result with IsActive = state }
                 | IsBoxed -> { result with IsBoxed = true }
                 | IsRight -> { result with IsRight = true }
                 | CustomClass customClass -> { result with CustomClass = Some customClass}
@@ -245,7 +245,7 @@ module Navbar =
     let menu options children =
         let parseOptions (result: Menu.Options ) opt =
             match opt with
-            | Menu.Active state -> { result with IsActive = state }
+            | Menu.IsActive state -> { result with IsActive = state }
             | Menu.Props props -> { result with Props = props }
             | Menu.CustomClass customClass -> { result with CustomClass = Some customClass }
 

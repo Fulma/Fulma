@@ -54,8 +54,8 @@ let stateInteractive =
         [ Button.button [ ] [ str "Normal" ]
           Button.button [ Button.Color IsSuccess; Button.IsHovered ] [ str "Hover" ]
           Button.button [ Button.Color IsWarning; Button.IsFocused ] [ str "Focus" ]
-          Button.button [ Button.Color IsInfo; Button.IsActive ] [ str "Active" ]
-          Button.button [ Button.Color IsBlack; Button.IsLoading ] [ str "Loading" ] ]
+          Button.button [ Button.Color IsInfo; Button.IsActive true ] [ str "Active" ]
+          Button.button [ Button.Color IsBlack; Button.IsLoading true ] [ str "Loading" ] ]
 
 let extraInteractive model dispatch =
     let buttonTxt =

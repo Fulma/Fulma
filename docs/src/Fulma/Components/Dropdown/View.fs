@@ -18,7 +18,7 @@ let basic =
             [ Dropdown.content [ ]
                 [ Dropdown.item [ ] [ str "Item n°1" ]
                   Dropdown.item [ ] [ str "Item n°2" ]
-                  Dropdown.item [ Dropdown.Item.Active true ] [ str "Item n°3" ]
+                  Dropdown.item [ Dropdown.Item.IsActive true ] [ str "Item n°3" ]
                   Dropdown.item [ ] [ str "Item n°4" ]
                   Dropdown.divider [ ]
                   Dropdown.item [ ] [ str "Item n°5" ] ] ] ]

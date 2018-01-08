@@ -23,7 +23,7 @@ let centered =
         [ Hero.head [ ]
             [ Tabs.tabs [ Tabs.IsBoxed
                           Tabs.IsCentered ]
-                [ Tabs.tab [ Tabs.Tab.Active true ]
+                [ Tabs.tab [ Tabs.Tab.IsActive true ]
                     [ a [ ] [ str "Fable" ] ]
                   Tabs.tab [ ]
                     [ a [ ] [ str "Elmish" ] ]

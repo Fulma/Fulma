@@ -12,7 +12,7 @@ module PageLoader =
         let [<Literal>] IsActive = "is-active"
 
     type Option =
-        | Active of bool
+        | IsActive of bool
         | Color of IColor
         | Props of IHTMLProp list
         | CustomClass of string
@@ -35,7 +35,7 @@ module PageLoader =
         let parseOptions (result: Options) opt =
             match opt with
             | Option.Color color -> { result with Color = ofColor color |> Some }
-            | Active state -> { result with IsActive = state }
+            | IsActive state -> { result with IsActive = state }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 

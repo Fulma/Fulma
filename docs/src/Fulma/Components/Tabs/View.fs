@@ -14,7 +14,7 @@ open Fulma.Elements.Form
 
 let basic =
     Tabs.tabs [ ]
-        [ Tabs.tab [ Tabs.Tab.Active true ]
+        [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -25,7 +25,7 @@ let basic =
 
 let alignment =
     Tabs.tabs [ Tabs.IsCentered ]
-        [ Tabs.tab [ Tabs.Tab.Active true ]
+        [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -36,7 +36,7 @@ let alignment =
 
 let size =
     Tabs.tabs [ Tabs.Size IsLarge ]
-        [ Tabs.tab [ Tabs.Tab.Active true ]
+        [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]
@@ -48,7 +48,7 @@ let size =
 let styles =
     Tabs.tabs [ Tabs.IsFullwidth
                 Tabs.IsBoxed ]
-        [ Tabs.tab [ Tabs.Tab.Active true ]
+        [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
           Tabs.tab [ ]
             [ a [ ] [ str "Elmish" ] ]

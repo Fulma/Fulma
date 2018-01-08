@@ -118,7 +118,7 @@ module Calendar =
                 | CustomClass of string
                 | Props of IHTMLProp list
                 | IsToday
-                | Active of bool
+                | IsActive of bool
 
             type internal Options =
                 { CustomClass : string option
@@ -155,7 +155,7 @@ module Calendar =
                 match opt with
                 | Item.Props props -> { result with Props = props }
                 | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
-                | Item.Active state -> { result with IsActive = state }
+                | Item.IsActive state -> { result with IsActive = state }
                 | Item.IsToday -> { result with IsToday = true }
 
             let opts = options |> List.fold parseOptions Item.Options.Empty

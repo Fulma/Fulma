@@ -28,7 +28,7 @@ module Textarea =
         | IsInline
         | Loading of bool
         | Focused of bool
-        | Active of bool
+        | IsActive of bool
         | Color of IColor
         | Id of string
         | Disabled of bool
@@ -77,7 +77,7 @@ module Textarea =
             | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
             | Loading state -> { result with IsLoading = state }
             | Focused state -> { result with IsFocused = state }
-            | Active state -> { result with IsActive = state }
+            | IsActive state -> { result with IsActive = state }
             | Color color -> { result with Color = ofColor color |> Some }
             | Id id -> { result with Id = Some id }
             | Disabled state -> { result with Disabled = state }

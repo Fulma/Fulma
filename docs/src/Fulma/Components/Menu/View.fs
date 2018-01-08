@@ -5,12 +5,12 @@ open Types
 open Fulma.Components
 
 let menuItem label isActive =
-    Menu.item [ Menu.Item.Active isActive ]
+    Menu.item [ Menu.Item.IsActive isActive ]
        [ str label ]
 
 let subMenu label isActive children =
     li [ ]
-       [ Menu.item [ Menu.Item.Active isActive ]
+       [ Menu.item [ Menu.Item.IsActive isActive ]
             [ str label ]
          ul [ ] children ]
 

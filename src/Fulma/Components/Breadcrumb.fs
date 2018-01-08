@@ -76,7 +76,7 @@ module Breadcrumb =
     module Item =
 
         type Option =
-            | IsActive
+            | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
 
@@ -93,7 +93,7 @@ module Breadcrumb =
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function
-            | Item.IsActive -> { result with IsActive = true }
+            | Item.IsActive state -> { result with IsActive = state }
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
 

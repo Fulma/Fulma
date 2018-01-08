@@ -17,7 +17,7 @@ module Menu =
 
     module Item =
         type Option =
-            | Active of bool
+            | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
             | OnClick of (React.MouseEvent -> unit)
@@ -51,7 +51,7 @@ module Menu =
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function
-            | Item.Active state -> { result with IsActive = state }
+            | Item.IsActive state -> { result with IsActive = state }
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Item.OnClick cb -> { result with OnClick = cb |> Some }

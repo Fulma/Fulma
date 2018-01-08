@@ -34,8 +34,8 @@ module Button =
         // States
         | IsHovered
         | IsFocused
-        | IsActive
-        | IsLoading
+        | IsActive of bool
+        | IsLoading of bool
         | IsStatic
         | Disabled of bool
         | Props of IHTMLProp list
@@ -77,8 +77,10 @@ module Button =
             // States
             | IsHovered -> { result with State = Classes.State.IsHovered |> Some }
             | IsFocused -> { result with State = Classes.State.IsFocused |> Some }
-            | IsActive -> { result with State = Classes.State.IsActive |> Some }
-            | IsLoading -> { result with State = Classes.State.IsLoading |> Some }
+            | IsActive true -> { result with State = Classes.State.IsActive |> Some }
+            | IsActive false -> { result with State = None }
+            | IsLoading true -> { result with State = Classes.State.IsLoading |> Some }
+            | IsLoading false -> { result with State = None }
             | IsStatic -> { result with State = Classes.State.IsStatic |> Some }
             | Disabled isDisabled -> { result with IsDisabled = isDisabled }
             | Props props -> { result with Props = props }

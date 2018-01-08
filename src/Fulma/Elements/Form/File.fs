@@ -33,7 +33,7 @@ module File =
         | CustomClass of string
         | Props of IHTMLProp list
         | Focused of bool
-        | Active of bool
+        | IsActive of bool
         | Hovered of bool
         | Size of ISize
         | IsFullwidth
@@ -73,7 +73,7 @@ module File =
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
             | Focused state -> { result with IsFocused = state }
-            | Active state -> { result with IsActive = state }
+            | IsActive state -> { result with IsActive = state }
             | Hovered state -> { result with IsHovered = state }
             | Size size -> { result with Size = ofSize size |> Some }
             | IsFullwidth -> { result with Size = Classes.Size.IsFullwidth |> Some }

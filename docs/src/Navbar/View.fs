@@ -2,30 +2,37 @@ module Navbar.View
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
+open Fulma
 open Fulma.Components
+open Fulma.Elements
+open Fulma.Elements.Form
+open Fulma.Extra.FontAwesome
 
-let navButton classy href faClass txt =
-    div [ ClassName "control" ]
-        [ a [ ClassName ("button " + classy)
-              Href href ]
-            [ span [ ClassName "icon" ]
-                   [ i [ ClassName ("fa " + faClass) ] [] ]
+let navButton classy href icon txt =
+    Control.control [ ]
+        [ Button.button [ Button.CustomClass classy
+                          Button.Props [ Href href ] ]
+            [ Icon.faIcon [ ]
+                [ Fa.icon icon ]
               span [] [ str txt ] ] ]
 
 let navButtons =
-    span
-        [ ClassName "nav-item block" ]
-        [ navButton "twitter" "https://twitter.com/FableCompiler" "fa-twitter" "Twitter"
-          navButton "github" "https://github.com/MangelMaxime/Fulma/" "fa-github" "Github"
-          navButton "github" "https://gitter.im/fable-compiler/Fable" "fa-comments" "Gitter" ]
+    Field.field [ Field.IsGrouped ]
+        [ navButton "twitter" "https://twitter.com/FableCompiler" Fa.I.Twitter "Twitter"
+          navButton "github" "https://github.com/MangelMaxime/Fulma/" Fa.I.Github "Github"
+          navButton "github" "https://gitter.im/fable-compiler/Fable" Fa.I.Comments "Gitter" ]
 
 let root =
-    div [ ClassName "nav" ]
-        [ div [ ClassName "nav-left" ]
-              [ h1 [ ClassName "nav-item is-brand title is-4" ]
-                   [ img  [ Src "assets/mini_logo.svg"
+    Navbar.navbar [ Navbar.Color IsPrimary ]
+        [ Navbar.Start.a [ ]
+            [ Navbar.Brand.div [ ]
+                [ Heading.h1 [ ]
+                    [ img [ Src "assets/mini_logo.svg"
                             Alt "logo"
                             Style [ MarginRight "10px"
-                                    Height "100%" ] ]
-                     str "Fulma" ] ]
-          navButtons ]
+                                    Height "32px" ] ] ] ]
+              Navbar.Item.a [ ]
+                [ Heading.h4 [ ]
+                    [ str "Fulma" ] ] ]
+          Navbar.Item.div [ ]
+            [ navButtons ] ]

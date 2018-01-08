@@ -56,7 +56,7 @@ module View =
                                       if isToday date then
                                         yield Calendar.Date.Item.IsToday
                                       if isSelected date then
-                                        yield Calendar.Date.Item.Active true
+                                        yield Calendar.Date.Item.IsActive true
                                       yield Calendar.Date.Item.Props [ OnClick (fun _ -> let newState = { state with ForceClose = true }
                                                                                          onChange config newState (Some date) dispatch) ] ]
                                     [ str (date.Day.ToString()) ] ]

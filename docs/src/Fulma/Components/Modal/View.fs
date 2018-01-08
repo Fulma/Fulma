@@ -33,7 +33,7 @@ let content =
                      Maecenas vestibulum interdum commodo." ] ]
 
 let basicModal model dispatch =
-    Modal.modal [ Modal.Active model.ShowBasicModal ]
+    Modal.modal [ Modal.IsActive model.ShowBasicModal ]
         [ Modal.background [ Props [ OnClick (fun _ -> dispatch ToggleBasicModal) ] ] [ ]
           Modal.content [ ]
             [ Box.box' [ ]
@@ -46,7 +46,7 @@ let basic dispatch =
         [ str "Show modal" ]
 
 let cardModal model dispatch =
-    Modal.modal [ Modal.Active model.ShowCardModal ]
+    Modal.modal [ Modal.IsActive model.ShowCardModal ]
         [ Modal.background [ Props [ OnClick (fun _ -> dispatch ToggleCardModal) ] ] [ ]
           Modal.Card.card [ ]
             [ Modal.Card.head [ ]

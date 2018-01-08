@@ -27,7 +27,7 @@ module Select =
         | IsInline
         | Loading of bool
         | Focused of bool
-        | Active of bool
+        | IsActive of bool
         | Disabled of bool
         | Color of IColor
         | Props of IHTMLProp list
@@ -60,7 +60,7 @@ module Select =
             | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
             | Loading state -> { result with IsLoading = state }
             | Focused state -> { result with IsFocused = state }
-            | Active state -> { result with IsActive = state }
+            | IsActive state -> { result with IsActive = state }
             | Disabled state -> { result with IsDisabled = state }
             | Color color -> { result with Color = ofColor color |> Some }
             | Props props -> { result with Props = props }

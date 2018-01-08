@@ -27,7 +27,7 @@ module Modal =
 
     type Option =
         | Props of IHTMLProp list
-        | Active of bool
+        | IsActive of bool
         | CustomClass of string
 
     type internal Options =
@@ -64,7 +64,7 @@ module Modal =
             match opt with
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Active state -> { result with IsActive = state }
+            | IsActive state -> { result with IsActive = state }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
