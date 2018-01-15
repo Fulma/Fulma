@@ -22,6 +22,7 @@ module Button =
             let [<Literal>] IsOutlined = "is-outlined"
             let [<Literal>] IsInverted = "is-inverted"
             let [<Literal>] IsText = "is-text"
+            let [<Literal>] IsRounded = "is-rounded"
         module List =
             let [<Literal>] Container = "buttons"
             let [<Literal>] HasAddons = "has-addons"
@@ -38,6 +39,7 @@ module Button =
         | IsOutlined
         | IsInverted
         | IsText
+        | IsRounded
         // States
         | IsHovered
         | IsFocused
@@ -56,6 +58,7 @@ module Button =
           IsInverted : bool
           IsDisabled : bool
           IsText : bool
+          IsRounded : bool
           State : string option
           Props : IHTMLProp list
           CustomClass : string option
@@ -67,6 +70,7 @@ module Button =
               IsInverted = false
               IsDisabled = false
               IsText = false
+              IsRounded = false
               State = None
               Props = []
               CustomClass = None
@@ -84,6 +88,7 @@ module Button =
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }
             | IsText -> { result with IsText = true }
+            | IsRounded -> { result with IsRounded = true }
             // States
             | IsHovered -> { result with State = Classes.State.IsHovered |> Some }
             | IsFocused -> { result with State = Classes.State.IsFocused |> Some }
@@ -106,7 +111,8 @@ module Button =
                           opts.CustomClass ]
                         [ Classes.Styles.IsOutlined, opts.IsOutlined
                           Classes.Styles.IsInverted, opts.IsInverted
-                          Classes.Styles.IsText, opts.IsText ]
+                          Classes.Styles.IsText, opts.IsText
+                          Classes.Styles.IsRounded, opts.IsRounded ]
 
         element
             [ yield classes

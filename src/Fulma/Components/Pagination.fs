@@ -20,10 +20,13 @@ module Pagination =
             let [<Literal>] Right = "is-right"
         module State =
             let [<Literal>] IsCurrent = "is-current"
+        module Styles =
+            let [<Literal>] IsRounded = "is-rounded"
 
     type Option =
         | IsCentered
         | IsRight
+        | IsRounded
         | Size of ISize
         | CustomClass of string
         | Props of IHTMLProp list
@@ -31,12 +34,14 @@ module Pagination =
     type internal Options =
         { Alignment : string option
           Size : string option
+          IsRounded : bool
           CustomClass : string option
           Props : IHTMLProp list }
 
         static member Empty =
             { Alignment = None
               Size = None
+              IsRounded = false
               CustomClass = None
               Props = [] }
 
@@ -63,6 +68,7 @@ module Pagination =
             | IsCentered -> { result with Alignment = Classes.Alignment.Center |> Some }
             | IsRight -> { result with Alignment = Classes.Alignment.Right |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
+            | IsRounded -> { result with IsRounded = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
 
@@ -70,7 +76,7 @@ module Pagination =
         let classes = Helpers.classes
                         Classes.Container
                         [ opts.Alignment; opts.Size ]
-                        [ ]
+                        [ Classes.Styles.IsRounded, opts.IsRounded ]
 
         nav (classes::opts.Props)
             children

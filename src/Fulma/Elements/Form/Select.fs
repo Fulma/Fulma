@@ -20,6 +20,8 @@ module Select =
             let [<Literal>] IsLarge = "is-large"
             let [<Literal>] IsFullwidth = "is-fullwidth"
             let [<Literal>] IsInline = "is-inline"
+        module Styles =
+            let [<Literal>] IsRounded = "is-rounded"
 
     type Option =
         | Size of ISize
@@ -30,6 +32,7 @@ module Select =
         | IsActive of bool
         | Disabled of bool
         | Color of IColor
+        | IsRounded
         | Props of IHTMLProp list
         | CustomClass of string
 
@@ -40,6 +43,7 @@ module Select =
           IsFocused : bool
           IsActive : bool
           IsDisabled : bool
+          IsRounded : bool
           Props : IHTMLProp list
           CustomClass : string option }
         static member Empty =
@@ -49,6 +53,7 @@ module Select =
               IsFocused = false
               IsActive = false
               IsDisabled = false
+              IsRounded = false
               Props = []
               CustomClass = None }
 
@@ -62,6 +67,7 @@ module Select =
             | Focused state -> { result with IsFocused = state }
             | IsActive state -> { result with IsActive = state }
             | Disabled state -> { result with IsDisabled = state }
+            | IsRounded -> { result with IsRounded = true }
             | Color color -> { result with Color = ofColor color |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
@@ -76,5 +82,6 @@ module Select =
                 [ Classes.State.IsLoading, opts.IsLoading
                   Classes.State.IsFocused, opts.IsFocused
                   Classes.State.IsActive, opts.IsActive
-                  Classes.State.IsDisabled, opts.IsDisabled ]
+                  Classes.State.IsDisabled, opts.IsDisabled
+                  Classes.Styles.IsRounded, opts.IsRounded ]
         div (classes::opts.Props) children

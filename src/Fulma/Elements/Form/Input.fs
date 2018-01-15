@@ -15,6 +15,8 @@ module Input =
             let [<Literal>] IsHovered = "is-hovered"
             let [<Literal>] IsLoading = "is-loading"
             let [<Literal>] IsStatic = "is-static"
+        module Styles =
+            let [<Literal>] IsRounded = "is-rounded"
         module Size =
             let [<Literal>] IsSmall = "is-small"
             let [<Literal>] IsMedium = "is-medium"
@@ -45,6 +47,7 @@ module Input =
         | Disabled of bool
         | IsReadOnly of bool
         | IsStatic
+        | IsRounded
         | Value of string
         | DefaultValue of string
         | Placeholder of string
@@ -59,6 +62,7 @@ module Input =
           Disabled : bool
           IsReadOnly : bool
           IsStatic : bool
+          IsRounded : bool
           Value : string option
           DefaultValue : string option
           Placeholder : string option
@@ -73,6 +77,7 @@ module Input =
               Disabled = false
               IsReadOnly = false
               IsStatic = false
+              IsRounded = false
               Value = None
               DefaultValue = None
               Placeholder = None
@@ -105,6 +110,7 @@ module Input =
             | Disabled disabled -> { result with Disabled = disabled }
             | IsReadOnly state -> { result with IsReadOnly = state }
             | IsStatic -> { result with IsStatic = true }
+            | IsRounded -> { result with IsRounded = true }
             | Value value -> { result with Value = Some value }
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
             | Placeholder placeholder -> { result with Placeholder = Some placeholder }
@@ -117,7 +123,8 @@ module Input =
                         [ opts.Size
                           opts.Color
                           opts.CustomClass ]
-                        [ Classes.State.IsStatic, opts.IsStatic ]
+                        [ Classes.State.IsStatic, opts.IsStatic
+                          Classes.Styles.IsRounded, opts.IsRounded ]
         input
             ([ yield classes
                yield Props.Disabled opts.Disabled :> IHTMLProp

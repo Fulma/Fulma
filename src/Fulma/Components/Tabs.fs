@@ -19,6 +19,7 @@ module Tabs =
             let [<Literal>] IsBoxed = "is-boxed"
             let [<Literal>] IsToggle = "is-toggle"
             let [<Literal>] IsFullwidth = "is-fullwidth"
+            let [<Literal>] IsToggleRounded = "is-toggle-rounded"
 
     type Option =
         | IsCentered
@@ -26,6 +27,7 @@ module Tabs =
         | Size of ISize
         | IsBoxed
         | IsToggle
+        | IsToggleRounded
         | IsFullwidth
         | CustomClass of string
         | Props of IHTMLProp list
@@ -35,6 +37,7 @@ module Tabs =
           Size : string option
           IsBoxed : bool
           IsToggle : bool
+          IsToggleRounded : bool
           IsFullwidth : bool
           CustomClass : string option
           Props : IHTMLProp list }
@@ -43,6 +46,7 @@ module Tabs =
             { Alignment = None
               IsBoxed = false
               IsToggle = false
+              IsToggleRounded = false
               IsFullwidth = false
               Size = None
               CustomClass = None
@@ -72,6 +76,7 @@ module Tabs =
             | IsRight -> { result with Alignment = Classes.Alignment.Right |> Some }
             | IsBoxed -> { result with IsBoxed = true }
             | IsToggle -> { result with IsToggle = true }
+            | IsToggleRounded -> { result with IsToggleRounded = true }
             | IsFullwidth -> { result with IsFullwidth = true }
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
@@ -83,7 +88,8 @@ module Tabs =
                         [ opts.Alignment; opts.Size ]
                         [ Classes.Style.IsBoxed, opts.IsBoxed
                           Classes.Style.IsFullwidth, opts.IsFullwidth
-                          Classes.Style.IsToggle, opts.IsToggle ]
+                          Classes.Style.IsToggle, opts.IsToggle
+                          Classes.Style.IsToggleRounded, opts.IsToggleRounded ]
         div (classes::opts.Props)
             [ ul [ ]
                  children ]
