@@ -29,6 +29,7 @@ module Textarea =
         | Loading of bool
         | Focused of bool
         | IsActive of bool
+        | IsReadOnly of bool
         | Color of IColor
         | Id of string
         | Disabled of bool
@@ -47,6 +48,7 @@ module Textarea =
           Color : string option
           Id : string option
           Disabled : bool
+          IsReadOnly : bool
           HasFixedSize : bool
           Value : string option
           DefaultValue : string option
@@ -62,6 +64,7 @@ module Textarea =
               Color = None
               Id = None
               Disabled = false
+              IsReadOnly = false
               Value = None
               HasFixedSize = false
               DefaultValue = None
@@ -81,6 +84,7 @@ module Textarea =
             | Color color -> { result with Color = ofColor color |> Some }
             | Id id -> { result with Id = Some id }
             | Disabled state -> { result with Disabled = state }
+            | IsReadOnly state -> { result with IsReadOnly = state }
             | Value value -> { result with Value = Some value }
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
             | Placeholder placeholder -> { result with Placeholder = Some placeholder }
@@ -102,6 +106,7 @@ module Textarea =
 
         textarea [ yield classes
                    yield Props.Disabled opts.Disabled :> IHTMLProp
+                   yield Props.ReadOnly opts.IsReadOnly :> IHTMLProp
                    if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
                    if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
                    if Option.isSome opts.DefaultValue then yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp

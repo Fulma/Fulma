@@ -14,6 +14,7 @@ module Input =
             let [<Literal>] IsActive = "is-active"
             let [<Literal>] IsHovered = "is-hovered"
             let [<Literal>] IsLoading = "is-loading"
+            let [<Literal>] IsStatic = "is-static"
         module Size =
             let [<Literal>] IsSmall = "is-small"
             let [<Literal>] IsMedium = "is-medium"
@@ -42,6 +43,8 @@ module Input =
         | Color of IColor
         | Id of string
         | Disabled of bool
+        | IsReadOnly of bool
+        | IsStatic
         | Value of string
         | DefaultValue of string
         | Placeholder of string
@@ -54,6 +57,8 @@ module Input =
           Color : string option
           Id : string option
           Disabled : bool
+          IsReadOnly : bool
+          IsStatic : bool
           Value : string option
           DefaultValue : string option
           Placeholder : string option
@@ -66,6 +71,8 @@ module Input =
               Color = None
               Id = None
               Disabled = false
+              IsReadOnly = false
+              IsStatic = false
               Value = None
               DefaultValue = None
               Placeholder = None
@@ -96,6 +103,8 @@ module Input =
             | Color color -> { result with Color = ofColor color |> Some }
             | Id id -> { result with Id = Some id }
             | Disabled disabled -> { result with Disabled = disabled }
+            | IsReadOnly state -> { result with IsReadOnly = state }
+            | IsStatic -> { result with IsStatic = true }
             | Value value -> { result with Value = Some value }
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
             | Placeholder placeholder -> { result with Placeholder = Some placeholder }
@@ -103,14 +112,19 @@ module Input =
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes Classes.Container [ opts.Size; opts.Color; opts.CustomClass ] [ ]
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Size
+                          opts.Color
+                          opts.CustomClass ]
+                        [ Classes.State.IsStatic, opts.IsStatic ]
         input
             ([ yield classes
                yield Props.Disabled opts.Disabled :> IHTMLProp
+               yield ReadOnly opts.IsReadOnly :> IHTMLProp
                yield Props.Type opts.Type :> IHTMLProp
                if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
                if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
-
                if Option.isSome opts.DefaultValue then
                    yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
                if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]

@@ -26,8 +26,29 @@ let basic =
               Card.Footer.item [ ]
                 [ str "Delete" ] ] ]
 
+let centered =
+    Card.card [ ]
+        [ Card.header [ ]
+            [ Card.Header.title [ Card.Header.Title.IsCentered ]
+                [ str "Component" ]
+              Card.Header.icon [ ]
+                [ i [ ClassName "fa fa-angle-down" ] [ ] ] ]
+          Card.content [ ]
+            [ Content.content [ ]
+                [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
+          Card.footer [ ]
+            [ Card.Footer.item [ ]
+                [ str "Save" ]
+              Card.Footer.item [ ]
+                [ str "Edit" ]
+              Card.Footer.item [ ]
+                [ str "Delete" ] ] ]
+
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                     Render.docSection
+                        "### Title can be centered"
+                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch)) ]

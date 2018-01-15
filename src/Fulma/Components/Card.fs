@@ -2,6 +2,7 @@ namespace Fulma.Components
 
 open Fulma
 open Fable.Helpers.React
+open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
 module Card =
@@ -10,8 +11,10 @@ module Card =
         let [<Literal>] Container = "card"
         module Header =
             let [<Literal>] Container = "card-header"
-            let [<Literal>] Title = "card-header-title"
-            let [<Literal>] Icon ="card-header-icon"
+            let [<Literal>] Icon = "card-header-icon"
+            module Title =
+                let [<Literal>] Container = "card-header-title"
+                let [<Literal>] IsCentered = "is-centered"
         let [<Literal>] Image = "card-image"
         let [<Literal>] Content = "card-content"
         module Footer =
@@ -40,14 +43,40 @@ module Card =
 
     module Header =
 
+        module Title =
+
+            type Option =
+                | IsCentered
+                | Props of IHTMLProp list
+                | CustomClass of string
+
+            type internal Options =
+                { IsCentered : bool
+                  Props : IHTMLProp list
+                  CustomClass : string option }
+                static member Empty =
+                    { IsCentered = false
+                      Props = []
+                      CustomClass = None }
+
         let icon (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Header.Icon [opts.CustomClass] []
             a (classes::opts.Props) children
 
-        let title (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Header.Title [opts.CustomClass] []
+        let title (options: Title.Option list) children =
+            let parseOption (result : Title.Options) opt =
+                match opt with
+                | Title.IsCentered -> { result with IsCentered = true }
+                | Title.Props props -> { result with Props = props }
+                | Title.CustomClass customClass -> { result with CustomClass = customClass |> Some }
+
+            let opts = options |> List.fold parseOption Title.Options.Empty
+            let classes = Helpers.classes
+                            Classes.Header.Title.Container
+                            [ opts.CustomClass ]
+                            [ Classes.Header.Title.IsCentered, opts.IsCentered ]
+
             p (classes::opts.Props) children
 
     module Footer =
