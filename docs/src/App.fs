@@ -82,3 +82,5 @@ let test() =
                     [ div [ ClassName "columns" ]
                           [ div [ ClassName "column is-2" ] []
                             div [ ClassName "column" ] [ ] ] ] ] ]
+
+printfn "CODE EXAMPLE: %s" (test() |> unbox)

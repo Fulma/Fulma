@@ -28,6 +28,9 @@ type ImportExamplePlugins() =
                         |> Seq.skip r.start.line
                         |> Seq.takeWhile (String.IsNullOrWhiteSpace >> not)
                         |> String.concat "\n"
-                    Some [Babel.ReturnStatement(Babel.StringLiteral text)]
+                    let body =
+                        Babel.BlockStatement [Babel.ReturnStatement (Babel.StringLiteral text)]
+                    Babel.FunctionDeclaration(Babel.Identifier m.Name, [], body) :> Babel.Statement
+                    |> List.singleton |> Some
                 else None
             | _ -> None
