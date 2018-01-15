@@ -28,6 +28,7 @@ module File =
             let [<Literal>] IsRight = "is-right"
         let [<Literal>] IsBoxed = "is-boxed"
         let [<Literal>] HasName = "has-name"
+        let [<Literal>] IsEmpty = "is-empty"
 
     type Option =
         | CustomClass of string
@@ -41,6 +42,7 @@ module File =
         | IsRight
         | IsBoxed
         | HasName
+        | IsEmpty of bool
         | Color of IColor
 
     type internal  Options =
@@ -53,7 +55,8 @@ module File =
           Alignment : string option
           IsBoxed : bool
           Color : string option
-          HasName : bool}
+          HasName : bool
+          IsEmpty : bool }
 
         static member Empty =
             { CustomClass = None
@@ -65,7 +68,8 @@ module File =
               Alignment = None
               IsBoxed = false
               Color = None
-              HasName = false }
+              HasName = false
+              IsEmpty = false }
 
     let file (options : Option list) children =
         let parseOptions (result : Options) option =
@@ -82,6 +86,7 @@ module File =
             | Color color -> { result with Color = ofColor color |> Some }
             | IsBoxed -> { result with IsBoxed = true }
             | HasName -> { result with HasName = true }
+            | IsEmpty state -> { result with IsEmpty = state }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
@@ -95,7 +100,8 @@ module File =
                   Classes.HasName, opts.HasName
                   Classes.State.IsFocused, opts.IsFocused
                   Classes.State.IsActive, opts.IsActive
-                  Classes.State.IsHovered, opts.IsHovered ]
+                  Classes.State.IsHovered, opts.IsHovered
+                  Classes.IsEmpty, opts.IsEmpty ]
         div (classes::opts.Props) children
 
     let cta (options : GenericOption list) children =

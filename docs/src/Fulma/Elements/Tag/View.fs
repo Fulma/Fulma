@@ -37,6 +37,11 @@ let nestedDeleteStyleInteractive =
             [ str "With delete"
               Delete.delete [ Delete.Size IsLarge ] [ ] ] ]
 
+let list =
+    Tag.list [ Tag.List.HasAddons ]
+        [ Tag.tag [ Tag.Color IsDanger ] [ str "Maxime Mangel" ]
+          Tag.delete [ ] [ ] ]
+
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
                      Render.docSection
@@ -48,4 +53,6 @@ let root model dispatch =
                      Render.docSection
                         "### Nested delete"
                         (Viewer.View.root nestedDeleteStyleInteractive model.NestedDeleteViewer (NestedDeleteViewerMsg >> dispatch))
-                               ]
+                     Render.docSection
+                        "### Tag List"
+                        (Viewer.View.root list model.ListViewer (ListViewerMsg >> dispatch)) ]

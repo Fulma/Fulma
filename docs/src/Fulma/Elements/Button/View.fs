@@ -95,9 +95,31 @@ let icons =
           Button.button [ Button.Color IsDanger
                           Button.IsOutlined ] [ str "Danger" ] ]
 
+let demoHelpers =
+    div [ ClassName "block" ]
+        [ Button.a [ ] [ str "Anchor" ]
+          Button.span [ ] [ str "Span" ]
+          Button.button [ ] [ str "Button" ]
+          Button.Input.reset [ Button.Props [ Value "Input `reset`" ] ]
+          Button.Input.submit [ Button.Props [ Value "Input `submit`" ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
+                     Render.docSection
+                        """
+**Important information about the helpers**
+
+Due to popular, request Fulma allow you to choose which HTMLElement you want your button to render.
+
+You can choose between:
+
+- `Button.button`
+- `Button.span`
+- `Button.a`
+- `Button.Input.reset`
+- `Button.Input.submit`
+                        """
+                        (Viewer.View.root demoHelpers model.DemoHelpersViewer (DemoHelpersViewerMsg >> dispatch))
                      Render.docSection
                         "### Colors"
                         (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))

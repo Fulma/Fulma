@@ -18,6 +18,7 @@ module Navbar =
         module Item =
             let [<Literal>] Container = "navbar-item"
             let [<Literal>] IsHoverable = "is-hoverable"
+            let [<Literal>] IsExpanded = "is-expanded"
             module State =
                 let [<Literal>] IsActive = "is-active"
             module Style =
@@ -86,6 +87,7 @@ module Navbar =
             | IsActive of bool
             | IsHoverable
             | HasDropdown
+            | IsExpanded
             | Props of IHTMLProp list
             | CustomClass of string
 
@@ -94,6 +96,7 @@ module Navbar =
               IsActive : bool
               IsHoverable : bool
               HasDropdown : bool
+              IsExpanded : bool
               CustomClass : string option
               Props : IHTMLProp list }
 
@@ -101,6 +104,7 @@ module Navbar =
                 { IsTab = false
                   IsActive = false
                   IsHoverable = false
+                  IsExpanded = false
                   HasDropdown = false
                   CustomClass = None
                   Props = [] }
@@ -109,6 +113,7 @@ module Navbar =
             let parseOptions (result: Options ) opt =
                 match opt with
                 | IsActive state -> { result with IsActive = state }
+                | IsExpanded -> { result with IsExpanded = true }
                 | IsTab -> { result with IsTab = true }
                 | IsHoverable -> { result with IsHoverable = true }
                 | HasDropdown -> { result with HasDropdown = true }
@@ -121,7 +126,8 @@ module Navbar =
                     [ Classes.Item.State.IsActive, opts.IsActive
                       Classes.Item.Style.IsTab, opts.IsTab
                       Classes.Item.IsHoverable, opts.IsHoverable
-                      Classes.Item.Style.HasDropdown, opts.HasDropdown ]
+                      Classes.Item.Style.HasDropdown, opts.HasDropdown
+                      Classes.Item.IsExpanded, opts.IsExpanded ]
 
             element (classes::opts.Props) children
 

@@ -44,6 +44,15 @@ let nestedDeletedCode =
 ```
     """
 
+let list =
+    """
+```fsharp
+    Tag.list [ Tag.List.HasAddons ]
+        [ Tag.tag [ Tag.Color IsDanger ] [ str "Maxime Mangel" ]
+          Tag.delete [ ] [ ] ]
+```
+    """
+
 let init() =
     { Intro =
         """
@@ -55,7 +64,8 @@ The **tags** can have different colors and sizes. You can also nest a *[Delete e
         """
       ColorViewer = Viewer.State.init colorCode
       SizeViewer = Viewer.State.init sizeCode
-      NestedDeleteViewer = Viewer.State.init nestedDeletedCode }
+      NestedDeleteViewer = Viewer.State.init nestedDeletedCode
+      ListViewer = Viewer.State.init list }
 
 let update msg model =
     match msg with
@@ -70,3 +80,7 @@ let update msg model =
     | NestedDeleteViewerMsg msg ->
         let (viewer, viewerMsg) = Viewer.State.update msg model.NestedDeleteViewer
         { model with NestedDeleteViewer = viewer }, Cmd.map NestedDeleteViewerMsg viewerMsg
+
+    | ListViewerMsg msg ->
+        let (viewer, viewerMsg) = Viewer.State.update msg model.ListViewer
+        { model with ListViewer = viewer }, Cmd.map ListViewerMsg viewerMsg

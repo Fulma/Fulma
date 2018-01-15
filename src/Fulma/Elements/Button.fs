@@ -22,6 +22,11 @@ module Button =
             let [<Literal>] IsOutlined = "is-outlined"
             let [<Literal>] IsInverted = "is-inverted"
             let [<Literal>] IsText = "is-text"
+        module List =
+            let [<Literal>] Container = "buttons"
+            let [<Literal>] HasAddons = "has-addons"
+            let [<Literal>] IsCentered = "is-centered"
+            let [<Literal>] IsRight = "is-right"
 
     type Option =
         // Colors
@@ -67,7 +72,7 @@ module Button =
               CustomClass = None
               OnClick = None }
 
-    let button (options : Option list) children =
+    let internal btnView element (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with
             | Color color -> { result with Level = ofColor color |> Some }
@@ -103,10 +108,82 @@ module Button =
                           Classes.Styles.IsInverted, opts.IsInverted
                           Classes.Styles.IsText, opts.IsText ]
 
-        button
+        element
             [ yield classes
               yield Fable.Helpers.React.Props.Disabled opts.IsDisabled :> IHTMLProp
               if Option.isSome opts.OnClick then
                 yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
               yield! opts.Props ]
             children
+
+    let button options children = btnView button options children
+    let span options children = btnView span options children
+    let a options children = btnView a options children
+
+    module Input =
+        let internal btnInput typ options =
+            let hasProps =
+                options
+                |> List.exists (fun opts ->
+                    match opts with
+                    | Props _ -> true
+                    | _ -> false
+                )
+
+            if hasProps then
+                let newOptions =
+                    options
+                    |> List.map (fun opts ->
+                        match opts with
+                        | Props props -> Props ((Type typ :> IHTMLProp) ::props)
+                        | forward -> forward
+                    )
+                btnView (fun options _ -> input options) newOptions [ ]
+
+            else
+                btnView (fun options _ -> input options) ((Props [ Type typ ])::options) [ ]
+
+        let reset options = btnInput "reset" options
+        let submit options = btnInput "submit" options
+
+    module List =
+
+        type Option =
+            | HasAddons
+            | IsCentered
+            | IsRight
+            | Props of IHTMLProp list
+            | CustomClass of string
+
+        type internal Options =
+            { HasAddons : bool
+              IsCentered : bool
+              IsRight : bool
+              Props : IHTMLProp list
+              CustomClass : string option }
+
+            static member Empty =
+                { HasAddons = false
+                  IsCentered = false
+                  IsRight = false
+                  Props = [ ]
+                  CustomClass = None }
+
+    let list (options : List.Option list) children =
+        let parseOption (result : List.Options) opt =
+            match opt with
+            | List.HasAddons -> { result with HasAddons = true }
+            | List.IsCentered -> { result with IsCentered = true }
+            | List.IsRight -> { result with IsRight = true }
+            | List.Props props -> { result with Props = props }
+            | List.CustomClass customClass -> { result with CustomClass = Some customClass }
+
+        let opts = options |> List.fold parseOption List.Options.Empty
+        let classes = Helpers.classes
+                        Classes.List.Container
+                        [ opts.CustomClass ]
+                        [ Classes.List.HasAddons, opts.HasAddons
+                          Classes.List.IsCentered, opts.IsCentered
+                          Classes.List.IsRight, opts.IsRight ]
+
+        div (classes::opts.Props) children
