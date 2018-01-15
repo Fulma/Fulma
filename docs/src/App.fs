@@ -69,10 +69,6 @@ open Fable.Helpers.React.Props
 
 open System
 
-type ExampleCodeAttribute() =
-    inherit Attribute()
-
-[<ExampleCode>]
 let test() =
     div []
         [ div [ ClassName "navbar-bg" ]
@@ -83,4 +79,6 @@ let test() =
                           [ div [ ClassName "column is-2" ] []
                             div [ ClassName "column" ] [ ] ] ] ] ]
 
-printfn "CODE EXAMPLE: %s" (test() |> unbox)
+let getViewSource (view: unit->React.ReactElement) = ""
+
+printfn "CODE EXAMPLE: %s" (getViewSource test)
