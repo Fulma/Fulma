@@ -1,22 +1,28 @@
 module Fable.Plugins.ImportExample
 
+open System
+open System.IO
 open Fable
 open Fable.AST
-open Fable.AST.Babel
+open Fable2Babel
 
 type ImportExamplePlugins() =
-    interface IReplacePlugin with
-        member this.TryReplace com (info: Fable.ApplyInfo) =
-            addWarning com "Test.fs" None info.ownerFullName
+    interface IDeclarePlugin with
+        member __.TryDeclareRoot _com _ctx _file =
             None
-
-    // interface IDeclarePlugin with
-    //     member this.TryDeclare com  ctx decl =
-    //         None
-            // match info.ownerFullName with
-
-            // | "App.View.ExampleCodeAttribute" ->
-            //     // ccall info "String" "printf" [info.args.Head] |> Some
-            //     addWarning com "Test.fs" None info.ownerFullName
-            //     None
-            // | _ -> None
+        member __.TryDeclare _com ctx decl =
+            match decl with
+            | Fable.MemberDeclaration(m,_,_,_,_,Some r) ->
+                if m.Decorators |> List.exists (fun x -> x.Name.Contains("ExampleCode")) then
+                    printfn "===================="
+                    printfn "EXAMPLE: %s" m.Name
+                    File.ReadLines(ctx.file.SourcePath)
+                    |> Seq.skip r.start.line
+                    |> Seq.takeWhile (String.IsNullOrWhiteSpace >> not)
+                    |> Seq.iter (printfn "%s")
+                    printfn "===================="
+                    // transformTest com ctx (test, decorator, args, body, range)
+                    // |> List.singleton |> Some
+                    Some [Babel.ExpressionStatement(Babel.NullLiteral())]
+                else None
+            | _ -> None

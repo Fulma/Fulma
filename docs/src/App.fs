@@ -27,8 +27,8 @@ open Types
 
 // Marked.Globals.marked.setOptions (unbox options) |> ignore
 
-// open Fable.Helpers.React
-// open Fable.Helpers.React.Props
+open Fable.Helpers.React
+open Fable.Helpers.React.Props
 
 // let root model dispatch =
 //     let pageHtml =
@@ -73,4 +73,12 @@ type ExampleCodeAttribute() =
     inherit Attribute()
 
 [<ExampleCode>]
-let test = "maxime"
+let test() =
+    div []
+        [ div [ ClassName "navbar-bg" ]
+              [ div [ ClassName "container" ] [ Navbar.View.root ] ]
+          div [ ClassName "section" ]
+              [ div [ ClassName "container" ]
+                    [ div [ ClassName "columns" ]
+                          [ div [ ClassName "column is-2" ] []
+                            div [ ClassName "column" ] [ ] ] ] ] ]
