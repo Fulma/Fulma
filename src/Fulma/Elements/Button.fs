@@ -21,6 +21,7 @@ module Button =
             let [<Literal>] IsLink = "is-link"
             let [<Literal>] IsOutlined = "is-outlined"
             let [<Literal>] IsInverted = "is-inverted"
+            let [<Literal>] IsText = "is-text"
 
     type Option =
         // Colors
@@ -31,6 +32,7 @@ module Button =
         | IsLink
         | IsOutlined
         | IsInverted
+        | IsText
         // States
         | IsHovered
         | IsFocused
@@ -48,6 +50,7 @@ module Button =
           IsOutlined : bool
           IsInverted : bool
           IsDisabled : bool
+          IsText : bool
           State : string option
           Props : IHTMLProp list
           CustomClass : string option
@@ -58,6 +61,7 @@ module Button =
               IsOutlined = false
               IsInverted = false
               IsDisabled = false
+              IsText = false
               State = None
               Props = []
               CustomClass = None
@@ -74,6 +78,7 @@ module Button =
             | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }
+            | IsText -> { result with IsText = true }
             // States
             | IsHovered -> { result with State = Classes.State.IsHovered |> Some }
             | IsFocused -> { result with State = Classes.State.IsFocused |> Some }
@@ -90,8 +95,13 @@ module Button =
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Level; opts.Size; opts.State; opts.CustomClass ]
-                        [ Classes.Styles.IsOutlined, opts.IsOutlined; Classes.Styles.IsInverted, opts.IsInverted ]
+                        [ opts.Level
+                          opts.Size
+                          opts.State
+                          opts.CustomClass ]
+                        [ Classes.Styles.IsOutlined, opts.IsOutlined
+                          Classes.Styles.IsInverted, opts.IsInverted
+                          Classes.Styles.IsText, opts.IsText ]
 
         button
             [ yield classes

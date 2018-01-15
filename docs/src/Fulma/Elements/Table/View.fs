@@ -8,7 +8,7 @@ open Types
 open Fulma.Elements
 
 let simpleInteractive =
-    Table.table [ ]
+    Table.table [ Table.IsHoverable ]
         [ thead [ ]
             [ tr
             [ ]

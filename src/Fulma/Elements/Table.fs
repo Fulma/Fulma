@@ -16,6 +16,7 @@ module Table =
           let [<Literal>] IsBordered = "is-bordered"
           let [<Literal>] IsStripped = "is-stripped "
           let [<Literal>] IsFullwidth = "is-fullwidth"
+          let [<Literal>] IsHoverable = "is-hoverable"
         module Spacing =
             let [<Literal>] IsNarrow = "is-narrow"
 
@@ -24,6 +25,7 @@ module Table =
         | IsStripped
         | IsFullwidth
         | IsNarrow
+        | IsHoverable
         | CustomClass of string
         | Props of IHTMLProp list
 
@@ -32,6 +34,7 @@ module Table =
           IsStripped : bool
           IsFullwidth : bool
           IsNarrow : bool
+          IsHoverable : bool
           CustomClass : string option
           Props : IHTMLProp list }
         static member Empty =
@@ -39,6 +42,7 @@ module Table =
               IsStripped = false
               IsNarrow = false
               IsFullwidth = false
+              IsHoverable = false
               CustomClass = None
               Props = [] }
 
@@ -49,6 +53,7 @@ module Table =
             | IsStripped -> { result with IsStripped = true }
             | IsFullwidth -> { result with IsFullwidth = true }
             | IsNarrow -> { result with IsNarrow = true }
+            | IsHoverable -> { result with IsHoverable = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 
@@ -57,6 +62,7 @@ module Table =
                         [ Classes.Style.IsBordered, opts.IsBordered
                           Classes.Style.IsStripped, opts.IsStripped
                           Classes.Style.IsFullwidth, opts.IsFullwidth
-                          Classes.Spacing.IsNarrow, opts.IsNarrow ]
+                          Classes.Spacing.IsNarrow, opts.IsNarrow
+                          Classes.Style.IsHoverable, opts.IsHoverable ]
 
         table (classes::opts.Props) children

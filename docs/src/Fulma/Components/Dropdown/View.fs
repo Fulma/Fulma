@@ -16,12 +16,12 @@ let basic =
                   Icon.faIcon [ Icon.Size IsSmall ] [ Fa.icon Fa.I.AngleDown ] ] ]
           Dropdown.menu [ ]
             [ Dropdown.content [ ]
-                [ Dropdown.item [ ] [ str "Item n°1" ]
-                  Dropdown.item [ ] [ str "Item n°2" ]
-                  Dropdown.item [ Dropdown.Item.IsActive true ] [ str "Item n°3" ]
-                  Dropdown.item [ ] [ str "Item n°4" ]
+                [ Dropdown.Item.a [ ] [ str "Item n°1" ]
+                  Dropdown.Item.a [ ] [ str "Item n°2" ]
+                  Dropdown.Item.a [ Dropdown.Item.IsActive true ] [ str "Item n°3" ]
+                  Dropdown.Item.a [ ] [ str "Item n°4" ]
                   Dropdown.divider [ ]
-                  Dropdown.item [ ] [ str "Item n°5" ] ] ] ]
+                  Dropdown.Item.a [ ] [ str "Item n°5" ] ] ] ]
 
 let root model dispatch =
     Render.docPage [ Render.contentFromMarkdown model.Intro
