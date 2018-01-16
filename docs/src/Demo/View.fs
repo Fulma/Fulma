@@ -1,4 +1,4 @@
-module Showcase.View
+module Demo.View
 
 open Fable.Core
 

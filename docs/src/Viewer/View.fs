@@ -1,5 +1,7 @@
 module Viewer.View
 
+open Fable.Core
+open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Types

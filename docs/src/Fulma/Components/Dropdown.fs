@@ -1,13 +1,12 @@
-module Components.Dropdown.View
+module Components.Dropdown
 
 open Fable.Helpers.React
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Extra.FontAwesome
 
-let basic =
+let basic () =
     Dropdown.dropdown [ Dropdown.IsHoverable ]
         [ div [ ]
             [ Button.button [ ]
@@ -23,11 +22,16 @@ let basic =
                   Dropdown.divider [ ]
                   Dropdown.Item.a [ ] [ str "Item n°5" ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Dropdown
+
+*[Bulma documentation](http://bulma.io/documentation/components/dropdown/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.contentFromMarkdown
                         """
 ### Properties

@@ -16,6 +16,9 @@ let contentFromMarkdown str =
     Content.content [ ]
                     [ htmlFromMarkdown str ]
 
+let renderFSharpCode code =
+    contentFromMarkdown ("```fsharp\n" + code + "\n```")
+
 let docSection title viewer =
     div [ ]
         [ yield contentFromMarkdown title
@@ -26,3 +29,5 @@ let docPage children =
         [ for child in children do
             yield child
             yield hr [ ] ]
+
+let getViewSource (view: unit->React.ReactElement) = ""

@@ -76,7 +76,7 @@ module.exports = {
                     options: {
                         babel: babelOptions,
                         define: isProduction ? [] : ["DEBUG"],
-                        plugins: path.join(__dirname, "./Plugins/bin/Debug/netstandard2.0/Fable.Plugins.ImportExample.dll")
+                        plugins: path.join(__dirname, "./Plugins/bin/Release/netstandard2.0/Fable.Plugins.ImportExample.dll")
                     }
                 }
             },

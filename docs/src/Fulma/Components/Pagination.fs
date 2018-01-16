@@ -1,11 +1,10 @@
-module Components.Pagination.View
+module Components.Pagination
 
 open Fable.Helpers.React
-open Types
 open Fulma
 open Fulma.Components
 
-let basic =
+let basic () =
     Pagination.pagination [ ]
         [ Pagination.previous [ ]
             [ str "Previous" ]
@@ -25,7 +24,7 @@ let basic =
               Pagination.link [ ]
                 [ str "77" ] ] ]
 
-let aligment =
+let aligment () =
     Pagination.pagination [ Pagination.IsCentered ]
         [ Pagination.previous [ ]
             [ str "Previous" ]
@@ -45,7 +44,7 @@ let aligment =
               Pagination.link [ ]
                 [ str "77" ] ] ]
 
-let size =
+let size () =
     Pagination.pagination [  Pagination.Size IsSmall]
         [ Pagination.previous [ ]
             [ str "Previous" ]
@@ -65,11 +64,16 @@ let size =
               Pagination.link [ ]
                 [ str "77" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Pagination
+
+*[Bulma documentation](http://bulma.io/documentation/components/pagination/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         """
 
@@ -82,7 +86,7 @@ Supported size:
 
 When you do not set the alignment, it's consider *left*.
                         """
-                        (Viewer.View.root aligment model.AlignmentViewer (AlignmentViewerMsg >> dispatch))
+                        (Showcase.view aligment (Render.getViewSource aligment))
                      Render.docSection
                         """
 ### Size
@@ -95,4 +99,4 @@ Supported size:
 
 When you do not set the size, it's consider *normal*.
                         """
-                        (Viewer.View.root size model.SizeViewer (SizeViewerMsg >> dispatch)) ]
+                        (Showcase.view size (Render.getViewSource size)) ]

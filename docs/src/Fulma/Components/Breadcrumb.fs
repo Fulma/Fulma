@@ -1,13 +1,14 @@
-module Components.Breadcrumb.View
+module Components.Breadcrumb
 
+open Elmish
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
-open Fulma.Elements
 open Fulma.Components
+open Fulma.Elements
+open Fulma.Extra.FontAwesome
 
-let basic =
+let basic () =
     Breadcrumb.breadcrumb [ ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
@@ -16,7 +17,7 @@ let basic =
           Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Fable.React" ] ] ]
 
-let alignmentCenter =
+let alignmentCenter () =
     Breadcrumb.breadcrumb [ Breadcrumb.IsCentered ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
@@ -25,7 +26,7 @@ let alignmentCenter =
           Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
-let icons =
+let icons () =
     Breadcrumb.breadcrumb [ ]
         [ Breadcrumb.item [ ]
             [ a [ ]
@@ -43,7 +44,7 @@ let icons =
                     [ i [ ClassName "fa fa-thumbs-up" ] [ ] ]
                   str "Elmish" ] ] ]
 
-let size =
+let size () =
     Breadcrumb.breadcrumb [ Breadcrumb.Size IsLarge ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
@@ -52,7 +53,7 @@ let size =
           Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
-let separator =
+let separator () =
     Breadcrumb.breadcrumb [ Breadcrumb.HasSucceedsSeparator ]
         [ Breadcrumb.item [ ]
             [ a [ ] [ str "F#" ] ]
@@ -61,11 +62,16 @@ let separator =
           Breadcrumb.item [ Breadcrumb.Item.IsActive true ]
             [ a [ ] [ str "Elmish" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Breadcrumb
+
+*[Bulma documentation](http://bulma.io/documentation/components/breadcrumb/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         """
 ### Alignment
@@ -78,10 +84,10 @@ Supported alignment:
 When you do not set the alignment, it's align to the *left*.
 
                         """
-                        (Viewer.View.root alignmentCenter model.AlignmentCenterViewer (AlignmentCenterViewerMsg >> dispatch))
+                        (Showcase.view alignmentCenter (Render.getViewSource alignmentCenter))
                      Render.docSection
                         "### Icons"
-                        (Viewer.View.root icons model.IconViewer (IconViewerMsg >> dispatch))
+                        (Showcase.view icons (Render.getViewSource icons))
                      Render.docSection
                         """
 ### Size
@@ -95,7 +101,7 @@ Supported size:
 By default, size is considered *normal*.
 
                         """
-                        (Viewer.View.root size model.SizeViewer (SizeViewerMsg >> dispatch))
+                        (Showcase.view size (Render.getViewSource size))
                      Render.docSection
                         """
 ### Separators
@@ -108,4 +114,4 @@ Supported separators:
 * `Breadcrumb.hasSucceedsSeparator`
 
                         """
-                        (Viewer.View.root separator model.SeparatorViewer (SeparatorViewerMsg >> dispatch)) ]
+                        (Showcase.view separator (Render.getViewSource separator)) ]

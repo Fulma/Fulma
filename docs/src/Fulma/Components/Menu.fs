@@ -1,22 +1,20 @@
-module Components.Menu.State
+module Components.Menu
 
-open Elmish
-open Types
+open Fable.Helpers.React
+open Fulma.Components
 
-let basic =
-    """
-```fsharp
+let basic () =
+    // Helper to generate a menu item
     let menuItem label isActive =
-        li []
-           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]
-               [ str label ] ]
-
+        Menu.item [ Menu.Item.IsActive isActive ]
+           [ str label ]
+    // Helper to generate a sub menu
     let subMenu label isActive children =
-        li []
-           [ a [ classList [ Bulma.Menu.State.IsActive, isActive ] ]
-                     [ str label ]
+        li [ ]
+           [ Menu.item [ Menu.Item.IsActive isActive ]
+                [ str label ]
              ul [ ] children ]
-
+    // Menu rendering
     Menu.menu [ ]
         [ Menu.label [ ] [ str "General" ]
           Menu.list [ ]
@@ -34,20 +32,14 @@ let basic =
             [ menuItem "Payments" false
               menuItem "Transfers" false
               menuItem "Balance" false ] ]
-```
-    """
 
-let init() =
-    { Intro =
-        """
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
 # Menu
 
 *[Bulma documentation](http://bulma.io/documentation/components/menu/)*
-        """
-      BasicViewer = Viewer.State.init basic }
-
-let update msg model =
-    match msg with
-    | BasicViewerMsg msg ->
-        let (viewer, viewerMsg) = Viewer.State.update msg model.BasicViewer
-        { model with BasicViewer = viewer }, Cmd.map BasicViewerMsg viewerMsg
+                        """
+                     Render.docSection
+                        ""
+                        (Showcase.view basic (Render.getViewSource basic)) ]

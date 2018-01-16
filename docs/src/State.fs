@@ -74,7 +74,6 @@ let init result =
     let (model, cmd) =
         urlUpdate result { CurrentPage = Home
                            Menu = Menu.State.init Home
-                           Fulma = Fulma.Dispatcher.State.init ()
                            FulmaExtensions = FulmaExtensions.Dispatcher.State.init ()
                            FulmaElmish = FulmaElmish.Dispatcher.State.init () }
 
@@ -88,10 +87,6 @@ let update msg model =
     | MenuMsg msg ->
         let (menu, menuMsg) = Menu.State.update msg model.Menu
         { model with Menu = menu }, Cmd.map MenuMsg menuMsg
-
-    | FulmaMsg msg ->
-        let (fulma, fulmaMsg) = Fulma.Dispatcher.State.update msg model.Fulma
-        { model with Fulma = fulma }, Cmd.map FulmaMsg fulmaMsg
 
     | FulmaExtensionsMsg msg ->
         let (fulmaExtensions, fulmaExtensionsMsg) = FulmaExtensions.Dispatcher.State.update msg model.FulmaExtensions
