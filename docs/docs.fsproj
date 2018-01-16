@@ -18,27 +18,13 @@
     <Compile Include="src/Menu/State.fs" />
     <Compile Include="src/Menu/View.fs" />
     <!-- Layouts -->
-    <Compile Include="src/Fulma/Layout/Container/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Container/State.fs" />
-    <Compile Include="src/Fulma/Layout/Container/View.fs" />
-    <Compile Include="src/Fulma/Layout/Level/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Level/State.fs" />
-    <Compile Include="src/Fulma/Layout/Level/View.fs" />
-    <Compile Include="src/Fulma/Layout/Hero/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Hero/State.fs" />
-    <Compile Include="src/Fulma/Layout/Hero/View.fs" />
-    <Compile Include="src/Fulma/Layout/Footer/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Footer/State.fs" />
-    <Compile Include="src/Fulma/Layout/Footer/View.fs" />
-    <Compile Include="src/Fulma/Layout/Section/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Section/State.fs" />
-    <Compile Include="src/Fulma/Layout/Section/View.fs" />
-    <Compile Include="src/Fulma/Layout/Tile/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Tile/State.fs" />
-    <Compile Include="src/Fulma/Layout/Tile/View.fs" />
-    <Compile Include="src/Fulma/Layout/Columns/Types.fs" />
-    <Compile Include="src/Fulma/Layout/Columns/State.fs" />
-    <Compile Include="src/Fulma/Layout/Columns/View.fs" />
+    <Compile Include="src/Fulma/Layout/Columns.fs" />
+    <Compile Include="src/Fulma/Layout/Container.fs" />
+    <Compile Include="src/Fulma/Layout/Footer.fs" />
+    <Compile Include="src/Fulma/Layout/Hero.fs" />
+    <Compile Include="src/Fulma/Layout/Level.fs" />
+    <Compile Include="src/Fulma/Layout/Section.fs" />
+    <Compile Include="src/Fulma/Layout/Tile.fs" />
     <!-- Components -->
     <Compile Include="src/Fulma/Components/Breadcrumb.fs" />
     <Compile Include="src/Fulma/Components/Card.fs" />
@@ -56,16 +42,16 @@
     <Compile Include="src/Fulma/Elements/Button.fs" />
     <Compile Include="src/Fulma/Elements/Content.fs" />
     <Compile Include="src/Fulma/Elements/Delete.fs" />
+    <Compile Include="src/Fulma/Elements/Form.fs" />
     <Compile Include="src/Fulma/Elements/Icon.fs" />
     <Compile Include="src/Fulma/Elements/Image.fs" />
+    <Compile Include="src/Fulma/Elements/Notification.fs" />
     <Compile Include="src/Fulma/Elements/Progress.fs" />
     <Compile Include="src/Fulma/Elements/Table.fs" />
     <Compile Include="src/Fulma/Elements/Tag.fs" />
     <Compile Include="src/Fulma/Elements/Title.fs" />
-    <Compile Include="src/Fulma/Elements/Notification.fs" />
-    <Compile Include="src/Fulma/Elements/Form.fs" />
-    <Compile Include="src/Fulma/Versions/View.fs" />
-    <Compile Include="src/Fulma/Introduction/View.fs" />
+    <Compile Include="src/Fulma/Versions.fs" />
+    <Compile Include="src/Fulma/Introduction.fs" />
     <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->

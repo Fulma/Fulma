@@ -1,8 +1,6 @@
-module Fulma.Versions.View
+module Fulma.Versions
 
-open Fable.Core
-
-let root _ =
+let view =
     Render.contentFromMarkdown
         """
 <center style="width: 200px;margin: auto;">

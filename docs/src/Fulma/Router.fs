@@ -4,8 +4,8 @@ open Global
 
 let view fulmaPage =
     match fulmaPage with
-    | FulmaPage.Introduction -> Fulma.Introduction.View.root ()
-    | FulmaPage.Versions -> Fulma.Versions.View.root ()
+    | FulmaPage.Introduction -> Fulma.Introduction.view
+    | FulmaPage.Versions -> Fulma.Versions.view
     | Element element ->
         match element with
         | Elements.Box -> Elements.Box.view
@@ -33,12 +33,12 @@ let view fulmaPage =
         | Modal -> Components.Modal.view
         | Media -> Components.Media.view
         | Dropdown -> Components.Dropdown.view
-    // | Layout layout ->
-    //     match layout with
-    //     | Container -> Layouts.Container.view
-    //     | Level -> Layouts.Level.view
-    //     | Hero -> Layouts.Hero.view
-    //     | Footer -> Layouts.Footer.view
-    //     | Section -> Layouts.Section.view
-    //     | Tile -> Layouts.Tile.view
-    //     | Columns -> Layouts.Columns.view
+    | Layout layout ->
+        match layout with
+        | Container -> Layouts.Container.view
+        | Level -> Layouts.Level.view
+        | Hero -> Layouts.Hero.view
+        | Footer -> Layouts.Footer.view
+        | Section -> Layouts.Section.view
+        | Tile -> Layouts.Tile.view
+        | Columns -> Layouts.Columns.view

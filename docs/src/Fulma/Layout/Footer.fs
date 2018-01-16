@@ -1,16 +1,15 @@
-module Layouts.Footer.View
+module Layouts.Footer
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Layouts
 open Fulma.Elements.Form
 open Fulma.Elements
 open Fulma.BulmaClasses
 
-let basic =
+let basic () =
     Footer.footer [ ]
         [ Content.content [ Content.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
             [ h1 [ ]
@@ -18,8 +17,13 @@ let basic =
               p [ ]
                 [ str "A wrapper around Bulma to help you create application quicker" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Level
+
+*[Bulma documentation](http://bulma.io/documentation/layout/level/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+                        (Showcase.view basic (Render.getViewSource basic)) ]

@@ -1,8 +1,6 @@
-module Fulma.Introduction.View
+module Fulma.Introduction
 
-open Fable.Core
-
-let root _ =
+let view =
     Render.contentFromMarkdown
         """
 # Fulma

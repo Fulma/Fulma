@@ -1,15 +1,14 @@
-module Layouts.Columns.View
+module Layouts.Columns
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Layouts
 
-let iconInteractive =
+let basic () =
     Columns.columns [ ]
         [ Column.column [ Column.Width (Column.All, Column.Is6) ]
             [ Columns.columns [ ]
@@ -36,11 +35,18 @@ let iconInteractive =
                     [ Notification.notification [ Notification.Color IsBlack ]
                         [ str "Column n°2.1" ] ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Columns
+
+A simple way to build **responsive** columns
+
+*[Bulma documentation](http://bulma.io/documentation/columns/basics/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.contentFromMarkdown
                         """
 ### Properties

@@ -1,14 +1,13 @@
-module Layouts.Hero.View
+module Layouts.Hero
 
 open Fable.Helpers.React
-open Types
 open Fulma
 open Fulma.Layouts
 open Fulma.Elements
 open Fulma.Components
 open Fulma.BulmaClasses
 
-let iconInteractive =
+let iconInteractive () =
     Hero.hero [ ]
         [ Hero.body [ ]
             [ Container.container [ Container.IsFluid ]
@@ -17,7 +16,7 @@ let iconInteractive =
                   Heading.h2 [ Heading.IsSubtitle ]
                     [ str "Subtitle" ] ] ] ]
 
-let centered =
+let centered () =
     Hero.hero [ Hero.Color IsSuccess
                 Hero.IsMedium ]
         [ Hero.head [ ]
@@ -39,14 +38,19 @@ let centered =
                   Heading.h2 [ Heading.IsSubtitle ]
                     [ str "Subtitle" ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Hero
+
+*[Bulma documentation](http://bulma.io/documentation/layout/hero/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch))
+                        (Showcase.view iconInteractive (Render.getViewSource iconInteractive))
                      Render.docSection
                         ""
-                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch))
+                        (Showcase.view centered (Render.getViewSource centered))
                      Render.contentFromMarkdown
                         """
 ### Properties

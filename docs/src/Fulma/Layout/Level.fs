@@ -1,13 +1,12 @@
-module Layouts.Level.View
+module Layouts.Level
 
 open Fable.Helpers.React
-open Types
 open Fulma
 open Fulma.Layouts
 open Fulma.Elements.Form
 open Fulma.Elements
 
-let iconInteractive =
+let iconInteractive () =
     Level.level [ ]
         [ Level.left [ ]
             [ Level.item [ ]
@@ -33,7 +32,7 @@ let iconInteractive =
               Level.item [ ]
                 [ Button.button [ Button.Color IsSuccess ] [ str "New" ] ] ] ]
 
-let centered =
+let centered () =
     Level.level [ ]
         [ Level.item [ Level.Item.HasTextCentered ]
             [ div [ ]
@@ -48,11 +47,16 @@ let centered =
                 [ Level.heading [ ] [ str "Watchers" ]
                   Level.title [ ] [ str "66" ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Level
+
+*[Bulma documentation](http://bulma.io/documentation/layout/level/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch))
+                        (Showcase.view iconInteractive (Render.getViewSource iconInteractive))
                      Render.docSection
                         "### Centered level"
-                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch)) ]
+                        (Showcase.view centered (Render.getViewSource centered)) ]

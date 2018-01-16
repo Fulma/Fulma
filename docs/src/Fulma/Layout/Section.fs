@@ -1,11 +1,10 @@
-module Layouts.Section.View
+module Layouts.Section
 
 open Fable.Helpers.React
-open Types
 open Fulma.Layouts
 open Fulma.Elements
 
-let basic =
+let basic () =
     Section.section [ ]
         [ Container.container [ Container.IsFluid ]
             [ Heading.h1 [ ]
@@ -13,11 +12,16 @@ let basic =
               Heading.h2 [ Heading.IsSubtitle ]
                 [ str "A simple container to divide your page into sections" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Section
+
+*[Bulma documentation](http://bulma.io/documentation/layout/section/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.contentFromMarkdown
                         """
 ### Properties
@@ -26,5 +30,4 @@ Spacing:
 
 - `Section.isMedium`
 - `Section.isLarge`
-                        """
-                        ]
+                        """ ]
