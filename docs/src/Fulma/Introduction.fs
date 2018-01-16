@@ -8,7 +8,7 @@ let view =
 <center style="width: 200px;margin: auto;">
 ![Fulma logo](assets/logo_transparent.svg)
 </center>
-Provide a wrapper around [Bulma 0.5.2](http://bulma.io/versions/0.5.2/) for [fable-react](https://github.com/fable-compiler/fable-react).
+Provide a wrapper around [Bulma 0.6.2](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
 This website isn't intended into providing a full documentation of Bulma.
 

@@ -1,8 +1,6 @@
-module Demo.View
+module Demo
 
-open Fable.Core
-
-let root _ =
+let view =
     Render.contentFromMarkdown
         """
 # Demos

@@ -28,9 +28,9 @@ open Fable.Helpers.React.Props
 let root model dispatch =
     let pageHtml =
         function
-        | Home -> Home.View.root ()
-        | Migration -> Migration.View.root ()
-        | Showcase -> Demo.View.root ()
+        | Home -> Home.view
+        | Migration -> Migration.view
+        | Showcase -> Demo.view
         | Fulma fulmaPage ->
             Fulma.Router.view fulmaPage
         | FulmaExtensions fulmaExtensionsPage ->
@@ -40,7 +40,7 @@ let root model dispatch =
 
     div []
         [ div [ ClassName "navbar-bg" ]
-              [ div [ ClassName "container" ] [ Navbar.View.root ] ]
+              [ div [ ClassName "container" ] [ Navbar.view ] ]
           div [ ClassName "section" ]
               [ div [ ClassName "container" ]
                     [ div [ ClassName "columns" ]

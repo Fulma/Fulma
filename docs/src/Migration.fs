@@ -1,8 +1,6 @@
-module Migration.View
+module Migration
 
-open Fable.Core
-
-let root _ =
+let view =
     Render.contentFromMarkdown
         """
 # Migration guide from Fable.Elmish.Bulma

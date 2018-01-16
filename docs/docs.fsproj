@@ -91,10 +91,10 @@
     <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />
     <Compile Include="src/FulmaElmish/Dispatcher/View.fs" />
     <!-- Home -->
-    <Compile Include="src/Home/View.fs" />
-    <Compile Include="src/Migration/View.fs" />
-    <Compile Include="src/Demo/View.fs" />
-    <Compile Include="src/Navbar/View.fs" />
+    <Compile Include="src/Home.fs" />
+    <Compile Include="src/Migration.fs" />
+    <Compile Include="src/Demo.fs" />
+    <Compile Include="src/Navbar.fs" />
     <Compile Include="src/Types.fs" />
     <Compile Include="src/State.fs" />
     <Compile Include="src/App.fs" />

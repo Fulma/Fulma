@@ -20,7 +20,7 @@ Here you can find which libraries versions are supported by Fulma.
     <tbody>
         <tr>
             <td>Current</td>
-            <td>0.5.2</td>
+            <td>0.6.2</td>
             <td>4.7.0</td>
         </tr>
     </tbody>
