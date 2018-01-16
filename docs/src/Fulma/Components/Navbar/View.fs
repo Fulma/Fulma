@@ -14,7 +14,7 @@ let basic =
         [ Navbar.brand_div [ ]
             [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
                 [ img [ Style [ Width "2.5em" ] // Force svg display
-                        Src "/assets/logo_transparent.svg" ] ] ]
+                        Src "assets/logo_transparent.svg" ] ] ]
           Navbar.item_a [ Navbar.Item.hasDropdown
                           Navbar.Item.isHoverable ]
 
@@ -39,7 +39,7 @@ let colors =
             [ Navbar.brand_div [ ]
                 [ Navbar.item_a[ Navbar.Item.props [ Href "#" ] ]
                     [ img [ Style [ Width "2.5em" ] // Force svg display
-                            Src "/assets/logo_transparent.svg" ] ] ]
+                            Src "assets/logo_transparent.svg" ] ] ]
               Navbar.item_a [ Navbar.Item.hasDropdown
                               Navbar.Item.isHoverable ]
 
