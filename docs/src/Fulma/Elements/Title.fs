@@ -1,10 +1,9 @@
-module Elements.Title.View
+module Elements.Title
 
 open Fable.Helpers.React
-open Types
 open Fulma.Elements
 
-let simpleInteractive =
+let simpleInteractive () =
     div [ ]
         [ Heading.h1 [ ]
             [ str "Title" ]
@@ -12,7 +11,7 @@ let simpleInteractive =
             [ str "Subtitle" ] ]
 
 
-let sizeInteractive =
+let sizeInteractive () =
     div [ ]
         [ Heading.h1 [ ]
             [ str "Title 1" ]
@@ -39,8 +38,13 @@ let sizeInteractive =
           Heading.h6 [ Heading.IsSubtitle ]
             [ str "Subtitle 6" ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Title
+
+*[Bulma documentation](http://bulma.io/documentation/elements/title/)*
+                        """
                      Render.docSection
                         """
 ### Types
@@ -49,7 +53,7 @@ let root model dispatch =
 
 By default, `Header.h1 [ ] [ ]` generate a title. You can specify `Heading.isSubtitle` if needed.
                         """
-                        (Viewer.View.root simpleInteractive model.TypeViewer (TypeViewerMsg >> dispatch))
+                        (Showcase.view simpleInteractive (Render.getViewSource simpleInteractive))
                      Render.docSection
                         """
 ### Sizes
@@ -58,6 +62,6 @@ Elmish.Bulma already associate each header size with the equivalent class.
 
 For example, `Heading.h1 [ Heading.isTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
                         """
-                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
+                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.contentFromMarkdown
                         """We also provide `Heading.isSpaced` helper. See the *[bulma documentation](http://bulma.io/documentation/elements/title/)* to learn more about it.""" ]

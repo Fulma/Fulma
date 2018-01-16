@@ -1,14 +1,13 @@
-module Elements.Progress.View
+module Elements.Progress
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 
-let colorInteractive =
+let colorInteractive () =
     div [ ClassName "block" ]
         [ Progress.progress
             [ Progress.Value 15
@@ -34,7 +33,7 @@ let colorInteractive =
               Progress.Value 90
               Progress.Max 100 ] [ str "90%" ] ]
 
-let sizeInteractive =
+let sizeInteractive () =
     div [ ClassName "block" ]
         [ Progress.progress
             [ Progress.Size IsSmall
@@ -52,11 +51,18 @@ let sizeInteractive =
               Progress.Value 60
               Progress.Max 100 ] [ str "60%" ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Progress
+
+The **progress** element can have different colors and sizes.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/progress/)*
+                        """
                      Render.docSection
                         "### Colors"
-                        (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
+                        (Showcase.view colorInteractive (Render.getViewSource colorInteractive))
                      Render.docSection
                         "### Sizes"
-                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch)) ]
+                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]

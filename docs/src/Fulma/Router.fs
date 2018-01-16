@@ -6,20 +6,20 @@ let view fulmaPage =
     match fulmaPage with
     | FulmaPage.Introduction -> Fulma.Introduction.View.root ()
     | FulmaPage.Versions -> Fulma.Versions.View.root ()
-    // | Element element ->
-    //     match element with
-    //     | Elements.Box -> Elements.Box.view
-    //     | Elements.Button -> Elements.Button.view
-    //     | Elements.Content -> Elements.Content.view
-    //     | Elements.Delete -> Elements.Delete.view
-    //     | Elements.Icon -> Elements.Icon.view
-    //     | Elements.Image -> Elements.Image.view
-    //     | Elements.Progress -> Elements.Progress.view
-    //     | Elements.Table -> Elements.Table.view
-    //     | Elements.Tag -> Elements.Tag.view
-    //     | Elements.Title -> Elements.Title.view
-    //     | Elements.Notification -> Elements.Notification.view
-    //     | Elements.Form -> Elements.Form.view
+    | Element element ->
+        match element with
+        | Elements.Box -> Elements.Box.view
+        | Elements.Button -> Elements.Button.view
+        | Elements.Content -> Elements.Content.view
+        | Elements.Delete -> Elements.Delete.view
+        | Elements.Icon -> Elements.Icon.view
+        | Elements.Image -> Elements.Image.view
+        | Elements.Progress -> Elements.Progress.view
+        | Elements.Table -> Elements.Table.view
+        | Elements.Tag -> Elements.Tag.view
+        | Elements.Title -> Elements.Title.view
+        | Elements.Notification -> Elements.Notification.view
+        | Elements.Form -> Elements.Form.view
     | Component ``component`` ->
         match ``component`` with
         | Breadcrumb -> Components.Breadcrumb.view

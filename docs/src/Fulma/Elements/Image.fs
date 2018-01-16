@@ -1,13 +1,12 @@
-module Elements.Image.View
+module Elements.Image
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Elements
 
-let fixedInteractive =
+let fixedInteractive () =
     div [ ClassName "block" ]
         [ Image.image [ Image.Is64x64 ]
             [ img [ Src "https://dummyimage.com/64x64/7a7a7a/fff" ] ]
@@ -15,16 +14,23 @@ let fixedInteractive =
           Image.image [ Image.Is128x128 ]
             [ img [ Src "https://dummyimage.com/128x128/7a7a7a/fff" ] ] ]
 
-let responsiveInteractive =
+let responsiveInteractive () =
     div [ ClassName "block" ]
         [ Image.image [ Image.Is2by1 ]
             [ img [ Src "https://dummyimage.com/640x320/7a7a7a/fff" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Images
+
+The **images** can have different sizes (fixed or ratio).
+
+*[Bulma documentation](http://bulma.io/documentation/elements/image/)*
+                        """
                      Render.docSection
                         "### Fixed square images"
-                        (Viewer.View.root fixedInteractive model.FixedViewer (FixedViewerMsg >> dispatch))
+                        (Showcase.view fixedInteractive (Render.getViewSource fixedInteractive))
                      Render.docSection
                         "### Responsive images with ratio"
-                        (Viewer.View.root responsiveInteractive model.ResponsiveViewer (ResponsiveViewerMsg >> dispatch)) ]
+                        (Showcase.view responsiveInteractive (Render.getViewSource responsiveInteractive)) ]

@@ -1,20 +1,21 @@
-module Elements.Form.View
+module Elements.Form
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 open Fulma.Elements.Form
 
-let iconInteractive =
+let basic () =
     form [ ]
-         [ Field.field [ ]
+         [ // Name field
+           Field.field [ ]
                 [ Label.label [ ]
                     [ str "Name" ]
                   Control.control [ ]
                     [ Input.text [ Input.Placeholder "Ex: Maxime" ] ] ]
+           // Username field
            Field.field [ ]
                 [ Label.label [ ]
                     [ str "Username" ]
@@ -26,7 +27,7 @@ let iconInteractive =
                       Icon.faIcon [ Icon.Size IsSmall; Icon.IsRight ] [ Fa.icon Fa.I.Check ] ]
                   Help.help [ Help.Color IsSuccess ]
                     [ str "This username is available" ] ]
-
+           // Email field
            Field.field [ ]
                 [ Label.label [ ]
                     [ str "Email" ]
@@ -38,7 +39,7 @@ let iconInteractive =
                       Icon.faIcon [ Icon.Size IsSmall; Icon.IsRight ] [ Fa.icon Fa.I.Warning ] ]
                   Help.help [ Help.Color IsDanger ]
                     [ str "This email is invalid" ] ]
-
+           // Subject field
            Field.field [ ]
                 [ Label.label [ ]
                     [ str "Subject" ]
@@ -48,19 +49,20 @@ let iconInteractive =
                             [ option [ Value "1" ] [ str "Value n°1" ]
                               option [ Value "2"] [ str "Value n°2" ]
                               option [ Value "3"] [ str "Value n°3" ] ] ] ] ]
+           // Message field
            Field.field [ ]
                 [ Label.label [ ]
                     [ str "Message" ]
                   Control.control [ Control.IsLoading ]
                     [ Textarea.textarea [ ]
                         [ ] ] ]
-
+           // Terms and conditions area
            Field.field [ ]
                 [ Control.control [ ]
                     [ Checkbox.checkbox [ ]
                         [ Checkbox.input [ ]
                           str "I agree with the terms and conditions" ] ] ]
-
+           // Validation fields
            Field.field [ ]
                 [ Control.control [ ]
                     [ Radio.radio [ ]
@@ -69,7 +71,7 @@ let iconInteractive =
                       Radio.radio [ ]
                         [ Radio.input [ Radio.Input.Name "answer" ]
                           str "No" ] ] ]
-
+           // Attachment
            Field.field [ ]
                 [ File.file [ File.HasName ]
                     [ File.label [ ]
@@ -81,7 +83,7 @@ let iconInteractive =
                                 [ str "Choose a file..." ] ]
                           File.name [ ]
                             [ str "License agreement.pdf" ] ] ] ]
-
+           // Control area (submit, cancel, etc.)
            Field.field [ Field.IsGrouped ]
                 [ Control.control [ ]
                     [ Button.button [ Button.Color IsPrimary ]
@@ -90,8 +92,15 @@ let iconInteractive =
                     [ Button.button [ Button.IsLink ]
                         [ str "Cancel" ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Form
+
+All generic **form controls**, designed for consistency
+
+*[Bulma documentation](http://bulma.io/documentation/form/general/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.BoxViewer (BoxViewerMsg >> dispatch)) ]
+                        (Showcase.view basic (Render.getViewSource basic)) ]

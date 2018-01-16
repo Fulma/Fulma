@@ -1,12 +1,11 @@
-module Elements.Tag.View
+module Elements.Tag
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 
-let colorInteractive =
+let colorInteractive () =
     div [ ClassName "block" ]
         [ Tag.tag [ ] [ str "Default" ]
           Tag.tag [ Tag.Color IsWhite ] [ str "White" ]
@@ -19,13 +18,13 @@ let colorInteractive =
           Tag.tag [ Tag.Color IsWarning ] [ str "Warning" ]
           Tag.tag [ Tag.Color IsDanger ] [ str "Danger" ] ]
 
-let sizeInteractive =
+let sizeInteractive () =
     div [ ClassName "block" ]
         [ Tag.tag [ ] [ str "Normal" ]
           Tag.tag [ Tag.Color IsPrimary; Tag.Size IsMedium ] [ str "Medium" ]
           Tag.tag [ Tag.Color IsInfo; Tag.Size IsLarge ] [ str "Large" ] ]
 
-let nestedDeleteStyleInteractive =
+let nestedDeleteStyleInteractive () =
     div [ ClassName "block" ]
         [ Tag.tag [ Tag.Color IsDark ]
             [ str "With delete"
@@ -37,22 +36,29 @@ let nestedDeleteStyleInteractive =
             [ str "With delete"
               Delete.delete [ Delete.Size IsLarge ] [ ] ] ]
 
-let list =
+let list () =
     Tag.list [ Tag.List.HasAddons ]
         [ Tag.tag [ Tag.Color IsDanger ] [ str "Maxime Mangel" ]
           Tag.delete [ ] [ ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Tags
+
+The **tags** can have different colors and sizes. You can also nest a *[Delete element](#elements/delete)* in it.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/tag/)*
+                        """
                      Render.docSection
                         "### Colors"
-                        (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
+                        (Showcase.view colorInteractive (Render.getViewSource colorInteractive))
                      Render.docSection
                         "### Sizes"
-                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
+                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.docSection
                         "### Nested delete"
-                        (Viewer.View.root nestedDeleteStyleInteractive model.NestedDeleteViewer (NestedDeleteViewerMsg >> dispatch))
+                        (Showcase.view nestedDeleteStyleInteractive (Render.getViewSource nestedDeleteStyleInteractive))
                      Render.docSection
                         "### Tag List"
-                        (Viewer.View.root list model.ListViewer (ListViewerMsg >> dispatch)) ]
+                        (Showcase.view list (Render.getViewSource list)) ]

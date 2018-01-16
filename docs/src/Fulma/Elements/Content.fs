@@ -1,11 +1,10 @@
-module Elements.Content.View
+module Elements.Content
 
 open Fable.Helpers.React
-open Types
 open Fulma
 open Fulma.Elements
 
-let contentInteractive =
+let contentInteractive () =
     Content.content [ ]
         [ h1 [ ] [str "Hello World"]
           p [ ]
@@ -30,7 +29,7 @@ let contentInteractive =
                      Nulla facilisi. Donec mattis vulputate risus in luctus.
                      Maecenas vestibulum interdum commodo." ] ]
 
-let sizeInteractive =
+let sizeInteractive () =
     Content.content [ Content.Size IsSmall ]
         [ h1 [ ] [str "Hello World"]
           p [ ]
@@ -55,11 +54,18 @@ let sizeInteractive =
                      Nulla facilisi. Donec mattis vulputate risus in luctus.
                      Maecenas vestibulum interdum commodo." ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Content
+
+A single class to handle WYSIWYG generated content, where only **HTML tags** are available. Content also support size attributes.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/content/)*
+                        """
                      Render.docSection
                         "### Demo"
-                        (Viewer.View.root contentInteractive model.ContentViewer (ContentViewerMsg >> dispatch))
+                        (Showcase.view contentInteractive (Render.getViewSource contentInteractive))
                      Render.docSection
                         """
 ### Size
@@ -72,4 +78,4 @@ Supported size:
 
 When you do not set the size, it's consider *normal*.
                         """
-                        (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch)) ]
+                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]

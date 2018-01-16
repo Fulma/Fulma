@@ -1,13 +1,12 @@
-module Elements.Icon.View
+module Elements.Icon
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 
-let icon =
+let icon () =
     div [ ClassName "block" ]
         [ Icon.icon [ Icon.Size IsSmall ]
             [ i [ ClassName "fa fa-home" ] [ ] ]
@@ -19,7 +18,7 @@ let icon =
             [ i [ ClassName "fa fa-3x fa-home" ] [ ] ] ]
 
 //Display modification of container size with Bulma options
-let containerSizes =
+let containerSizes () =
     div [ ClassName "block" ]
         [ //faIcon creates one Fulma icon element containing one Font Awesome icon
           Icon.faIcon [ // First group of Options: Usual fulma properties available: size, class
@@ -30,12 +29,10 @@ let containerSizes =
                         //Second group of Options: Font Awesome options
                         [ //Display one Font Awesome Icon available in the Fa.I namespace
                           Fa.icon Fa.I.Home ]
-
           Icon.faIcon [ //No setting for Icon container size = Normal size
                         //...
                         Icon.CustomClass "icon-size" ]
                       [ Fa.icon Fa.I.Home ]
-
           Icon.faIcon [ Icon.Size IsMedium
                         Icon.CustomClass "icon-size" ]
                       [ Fa.icon Fa.I.Home
@@ -48,7 +45,7 @@ let containerSizes =
                         Fa.fa2x ] ]
 
 //Diplay Font Awesome Rotation & Flip
-let iconRotationFlip =
+let iconRotationFlip () =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
@@ -87,7 +84,7 @@ let iconRotationFlip =
                     str "Vertical flip" ] ] ]
 
 //Display Font Awesome Animations
-let iconAnimations =
+let iconAnimations () =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
@@ -110,7 +107,7 @@ let iconAnimations =
                     str "Spin animation" ] ] ]
 
 //Stacked Icons
-let stackedIcons =
+let stackedIcons () =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
@@ -125,7 +122,7 @@ let stackedIcons =
                     str "One flag with inversed color over a circle" ] ] ]
 
 //Display Font Awesome Icon List
-let iconList =
+let iconList () =
     div [ ClassName "block" ]
         [ // fa_ul creates an unordered list with icons instead of the classic bullet points
           Icon.fa_ul [ ]
@@ -141,7 +138,7 @@ let iconList =
                                 Fa.isLi ]
                   str "Item processing" ] ] ]
 
-let borderPulledIcons =
+let borderPulledIcons () =
     div [ ClassName "block" ]
         [ span [ ]
                [ Icon.faIcon [ ]
@@ -153,14 +150,14 @@ let borderPulledIcons =
                      Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.\
                      Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat.." ] ]
 
-let fontAwesomeIcons =
+let fontAwesomeIcons () =
     div [ ClassName "block" ]
         [ Icon.faIcon [ Icon.Size IsSmall ] [ Fa.icon Fa.I.Home ]
           Icon.faIcon [ ] [ Fa.icon Fa.I.Tags; Fa.faLg ]
           Icon.faIcon [ Icon.Size IsMedium ] [ Fa.icon Fa.I.``500px``; Fa.fa2x ]
           Icon.faIcon [ Icon.Size IsLarge ] [ Fa.icon Fa.I.Android; Fa.fa3x ] ]
 
-let composeButtons =
+let composeButtons () =
     div [ ClassName "block" ]
         [ Button.button [ Button.Color IsDanger ]
                         [ Icon.faIcon [ ]
@@ -171,11 +168,18 @@ let composeButtons =
                                       [ Fa.icon Fa.I.User; Fa.fw ]
                           span [] [ str "User" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Icons
+
+The **icons** can have different sizes and is also compatible with *[Font Awesome](http://fontawesome.io/)* icons.
+
+*[Bulma documentation](http://bulma.io/documentation/elements/icon/)*
+                        """
                      Render.docSection
                         "### Sizes"
-                        (Viewer.View.root icon model.IconViewer (IconViewerMsg >> dispatch))
+                        (Showcase.view icon (Render.getViewSource icon))
                      Render.docSection
                         """
 ### Convenience functions
@@ -191,7 +195,7 @@ You need the next `open` statement to access the FontAwesome convenience functio
 
 All the examples below use Font Awesome.
                         """
-                        (Viewer.View.root containerSizes model.IconViewer (IconViewerMsg >> dispatch))
+                        (Showcase.view containerSizes (Render.getViewSource containerSizes))
                      Render.docSection
                         """
 ### Available Font Awesome icons
@@ -204,47 +208,46 @@ You can also use `Fa.I.Custom "fa-my-icon"` as a fix.
     Icon.faIcon [ Icon.isLarge ] [ Fa.I.Custom "fa-thumbs-up" ]
 ```
                         """
-                        (Viewer.View.root fontAwesomeIcons model.ConvenienceViewer (ConvenienceViewerMsg >> dispatch))
+                        (Showcase.view fontAwesomeIcons (Render.getViewSource fontAwesomeIcons))
                      Render.docSection
                         """
 ### Rotations and Flip
 
 Font Awesome options to rotate or flip icons are available as options in the library.
                         """
-                        (Viewer.View.root iconRotationFlip model.RotationFlipViewer (RotationFlipViewerMsg >> dispatch))
+                        (Showcase.view iconRotationFlip (Render.getViewSource iconRotationFlip))
                      Render.docSection
                         """
 ### Animated Icons
 
 Font Awesome spin and pulse animations are available as options in the library.
                         """
-                        (Viewer.View.root iconAnimations model.AnimationViewer (AnimationViewerMsg >> dispatch))
+                        (Showcase.view iconAnimations (Render.getViewSource iconAnimations))
                      Render.docSection
                         """
 ### Icons as Bullet Points
 
 You can use icons instead of bullet points in unordered lists.
                         """
-                        (Viewer.View.root iconList model.IconListViewer (IconListViewerMsg >> dispatch))
+                        (Showcase.view iconList (Render.getViewSource iconList))
                      Render.docSection
                         """
 ### Icons inside text paragraphs
 
 You can embed icons inside text paragraphs.
                         """
-                        (Viewer.View.root borderPulledIcons model.BorderPulledViewer (BorderPulledViewerMsg >> dispatch))
+                        (Showcase.view borderPulledIcons (Render.getViewSource borderPulledIcons))
                      Render.docSection
                         """
 ### Stacked icons
 
 You can build complex icons by combining several simple icons
                         """
-                        (Viewer.View.root stackedIcons model.StackedIconViewer (StackedIconViewerMsg >> dispatch))
+                        (Showcase.view stackedIcons (Render.getViewSource stackedIcons))
                      Render.docSection
                         """
 ### Compose Buttons
 
 You can add Font Awesome icons to buttons.
                         """
-                        (Viewer.View.root composeButtons model.ComposeButtonViewer (ComposeButtonViewerMsg >> dispatch))
-                ]
+                        (Showcase.view composeButtons (Render.getViewSource composeButtons)) ]
