@@ -1,18 +1,16 @@
-module Components.Tabs.View
+module Components.Tabs
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Layouts
 open Fulma.Elements.Form
 
-
-let basic =
+let basic () =
     Tabs.tabs [ ]
         [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
@@ -23,7 +21,7 @@ let basic =
           Tabs.tab [ ]
             [ a [ ] [ str "Hink" ] ] ]
 
-let alignment =
+let alignment () =
     Tabs.tabs [ Tabs.IsCentered ]
         [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
@@ -34,7 +32,7 @@ let alignment =
           Tabs.tab [ ]
             [ a [ ] [ str "Hink" ] ] ]
 
-let size =
+let size () =
     Tabs.tabs [ Tabs.Size IsLarge ]
         [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]
@@ -45,7 +43,7 @@ let size =
           Tabs.tab [ ]
             [ a [ ] [ str "Hink" ] ] ]
 
-let styles =
+let styles () =
     Tabs.tabs [ Tabs.IsFullwidth
                 Tabs.IsBoxed ]
         [ Tabs.tab [ Tabs.Tab.IsActive true ]
@@ -57,18 +55,24 @@ let styles =
           Tabs.tab [ ]
             [ a [ ] [ str "Hink" ] ] ]
 
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Tabs
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+Simple responsive horizontal navigation **tabs**, with different styles
+
+*[Bulma documentation](http://bulma.io/documentation/components/tabs/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         "### Alignment"
-                        (Viewer.View.root alignment model.AlignmentViewer (AlignmentViewerMsg >> dispatch))
+                        (Showcase.view alignment (Render.getViewSource alignment))
                      Render.docSection
                         "### Size"
-                        (Viewer.View.root size model.SizeViewer (SizeViewerMsg >> dispatch))
+                        (Showcase.view size (Render.getViewSource size))
                      Render.docSection
                         "### Styles"
-                        (Viewer.View.root styles model.StylesViewer (StylesViewerMsg >> dispatch)) ]
+                        (Showcase.view styles (Render.getViewSource styles)) ]

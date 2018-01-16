@@ -1,13 +1,12 @@
-module Components.Navbar.View
+module Components.Navbar
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Components
 open Fulma.Elements
 
-let basic =
+let basic () =
     Navbar.navbar [ ]
         [ Navbar.Brand.div [ ]
             [ Navbar.Item.a [ Navbar.Item.Props [ Href "#" ] ]
@@ -30,7 +29,7 @@ let basic =
                 [ Button.button [ Button.Color IsSuccess ]
                     [ str "Demo" ] ] ] ]
 
-let colors =
+let colors () =
     let navbarWithColor color =
         Navbar.navbar [ Navbar.Color color ]
             [ Navbar.Brand.div [ ]
@@ -39,7 +38,6 @@ let colors =
                             Src "/assets/logo_transparent.svg" ] ] ]
               Navbar.Item.a [ Navbar.Item.HasDropdown
                               Navbar.Item.IsHoverable ]
-
                 [ Navbar.Link.a [ ]
                     [ str "Docs" ]
                   Navbar.Dropdown.div [ ]
@@ -54,17 +52,21 @@ let colors =
                 [ Navbar.Item.div [ ]
                     [ Button.button [ Button.Color IsSuccess ]
                         [ str "Demo" ] ] ] ]
-
     div [ ]
         [ navbarWithColor IsDanger
           br [ ]
           navbarWithColor IsInfo ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Navbar
+
+*[Bulma documentation](http://bulma.io/documentation/components/navbar/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         """
 ### Colors
@@ -73,7 +75,7 @@ Please note the display on the next sample isn't perfact because we customize Bu
 
 You can see the default looks [here](https://bulma.io/documentation/components/navbar/#colors).
                         """
-                        (Viewer.View.root colors model.ColorViewer (ColorViewerMsg >> dispatch))
+                        (Showcase.view colors (Render.getViewSource colors))
                      Render.contentFromMarkdown
                         """
 ### Important

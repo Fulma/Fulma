@@ -27,7 +27,7 @@ module Breadcrumb =
     type Option =
         | IsCentered
         | IsRight
-        // Separators
+        /// Separators
         | HasArrowSeparator
         | HasBulletSeparator
         | HasDotSeparator

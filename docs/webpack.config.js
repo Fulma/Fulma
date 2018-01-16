@@ -75,7 +75,8 @@ module.exports = {
                     loader: "fable-loader",
                     options: {
                         babel: babelOptions,
-                        define: isProduction ? [] : ["DEBUG"]
+                        define: isProduction ? [] : ["DEBUG"],
+                        plugins: path.join(__dirname, "./Plugins/bin/Release/netstandard2.0/Fable.Plugins.ImportExample.dll")
                     }
                 }
             },

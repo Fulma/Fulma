@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Simple Fable App",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart-plugin": "dotnet restore docs && dotnet restore docs/Plugins",
+    "start-plugin": "chokidar 'docs/Plugins/*.fs' -c 'dotnet build docs/Plugins --no-restore && cd docs && dotnet fable webpack'"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +36,7 @@
     "bulma-switch": "^0.1.2",
     "bulma-timeline": "^1.1.2",
     "bulma-tooltip": "^0.1.1",
+    "chokidar-cli": "^1.2.0",
     "css-loader": "^0.28.8",
     "extract-text-webpack-plugin": "^3.0.2",
     "fable-loader": "^1.1.3",

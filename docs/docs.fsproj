@@ -10,6 +10,7 @@
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <Compile Include="src/Global.fs" />
     <Compile Include="src/Render.fs" />
+    <Compile Include="src/Showcase.fs" />
     <Compile Include="src/Viewer/Types.fs" />
     <Compile Include="src/Viewer/State.fs" />
     <Compile Include="src/Viewer/View.fs" />
@@ -39,39 +40,17 @@
     <Compile Include="src/Fulma/Layout/Columns/State.fs" />
     <Compile Include="src/Fulma/Layout/Columns/View.fs" />
     <!-- Components -->
-    <Compile Include="src/Fulma/Components/Panel/Types.fs" />
-    <Compile Include="src/Fulma/Components/Panel/State.fs" />
-    <Compile Include="src/Fulma/Components/Panel/View.fs" />
-    <Compile Include="src/Fulma/Components/Breadcrumb/Types.fs" />
-    <Compile Include="src/Fulma/Components/Breadcrumb/State.fs" />
-    <Compile Include="src/Fulma/Components/Breadcrumb/View.fs" />
-    <Compile Include="src/Fulma/Components/Card/Types.fs" />
-    <Compile Include="src/Fulma/Components/Card/State.fs" />
-    <Compile Include="src/Fulma/Components/Card/View.fs" />
-    <Compile Include="src/Fulma/Components/Media/Types.fs" />
-    <Compile Include="src/Fulma/Components/Media/State.fs" />
-    <Compile Include="src/Fulma/Components/Media/View.fs" />
-    <Compile Include="src/Fulma/Components/Menu/Types.fs" />
-    <Compile Include="src/Fulma/Components/Menu/State.fs" />
-    <Compile Include="src/Fulma/Components/Menu/View.fs" />
-    <Compile Include="src/Fulma/Components/Navbar/Types.fs" />
-    <Compile Include="src/Fulma/Components/Navbar/State.fs" />
-    <Compile Include="src/Fulma/Components/Navbar/View.fs" />
-    <Compile Include="src/Fulma/Components/Message/Types.fs" />
-    <Compile Include="src/Fulma/Components/Message/State.fs" />
-    <Compile Include="src/Fulma/Components/Message/View.fs" />
-    <Compile Include="src/Fulma/Components/Pagination/Types.fs" />
-    <Compile Include="src/Fulma/Components/Pagination/State.fs" />
-    <Compile Include="src/Fulma/Components/Pagination/View.fs" />
-    <Compile Include="src/Fulma/Components/Tabs/Types.fs" />
-    <Compile Include="src/Fulma/Components/Tabs/State.fs" />
-    <Compile Include="src/Fulma/Components/Tabs/View.fs" />
-    <Compile Include="src/Fulma/Components/Modal/Types.fs" />
-    <Compile Include="src/Fulma/Components/Modal/State.fs" />
-    <Compile Include="src/Fulma/Components/Modal/View.fs" />
-    <Compile Include="src/Fulma/Components/Dropdown/Types.fs" />
-    <Compile Include="src/Fulma/Components/Dropdown/State.fs" />
-    <Compile Include="src/Fulma/Components/Dropdown/View.fs" />
+    <Compile Include="src/Fulma/Components/Breadcrumb.fs" />
+    <Compile Include="src/Fulma/Components/Card.fs" />
+    <Compile Include="src/Fulma/Components/Dropdown.fs" />
+    <Compile Include="src/Fulma/Components/Media.fs" />
+    <Compile Include="src/Fulma/Components/Menu.fs" />
+    <Compile Include="src/Fulma/Components/Message.fs" />
+    <Compile Include="src/Fulma/Components/Modal.fs" />
+    <Compile Include="src/Fulma/Components/Navbar.fs" />
+    <Compile Include="src/Fulma/Components/Pagination.fs" />
+    <Compile Include="src/Fulma/Components/Panel.fs" />
+    <Compile Include="src/Fulma/Components/Tabs.fs" />
     <!-- Elements -->
     <Compile Include="src/Fulma/Elements/Box/Types.fs" />
     <Compile Include="src/Fulma/Elements/Box/State.fs" />
@@ -112,9 +91,7 @@
     <Compile Include="src/Fulma/Versions/View.fs" />
     <Compile Include="src/Fulma/Introduction/View.fs" />
     <!-- Dispatcher need to be latest of the group -->
-    <Compile Include="src/Fulma/Dispatcher/Types.fs" />
-    <Compile Include="src/Fulma/Dispatcher/State.fs" />
-    <Compile Include="src/Fulma/Dispatcher/View.fs" />
+    <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->
     <Compile Include="src/FulmaExtensions/Calendar/Types.fs" />
     <Compile Include="src/FulmaExtensions/Calendar/State.fs" />
@@ -154,7 +131,7 @@
     <!-- Home -->
     <Compile Include="src/Home/View.fs" />
     <Compile Include="src/Migration/View.fs" />
-    <Compile Include="src/Showcase/View.fs" />
+    <Compile Include="src/Demo/View.fs" />
     <Compile Include="src/Navbar/View.fs" />
     <Compile Include="src/Types.fs" />
     <Compile Include="src/State.fs" />

@@ -99,6 +99,10 @@ Target "BuildDocs" (fun _ ->
     runDotnet "docs" "fable webpack --port free -- -p"
 )
 
+Target "BuildPlugin" (fun _ ->
+    runDotnet "docs" "build Plugins -c Release"
+)
+
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes) projFile =
@@ -186,6 +190,7 @@ Target "PublishDocs" (fun _ ->
 "Build"
     ==> "YarnInstall"
     ==> "InstallDocs"
+    ==> "BuildPlugin"
     ==> "WatchDocs"
 
 "Build"

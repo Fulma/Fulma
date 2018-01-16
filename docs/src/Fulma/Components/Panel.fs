@@ -1,15 +1,14 @@
-module Components.Panel.View
+module Components.Panel
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Components
 open Fulma.Layouts
 open Fulma.Elements.Form
 
-let iconInteractive =
+let iconInteractive () =
     Columns.columns [ ]
         [ Column.column [ Column.Offset (Column.All, Column.Is3)
                           Column.Width (Column.All, Column.Is6) ]
@@ -43,8 +42,15 @@ let iconInteractive =
                                     [ str "Reset" ] ] ] ] ]
 
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Panel
+
+A composable **panel**, for compact controls
+
+*[Bulma documentation](http://bulma.io/documentation/components/panel/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root iconInteractive model.PanelViewer (PanelViewerMsg >> dispatch)) ]
+                        (Showcase.view iconInteractive (Render.getViewSource iconInteractive)) ]

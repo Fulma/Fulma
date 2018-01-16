@@ -1,15 +1,14 @@
-module Components.Media.View
+module Components.Media
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
 open Fulma.Layouts
 open Fulma.Components
 
-let basic =
+let basic () =
     Media.media [ ]
         [ Media.left [ ]
             [ Image.image [ Image.Is64x64 ]
@@ -29,8 +28,13 @@ let basic =
                     [ Level.item [ ]
                         [ str "Press Ctrl + Enter to submit" ] ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Media
+
+*[Bulma documentation](http://bulma.io/documentation/components/media-object/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+                        (Showcase.view basic (Render.getViewSource basic)) ]

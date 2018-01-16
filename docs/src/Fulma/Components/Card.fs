@@ -1,14 +1,13 @@
-module Components.Card.View
+module Components.Card
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Elements
 open Fulma.Components
 
-let basic =
+let basic () =
     Card.card [ ]
         [ Card.header [ ]
             [ Card.Header.title [ ]
@@ -26,7 +25,7 @@ let basic =
               Card.Footer.item [ ]
                 [ str "Delete" ] ] ]
 
-let centered =
+let centered () =
     Card.card [ ]
         [ Card.header [ ]
             [ Card.Header.title [ Card.Header.Title.IsCentered ]
@@ -44,11 +43,16 @@ let centered =
               Card.Footer.item [ ]
                 [ str "Delete" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Card
+
+*[Bulma documentation](http://bulma.io/documentation/components/card/)*
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch))
+                        (Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         "### Title can be centered"
-                        (Viewer.View.root centered model.CenteredViewer (CenteredViewerMsg >> dispatch)) ]
+                        (Showcase.view centered (Render.getViewSource centered)) ]
