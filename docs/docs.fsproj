@@ -53,32 +53,16 @@
     <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->
-    <Compile Include="src/FulmaExtensions/Calendar/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Calendar/State.fs" />
-    <Compile Include="src/FulmaExtensions/Calendar/View.fs" />
-    <Compile Include="src/FulmaExtensions/Tooltip/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Tooltip/State.fs" />
-    <Compile Include="src/FulmaExtensions/Tooltip/View.fs" />
-    <Compile Include="src/FulmaExtensions/Divider/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Divider/State.fs" />
-    <Compile Include="src/FulmaExtensions/Divider/View.fs" />
-    <Compile Include="src/FulmaExtensions/Introduction/View.fs" />
-    <Compile Include="src/FulmaExtensions/PageLoader/Types.fs" />
-    <Compile Include="src/FulmaExtensions/PageLoader/State.fs" />
-    <Compile Include="src/FulmaExtensions/PageLoader/View.fs" />
-    <Compile Include="src/FulmaExtensions/Slider/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Slider/State.fs" />
-    <Compile Include="src/FulmaExtensions/Slider/View.fs" />
-    <Compile Include="src/FulmaExtensions/Switch/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Switch/State.fs" />
-    <Compile Include="src/FulmaExtensions/Switch/View.fs" />
-    <Compile Include="src/FulmaExtensions/Checkradio/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Checkradio/State.fs" />
-    <Compile Include="src/FulmaExtensions/Checkradio/View.fs" />
+    <Compile Include="src/FulmaExtensions/Calendar.fs" />
+    <Compile Include="src/FulmaExtensions/Checkradio.fs" />
+    <Compile Include="src/FulmaExtensions/Divider.fs" />
+    <Compile Include="src/FulmaExtensions/PageLoader.fs" />
+    <Compile Include="src/FulmaExtensions/Slider.fs" />
+    <Compile Include="src/FulmaExtensions/Switch.fs" />
+    <Compile Include="src/FulmaExtensions/Tooltip.fs" />
+    <Compile Include="src/FulmaExtensions/Introduction.fs" />
     <!-- Dispatcher need to be latest of the group -->
-    <Compile Include="src/FulmaExtensions/Dispatcher/Types.fs" />
-    <Compile Include="src/FulmaExtensions/Dispatcher/State.fs" />
-    <Compile Include="src/FulmaExtensions/Dispatcher/View.fs" />
+    <Compile Include="src/FulmaExtensions/Router.fs" />
     <!-- FulmaElmish -->
     <Compile Include="src/FulmaElmish/DatePicker/Types.fs" />
     <Compile Include="src/FulmaElmish/DatePicker/State.fs" />

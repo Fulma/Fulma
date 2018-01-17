@@ -1,15 +1,14 @@
-module FulmaExtensions.Calendar.View
+module FulmaExtensions.Calendar
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Extensions
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
 
-let basic =
+let basic () =
     Calendar.calendar [ ]
         [ Calendar.Nav.nav [ ]
             [ Calendar.Nav.left [ ]
@@ -135,8 +134,36 @@ let basic =
                       [ Calendar.Date.item [ ]
                           [ str "3" ] ] ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Calendar
+
+Display a **calendar** for date selection or for planning management, in different colors and sizes.
+
+*[Documentation](https://wikiki.github.io/bulma-extensions/calendar)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-calendar bulma-tooltip`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-calendar@0.0.1 bulma-tooltip@0.0.4`</td>
+        </tr>
+    </tbody>
+<table>
+                        """
                      Render.docSection
                         ""
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]

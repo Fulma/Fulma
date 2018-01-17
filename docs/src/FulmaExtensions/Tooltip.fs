@@ -1,15 +1,12 @@
-module FulmaExtensions.Tooltip.View
+module FulmaExtensions.Tooltip
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Extensions
 open Fulma.Elements
 open Fulma.BulmaClasses
 
-let basic =
+let basic () =
     div [ ClassName "block" ]
         [ Button.button [ Button.Props [ Tooltip.dataTooltip "Top tooltip" ]
                           Button.CustomClass Tooltip.ClassName ]
@@ -25,10 +22,38 @@ let basic =
             [ str "Bottom tooltip" ] ]
 
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Tooltip
+
+Display a **tooltip** attached to any kind of element, in different position.
+
+*[Documentation](https://wikiki.github.io/bulma-extensions/tooltip)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-tooltip`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-tooltip@0.0.4`</td>
+        </tr>
+    </tbody>
+<table>
+                        """
                      Render.docSection
                         """
 As tooltips, can be attach to **any elements** we can't provide standard wrappers. However, we provide helpers over the classes and one to create the `data-tooltip` attribute.
                         """
-                        (Viewer.View.root basic model.BasicViewer (BasicViewerMsg >> dispatch)) ]
+                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]

@@ -1,10 +1,10 @@
-module FulmaExtensions.Switch.View
+module FulmaExtensions.Switch
 
 open Fable.Core
 open Fable.Core.JsInterop
+open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
@@ -12,7 +12,7 @@ open Fulma.Layouts
 open Fulma.Extensions
 open Fulma.Extra.FontAwesome
 
-let inlineBlockInteractive =
+let inlineBlockInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -25,11 +25,11 @@ let inlineBlockInteractive =
                       [ yield! Switch.switchInline [ ] [ str "One" ]
                         yield! Switch.switchInline [ ] [ str "Two" ] ] ] ] ]
 
-let rtl =
+let rtl () =
     Switch.switch [ Switch.IsRtl ] [ str "Label is on the left" ]
 
 
-let colorInteractive =
+let colorInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -48,7 +48,7 @@ let colorInteractive =
                     Switch.switch [ Switch.Checked true; Switch.Color IsDanger ] [ str "Danger" ] ] ] ]
 
 
-let sizeInteractive =
+let sizeInteractive () =
     div [ ClassName "block" ]
         [ Switch.switch [ Switch.Checked true; Switch.Size IsSmall ] [ str "Small" ]
           Switch.switch [ Switch.Checked true ] [ str "Normal" ]
@@ -56,7 +56,7 @@ let sizeInteractive =
           Switch.switch [ Switch.Checked true; Switch.Size IsLarge ] [ str "Large" ] ]
 
 
-let stylesInteractive =
+let stylesInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -146,55 +146,112 @@ let stylesInteractive =
                                     Switch.Color IsInfo ] [ str "Checkbox - info" ] ] ] ]
 
 
-let stateInteractive =
+let stateInteractive () =
     div [ ClassName "block" ]
         [ Switch.switch [ Switch.Disabled true ] [ str "Disabled" ]
           Switch.switch [ Switch.Disabled true; Switch.Checked true ] [ str "Disabled & Checked" ]
           Switch.switch [ ] [ str "Unchecked" ]
           Switch.switch [ Switch.Checked true ] [ str "checked" ] ]
 
-let eventInteractive model dispatch =
-    let newState = not model.IsChecked
+[<Pojo>]
+type SwitchDemoProps =
+    interface end
 
+[<Pojo>]
+type SwitchDemoState =
+    { IsChecked : bool }
+
+type SwitchDemo(props) =
+    inherit React.Component<SwitchDemoProps, SwitchDemoState>(props)
+    do base.setInitState({ IsChecked = false })
+
+    member this.toggleState _ =
+        { this.state with IsChecked = not this.state.IsChecked}
+        |> this.setState
+
+    member this.render () =
+        div [ ClassName "block" ]
+            [ Switch.switch
+                [ Switch.Checked this.state.IsChecked
+                  Switch.OnChange this.toggleState ]
+                [ str (string this.state.IsChecked) ]
+              Switch.switch
+                [ Switch.Checked this.state.IsChecked
+                  Switch.OnChange this.toggleState ]
+                [ if this.state.IsChecked then
+                    yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
+                  else
+                    yield Icon.faIcon [ ] [ Fa.icon Fa.I.Times ] ] ]
+
+let demoView () =
+    // Fake values, and helpers
+    let isChecked = true
+    let toggleState _ = ()
+    // View part
     div [ ClassName "block" ]
         [ Switch.switch
-            [ Switch.Checked model.IsChecked
-              Switch.OnChange (fun x -> dispatch (Change newState)) ]
-            [ str (string model.IsChecked) ]
+            [ Switch.Checked isChecked
+              Switch.OnChange toggleState ]
+            [ str (string isChecked) ]
           Switch.switch
-            [ Switch.Checked model.IsChecked
-              Switch.OnChange (fun x -> dispatch (Change newState)) ]
-            [ if model.IsChecked then
+            [ Switch.Checked isChecked
+              Switch.OnChange toggleState ]
+            [ if isChecked then
                 yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
               else
                 yield Icon.faIcon [ ] [ Fa.icon Fa.I.Times ] ] ]
 
-let root model dispatch =
-    Render.docPage [    Render.contentFromMarkdown model.Intro
-                        Render.docSection
-                            "### Inline vs Block"
-                            (Viewer.View.root inlineBlockInteractive model.InlineBlockViewer (InlineBlockViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Text position"
-                            (Viewer.View.root rtl model.RtlViewer (RtlViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Colors"
-                            (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Sizes"
-                            (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
-                        Render.docSection
-                            """
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Switch
+
+The **Switch** can have different colors, sizes and states.
+
+*[Documentation](https://wikiki.github.io/bulma-extensions/switch)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-switch`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-switch@0.0.4`</td>
+        </tr>
+    </tbody>
+<table>
+                        """
+                     Render.docSection
+                        "### Inline vs Block"
+                        (Widgets.Showcase.view inlineBlockInteractive (Render.getViewSource inlineBlockInteractive))
+                     Render.docSection
+                        "### Text position"
+                        (Widgets.Showcase.view rtl (Render.getViewSource rtl))
+                     Render.docSection
+                        "### Colors"
+                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                     Render.docSection
+                        "### Sizes"
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                     Render.docSection
+                        """
 ### Styles
 The switch can be **rounded, outlined, thin or any combinaison of those**.
-                            """
-                            (Viewer.View.root stylesInteractive model.CircleViewer (CircleViewerMsg >> dispatch))
-
-                        Render.docSection
-                            "### States"
-                            (Viewer.View.root stateInteractive model.StateViewer (StateViewerMsg >> dispatch))
-
-                        Render.docSection
-                            "### Event handler"
-                            (Viewer.View.root (eventInteractive model dispatch) model.EventViewer (EventViewerMsg >> dispatch))
-                    ]
+                        """
+                        (Widgets.Showcase.view stylesInteractive (Render.getViewSource stylesInteractive))
+                     Render.docSection
+                        "### States"
+                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                     Render.docSection
+                        "### Event handler"
+                        (Widgets.Showcase.view (fun _ -> com<SwitchDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]

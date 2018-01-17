@@ -1,17 +1,16 @@
-module FulmaExtensions.Divider.View
+module FulmaExtensions.Divider
 
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Extensions
 open Fulma.Elements
 open Fulma.Layouts
 open Fulma.Extra.FontAwesome
 open Fulma.BulmaClasses
 
-let basicInteractive =
+let basicInteractive () =
     div [ ]
         [ div [ ClassName Bulma.Properties.Alignment.HasTextCentered ]
               [ Heading.h1 [ ] [ str "Top" ] ]
@@ -22,7 +21,7 @@ let basicInteractive =
           div [ ClassName Bulma.Properties.Alignment.HasTextCentered ]
               [ Heading.h1 [ ] [ str "Bottom" ] ] ]
 
-let verticalInteractive =
+let verticalInteractive () =
      Columns.columns [ ]
         [ Column.column [ Column.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
               [ Heading.h1 [ ] [str "Left"] ]
@@ -32,11 +31,39 @@ let verticalInteractive =
           Column.column [ Column.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
               [ Heading.h1 [ ] [ str "Right" ] ] ]
 
-let root model dispatch =
-    Render.docPage [ Render.contentFromMarkdown model.Intro
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Divider
+
+Display a vertical or horizontal divider to segment your design.
+
+*[Documentation](https://wikiki.github.io/bulma-extensions/divider)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-divider`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-divider@0.0.1`</td>
+        </tr>
+    </tbody>
+<table>
+                        """
                      Render.docSection
                          "### Default divider"
-                         (Viewer.View.root basicInteractive model.NormalViewer (NormalViewerMsg >> dispatch))
+                         (Widgets.Showcase.view basicInteractive (Render.getViewSource basicInteractive))
                      Render.docSection
                          "### Vertical divider"
-                         (Viewer.View.root verticalInteractive model.VerticalViewer (VerticalViewerMsg >> dispatch)) ]
+                         (Widgets.Showcase.view verticalInteractive (Render.getViewSource verticalInteractive)) ]

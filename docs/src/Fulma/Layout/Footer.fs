@@ -1,11 +1,7 @@
 module Layouts.Footer
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma.Layouts
-open Fulma.Elements.Form
 open Fulma.Elements
 open Fulma.BulmaClasses
 

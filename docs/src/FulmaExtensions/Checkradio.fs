@@ -1,10 +1,9 @@
-module FulmaExtensions.Checkradio.View
+module FulmaExtensions.Checkradio
 
 open Fable.Core
-open Fable.Core.JsInterop
+open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
@@ -12,7 +11,7 @@ open Fulma.Layouts
 open Fulma.Extensions
 open Fulma.Extra.FontAwesome
 
-let inlineBlockInteractive =
+let inlineBlockInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -36,7 +35,7 @@ let inlineBlockInteractive =
                         [ yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "One" ]
                           yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "Two " ] ] ] ] ]
 
-let rtl =
+let rtl () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ Checkradio.checkbox [ Checkradio.IsRtl ] [ str "Label is on the left" ] ]
@@ -44,7 +43,7 @@ let rtl =
           Column.column [ ]
             [ Checkradio.radio [ Checkradio.IsRtl ] [ str "Label is on the left" ] ] ]
 
-let colorInteractive =
+let colorInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ Checkradio.checkbox [ Checkradio.Checked true ] [ str "Checkbox" ]
@@ -74,7 +73,7 @@ let colorInteractive =
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsWarning; Checkradio.Name "rad1" ] [ str "Warning" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsDanger; Checkradio.Name "rad1" ] [ str "Danger" ] ] ]
 
-let sizeInteractive =
+let sizeInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Size IsSmall ] [ str "Small" ]
@@ -88,7 +87,7 @@ let sizeInteractive =
               Checkradio.radio [ Checkradio.Name "rSize"; Checkradio.Size IsMedium ] [ str "Medium" ]
               Checkradio.radio [ Checkradio.Name "rSize"; Checkradio.Size IsLarge ] [ str "Large" ] ] ]
 
-let stylesInteractive =
+let stylesInteractive () =
     div [ ]
         [ b [ ]
             [ str "Checkbox" ]
@@ -139,7 +138,7 @@ let stylesInteractive =
                     Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsInfo ] [ str "Info" ]
                     Checkradio.radio [ Checkradio.Checked true; Checkradio.HasBackgroundColor; Checkradio.Color IsWarning ] [ str "Warning" ] ] ] ]
 
-let stateInteractive =
+let stateInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ div [ ClassName "block" ]
@@ -155,53 +154,110 @@ let stateInteractive =
                     Checkradio.radio [ ] [ str "Unchecked" ]
                     Checkradio.radio [ Checkradio.Checked true;] [ str "Checked" ] ] ] ]
 
-let eventInteractive model dispatch =
-    let newState = not model.IsChecked
+[<Pojo>]
+type CheckradioDemoProps =
+    interface end
 
+[<Pojo>]
+type CheckradioDemoState =
+    { IsChecked : bool }
+
+type CheckradioDemo(props) =
+    inherit React.Component<CheckradioDemoProps, CheckradioDemoState>(props)
+    do base.setInitState({ IsChecked = false })
+
+    member this.toggleState _ =
+        { this.state with IsChecked = not this.state.IsChecked}
+        |> this.setState
+
+    member this.render () =
+        div [ ClassName "block" ]
+            [ Checkradio.checkbox
+                [ Checkradio.Checked this.state.IsChecked
+                  Checkradio.OnChange this.toggleState ]
+                [ str  (string this.state.IsChecked) ]
+
+              Checkradio.checkbox
+                    [ Checkradio.Checked this.state.IsChecked
+                      Checkradio.OnChange this.toggleState ]
+                    [ if this.state.IsChecked then
+                        yield Icon.faIcon [ ] [ Fa.icon Fa.I.Plane ]
+                      else
+                        yield Icon.faIcon [ ] [ Fa.icon Fa.I.Rocket] ] ]
+
+let demoView () =
+    // Fake values, and helpers
+    let isChecked = true
+    let toggleState _ = ()
+    // View part
     div [ ClassName "block" ]
         [ Checkradio.checkbox
-            [ Checkradio.Checked model.IsChecked
-              Checkradio.OnChange (fun x -> dispatch (Change newState)) ]
-            [ str  (string model.IsChecked) ]
-
+            [ Checkradio.Checked isChecked
+              Checkradio.OnChange toggleState ]
+            [ str  (string isChecked) ]
           Checkradio.checkbox
-                [ Checkradio.Checked model.IsChecked
-                  Checkradio.OnChange (fun x -> dispatch (Change newState)) ]
-                [ if model.IsChecked then
+                [ Checkradio.Checked isChecked
+                  Checkradio.OnChange toggleState ]
+                [ if isChecked then
                     yield Icon.faIcon [ ] [ Fa.icon Fa.I.Plane ]
                   else
                     yield Icon.faIcon [ ] [ Fa.icon Fa.I.Rocket] ] ]
 
-let root model dispatch =
-    Render.docPage [    Render.contentFromMarkdown model.Intro
-                        Render.docSection
-                            """
+let view =
+    Render.docPage [ Render.contentFromMarkdown
+                        """
+# Checkradio
+
+Make classic **checkbox** and **radio** more sexy in different colors, sizes, and states.
+
+*[Documentation](https://github.com/Wikiki/bulma-checkradio)*
+
+## Npm packages
+
+<table class="table" style="width: auto;">
+    <thead>
+        <tr>
+            <th>Version</th>
+            <th>CLI</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Latest</td>
+            <td>`yarn add bulma bulma-checkradio`</td>
+        </tr>
+        <tr>
+            <td>Supported</td>
+            <td>`yarn add bulma bulma-checkradio@0.0.8`</td>
+        </tr>
+    </tbody>
+<table>
+                        """
+                     Render.docSection
+                        """
 ### Inline vs Block
 By default checkradio are include in `div.field` element, so it's presented in block.
 Use can use helpers functions to retrieve the input and the label by yourself.
-"""
-                            (Viewer.View.root inlineBlockInteractive model.InlineBlockViewer (InlineBlockViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Text position"
-                            (Viewer.View.root rtl model.ColorViewer (ColorViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Colors"
-                            (Viewer.View.root colorInteractive model.ColorViewer (ColorViewerMsg >> dispatch))
-                        Render.docSection
-                            "### Sizes"
-                            (Viewer.View.root sizeInteractive model.SizeViewer (SizeViewerMsg >> dispatch))
-                        Render.docSection
-                            """
+                        """
+                        (Widgets.Showcase.view inlineBlockInteractive (Render.getViewSource inlineBlockInteractive))
+                     Render.docSection
+                        "### Text position"
+                        (Widgets.Showcase.view rtl (Render.getViewSource rtl))
+                     Render.docSection
+                        "### Colors"
+                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                     Render.docSection
+                        "### Sizes"
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                     Render.docSection
+                        """
 ### Styles
 The checkbox can be **circle**.
-                            """
-                            (Viewer.View.root stylesInteractive model.CircleViewer (CircleViewerMsg >> dispatch))
-
-                        Render.docSection
-                            "### States"
-                            (Viewer.View.root stateInteractive model.StateViewer (StateViewerMsg >> dispatch))
-
-                        Render.docSection
-                            "### Event handler"
-                            (Viewer.View.root (eventInteractive model dispatch) model.EventViewer (EventViewerMsg >> dispatch))
-                    ]
+                        """
+                        (Widgets.Showcase.view stylesInteractive (Render.getViewSource stylesInteractive))
+                     Render.docSection
+                        "### States"
+                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                     Render.docSection
+                        "### Event handler"
+                        (Widgets.Showcase.view (fun _ -> com<CheckradioDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]

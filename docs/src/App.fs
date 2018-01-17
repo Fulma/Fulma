@@ -7,7 +7,6 @@ open Fulma.Components
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
-open Fable.Import.Browser
 
 [<Emit("Prism.languages.fsharp")>]
 let prismFSharp = ""
@@ -21,13 +20,11 @@ Marked.Globals.marked.setOptions (unbox options) |> ignore
 
 type Msg =
     | MenuMsg of Widgets.Menu.Msg
-    | FulmaExtensionsMsg of FulmaExtensions.Dispatcher.Types.Msg
     | FulmaElmishMsg of FulmaElmish.Dispatcher.Types.Msg
 
 type Model =
     { Menu : Widgets.Menu.Model
       CurrentPage : Router.Page
-      FulmaExtensions : FulmaExtensions.Dispatcher.Types.Model
       FulmaElmish : FulmaElmish.Dispatcher.Types.Model }
 
 let urlUpdate (result : Option<Router.Page>) model =
@@ -44,7 +41,6 @@ let init result =
     let (model, cmd) =
         urlUpdate result { CurrentPage = Router.Home
                            Menu = Widgets.Menu.init Router.Home
-                           FulmaExtensions = FulmaExtensions.Dispatcher.State.init ()
                            FulmaElmish = FulmaElmish.Dispatcher.State.init () }
 
     model, Cmd.batch [ cmd ]
@@ -58,17 +54,9 @@ let update msg model =
         let (menu, menuMsg) = Widgets.Menu.update msg model.Menu
         { model with Menu = menu }, Cmd.map MenuMsg menuMsg
 
-    | FulmaExtensionsMsg msg ->
-        let (fulmaExtensions, fulmaExtensionsMsg) = FulmaExtensions.Dispatcher.State.update msg model.FulmaExtensions
-        { model with FulmaExtensions = fulmaExtensions }, Cmd.map FulmaExtensionsMsg fulmaExtensionsMsg
-
     | FulmaElmishMsg msg ->
         let (fulmaElmish, fulmaElmishMsg) = FulmaElmish.Dispatcher.State.update msg model.FulmaElmish
         { model with FulmaElmish = fulmaElmish }, Cmd.map FulmaElmishMsg fulmaElmishMsg
-
-
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
 
 let root model dispatch =
     let pageHtml =
@@ -79,7 +67,7 @@ let root model dispatch =
         | Router.Fulma fulmaPage ->
             Fulma.Router.view fulmaPage
         | Router.FulmaExtensions fulmaExtensionsPage ->
-            FulmaExtensions.Dispatcher.View.root fulmaExtensionsPage model.FulmaExtensions (FulmaExtensionsMsg >> dispatch)
+            FulmaExtensions.Router.view fulmaExtensionsPage
         | Router.FulmaElmish fulmaElmishPage ->
             FulmaElmish.Dispatcher.View.root fulmaElmishPage model.FulmaElmish (FulmaElmishMsg >> dispatch)
 

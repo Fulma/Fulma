@@ -1,8 +1,6 @@
-module FulmaExtensions.Introduction.View
+module FulmaExtensions.Introduction
 
-open Fable.Core
-
-let root _ =
+let view =
     Render.contentFromMarkdown
         """
 # Fulma.Extensions
@@ -42,5 +40,4 @@ And then add a reference to them into your `main.sass` file.
 
 @import "./node_modules/bulma-calendar/calendar.sass"
 ```
-
         """
