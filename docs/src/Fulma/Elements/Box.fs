@@ -24,4 +24,4 @@ A white **box** to contain other elements .
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic)) ]
+                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]

@@ -8,15 +8,13 @@
   <ItemGroup>
     <Compile Include="src/Libs/Fable.Import.Marked.fs" />
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
-    <Compile Include="src/Global.fs" />
-    <Compile Include="src/Render.fs" />
-    <Compile Include="src/Showcase.fs" />
+    <Compile Include="src/Global/Router.fs" />
+    <Compile Include="src/Global/Render.fs" />
     <Compile Include="src/Viewer/Types.fs" />
     <Compile Include="src/Viewer/State.fs" />
     <Compile Include="src/Viewer/View.fs" />
-    <Compile Include="src/Menu/Types.fs" />
-    <Compile Include="src/Menu/State.fs" />
-    <Compile Include="src/Menu/View.fs" />
+    <Compile Include="src/Widgets/Menu.fs" />
+    <Compile Include="src/Widgets/Showcase.fs" />
     <!-- Layouts -->
     <Compile Include="src/Fulma/Layout/Columns.fs" />
     <Compile Include="src/Fulma/Layout/Container.fs" />
@@ -91,12 +89,10 @@
     <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />
     <Compile Include="src/FulmaElmish/Dispatcher/View.fs" />
     <!-- Home -->
-    <Compile Include="src/Home.fs" />
-    <Compile Include="src/Migration.fs" />
-    <Compile Include="src/Demo.fs" />
-    <Compile Include="src/Navbar.fs" />
-    <Compile Include="src/Types.fs" />
-    <Compile Include="src/State.fs" />
+    <Compile Include="src/Views/Demo.fs" />
+    <Compile Include="src/Views/Home.fs" />
+    <Compile Include="src/Views/Migration.fs" />
+    <Compile Include="src/Views/Navbar.fs" />
     <Compile Include="src/App.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

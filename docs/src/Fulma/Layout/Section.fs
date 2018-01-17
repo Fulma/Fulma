@@ -21,7 +21,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.getViewSource basic))
                      Render.contentFromMarkdown
                         """
 ### Properties

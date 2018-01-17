@@ -1,44 +1,42 @@
 module Fulma.Router
 
-open Global
-
 let view fulmaPage =
     match fulmaPage with
-    | FulmaPage.Introduction -> Fulma.Introduction.view
-    | FulmaPage.Versions -> Fulma.Versions.view
-    | Element element ->
+    | Router.FulmaPage.Introduction -> Fulma.Introduction.view
+    | Router.FulmaPage.Versions -> Fulma.Versions.view
+    | Router.Element element ->
         match element with
-        | Elements.Box -> Elements.Box.view
-        | Elements.Button -> Elements.Button.view
-        | Elements.Content -> Elements.Content.view
-        | Elements.Delete -> Elements.Delete.view
-        | Elements.Icon -> Elements.Icon.view
-        | Elements.Image -> Elements.Image.view
-        | Elements.Progress -> Elements.Progress.view
-        | Elements.Table -> Elements.Table.view
-        | Elements.Tag -> Elements.Tag.view
-        | Elements.Title -> Elements.Title.view
-        | Elements.Notification -> Elements.Notification.view
-        | Elements.Form -> Elements.Form.view
-    | Component ``component`` ->
+        | Router.Elements.Box -> Elements.Box.view
+        | Router.Elements.Button -> Elements.Button.view
+        | Router.Elements.Content -> Elements.Content.view
+        | Router.Elements.Delete -> Elements.Delete.view
+        | Router.Elements.Icon -> Elements.Icon.view
+        | Router.Elements.Image -> Elements.Image.view
+        | Router.Elements.Progress -> Elements.Progress.view
+        | Router.Elements.Table -> Elements.Table.view
+        | Router.Elements.Tag -> Elements.Tag.view
+        | Router.Elements.Title -> Elements.Title.view
+        | Router.Elements.Notification -> Elements.Notification.view
+        | Router.Elements.Form -> Elements.Form.view
+    | Router.Component ``component`` ->
         match ``component`` with
-        | Breadcrumb -> Components.Breadcrumb.view
-        | Panel -> Components.Panel.view
-        | Card -> Components.Card.view
-        | Menu -> Components.Menu.view
-        | Message -> Components.Message.view
-        | Navbar -> Components.Navbar.view
-        | Pagination -> Components.Pagination.view
-        | Tabs -> Components.Tabs.view
-        | Modal -> Components.Modal.view
-        | Media -> Components.Media.view
-        | Dropdown -> Components.Dropdown.view
-    | Layout layout ->
+        | Router.Breadcrumb -> Components.Breadcrumb.view
+        | Router.Panel -> Components.Panel.view
+        | Router.Card -> Components.Card.view
+        | Router.Menu -> Components.Menu.view
+        | Router.Message -> Components.Message.view
+        | Router.Navbar -> Components.Navbar.view
+        | Router.Pagination -> Components.Pagination.view
+        | Router.Tabs -> Components.Tabs.view
+        | Router.Modal -> Components.Modal.view
+        | Router.Media -> Components.Media.view
+        | Router.Dropdown -> Components.Dropdown.view
+    | Router.Layout layout ->
         match layout with
-        | Container -> Layouts.Container.view
-        | Level -> Layouts.Level.view
-        | Hero -> Layouts.Hero.view
-        | Footer -> Layouts.Footer.view
-        | Section -> Layouts.Section.view
-        | Tile -> Layouts.Tile.view
-        | Columns -> Layouts.Columns.view
+        | Router.Container -> Layouts.Container.view
+        | Router.Level -> Layouts.Level.view
+        | Router.Hero -> Layouts.Hero.view
+        | Router.Footer -> Layouts.Footer.view
+        | Router.Section -> Layouts.Section.view
+        | Router.Tile -> Layouts.Tile.view
+        | Router.Columns -> Layouts.Columns.view

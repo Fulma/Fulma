@@ -103,4 +103,4 @@ All generic **form controls**, designed for consistency
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic)) ]
+                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]

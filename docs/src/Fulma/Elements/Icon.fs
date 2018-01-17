@@ -179,7 +179,7 @@ The **icons** can have different sizes and is also compatible with *[Font Awesom
                         """
                      Render.docSection
                         "### Sizes"
-                        (Showcase.view icon (Render.getViewSource icon))
+                        (Widgets.Showcase.view icon (Render.getViewSource icon))
                      Render.docSection
                         """
 ### Convenience functions
@@ -195,7 +195,7 @@ You need the next `open` statement to access the FontAwesome convenience functio
 
 All the examples below use Font Awesome.
                         """
-                        (Showcase.view containerSizes (Render.getViewSource containerSizes))
+                        (Widgets.Showcase.view containerSizes (Render.getViewSource containerSizes))
                      Render.docSection
                         """
 ### Available Font Awesome icons
@@ -208,46 +208,46 @@ You can also use `Fa.I.Custom "fa-my-icon"` as a fix.
     Icon.faIcon [ Icon.isLarge ] [ Fa.I.Custom "fa-thumbs-up" ]
 ```
                         """
-                        (Showcase.view fontAwesomeIcons (Render.getViewSource fontAwesomeIcons))
+                        (Widgets.Showcase.view fontAwesomeIcons (Render.getViewSource fontAwesomeIcons))
                      Render.docSection
                         """
 ### Rotations and Flip
 
 Font Awesome options to rotate or flip icons are available as options in the library.
                         """
-                        (Showcase.view iconRotationFlip (Render.getViewSource iconRotationFlip))
+                        (Widgets.Showcase.view iconRotationFlip (Render.getViewSource iconRotationFlip))
                      Render.docSection
                         """
 ### Animated Icons
 
 Font Awesome spin and pulse animations are available as options in the library.
                         """
-                        (Showcase.view iconAnimations (Render.getViewSource iconAnimations))
+                        (Widgets.Showcase.view iconAnimations (Render.getViewSource iconAnimations))
                      Render.docSection
                         """
 ### Icons as Bullet Points
 
 You can use icons instead of bullet points in unordered lists.
                         """
-                        (Showcase.view iconList (Render.getViewSource iconList))
+                        (Widgets.Showcase.view iconList (Render.getViewSource iconList))
                      Render.docSection
                         """
 ### Icons inside text paragraphs
 
 You can embed icons inside text paragraphs.
                         """
-                        (Showcase.view borderPulledIcons (Render.getViewSource borderPulledIcons))
+                        (Widgets.Showcase.view borderPulledIcons (Render.getViewSource borderPulledIcons))
                      Render.docSection
                         """
 ### Stacked icons
 
 You can build complex icons by combining several simple icons
                         """
-                        (Showcase.view stackedIcons (Render.getViewSource stackedIcons))
+                        (Widgets.Showcase.view stackedIcons (Render.getViewSource stackedIcons))
                      Render.docSection
                         """
 ### Compose Buttons
 
 You can add Font Awesome icons to buttons.
                         """
-                        (Showcase.view composeButtons (Render.getViewSource composeButtons)) ]
+                        (Widgets.Showcase.view composeButtons (Render.getViewSource composeButtons)) ]

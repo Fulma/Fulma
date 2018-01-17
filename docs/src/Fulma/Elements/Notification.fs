@@ -29,10 +29,10 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         "### Colors"
-                        (Showcase.view color (Render.getViewSource color))
+                        (Widgets.Showcase.view color (Render.getViewSource color))
                      Render.docSection
                         "### Delete button"
-                        (Showcase.view withCross (Render.getViewSource withCross)) ]
+                        (Widgets.Showcase.view withCross (Render.getViewSource withCross)) ]

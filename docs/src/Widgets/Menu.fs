@@ -1,22 +1,78 @@
-module Menu.View
+module Widgets.Menu
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Types
 open Fulma.Components
 open Fulma.Elements
 open Fulma.Extra.FontAwesome
-open Global
+open Elmish
 
-let menuItem label page currentPage =
+type FulmaModules =
+    | Elements
+    | Components
+    | Layouts
+
+type Library =
+    | Fulma of FulmaModules
+    | FulmaExtensions
+
+type Fulma =
+    { IsElementsExpanded : bool
+      IsComponentsExpanded : bool
+      IsLayoutExpanded : bool }
+
+type FulmaExtensions =
+    { IsExpanded : bool }
+
+type Model =
+    { Fulma : Fulma
+      FulmaExtensions : FulmaExtensions
+      CurrentPage : Router.Page }
+
+type Msg =
+    | ToggleMenu of Library
+
+let init currentPage : Model =
+    { Fulma =
+            { IsElementsExpanded = false
+              IsComponentsExpanded = false
+              IsLayoutExpanded = false }
+      FulmaExtensions =
+            { IsExpanded = false }
+      CurrentPage = currentPage }
+
+let update msg model =
+    match msg with
+    | ToggleMenu library ->
+        match library with
+        | Fulma ``module`` ->
+            match ``module`` with
+            | Elements ->
+                { model with Fulma =
+                                { model.Fulma with IsElementsExpanded = not model.Fulma.IsElementsExpanded } }
+            | Components ->
+                { model with Fulma =
+                                { model.Fulma with IsComponentsExpanded = not model.Fulma.IsComponentsExpanded } }
+
+            | Layouts ->
+                { model with Fulma =
+                                { model.Fulma with IsLayoutExpanded = not model.Fulma.IsLayoutExpanded } }
+
+        | FulmaExtensions ->
+            { model with FulmaExtensions =
+                                { model.FulmaExtensions with IsExpanded = not model.FulmaExtensions.IsExpanded } }
+
+        , Cmd.none
+
+open Router
+
+let private menuItem label page currentPage =
     li []
        [ a [ classList [ "is-active", page = currentPage ]
-             Href(toHash page) ]
+             Router.href page ]
            [ str label ] ]
 
-let menuFulma currentPage subModel dispatch =
+let private menuFulma currentPage subModel dispatch =
     let (elementsClass, elementsIcon) =
         if not subModel.IsElementsExpanded then
             match currentPage with
@@ -103,7 +159,7 @@ let menuFulma currentPage subModel dispatch =
                                menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
                                menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage ] ] ] ]
 
-let menuFulmaExtensions currentPage subModel dispatch =
+let private menuFulmaExtensions currentPage subModel dispatch =
     [ Menu.label [ ] [ str "Fulma.Extensions" ]
       Menu.list [ ]
         [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
@@ -116,14 +172,14 @@ let menuFulmaExtensions currentPage subModel dispatch =
           menuItem "Switch" (FulmaExtensions Switch) currentPage
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
 
-let menuFulmaElmish currentPage dispatch =
+let private menuFulmaElmish currentPage dispatch =
     [ Menu.label [ ] [ str "Fulma.Elmish" ]
       Menu.list [ ]
         [ menuItem "Introduction" (FulmaElmish FulmaElmishPage.Introduction) currentPage ]
       Menu.list [ ]
         [ menuItem "Date picker" (FulmaElmish DatePicker) currentPage ] ]
 
-let root model dispatch =
+let view model dispatch =
     Menu.menu [ ]
         [ yield Menu.list [ ]
                    [ menuItem "Introduction" Home model.CurrentPage

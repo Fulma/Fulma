@@ -66,7 +66,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         """
 ### Colors
@@ -75,7 +75,7 @@ Please note the display on the next sample isn't perfact because we customize Bu
 
 You can see the default looks [here](https://bulma.io/documentation/components/navbar/#colors).
                         """
-                        (Showcase.view colors (Render.getViewSource colors))
+                        (Widgets.Showcase.view colors (Render.getViewSource colors))
                      Render.contentFromMarkdown
                         """
 ### Important

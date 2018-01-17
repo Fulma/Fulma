@@ -1,4 +1,4 @@
-module Showcase
+module Widgets.Showcase
 
 open Fable.Core
 open Fable.Import

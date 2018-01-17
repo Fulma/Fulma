@@ -65,7 +65,7 @@ A single class to handle WYSIWYG generated content, where only **HTML tags** are
                         """
                      Render.docSection
                         "### Demo"
-                        (Showcase.view contentInteractive (Render.getViewSource contentInteractive))
+                        (Widgets.Showcase.view contentInteractive (Render.getViewSource contentInteractive))
                      Render.docSection
                         """
 ### Size
@@ -78,4 +78,4 @@ Supported size:
 
 When you do not set the size, it's consider *normal*.
                         """
-                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]

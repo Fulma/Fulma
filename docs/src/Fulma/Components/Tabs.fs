@@ -66,13 +66,13 @@ Simple responsive horizontal navigation **tabs**, with different styles
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.getViewSource basic))
                      Render.docSection
                         "### Alignment"
-                        (Showcase.view alignment (Render.getViewSource alignment))
+                        (Widgets.Showcase.view alignment (Render.getViewSource alignment))
                      Render.docSection
                         "### Size"
-                        (Showcase.view size (Render.getViewSource size))
+                        (Widgets.Showcase.view size (Render.getViewSource size))
                      Render.docSection
                         "### Styles"
-                        (Showcase.view styles (Render.getViewSource styles)) ]
+                        (Widgets.Showcase.view styles (Render.getViewSource styles)) ]

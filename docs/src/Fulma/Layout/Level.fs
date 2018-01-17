@@ -56,7 +56,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Showcase.view iconInteractive (Render.getViewSource iconInteractive))
+                        (Widgets.Showcase.view iconInteractive (Render.getViewSource iconInteractive))
                      Render.docSection
                         "### Centered level"
-                        (Showcase.view centered (Render.getViewSource centered)) ]
+                        (Widgets.Showcase.view centered (Render.getViewSource centered)) ]

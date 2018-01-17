@@ -71,4 +71,4 @@ This is important because you will probably need to add `style="height: 100%"` t
                         """
                      Render.docSection
                         ""
-                        (Showcase.view iconInteractive (Render.getViewSource iconInteractive)) ]
+                        (Widgets.Showcase.view iconInteractive (Render.getViewSource iconInteractive)) ]

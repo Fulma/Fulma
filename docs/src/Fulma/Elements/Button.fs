@@ -113,36 +113,36 @@ You can choose between:
 - `Button.Input.reset`
 - `Button.Input.submit`
                         """
-                        (Showcase.view demoHelpers (Render.getViewSource demoHelpers))
+                        (Widgets.Showcase.view demoHelpers (Render.getViewSource demoHelpers))
                      Render.docSection
                         "### Colors"
-                        (Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
                      Render.docSection
                         "### Sizes"
-                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.docSection
                         """
 ### Styles
 The button can be **outlined** and/or **inverted**.
                         """
                         (div [ ]
-                            [ Showcase.view outlinedInteractive (Render.getViewSource outlinedInteractive)
+                            [ Widgets.Showcase.view outlinedInteractive (Render.getViewSource outlinedInteractive)
                               br []
-                              Showcase.view mixedStyleInteractive (Render.getViewSource mixedStyleInteractive) ])
+                              Widgets.Showcase.view mixedStyleInteractive (Render.getViewSource mixedStyleInteractive) ])
 
                      Render.docSection
                         "### States"
-                        (Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
                      Render.docSection
                         "### Static"
-                        (Showcase.view staticView (Render.getViewSource staticView))
+                        (Widgets.Showcase.view staticView (Render.getViewSource staticView))
                      Render.docSection
                         "### Disabled"
-                        (Showcase.view disabled (Render.getViewSource disabled))
+                        (Widgets.Showcase.view disabled (Render.getViewSource disabled))
                      Render.docSection
                         """
 ### Font awesome icons support
 
 For more info, about Font Awesome support see [Convenience functions](#fulma/elements/icon).
                         """
-                        (Showcase.view icons (Render.getViewSource icons)) ]
+                        (Widgets.Showcase.view icons (Render.getViewSource icons)) ]

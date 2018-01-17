@@ -140,7 +140,7 @@ let view =
                         """
                      Render.docSection
                         "### Any content"
-                        (Showcase.view (fun _ -> com<BasicModal,_,_> (unbox null) []) (Render.getViewSource basicModalCode))
+                        (Widgets.Showcase.view (fun _ -> com<BasicModal,_,_> (unbox null) []) (Render.getViewSource basicModalCode))
                      Render.docSection
                         "### Card modal"
-                        (Showcase.view (fun _ -> com<CardModal,_,_> (unbox null) []) (Render.getViewSource cardModalCode)) ]
+                        (Widgets.Showcase.view (fun _ -> com<CardModal,_,_> (unbox null) []) (Render.getViewSource cardModalCode)) ]

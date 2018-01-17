@@ -83,7 +83,7 @@ let view =
                         """
                      Render.docSection
                         "### Table"
-                        (Showcase.view simpleInteractive (Render.getViewSource simpleInteractive))
+                        (Widgets.Showcase.view simpleInteractive (Render.getViewSource simpleInteractive))
                      Render.docSection
                         """
 ### Modifiers
@@ -99,9 +99,9 @@ and 2 options for table spacing:
 You can apply any combination of the first two modifiers and one of option for spacing.
 Below is displayed one table with narrow spacing:
                         """
-                        (Showcase.view modifierInteractive (Render.getViewSource modifierInteractive))
+                        (Widgets.Showcase.view modifierInteractive (Render.getViewSource modifierInteractive))
                      Render.docSection
                         """
 Below is displayed one example of table with fullwidth spacing. The table fills the full width of its parent component:
                         """
-                        (Showcase.view modifierFullWitdth (Render.getViewSource modifierFullWitdth)) ]
+                        (Widgets.Showcase.view modifierFullWitdth (Render.getViewSource modifierFullWitdth)) ]

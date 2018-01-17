@@ -2,30 +2,29 @@ module FulmaExtensions.Dispatcher.View
 
 open Fable.Core
 open Types
-open Global
 
 let root fulmaExtensionsPage model dispatch =
     match fulmaExtensionsPage with
-    | FulmaExtensionsPage.Introduction ->
+    | Router.FulmaExtensionsPage.Introduction ->
         FulmaExtensions.Introduction.View.root ()
 
-    | Calendar ->
+    | Router.Calendar ->
         FulmaExtensions.Calendar.View.root model.Calendar (CalendarMsg >> dispatch)
 
-    | Tooltip ->
+    | Router.Tooltip ->
         FulmaExtensions.Tooltip.View.root model.Tooltip (TooltipMsg >> dispatch)
-    
-    | Checkradio ->
+
+    | Router.Checkradio ->
         FulmaExtensions.Checkradio.View.root model.Checkradio (CheckradioMsg >> dispatch)
 
-    | Switch ->
+    | Router.Switch ->
         FulmaExtensions.Switch.View.root model.Switch (SwitchMsg >> dispatch)
 
-    | Divider ->
+    | Router.Divider ->
         FulmaExtensions.Divider.View.root model.Divider (DividerMsg >> dispatch)
 
-    | PageLoader ->
+    | Router.PageLoader ->
         FulmaExtensions.PageLoader.View.root model.PageLoader (PageLoaderMsg >> dispatch)
 
-    | Slider ->
+    | Router.Slider ->
         FulmaExtensions.Slider.View.root model.Slider (SliderMsg >> dispatch)

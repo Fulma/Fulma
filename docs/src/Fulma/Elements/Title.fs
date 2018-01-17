@@ -53,7 +53,7 @@ let view =
 
 By default, `Header.h1 [ ] [ ]` generate a title. You can specify `Heading.isSubtitle` if needed.
                         """
-                        (Showcase.view simpleInteractive (Render.getViewSource simpleInteractive))
+                        (Widgets.Showcase.view simpleInteractive (Render.getViewSource simpleInteractive))
                      Render.docSection
                         """
 ### Sizes
@@ -62,6 +62,6 @@ Elmish.Bulma already associate each header size with the equivalent class.
 
 For example, `Heading.h1 [ Heading.isTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
                         """
-                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.contentFromMarkdown
                         """We also provide `Heading.isSpaced` helper. See the *[bulma documentation](http://bulma.io/documentation/elements/title/)* to learn more about it.""" ]

@@ -52,13 +52,13 @@ The **tags** can have different colors and sizes. You can also nest a *[Delete e
                         """
                      Render.docSection
                         "### Colors"
-                        (Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
                      Render.docSection
                         "### Sizes"
-                        (Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.docSection
                         "### Nested delete"
-                        (Showcase.view nestedDeleteStyleInteractive (Render.getViewSource nestedDeleteStyleInteractive))
+                        (Widgets.Showcase.view nestedDeleteStyleInteractive (Render.getViewSource nestedDeleteStyleInteractive))
                      Render.docSection
                         "### Tag List"
-                        (Showcase.view list (Render.getViewSource list)) ]
+                        (Widgets.Showcase.view list (Render.getViewSource list)) ]

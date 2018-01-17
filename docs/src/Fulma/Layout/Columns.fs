@@ -46,7 +46,7 @@ A simple way to build **responsive** columns
                         """
                      Render.docSection
                         ""
-                        (Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.getViewSource basic))
                      Render.contentFromMarkdown
                         """
 ### Properties

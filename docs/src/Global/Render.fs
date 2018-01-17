@@ -1,3 +1,4 @@
+[<RequireQualifiedAccess>]
 module Render
 
 open Fable.Core
