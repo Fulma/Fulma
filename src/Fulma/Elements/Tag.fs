@@ -19,6 +19,7 @@ module Tag =
     type Option =
         | Size of ISize
         | Color of IColor
+        /// Add `is-delete` class
         | IsDelete
         | Props of IHTMLProp list
         | CustomClass of string
@@ -36,6 +37,7 @@ module Tag =
               Props = []
               CustomClass = None }
 
+    /// Generate <span class="tag"></span>
     let tag (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with
@@ -56,13 +58,17 @@ module Tag =
         span (classes::opts.Props)
             children
 
+    /// Generate <span class="tag is-delete"></span>
     let delete options children = tag (IsDelete::options) children
 
     module List =
 
         type Option =
+            /// Add `has-addons` class
             | HasAddons
+            /// Add `is-centered` class
             | IsCentered
+            /// Add `is-right` class
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
@@ -81,6 +87,7 @@ module Tag =
                   Props = [ ]
                   CustomClass = None }
 
+    /// Generate <div class="tags"></div>
     let list (options : List.Option list) children =
         let parseOption (result : List.Options) opt =
             match opt with

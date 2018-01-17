@@ -28,6 +28,7 @@ module Delete =
               CustomClass = None
               OnClick = None }
 
+    /// Generate <a class="delete"></a>
     let delete (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with

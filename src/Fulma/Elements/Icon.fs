@@ -16,8 +16,9 @@ module Icon =
     type Option =
         // Sizes
         | Size of ISize
-        // Position
+        /// Add `is-left` class
         | IsLeft
+        /// Add `is-right` class
         | IsRight
         // Extra
         | CustomClass of string
@@ -34,6 +35,7 @@ module Icon =
               CustomClass = None
               Props = [] }
 
+    /// Generate <span class="icon"></span>
     let icon options children =
         let parseOptions (result : Options) option =
             match option with

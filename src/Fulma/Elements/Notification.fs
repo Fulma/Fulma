@@ -28,6 +28,7 @@ module Notification =
               CustomClass = None
               Props = [] }
 
+    /// Generate <div class="notification"></div>
     let notification (options : Option list) children =
         let parseOptions (result : Options) opt =
             match opt with
@@ -39,6 +40,7 @@ module Notification =
         let classes = Helpers.classes Classes.Container [opts.CustomClass; opts.Color] []
         div (classes::opts.Props) children
 
+    /// Generate <button class="delete"></button>
     let delete (options: GenericOption list) children =
         let opts = genericParse options
         button

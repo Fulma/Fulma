@@ -25,6 +25,7 @@ module Content =
               Props = []
               CustomClass = None }
 
+    /// Generate <div class="content"></div>
     let content (options : Option list) children =
         let parseOption (result : Options) opt =
             match opt with

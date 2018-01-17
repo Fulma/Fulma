@@ -27,19 +27,32 @@ module Image =
 
     type Option =
         // Size
+
+        /// Add `is-16x16` class
         | Is16x16
+        /// Add `is-24x24` class
         | Is24x24
+        /// Add `is-32x32` class
         | Is32x32
+        /// Add `is-48x48` class
         | Is48x48
+        /// Add `is-64x64` class
         | Is64x64
+        /// Add `is-96x96` class
         | Is96x96
+        /// Add `is-128x128` class
         | Is128x128
-        // Ratio
+        /// Add `is-square` class
         | IsSquare
+        /// Add `is-1by1` class
         | Is1by1
+        /// Add `is-4by3` class
         | Is4by3
+        /// Add `is-3by2` class
         | Is3by2
+        /// Add `is-16by9` class
         | Is16by9
+        /// Add `is-2by1` class
         | Is2by1
         // Extra
         | CustomClass of string
@@ -56,6 +69,7 @@ module Image =
               CustomClass = None
               Props = [] }
 
+    /// Generate <figure class="image"></figure>
     let image options children =
         let parseOptions (result : Options) =
             function

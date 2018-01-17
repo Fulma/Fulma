@@ -33,19 +33,27 @@ module Button =
         // Colors
         | Color of IColor
         | Size of ISize
-        // Styles
+        /// Add `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-link` class
         | IsLink
+        /// Add `is-outlined` class
         | IsOutlined
+        /// Add `is-inverted` class
         | IsInverted
+        /// Add `is-text` class
         | IsText
+        /// Add `is-rouned` class
         | IsRounded
-        // States
-        | IsHovered
-        | IsFocused
+        /// Add `is-hovered` class if true
+        | IsHovered of bool
+        /// Add `is-focused` class if true
+        | IsFocused of bool
         /// Add `is-active` class if true
         | IsActive of bool
+        /// Add `is-loading` class if true
         | IsLoading of bool
+        /// Add `is-static` class if true
         | IsStatic
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
@@ -124,8 +132,11 @@ module Button =
               yield! opts.Props ]
             children
 
+    /// Generate <button class="button"></button>
     let button options children = btnView button options children
+    /// Generate <span class="button"></span>
     let span options children = btnView span options children
+    /// Generate <a class="button"></a>
     let a options children = btnView a options children
 
     module Input =
@@ -151,7 +162,9 @@ module Button =
             else
                 btnView (fun options _ -> input options) ((Props [ Type typ ])::options) [ ]
 
+        /// Generate <input type="reset" class="button" />
         let reset options = btnInput "reset" options
+        /// Generate <input type="submit" class="button" />
         let submit options = btnInput "submit" options
 
     module List =
@@ -177,6 +190,7 @@ module Button =
                   Props = [ ]
                   CustomClass = None }
 
+    /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
         let parseOption (result : List.Options) opt =
             match opt with

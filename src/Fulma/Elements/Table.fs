@@ -21,10 +21,15 @@ module Table =
             let [<Literal>] IsNarrow = "is-narrow"
 
     type TableOption =
+        /// Set `is-hovered` class
         | IsBordered
+        /// Set `is-stripped` class
         | IsStripped
+        /// Set `is-fullwidth` class
         | IsFullwidth
+        /// Set `is-narrow` class
         | IsNarrow
+        /// Set `is-hoverable` class
         | IsHoverable
         | CustomClass of string
         | Props of IHTMLProp list
@@ -46,6 +51,7 @@ module Table =
               CustomClass = None
               Props = [] }
 
+    /// Generate <table class="table"></table>
     let table options children =
         let parseOptions (result : TableOptions) =
             function

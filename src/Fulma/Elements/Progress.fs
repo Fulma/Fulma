@@ -14,7 +14,9 @@ module Progress =
         | Size of ISize
         | Color of IColor
         | Props of IHTMLProp list
+        /// Set `Value` HTMLAttr
         | Value of int
+        /// Set `Max` HTMLAttr
         | Max of int
         | CustomClass of string
 
@@ -33,6 +35,7 @@ module Progress =
               Value = None
               CustomClass = None }
 
+    /// Generate <progress class="progress"></progress>
     let progress options children =
         let parseOptions (result : Options) =
             function

@@ -22,15 +22,21 @@ module Heading =
             let [<Literal>] IsNormal = "is-spaced"
 
     type Option =
-        // Sies
+        /// Add `is-1` class
         | Is1
+        /// Add `is-2` class
         | Is2
+        /// Add `is-3` class
         | Is3
+        /// Add `is-4` class
         | Is4
+        /// Add `is-5` class
         | Is5
+        /// Add `is-6` class
         | Is6
-        // Styles
+        /// Add `subtitle` class
         | IsSubtitle
+        /// Add `title` class
         | IsSpaced
         // Extra
         | CustomClass of string
@@ -77,10 +83,24 @@ module Heading =
             children
 
     // Alias
+    /// Generate <h1 class="title is-1"></h1>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h1 (options : Option list) = title h1 (Is1 :: options)
+    /// Generate <h2 class="title is-2"></h2>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h2 (options : Option list) = title h2 (Is2 :: options)
+    /// Generate <h3 class="title is-3"></h3>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h3 (options : Option list) = title h3 (Is3 :: options)
+    /// Generate <h4 class="title is-4"></h4>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h4 (options : Option list) = title h4 (Is4 :: options)
+    /// Generate <h5 class="title is-5"></h5>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h5 (options : Option list) = title h5 (Is5 :: options)
+    /// Generate <h6 class="title is-6"></h6>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let h6 (options : Option list) = title h6 (Is6 :: options)
+    /// Generate <p class="title"></p>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let p opts children = title p opts children
