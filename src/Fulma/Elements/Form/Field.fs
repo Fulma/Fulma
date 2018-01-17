@@ -25,13 +25,21 @@ module Field =
             let [<Literal>] IsHorizontal = "is-horizontal"
 
     type Option =
+        /// Add `has-addons` class
         | HasAddons
+        /// Add `has-addons-centered` class
         | HasAddonsCentered
+        /// Add `has-addons-right` class
         | HasAddonsRight
+        /// Add `has-addons-fullwidth` class
         | HasAddonsFullWidth
+        /// Add `is-grouped` class
         | IsGrouped
+        /// Add `is-grouped-centered` class
         | IsGroupedCentered
+        /// Add `is-grouped-right` class
         | IsGroupedRight
+        /// Add `is-horizontal` class
         | IsHorizontal
         | CustomClass of string
         | Props of IHTMLProp list
@@ -63,6 +71,7 @@ module Field =
               CustomClass = None
               Props = [] }
 
+    /// Generate <div class="field"></div>
     let field options children =
         let parseOptions (result : Options) =
             function
@@ -86,6 +95,7 @@ module Field =
         div (classes::opts.Props)
             children
 
+    /// Generate <label class="field-label"></label>
     let label options children =
         let parseOptions (result : FieldLabelOptions) =
             function
@@ -101,6 +111,7 @@ module Field =
         div (classes::opts.Props)
             children
 
+    /// Generate <label class="field-body"></label>
     let body (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Body [opts.CustomClass] []

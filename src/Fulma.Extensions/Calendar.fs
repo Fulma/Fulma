@@ -95,6 +95,7 @@ module Calendar =
         type Option =
             | CustomClass of string
             | Props of IHTMLProp list
+            /// Add `is-disabled` class if true
             | Disabled of bool
             | IsRangeStart
             | IsRange
@@ -118,6 +119,7 @@ module Calendar =
                 | CustomClass of string
                 | Props of IHTMLProp list
                 | IsToday
+                /// Add `is-active` class if true
                 | IsActive of bool
 
             type internal Options =

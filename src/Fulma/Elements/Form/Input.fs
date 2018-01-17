@@ -41,15 +41,25 @@ module Input =
 
     type Option =
         | Size of ISize
+        /// Set `Type` HTMLAttr
+        /// Don't use if the you used one of the helpers like: `Input.password`
         | Type of IInputType
         | Color of IColor
+        /// Set `Id` HTMLAttr
         | Id of string
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
+        /// Set `IsReadOnly` HTMLAttr
         | IsReadOnly of bool
-        | IsStatic
+        /// Add `is-static` class if true
+        | IsStatic of bool
+        /// Add `is-rounded` class
         | IsRounded
+        /// Set `Value` HTMLAttr
         | Value of string
+        /// Set `DefaultValue` HTMLAttr
         | DefaultValue of string
+        /// Set `Placeholder` HTMLAttr
         | Placeholder of string
         | Props of IHTMLProp list
         | CustomClass of string
@@ -84,7 +94,7 @@ module Input =
               Props = []
               CustomClass = None }
 
-    let ofType =
+    let private ofType =
         function
         | Text -> "text"
         | Password -> "password"
@@ -100,6 +110,7 @@ module Input =
         | Tel -> "tel"
         | IInputType.ColorType -> "color"
 
+    /// Generate <input class="input" />
     let input options =
         let parseOptions (result : Options) option =
             match option with
@@ -109,7 +120,7 @@ module Input =
             | Id id -> { result with Id = Some id }
             | Disabled disabled -> { result with Disabled = disabled }
             | IsReadOnly state -> { result with IsReadOnly = state }
-            | IsStatic -> { result with IsStatic = true }
+            | IsStatic state -> { result with IsStatic = state }
             | IsRounded -> { result with IsRounded = true }
             | Value value -> { result with Value = Some value }
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
@@ -137,17 +148,29 @@ module Input =
                if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp ]
              @ opts.Props)
 
-    // Alias to create input already typed
+    /// Generate <input type="text" class="input" />
     let inline text options = input (Type Text :: options)
+    /// Generate <input type="password" class="input" />
     let inline password options = input (Type Password :: options)
+    /// Generate <input type="datetime-local" class="input" />
     let inline datetimeLocal options = input (Type DatetimeLocal :: options)
+    /// Generate <input type="date" class="input" />
     let inline date options = input (Type Date :: options)
+    /// Generate <input type="month" class="input" />
     let inline month options = input (Type Month :: options)
+    /// Generate <input type="time" class="input" />
     let inline time options = input (Type Time :: options)
+    /// Generate <input type="week" class="input" />
     let inline week options = input (Type Week :: options)
+    /// Generate <input type="number" class="input" />
     let inline number options = input (Type Number :: options)
+    /// Generate <input type="email" class="input" />
     let inline email options = input (Type Email :: options)
+    /// Generate <input type="url" class="input" />
     let inline url options = input (Type Url :: options)
+    /// Generate <input type="search" class="input" />
     let inline search options = input (Type Search :: options)
+    /// Generate <input type="tel" class="input" />
     let inline tel options = input (Type Tel :: options)
+    /// Generate <input type="color" class="input" />
     let inline color options = input (Type IInputType.ColorType :: options)

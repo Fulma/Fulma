@@ -16,8 +16,11 @@ module Control =
             let [<Literal>] IsLoading = "is-loading"
 
     type Option =
+        /// Add `has-icon-right` class
         | HasIconRight
+        /// Add `has-icon-left` class
         | HasIconLeft
+        /// Add `is-loading` class
         | IsLoading
         | CustomClass of string
         | Props of IHTMLProp list
@@ -35,6 +38,7 @@ module Control =
               Props = []
               IsLoading = false }
 
+    /// Generate <div class="control"></div>
     let control options children =
         let parseOptions (result : Options) =
             function

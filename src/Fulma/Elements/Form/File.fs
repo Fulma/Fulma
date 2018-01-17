@@ -33,15 +33,24 @@ module File =
     type Option =
         | CustomClass of string
         | Props of IHTMLProp list
-        | Focused of bool
+        /// Add `is-focused` class if true
+        | IsFocused of bool
+        /// Add `is-active` class if true
         | IsActive of bool
-        | Hovered of bool
+        /// Add `is-hovered` class if true
+        | IsHovered of bool
         | Size of ISize
+        /// Add `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-centered` class
         | IsCentered
+        /// Add `is-right` class
         | IsRight
+        /// Add `is-boxed` class
         | IsBoxed
+        /// Add `has-name` class
         | HasName
+        /// Add `is-empty` class if true
         | IsEmpty of bool
         | Color of IColor
 
@@ -71,14 +80,15 @@ module File =
               HasName = false
               IsEmpty = false }
 
+    /// Generate <div class="file"></div>
     let file (options : Option list) children =
         let parseOptions (result : Options) option =
             match option with
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
-            | Focused state -> { result with IsFocused = state }
+            | IsFocused state -> { result with IsFocused = state }
             | IsActive state -> { result with IsActive = state }
-            | Hovered state -> { result with IsHovered = state }
+            | IsHovered state -> { result with IsHovered = state }
             | Size size -> { result with Size = ofSize size |> Some }
             | IsFullwidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
             | IsCentered -> { result with Alignment = Classes.Alignment.IsCentered |> Some }
@@ -104,26 +114,31 @@ module File =
                   Classes.IsEmpty, opts.IsEmpty ]
         div (classes::opts.Props) children
 
+    /// Generate <span class="file-cta"></span>
     let cta (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Cta [opts.CustomClass] []
         span (classes::opts.Props) children
 
+    /// Generate <span class="file-name"></span>
     let name (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Name [opts.CustomClass] []
         span (classes::opts.Props) children
 
+    /// Generate <span class="file-icon"></span>
     let icon (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Icon [opts.CustomClass] []
         span (classes::opts.Props) children
 
+    /// Generate <label class="file-label"></label>
     let label (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Label [opts.CustomClass] []
         Fable.Helpers.React.label (classes::opts.Props) children
 
+    /// Generate <input type="file" class="file-input" />
     let input (options : GenericOption list) =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Input [opts.CustomClass] []

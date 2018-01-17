@@ -24,20 +24,32 @@ module Textarea =
 
     type Option =
         | Size of ISize
+        /// Add `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-inline` class
         | IsInline
-        | Loading of bool
-        | Focused of bool
+        // Add `is-loading` class if true
+        | IsLoading of bool
+        /// Add `is-focused` class
+        | IsFocused of bool
+        /// Add `is-active` class if true
         | IsActive of bool
+        /// Add `IsReadOnly` HTMLAttr
         | IsReadOnly of bool
         | Color of IColor
         | Id of string
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
+        /// Set `Value` HTMLAttr
         | Value of string
+        /// Set `DefaultValue` HTMLAttr
         | DefaultValue of string
+        /// Set `Placeholder` HTMLAttr
         | Placeholder of string
+
         | Props of IHTMLProp list
         | CustomClass of string
+        /// Add `has-fixed-size` class
         | HasFixedSize
 
     type internal Options =
@@ -72,14 +84,15 @@ module Textarea =
               Props = []
               CustomClass = None }
 
+    /// Generate <textarea class="textarea"></textarea>
     let textarea options children =
         let parseOptions (result : Options) option =
             match option with
             | Size size -> { result with Size = ofSize size |> Some }
             | IsFullwidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
             | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
-            | Loading state -> { result with IsLoading = state }
-            | Focused state -> { result with IsFocused = state }
+            | IsLoading state -> { result with IsLoading = state }
+            | IsFocused state -> { result with IsFocused = state }
             | IsActive state -> { result with IsActive = state }
             | Color color -> { result with Color = ofColor color |> Some }
             | Id id -> { result with Id = Some id }

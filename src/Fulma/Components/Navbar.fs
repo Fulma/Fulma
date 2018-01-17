@@ -72,6 +72,7 @@ module Navbar =
     module Menu =
 
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
@@ -90,6 +91,7 @@ module Navbar =
 
         type Option =
             | IsTab
+            /// Add `is-active` class if true
             | IsActive of bool
             | IsHoverable
             | HasDropdown
@@ -143,6 +145,7 @@ module Navbar =
     module Link =
 
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
@@ -174,6 +177,7 @@ module Navbar =
     module Dropdown =
 
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | IsBoxed
             | IsRight
@@ -243,7 +247,7 @@ module Navbar =
             | HasShadow -> { result with HasShadow = true }
             | Props props -> { result with Props = props }
             | IsFixedTop -> { result with FixedInfo = Some Classes.Style.IsFixedTop }
-            | IsFixedBotton  -> { result with FixedInfo = Some Classes.Style.IsFixedBotton  }
+            | IsFixedBottom  -> { result with FixedInfo = Some Classes.Style.IsFixedBottom  }
             | IsTransparent -> { result with IsTransparent = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Color color -> { result with Color = ofColor color |> Some }

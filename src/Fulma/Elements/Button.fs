@@ -43,9 +43,11 @@ module Button =
         // States
         | IsHovered
         | IsFocused
+        /// Add `is-active` class if true
         | IsActive of bool
         | IsLoading of bool
         | IsStatic
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
         | OnClick of (MouseEvent -> unit)

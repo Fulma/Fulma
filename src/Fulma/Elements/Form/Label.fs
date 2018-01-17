@@ -12,6 +12,7 @@ module Label =
 
     type Option =
         | Size of ISize
+        /// Set `For` HTMLAttr
         | For of string
         | CustomClass of string
         | Props of IHTMLProp list
@@ -27,6 +28,7 @@ module Label =
               CustomClass = None
               Props = [] }
 
+    /// Generate <label class="label"></label>
     let label options children =
         let parseOptions (result : Options) =
             function

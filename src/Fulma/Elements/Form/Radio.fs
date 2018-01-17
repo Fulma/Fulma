@@ -15,6 +15,7 @@ module Radio =
         type Option =
             | CustomClass of string
             | Props of IHTMLProp list
+            /// Set `Name` HTMLAtrr
             | Name of string
 
         type internal Options =
@@ -27,11 +28,13 @@ module Radio =
                   Props = []
                   Name = None }
 
+    /// Generate <label class="radio"></label>
     let radio (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Container [opts.CustomClass] []
         label (classes::opts.Props) children
 
+    /// Generate <input class="radio" />
     let input (options : Input.Option list) =
         let parseOptions (result : Input.Options) option =
             match option with

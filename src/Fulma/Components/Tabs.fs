@@ -55,6 +55,7 @@ module Tabs =
     module Tab =
 
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
             | Props of IHTMLProp list

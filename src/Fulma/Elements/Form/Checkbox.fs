@@ -10,11 +10,13 @@ module Checkbox =
     module Classes =
         let [<Literal>] Container = "checkbox"
 
+    /// Generate <label class="checkbox"></label>
     let checkbox (options : GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Container [opts.CustomClass] []
         label (classes::opts.Props) children
 
+    /// Generate <input type="checkbox" class="checkbox"></input>
     let input (options : GenericOption list) =
         let opts = genericParse options
         let classes = Helpers.classes "" [opts.CustomClass] []

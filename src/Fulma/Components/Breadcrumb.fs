@@ -76,6 +76,7 @@ module Breadcrumb =
     module Item =
 
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string

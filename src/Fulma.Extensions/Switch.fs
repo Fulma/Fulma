@@ -24,6 +24,7 @@ module Switch =
         | IsThin
         | IsRtl
         | Checked of bool
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
         | OnChange of (React.FormEvent -> unit)

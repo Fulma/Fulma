@@ -19,6 +19,7 @@ module Slider =
         | Size of ISize
         | IsFullWidth
         | IsCircle
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
         | OnChange of (React.FormEvent -> unit)

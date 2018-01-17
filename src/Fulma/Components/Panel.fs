@@ -27,6 +27,7 @@ module Panel =
 
         type Option =
             | Props of IHTMLProp list
+            /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
 
@@ -44,6 +45,7 @@ module Panel =
 
         type Option =
             | Props of IHTMLProp list
+            /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
 

@@ -12,6 +12,7 @@ module PageLoader =
         let [<Literal>] IsActive = "is-active"
 
     type Option =
+        /// Add `is-active` class if true
         | IsActive of bool
         | Color of IColor
         | Props of IHTMLProp list

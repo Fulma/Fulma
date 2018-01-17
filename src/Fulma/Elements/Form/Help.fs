@@ -25,6 +25,7 @@ module Help =
               Props = []
               Color = None }
 
+    /// Generate <p class="help"></p>
     let help (options : Option list) children =
         let parseOptions (result: Options ) =
             function

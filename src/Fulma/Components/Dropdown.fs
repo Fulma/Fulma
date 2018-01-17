@@ -24,6 +24,7 @@ module Dropdown =
                 let [<Literal>] IsActive = "is-active"
 
     type Option =
+        /// Add `is-active` class if true
         | IsActive of bool
         | IsHoverable
         | IsRight
@@ -84,6 +85,7 @@ module Dropdown =
 
     module Item =
         type Option =
+            /// Add `is-active` class if true
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string

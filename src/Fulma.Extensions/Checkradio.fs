@@ -26,6 +26,7 @@ module Checkradio =
         | HasBackgroundColor
         | IsCircle
         | Checked of bool
+        /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | IsBlock
         | Props of IHTMLProp list
