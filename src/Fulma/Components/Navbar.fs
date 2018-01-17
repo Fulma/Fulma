@@ -41,11 +41,15 @@ module Navbar =
         module Style =
             let [<Literal>] HasShadow = "has-shadow"
             let [<Literal>] IsTransparent = "is-transparent"
+            let [<Literal>] IsFixedTop = "is-fixed-top"
+            let [<Literal>] IsFixedBottom = "is-fixed-bottom"
 
     type Option =
         | Color of IColor
         | HasShadow
         | IsTransparent
+        | IsFixedTop
+        | IsFixedBottom
         | Props of IHTMLProp list
         | CustomClass of string
 
@@ -53,12 +57,14 @@ module Navbar =
         { HasShadow : bool
           Color : string option
           IsTransparent : bool
+          FixedInfo : string option
           CustomClass : string option
           Props : IHTMLProp list }
 
         static member Empty =
             { HasShadow = false
               Color = None
+              FixedInfo = None
               IsTransparent = false
               CustomClass = None
               Props = [] }
@@ -236,13 +242,15 @@ module Navbar =
             match opt with
             | HasShadow -> { result with HasShadow = true }
             | Props props -> { result with Props = props }
+            | IsFixedTop -> { result with FixedInfo = Some Classes.Style.IsFixedTop }
+            | IsFixedBotton  -> { result with FixedInfo = Some Classes.Style.IsFixedBotton  }
             | IsTransparent -> { result with IsTransparent = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Color color -> { result with Color = ofColor color |> Some }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
-            Helpers.classes Classes.Container [opts.CustomClass; opts.Color]
+            Helpers.classes Classes.Container [opts.CustomClass; opts.Color; opts.FixedInfo ]
                [ Classes.Style.HasShadow, opts.HasShadow
                  Classes.Style.IsTransparent, opts.IsTransparent]
 
