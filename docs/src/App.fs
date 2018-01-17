@@ -20,12 +20,10 @@ Marked.Globals.marked.setOptions (unbox options) |> ignore
 
 type Msg =
     | MenuMsg of Widgets.Menu.Msg
-    | FulmaElmishMsg of FulmaElmish.Dispatcher.Types.Msg
 
 type Model =
     { Menu : Widgets.Menu.Model
-      CurrentPage : Router.Page
-      FulmaElmish : FulmaElmish.Dispatcher.Types.Model }
+      CurrentPage : Router.Page }
 
 let urlUpdate (result : Option<Router.Page>) model =
     match result with
@@ -40,8 +38,7 @@ let urlUpdate (result : Option<Router.Page>) model =
 let init result =
     let (model, cmd) =
         urlUpdate result { CurrentPage = Router.Home
-                           Menu = Widgets.Menu.init Router.Home
-                           FulmaElmish = FulmaElmish.Dispatcher.State.init () }
+                           Menu = Widgets.Menu.init Router.Home }
 
     model, Cmd.batch [ cmd ]
 
@@ -54,10 +51,6 @@ let update msg model =
         let (menu, menuMsg) = Widgets.Menu.update msg model.Menu
         { model with Menu = menu }, Cmd.map MenuMsg menuMsg
 
-    | FulmaElmishMsg msg ->
-        let (fulmaElmish, fulmaElmishMsg) = FulmaElmish.Dispatcher.State.update msg model.FulmaElmish
-        { model with FulmaElmish = fulmaElmish }, Cmd.map FulmaElmishMsg fulmaElmishMsg
-
 let root model dispatch =
     let pageHtml =
         function
@@ -69,7 +62,7 @@ let root model dispatch =
         | Router.FulmaExtensions fulmaExtensionsPage ->
             FulmaExtensions.Router.view fulmaExtensionsPage
         | Router.FulmaElmish fulmaElmishPage ->
-            FulmaElmish.Dispatcher.View.root fulmaElmishPage model.FulmaElmish (FulmaElmishMsg >> dispatch)
+            FulmaElmish.Router.view fulmaElmishPage
 
     div []
         [ div [ ClassName "navbar-bg" ]
@@ -94,18 +87,3 @@ Program.mkProgram init update root
 #endif
 |> Program.withReact "elmish-app"
 |> Program.run
-
-
-// let test() =
-//     div []
-//         [ div [ ClassName "navbar-bg" ]
-//               [ div [ ClassName "container" ] [ Navbar.View.root ] ]
-//           div [ ClassName "section" ]
-//               [ div [ ClassName "container" ]
-//                     [ div [ ClassName "columns" ]
-//                           [ div [ ClassName "column is-2" ] []
-//                             div [ ClassName "column" ] [ ] ] ] ] ]
-
-
-
-// printfn "CODE EXAMPLE: %s" (Render.getViewSource test)

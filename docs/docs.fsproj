@@ -50,7 +50,6 @@
     <Compile Include="src/Fulma/Elements/Title.fs" />
     <Compile Include="src/Fulma/Versions.fs" />
     <Compile Include="src/Fulma/Introduction.fs" />
-    <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->
     <Compile Include="src/FulmaExtensions/Calendar.fs" />
@@ -61,17 +60,11 @@
     <Compile Include="src/FulmaExtensions/Switch.fs" />
     <Compile Include="src/FulmaExtensions/Tooltip.fs" />
     <Compile Include="src/FulmaExtensions/Introduction.fs" />
-    <!-- Dispatcher need to be latest of the group -->
     <Compile Include="src/FulmaExtensions/Router.fs" />
     <!-- FulmaElmish -->
-    <Compile Include="src/FulmaElmish/DatePicker/Types.fs" />
-    <Compile Include="src/FulmaElmish/DatePicker/State.fs" />
-    <Compile Include="src/FulmaElmish/DatePicker/View.fs" />
-    <Compile Include="src/FulmaElmish/Introduction/View.fs" />
-    <!-- Dispatcher need to be latest of the group -->
-    <Compile Include="src/FulmaElmish/Dispatcher/Types.fs" />
-    <Compile Include="src/FulmaElmish/Dispatcher/State.fs" />
-    <Compile Include="src/FulmaElmish/Dispatcher/View.fs" />
+    <Compile Include="src/FulmaElmish/DatePicker.fs" />
+    <Compile Include="src/FulmaElmish/Introduction.fs" />
+    <Compile Include="src/FulmaElmish/Router.fs" />
     <!-- Home -->
     <Compile Include="src/Views/Demo.fs" />
     <Compile Include="src/Views/Home.fs" />
