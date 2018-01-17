@@ -20,9 +20,9 @@ let basic () =
 let view =
     Render.docPage [ Render.contentFromMarkdown
                         """
-# Level
+# Footer
 
-*[Bulma documentation](http://bulma.io/documentation/layout/level/)*
+*[Bulma documentation](http://bulma.io/documentation/layout/footer/)*
                         """
                      Render.docSection
                         ""
