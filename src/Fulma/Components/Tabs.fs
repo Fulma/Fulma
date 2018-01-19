@@ -22,12 +22,18 @@ module Tabs =
             let [<Literal>] IsToggleRounded = "is-toggle-rounded"
 
     type Option =
+        /// Add `is-centered` class
         | IsCentered
+        /// Add `is-right` class
         | IsRight
         | Size of ISize
+        /// Add `is-boxed` class
         | IsBoxed
+        /// Add `is-toggle` class
         | IsToggle
+        /// Add `is-toggle-rounded` class
         | IsToggleRounded
+        /// Add `is-fullwidth` class
         | IsFullwidth
         | CustomClass of string
         | Props of IHTMLProp list
@@ -70,6 +76,7 @@ module Tabs =
                   CustomClass = None
                   Props = [] }
 
+    /// Generate <div class="tabs"><ul></ul></div>
     let tabs (options: Option list) children =
         let parseOptions (result: Options) opt =
             match opt with
@@ -95,6 +102,7 @@ module Tabs =
             [ ul [ ]
                  children ]
 
+    /// Generate <li></li>
     let tab (options: Tab.Option list) children =
         let parseOptions (result: Tab.Options) opt =
             match opt with

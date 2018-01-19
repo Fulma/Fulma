@@ -34,21 +34,25 @@ module Menu =
                   CustomClass = None
                   OnClick = None }
 
+    /// Generate <aside class="menu"></aside>
     let menu (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Container [opts.CustomClass] []
         aside (classes::opts.Props) children
 
+    /// Generate <p class="menu-label"></p>
     let label (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Label [opts.CustomClass] []
         p (classes::opts.Props) children
 
+    /// Generate <div class="menu-list"></div>
     let list (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.List [opts.CustomClass] []
         ul (classes::opts.Props) children
 
+    /// Generate <li><a></a></li>
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function

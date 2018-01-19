@@ -25,12 +25,17 @@ module Breadcrumb =
             let [<Literal>] IsActive = "is-active"
 
     type Option =
+        /// Add `is-centered` class
         | IsCentered
+        /// Add `is-right` class
         | IsRight
-        /// Separators
+        /// Add `has-arrow-separator` class
         | HasArrowSeparator
+        /// Add `has-bullet-separator` class
         | HasBulletSeparator
+        /// Add `has-dot-separator` class
         | HasDotSeparator
+        /// Add `has-succeeds-separator` class
         | HasSucceedsSeparator
         | Size of ISize
         | Props of IHTMLProp list
@@ -50,6 +55,7 @@ module Breadcrumb =
               Size = None
               CustomClass = None }
 
+    /// Generate <nav class="breadcumb"></nav>
     let breadcrumb options children =
         let parseOptions result =
             function
@@ -91,6 +97,7 @@ module Breadcrumb =
                   IsActive = false
                   CustomClass = None }
 
+    /// Generate <li></li>
     let item (options: Item.Option list) children =
         let parseOptions (result: Item.Options) =
             function

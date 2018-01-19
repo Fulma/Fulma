@@ -30,6 +30,7 @@ module Message =
               Size = None
               CustomClass = None }
 
+    /// Generate <article class="message"></article>
     let message options children =
         let parseOptions (result: Options ) opt =
             match opt with
@@ -47,11 +48,13 @@ module Message =
         article (classes::opts.Props)
             children
 
+    /// Generate <div class="message-header"></div>
     let header (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Header [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="message-body"></div>
     let body (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Body [opts.CustomClass] []

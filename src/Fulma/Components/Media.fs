@@ -29,6 +29,7 @@ module Media =
               Props = []
               CustomClass = None }
 
+    /// Generate <article class="media"></article>
     let media (options: Option list) children =
         let parseOption (result : Options) opt =
             match opt with
@@ -47,16 +48,19 @@ module Media =
                         [ ]
         article (classes::opts.Props) children
 
+    /// Generate <div class="media-left"></div>
     let left (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Left [opts.CustomClass] []
         figure (classes::opts.Props) children
 
+    /// Generate <div class="media-right"></div>
     let right (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Right [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="media-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Content [opts.CustomClass] []

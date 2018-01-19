@@ -1,6 +1,5 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
 open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -24,8 +23,11 @@ module Pagination =
             let [<Literal>] IsRounded = "is-rounded"
 
     type Option =
+        /// Add `is-centered` class
         | IsCentered
+        /// Add `is-right` class
         | IsRight
+        /// Add `is-rounded` class
         | IsRounded
         | Size of ISize
         | CustomClass of string
@@ -48,6 +50,7 @@ module Pagination =
     module Link =
 
         type Option =
+            /// Add `current` class if true
             | Current of bool
             | CustomClass of string
             | Props of IHTMLProp list
@@ -62,6 +65,7 @@ module Pagination =
                   CustomClass = None
                   Props = [] }
 
+    /// Generate <nav class="pagination"></nav>
     let pagination (options: Option list) children =
         let parseOptions (result: Options) opt =
             match opt with
@@ -81,16 +85,19 @@ module Pagination =
         nav (classes::opts.Props)
             children
 
+    /// Generate <a class="pagination-previous"></a>
     let previous (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Previous [opts.CustomClass] []
         a (classes::opts.Props) children
 
+    /// Generate <a class="pagination-next"></a>
     let next (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Next [opts.CustomClass] []
         a (classes::opts.Props) children
 
+    /// Generate <li><a class="pagination-link"></a></li>
     let link (options: Link.Option list) children =
         let parseOptions (result: Link.Options) opt =
             match opt with
@@ -105,6 +112,7 @@ module Pagination =
                  yield! opts.Props ]
                children ]
 
+    /// Generate <li><a class="pagination-ellipsis">&hellip;</a></li>
     let ellipsis (options: GenericOption list) =
         let opts = genericParse options
 
@@ -114,6 +122,7 @@ module Pagination =
                     yield (DangerouslySetInnerHTML { __html = "&hellip;" }) :> IHTMLProp ]
                   [ ] ]
 
+    /// Generate <ul class="pagination-list"></ul>
     let list (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.List [opts.CustomClass] []

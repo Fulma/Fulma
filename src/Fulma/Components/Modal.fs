@@ -60,6 +60,7 @@ module Modal =
                   CustomClass = None
                   OnClick = None }
 
+    /// Generate <div class="modal"></div>
     let modal options children =
         let parseOptions (result: Options ) opt =
             match opt with
@@ -75,6 +76,7 @@ module Modal =
         div (classes::opts.Props)
             children
 
+    /// Generate <button class="modal-close"></button>
     let close (options : Close.Option list) children =
         let parseOptions (result: Close.Options ) opt =
             match opt with
@@ -96,11 +98,13 @@ module Modal =
 
         button opts children
 
+    /// Generate <div class="modal-background"></div>
     let background (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Background [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="modal-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Content [opts.CustomClass] []
@@ -108,26 +112,31 @@ module Modal =
 
     module Card =
 
+        /// Generate <div class="modal-card"></div>
         let card (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Card.Container [opts.CustomClass] []
             div (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-head"></div>
         let head (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Card.Head [opts.CustomClass] []
             header (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-foot"></div>
         let foot (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Card.Foot [opts.CustomClass] []
             footer (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-title"></div>
         let title (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Card.Title [opts.CustomClass] []
             div (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-body"></div>
         let body (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Card.Body [opts.CustomClass] []

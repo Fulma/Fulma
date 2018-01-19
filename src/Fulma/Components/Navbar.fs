@@ -46,9 +46,15 @@ module Navbar =
 
     type Option =
         | Color of IColor
+        /// Add `has-shadow` class
         | HasShadow
+        /// Add `is-transparent` class
         | IsTransparent
+        /// Add `is-fixed-top` class
+        /// You also need to add `has-navbar-fixed-top` to your html tag
         | IsFixedTop
+        /// Add `is-fixed-bottom` class
+        /// You also need to add `has-navbar-fixed-bottom` to your html tag
         | IsFixedBottom
         | Props of IHTMLProp list
         | CustomClass of string
@@ -90,11 +96,15 @@ module Navbar =
     module Item =
 
         type Option =
+            /// Add `is-tab` class
             | IsTab
             /// Add `is-active` class if true
             | IsActive of bool
+            /// Add `is-hoverable` class
             | IsHoverable
+            /// Add `has-dropdown` class
             | HasDropdown
+            /// Add `is-expanded` class
             | IsExpanded
             | Props of IHTMLProp list
             | CustomClass of string
@@ -139,7 +149,9 @@ module Navbar =
 
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-item"></div>
         let div x y = item div x y
+        /// Generate <a class="navbar-item"></a>
         let a x y = item a x y
 
     module Link =
@@ -171,7 +183,9 @@ module Navbar =
             let classes = Helpers.classes Classes.Link.Container [] [Classes.Link.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-link"></div>
         let div x y = link div x y
+        /// Generate <a class="navbar-link"></a>
         let a x y = link a x y
 
     module Dropdown =
@@ -179,7 +193,9 @@ module Navbar =
         type Option =
             /// Add `is-active` class if true
             | IsActive of bool
+            /// Add `is-boxed` class
             | IsBoxed
+            /// Add `is-right` class
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
@@ -211,7 +227,9 @@ module Navbar =
             let classes = Helpers.classes Classes.Dropdown.Container [] [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-dropdown"></div>
         let div x y = dropdown div x y
+        /// Generate <a class="navbar-dropdown"></a>
         let a x y = dropdown a x y
 
     module Brand =
@@ -220,7 +238,9 @@ module Navbar =
             let classes = Helpers.classes Classes.Brand [opts.CustomClass] []
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-brand"></div>
         let div x y = brand div x y
+        /// Generate <a class="navbar-brand"></a>
         let a x y = brand a x y
 
     module Start =
@@ -229,7 +249,9 @@ module Navbar =
             let classes = Helpers.classes Classes.Start [opts.CustomClass] []
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-start"></div>
         let div x y = start div x y
+        /// Generate <a class="navbar-start"></a>
         let a x y = start a x y
 
     module End =
@@ -238,9 +260,12 @@ module Navbar =
             let classes = Helpers.classes Classes.End [opts.CustomClass] []
             element (classes::opts.Props) children
 
+        /// Generate <div class="navbar-end"></div>
         let div x y = ``end`` div x y
+        /// Generate <a class="navbar-end"></a>
         let a x y = ``end`` a x y
 
+    /// Generate <nav class="navbar"></nav>
     let navbar (options : Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with
@@ -260,6 +285,7 @@ module Navbar =
 
         nav (classes::opts.Props) children
 
+    /// Generate <div class="navbar-menu"></div>
     let menu options children =
         let parseOptions (result: Menu.Options ) opt =
             match opt with
@@ -274,16 +300,19 @@ module Navbar =
 
         div (classes::opts.Props) children
 
+    /// Generate <div class="navbar-burger"></div>
     let burger (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Burger [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="navbar-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Content [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="navbar-divider"></div>
     let divider (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Divider [opts.CustomClass] []

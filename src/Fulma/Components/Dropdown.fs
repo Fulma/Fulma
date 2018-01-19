@@ -26,8 +26,11 @@ module Dropdown =
     type Option =
         /// Add `is-active` class if true
         | IsActive of bool
+        /// Add `is-hoverable` class
         | IsHoverable
+        /// Add `is-right` class
         | IsRight
+        /// Add `is-up` class
         | IsUp
         | Props of IHTMLProp list
         | CustomClass of string
@@ -48,6 +51,7 @@ module Dropdown =
               IsUp = false
               CustomClass = None }
 
+    /// Generate <div class="dropdown"></div>
     let dropdown (options: Option list) children =
         let parseOptions (result : Options) =
             function
@@ -68,16 +72,19 @@ module Dropdown =
 
         div (classes::opts.Props) children
 
+    /// Generate <div class="dropdown-menu"></div>
     let menu (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Menu [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="dropdown-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Content [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="dropdown-divider"></div>
     let divider (options: GenericOption list) =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Divider [opts.CustomClass] []
@@ -114,5 +121,7 @@ module Dropdown =
 
             element (classes::opts.Props) children
 
+        /// Generate <div class="dropdown-item"></div>
         let div x y = item div x y
+        /// Generate <a class="dropdown-item"></a>
         let a x y = item a x y
