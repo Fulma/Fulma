@@ -50,13 +50,13 @@ let mixedStyleInteractive () =
 let stateInteractive () =
     div [ ClassName "block" ]
         [ Button.button [ ] [ str "Normal" ]
-          Button.button [ Button.Color IsSuccess; Button.IsHovered ] [ str "Hover" ]
-          Button.button [ Button.Color IsWarning; Button.IsFocused ] [ str "Focus" ]
+          Button.button [ Button.Color IsSuccess; Button.IsHovered true ] [ str "Hover" ]
+          Button.button [ Button.Color IsWarning; Button.IsFocused true ] [ str "Focus" ]
           Button.button [ Button.Color IsInfo; Button.IsActive true ] [ str "Active" ]
           Button.button [ Button.Color IsBlack; Button.IsLoading true ] [ str "Loading" ] ]
 
 let staticView () =
-    Button.button [ Button.IsStatic ]
+    Button.button [ Button.IsStatic true ]
         [ str "Static" ]
 
 let disabled () =

@@ -54,7 +54,7 @@ module Button =
         /// Add `is-loading` class if true
         | IsLoading of bool
         /// Add `is-static` class if true
-        | IsStatic
+        | IsStatic of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
@@ -67,9 +67,13 @@ module Button =
           IsOutlined : bool
           IsInverted : bool
           IsDisabled : bool
+          IsHovered : bool
+          IsFocused : bool
           IsText : bool
           IsRounded : bool
-          State : string option
+          IsActive : bool
+          IsLoading : bool
+          IsStatic : bool
           Props : IHTMLProp list
           CustomClass : string option
           OnClick : (MouseEvent -> unit) option }
@@ -81,7 +85,11 @@ module Button =
               IsDisabled = false
               IsText = false
               IsRounded = false
-              State = None
+              IsActive = false
+              IsLoading = false
+              IsStatic = false
+              IsHovered = false
+              IsFocused = false
               Props = []
               CustomClass = None
               OnClick = None }
@@ -100,13 +108,11 @@ module Button =
             | IsText -> { result with IsText = true }
             | IsRounded -> { result with IsRounded = true }
             // States
-            | IsHovered -> { result with State = Classes.State.IsHovered |> Some }
-            | IsFocused -> { result with State = Classes.State.IsFocused |> Some }
-            | IsActive true -> { result with State = Classes.State.IsActive |> Some }
-            | IsActive false -> { result with State = None }
-            | IsLoading true -> { result with State = Classes.State.IsLoading |> Some }
-            | IsLoading false -> { result with State = None }
-            | IsStatic -> { result with State = Classes.State.IsStatic |> Some }
+            | IsHovered state -> { result with IsHovered = state }
+            | IsFocused state -> { result with IsFocused = state }
+            | IsActive state -> { result with IsActive = state }
+            | IsLoading state -> { result with IsLoading = state }
+            | IsStatic state -> { result with IsStatic = state }
             | Disabled isDisabled -> { result with IsDisabled = isDisabled }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
@@ -117,12 +123,16 @@ module Button =
                         Classes.Container
                         [ opts.Level
                           opts.Size
-                          opts.State
                           opts.CustomClass ]
                         [ Classes.Styles.IsOutlined, opts.IsOutlined
                           Classes.Styles.IsInverted, opts.IsInverted
                           Classes.Styles.IsText, opts.IsText
-                          Classes.Styles.IsRounded, opts.IsRounded ]
+                          Classes.Styles.IsRounded, opts.IsRounded
+                          Classes.State.IsHovered, opts.IsHovered
+                          Classes.State.IsFocused, opts.IsFocused
+                          Classes.State.IsActive, opts.IsActive
+                          Classes.State.IsLoading, opts.IsLoading
+                          Classes.State.IsStatic, opts.IsStatic ]
 
         element
             [ yield classes
