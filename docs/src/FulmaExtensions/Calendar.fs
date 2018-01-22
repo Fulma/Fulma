@@ -159,7 +159,7 @@ Display a **calendar** for date selection or for planning management, in differe
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-calendar@0.0.1 bulma-tooltip@0.0.4`</td>
+            <td>`yarn add bulma bulma-calendar@0.0.1 bulma-tooltip@0.1.7`</td>
         </tr>
     </tbody>
 <table>

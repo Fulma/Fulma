@@ -10,5 +10,11 @@ module Tooltip =
     let [<Literal>] IsTooltipRight = "is-tooltip-right"
     let [<Literal>] IsTooltipBottom = "is-tooltip-bottom"
     let [<Literal>] IsTooltipLeft = "is-tooltip-left"
+    let [<Literal>] IsMultiline = "is-tooltip-multiline"
+    let [<Literal>] IsPrimary = "is-tooltip-primary"
+    let [<Literal>] IsInfo = "is-tooltip-info"
+    let [<Literal>] IsSuccess = "is-tooltip-success"
+    let [<Literal>] IsWarning = "is-tooltip-warning"
+    let [<Literal>] IsDanger = "is-tooltip-danger"
 
     let dataTooltip d = Data ("tooltip", d)

@@ -93,7 +93,7 @@ Display a **page-loader** to inform user that content is loading, in different c
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-pageloader@0.0.2`</td>
+            <td>`yarn add bulma bulma-pageloader@0.1.0`</td>
         </tr>
     </tbody>
 <table>

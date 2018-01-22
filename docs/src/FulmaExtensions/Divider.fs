@@ -56,7 +56,7 @@ Display a vertical or horizontal divider to segment your design.
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-divider@0.0.1`</td>
+            <td>`yarn add bulma bulma-divider@0.1.0`</td>
         </tr>
     </tbody>
 <table>

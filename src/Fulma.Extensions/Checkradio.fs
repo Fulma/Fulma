@@ -10,8 +10,7 @@ open Fulma.Elements.Form
 module Checkradio =
 
     module Classes =
-        let [<Literal>] IsCheckox = "is-checkbox"
-        let [<Literal>] IsRadio = "is-radio"
+        let [<Literal>] IsCheckradio = "is-checkradio"
         let [<Literal>] IsCircle = "is-circle"
         let [<Literal>] IsRtl = "is-rtl"
         let [<Literal>] IsBlock = "is-block"
@@ -25,6 +24,7 @@ module Checkradio =
         | HasNoBorder
         | HasBackgroundColor
         | IsCircle
+        /// Add `checked` HTMLAttr if true
         | Checked of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
@@ -109,14 +109,14 @@ module Checkradio =
                 children ]
 
     let checkboxInline (options : Option list) children =
-        genericElement "checkbox" Classes.IsCheckox options children
+        genericElement "checkbox" Classes.IsCheckradio options children
 
     let checkbox (options : Option list) children =
         Field.field [ ]
             (checkboxInline options children)
 
     let radioInline (options : Option list) children =
-        genericElement "radio" Classes.IsRadio options children
+        genericElement "radio" Classes.IsCheckradio options children
 
 
     let radio (options : Option list) children =

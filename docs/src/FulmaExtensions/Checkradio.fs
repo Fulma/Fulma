@@ -47,28 +47,24 @@ let colorInteractive () =
     Columns.columns [ ]
         [ Column.column [ ]
             [ Checkradio.checkbox [ Checkradio.Checked true ] [ str "Checkbox" ]
-              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsWhite ] [ str "White" ]
-              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsLight ] [ str "Light" ]
+              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsInfo ] [ str "Info" ]
               Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsDark ] [ str "Dark" ]
               Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsBlack ] [ str "Black" ] ]
 
           Column.column [ ]
             [ Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsPrimary ] [ str "Primary" ]
-              Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsInfo ] [ str "Info" ]
               Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsSuccess ] [ str "Success" ]
               Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsWarning ] [ str "Warning" ]
               Checkradio.checkbox [ Checkradio.Checked true; Checkradio.Color IsDanger ] [ str "Danger" ] ]
 
           Column.column [ ]
             [ Checkradio.radio [ Checkradio.Checked true; Checkradio.Name "rad" ] [ str "Checkbox" ]
-              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsWhite; Checkradio.Name "rad" ] [ str "White" ]
-              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsLight; Checkradio.Name "rad" ] [ str "Light" ]
+              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsInfo; Checkradio.Name "rad1" ] [ str "Info" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsDark; Checkradio.Name "rad" ] [ str "Dark" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsBlack; Checkradio.Name "rad" ] [ str "Black" ] ]
 
           Column.column [ ]
             [ Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsPrimary ; Checkradio.Name "rad1" ] [ str "Primary" ]
-              Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsInfo; Checkradio.Name "rad1" ] [ str "Info" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsSuccess; Checkradio.Name "rad1" ] [ str "Success" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsWarning; Checkradio.Name "rad1" ] [ str "Warning" ]
               Checkradio.radio [ Checkradio.Checked true; Checkradio.Color IsDanger; Checkradio.Name "rad1" ] [ str "Danger" ] ] ]
@@ -210,7 +206,7 @@ let view =
 
 Make classic **checkbox** and **radio** more sexy in different colors, sizes, and states.
 
-*[Documentation](https://github.com/Wikiki/bulma-checkradio)*
+*[Documentation](https://wikiki.github.io/form/checkradio/)*
 
 ## Npm packages
 
@@ -228,7 +224,7 @@ Make classic **checkbox** and **radio** more sexy in different colors, sizes, an
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-checkradio@0.0.8`</td>
+            <td>`yarn add bulma bulma-checkradio@0.1.5`</td>
         </tr>
     </tbody>
 <table>

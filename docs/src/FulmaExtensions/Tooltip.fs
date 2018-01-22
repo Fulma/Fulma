@@ -47,7 +47,7 @@ Display a **tooltip** attached to any kind of element, in different position.
         </tr>
         <tr>
             <td>Supported</td>
-            <td>`yarn add bulma bulma-tooltip@0.0.4`</td>
+            <td>`yarn add bulma bulma-tooltip@0.1.1`</td>
         </tr>
     </tbody>
 <table>
