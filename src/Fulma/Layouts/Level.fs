@@ -26,6 +26,7 @@ module Level =
 
         type Option =
             | Props of IHTMLProp list
+            /// Add `is-mobile` class
             | IsMobile
             | CustomClass of string
 
@@ -43,6 +44,7 @@ module Level =
 
         type Option =
             | Props of IHTMLProp list
+            /// Add `has-text-centered` class
             | HasTextCentered
             | CustomClass of string
 
@@ -56,6 +58,7 @@ module Level =
                   HasTextCentered = false
                   CustomClass = None }
 
+    /// Generate <nav class="level"></nav>
     let level (options : Level.Option list) children =
         let parseOptions (result: Level.Options ) opt =
             match opt with
@@ -68,16 +71,19 @@ module Level =
                         [ Classes.Mobile.IsHorizontal, opts.IsMobile ]
         nav (classes::opts.Props) children
 
+    /// Generate <div class="level-left"></div>
     let left (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Left [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="level-right"></div>
     let right (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Right [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="level-item"></div>
     let item (options : Item.Option list) children =
         let parseOptions (result: Item.Options ) opt =
             match opt with
@@ -90,11 +96,13 @@ module Level =
                         [ Classes.Item.HasTextCentered, opts.HasTextCentered ]
         div (classes::opts.Props) children
 
+    /// Generate <p class="heading"></p>
     let heading (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Item.Heading [opts.CustomClass] []
         p (classes::opts.Props) children
 
+    /// Generate <p class="title"></p>
     let title (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Item.Title [opts.CustomClass] []

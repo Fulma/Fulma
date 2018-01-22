@@ -19,7 +19,9 @@ module Section =
     type Option =
         | Props of IHTMLProp list
         | CustomClass of string
+        /// Add `is-medium` class
         | IsMedium
+        /// Add `is-large` class
         | IsLarge
 
     type internal Options =
@@ -32,6 +34,7 @@ module Section =
               CustomClass = None
               Spacing = None }
 
+    /// Generate <section class="section"></section>
     let section (options: Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with

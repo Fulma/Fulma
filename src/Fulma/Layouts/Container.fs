@@ -21,8 +21,11 @@ module Container =
     type Option =
         | Props of IHTMLProp list
         | CustomClass of string
+        /// Add `is-fluid` class
         | IsFluid
+        /// Add `is-widescreen` class
         | IsWideScreen
+        /// Add `is-fullhd` class
         | IsFullHD
 
     type internal Options =
@@ -37,6 +40,7 @@ module Container =
               IsFluid = false
               Breakpoint = None }
 
+    /// Generate <div class="container"></div>
     let container (options: Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with

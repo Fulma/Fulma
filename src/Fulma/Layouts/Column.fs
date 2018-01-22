@@ -290,7 +290,13 @@ module Column =
         | WideScreen
 
     type Option =
+        /// Configure the width of the column. You can configure the display and size
+        /// Example: Column.Width (Column.Desktop, Column.Is6)
+        /// Becomde: `is-6-desktop`
         | Width of IScreen * ISize
+        /// Configure the offset of the column. You can configure the display and offset size
+        /// Example: Column.Offset (Column.Desktop, Column.Is6)
+        /// Becomde: `is-offset-6-desktop`
         | Offset of IScreen * ISize
         | CustomClass of string
         | Props of IHTMLProp list
@@ -568,6 +574,7 @@ module Column =
               CustomClass = None
               Props = [] }
 
+    /// Generate <div class="column"></div>
     let column (options : Option list) children =
         let parseOptions (result: Options) =
             function

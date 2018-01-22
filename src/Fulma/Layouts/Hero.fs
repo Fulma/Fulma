@@ -28,10 +28,15 @@ module Hero =
             let [<Literal>] IsFullHeight = "is-fullheight"
 
     type Option =
+        /// Add `is-bold` class
         | IsBold
+        /// Add `is-medium` class
         | IsMedium
+        /// Add `is-large` class
         | IsLarge
+        /// Add `is-halfheight` class
         | IsHalfHeight
+        /// Add `is-fullheight` class
         | IsFullHeight
         | Color of IColor
         | CustomClass of string
@@ -51,6 +56,7 @@ module Hero =
               Color = None
               CustomClass = None }
 
+    /// Generate <div class="footer"></div>
     let hero (options : Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with
@@ -69,26 +75,31 @@ module Hero =
                         [Classes.Style.IsBold, opts.IsBold]
         section (classes::opts.Props) children
 
+    /// Generate <div class="hero-head"></div>
     let head (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Head [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="hero-body"></div>
     let body (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Body [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="hero-foot"></div>
     let foot (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Foot [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="hero-video"></div>
     let video (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Video.Container [opts.CustomClass] []
         div (classes::opts.Props) children
 
+    /// Generate <div class="hero-buttons"></div>
     let buttons (options: GenericOption list) children =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Buttons.Container [opts.CustomClass] []

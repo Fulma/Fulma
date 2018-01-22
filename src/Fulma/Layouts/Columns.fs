@@ -18,17 +18,24 @@ module Columns =
             let [<Literal>] IsGapless = "is-gapless"
             let [<Literal>] IsGrid = "is-grid"
         module Display =
-            let [<Literal>] OnMobile = "on-mobile"
-            let [<Literal>] OnlyDesktop = "only-desktop"
+            let [<Literal>] IsMobile = "is-mobile"
+            let [<Literal>] IsDesktop = "is-desktop"
 
     type Option =
+        /// Add `is-centered` class
         | IsCentered
+        /// Add `is-vcentered` class
         | IsVCentered
+        /// Add `is-multiline` class
         | IsMultiline
+        /// Add `is-gapless` class
         | IsGapless
+        /// Add `is-grid` class
         | IsGrid
-        | Mobile
-        | DesktopOnly
+        /// Add `is-mobile` class
+        | IsMobile
+        /// Add `is-desktop` class
+        | IsDesktop
         | CustomClass of string
         | Props of IHTMLProp list
 
@@ -45,6 +52,7 @@ module Columns =
               CustomClass = None
               Props = [] }
 
+    /// Generate <div class="columns"></div>
     let columns (options: Option list) children =
         let parseOptions (result: Options) =
             function
@@ -53,8 +61,8 @@ module Columns =
             | IsMultiline -> { result with Spacing = Classes.Spacing.IsMultiline |> Some }
             | IsGapless -> { result with Spacing = Classes.Spacing.IsGapless |> Some }
             | IsGrid -> { result with Spacing = Classes.Spacing.IsGrid |> Some }
-            | Mobile -> { result with Display = Classes.Display.OnMobile |> Some }
-            | DesktopOnly -> { result with Display = Classes.Display.OnlyDesktop |> Some }
+            | IsMobile -> { result with Display = Classes.Display.IsMobile |> Some }
+            | IsDesktop -> { result with Display = Classes.Display.IsDesktop |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 

@@ -64,9 +64,13 @@ module Tile =
         | Size of ISize
         | CustomClass of string
         | Props of IHTMLProp list
+        /// Add `is-child` class
         | IsChild
+        /// Add `is-ancestor` class
         | IsAncestor
+        /// Add `is-parent` class
         | IsParent
+        /// Add `is-vertical` class
         | IsVertical
 
     type internal Options =
@@ -83,6 +87,7 @@ module Tile =
               Props = []
               Context = None }
 
+    /// Generate <div class="title"></div>
     let tile (options: Option list) children =
         let parseOptions (result: Options) =
             function
@@ -103,11 +108,14 @@ module Tile =
               yield! opts.Props ]
             children
 
+    /// Generate <div class="title is-parent"></div>
     let parent (options: Option list) children =
         tile (IsParent :: options) children
 
+    /// Generate <div class="title is-child"></div>
     let child (options: Option list) children =
         tile (IsChild :: options) children
 
+    /// Generate <div class="title is-ancestor"></div>
     let ancestor (options: Option list) children =
         tile (IsAncestor :: options) children
