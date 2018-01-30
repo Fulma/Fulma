@@ -55,8 +55,10 @@ let root model dispatch =
     let pageHtml =
         function
         | Router.Home -> Home.view
-        | Router.Migration -> Migration.view
         | Router.Showcase -> Demo.view
+        | Router.Changelog (project, version) ->
+            div [ Key (project + version) ]
+                [ Widgets.Changelog.view project version ]
         | Router.Fulma fulmaPage ->
             Fulma.Router.view fulmaPage
         | Router.FulmaExtensions fulmaExtensionsPage ->

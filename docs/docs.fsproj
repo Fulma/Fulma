@@ -10,6 +10,7 @@
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <Compile Include="src/Global/Router.fs" />
     <Compile Include="src/Global/Render.fs" />
+    <Compile Include="src/Widgets/Changelog.fs" />
     <Compile Include="src/Widgets/Menu.fs" />
     <Compile Include="src/Widgets/Showcase.fs" />
     <!-- Layouts -->
@@ -65,7 +66,6 @@
     <!-- Home -->
     <Compile Include="src/Views/Demo.fs" />
     <Compile Include="src/Views/Home.fs" />
-    <Compile Include="src/Views/Migration.fs" />
     <Compile Include="src/Views/Navbar.fs" />
     <Compile Include="src/App.fs" />
   </ItemGroup>

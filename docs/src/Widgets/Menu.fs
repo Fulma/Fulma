@@ -11,6 +11,7 @@ type FulmaModules =
     | Elements
     | Components
     | Layouts
+    | Changelogs
 
 type Library =
     | Fulma of FulmaModules
@@ -19,7 +20,8 @@ type Library =
 type Fulma =
     { IsElementsExpanded : bool
       IsComponentsExpanded : bool
-      IsLayoutExpanded : bool }
+      IsLayoutExpanded : bool
+      IsChangeLogExpanded : bool }
 
 type FulmaExtensions =
     { IsExpanded : bool }
@@ -36,7 +38,8 @@ let init currentPage : Model =
     { Fulma =
             { IsElementsExpanded = false
               IsComponentsExpanded = false
-              IsLayoutExpanded = false }
+              IsLayoutExpanded = false
+              IsChangeLogExpanded = false }
       FulmaExtensions =
             { IsExpanded = false }
       CurrentPage = currentPage }
@@ -58,6 +61,10 @@ let update msg model =
                 { model with Fulma =
                                 { model.Fulma with IsLayoutExpanded = not model.Fulma.IsLayoutExpanded } }
 
+            | Changelogs ->
+                { model with Fulma =
+                                { model.Fulma with IsChangeLogExpanded = not model.Fulma.IsChangeLogExpanded } }
+
         | FulmaExtensions ->
             { model with FulmaExtensions =
                                 { model.FulmaExtensions with IsExpanded = not model.FulmaExtensions.IsExpanded } }
@@ -71,6 +78,9 @@ let private menuItem label page currentPage =
        [ a [ classList [ "is-active", page = currentPage ]
              Router.href page ]
            [ str label ] ]
+
+let private changelogItem currentPage version =
+    menuItem version (Changelog ("fulma", version)) currentPage
 
 let private menuFulma currentPage subModel dispatch =
     let (elementsClass, elementsIcon) =
@@ -100,10 +110,31 @@ let private menuFulma currentPage subModel dispatch =
         else
             "menu-group", Fa.I.AngleUp
 
+    let (changelogClass, changelogIcon) =
+        if not subModel.IsChangeLogExpanded then
+            match currentPage with
+            | Changelog ("fulma", _) ->
+                "menu-group is-active", Fa.I.AngleDown
+            | _ -> "menu-group", Fa.I.AngleDown
+        else
+            "menu-group", Fa.I.AngleUp
+
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ menuItem "Introduction" (Fulma FulmaPage.Introduction) currentPage
           menuItem "Versions" (Fulma FulmaPage.Versions) currentPage ]
+      Menu.list [ ]
+        [ li [ ]
+             [ yield a [ ClassName changelogClass
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Changelogs) |> dispatch ) ]
+                       [ span [ ] [ str "Changelogs" ]
+                         Icon.faIcon [ ] [ Fa.icon changelogIcon ] ]
+               if subModel.IsChangeLogExpanded then
+                    yield ul [ ]
+                             ( [ "1.0.0-beta-006"
+                                 "1.0.0-beta-001" ]
+                               |> List.map (changelogItem currentPage)
+                             ) ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName layoutsClass
@@ -183,8 +214,7 @@ let view model dispatch =
     Menu.menu [ ]
         [ yield Menu.list [ ]
                    [ menuItem "Introduction" Home model.CurrentPage
-                     menuItem "Demo" Showcase model.CurrentPage
-                     menuItem "Migration" Migration model.CurrentPage ]
+                     menuItem "Demo" Showcase model.CurrentPage ]
           yield! menuFulma model.CurrentPage model.Fulma dispatch
           yield! menuFulmaExtensions model.CurrentPage model.FulmaExtensions dispatch
           yield! menuFulmaElmish model.CurrentPage dispatch ]

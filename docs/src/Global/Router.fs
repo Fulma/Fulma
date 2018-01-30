@@ -63,8 +63,8 @@ type FulmaElmishPage =
 
 type Page =
     | Home
-    | Migration
     | Showcase
+    | Changelog of string * string
     | Fulma of FulmaPage
     | FulmaExtensions of FulmaExtensionsPage
     | FulmaElmish of FulmaElmishPage
@@ -72,8 +72,8 @@ type Page =
 let private toHash page =
     match page with
     | Home -> "#home"
-    | Migration -> "#migration"
     | Showcase -> "#showcase"
+    | Changelog (project, version) -> "#" + project + "/changelog/" + version
     | Fulma pageType ->
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
@@ -131,8 +131,8 @@ let private toHash page =
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
-            map Migration (s "migration")
             map Showcase (s "showcase")
+            map (fun project version -> Changelog (project, version)) ( str </> s "changelog" </> str)
             map (Fulma FulmaPage.Introduction ) (s "fulma")
             map (Fulma FulmaPage.Versions ) (s "fulma" </> s "versions")
             // Layouts
