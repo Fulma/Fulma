@@ -71,30 +71,6 @@ module Field =
               CustomClass = None
               Props = [] }
 
-    /// Generate <div class="field"></div>
-    let field options children =
-        let parseOptions (result : Options) =
-            function
-            | HasAddons -> { result with HasAddons = Classes.HasAddons.Left |> Some }
-            | HasAddonsCentered -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.Centered |> Some }
-            | HasAddonsRight -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.Right |> Some }
-            | HasAddonsFullWidth -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.FullWidh |> Some }
-            | IsGrouped -> { result with IsGrouped = Classes.IsGrouped.Left |> Some }
-            | IsGroupedCentered -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Centered |> Some }
-            | IsGroupedRight -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Right |> Some }
-            | IsHorizontal -> { result with Layout = Classes.Layout.IsHorizontal |> Some }
-            | Option.CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Option.Props props -> { result with Props = props }
-
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        [ opts.HasAddons; opts.IsGrouped; opts.Layout; opts.CustomClass ]
-                        [ ]
-
-        div (classes::opts.Props)
-            children
-
     /// Generate <label class="field-label"></label>
     let label options children =
         let parseOptions (result : FieldLabelOptions) =
@@ -116,3 +92,31 @@ module Field =
         let opts = genericParse options
         let classes = Helpers.classes Classes.Body [opts.CustomClass] []
         div (classes::opts.Props) children
+
+    let internal fieldView element options children =
+        let parseOptions (result : Options) =
+            function
+            | HasAddons -> { result with HasAddons = Classes.HasAddons.Left |> Some }
+            | HasAddonsCentered -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.Centered |> Some }
+            | HasAddonsRight -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.Right |> Some }
+            | HasAddonsFullWidth -> { result with HasAddons = Classes.HasAddons.Left + " " + Classes.HasAddons.FullWidh |> Some }
+            | IsGrouped -> { result with IsGrouped = Classes.IsGrouped.Left |> Some }
+            | IsGroupedCentered -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Centered |> Some }
+            | IsGroupedRight -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Right |> Some }
+            | IsHorizontal -> { result with Layout = Classes.Layout.IsHorizontal |> Some }
+            | Option.CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Option.Props props -> { result with Props = props }
+
+        let opts = options |> List.fold parseOptions Options.Empty
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.HasAddons; opts.IsGrouped; opts.Layout; opts.CustomClass ]
+                        [ ]
+
+        element (classes::opts.Props)
+            children
+
+    /// Generate <div class="field"></div>
+    let div x y = fieldView div x y
+    /// Generate <p class="field"></p>
+    let p x y = fieldView p x y

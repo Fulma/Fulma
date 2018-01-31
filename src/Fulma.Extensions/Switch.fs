@@ -93,5 +93,5 @@ module Switch =
 
 
     let switch (options : Option list) children =
-        Field.field [ ]
+        Field.div [ ]
             (switchInline options children)

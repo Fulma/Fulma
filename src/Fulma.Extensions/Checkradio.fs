@@ -112,7 +112,7 @@ module Checkradio =
         genericElement "checkbox" Classes.IsCheckradio options children
 
     let checkbox (options : Option list) children =
-        Field.field [ ]
+        Field.div [ ]
             (checkboxInline options children)
 
     let radioInline (options : Option list) children =
@@ -120,5 +120,5 @@ module Checkradio =
 
 
     let radio (options : Option list) children =
-        Field.field [ ]
+        Field.div [ ]
             (radioInline options children)

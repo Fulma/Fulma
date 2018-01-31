@@ -21,7 +21,7 @@ let inlineBlockInteractive () =
                   Switch.switch [ ] [ str "Two" ]
 
                   b [] [str "Inline"]
-                  Field.field [ ]
+                  Field.div [ ]
                       [ yield! Switch.switchInline [ ] [ str "One" ]
                         yield! Switch.switchInline [ ] [ str "Two" ] ] ] ] ]
 

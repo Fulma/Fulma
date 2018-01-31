@@ -15,7 +15,7 @@ let iconInteractive () =
             [ Panel.panel [ ]
                 [ Panel.heading [ ] [ str "Repositories"]
                   Panel.block [ ]
-                    [ Control.control [ Control.HasIconLeft ]
+                    [ Control.div [ Control.HasIconLeft ]
                         [ Input.text [ Input.Size IsSmall
                                        Input.Placeholder "Search" ]
                           Icon.icon [ Icon.Size IsSmall

@@ -10,17 +10,17 @@ open Fulma.Elements.Form
 let basic () =
     form [ ]
          [ // Name field
-           Field.field [ ]
+           Field.div [ ]
                 [ Label.label [ ]
                     [ str "Name" ]
-                  Control.control [ ]
+                  Control.div [ ]
                     [ Input.text [ Input.Placeholder "Ex: Maxime" ] ] ]
            // Username field
-           Field.field [ ]
+           Field.div [ ]
                 [ Label.label [ ]
                     [ str "Username" ]
-                  Control.control [ Control.HasIconLeft
-                                    Control.HasIconRight ]
+                  Control.div [ Control.HasIconLeft
+                                Control.HasIconRight ]
                     [ Input.text [ Input.Color IsSuccess
                                    Input.DefaultValue "Maxime" ]
                       Icon.faIcon [ Icon.Size IsSmall; Icon.IsLeft ] [ Fa.icon Fa.I.User ]
@@ -28,11 +28,11 @@ let basic () =
                   Help.help [ Help.Color IsSuccess ]
                     [ str "This username is available" ] ]
            // Email field
-           Field.field [ ]
+           Field.div [ ]
                 [ Label.label [ ]
                     [ str "Email" ]
-                  Control.control [ Control.HasIconLeft
-                                    Control.HasIconRight ]
+                  Control.div [ Control.HasIconLeft
+                                Control.HasIconRight ]
                     [ Input.email [ Input.Color IsDanger
                                     Input.DefaultValue "hello@" ]
                       Icon.faIcon [ Icon.Size IsSmall; Icon.IsLeft ] [ Fa.icon Fa.I.Envelope ]
@@ -40,31 +40,31 @@ let basic () =
                   Help.help [ Help.Color IsDanger ]
                     [ str "This email is invalid" ] ]
            // Subject field
-           Field.field [ ]
+           Field.div [ ]
                 [ Label.label [ ]
                     [ str "Subject" ]
-                  Control.control [ ]
+                  Control.div [ ]
                     [ Select.select [ ]
                         [ select [ DefaultValue "2" ]
                             [ option [ Value "1" ] [ str "Value n°1" ]
                               option [ Value "2"] [ str "Value n°2" ]
                               option [ Value "3"] [ str "Value n°3" ] ] ] ] ]
            // Message field
-           Field.field [ ]
+           Field.div [ ]
                 [ Label.label [ ]
                     [ str "Message" ]
-                  Control.control [ Control.IsLoading ]
+                  Control.div [ Control.IsLoading ]
                     [ Textarea.textarea [ ]
                         [ ] ] ]
            // Terms and conditions area
-           Field.field [ ]
-                [ Control.control [ ]
+           Field.div [ ]
+                [ Control.div [ ]
                     [ Checkbox.checkbox [ ]
                         [ Checkbox.input [ ]
                           str "I agree with the terms and conditions" ] ] ]
            // Validation fields
-           Field.field [ ]
-                [ Control.control [ ]
+           Field.div [ ]
+                [ Control.div [ ]
                     [ Radio.radio [ ]
                         [ Radio.input [ Radio.Input.Name "answer" ]
                           str "Yes" ]
@@ -72,7 +72,7 @@ let basic () =
                         [ Radio.input [ Radio.Input.Name "answer" ]
                           str "No" ] ] ]
            // Attachment
-           Field.field [ ]
+           Field.div [ ]
                 [ File.file [ File.HasName ]
                     [ File.label [ ]
                         [ File.input [ ]
@@ -84,11 +84,11 @@ let basic () =
                           File.name [ ]
                             [ str "License agreement.pdf" ] ] ] ]
            // Control area (submit, cancel, etc.)
-           Field.field [ Field.IsGrouped ]
-                [ Control.control [ ]
+           Field.div [ Field.IsGrouped ]
+                [ Control.div [ ]
                     [ Button.button [ Button.Color IsPrimary ]
                         [ str "Submit" ] ]
-                  Control.control [ ]
+                  Control.div [ ]
                     [ Button.button [ Button.IsLink ]
                         [ str "Cancel" ] ] ] ]
 

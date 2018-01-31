@@ -20,7 +20,7 @@ let inlineBlockInteractive () =
                     Checkradio.checkbox [ ] [ str "Two" ]
 
                     b [] [str "Inline"]
-                    Field.field [ ]
+                    Field.div [ ]
                         [ yield! Checkradio.checkboxInline [ ] [ str "One " ]
                           yield! Checkradio.checkboxInline [ ] [ str "Two " ] ] ] ]
 
@@ -31,7 +31,7 @@ let inlineBlockInteractive () =
                     Checkradio.radio [ Checkradio.Name "block"  ] [ str "Two" ]
 
                     b [] [str "Inline"]
-                    Field.field [ ]
+                    Field.div [ ]
                         [ yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "One" ]
                           yield! Checkradio.radioInline [ Checkradio.Name "inline" ] [ str "Two " ] ] ] ] ]
 

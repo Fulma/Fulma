@@ -38,8 +38,7 @@ module Control =
               Props = []
               IsLoading = false }
 
-    /// Generate <div class="control"></div>
-    let control options children =
+    let internal controlView element options children =
         let parseOptions (result : Options) =
             function
             | HasIconRight -> { result with HasIconRight = true }
@@ -57,5 +56,10 @@ module Control =
                           Classes.HasIcon.Right, opts.HasIconRight
                           Classes.HasIcon.Left, opts.HasIconLeft ]
 
-        div (classes::opts.Props)
+        element (classes::opts.Props)
             children
+
+    /// Generate <div class="control"></div>
+    let div x y = controlView div x y
+    /// Generate <p class="control"></p>
+    let p x y = controlView p x y
