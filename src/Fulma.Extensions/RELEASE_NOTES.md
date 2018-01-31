@@ -1,3 +1,12 @@
+### 1.0.0-beta-008
+
+* Remove small helpers
+* Mutualize common properties
+* Exposed GenericOption properties
+* Remove underscore function
+* Avoid computation list usage in user code
+* Update extensions to latest npm versions
+
 ### 1.0.0-beta-007
 
 * Don't access Value member in options (update to support future version of Fable)

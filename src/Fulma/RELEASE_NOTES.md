@@ -1,3 +1,15 @@
+### 1.0.0-beta-006
+
+* Remove small helpers
+* Mutualize common properties
+* Exposed GenericOption properties
+* Remove underscore function
+* Avoid computation list usage in user code
+* Fix #73: Rework the button element
+* Fix #47: Make a review and clean up of the code before releasing Fulma
+* Fix #91: Update Bulma to 0.6.x
+* Fix #87: Unable to implement modal custom class
+
 ### 1.0.0-beta-005
 
 * Don't access Value member in options (update to support future version of Fable)
