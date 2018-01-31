@@ -1,10 +1,14 @@
-### 0.1.0-beta-004
+### 0.1.0-beta-005
 
 * Remove small helpers
 * Mutualize common properties
 * Exposed GenericOption properties
 * Remove underscore function
 * Avoid computation list usage in user code
+
+### 0.1.0-beta-004
+
+* Use Utc date as reference to support time change
 
 ### 0.1.0-beta-003
 
