@@ -1,92 +1,106 @@
 namespace Fulma.Elements
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Import.React
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
 module Heading =
-    module Types =
-        type ITitleSize =
-            | Is1
-            | Is2
-            | Is3
-            | Is4
-            | Is5
-            | Is6
 
-        let ofTitleSize titleSize =
-            match titleSize with
-            | Is1 -> Bulma.Heading.Size.Is1
-            | Is2 -> Bulma.Heading.Size.Is2
-            | Is3 -> Bulma.Heading.Size.Is3
-            | Is4 -> Bulma.Heading.Size.Is4
-            | Is5 -> Bulma.Heading.Size.Is5
-            | Is6 -> Bulma.Heading.Size.Is6
+    module Classes =
+        let [<Literal>] Title = "title"
+        let [<Literal>] Subtitle = "subtitle"
+        module Size =
+          let [<Literal>] Is1 = "is-1"
+          let [<Literal>] Is2 = "is-2"
+          let [<Literal>] Is3 = "is-3"
+          let [<Literal>] Is4 = "is-4"
+          let [<Literal>] Is5 = "is-5"
+          let [<Literal>] Is6 = "is-6"
+        module Spacing =
+            let [<Literal>] IsNormal = "is-spaced"
 
-        type Option =
-            | Size of ITitleSize
-            | IsSubtitle
-            | IsSpaced
-            | CustomClass of string
-            | Props of IHTMLProp list
+    type Option =
+        /// Add `is-1` class
+        | Is1
+        /// Add `is-2` class
+        | Is2
+        /// Add `is-3` class
+        | Is3
+        /// Add `is-4` class
+        | Is4
+        /// Add `is-5` class
+        | Is5
+        /// Add `is-6` class
+        | Is6
+        /// Add `subtitle` class
+        | IsSubtitle
+        /// Add `title` class
+        | IsSpaced
+        // Extra
+        | CustomClass of string
+        | Props of IHTMLProp list
 
-        type Options =
-            { TitleSize : string option
-              TitleType : string
-              IsSpaced : bool
-              CustomClass : string option
-              Props : IHTMLProp list }
-            static member Empty =
-                { TitleSize = None
-                  TitleType = Bulma.Heading.Title
-                  IsSpaced = false
-                  CustomClass = None
-                  Props = [] }
-
-    open Types
-
-    //Types
-    let inline isSubtitle<'T> = IsSubtitle
-    // Sizes
-    let inline is1<'T> = Size Is1
-    let inline is2<'T> = Size Is2
-    let inline is3<'T> = Size Is3
-    let inline is4<'T> = Size Is4
-    let inline is5<'T> = Size Is5
-    let inline is6<'T> = Size Is6
-    // Spacing
-    let inline isSpaced<'T> = IsSpaced
-    // Extra
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
+    type internal Options =
+        { TitleSize : string option
+          TitleType : string
+          IsSpaced : bool
+          CustomClass : string option
+          Props : IHTMLProp list }
+        static member Empty =
+            { TitleSize = None
+              TitleType = Classes.Title
+              IsSpaced = false
+              CustomClass = None
+              Props = [] }
 
     let internal title (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list)
         (children) =
         let parseOption result opt =
             match opt with
-            | Size ts -> { result with TitleSize = ofTitleSize ts |> Some }
-            | IsSubtitle -> { result with TitleType = Bulma.Heading.Subtitle }
+            // Sizes
+            | Is1 -> { result with TitleSize = Classes.Size.Is1 |> Some }
+            | Is2 -> { result with TitleSize = Classes.Size.Is2 |> Some }
+            | Is3 -> { result with TitleSize = Classes.Size.Is3 |> Some }
+            | Is4 -> { result with TitleSize = Classes.Size.Is4 |> Some }
+            | Is5 -> { result with TitleSize = Classes.Size.Is5 |> Some }
+            | Is6 -> { result with TitleSize = Classes.Size.Is6 |> Some }
+            // Styles
+            | IsSubtitle -> { result with TitleType = Classes.Subtitle }
             | IsSpaced -> { result with IsSpaced = true }
+            // Extra
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOption Options.Empty
-        let className =
-            classBaseList (Helpers.generateClassName opts.TitleType [ opts.TitleSize; opts.CustomClass ])
-                [ Bulma.Heading.Spacing.IsNormal, opts.IsSpaced ]
-        element
-            [ yield className :> IHTMLProp
-              yield! opts.Props ]
+        let classes = Helpers.classes
+                        opts.TitleType
+                        [ opts.TitleSize; opts.CustomClass ]
+                        [ Classes.Spacing.IsNormal, opts.IsSpaced ]
+
+        element (classes::opts.Props)
             children
 
     // Alias
-    let h1 (options : Option list) = title h1 (is1 :: options)
-    let h2 (options : Option list) = title h2 (is2 :: options)
-    let h3 (options : Option list) = title h3 (is3 :: options)
-    let h4 (options : Option list) = title h4 (is4 :: options)
-    let h5 (options : Option list) = title h5 (is5 :: options)
-    let h6 (options : Option list) = title h6 (is6 :: options)
+    /// Generate <h1 class="title is-1"></h1>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h1 (options : Option list) = title h1 (Is1 :: options)
+    /// Generate <h2 class="title is-2"></h2>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h2 (options : Option list) = title h2 (Is2 :: options)
+    /// Generate <h3 class="title is-3"></h3>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h3 (options : Option list) = title h3 (Is3 :: options)
+    /// Generate <h4 class="title is-4"></h4>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h4 (options : Option list) = title h4 (Is4 :: options)
+    /// Generate <h5 class="title is-5"></h5>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h5 (options : Option list) = title h5 (Is5 :: options)
+    /// Generate <h6 class="title is-6"></h6>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
+    let h6 (options : Option list) = title h6 (Is6 :: options)
+    /// Generate <p class="title"></p>
+    /// Class can be `subtitle` if you pass `Heading.IsSubtitle`
     let p opts children = title p opts children

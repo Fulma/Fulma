@@ -1,32 +1,67 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Media =
 
-    let media (options: GenericOption list) children =
-        let opts = genericParse options
-        let class' = Helpers.classes Bulma.Media.Container [opts.CustomClass] []
-        article (class'::opts.Props) children
+    module Classes =
+        let [<Literal>] Container = "media"
+        let [<Literal>] Left = "media-left"
+        let [<Literal>] Right = "media-right"
+        let [<Literal>] Content = "media-content"
+        module Size =
+            let [<Literal>] IsLarge = "is-large"
 
+    type Option =
+        | Size of ISize
+        | Props of IHTMLProp list
+        | CustomClass of string
+
+    type internal Options =
+        { Size : string option
+          Props : IHTMLProp list
+          CustomClass : string option }
+        static member Empty =
+            { Size = None
+              Props = []
+              CustomClass = None }
+
+    /// Generate <article class="media"></article>
+    let media (options: Option list) children =
+        let parseOption (result : Options) opt =
+            match opt with
+            | Size IsSmall
+            | Size IsMedium ->
+                Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for the media component")
+                result
+            | Size size -> { result with Size = ofSize size |> Some }
+            | Props props -> { result with Props = props }
+            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+
+        let opts = options |> List.fold parseOption Options.Empty
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Size ]
+                        [ ]
+        article (classes::opts.Props) children
+
+    /// Generate <div class="media-left"></div>
     let left (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Media.Left [opts.CustomClass] []
-        figure (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Left [opts.CustomClass] []
+        figure (classes::opts.Props) children
 
+    /// Generate <div class="media-right"></div>
     let right (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Media.Right [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Right [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="media-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Media.Content [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        div (classes::opts.Props) children

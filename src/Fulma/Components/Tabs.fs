@@ -1,7 +1,6 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Core
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -9,104 +8,109 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Tabs =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "tabs"
+        module State =
+            let [<Literal>] IsActive = "is-active"
+        module Alignment =
+            let [<Literal>] Center = "is-centered"
+            let [<Literal>] Right = "is-right"
+        module Style =
+            let [<Literal>] IsBoxed = "is-boxed"
+            let [<Literal>] IsToggle = "is-toggle"
+            let [<Literal>] IsFullwidth = "is-fullwidth"
+            let [<Literal>] IsToggleRounded = "is-toggle-rounded"
 
-        type IAlignment =
-            | Center
-            | Right
+    type Option =
+        /// Add `is-centered` class
+        | IsCentered
+        /// Add `is-right` class
+        | IsRight
+        | Size of ISize
+        /// Add `is-boxed` class
+        | IsBoxed
+        /// Add `is-toggle` class
+        | IsToggle
+        /// Add `is-toggle-rounded` class
+        | IsToggleRounded
+        /// Add `is-fullwidth` class
+        | IsFullwidth
+        | CustomClass of string
+        | Props of IHTMLProp list
 
-        let ofAlignment =
-            function
-            | Center -> Bulma.Tabs.Alignment.Center
-            | right -> Bulma.Tabs.Alignment.Right
+    type internal Options =
+        { Alignment : string option
+          Size : string option
+          IsBoxed : bool
+          IsToggle : bool
+          IsToggleRounded : bool
+          IsFullwidth : bool
+          CustomClass : string option
+          Props : IHTMLProp list }
+
+        static member Empty =
+            { Alignment = None
+              IsBoxed = false
+              IsToggle = false
+              IsToggleRounded = false
+              IsFullwidth = false
+              Size = None
+              CustomClass = None
+              Props = [] }
+
+    module Tab =
 
         type Option =
-            | Alignment of IAlignment
-            | Size of ISize
-            | IsBoxed
-            | IsToggle
-            | IsFullwidth
+            /// Add `is-active` class if true
+            | IsActive of bool
             | CustomClass of string
             | Props of IHTMLProp list
 
-        type Options =
-            { Alignment : string option
-              Size : string option
-              IsBoxed : bool
-              IsToggle : bool
-              IsFullwidth : bool
+        type internal Options =
+            { IsActive : bool
               CustomClass : string option
               Props : IHTMLProp list }
 
             static member Empty =
-                { Alignment = None
-                  IsBoxed = false
-                  IsToggle = false
-                  IsFullwidth = false
-                  Size = None
+                { IsActive = false
                   CustomClass = None
                   Props = [] }
 
-        module Tab =
-
-            type Option =
-                | IsActive
-                | CustomClass of string
-                | Props of IHTMLProp list
-
-            type Options =
-                { IsActive : bool
-                  CustomClass : string option
-                  Props : IHTMLProp list }
-
-                static member Empty =
-                    { IsActive = false
-                      CustomClass = None
-                      Props = [] }
-
-    open Types
-
-    let inline isSmall<'T> = Size IsSmall
-    let inline isMedium<'T> = Size IsMedium
-    let inline isLarge<'T> = Size IsLarge
-    let inline isCentered<'T> = Alignment Center
-    let inline isRight<'T> = Alignment Right
-    let inline isBoxed<'T> = IsBoxed
-    let inline isToggle<'T> = IsToggle
-    let inline isFullwidth<'T> = IsFullwidth
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
-
-    module Tab =
-        let isActive= Tab.IsActive
-        let inline customClass x = Tab.CustomClass x
-        let inline props x = Tab.Props x
-
+    /// Generate <div class="tabs"><ul></ul></div>
     let tabs (options: Option list) children =
         let parseOptions (result: Options) opt =
             match opt with
-            | Alignment alignment -> { result with Alignment = ofAlignment alignment |> Some }
+            | IsCentered -> { result with Alignment = Classes.Alignment.Center |> Some }
+            | IsRight -> { result with Alignment = Classes.Alignment.Right |> Some }
             | IsBoxed -> { result with IsBoxed = true }
             | IsToggle -> { result with IsToggle = true }
+            | IsToggleRounded -> { result with IsToggleRounded = true }
             | IsFullwidth -> { result with IsFullwidth = true }
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        div [ yield Helpers.classes Bulma.Tabs.Container [opts.Alignment; opts.Size] [Bulma.Tabs.Style.IsBoxed, opts.IsBoxed; Bulma.Tabs.Style.IsFullwidth, opts.IsFullwidth; Bulma.Tabs.Style.IsToggle, opts.IsToggle]
-              yield! opts.Props ]
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Alignment; opts.Size ]
+                        [ Classes.Style.IsBoxed, opts.IsBoxed
+                          Classes.Style.IsFullwidth, opts.IsFullwidth
+                          Classes.Style.IsToggle, opts.IsToggle
+                          Classes.Style.IsToggleRounded, opts.IsToggleRounded ]
+        div (classes::opts.Props)
             [ ul [ ]
                  children ]
 
+    /// Generate <li></li>
     let tab (options: Tab.Option list) children =
         let parseOptions (result: Tab.Options) opt =
             match opt with
-            | Tab.IsActive -> { result with IsActive = true }
+            | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Tab.Props props -> { result with Props = props }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
-        li [ yield (classList [ Bulma.Tabs.State.IsActive, opts.IsActive ]) :> IHTMLProp
-             yield! opts.Props ]
+        let classes = classList [ Classes.State.IsActive, opts.IsActive ] :> IHTMLProp
+        li (classes::opts.Props)
             children

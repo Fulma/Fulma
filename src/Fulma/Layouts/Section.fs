@@ -1,7 +1,6 @@
 namespace Fulma.Layouts
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
@@ -11,47 +10,40 @@ open Fable.Import
 [<RequireQualifiedAccess>]
 module Section =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "section"
+        module Spacing =
+            let [<Literal>] IsMedium = "is-medium"
+            let [<Literal>] IsLarge = "is-large"
 
-        type ISpacing =
-            | Medium
-            | Large
+    type Option =
+        | Props of IHTMLProp list
+        | CustomClass of string
+        /// Add `is-medium` class
+        | IsMedium
+        /// Add `is-large` class
+        | IsLarge
 
-        type Option =
-            | Props of IHTMLProp list
-            | CustomClass of string
-            | Spacing of ISpacing
+    type internal Options =
+        { Props : IHTMLProp list
+          CustomClass : string option
+          Spacing : string option }
 
-        let ofSpacing =
-            function
-            | Medium -> Bulma.Section.Spacing.IsMedium
-            | Large -> Bulma.Section.Spacing.IsLarge
+        static member Empty =
+            { Props = []
+              CustomClass = None
+              Spacing = None }
 
-        type Options =
-            { Props : IHTMLProp list
-              CustomClass : string option
-              Spacing : string option }
-
-            static member Empty =
-                { Props = []
-                  CustomClass = None
-                  Spacing = None }
-
-    open Types
-
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
-    let inline isMedium<'T> = IsMedium
-    let inline isLarge<'T> = IsLarge
-
+    /// Generate <section class="section"></section>
     let section (options: Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with
             | Props props -> { result with Props = props }
-            | Spacing spacing -> { result with Spacing = ofSpacing spacing |> Some }
+            | IsMedium -> { result with Spacing = Classes.Spacing.IsMedium |> Some }
+            | IsLarge -> { result with Spacing = Classes.Spacing.IsLarge |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let class' = Helpers.classes Bulma.Section.Container [opts.CustomClass; opts.Spacing] []
+        let classes = Helpers.classes Classes.Container [opts.CustomClass; opts.Spacing] []
 
-        section (class'::opts.Props) children
+        section (classes::opts.Props) children

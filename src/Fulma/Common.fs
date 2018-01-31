@@ -4,13 +4,21 @@ open Fulma.BulmaClasses
 open Fable.Core
 open Fable.Helpers.React.Props
 
-module Common =
-    type ISize =
-        | IsSmall
-        | IsMedium
-        | IsLarge
+[<AutoOpen>]
+module Color =
 
-    type ILevelAndColor =
+    module Classes =
+        let [<Literal>] IsBlack = "is-black"
+        let [<Literal>] IsDark = "is-dark"
+        let [<Literal>] IsLight = "is-light"
+        let [<Literal>] IsWhite = "is-white"
+        let [<Literal>] IsPrimary = "is-primary"
+        let [<Literal>] IsInfo = "is-info"
+        let [<Literal>] IsSuccess = "is-success"
+        let [<Literal>] IsWarning = "is-warning"
+        let [<Literal>] IsDanger = "is-danger"
+
+    type IColor =
         | IsBlack
         | IsDark
         | IsLight
@@ -21,24 +29,39 @@ module Common =
         | IsWarning
         | IsDanger
 
-    let ofLevelAndColor level =
+    let ofColor level =
         match level with
-        | IsBlack -> Bulma.Modifiers.Color.IsBlack
-        | IsDark -> Bulma.Modifiers.Color.IsDark
-        | IsLight -> Bulma.Modifiers.Color.IsLight
-        | IsWhite -> Bulma.Modifiers.Color.IsWhite
-        | IsPrimary -> Bulma.Modifiers.Color.IsPrimary
-        | IsInfo -> Bulma.Modifiers.Color.IsInfo
-        | IsSuccess -> Bulma.Modifiers.Color.IsSuccess
-        | IsWarning -> Bulma.Modifiers.Color.IsWarning
-        | IsDanger -> Bulma.Modifiers.Color.IsDanger
+        | IsBlack -> Classes.IsBlack
+        | IsDark -> Classes.IsDark
+        | IsLight -> Classes.IsLight
+        | IsWhite -> Classes.IsWhite
+        | IsPrimary -> Classes.IsPrimary
+        | IsInfo -> Classes.IsInfo
+        | IsSuccess -> Classes.IsSuccess
+        | IsWarning -> Classes.IsWarning
+        | IsDanger -> Classes.IsDanger
+
+[<AutoOpen>]
+module Size =
+
+    module Classes =
+        let [<Literal>] IsSmall = "is-small"
+        let [<Literal>] IsMedium = "is-medium"
+        let [<Literal>] IsLarge = "is-large"
+
+    type ISize =
+        | IsSmall
+        | IsMedium
+        | IsLarge
 
     let ofSize size =
         match size with
-        | IsSmall -> Bulma.Modifiers.Size.IsSmall
-        | IsMedium -> Bulma.Modifiers.Size.IsMedium
-        | IsLarge -> Bulma.Modifiers.Size.IsLarge
+        | IsSmall -> Classes.IsSmall
+        | IsMedium -> Classes.IsMedium
+        | IsLarge -> Classes.IsLarge
 
+[<AutoOpen>]
+module Common =
     type GenericOption =
         | CustomClass of string
         | Props of IHTMLProp list
@@ -59,12 +82,7 @@ module Common =
 
         options |> List.fold parseOptions GenericOptions.Empty
 
-
-
     module Helpers =
-        let inline generateClassName baseClass (values : string option list) =
-            baseClass :: (values |> List.choose id)
-            |> String.concat " "
 
         let classes std (options : string option list) (booleans: (string * bool) list) =
             let std = (std, options) ||> List.fold (fun complete opt ->

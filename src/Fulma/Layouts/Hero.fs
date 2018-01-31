@@ -1,131 +1,106 @@
 namespace Fulma.Layouts
 
+open Fulma
 open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Hero =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "hero"
+        let [<Literal>] Head = "hero-head"
+        let [<Literal>] Body = "hero-body"
+        let [<Literal>] Foot = "hero-foot"
+        module Video =
+            let [<Literal>] Container = "hero-video"
+            let [<Literal>] IsTransparent = "is-transparent"
+        module Buttons =
+            let [<Literal>] Container = "hero-buttons"
+        module Style =
+            let [<Literal>] IsBold = "is-bold"
+        module Size =
+            let [<Literal>] IsMedium = "is-medium"
+            let [<Literal>] IsLarge = "is-large"
+            let [<Literal>] IsHalfHeight = "is-halfheight"
+            let [<Literal>] IsFullHeight = "is-fullheight"
 
-        type ISize =
-            | IsMedium
-            | IsLarge
-            | IsHalfHeight
-            | IsFullHeight
+    type Option =
+        /// Add `is-bold` class
+        | IsBold
+        /// Add `is-medium` class
+        | IsMedium
+        /// Add `is-large` class
+        | IsLarge
+        /// Add `is-halfheight` class
+        | IsHalfHeight
+        /// Add `is-fullheight` class
+        | IsFullHeight
+        | Color of IColor
+        | CustomClass of string
+        | Props of IHTMLProp list
 
-        type Option =
-            | Props of IHTMLProp list
-            | IsBold
-            | Size of ISize
-            | Color of ILevelAndColor
-            | CustomClass of string
+    type internal Options =
+        { Props : IHTMLProp list
+          IsBold : bool
+          Size : string option
+          Color : string option
+          CustomClass : string option }
 
-        let ofSize =
-            function
-            | IsMedium -> Bulma.Hero.Size.IsMedium
-            | IsLarge -> Bulma.Hero.Size.IsLarge
-            | IsHalfHeight -> Bulma.Hero.Size.IsHalfHeight
-            | IsFullHeight -> Bulma.Hero.Size.IsFullHeight
+        static member Empty =
+            { Props = []
+              IsBold = false
+              Size = None
+              Color = None
+              CustomClass = None }
 
-        type Options =
-            { Props : IHTMLProp list
-              IsBold : bool
-              Size : string option
-              Color : string option
-              CustomClass : string option }
-
-            static member Empty =
-                { Props = []
-                  IsBold = false
-                  Size = None
-                  Color = None
-                  CustomClass = None }
-
-    open Types
-
-    // Sizes
-    let inline isMedium<'T> = Size IsMedium
-    let inline isLarge<'T> = Size IsLarge
-    let inline isHalfHeight<'T> = Size IsHalfHeight
-    let inline isFullHeight<'T> = Size IsFullHeight
-    // Style
-    let inline isBold<'T> = IsBold
-    // Colors
-    let inline isBlack<'T> = Color IsBlack
-    let inline isDark<'T> = Color IsDark
-    let inline isLight<'T> = Color IsLight
-    let inline isWhite<'T> = Color IsWhite
-    let inline isPrimary<'T> = Color IsPrimary
-    let inline isInfo<'T> = Color IsInfo
-    let inline isSuccess<'T> = Color IsSuccess
-    let inline isWarning<'T> = Color IsWarning
-    let inline isDanger<'T> = Color IsDanger
-    // Extra
-    let inline props x = Props x
-    let customClass cls = CustomClass cls
-
+    /// Generate <div class="footer"></div>
     let hero (options : Option list) children =
         let parseOptions (result: Options ) opt =
             match opt with
             | Props props -> { result with Props = props }
-            | Size size -> { result with Size = ofSize size |> Some }
-            | Color color -> { result with Color = ofLevelAndColor color |> Some }
+            | IsMedium -> { result with Size = Classes.Size.IsMedium |> Some }
+            | IsLarge -> { result with Size = Classes.Size.IsLarge |> Some }
+            | IsHalfHeight -> { result with Size = Classes.Size.IsHalfHeight |> Some }
+            | IsFullHeight -> { result with Size = Classes.Size.IsFullHeight |> Some }
+            | Color color -> { result with Color = ofColor color |> Some }
             | IsBold -> { result with IsBold = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let class' = Helpers.classes Bulma.Hero.Container
+        let classes = Helpers.classes Classes.Container
                         [opts.Color; opts.Size; opts.CustomClass]
-                        [Bulma.Hero.Style.IsBold, opts.IsBold]
-        section (class'::opts.Props) children
+                        [Classes.Style.IsBold, opts.IsBold]
+        section (classes::opts.Props) children
 
-    module Head =
-        let inline props x = GenericOption.Props x
-        let customClass cls = GenericOption.CustomClass cls
-
-    module Body =
-        let inline props x = GenericOption.Props x
-        let customClass cls = GenericOption.CustomClass cls
-
-    module Foot =
-        let inline props x = GenericOption.Props x
-        let customClass cls = GenericOption.CustomClass cls
-
-    module Video =
-        let inline props x = GenericOption.Props x
-        let customClass cls = GenericOption.CustomClass cls
-
-    module Buttons =
-        let inline props x = GenericOption.Props x
-        let customClass cls = GenericOption.CustomClass cls
-
+    /// Generate <div class="hero-head"></div>
     let head (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Hero.Head [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Head [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="hero-body"></div>
     let body (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Hero.Body [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Body [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="hero-foot"></div>
     let foot (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Hero.Foot [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Foot [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="hero-video"></div>
     let video (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Hero.Video.Container [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Video.Container [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="hero-buttons"></div>
     let buttons (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Hero.Buttons.Container [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Buttons.Container [opts.CustomClass] []
+        div (classes::opts.Props) children

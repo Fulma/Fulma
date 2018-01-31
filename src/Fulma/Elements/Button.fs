@@ -1,234 +1,221 @@
 namespace Fulma.Elements
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
+open Fulma
 open Fable.Import.React
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
 module Button =
-    module Types =
-        type ISize =
-            | IsSmall
-            | IsMedium
-            | IsLarge
-            | IsFullWidth
-            | Nothing
 
-        type IState =
-            | IsHovered
-            | IsFocused
-            | IsActive
-            | IsLoading
-            | IsStatic
-            | Nothing
+    module Classes =
+        let [<Literal>] Container = "button"
+        module State =
+              let [<Literal>] IsHovered = "is-hovered"
+              let [<Literal>] IsFocused = "is-focus"
+              let [<Literal>] IsActive = "is-active"
+              let [<Literal>] IsLoading = "is-loading"
+              let [<Literal>] IsStatic = "is-static"
+        module Styles =
+            let [<Literal>] IsFullwidth = "is-fullwidth"
+            let [<Literal>] IsLink = "is-link"
+            let [<Literal>] IsOutlined = "is-outlined"
+            let [<Literal>] IsInverted = "is-inverted"
+            let [<Literal>] IsText = "is-text"
+            let [<Literal>] IsRounded = "is-rounded"
+        module List =
+            let [<Literal>] Container = "buttons"
+            let [<Literal>] HasAddons = "has-addons"
+            let [<Literal>] IsCentered = "is-centered"
+            let [<Literal>] IsRight = "is-right"
 
-        type IAnchorOption =
-            interface end
+    type Option =
+        // Colors
+        | Color of IColor
+        | Size of ISize
+        /// Add `is-fullwidth` class
+        | IsFullwidth
+        /// Add `is-link` class
+        | IsLink
+        /// Add `is-outlined` class
+        | IsOutlined
+        /// Add `is-inverted` class
+        | IsInverted
+        /// Add `is-text` class
+        | IsText
+        /// Add `is-rouned` class
+        | IsRounded
+        /// Add `is-hovered` class if true
+        | IsHovered of bool
+        /// Add `is-focused` class if true
+        | IsFocused of bool
+        /// Add `is-active` class if true
+        | IsActive of bool
+        /// Add `is-loading` class if true
+        | IsLoading of bool
+        /// Add `is-static` class if true
+        | IsStatic of bool
+        /// Add `disabled` HTMLAttr if true
+        | Disabled of bool
+        | Props of IHTMLProp list
+        | OnClick of (MouseEvent -> unit)
+        | CustomClass of string
 
-        type IBtnOption =
-            interface end
+    type internal Options =
+        { Level : string option
+          Size : string option
+          IsOutlined : bool
+          IsInverted : bool
+          IsDisabled : bool
+          IsHovered : bool
+          IsFocused : bool
+          IsText : bool
+          IsRounded : bool
+          IsActive : bool
+          IsLoading : bool
+          IsStatic : bool
+          Props : IHTMLProp list
+          CustomClass : string option
+          OnClick : (MouseEvent -> unit) option }
+        static member Empty =
+            { Level = None
+              Size = None
+              IsOutlined = false
+              IsInverted = false
+              IsDisabled = false
+              IsText = false
+              IsRounded = false
+              IsActive = false
+              IsLoading = false
+              IsStatic = false
+              IsHovered = false
+              IsFocused = false
+              Props = []
+              CustomClass = None
+              OnClick = None }
 
-        type IInputOption =
-            interface end
-
-        type Option =
-            | Level of ILevelAndColor
-            | Size of ISize
-            | IsOutlined
-            | IsInverted
-            | IsLink
-            | IsDisabled
-            | State of IState
-            | Props of IHTMLProp list
-            | OnClick of (MouseEvent -> unit)
-            | CustomClass of string
-            interface IAnchorOption
-            interface IBtnOption
-            interface IInputOption
-
-        type AnchorOnlyOption =
-            | Href of string
-            interface IAnchorOption
-
-        type InputOnlyOption =
-            | Type of string
-            | Value of string
-            interface IInputOption
-
-        let ofSize size =
-            match size with
-            | IsSmall -> Bulma.Button.Size.IsSmall
-            | IsMedium -> Bulma.Button.Size.IsMedium
-            | IsLarge -> Bulma.Button.Size.IsLarge
-            | IsFullWidth -> Bulma.Button.Size.IsFullwidth
-            | ISize.Nothing -> ""
-
-        let ofStyles style =
-            match style with
-            | IsOutlined -> Bulma.Button.Styles.IsOutlined
-            | IsInverted -> Bulma.Button.Styles.IsInverted
-            | IsLink -> Bulma.Button.Styles.IsLink
-            | value -> string value + " isn't a valid style value"
-
-        let ofState state =
-            match state with
-            | IState.Nothing -> ""
-            | IsHovered -> Bulma.Button.State.IsHovered
-            | IsFocused -> Bulma.Button.State.IsFocused
-            | IsActive -> Bulma.Button.State.IsActive
-            | IsLoading -> Bulma.Button.State.IsLoading
-            | IsStatic -> Bulma.Button.State.IsStatic
-
-        type Options =
-            { Level : string option
-              Size : string option
-              IsOutlined : bool
-              IsInverted : bool
-              IsLink : bool
-              IsDisabled : bool
-              State : string option
-              Props : IHTMLProp list
-              CustomClass : string option
-              OnClick : (MouseEvent -> unit) option }
-            static member Empty =
-                { Level = None
-                  Size = None
-                  IsOutlined = false
-                  IsInverted = false
-                  IsLink = false
-                  IsDisabled = false
-                  State = None
-                  Props = []
-                  CustomClass = None
-                  OnClick = None }
-
-        type AnchorOptions =
-            { GenericOption : Options
-              Href : string option }
-
-            static member Empty =
-                { GenericOption = Options.Empty
-                  Href = None }
-
-        type InputOptions =
-            { GenericOption : Options
-              Value : string option
-              Type : string option }
-
-            static member Empty =
-                { GenericOption = Options.Empty
-                  Type = None
-                  Value = None }
-
-
-        let parseGenericOptions (result: Options) opt =
+    let internal btnView element (options : Option list) children =
+        let parseOption (result : Options) opt =
             match opt with
-            | Option.Level level -> { result with Level = ofLevelAndColor level |> Some }
+            | Color color -> { result with Level = ofColor color |> Some }
+            // Sizes
             | Size size -> { result with Size = ofSize size |> Some }
+            // Styles
+            | IsFullwidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
+            | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }
-            | IsLink -> { result with IsLink = true }
-            | State state -> { result with State = ofState state |> Some }
+            | IsText -> { result with IsText = true }
+            | IsRounded -> { result with IsRounded = true }
+            // States
+            | IsHovered state -> { result with IsHovered = state }
+            | IsFocused state -> { result with IsFocused = state }
+            | IsActive state -> { result with IsActive = state }
+            | IsLoading state -> { result with IsLoading = state }
+            | IsStatic state -> { result with IsStatic = state }
+            | Disabled isDisabled -> { result with IsDisabled = isDisabled }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
-            | IsDisabled -> { result with IsDisabled = true }
 
-    open Types
+        let opts = options |> List.fold parseOption Options.Empty
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ opts.Level
+                          opts.Size
+                          opts.CustomClass ]
+                        [ Classes.Styles.IsOutlined, opts.IsOutlined
+                          Classes.Styles.IsInverted, opts.IsInverted
+                          Classes.Styles.IsText, opts.IsText
+                          Classes.Styles.IsRounded, opts.IsRounded
+                          Classes.State.IsHovered, opts.IsHovered
+                          Classes.State.IsFocused, opts.IsFocused
+                          Classes.State.IsActive, opts.IsActive
+                          Classes.State.IsLoading, opts.IsLoading
+                          Classes.State.IsStatic, opts.IsStatic ]
 
-    // Sizes
-    let inline isSmall<'T> = Size IsSmall
-    let inline isMedium<'T> = Size IsMedium
-    let inline isLarge<'T> = Size IsLarge
-    let inline isFullWidth<'T> = Size IsFullWidth
-    // States
-    let inline isHovered<'T> = State IsHovered
-    let inline isFocused<'T> = State IsFocused
-    let inline isActive<'T> = State IsActive
-    let inline isLoading<'T> = State IsLoading
-    let inline isStatic<'T> = State IsStatic
-    let inline isDisabled<'T> = IsDisabled
-    // Styles
-    let inline isOutlined<'T> = IsOutlined
-    let inline isInverted<'T> = IsInverted
-    let inline isLink<'T> = IsLink
-    // Levels and colors
-    let inline isBlack<'T> = Level IsBlack
-    let inline isDark<'T> = Level IsDark
-    let inline isLight<'T> = Level IsLight
-    let inline isWhite<'T> = Level IsWhite
-    let inline isPrimary<'T> = Level IsPrimary
-    let inline isInfo<'T> = Level IsInfo
-    let inline isSuccess<'T> = Level IsSuccess
-    let inline isWarning<'T> = Level IsWarning
-    let inline isDanger<'T> = Level IsDanger
-    // Extra
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
-    let inline onClick cb = OnClick cb
-
-    // Anchor only
-    let inline href x = AnchorOnlyOption.Href x
-
-    // Input only
-    let inline typeIsSubmit<'T> = InputOnlyOption.Type "submit"
-    let inline typeIsReset<'T> = InputOnlyOption.Type "reset"
-    let inline value x = InputOnlyOption.Value x
-
-    let genericPropsGenerator opts =
-        [ yield Helpers.classes Bulma.Button.Container [opts.Level; opts.Size; opts.State; opts.CustomClass] [Bulma.Button.Styles.IsOutlined, opts.IsOutlined; Bulma.Button.Styles.IsInverted, opts.IsInverted; Bulma.Button.Styles.IsLink, opts.IsLink]
-          if opts.IsDisabled then
-            yield Disabled true :> IHTMLProp
-          if Option.isSome opts.OnClick then
-            yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-          yield! opts.Props ]
-
-    let button_a (options : 'T list when 'T :> IAnchorOption) children =
-        let parseOptions (result: AnchorOptions) (opt : IAnchorOption) =
-            match opt with
-            | :? Option as genericOption -> { result with GenericOption = parseGenericOptions result.GenericOption genericOption }
-            | :? AnchorOnlyOption as anchorOption ->
-                match anchorOption with
-                | AnchorOnlyOption.Href href -> { result with Href = Some href }
-            | invalidType ->
-                Fable.Import.JS.console.warn ("Invalid option type given for the anchor button: " + string invalidType)
-                result
-
-        let anchorOpts = options |> List.fold parseOptions AnchorOptions.Empty
-
-        a
-            [ if Option.isSome anchorOpts.Href then
-                yield HTMLAttr.Href anchorOpts.Href.Value :> IHTMLProp
-              yield! genericPropsGenerator anchorOpts.GenericOption ]
+        element
+            [ yield classes
+              yield Fable.Helpers.React.Props.Disabled opts.IsDisabled :> IHTMLProp
+              if Option.isSome opts.OnClick then
+                yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
+              yield! opts.Props ]
             children
 
-    let button_btn (options : Option list) children =
-        let opts = options |> List.fold parseGenericOptions Options.Empty
+    /// Generate <button class="button"></button>
+    let button options children = btnView button options children
+    /// Generate <span class="button"></span>
+    let span options children = btnView span options children
+    /// Generate <a class="button"></a>
+    let a options children = btnView a options children
 
-        button
-            (genericPropsGenerator opts)
-            children
+    module Input =
+        let internal btnInput typ options =
+            let hasProps =
+                options
+                |> List.exists (fun opts ->
+                    match opts with
+                    | Props _ -> true
+                    | _ -> false
+                )
 
-    let button_input (options : 'T list when 'T :> IInputOption) =
-        let parseOptions (result: InputOptions) (opt : IInputOption) =
+            if hasProps then
+                let newOptions =
+                    options
+                    |> List.map (fun opts ->
+                        match opts with
+                        | Props props -> Props ((Type typ :> IHTMLProp) ::props)
+                        | forward -> forward
+                    )
+                btnView (fun options _ -> input options) newOptions [ ]
+
+            else
+                btnView (fun options _ -> input options) ((Props [ Type typ ])::options) [ ]
+
+        /// Generate <input type="reset" class="button" />
+        let reset options = btnInput "reset" options
+        /// Generate <input type="submit" class="button" />
+        let submit options = btnInput "submit" options
+
+    module List =
+
+        type Option =
+            | HasAddons
+            | IsCentered
+            | IsRight
+            | Props of IHTMLProp list
+            | CustomClass of string
+
+        type internal Options =
+            { HasAddons : bool
+              IsCentered : bool
+              IsRight : bool
+              Props : IHTMLProp list
+              CustomClass : string option }
+
+            static member Empty =
+                { HasAddons = false
+                  IsCentered = false
+                  IsRight = false
+                  Props = [ ]
+                  CustomClass = None }
+
+    /// Generate <div class="buttons"></div>
+    let list (options : List.Option list) children =
+        let parseOption (result : List.Options) opt =
             match opt with
-            | :? Option as genericOption -> { result with GenericOption = parseGenericOptions result.GenericOption genericOption }
-            | :? InputOnlyOption as anchorOption ->
-                match anchorOption with
-                | InputOnlyOption.Type typeValue -> { result with Type = Some typeValue }
-                | InputOnlyOption.Value value -> { result with Value = Some value }
-            | invalidType ->
-                Fable.Import.JS.console.warn ("Invalid option type given for the input button: " + string invalidType)
-                result
+            | List.HasAddons -> { result with HasAddons = true }
+            | List.IsCentered -> { result with IsCentered = true }
+            | List.IsRight -> { result with IsRight = true }
+            | List.Props props -> { result with Props = props }
+            | List.CustomClass customClass -> { result with CustomClass = Some customClass }
 
-        let inputOpts = options |> List.fold parseOptions InputOptions.Empty
+        let opts = options |> List.fold parseOption List.Options.Empty
+        let classes = Helpers.classes
+                        Classes.List.Container
+                        [ opts.CustomClass ]
+                        [ Classes.List.HasAddons, opts.HasAddons
+                          Classes.List.IsCentered, opts.IsCentered
+                          Classes.List.IsRight, opts.IsRight ]
 
-        input
-            [ if Option.isSome inputOpts.Type then
-                yield HTMLAttr.Type inputOpts.Type.Value :> IHTMLProp
-              if Option.isSome inputOpts.Value then
-                yield HTMLAttr.Value inputOpts.Value.Value :> IHTMLProp
-              yield! genericPropsGenerator inputOpts.GenericOption ]
+        div (classes::opts.Props) children

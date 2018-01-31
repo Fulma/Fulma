@@ -1,8 +1,6 @@
 namespace Fulma.Extensions
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
@@ -13,34 +11,25 @@ module Divider =
         let [<Literal>] Divider = "is-divider"
         let [<Literal>] IsVertical = "is-divider-vertical"
 
+    type Option =
+        | IsVertical
+        | Label of string
+        | Props of IHTMLProp list
+        | CustomClass of string
 
-    module Types =
-        type Option =
-            | IsVertical
-            | Label of string
-            | Props of IHTMLProp list
-            | CustomClass of string
+    type internal Options =
+        { IsVertical: bool
+          Label : string option
+          Props : IHTMLProp list
+          CustomClass : string option }
 
-        type Options =
-            { IsVertical: bool
-              Label : string option
-              Props : IHTMLProp list
-              CustomClass : string option }
+        static member Empty =
+            { IsVertical = false
+              Label = None
+              Props = []
+              CustomClass = None }
 
-            static member Empty =
-                { IsVertical = false
-                  Label = None
-                  Props = []
-                  CustomClass = None }
-
-    open Types
-
-    let inline IsVertical<'T> = IsVertical
-    let inline label s = Label s
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
-
-    let divider (options : Option list) children =
+    let divider (options : Option list) =
 
         let parseOptions (result: Options) opt =
             match opt with
@@ -51,9 +40,9 @@ module Divider =
 
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let class' = Helpers.classes "" [opts.CustomClass] [Classes.Divider, not opts.IsVertical; Classes.IsVertical, opts.IsVertical]
+        let classes = Helpers.classes "" [opts.CustomClass] [Classes.Divider, not opts.IsVertical; Classes.IsVertical, opts.IsVertical]
         let attrs =
             match opts.Label with
-            | Some label -> class'::(Data("content", label))::opts.Props
-            | None -> class'::opts.Props
+            | Some label -> classes::(Data("content", label))::opts.Props
+            | None -> classes::opts.Props
         div attrs [ ]

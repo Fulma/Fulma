@@ -1,158 +1,143 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Import.React
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Modal =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "modal"
+        let [<Literal>] Background = "modal-background"
+        let [<Literal>] Content = "modal-content"
+        module State =
+            let [<Literal>] IsActive = "is-active"
 
+        module Close =
+            let [<Literal>] Container = "modal-close"
+
+        module Card =
+            let [<Literal>] Container = "modal-card"
+            let [<Literal>] Head = "modal-card-head"
+            let [<Literal>] Foot = "modal-card-foot"
+            let [<Literal>] Title = "modal-card-title"
+            let [<Literal>] Body = "modal-card-body"
+
+    type Option =
+        | Props of IHTMLProp list
+        /// Add `is-active` class if true
+        | IsActive of bool
+        | CustomClass of string
+
+    type internal Options =
+        { Props : IHTMLProp list
+          IsActive : bool
+          CustomClass : string option }
+
+        static member Empty =
+            { Props = []
+              IsActive = false
+              CustomClass = None }
+
+    module Close =
         type Option =
             | Props of IHTMLProp list
-            | IsActive
+            | Size of ISize
             | CustomClass of string
+            | OnClick of (MouseEvent -> unit)
 
-        type Options =
+        type internal Options =
             { Props : IHTMLProp list
-              IsActive : bool
-              CustomClass : string option }
+              Size : string option
+              CustomClass : string option
+              OnClick : (MouseEvent -> unit) option }
 
             static member Empty =
                 { Props = []
-                  IsActive = false
-                  CustomClass = None }
+                  Size = None
+                  CustomClass = None
+                  OnClick = None }
 
-        module Close =
-            type Option =
-                | Props of IHTMLProp list
-                | Size of ISize
-                | CustomClass of string
-                | OnClick of (MouseEvent -> unit)
-
-            type Options =
-                { Props : IHTMLProp list
-                  Size : string option
-                  CustomClass : string option
-                  OnClick : (MouseEvent -> unit) option }
-
-                static member Empty =
-                    { Props = []
-                      Size = None
-                      CustomClass = None
-                      OnClick = None }
-
-    open Types
-
-    let inline isActive<'T> = IsActive
-    let inline props x = Props x
-    let inline customClass x = CustomClass x
-
-    module Background =
-        let inline props x = GenericOption.Props x
-        let inline customClass x = GenericOption.CustomClass x
-
-    module Content =
-        let inline props x = GenericOption.Props x
-        let inline customClass x = GenericOption.CustomClass x
-
-    module Close =
-        let inline isSmall<'T> = Close.Size IsSmall
-        let inline isMedium<'T> = Close.Size IsMedium
-        let inline isLarge<'T> = Close.Size IsLarge
-        let inline onClick x = Close.OnClick x
-        let inline props x = Close.Props x
-        let inline customClass x = Close.CustomClass x
-
+    /// Generate <div class="modal"></div>
     let modal options children =
         let parseOptions (result: Options ) opt =
             match opt with
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | IsActive -> { result with IsActive = true }
+            | IsActive state -> { result with IsActive = state }
 
         let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield (classBaseList Bulma.Modal.Container
-                                   [ Bulma.Modal.State.IsActive, opts.IsActive ] ) :> IHTMLProp
-              yield! opts.Props ]
+        let classes = Helpers.classes
+                        Classes.Container
+                        [ ]
+                        [ Classes.State.IsActive, opts.IsActive ]
+        div (classes::opts.Props)
             children
 
+    /// Generate <button class="modal-close"></button>
     let close (options : Close.Option list) children =
         let parseOptions (result: Close.Options ) opt =
             match opt with
             | Close.Props props -> { result with Props = props }
             | Close.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Close.Size IsSmall
+            | Close.Size IsMedium ->
+                Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for 'modal close'")
+                result
             | Close.Size size -> { result with Size = ofSize size |> Some }
             | Close.OnClick cb -> { result with OnClick = Some cb }
 
         let opts = options |> List.fold parseOptions Close.Options.Empty
-        let class' = Helpers.classes Bulma.Modal.Close.Container [opts.Size] []
+        let classes = Helpers.classes Classes.Close.Container [opts.Size] []
         let opts =
             match opts.OnClick with
-            | Some v -> class'::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
-            | None -> class'::opts.Props
+            | Some v -> classes::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
+            | None -> classes::opts.Props
 
         button opts children
 
+    /// Generate <div class="modal-background"></div>
     let background (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Modal.Background [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Background [opts.CustomClass] []
+        div (classes::opts.Props) children
 
+    /// Generate <div class="modal-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let class' = Helpers.classes Bulma.Modal.Content [opts.CustomClass] []
-        div (class'::opts.Props) children
+        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        div (classes::opts.Props) children
 
     module Card =
 
-        let inline props x = GenericOption.Props x
-        let inline customClass x = GenericOption.CustomClass x
-
-        module Head =
-            let inline props x = GenericOption.Props x
-            let inline customClass x = GenericOption.CustomClass x
-
-        module Foot =
-            let inline props x = GenericOption.Props x
-            let inline customClass x = GenericOption.CustomClass x
-
-        module Title =
-            let inline props x = GenericOption.Props x
-            let inline customClass x = GenericOption.CustomClass x
-
-        module Body =
-            let inline props x = GenericOption.Props x
-            let inline customClass x = GenericOption.CustomClass x
-
+        /// Generate <div class="modal-card"></div>
         let card (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes Bulma.Modal.Card.Container [opts.CustomClass] []
-            div (class'::opts.Props) children
+            let classes = Helpers.classes Classes.Card.Container [opts.CustomClass] []
+            div (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-head"></div>
         let head (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes Bulma.Modal.Card.Head [opts.CustomClass] []
-            header (class'::opts.Props) children
+            let classes = Helpers.classes Classes.Card.Head [opts.CustomClass] []
+            header (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-foot"></div>
         let foot (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes Bulma.Modal.Card.Foot [opts.CustomClass] []
-            footer (class'::opts.Props) children
+            let classes = Helpers.classes Classes.Card.Foot [opts.CustomClass] []
+            footer (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-title"></div>
         let title (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes Bulma.Modal.Card.Title [opts.CustomClass] []
-            div (class'::opts.Props) children
+            let classes = Helpers.classes Classes.Card.Title [opts.CustomClass] []
+            div (classes::opts.Props) children
 
+        /// Generate <div class="modal-card-body"></div>
         let body (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes Bulma.Modal.Card.Body [opts.CustomClass] []
-            section (class'::opts.Props) children
+            let classes = Helpers.classes Classes.Card.Body [opts.CustomClass] []
+            section (classes::opts.Props) children

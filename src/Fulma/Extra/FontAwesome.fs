@@ -1,11 +1,9 @@
 namespace Fulma.Extra
 
 open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma.Elements
-open Fulma.Common
+open Fulma
 
 module FontAwesome =
 
@@ -1032,7 +1030,7 @@ module FontAwesome =
             let faLg      = StackParentOption.ParentSize FaLarge
     module Icon =
         open Fa.Types
-        let internal stackChild (faOptions: StackChildOption list ) =
+        let stackChild (faOptions: StackChildOption list ) =
             let parseOptions (result: StackChildOptions) (option: StackChildOption) =
                     match option with
                     | ChildSize s               -> { result with Size   = ofChildSize  s       |> Some }
@@ -1042,7 +1040,7 @@ module FontAwesome =
             let opts = faOptions |> List.fold parseOptions StackChildOptions.Empty
             i [Helpers.classes "fa" [opts.Icon; opts.Size; opts.Color] []] []
 
-        let internal stackParent (faOptions: StackParentOption list) children =
+        let stackParent (faOptions: StackParentOption list) children =
             let parseOptions (result: StackParentOptions) (option: StackParentOption) =
                     match option with
                     | ParentSize s        -> { result with Size   = ofSize s  |> Some }
@@ -1050,7 +1048,7 @@ module FontAwesome =
             let opts = faOptions |> List.fold parseOptions StackParentOptions.Empty
             span [Helpers.classes "fa-stack" [opts.Size] []] children
 
-        let internal toIconOptions (faOptions: IconOption list) =
+        let toIconOptions (faOptions: IconOption list) =
             let parseOptions (result: IconOptions) (option: IconOption) =
                     match option with
                     | Size s        -> { result with Size       = ofSize s              |> Some }
@@ -1067,18 +1065,18 @@ module FontAwesome =
 
 
         //Logic used to display one icon alone or as one item in an unordered list:
-        let internal displayIcon baseClass  (opts: IconOptions) =
+        let displayIcon baseClass  (opts: IconOptions) =
             i [ Helpers.classes baseClass
                     [ opts.Icon; opts.Size; opts.Border
                       opts.Pull; opts.Animation; opts.Rotation
                       opts.Flip; opts.Color ] [] ] []
 
-        let faIcon (options : Fulma.Elements.Icon.Types.Option list) (faOptions: IconOption list) =
+        let faIcon (options : Fulma.Elements.Icon.Option list) (faOptions: IconOption list) =
             let opts = toIconOptions faOptions
             Icon.icon options
                 [ displayIcon "fa " opts ]
 
         let fa_ul (options: GenericOption list) children =
             let opts = genericParse options
-            let class' = Helpers.classes "fa-ul" [opts.CustomClass] []
-            ul (class'::opts.Props) children
+            let classes = Helpers.classes "fa-ul" [opts.CustomClass] []
+            ul (classes::opts.Props) children

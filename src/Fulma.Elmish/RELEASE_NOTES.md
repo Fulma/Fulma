@@ -1,3 +1,11 @@
+### 0.1.0-beta-004
+
+* Remove small helpers
+* Mutualize common properties
+* Exposed GenericOption properties
+* Remove underscore function
+* Avoid computation list usage in user code
+
 ### 0.1.0-beta-003
 
 * Update to support latest version of Fulma. (Use `Button.button_a` instead of `Button.button`)

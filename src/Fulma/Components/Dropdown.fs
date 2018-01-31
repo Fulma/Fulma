@@ -1,124 +1,127 @@
 namespace Fulma.Components
 
-open Fulma.BulmaClasses
-open Fulma.Common
-open Fable.Core
-open Fable.Core.JsInterop
+open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Dropdown =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "dropdown"
+        let [<Literal>] Menu = "dropdown-menu"
+        let [<Literal>] Content = "dropdown-content"
+        let [<Literal>] Divider = "dropdown-divider"
+        module State =
+            let [<Literal>] IsActive = "is-active"
+            let [<Literal>] IsHoverable = "is-hoverable"
+            let [<Literal>] IsUp = "is-up"
+        module Alignment =
+            let [<Literal>] IsRight = "is-right"
+        module Item =
+            let [<Literal>] Container = "dropdown-item"
+            module State =
+                let [<Literal>] IsActive = "is-active"
 
+    type Option =
+        /// Add `is-active` class if true
+        | IsActive of bool
+        /// Add `is-hoverable` class
+        | IsHoverable
+        /// Add `is-right` class
+        | IsRight
+        /// Add `is-up` class
+        | IsUp
+        | Props of IHTMLProp list
+        | CustomClass of string
+
+    type internal Options =
+        { Props : IHTMLProp list
+          IsActive : bool
+          IsHoverable : bool
+          IsRight : bool
+          IsUp : bool
+          CustomClass : string option }
+
+        static member Empty =
+            { Props = []
+              IsActive = false
+              IsHoverable = false
+              IsRight = false
+              IsUp = false
+              CustomClass = None }
+
+    /// Generate <div class="dropdown"></div>
+    let dropdown (options: Option list) children =
+        let parseOptions (result : Options) =
+            function
+            | IsActive state -> { result with IsActive = state }
+            | IsRight -> { result with IsRight = true }
+            | IsHoverable -> { result with IsHoverable = true }
+            | IsUp -> { result with IsUp = true }
+            | Props props -> { result with Props = props }
+            | CustomClass customClass -> { result with CustomClass = Some customClass }
+
+        let opts = options |> List.fold parseOptions Options.Empty
+        let classes =
+            [ Classes.Alignment.IsRight, opts.IsRight
+              Classes.State.IsActive, opts.IsActive
+              Classes.State.IsHoverable, opts.IsHoverable
+              Classes.State.IsUp, opts.IsUp ]
+            |> Helpers.classes Classes.Container [opts.CustomClass]
+
+        div (classes::opts.Props) children
+
+    /// Generate <div class="dropdown-menu"></div>
+    let menu (options: GenericOption list) children =
+        let opts = genericParse options
+        let classes = Helpers.classes Classes.Menu [opts.CustomClass] []
+        div (classes::opts.Props) children
+
+    /// Generate <div class="dropdown-content"></div>
+    let content (options: GenericOption list) children =
+        let opts = genericParse options
+        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        div (classes::opts.Props) children
+
+    /// Generate <div class="dropdown-divider"></div>
+    let divider (options: GenericOption list) =
+        let opts = genericParse options
+        let classes = Helpers.classes Classes.Divider [opts.CustomClass] []
+        hr (classes::opts.Props)
+
+    module Item =
         type Option =
-            | IsActive
-            | IsHoverable
-            | IsRight
+            /// Add `is-active` class if true
+            | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
 
-        type Options =
+        type internal Options =
             { Props : IHTMLProp list
               IsActive : bool
-              IsHoverable : bool
-              IsRight : bool
               CustomClass : string option }
 
             static member Empty =
                 { Props = []
                   IsActive = false
-                  IsHoverable = false
-                  IsRight = false
                   CustomClass = None }
 
-        module Item =
+        let internal item element (options: Option list) children =
+            let parseOptions (result : Options) =
+                function
+                | IsActive state -> { result with IsActive = state }
+                | Props props -> { result with Props = props }
+                | CustomClass customClass -> { result with CustomClass = Some customClass }
 
-            type Option =
-                | IsActive
-                | Props of IHTMLProp list
-                | CustomClass of string
+            let opts = options |> List.fold parseOptions Options.Empty
+            let classes =
+                [ Classes.Item.State.IsActive, opts.IsActive ]
+                |> Helpers.classes Classes.Item.Container [opts.CustomClass]
 
-            type Options =
-                { Props : IHTMLProp list
-                  IsActive : bool
-                  CustomClass : string option }
+            element (classes::opts.Props) children
 
-                static member Empty =
-                    { Props = []
-                      IsActive = false
-                      CustomClass = None }
-
-    open Types
-
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
-    let inline isActive<'T> = IsActive
-    let inline isHoverable<'T> = IsHoverable
-    let inline isRight<'T> = IsRight
-
-    module Menu =
-        let inline customClass x = CustomClass x
-        let inline props x = Props x
-
-    module Content =
-        let inline customClass x = CustomClass x
-        let inline props x = Props x
-
-    module Divider =
-        let inline customClass x = CustomClass x
-        let inline props x = Props x
-
-    module Item =
-        let inline customClass x = Item.CustomClass x
-        let inline props x = Item.Props x
-        let inline isActive<'T> = Item.IsActive
-
-    let dropdown (options: Option list) children =
-        let parseOptions (result : Options) =
-            function
-            | IsActive -> { result with IsActive = true }
-            | IsRight -> { result with IsRight = true }
-            | IsHoverable -> { result with IsHoverable = true }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-
-        let opts = options |> List.fold parseOptions Options.Empty
-        let class' =
-            [ Bulma.Dropdown.Alignment.IsRight, opts.IsRight
-              Bulma.Dropdown.State.IsActive, opts.IsActive
-              Bulma.Dropdown.State.IsHoverable, opts.IsHoverable ]
-            |> Helpers.classes Bulma.Dropdown.Container [opts.CustomClass]
-
-        div (class'::opts.Props) children
-
-    let menu (options: GenericOption list) children =
-        let opts = genericParse options
-        let class' = Helpers.classes Bulma.Dropdown.Menu [opts.CustomClass] []
-        div (class'::opts.Props) children
-
-    let content (options: GenericOption list) children =
-        let opts = genericParse options
-        let class' = Helpers.classes Bulma.Dropdown.Content [opts.CustomClass] []
-        div (class'::opts.Props) children
-
-    let divider (options: GenericOption list) =
-        let opts = genericParse options
-        let class' = Helpers.classes Bulma.Dropdown.Divider [opts.CustomClass] []
-        hr (class'::opts.Props)
-
-    let item (options: Item.Option list) children =
-        let parseOptions (result : Item.Options) =
-            function
-            | Item.IsActive -> { result with IsActive = true }
-            | Item.Props props -> { result with Props = props }
-            | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
-
-        let opts = options |> List.fold parseOptions Item.Options.Empty
-        let class' =
-            [ Bulma.Dropdown.Item.State.IsActive, opts.IsActive ]
-            |> Helpers.classes Bulma.Dropdown.Item.Container [opts.CustomClass]
-
-        a (class'::opts.Props) children
+        /// Generate <div class="dropdown-item"></div>
+        let div x y = item div x y
+        /// Generate <a class="dropdown-item"></a>
+        let a x y = item a x y

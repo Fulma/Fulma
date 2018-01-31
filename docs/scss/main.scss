@@ -25,6 +25,7 @@ $primary: $dark-blue;
 
 @import "./callout";
 @import "./prism";
+@import "./../css/prism.min.css";
 
 .navbar-bg {
     background-color: $dark-blue;
@@ -33,7 +34,6 @@ $primary: $dark-blue;
     }
     .title {
         color: white;
-        font-weight: 600;
     }
 }
 
@@ -89,12 +89,18 @@ body {
 //     min-height: inherit
 //     min-width: inherit
 
-a {
-    &:not([class]) {
-        color: #028fcc;
-            &:hover {
-            color: #2d3947;
-        }
+// a {
+//     &:not([class]) {
+//         color: #028fcc;
+//             &:hover {
+//             color: #2d3947;
+//         }
+//     }
+// }
+
+.card-footer {
+    >a {
+        color: #2d3947;
     }
 }
 

@@ -1,7 +1,6 @@
 namespace Fulma.Layouts
 
-open Fulma.BulmaClasses
-open Fulma.Common
+open Fulma
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
@@ -11,113 +10,112 @@ open Fable.Import
 [<RequireQualifiedAccess>]
 module Tile =
 
-    module Types =
+    module Classes =
+        let [<Literal>] Container = "tile"
+        let [<Literal>] IsAncestor = "is-ancestor"
+        let [<Literal>] IsChild = "is-child"
+        let [<Literal>] IsParent = "is-parent"
+        let [<Literal>] IsVertical = "is-vertical"
 
-        type ISize =
-            | Is1
-            | Is2
-            | Is3
-            | Is4
-            | Is5
-            | Is6
-            | Is7
-            | Is8
-            | Is9
-            | Is10
-            | Is11
-            | Is12
+        module Size =
+            let [<Literal>] Is1 = "is-1"
+            let [<Literal>] Is2 = "is-2"
+            let [<Literal>] Is3 = "is-3"
+            let [<Literal>] Is4 = "is-4"
+            let [<Literal>] Is5 = "is-5"
+            let [<Literal>] Is6 = "is-6"
+            let [<Literal>] Is7 = "is-7"
+            let [<Literal>] Is8 = "is-8"
+            let [<Literal>] Is9 = "is-9"
+            let [<Literal>] Is10 = "is-10"
+            let [<Literal>] Is11 = "is-11"
+            let [<Literal>] Is12 = "is-12"
 
-        let ofSize =
-            function
-            | Is1 -> Bulma.Grid.Tile.Size.Is1
-            | Is2 -> Bulma.Grid.Tile.Size.Is2
-            | Is3 -> Bulma.Grid.Tile.Size.Is3
-            | Is4 -> Bulma.Grid.Tile.Size.Is4
-            | Is5 -> Bulma.Grid.Tile.Size.Is5
-            | Is6 -> Bulma.Grid.Tile.Size.Is6
-            | Is7 -> Bulma.Grid.Tile.Size.Is7
-            | Is8 -> Bulma.Grid.Tile.Size.Is8
-            | Is9 -> Bulma.Grid.Tile.Size.Is9
-            | Is10 -> Bulma.Grid.Tile.Size.Is10
-            | Is11 -> Bulma.Grid.Tile.Size.Is11
-            | Is12 -> Bulma.Grid.Tile.Size.Is12
+    type ISize =
+        | Is1
+        | Is2
+        | Is3
+        | Is4
+        | Is5
+        | Is6
+        | Is7
+        | Is8
+        | Is9
+        | Is10
+        | Is11
+        | Is12
 
-        type IContext =
-            | IsChild
-            | IsAncestor
-            | IsParent
+    let ofSize =
+        function
+        | Is1 -> Classes.Size.Is1
+        | Is2 -> Classes.Size.Is2
+        | Is3 -> Classes.Size.Is3
+        | Is4 -> Classes.Size.Is4
+        | Is5 -> Classes.Size.Is5
+        | Is6 -> Classes.Size.Is6
+        | Is7 -> Classes.Size.Is7
+        | Is8 -> Classes.Size.Is8
+        | Is9 -> Classes.Size.Is9
+        | Is10 -> Classes.Size.Is10
+        | Is11 -> Classes.Size.Is11
+        | Is12 -> Classes.Size.Is12
 
-        let ofContext =
-            function
-            | IsChild -> Bulma.Grid.Tile.IsChild
-            | IsAncestor -> Bulma.Grid.Tile.IsAncestor
-            | IsParent -> Bulma.Grid.Tile.IsParent
+    type Option =
+        | Size of ISize
+        | CustomClass of string
+        | Props of IHTMLProp list
+        /// Add `is-child` class
+        | IsChild
+        /// Add `is-ancestor` class
+        | IsAncestor
+        /// Add `is-parent` class
+        | IsParent
+        /// Add `is-vertical` class
+        | IsVertical
 
-        type Option =
-            | Size of ISize
-            | CustomClass of string
-            | Props of IHTMLProp list
-            | Context of IContext
-            | IsVertical
+    type internal Options =
+        { Size : string option
+          IsVertical : bool
+          CustomClass : string option
+          Props : IHTMLProp list
+          Context : string option }
 
-        type Options =
-            { Size : string option
-              IsVertical : bool
-              CustomClass : string option
-              Props : IHTMLProp list
-              Context : string option }
+        static member Empty =
+            { Size = None
+              IsVertical = false
+              CustomClass = None
+              Props = []
+              Context = None }
 
-            static member Empty =
-                { Size = None
-                  IsVertical = false
-                  CustomClass = None
-                  Props = []
-                  Context = None }
-
-    open Types
-
-    let inline isChild<'T> = Context IsChild
-    let inline isParent<'T> = Context IsParent
-    let inline isAncestor<'T> = Context IsAncestor
-    let inline is1<'T> = Size Is1
-    let inline is2<'T> = Size Is2
-    let inline is3<'T> = Size Is3
-    let inline is4<'T> = Size Is4
-    let inline is5<'T> = Size Is5
-    let inline is6<'T> = Size Is6
-    let inline is7<'T> = Size Is7
-    let inline is8<'T> = Size Is8
-    let inline is9<'T> = Size Is9
-    let inline is10<'T> = Size Is10
-    let inline is11<'T> = Size Is11
-    let inline is12<'T> = Size Is12
-    let inline isVertical<'T> = IsVertical
-    let inline customClass x = CustomClass x
-    let inline props x = Props x
-
+    /// Generate <div class="title"></div>
     let tile (options: Option list) children =
         let parseOptions (result: Options) =
             function
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
             | Size size -> { result with Size = ofSize size |> Some }
-            | Context context -> { result with Context = ofContext context |> Some }
+            | IsChild -> { result with Context = Classes.IsChild |> Some }
+            | IsAncestor -> { result with Context = Classes.IsAncestor |> Some }
+            | IsParent -> { result with Context = Classes.IsParent |> Some }
             | IsVertical -> { result with IsVertical = true }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
         div [ yield Helpers.classes
-                        Bulma.Grid.Tile.Container
+                        Classes.Container
                         [opts.CustomClass; opts.Context; opts.Size]
-                        [Bulma.Grid.Tile.IsVertical, opts.IsVertical]
+                        [Classes.IsVertical, opts.IsVertical]
               yield! opts.Props ]
             children
 
+    /// Generate <div class="title is-parent"></div>
     let parent (options: Option list) children =
-        tile (isParent :: options) children
+        tile (IsParent :: options) children
 
+    /// Generate <div class="title is-child"></div>
     let child (options: Option list) children =
-        tile (isChild :: options) children
+        tile (IsChild :: options) children
 
+    /// Generate <div class="title is-ancestor"></div>
     let ancestor (options: Option list) children =
-        tile (isAncestor :: options) children
+        tile (IsAncestor :: options) children

@@ -2,7 +2,7 @@ namespace Fulma.Elmish.DatePicker
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.BulmaClasses
+open Fulma
 open Fulma.Elements
 open Fulma.Elements.Form
 open Fulma.Extra.FontAwesome
@@ -51,35 +51,33 @@ module View =
             seq {
                 for dayRank = 0 to 34 do // We have 35 dates to show
                     let date = firstDateCalendar.AddDays(float dayRank)
-                    yield Calendar.Date.date [
-                                if not (isCurrentMonth date) then
-                                    yield Calendar.Date.isDisabled ]
+                    yield Calendar.Date.date [ Calendar.Date.Disabled (not (isCurrentMonth date)) ]
                                 [ Calendar.Date.item [
                                       if isToday date then
-                                        yield Calendar.Date.Item.isToday
+                                        yield Calendar.Date.Item.IsToday
                                       if isSelected date then
-                                        yield Calendar.Date.Item.isActive
-                                      yield Calendar.Date.Item.props [ OnClick (fun _ -> let newState = { state with ForceClose = true }
+                                        yield Calendar.Date.Item.IsActive true
+                                      yield Calendar.Date.Item.Props [ OnClick (fun _ -> let newState = { state with ForceClose = true }
                                                                                          onChange config newState (Some date) dispatch) ] ]
                                     [ str (date.Day.ToString()) ] ]
             } |> Seq.toList
 
-        Box.box' [ Box.props [ Style config.DatePickerStyle ] ]
-                 [ Calendar.calendar [ Calendar.props [ OnMouseDown (fun ev -> ev.preventDefault()) ]
+        Box.box' [ Common.Props [ Style config.DatePickerStyle ] ]
+                 [ Calendar.calendar [ Calendar.Props [ OnMouseDown (fun ev -> ev.preventDefault()) ]
                                                    ]
                                      [ Calendar.Nav.nav [ ]
                                          [ Calendar.Nav.left [ ]
-                                             [ Button.button_a [ Button.isLink
-                                                                 Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
-                                                                                                                      ForceClose = false }
-                                                                                          onChange config newState currentDate dispatch) ]
+                                             [ Button.button [ Button.IsLink
+                                                               Button.OnClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
+                                                                                                                    ForceClose = false }
+                                                                                        onChange config newState currentDate dispatch) ]
                                                              [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronLeft ] ] ]
                                            str (Date.Format.localFormat config.Local state.ReferenceDate "MMMM yyyy")
                                            Calendar.Nav.right [ ]
-                                             [ Button.button_a [ Button.isLink
-                                                                 Button.onClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
-                                                                                                                      ForceClose = false }
-                                                                                          onChange config newState currentDate dispatch) ]
+                                             [ Button.button [ Button.IsLink
+                                                               Button.OnClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
+                                                                                                                    ForceClose = false }
+                                                                                        onChange config newState currentDate dispatch) ]
                                                              [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronRight ] ] ] ]
                                        div [ ]
                                            [ Calendar.header [ ]
@@ -101,12 +99,11 @@ module View =
                 Date.Format.localFormat Date.Local.french date "dd/MM/yyyy"
             | None -> ""
         div [ ]
-            [ yield Input.input [ Input.typeIsText
-                                  Input.props [ Value dateTxt
-                                                OnFocus (fun _ -> onFocus config state currentDate dispatch)
-                                                OnClick (fun _ -> onFocus config state currentDate dispatch)
-                                                // TODO: Implement something to trigger onChange only if the value actually change
-                                                OnBlur (fun _ -> let newState = { state with InputFocused = false }
-                                                                 onChange config newState currentDate dispatch) ] ]
+            [ yield Input.text [ Input.Props [ Value dateTxt
+                                               OnFocus (fun _ -> onFocus config state currentDate dispatch)
+                                               OnClick (fun _ -> onFocus config state currentDate dispatch)
+                                               // TODO: Implement something to trigger onChange only if the value actually change
+                                               OnBlur (fun _ -> let newState = { state with InputFocused = false }
+                                                                onChange config newState currentDate dispatch) ] ]
               if isCalendarDisplayed state then
                 yield calendar config state currentDate dispatch ]
