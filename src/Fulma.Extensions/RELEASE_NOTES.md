@@ -1,4 +1,4 @@
-### 1.0.0-beta-008
+### 1.0.0-beta-010
 
 * Remove small helpers
 * Mutualize common properties
