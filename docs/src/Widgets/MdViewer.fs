@@ -1,4 +1,4 @@
-module Widgets.Changelog
+module Widgets.MdViewer
 
 open Fable.Core
 open Fable.Import
@@ -28,7 +28,7 @@ type ChangelogState =
 type Changelog(props) =
     inherit React.Component<ChangelogProps, ChangelogState>(props)
 
-    let rootUrl = "http://localhost:8080/changelogs/"
+    let rootUrl = "http://localhost:8080/"
 
     do base.setInitState({ Content = Loading })
 
@@ -71,7 +71,7 @@ type Changelog(props) =
         | Fetched txt ->
             Render.contentFromMarkdown txt
 
-let view project version =
+let view file =
     com<Changelog,_,_>
-        { File = project + "/" + version + ".md" }
+        { File = file }
         [ ]

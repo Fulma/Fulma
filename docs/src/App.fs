@@ -56,9 +56,13 @@ let root model dispatch =
         function
         | Router.Home -> Home.view
         | Router.Showcase -> Demo.view
-        | Router.Changelog (project, version) ->
-            div [ Key (project + version) ]
-                [ Widgets.Changelog.view project version ]
+        | Router.BlogIndex ->
+            Widgets.MdViewer.view "blog/index.md"
+        | Router.BlogArticle (Some file) ->
+            div [ Key file ]
+                [ Widgets.MdViewer.view file ]
+        | Router.BlogArticle None ->
+            str "blog index"
         | Router.Fulma fulmaPage ->
             Fulma.Router.view fulmaPage
         | Router.FulmaExtensions fulmaExtensionsPage ->

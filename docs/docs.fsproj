@@ -10,7 +10,7 @@
     <Compile Include="src/Libs/Fable.Import.PrismJS.fs" />
     <Compile Include="src/Global/Router.fs" />
     <Compile Include="src/Global/Render.fs" />
-    <Compile Include="src/Widgets/Changelog.fs" />
+    <Compile Include="src/Widgets/MdViewer.fs" />
     <Compile Include="src/Widgets/Menu.fs" />
     <Compile Include="src/Widgets/Showcase.fs" />
     <!-- Layouts -->

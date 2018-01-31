@@ -32,7 +32,7 @@ paket\.local
 
 docs/public/*
 !docs/public/libs
-!docs/public/changelogs
+!docs/public/blog
 !docs/public/assets
 
 \.idea/

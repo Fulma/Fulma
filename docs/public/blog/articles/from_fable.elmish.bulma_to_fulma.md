@@ -2,7 +2,7 @@
 
 Fulma was first known as Fable.Elmish.Bulma, in this post I will try to explain the reason of changing the name and also how to migrate your existing code base.
 
-## Why a new name ?
+## Why a new name ?
 
 After some discussions with [Alfonso Garcia-Caro](https://twitter.com/alfonsogcnunez), we agreed that Fable.Elmish.Bulma doesn't depends
 on [Elmish](https://github.com/fable-elmish/elmish) but on [Fable.React](https://github.com/fable-compiler/fable-react). So we decided to rename the project to remove Elmish from it.
@@ -17,7 +17,7 @@ Thanks to [Vincent Bourdon](https://twitter.com/Evilznet)'s idea of using Fable 
 
 In this section, you will learn how to migrate your existing code to Fulma. Don't panic it's should be easy because the compiler will help you to detect all the errors and fixing them.
 
-### Dependencies
+### Dependencies
 
 In your `paket.dependencies` and `paket.reference` replace `Fable.Elmish.Bulma` by `Fulma`.
 
@@ -40,3 +40,4 @@ This rules should work for most of the open statement, however please note `open
 ### Any issues ?
 
 If you have any issues porting your project please [open an issue](https://github.com/MangelMaxime/Fulma/issues) so we can help you and prevent others users to be alone with it :).
+       """
