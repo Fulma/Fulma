@@ -196,6 +196,7 @@ Target "PublishDocs" (fun _ ->
 "Build"
     ==> "YarnInstall"
     ==> "InstallDocs"
+    ==> "BuildPlugin"
     ==> "BuildDocs"
     ==> "PublishDocs"
 

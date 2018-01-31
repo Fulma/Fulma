@@ -53,7 +53,7 @@ let basic () =
            Field.div [ ]
                 [ Label.label [ ]
                     [ str "Message" ]
-                  Control.div [ Control.IsLoading ]
+                  Control.div [ Control.IsLoading true ]
                     [ Textarea.textarea [ ]
                         [ ] ] ]
            // Terms and conditions area
