@@ -1,8 +1,8 @@
-# 1.0.0-beta-006
-
-## Breaking changes
+## Breaking changes in the API (>= 1.0.0-beta-006)
 
 In this version of Fulma, we introduced a large number of breaking change. However, it's important to note that the compiler will help you fix them.
+
+[Click here](https://github.com/MangelMaxime/fulma-demo/commit/6245f2b0048e882e7290807aef087ac92d355b63) to see the diff resulting of updating a project [Fulma-demo](https://mangelmaxime.github.io/fulma-demo/).
 
 ### Remove the small helpers
 
