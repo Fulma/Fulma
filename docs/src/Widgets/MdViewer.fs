@@ -3,9 +3,7 @@ module Widgets.MdViewer
 open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Components
 open Fulma.Elements
 open Fulma.Layouts
 open Fulma.Extra.FontAwesome
@@ -28,7 +26,11 @@ type ChangelogState =
 type Changelog(props) =
     inherit React.Component<ChangelogProps, ChangelogState>(props)
 
+    #if DEBUG
     let rootUrl = "http://localhost:8080/"
+    #else
+    let rootUrl = "https://raw.githubusercontent.com/MangelMaxime/Fulma/master/docs/public/"
+    #endif
 
     do base.setInitState({ Content = Loading })
 
