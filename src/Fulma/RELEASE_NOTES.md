@@ -1,3 +1,7 @@
+### 1.0.0-beta-007
+
+* Fix `IsLoading` signature for the `Control` element
+
 ### 1.0.0-beta-006
 
 * Remove small helpers

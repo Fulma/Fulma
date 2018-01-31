@@ -20,8 +20,8 @@ module Control =
         | HasIconRight
         /// Add `has-icon-left` class
         | HasIconLeft
-        /// Add `is-loading` class
-        | IsLoading
+        /// Add `is-loading` class if true
+        | IsLoading of bool
         | CustomClass of string
         | Props of IHTMLProp list
 
@@ -45,7 +45,7 @@ module Control =
             | HasIconLeft -> { result with HasIconLeft = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
-            | IsLoading -> { result with IsLoading = true }
+            | IsLoading state -> { result with IsLoading = state }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
