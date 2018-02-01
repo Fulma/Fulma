@@ -107,17 +107,17 @@ Display a **page-loader** to inform user that content is loading, in different c
 
 State:
 
-- `PageLoader.isActive`
+- `PageLoader.IsActive true`
 
 Color:
 
-- `PageLoader.isBlack`
-- `PageLoader.isDark`
-- `PageLoader.isLight`
-- `PageLoader.isWhite`
-- `PageLoader.isPrimary`
-- `PageLoader.isInfo`
-- `PageLoader.isSuccess`
-- `PageLoader.isWarning`
-- `PageLoader.isDanger`
+- `PageLoader.Color IsBlack`
+- `PageLoader.Color IsDark`
+- `PageLoader.Color IsLight`
+- `PageLoader.Color IsWhite`
+- `PageLoader.Color IsPrimary`
+- `PageLoader.Color IsInfo`
+- `PageLoader.Color IsSuccess`
+- `PageLoader.Color IsWarning`
+- `PageLoader.Color IsDanger`
                         """ ]

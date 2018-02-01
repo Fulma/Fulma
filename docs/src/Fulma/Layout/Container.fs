@@ -33,7 +33,7 @@ let view =
 
 A container can have the following properties:
 
-- `Container.isFluid`
-- `Container.isWideScreen`
-- `Container.isFullHD`
+- `Container.IsFluid`
+- `Container.IsWideScreen`
+- `Container.IsFullHD`
                         """ ]

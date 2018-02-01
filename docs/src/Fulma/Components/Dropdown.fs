@@ -39,16 +39,16 @@ let view =
 #### Dropdown
 State:
 
-- `Dropdown.isActive`
-- `Dropdown.isHoverable`
+- `Dropdown.IsActive true`
+- `Dropdown.IsHoverable`
 
 Alignment:
 
-- `Dropdown.isRight`
+- `Dropdown.IsRight`
 
 #### Dropdown item
 
 State:
 
-- `Dropdown.Item.isActive`
+- `Dropdown.Item.IsActive true`
                         """ ]

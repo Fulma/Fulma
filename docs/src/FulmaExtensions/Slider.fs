@@ -125,11 +125,11 @@ The Slider can be **rounded, outlined or both**.
 
 The following helper help you control the behavior of your slider:
 
-- `Slider.defaultValue`: Set the initial value. The slider value can change in time without requiring you to set it.
-- `Slider.value`: Force the value of the slider. You will need to update this value yourself if you want the slider to move.
-- `Slider.step`: control the step of the slider. Ex: If you set it to 10, it will increment 10 by 10
-- `Slider.min`: minimal value
-- `Slider.max`: maximal value
+- `Slider.DefaultValue`: Set the initial value. The slider value can change in time without requiring you to set it.
+- `Slider.Value`: Force the value of the slider. You will need to update this value yourself if you want the slider to move.
+- `Slider.Step`: control the step of the slider. Ex: If you set it to 10, it will increment 10 by 10
+- `Slider.Min`: minimal value
+- `Slider.Max`: maximal value
                         """
                         (div [] []) // No view for now
                      Render.docSection

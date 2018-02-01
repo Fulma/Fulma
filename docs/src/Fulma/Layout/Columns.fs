@@ -54,38 +54,36 @@ A simple way to build **responsive** columns
 #### Columns
 
 Alignment:
-- `Columns.isCentered`
-- `Columns.isVCentered`
+- `Columns.IsCentered`
+- `Columns.IsVCentered`
 
 Display:
-- `Columns.onMobile`
-- `Columns.onDesktopOnly`
+- `Columns.OnMobile`
+- `Columns.OnDesktopOnly`
 
 Spacing:
-- `Columns.isMultiline`
-- `Columns.isGapless`
-- `Columns.isGrid`
+- `Columns.IsMultiline`
+- `Columns.IsGapless`
+- `Columns.IsGrid`
 
 #### Column
 
-You can access all the width properties of `Column` via `Column.Width.XXXX`.
+You can set the width of `Column` via:
+
+```
+Column.Width (Column.All, Column.Is3)
+Column.Width (Column.Desktop, Column.Is3)
+Column.Width (Column.Mobile, Column.IsFull)
+```
+
+You can set the offset of `Column` via:
 
 Ex:
 
 ```
-Column.Width.is3
-Column.Width.Dekstop.is6
-Column.Width.Mobile.isFull
-```
-
-You can access all the width properties of `Column` via `Column.Offset.XXXX`.
-
-Ex:
-
-```
-Column.Offset.is3
-Column.Offset.Dekstop.is6
-Column.Offset.Mobile.isFull
+Column.Offset (Column.All, Column.Is3)
+Column.Offset (Column.Desktop, Column.Is3)
+Column.Offset (Column.Mobile, Column.IsFull)
 ```
                         """
                          ]

@@ -81,8 +81,8 @@ let view =
 
 Supported size:
 
-* `Content.isCentered`
-* `Content.isRight`
+* `Content.IsCentered`
+* `Content.IsRight`
 
 When you do not set the alignment, it's consider *left*.
                         """
@@ -93,9 +93,9 @@ When you do not set the alignment, it's consider *left*.
 
 Supported size:
 
-* `Pagination.isSmall`
-* `Pagination.isMedium`
-* `Pagination.isLarge`
+* `Pagination.Size IsSmall`
+* `Pagination.Size IsMedium`
+* `Pagination.Size IsLarge`
 
 When you do not set the size, it's consider *normal*.
                         """

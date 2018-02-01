@@ -89,12 +89,12 @@ let view =
 ### Modifiers
 
 There are four modifiers:
-- `Table.isBordered`
-- `Table.isStripped`
+- `Table.IsBordered`
+- `Table.IsStripped`
 
 and 2 options for table spacing:
-- `Table.isNarrow`
-- `Table.isFullwidth`
+- `Table.IsNarrow`
+- `Table.IsFullwidth`
 
 You can apply any combination of the first two modifiers and one of option for spacing.
 Below is displayed one table with narrow spacing:

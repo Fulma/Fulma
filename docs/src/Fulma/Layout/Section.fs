@@ -28,6 +28,6 @@ let view =
 
 Spacing:
 
-- `Section.isMedium`
-- `Section.isLarge`
+- `Section.Size IsMedium`
+- `Section.Size IsLarge`
                         """ ]

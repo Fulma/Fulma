@@ -60,7 +60,7 @@ By default, `Header.h1 [ ] [ ]` generate a title. You can specify `Heading.isSub
 
 Elmish.Bulma already associate each header size with the equivalent class.
 
-For example, `Heading.h1 [ Heading.isTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
+For example, `Heading.h1 [ Heading.IsTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
                         """
                         (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
                      Render.contentFromMarkdown

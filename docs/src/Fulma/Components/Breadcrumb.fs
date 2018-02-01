@@ -78,8 +78,8 @@ let view =
 
 Supported alignment:
 
-* `Breadcrumb.isCentered`
-* `Breadcrumb.isRight`
+* `Breadcrumb.IsCentered`
+* `Breadcrumb.IsRight`
 
 When you do not set the alignment, it's align to the *left*.
 
@@ -94,9 +94,9 @@ When you do not set the alignment, it's align to the *left*.
 
 Supported size:
 
-* `Breadcrumb.isSmall`
-* `Breadcrumb.isMedium`
-* `Breadcrumb.isLarge`
+* `Breadcrumb.Size IsSmall`
+* `Breadcrumb.Size IsMedium`
+* `Breadcrumb.Size IsLarge`
 
 By default, size is considered *normal*.
 
@@ -108,10 +108,10 @@ By default, size is considered *normal*.
 
 Supported separators:
 
-* `Breadcrumb.hasArrowSeparator`
-* `Breadcrumb.hasBulletSeparator`
-* `Breadcrumb.hasDotSeparator`
-* `Breadcrumb.hasSucceedsSeparator`
+* `Breadcrumb.HasArrowSeparator`
+* `Breadcrumb.HasBulletSeparator`
+* `Breadcrumb.HasDotSeparator`
+* `Breadcrumb.HasSucceedsSeparator`
 
                         """
                         (Widgets.Showcase.view separator (Render.getViewSource separator)) ]

@@ -57,25 +57,25 @@ let view =
 
 Colors:
 
-- `Hero.isBlack`
-- `Hero.isDark`
-- `Hero.isLight`
-- `Hero.isWhite`
-- `Hero.isPrimary`
-- `Hero.isInfo`
-- `Hero.isSuccess`
-- `Hero.isWarning`
-- `Hero.isDanger`
+- `Hero.Color IsBlack`
+- `Hero.Color IsDark`
+- `Hero.Color IsLight`
+- `Hero.Color IsWhite`
+- `Hero.Color IsPrimary`
+- `Hero.Color IsInfo`
+- `Hero.Color IsSuccess`
+- `Hero.Color IsWarning`
+- `Hero.Color IsDanger`
 
 Sizes:
 
-- `Hero.isMedium`
-- `Hero.isLarge`
-- `Hero.isHalfHeight`
-- `Hero.isFullHeight`
+- `Hero.Size IsMedium`
+- `Hero.Size IsLarge`
+- `Hero.Size IsHalfHeight`
+- `Hero.Size IsFullHeight`
 
 Styles:
 
-- `Hero.isBold`
+- `Hero.IsBold`
                         """
                         ]

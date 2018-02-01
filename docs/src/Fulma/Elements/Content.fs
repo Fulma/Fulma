@@ -72,9 +72,9 @@ A single class to handle WYSIWYG generated content, where only **HTML tags** are
 
 Supported size:
 
-* `Content.isSmall`
-* `Content.isMedium`
-* `Content.isLarge`
+* `Content.Size IsSmall`
+* `Content.Size IsMedium`
+* `Content.Size IsLarge`
 
 When you do not set the size, it's consider *normal*.
                         """
