@@ -10,8 +10,8 @@ open Fulma.Extra.FontAwesome
 
 let private navButton classy href icon txt =
     Control.div [ ]
-        [ Button.button [ Button.CustomClass classy
-                          Button.Props [ Href href ] ]
+        [ Button.a [ Button.CustomClass classy
+                     Button.Props [ Href href ] ]
             [ Icon.faIcon [ ]
                 [ Fa.icon icon ]
               span [] [ str txt ] ] ]
