@@ -1,3 +1,7 @@
+### 1.0.0-beta-008
+
+* Fix `Table.IsStriped`
+
 ### 1.0.0-beta-007
 
 * Fix `IsLoading` signature for the `Control` element
