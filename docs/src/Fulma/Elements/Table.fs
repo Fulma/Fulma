@@ -31,7 +31,7 @@ let simpleInteractive () =
 let modifierInteractive () =
     Table.table [ Table.IsBordered
                   Table.IsNarrow
-                  Table.IsStripped ]
+                  Table.IsStriped ]
         [ thead [ ]
             [ tr [ ]
                  [ th [ ] [ str "Firstname" ]
@@ -54,7 +54,7 @@ let modifierInteractive () =
 let modifierFullWitdth () =
     Table.table [ Table.IsBordered
                   Table.IsFullwidth
-                  Table.IsStripped ]
+                  Table.IsStriped ]
         [ thead [ ]
             [ tr [ ]
                  [ th [ ] [ str "Firstname" ]
@@ -90,7 +90,7 @@ let view =
 
 There are four modifiers:
 - `Table.IsBordered`
-- `Table.IsStripped`
+- `Table.IsStriped`
 
 and 2 options for table spacing:
 - `Table.IsNarrow`
