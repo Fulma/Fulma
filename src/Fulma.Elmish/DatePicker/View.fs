@@ -96,7 +96,7 @@ module View =
         let dateTxt =
             match currentDate with
             | Some date ->
-                Date.Format.localFormat Date.Local.french date "dd/MM/yyyy"
+                Date.Format.localFormat config.Local date "dd/MM/yyyy"
             | None -> ""
         div [ ]
             [ yield Input.text [ Input.Props [ Value dateTxt
