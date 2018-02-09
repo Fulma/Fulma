@@ -1,3 +1,7 @@
+### 0.1.0-beta-006
+
+* Using localization settings from config for DatePicker
+
 ### 0.1.0-beta-005
 
 * Remove small helpers
