@@ -1,3 +1,7 @@
+### NEXT
+
+* Fix typos in Title docs comment
+
 ### 1.0.0-beta-008
 
 * Fix `Table.IsStriped`
