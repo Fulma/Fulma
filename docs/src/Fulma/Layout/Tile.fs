@@ -54,7 +54,7 @@ A **single tile** element to build 2-dimensional Metro-like, Pinterest-like, or 
 In Bulma, you would generally apply the `tile` class directly to your components.
 
 ```html
-<div class="title box">
+<div class="tile box">
 </div>
 ```
 
