@@ -1,3 +1,7 @@
+### 1.0.0-beta-011
+
+* Add `Quickview` support
+
 ### 1.0.0-beta-010
 
 * Remove small helpers

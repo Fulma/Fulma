@@ -1,6 +1,7 @@
-### NEXT
+### 1.0.0-beta-009
 
 * Fix typos in Title docs comment
+* Fix typos in Tile docs comment
 
 ### 1.0.0-beta-008
 

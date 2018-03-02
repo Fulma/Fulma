@@ -38,3 +38,5 @@ docs/public/*
 \.idea/
 
 Fulma\.sln\.DotSettings\.user
+
+yarn-error\.log
