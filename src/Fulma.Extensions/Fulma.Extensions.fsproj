@@ -22,6 +22,7 @@
         <Compile Include="PageLoader.fs" />
         <Compile Include="Slider.fs" />
         <Compile Include="Checkradio.fs" />
+        <Compile Include="Components/Quickview.fs" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />

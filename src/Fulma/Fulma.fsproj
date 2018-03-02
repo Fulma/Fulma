@@ -28,7 +28,6 @@
     <Compile Include="Components/Navbar.fs" />
     <Compile Include="Components/Pagination.fs" />
     <Compile Include="Components/Panel.fs" />
-    <Compile Include="Components/Quickview.fs" />
     <Compile Include="Components/Tabs.fs" />
     <!-- Elements -->
     <Compile Include="Elements/Box.fs" />
