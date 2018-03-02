@@ -29,7 +29,7 @@ let view =
 
 Display a **tooltip** attached to any kind of element, in different position.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/tooltip)*
+*[Documentation](https://wikiki.github.io/elements/tooltip/)*
 
 ## Npm packages
 

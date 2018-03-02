@@ -208,7 +208,7 @@ let view =
 
 The **Switch** can have different colors, sizes and states.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/switch)*
+*[Documentation](https://wikiki.github.io/form/switch/)*
 
 ## Npm packages
 

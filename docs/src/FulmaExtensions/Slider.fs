@@ -80,7 +80,7 @@ let view =
 
 The **Slider** can have different colors, sizes and states.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/slider)*
+*[Documentation](https://wikiki.github.io/form/slider/)*
 
 
 ## Npm packages

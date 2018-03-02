@@ -75,7 +75,7 @@ let view =
 
 Display a **page-loader** to inform user that content is loading, in different colors.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/pageloader)*
+*[Documentation](https://wikiki.github.io/elements/pageloader/)*
 
 ## Npm packages
 

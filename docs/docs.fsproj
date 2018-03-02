@@ -58,6 +58,7 @@
     <Compile Include="src/FulmaExtensions/Switch.fs" />
     <Compile Include="src/FulmaExtensions/Tooltip.fs" />
     <Compile Include="src/FulmaExtensions/Introduction.fs" />
+    <Compile Include="src/FulmaExtensions/Quickview.fs" />
     <Compile Include="src/FulmaExtensions/Router.fs" />
     <!-- FulmaElmish -->
     <Compile Include="src/FulmaElmish/DatePicker.fs" />

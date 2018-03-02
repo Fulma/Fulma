@@ -1036,6 +1036,10 @@ bulma-pricingtable@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/bulma-pricingtable/-/bulma-pricingtable-0.1.4.tgz#c2042ab509718b893d202b041a9b5f129d5edc1f"
 
+bulma-quickview@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/bulma-quickview/-/bulma-quickview-1.0.1.tgz#d6b329cd839aef8d72e93e8cd4c7f19f44629821"
+
 bulma-ribbon@^0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/bulma-ribbon/-/bulma-ribbon-0.0.3.tgz#d611ae435457467281d0f0f5bce12730b74d6591"

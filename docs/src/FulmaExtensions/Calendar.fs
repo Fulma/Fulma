@@ -141,7 +141,7 @@ let view =
 
 Display a **calendar** for date selection or for planning management, in different colors and sizes.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/calendar)*
+*[Documentation](https://wikiki.github.io/components/calendar/)*
 
 ## Npm packages
 

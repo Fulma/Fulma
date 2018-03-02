@@ -38,7 +38,7 @@ let view =
 
 Display a vertical or horizontal divider to segment your design.
 
-*[Documentation](https://wikiki.github.io/bulma-extensions/divider)*
+*[Documentation](https://wikiki.github.io/layout/divider/)*
 
 ## Npm packages
 
