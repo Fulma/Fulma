@@ -31,8 +31,7 @@ type QuickviewDemo(props) =
 
     member this.render () =
         div [ ]
-            [ Quickview.quickview [ Quickview.IsActive this.state.IsActive
-                                    Quickview.CustomClass "your-custom-class"  ]
+            [ Quickview.quickview [ Quickview.IsActive this.state.IsActive ]
                     [ Quickview.header [ ]
                         [ Quickview.title [ ] [ str "Testing..." ]
                           Delete.delete [ Delete.OnClick this.hide ] [ ] ]
@@ -47,8 +46,7 @@ type QuickviewDemo(props) =
 
 let hide = ignore
 let demoView () =
-    Quickview.quickview [ Quickview.IsActive true
-                          Quickview.CustomClass "your-custom-class" ]
+    Quickview.quickview [ Quickview.IsActive true ]
                         [ Quickview.header [ ]
                             [ Quickview.title [ ] [ str "Testing..." ]
                               Delete.delete [ Delete.OnClick hide ] [ ] ]
