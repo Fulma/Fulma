@@ -1,3 +1,7 @@
+### 1.0.0-beta-010
+
+* Added missing `CustomClass` to `Media` - `Modal` - `Navbar` - `Pagination` - `Tabs`: https://github.com/MangelMaxime/Fulma/pull/110/files
+
 ### 1.0.0-beta-009
 
 * Fix typos in Title docs comment
