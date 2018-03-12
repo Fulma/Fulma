@@ -1,14 +1,10 @@
 module FulmaExtensions.Quickview
 
 open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Elements
-open Fulma.Elements.Form
-open Fulma.Layouts
 open Fulma.Extensions
 
 [<Pojo>]
@@ -35,7 +31,8 @@ type QuickviewDemo(props) =
 
     member this.render () =
         div [ ]
-            [ Quickview.quickview [ Quickview.IsActive this.state.IsActive ]
+            [ Quickview.quickview [ Quickview.IsActive this.state.IsActive
+                                    Quickview.CustomClass "your-custom-class"  ]
                     [ Quickview.header [ ]
                         [ Quickview.title [ ] [ str "Testing..." ]
                           Delete.delete [ Delete.OnClick this.hide ] [ ] ]
@@ -50,7 +47,8 @@ type QuickviewDemo(props) =
 
 let hide = ignore
 let demoView () =
-    Quickview.quickview [ Quickview.IsActive true ]
+    Quickview.quickview [ Quickview.IsActive true
+                          Quickview.CustomClass "your-custom-class" ]
                         [ Quickview.header [ ]
                             [ Quickview.title [ ] [ str "Testing..." ]
                               Delete.delete [ Delete.OnClick hide ] [ ] ]

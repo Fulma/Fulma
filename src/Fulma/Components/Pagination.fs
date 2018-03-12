@@ -79,7 +79,7 @@ module Pagination =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment; opts.Size ]
+                        [ opts.Alignment; opts.Size; opts.CustomClass ]
                         [ Classes.Styles.IsRounded, opts.IsRounded ]
 
         nav (classes::opts.Props)

@@ -1,7 +1,6 @@
 namespace Fulma.Components
 
 open Fulma
-open Fable.Core
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
@@ -93,7 +92,7 @@ module Tabs =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment; opts.Size ]
+                        [ opts.Alignment; opts.Size; opts.CustomClass ]
                         [ Classes.Style.IsBoxed, opts.IsBoxed
                           Classes.Style.IsFullwidth, opts.IsFullwidth
                           Classes.Style.IsToggle, opts.IsToggle
