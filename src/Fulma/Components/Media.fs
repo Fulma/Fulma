@@ -44,7 +44,7 @@ module Media =
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size ]
+                        [ opts.Size; opts.CustomClass ]
                         [ ]
         article (classes::opts.Props) children
 

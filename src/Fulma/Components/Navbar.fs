@@ -180,7 +180,7 @@ module Navbar =
                 | Props props -> { result with Props = props}
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Link.Container [] [Classes.Link.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Link.Container [opts.CustomClass] [Classes.Link.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-link"></div>
@@ -224,7 +224,7 @@ module Navbar =
                 | Props props -> { result with Props = props}
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Dropdown.Container [] [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Dropdown.Container [opts.CustomClass] [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-dropdown"></div>

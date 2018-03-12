@@ -1,14 +1,10 @@
 module FulmaExtensions.Quickview
 
 open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Import
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Elements
-open Fulma.Elements.Form
-open Fulma.Layouts
 open Fulma.Extensions
 
 [<Pojo>]

@@ -71,6 +71,6 @@ module Quickview =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ ]
+                        [ opts.CustomClass ]
                         [ Classes.State.IsActive, opts.IsActive ]
         div (classes::opts.Props) children

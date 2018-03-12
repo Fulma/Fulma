@@ -71,7 +71,7 @@ module Modal =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ ]
+                        [ opts.CustomClass ]
                         [ Classes.State.IsActive, opts.IsActive ]
         div (classes::opts.Props)
             children
@@ -90,7 +90,7 @@ module Modal =
             | Close.OnClick cb -> { result with OnClick = Some cb }
 
         let opts = options |> List.fold parseOptions Close.Options.Empty
-        let classes = Helpers.classes Classes.Close.Container [opts.Size] []
+        let classes = Helpers.classes Classes.Close.Container [opts.Size; opts.CustomClass] []
         let opts =
             match opts.OnClick with
             | Some v -> classes::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
