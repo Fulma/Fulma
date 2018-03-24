@@ -60,6 +60,9 @@ Every element providing by Fulma will have at least 2 specials helpers:
         Button.button_a [ Button.customClass "my-custom-button" ]
             [ str "I am a button" ]
     ```
+    
+    Note, that only one `customClass` can be provided. If you provide several, then the last got precedence. If you need apply more than one custom class, then provide it as a single string, i.e. `Button.customClass "custom1 custom2"`. See [discussion](https://github.com/MangelMaxime/Fulma/issues/111) for more information. 
+    
 - `props`:
 
     ```fsharp
