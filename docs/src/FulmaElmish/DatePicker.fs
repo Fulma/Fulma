@@ -46,7 +46,7 @@ type DatePickerDemo(props) =
         let dateText =
             match this.state.CurrentDate with
             | Some date ->
-                Date.Format.format date "dddd, MMMM dd, yyyy"
+                Date.Format.localFormat pickerConfig.Local "dddd, MMMM dd, yyyy" date
                 |> (fun dateStr -> "The selected date is: " + dateStr)
                 |> str
 
