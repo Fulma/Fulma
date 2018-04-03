@@ -29,7 +29,7 @@ module Types =
 
     let defaultConfig onChangeMsg =
         { OnChange = onChangeMsg
-          Local = Date.Local.english
+          Local = Date.Local.englishUK
           DatePickerStyle = [ Position "absolute"
                               MaxWidth "450px" ] }
 

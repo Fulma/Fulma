@@ -72,7 +72,7 @@ module View =
                                                                                                                     ForceClose = false }
                                                                                         onChange config newState currentDate dispatch) ]
                                                              [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronLeft ] ] ]
-                                           str (Date.Format.localFormat config.Local state.ReferenceDate "MMMM yyyy")
+                                           str (Date.Format.localFormat config.Local "MMMM yyyy" state.ReferenceDate)
                                            Calendar.Nav.right [ ]
                                              [ Button.button [ Button.IsLink
                                                                Button.OnClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
@@ -96,7 +96,7 @@ module View =
         let dateTxt =
             match currentDate with
             | Some date ->
-                Date.Format.localFormat config.Local date "dd/MM/yyyy"
+                Date.Format.localFormat config.Local config.Local.Date.DefaultFormat date
             | None -> ""
         div [ ]
             [ yield Input.text [ Input.Props [ Value dateTxt
