@@ -29,7 +29,7 @@ type QuickviewDemo(props) =
                         IsActive = false }
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ]
             [ Quickview.quickview [ Quickview.IsActive this.state.IsActive ]
                     [ Quickview.header [ ]
@@ -90,7 +90,7 @@ Display quick view of data without leaving the current page
 """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view (fun _ -> com<QuickviewDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
+                        (Widgets.Showcase.view (fun _ -> ofType<QuickviewDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
                      Render.contentFromMarkdown
                         """
 ### Properties

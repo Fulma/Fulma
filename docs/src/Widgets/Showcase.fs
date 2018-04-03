@@ -25,7 +25,7 @@ type Showcase(props) =
         { this.state with IsExpanded = not this.state.IsExpanded}
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         let footerItemIcon  =
             let footerIconClass =
                 match this.state.IsExpanded with
@@ -53,7 +53,7 @@ type Showcase(props) =
             ]
 
 let view preview sourceCode =
-    com<Showcase,_,_>
+    ofType<Showcase,_,_>
         { Preview = preview
           SourceCode = sourceCode }
         [ ]

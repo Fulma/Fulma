@@ -37,7 +37,7 @@ type PageLoaderDemo(props) =
         }
         |> Async.StartImmediate
 
-    member this.render () =
+    override this.render () =
         let renderButton color =
             Button.button [ Button.Color color
                             Button.OnClick (fun _ -> this.onClick color) ]
@@ -100,7 +100,7 @@ Display a **page-loader** to inform user that content is loading, in different c
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view (fun _ -> com<PageLoaderDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
+                        (Widgets.Showcase.view (fun _ -> ofType<PageLoaderDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
                      Render.contentFromMarkdown
                         """
 ### Properties

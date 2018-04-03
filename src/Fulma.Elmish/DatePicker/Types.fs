@@ -25,7 +25,7 @@ module Types =
     type Config<'Msg> =
         { OnChange : State * (DateTime option) -> 'Msg
           Local : Date.Local.Localization
-          DatePickerStyle : ICSSProp list }
+          DatePickerStyle : CSSProp list }
 
     let defaultConfig onChangeMsg =
         { OnChange = onChangeMsg

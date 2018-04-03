@@ -166,7 +166,7 @@ type CheckradioDemo(props) =
         { this.state with IsChecked = not this.state.IsChecked}
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ClassName "block" ]
             [ Checkradio.checkbox
                 [ Checkradio.Checked this.state.IsChecked
@@ -256,4 +256,4 @@ The checkbox can be **circle**.
                         (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
                      Render.docSection
                         "### Event handler"
-                        (Widgets.Showcase.view (fun _ -> com<CheckradioDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<CheckradioDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]

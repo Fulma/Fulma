@@ -39,7 +39,7 @@ type DatePickerDemo(props) =
                           CurrentDate = newDate }
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         let datePickerView =
                 DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
 
@@ -70,13 +70,13 @@ A ready to use date picker.
 
 This component is based on [Fulma.Extensions.Calendar](#fulma-extensions/calendar).
                         """
-                     (com<DatePickerDemo,_,_> (unbox null) [])
+                     (ofType<DatePickerDemo,_,_> (unbox null) [])
                      Render.contentFromMarkdown
                         """
 Here is the minimal code needed to include the datepicker components into your application.
 
 *Types.fs*
-```fsharp
+```fs
 type Model =
     { DatePickerState : DatePicker.Types.State // Store the state of the date picker into your model
       CurrentDate : DateTime option } // Current date selected
@@ -87,7 +87,7 @@ type Msg =
 ```
 
 *Update.fs*
-```fsharp
+```fs
 let init() =
     { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true }
       CurrentDate = None }
@@ -102,7 +102,7 @@ let update msg model =
 ```
 
 *View.fs*
-```fsharp
+```fs
 // Configuration passed to the components
 let pickerConfig : DatePicker.Types.Config<Msg> =
     DatePicker.Types.defaultConfig DatePickerChanged

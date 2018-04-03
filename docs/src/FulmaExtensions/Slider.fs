@@ -59,7 +59,7 @@ type SliderDemo(props) =
         |> (fun newRatio -> { this.state with Ratio = newRatio })
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ]
             [ Slider.slider [ Slider.OnChange this.onSlide ]
               div [ ] [ str (string this.state.Ratio) ] ]
@@ -137,4 +137,4 @@ The following helper help you control the behavior of your slider:
 ### Events
 You can subscribe to **OnChange**.
                         """
-                        (Widgets.Showcase.view (fun _ -> com<SliderDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<SliderDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]

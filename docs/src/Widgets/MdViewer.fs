@@ -38,7 +38,7 @@ type Changelog(props) =
         { this.state with Content = Fetched content }
         |> this.setState
 
-    member this.componentDidMount () =
+    override this.componentDidMount () =
         promise {
             let! res = fetch (rootUrl + this.props.File) [ ]
             let! txt = res.text()
@@ -50,7 +50,7 @@ type Changelog(props) =
         )
         |> Promise.start
 
-    member this.render () =
+    override this.render () =
         match this.state.Content with
         | Loading ->
             Hero.hero [ Hero.IsLarge ]
@@ -74,6 +74,6 @@ type Changelog(props) =
             Render.contentFromMarkdown txt
 
 let view file =
-    com<Changelog,_,_>
+    ofType<Changelog,_,_>
         { File = file }
         [ ]

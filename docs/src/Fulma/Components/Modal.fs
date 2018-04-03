@@ -101,7 +101,7 @@ type BasicModal(props) =
         { this.state with IsShown = not this.state.IsShown}
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ]
             [ basicModal this.state.IsShown this.toggleDisplay
               Button.button [ Button.OnClick this.toggleDisplay ]
@@ -123,7 +123,7 @@ type CardModal(props) =
         { this.state with IsShown = not this.state.IsShown}
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ]
             [ cardModal this.state.IsShown this.toggleDisplay
               Button.button [ Button.OnClick this.toggleDisplay ]
@@ -140,7 +140,7 @@ let view =
                         """
                      Render.docSection
                         "### Any content"
-                        (Widgets.Showcase.view (fun _ -> com<BasicModal,_,_> (unbox null) []) (Render.getViewSource basicModalCode))
+                        (Widgets.Showcase.view (fun _ -> ofType<BasicModal,_,_> (unbox null) []) (Render.getViewSource basicModalCode))
                      Render.docSection
                         "### Card modal"
-                        (Widgets.Showcase.view (fun _ -> com<CardModal,_,_> (unbox null) []) (Render.getViewSource cardModalCode)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<CardModal,_,_> (unbox null) []) (Render.getViewSource cardModalCode)) ]

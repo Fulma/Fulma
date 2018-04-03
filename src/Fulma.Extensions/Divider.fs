@@ -43,6 +43,6 @@ module Divider =
         let classes = Helpers.classes "" [opts.CustomClass] [Classes.Divider, not opts.IsVertical; Classes.IsVertical, opts.IsVertical]
         let attrs =
             match opts.Label with
-            | Some label -> classes::(Data("content", label))::opts.Props
+            | Some label -> classes:: (Data("content", label) :> IHTMLProp)::opts.Props
             | None -> classes::opts.Props
         div attrs [ ]

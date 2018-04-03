@@ -169,7 +169,7 @@ type SwitchDemo(props) =
         { this.state with IsChecked = not this.state.IsChecked}
         |> this.setState
 
-    member this.render () =
+    override this.render () =
         div [ ClassName "block" ]
             [ Switch.switch
                 [ Switch.Checked this.state.IsChecked
@@ -254,4 +254,4 @@ The switch can be **rounded, outlined, thin or any combinaison of those**.
                         (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
                      Render.docSection
                         "### Event handler"
-                        (Widgets.Showcase.view (fun _ -> com<SwitchDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<SwitchDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
