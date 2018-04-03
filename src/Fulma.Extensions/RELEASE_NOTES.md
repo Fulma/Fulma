@@ -1,3 +1,8 @@
+### 1.0.0-beta-013
+
+* Update dependencies
+* Fix Divider compilation
+
 ### 1.0.0-beta-012
 
 * Added missing `CustomClass` to `Quickview`: https://github.com/MangelMaxime/Fulma/pull/110/files

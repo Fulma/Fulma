@@ -1,3 +1,7 @@
+### 0.1.0-beta-008
+
+* Update dependencies
+
 ### 0.1.0-beta-007
 
 * Update to Fable.PowerPack 1.4
