@@ -1,6 +1,9 @@
-### 1.0.0-next
+### 1.0.0-beta-012
 
 * Add `NoColor` to `IColor`
+* Fix #114: add `Field.Label.IsNormal`
+* Fix #113: fix `Field.Label` API
+* Fix #106: provide alternate spelling for some classes `is-fullwidth` - `is-halfheight` - `is-fullwidth`
 
 ### 1.0.0-beta-011
 

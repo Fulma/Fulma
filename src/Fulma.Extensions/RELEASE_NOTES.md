@@ -1,3 +1,7 @@
+### 1.0.0-beta-014
+
+* Fix #106: provide alternate spelling for some classes `is-fullwidth` - `is-halfheight` - `is-fullwidth`
+
 ### 1.0.0-beta-013
 
 * Update dependencies
