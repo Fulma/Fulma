@@ -19,7 +19,7 @@ On windows:
 ./build.cmd
 ```
 
-On *nises and MacOSX:
+On Unix:
 ```shell
 ./build.sh
 ```
@@ -32,7 +32,7 @@ Before starting contributing, please make sure you've read the [How to make a cl
 ### 1 - Solve issues
 
 #### Choose
-Just head up to the [Issues page](https://github.com/MangelMaxime/Fulma/issues?q=is%3Aissue+is%3Aopen+label%3Abug) on Github then choose the issue you want to work on.
+Just head up to the [Issues page](https://github.com/MangelMaxime/Fulma/issues?q=is%3Aopen+is%3Aissue) on Github then choose the issue you want to work on. Mention by commenting the issue that you are working on it, so we can avoid being several working on the same issue.
 
 #### Code
 The source code for the project is located in the `src` folder.
@@ -45,13 +45,13 @@ On windows:
 ./build.cmd Build
 ```
 
-On *nises and MacOSX:
+On Unix:
 ```shell
 ./build.sh Build
 ```
 
 #### Test
-In order to test what you've just commited, the easiest way is to... [TODO]
+In order to test what you've just commited, the easiest way is to create/update the documentation. The documentation being build using Fulma itself.
 
 ### 2 - Add or update documentation
 
@@ -59,16 +59,34 @@ In order to test what you've just commited, the easiest way is to... [TODO]
 Just head up to the [Issues page](https://github.com/MangelMaxime/Fulma/issues?q=is%3Aissue+is%3Aopen+label%3ADocumentation) on Github then choose the doc issue you want to work on.
 
 #### Code architecture
-The documentation in the Fulma project can be found in the `docs` folder. The documentation is generated from source files located in the `src` folder.
+The documentation in the Fulma project can be found in the `docs` folder. The documentation is generated from source files located in the `docs/src` folder.
 
 The common architecture for building docs is the following:
 1 - A folder by category (for instance Layout or Elements). This architecture mimics the one you can find in the library root `src` folder.
 
-2 - `Introduction.fs` file`. This file hosts the a Markdown based text documentation introducing a category. (for instance, in the Layout section you'll find the following components: ...)
+2 - `Introduction.fs` file. This file hosts the a Markdown based text documentation introducing a category.
 
-3 - `Router.fs` file`. This file is responsible for routing the requests to the local components. (for instance, if you add the documentation for a new component to the category, you'll have to add the route to this documentation)
+3 - `Router.fs` file`. This file is responsible for routing the requests to the local components. For instance, if you add the documentation for a new component to the category, you'll have to add the route to this documentation
 
 4 - A `.fs` file per component (for instance Columns.fs). This is the file that hosts actual *code samples* and proper documentation (markdown based) for the component.
+
+##### Notes on how the documentation code works
+
+In order to display an example and the code used, you need to use:
+
+```fs
+Render.docSection
+    "[Your section title goes here]"
+    (Widgets.Showcase.view demoView (Render.getViewSource demoView))
+```
+
+In the previous code `demoView` has the signature `unit -> Fable.Import.React.ReactElement`.
+
+In order to inject, the code used in `demoView`, we use `Render.getViewSource` function which will be handle by a plugin to inject the code as a string.
+
+:warning: For the plugin to work correctly, it's important to not have any empty line in the code of `demoView` :warning: If you need to have to space out your code you can use comment like [in Form.fs file](docs/src/Fulma/Elements/Form.fs).
+
+If you want to create an interactive example, please create a stateful component and a `code` function to provide the code to the plugin. You can see an example [in Model.fs](docs/src/Fulma/Components/Modal.fs) and [in Switch.fs](docs/src/FulmaExtensions/Switch.fs).
 
 #### Watch and test
 In order to live test your updates to the documentation, please use the *WatchDocs* command:
@@ -78,13 +96,12 @@ On windows:
 ./build.cmd WatchDocs
 ```
 
-On *nises and MacOSX:
+On Unix:
 ```shell
 ./build.sh WatchDocs
 ```
 
-Then proceed to the [local page](http://localhost:8080) and check your updates there
-
+Then proceed to the [local page](http://localhost:8080) and check your updates there.
 
 ### 3 - Adventurer?
 Just head up to the [Issues page](https://github.com/MangelMaxime/Fulma/issues?q=is%3Aissue+is%3Aopen+label%3A%22up+for+graps%22) on Github then choose the issue you want to work on.
