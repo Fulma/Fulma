@@ -1,6 +1,7 @@
 namespace Fulma.Elements.Form
 
 open Fulma
+open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
@@ -50,6 +51,8 @@ module Textarea =
         | Placeholder of string
 
         | Props of IHTMLProp list
+        | OnChange of (React.FormEvent -> unit)
+        | Ref of (Browser.Element->unit)
         | CustomClass of string
         /// Add `has-fixed-size` class
         | HasFixedSize
@@ -67,6 +70,8 @@ module Textarea =
           Value : string option
           DefaultValue : string option
           Placeholder : string option
+          OnChange : (React.FormEvent -> unit) option
+          Ref : (Browser.Element->unit) option
           Props : IHTMLProp list
           CustomClass : string option }
 
@@ -83,6 +88,8 @@ module Textarea =
               HasFixedSize = false
               DefaultValue = None
               Placeholder = None
+              OnChange = None
+              Ref = None
               Props = []
               CustomClass = None }
 
@@ -104,6 +111,8 @@ module Textarea =
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
             | Placeholder placeholder -> { result with Placeholder = Some placeholder }
             | Props props -> { result with Props = props }
+            | OnChange cb -> { result with OnChange = cb |> Some }
+            | Ref cb -> { result with Ref = cb |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | HasFixedSize -> { result with HasFixedSize = true }
 
@@ -126,5 +135,7 @@ module Textarea =
                    if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
                    if Option.isSome opts.DefaultValue then yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
                    if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp
+                   if Option.isSome opts.OnChange then yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
+                   if Option.isSome opts.Ref then yield Prop.Ref opts.Ref.Value :> IHTMLProp
                    yield! opts.Props ]
             children

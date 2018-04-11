@@ -1,3 +1,7 @@
+### 1.0.0-beta-013
+
+* Add `OnChange` and `Ref` to `Input` and `TextArea`
+
 ### 1.0.0-beta-012
 
 * Add `NoColor` to `IColor`
