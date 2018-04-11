@@ -3,5 +3,11 @@ build:
 
 image: Visual Studio 2017
 
+install:
+  - ps: Install-Product node 8 x64
+
 build_script:
-    - cmd: build.cmd BuildDocs
+    - cmd: fake.cmd build -t BuildDocs
+
+cache:
+  - "%LOCALAPPDATA%\\Yarn"

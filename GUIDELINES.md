@@ -16,12 +16,12 @@ In order to install the dependencies, generate the docs and build the project ju
 
 On windows:
 ```shell
-./build.cmd
+./fake.cmd build
 ```
 
 On Unix:
 ```shell
-./build.sh
+./fake.sh build
 ```
 
 ## How you can help
@@ -42,12 +42,12 @@ So start coding and when you're done, just use the *Build* command:
 
 On windows:
 ```shell
-./build.cmd Build
+./fake.cmd build
 ```
 
 On Unix:
 ```shell
-./build.sh Build
+./fake.sh build
 ```
 
 #### Test
@@ -93,12 +93,12 @@ In order to live test your updates to the documentation, please use the *WatchDo
 
 On windows:
 ```shell
-./build.cmd WatchDocs
+./fake.cmd build -t WatchDocs
 ```
 
 On Unix:
 ```shell
-./build.sh WatchDocs
+./fake.sh build -t WatchDocs
 ```
 
 Then proceed to the [local page](http://localhost:8080) and check your updates there.
