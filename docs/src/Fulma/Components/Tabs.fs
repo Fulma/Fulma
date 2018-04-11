@@ -44,7 +44,7 @@ let size () =
             [ a [ ] [ str "Hink" ] ] ]
 
 let styles () =
-    Tabs.tabs [ Tabs.IsFullwidth
+    Tabs.tabs [ Tabs.IsFullWidth
                 Tabs.IsBoxed ]
         [ Tabs.tab [ Tabs.Tab.IsActive true ]
             [ a [ ] [ str "Fable" ] ]

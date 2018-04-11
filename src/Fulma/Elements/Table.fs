@@ -25,8 +25,10 @@ module Table =
         | IsBordered
         /// Set `is-stripped` class
         | IsStriped
-        /// Set `is-fullwidth` class
+        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-fullwidth` class
+        | IsFullWidth
         /// Set `is-narrow` class
         | IsNarrow
         /// Set `is-hoverable` class
@@ -57,7 +59,7 @@ module Table =
             function
             | IsBordered -> { result with IsBordered = true }
             | IsStriped -> { result with IsStriped = true }
-            | IsFullwidth -> { result with IsFullwidth = true }
+            | IsFullwidth | IsFullWidth -> { result with IsFullwidth = true }
             | IsNarrow -> { result with IsNarrow = true }
             | IsHoverable -> { result with IsHoverable = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }

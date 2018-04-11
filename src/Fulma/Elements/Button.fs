@@ -33,8 +33,10 @@ module Button =
         // Colors
         | Color of IColor
         | Size of ISize
-        /// Add `is-fullwidth` class
+        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-fullwidth` class
+        | IsFullWidth
         /// Add `is-link` class
         | IsLink
         /// Add `is-outlined` class
@@ -101,7 +103,7 @@ module Button =
             // Sizes
             | Size size -> { result with Size = ofSize size |> Some }
             // Styles
-            | IsFullwidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
+            | IsFullwidth | IsFullWidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
             | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }

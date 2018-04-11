@@ -53,7 +53,7 @@ let modifierInteractive () =
 
 let modifierFullWitdth () =
     Table.table [ Table.IsBordered
-                  Table.IsFullwidth
+                  Table.IsFullWidth
                   Table.IsStriped ]
         [ thead [ ]
             [ tr [ ]
@@ -94,7 +94,7 @@ There are four modifiers:
 
 and 2 options for table spacing:
 - `Table.IsNarrow`
-- `Table.IsFullwidth`
+- `Table.IsFullWidth`
 
 You can apply any combination of the first two modifiers and one of option for spacing.
 Below is displayed one table with narrow spacing:

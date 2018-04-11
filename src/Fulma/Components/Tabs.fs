@@ -32,8 +32,10 @@ module Tabs =
         | IsToggle
         /// Add `is-toggle-rounded` class
         | IsToggleRounded
-        /// Add `is-fullwidth` class
+        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-fullwidth` class
+        | IsFullWidth
         | CustomClass of string
         | Props of IHTMLProp list
 
@@ -84,7 +86,7 @@ module Tabs =
             | IsBoxed -> { result with IsBoxed = true }
             | IsToggle -> { result with IsToggle = true }
             | IsToggleRounded -> { result with IsToggleRounded = true }
-            | IsFullwidth -> { result with IsFullwidth = true }
+            | IsFullwidth | IsFullWidth -> { result with IsFullwidth = true }
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }

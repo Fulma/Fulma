@@ -38,7 +38,7 @@ let iconInteractive () =
                   Panel.block [ ]
                     [ Button.button [ Button.Color IsPrimary
                                       Button.IsOutlined
-                                      Button.IsFullwidth ]
+                                      Button.IsFullWidth ]
                                     [ str "Reset" ] ] ] ] ]
 
 

@@ -25,8 +25,10 @@ module Select =
 
     type Option =
         | Size of ISize
-        /// Add `is-fullwidth` class
+        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
         | IsFullwidth
+        /// Add `is-fullwidth` class
+        | IsFullWidth
         /// Add `is-inline` class
         | IsInline
         /// Add `is-loading` class if true
@@ -69,7 +71,7 @@ module Select =
         let parseOptions (result : Options) =
             function
             | Size size -> { result with Size = ofSize size |> Some }
-            | IsFullwidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
+            | IsFullwidth | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
             | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
             | IsLoading state -> { result with IsLoading = state }
             | IsFocused state -> { result with IsFocused = state }

@@ -9,8 +9,11 @@ module Field =
 
     module Classes =
         let [<Literal>] Container = "field"
-        let [<Literal>] Label = "field-label"
         let [<Literal>] Body = "field-body"
+        module Label =
+            let [<Literal>] Container = "field-label"
+            module VerticalAlign =
+                  let [<Literal>] IsNormal = "is-normal"
         module HasAddons =
               let [<Literal>] Left = "has-addons"
               let [<Literal>] Centered = "has-addons-centered"
@@ -57,31 +60,35 @@ module Field =
               CustomClass = None
               Props = [] }
 
-    type FieldLabelOption =
-        | Size of ISize
-        | CustomClass of string
-        | Props of IHTMLProp list
+    module Label =
 
-    type internal FieldLabelOptions =
-        { Size : string option
-          CustomClass : string option
-          Props : IHTMLProp list }
-        static member Empty =
-            { Size = None
-              CustomClass = None
-              Props = [] }
+        type Option =
+            | Size of ISize
+            | IsNormal
+            | CustomClass of string
+            | Props of IHTMLProp list
+
+        type internal Options =
+            { Size : string option
+              CustomClass : string option
+              Props : IHTMLProp list }
+            static member Empty =
+                { Size = None
+                  CustomClass = None
+                  Props = [] }
 
     /// Generate <label class="field-label"></label>
     let label options children =
-        let parseOptions (result : FieldLabelOptions) =
+        let parseOptions (result : Label.Options) =
             function
-            | Size size -> { result with Size = ofSize size |> Some }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
+            | Label.Size size -> { result with Size = ofSize size |> Some }
+            | Label.IsNormal -> { result with Size = Classes.Label.VerticalAlign.IsNormal |> Some }
+            | Label.CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Label.Props props -> { result with Props = props }
 
-        let opts = options |> List.fold parseOptions FieldLabelOptions.Empty
+        let opts = options |> List.fold parseOptions Label.Options.Empty
         let classes = Helpers.classes
-                        Classes.Label
+                        Classes.Label.Container
                         [ opts.Size; opts.CustomClass ]
                         [ ]
         div (classes::opts.Props)
