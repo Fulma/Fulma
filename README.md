@@ -3,7 +3,7 @@
 [![Gitter](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/fable-compiler/Fable)
 [![NuGet version](https://badge.fury.io/nu/Fulma.svg)](https://badge.fury.io/nu/Fulma)
 [![Build status](https://ci.appveyor.com/api/projects/status/s5syrdkbmbouoa0p/branch/master?svg=true)](https://ci.appveyor.com/project/MangelMaxime/fulma/branch/master)
-
+[![Build Status](https://travis-ci.org/MangelMaxime/Fulma.svg?branch=master)](https://travis-ci.org/MangelMaxime/Fulma)
 ## Supported version
 
 ### Fulma
