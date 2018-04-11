@@ -1,15 +1,19 @@
-// include Fake libs
-#r "./packages/build/FAKE/tools/FakeLib.dll"
-#r "System.IO.Compression.FileSystem"
+#r "paket: groupref netcorebuild //"
+#load ".fake/build.fsx/intellisense.fsx"
+
+#nowarn "52"
 
 open System
 open System.IO
 open System.Text.RegularExpressions
-open Fake
-open Fake.NpmHelper
-open Fake.ReleaseNotesHelper
-open Fake.Git
-open Fake.YarnHelper
+open Fake.Core
+open Fake.Core.TargetOperators
+open Fake.DotNet
+open Fake.IO
+open Fake.IO.Globbing.Operators
+open Fake.IO.FileSystemOperators
+open Fake.Tools.Git
+open Fake.Core.Environment
 
 module Util =
 
@@ -28,84 +32,100 @@ module Util =
                 | None -> line
                 | Some newLine -> newLine)
 
-let mutable dotnetExePath = "dotnet"
+let platformTool tool =
+    Process.tryFindFileOnPath tool
+    |> function Some t -> t | _ -> failwithf "%s not found" tool
 
-let runDotnet dir =
-    DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
-                                            WorkingDir = dir
-                                            TimeOut =  TimeSpan.FromHours 12. } )
-                                            // Extra timeout allow us to run watch mode
-                                            // Otherwise, the process is stopped every 30 minutes by default
+let run (cmd:string) dir args  =
+    if Process.execSimple (fun info ->
+        { info with
+            FileName = cmd
+            WorkingDirectory =
+                if not (String.IsNullOrWhiteSpace dir) then dir else info.WorkingDirectory
+            Arguments = args
+        }
+    ) TimeSpan.MaxValue <> 0 then
+        failwithf "Error while running '%s' with args: %s " cmd args
 
-Target "Clean" (fun _ ->
+let yarnTool = platformTool "yarn"
+
+let yarn = run yarnTool "./"
+
+Target.create "Clean" (fun _ ->
     !! "docs/**/bin"
     ++ "docs/**/obj"
     ++ "src/**/bin"
     ++ "src/**/obj"
-    |> Seq.iter(CleanDir)
+    |> Seq.iter Shell.CleanDir
 )
 
-Target "Install" (fun _ ->
+Target.create "Install" (fun _ ->
     !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "restore")
+        DotNet.restore id dir)
 )
 
-Target "Build" (fun _ ->
+Target.create "Build" (fun _ ->
     !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "build")
+        DotNet.build id dir)
 )
 
-Target "QuickBuild" (fun _ ->
+Target.create "QuickBuild" (fun _ ->
     !! "src/**/*.fsproj"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "build")
+        DotNet.build id dir)
 )
 
-Target "YarnInstall" (fun _ ->
-    Yarn (fun p ->
-    { p with
-        Command = Install Standard
-    })
+Target.create "YarnInstall" (fun _ ->
+    yarn "install"
 )
 
 // --------------------------------------------------------------------------------------
 // Docs targets
 
-Target "InstallDocs" (fun _ ->
+Target.create "InstallDocs" (fun _ ->
     !! "docs/**.fsproj"
     |> Seq.iter(fun s ->
         let dir = IO.Path.GetDirectoryName s
-        runDotnet dir "restore")
+        DotNet.restore id dir)
 )
 
 let watchDocs _ =
-    let runDotnetNoTimeout workingDir =
-        DotNetCli.RunCommand (fun p -> { p with ToolPath = dotnetExePath
-                                                WorkingDir = workingDir
-                                                TimeOut =  TimeSpan.FromDays 1. } ) // Really big timeout as we use a watcher
+    let result =
+        DotNet.exec
+            (DotNet.Options.withWorkingDirectory "docs")
+            "fable"
+            "webpack-dev-server --port free"
 
-    runDotnetNoTimeout "docs" "fable webpack-dev-server --port free"
+    if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
 
-Target "WatchDocs" watchDocs
 
-Target "QuickWatchDocs" watchDocs
+Target.create "WatchDocs" watchDocs
 
-Target "BuildDocs" (fun _ ->
-    runDotnet "docs" "fable webpack --port free -- -p"
+Target.create "QuickWatchDocs" watchDocs
+
+Target.create "BuildDocs" (fun _ ->
+    DotNet.exec
+        (DotNet.Options.withWorkingDirectory "docs")
+        "fable"
+        "webpack --port free -- -p"
+    |> ignore
 )
 
-Target "BuildPlugin" (fun _ ->
-    runDotnet "docs" "build Plugins -c Release"
+Target.create "BuildPlugin" (fun _ ->
+    DotNet.build
+        (fun p ->
+            { p with Configuration = DotNet.BuildConfiguration.Release } )
+        "docs/Plugins"
 )
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
-let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes) projFile =
+let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes.ReleaseNotes) projFile =
     printfn "Project: %s" projFile
     if releaseNotes.NugetVersion.ToUpper().EndsWith("NEXT")
     then
@@ -128,7 +148,7 @@ let toPackageReleaseNotes (notes: string list) =
     "* " + String.Join("\n * ", notes)
     |> (fun txt -> txt.Replace("\"", "\\\""))
 
-let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
+let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
     let versionRegex = Regex("<Version>(.*?)</Version>", RegexOptions.IgnoreCase)
 
     if needsPublishing versionRegex releaseNotes projFile then
@@ -140,23 +160,30 @@ let pushNuget (releaseNotes: ReleaseNotes) (projFile: string) =
         (versionRegex, projFile)
         ||> Util.replaceLines (fun line _ ->
                                     versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
-        runDotnet projDir (sprintf "pack -c Release /p:PackageReleaseNotes=\"%s\"" (toPackageReleaseNotes releaseNotes.Notes))
+
+        let result =
+            DotNet.exec
+                (DotNet.Options.withWorkingDirectory projDir)
+                "pack"
+                (sprintf "-c Release /p:PackageReleaseNotes=\"%s\"" (toPackageReleaseNotes releaseNotes.Notes))
+
+        if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
+
         Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
         |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
         |> (fun nupkg ->
-            (Path.GetFullPath nupkg, nugetKey)
-            ||> sprintf "nuget push %s -s nuget.org -k %s"
-            |> DotNetCli.RunCommand id)
+            Paket.push (fun p -> { p with ApiKey = nugetKey
+                                          WorkingDir = Path.getDirectory nupkg }))
 
 
-Target "PublishNugets" (fun _ ->
+Target.create "PublishNugets" (fun _ ->
     !! "src/Fulma/Fulma.fsproj"
     ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
     ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
     |> Seq.iter(fun s ->
         let projFile = s
         let projDir = IO.Path.GetDirectoryName(projFile)
-        let release = projDir </> "RELEASE_NOTES.md" |> ReleaseNotesHelper.LoadReleaseNotes
+        let release = projDir </> "RELEASE_NOTES.md" |> ReleaseNotes.load
         pushNuget release projFile
     )
 )
@@ -171,13 +198,13 @@ let docsOuput = fableRoot </> "docs" </> "public"
 // --------------------------------------------------------------------------------------
 // Release Scripts
 
-Target "PublishDocs" (fun _ ->
-  CleanDir temp
+Target.create "PublishDocs" (fun _ ->
+  Shell.CleanDir temp
   Repository.cloneSingleBranch "" githubLink publishBranch temp
 
-  CopyRecursive docsOuput temp true |> tracefn "%A"
-  StageAll temp
-  Git.Commit.Commit temp (sprintf "Update site (%s)" (DateTime.Now.ToShortDateString()))
+  Shell.CopyRecursive docsOuput temp true |> Trace.tracefn "%A"
+  Staging.stageAll temp
+  Commit.exec temp (sprintf "Update site (%s)" (DateTime.Now.ToShortDateString()))
   Branches.push temp
 )
 
@@ -201,4 +228,4 @@ Target "PublishDocs" (fun _ ->
     ==> "PublishDocs"
 
 // start build
-RunTargetOrDefault "Build"
+Target.runOrDefault "Build"
