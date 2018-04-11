@@ -1,3 +1,7 @@
+### 1.0.0-next
+
+* Add `NoColor` to `IColor`
+
 ### 1.0.0-beta-011
 
 * Update dependencies

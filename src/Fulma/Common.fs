@@ -1,6 +1,5 @@
 namespace Fulma
 
-open Fulma.BulmaClasses
 open Fable.Core
 open Fable.Helpers.React.Props
 
@@ -28,6 +27,7 @@ module Color =
         | IsSuccess
         | IsWarning
         | IsDanger
+        | NoColor
 
     let ofColor level =
         match level with
@@ -40,6 +40,7 @@ module Color =
         | IsSuccess -> Classes.IsSuccess
         | IsWarning -> Classes.IsWarning
         | IsDanger -> Classes.IsDanger
+        | NoColor -> ""
 
 [<AutoOpen>]
 module Size =
