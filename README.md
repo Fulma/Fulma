@@ -27,4 +27,8 @@
 
 Contributing
 ------
-Please have a look at the [guidelines](https://github.com/fable-elmish/elmish/blob/master/.github/CONTRIBUTING.md).
+Please have a look at the general [guidelines](https://github.com/fable-elmish/elmish/blob/master/.github/CONTRIBUTING.md).
+
+Instructions and Guidelines
+------
+Instructions and guidelines can be found just [here](https://github.com/MangelMaxime/Fulma/blob/master/GUIDELINES.md)

@@ -13,7 +13,7 @@ module FontAwesome =
             type IFontAwesomeIcon =
                 interface end
 
-            // In order to update this DU please us the script located under: utils/extract-font-awesome.js
+            // In order to update this DU please use the script located under: utils/extract-font-awesome.js
             // Generation for Font awesome 4.7.0
             [<StringEnum>]
             type FontAwesomeIcons =
