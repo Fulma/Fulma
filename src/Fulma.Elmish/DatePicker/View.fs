@@ -49,7 +49,7 @@ module View =
             let firstDateCalendar = first.AddDays(float -weekOffset)
 
             seq {
-                for dayRank = 0 to 34 do // We have 35 dates to show
+                for dayRank = 0 to 41 do // We have 42 dates to show
                     let date = firstDateCalendar.AddDays(float dayRank)
                     yield Calendar.Date.date [ Calendar.Date.Disabled (not (isCurrentMonth date)) ]
                                 [ Calendar.Date.item [
