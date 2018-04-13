@@ -1,3 +1,7 @@
+### 1.0.0-beta-015
+
+* Update to Fulma 1.0.0-beta-014
+
 ### 1.0.0-beta-014
 
 * Fix #106: provide alternate spelling for some classes `is-fullwidth` - `is-halfheight` - `is-fullwidth`

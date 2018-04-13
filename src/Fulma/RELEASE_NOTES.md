@@ -1,3 +1,8 @@
+### 1.0.0-beta-014
+
+* Fix #120: Simplify namespace
+* Remove alternate spelling
+
 ### 1.0.0-beta-013
 
 * Add `OnChange` and `Ref` to `Input` and `TextArea`

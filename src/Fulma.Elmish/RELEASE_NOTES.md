@@ -1,5 +1,9 @@
 ### 0.1.0-beta-009
 
+* Update to Fulma 1.0.0-beta-014
+
+### 0.1.0-beta-009
+
 * Fix #123: Datepicker: can't select 2018. september 30
 
 ### 0.1.0-beta-008
