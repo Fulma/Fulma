@@ -1,3 +1,7 @@
+### 1.0.0-beta-015
+
+* Allow user to define custom color using `IsCustomColor my-color`
+
 ### 1.0.0-beta-014
 
 * Fix #120: Simplify namespace

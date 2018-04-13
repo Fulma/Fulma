@@ -27,6 +27,9 @@ module Color =
         | IsSuccess
         | IsWarning
         | IsDanger
+        /// Allow you to specify a custom color. The color will be prefixed by "is-"
+        | IsCustomColor of string
+        /// Allow you to specify a NoColor case.
         | NoColor
 
     let ofColor level =
@@ -40,6 +43,7 @@ module Color =
         | IsSuccess -> Classes.IsSuccess
         | IsWarning -> Classes.IsWarning
         | IsDanger -> Classes.IsDanger
+        | IsCustomColor color -> "is-" + color
         | NoColor -> ""
 
 [<AutoOpen>]
