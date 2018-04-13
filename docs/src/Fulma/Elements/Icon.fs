@@ -188,7 +188,7 @@ We provide convenience functions for **[Font Awesome](http://fontawesome.io/)**.
 You need the next `open` statement to access the FontAwesome convenience functions.
 
 ```fsharp
-    open Fulma.Elements
+    open Fulma
     open Fulma.FontAwesome
 ```
 
