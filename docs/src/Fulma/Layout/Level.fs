@@ -2,9 +2,6 @@ module Layouts.Level
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.Layouts
-open Fulma.Elements.Form
-open Fulma.Elements
 
 let iconInteractive () =
     Level.level [ ]

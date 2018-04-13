@@ -1,4 +1,4 @@
-namespace Fulma.Elements
+namespace Fulma
 
 open Fulma
 open Fable.Import.React
@@ -33,8 +33,6 @@ module Button =
         // Colors
         | Color of IColor
         | Size of ISize
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         /// Add `is-link` class
@@ -103,7 +101,7 @@ module Button =
             // Sizes
             | Size size -> { result with Size = ofSize size |> Some }
             // Styles
-            | IsFullwidth | IsFullWidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
+            | IsFullWidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
             | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }

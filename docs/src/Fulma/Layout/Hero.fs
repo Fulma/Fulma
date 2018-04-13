@@ -2,9 +2,6 @@ module Layouts.Hero
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.Layouts
-open Fulma.Elements
-open Fulma.Components
 open Fulma.BulmaClasses
 
 let iconInteractive () =

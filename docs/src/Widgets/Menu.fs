@@ -2,10 +2,9 @@ module Widgets.Menu
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Components
-open Fulma.Elements
-open Fulma.Extra.FontAwesome
 open Elmish
+open Fulma
+open Fulma.FontAwesome
 
 type FulmaModules =
     | Elements

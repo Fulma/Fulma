@@ -1,4 +1,4 @@
-namespace Fulma.Layouts
+namespace Fulma
 
 open Fulma
 open Fable.Core

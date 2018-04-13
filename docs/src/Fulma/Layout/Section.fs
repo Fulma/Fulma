@@ -1,8 +1,7 @@
 module Layouts.Section
 
 open Fable.Helpers.React
-open Fulma.Layouts
-open Fulma.Elements
+open Fulma
 
 let basic () =
     Section.section [ ]

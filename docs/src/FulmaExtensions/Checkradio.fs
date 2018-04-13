@@ -5,11 +5,8 @@ open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
-open Fulma.Elements.Form
-open Fulma.Layouts
 open Fulma.Extensions
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 
 let inlineBlockInteractive () =
     Columns.columns [ ]

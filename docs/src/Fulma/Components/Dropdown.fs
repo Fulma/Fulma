@@ -2,9 +2,7 @@ module Components.Dropdown
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.Elements
-open Fulma.Components
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 
 let basic () =
     Dropdown.dropdown [ Dropdown.IsHoverable ]

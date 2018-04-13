@@ -3,7 +3,7 @@ module App.View
 open Elmish
 open Elmish.Browser.Navigation
 open Elmish.Browser.UrlParser
-open Fulma.Components
+open Fulma
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import

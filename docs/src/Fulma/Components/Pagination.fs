@@ -2,7 +2,6 @@ module Components.Pagination
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.Components
 
 let basic () =
     Pagination.pagination [ ]

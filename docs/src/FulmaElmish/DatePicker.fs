@@ -4,9 +4,8 @@ open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Components
+open Fulma
 open Fulma.Elmish
-open Fulma.Layouts
 open Fable.PowerPack
 open System
 

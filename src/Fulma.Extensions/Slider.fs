@@ -17,8 +17,6 @@ module Slider =
     type Option =
         | Color of IColor
         | Size of ISize
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         | IsCircle
@@ -73,7 +71,7 @@ module Slider =
             match opt with
             | Option.Color color -> { result with Color = ofColor color |> Some }
             | Size size -> { result with Size = ofSize size |> Some }
-            | IsFullwidth | IsFullWidth -> { result with Size = Classes.IsFullwidth |> Some }
+            | IsFullWidth -> { result with Size = Classes.IsFullwidth |> Some }
             | IsCircle -> { result with IsCircle  = true }
             | Disabled state -> { result with IsDisabled = state }
             | Value value -> { result with Value = Some value }

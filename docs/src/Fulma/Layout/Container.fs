@@ -4,8 +4,7 @@ open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fulma.Elements
-open Fulma.Layouts
+open Fulma
 
 let basic () =
     Container.container [ Container.IsFluid ]

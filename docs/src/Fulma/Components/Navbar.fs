@@ -3,8 +3,6 @@ module Components.Navbar
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Components
-open Fulma.Elements
 
 let basic () =
     Navbar.navbar [ ]

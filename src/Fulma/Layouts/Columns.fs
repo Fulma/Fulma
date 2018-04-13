@@ -1,6 +1,5 @@
-namespace Fulma.Layouts
+namespace Fulma
 
-open Fulma.BulmaClasses
 open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props

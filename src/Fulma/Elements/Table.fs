@@ -1,4 +1,4 @@
-namespace Fulma.Elements
+namespace Fulma
 
 open Fulma
 open Fable.Helpers.React
@@ -25,8 +25,6 @@ module Table =
         | IsBordered
         /// Set `is-stripped` class
         | IsStriped
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         /// Set `is-narrow` class
@@ -59,7 +57,7 @@ module Table =
             function
             | IsBordered -> { result with IsBordered = true }
             | IsStriped -> { result with IsStriped = true }
-            | IsFullwidth | IsFullWidth -> { result with IsFullwidth = true }
+            | IsFullWidth -> { result with IsFullwidth = true }
             | IsNarrow -> { result with IsNarrow = true }
             | IsHoverable -> { result with IsHoverable = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }

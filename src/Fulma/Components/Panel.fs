@@ -1,4 +1,4 @@
-namespace Fulma.Components
+namespace Fulma
 
 open Fulma.BulmaClasses
 open Fulma

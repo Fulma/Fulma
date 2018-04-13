@@ -1,4 +1,4 @@
-namespace Fulma.Elements
+namespace Fulma
 
 open Fulma
 open Fable.Import.React

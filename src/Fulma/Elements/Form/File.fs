@@ -1,4 +1,4 @@
-namespace Fulma.Elements.Form
+namespace Fulma
 
 open Fulma
 open Fable.Helpers.React
@@ -40,8 +40,6 @@ module File =
         /// Add `is-hovered` class if true
         | IsHovered of bool
         | Size of ISize
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         /// Add `is-centered` class
@@ -92,7 +90,7 @@ module File =
             | IsActive state -> { result with IsActive = state }
             | IsHovered state -> { result with IsHovered = state }
             | Size size -> { result with Size = ofSize size |> Some }
-            | IsFullwidth | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
+            | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
             | IsCentered -> { result with Alignment = Classes.Alignment.IsCentered |> Some }
             | IsRight -> { result with Alignment = Classes.Alignment.IsRight |> Some }
             | Color color -> { result with Color = ofColor color |> Some }

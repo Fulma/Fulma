@@ -3,8 +3,6 @@ module Components.Modal
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
-open Fulma.Components
 open Fable.Core
 open Fable.Import
 

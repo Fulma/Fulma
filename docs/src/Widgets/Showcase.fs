@@ -5,8 +5,6 @@ open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Components
-open Fulma.Elements
 
 [<Pojo>]
 type ShowcaseProps =

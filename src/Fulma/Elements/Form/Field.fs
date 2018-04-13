@@ -1,4 +1,4 @@
-namespace Fulma.Elements.Form
+namespace Fulma
 
 open Fulma
 open Fable.Helpers.React

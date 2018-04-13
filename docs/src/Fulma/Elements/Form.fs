@@ -3,9 +3,7 @@ module Elements.Form
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
-open Fulma.Extra.FontAwesome
-open Fulma.Elements.Form
+open Fulma.FontAwesome
 
 let basic () =
     form [ ]

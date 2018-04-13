@@ -1,4 +1,4 @@
-namespace Fulma.Elements.Form
+namespace Fulma
 
 open Fulma
 open Fable.Import
@@ -25,8 +25,6 @@ module Textarea =
 
     type Option =
         | Size of ISize
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         /// Add `is-inline` class
@@ -98,7 +96,7 @@ module Textarea =
         let parseOptions (result : Options) option =
             match option with
             | Size size -> { result with Size = ofSize size |> Some }
-            | IsFullwidth | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
+            | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
             | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
             | IsLoading state -> { result with IsLoading = state }
             | IsFocused state -> { result with IsFocused = state }

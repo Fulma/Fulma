@@ -1,12 +1,9 @@
 module FulmaExtensions.Calendar
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fulma
 open Fulma.Extensions
-open Fulma.Elements
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 
 let basic () =
     Calendar.calendar [ ]

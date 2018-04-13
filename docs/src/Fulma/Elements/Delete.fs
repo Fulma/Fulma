@@ -3,7 +3,6 @@ module Elements.Delete
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
 
 let demoInteractive () =
     div [ ClassName "block" ]

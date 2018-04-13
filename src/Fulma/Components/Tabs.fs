@@ -1,4 +1,4 @@
-namespace Fulma.Components
+namespace Fulma
 
 open Fulma
 open Fable.Helpers.React
@@ -32,8 +32,6 @@ module Tabs =
         | IsToggle
         /// Add `is-toggle-rounded` class
         | IsToggleRounded
-        /// Alternate spelling for consistency with Bulma's `is-fullwidth` class
-        | IsFullwidth
         /// Add `is-fullwidth` class
         | IsFullWidth
         | CustomClass of string
@@ -86,7 +84,7 @@ module Tabs =
             | IsBoxed -> { result with IsBoxed = true }
             | IsToggle -> { result with IsToggle = true }
             | IsToggleRounded -> { result with IsToggleRounded = true }
-            | IsFullwidth | IsFullWidth -> { result with IsFullwidth = true }
+            | IsFullWidth -> { result with IsFullwidth = true }
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }

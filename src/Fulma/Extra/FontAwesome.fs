@@ -1,8 +1,7 @@
-namespace Fulma.Extra
+namespace Fulma
 
 open Fable.Core
 open Fable.Helpers.React
-open Fulma.Elements
 open Fulma
 
 module FontAwesome =
@@ -1071,7 +1070,7 @@ module FontAwesome =
                       opts.Pull; opts.Animation; opts.Rotation
                       opts.Flip; opts.Color ] [] ] []
 
-        let faIcon (options : Fulma.Elements.Icon.Option list) (faOptions: IconOption list) =
+        let faIcon (options : Fulma.Icon.Option list) (faOptions: IconOption list) =
             let opts = toIconOptions faOptions
             Icon.icon options
                 [ displayIcon "fa " opts ]

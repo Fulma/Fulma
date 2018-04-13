@@ -1,8 +1,7 @@
 module Layouts.Footer
 
 open Fable.Helpers.React
-open Fulma.Layouts
-open Fulma.Elements
+open Fulma
 open Fulma.BulmaClasses
 
 let basic () =

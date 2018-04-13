@@ -1,4 +1,4 @@
-namespace Fulma.Layouts
+namespace Fulma
 
 open Fulma
 open Fulma.BulmaClasses
@@ -34,12 +34,8 @@ module Hero =
         | IsMedium
         /// Add `is-large` class
         | IsLarge
-        /// Alternate spelling for consistency with Bulma's `is-halfheight` class
-        | IsHalfheight
         /// Add `is-halfheight` class
         | IsHalfHeight
-        /// Alternate spelling for consistency with Bulma's `is-fullheight` class
-        | IsFullheight
         /// Add `is-fullheight` class
         | IsFullHeight
         | Color of IColor
@@ -67,8 +63,8 @@ module Hero =
             | Props props -> { result with Props = props }
             | IsMedium -> { result with Size = Classes.Size.IsMedium |> Some }
             | IsLarge -> { result with Size = Classes.Size.IsLarge |> Some }
-            | IsHalfHeight | IsHalfheight -> { result with Size = Classes.Size.IsHalfHeight |> Some }
-            | IsFullHeight | IsFullheight -> { result with Size = Classes.Size.IsFullHeight |> Some }
+            | IsHalfHeight -> { result with Size = Classes.Size.IsHalfHeight |> Some }
+            | IsFullHeight -> { result with Size = Classes.Size.IsFullHeight |> Some }
             | Color color -> { result with Color = ofColor color |> Some }
             | IsBold -> { result with IsBold = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }

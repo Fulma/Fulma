@@ -4,9 +4,7 @@ open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
 open Fulma
-open Fulma.Elements
-open Fulma.Layouts
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 open Fable.PowerPack
 open Fable.PowerPack.Fetch
 

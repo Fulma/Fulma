@@ -5,7 +5,7 @@ open Fable.Core
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
-open Fulma.Elements
+open Fulma
 
 [<Pojo>]
 type DangerousInnerHtml =

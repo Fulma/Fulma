@@ -1,7 +1,7 @@
 module Elements.Title
 
 open Fable.Helpers.React
-open Fulma.Elements
+open Fulma
 
 let simpleInteractive () =
     div [ ]

@@ -3,7 +3,6 @@ module Elements.Tag
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
 
 let colorInteractive () =
     div [ ClassName "block" ]

@@ -4,7 +4,6 @@ open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
 open Fulma
-open Fulma.Elements
 open Fulma.Extensions
 
 [<Pojo>]

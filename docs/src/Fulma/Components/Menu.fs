@@ -1,7 +1,7 @@
 module Components.Menu
 
 open Fable.Helpers.React
-open Fulma.Components
+open Fulma
 
 let basic () =
     // Helper to generate a menu item

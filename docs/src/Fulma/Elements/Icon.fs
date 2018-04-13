@@ -3,8 +3,7 @@ module Elements.Icon
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Elements
-open Fulma.Extra.FontAwesome
+open Fulma.FontAwesome
 
 let icon () =
     div [ ClassName "block" ]
@@ -190,7 +189,7 @@ You need the next `open` statement to access the FontAwesome convenience functio
 
 ```fsharp
     open Fulma.Elements
-    open Fulma.Extra.FontAwesome
+    open Fulma.FontAwesome
 ```
 
 All the examples below use Font Awesome.
