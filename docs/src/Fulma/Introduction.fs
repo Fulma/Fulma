@@ -72,7 +72,7 @@ Every element providing by Fulma will have at least 2 specials helpers:
 
 ### BulmaClasses
 
-*It's **important** to note that `BulmaClasses.fs` will be refactored before 1.0 release. It should not make much impact in your code has you will rarely use this file in your application.*
+*It's **important** to note that `BulmaClasses.fs` will be refactored before 1.0 release. It should not have much impact on your code, as you will rarely use this file in your application.*
 
 Fulma do not only provide wrappers around Bulma but also intellisense for the classes provided.
 
@@ -86,6 +86,6 @@ Bulma.Properties.Visibility.IsHidden
 
 ```
 
-All the compoments documented into this website, are availables into the library.
+All the compoments documented on this website, are available in the library.
 
         """
