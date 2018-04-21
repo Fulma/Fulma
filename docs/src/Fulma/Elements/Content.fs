@@ -58,7 +58,7 @@ let view =
                         """
 # Content
 
-A single class to handle WYSIWYG generated content, where only **HTML tags** are available. Content also support size attributes.
+A single class to handle WYSIWYG generated content, where only **HTML tags** are available. Content also supports size attributes.
 
 *[Bulma documentation](http://bulma.io/documentation/elements/content/)*
                         """
@@ -69,12 +69,12 @@ A single class to handle WYSIWYG generated content, where only **HTML tags** are
                         """
 ### Size
 
-Supported size:
+Supported sizez:
 
 * `Content.Size IsSmall`
 * `Content.Size IsMedium`
 * `Content.Size IsLarge`
 
-When you do not set the size, it's consider *normal*.
+When you do not set the size, it's considered *normal*.
                         """
                         (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]
