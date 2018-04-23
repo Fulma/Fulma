@@ -56,6 +56,8 @@ Target.create "Clean" (fun _ ->
     ++ "docs/**/obj"
     ++ "src/**/bin"
     ++ "src/**/obj"
+    ++ "templates/**/bin"
+    ++ "templates/**/obj"
     |> Seq.iter Shell.CleanDir
 )
 

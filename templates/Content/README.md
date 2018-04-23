@@ -18,6 +18,8 @@ This template setup a minimal application using [Fable](http://fable.io/), [Elmi
 1. Run: `./fake.sh build -t Watch`
 2. Go to [http://localhost:8080/](http://localhost:8080/)
 
+*On Unix you may need to run `chmod a+x fake.sh`*
+
 In development mode, we activate:
 
 - [Hot Module Replacement](https://fable-elmish.github.io/hmr/), modify your code and see the change on the fly

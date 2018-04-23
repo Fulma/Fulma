@@ -48,11 +48,15 @@ open Elmish.Debug
 open Elmish.HMR
 
 Program.mkProgram init update view
+//-:cnd:noEmit
 #if DEBUG
 |> Program.withHMR
 #endif
+//+:cnd:noEmit
 |> Program.withReactUnoptimized "elmish-app"
+//-:cnd:noEmit
 #if DEBUG
 |> Program.withDebugger
 #endif
+//+:cnd:noEmit
 |> Program.run
