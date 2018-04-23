@@ -56,6 +56,7 @@ let root model dispatch =
         function
         | Router.Home -> Home.view
         | Router.Showcase -> Demo.view
+        | Router.Template -> Template.view
         | Router.BlogIndex ->
             Widgets.MdViewer.view "blog/index.md"
         | Router.BlogArticle (Some file) ->

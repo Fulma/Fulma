@@ -65,6 +65,7 @@ type FulmaElmishPage =
 type Page =
     | Home
     | Showcase
+    | Template
     | BlogIndex
     | BlogArticle of string option
     | Fulma of FulmaPage
@@ -75,6 +76,7 @@ let private toHash page =
     match page with
     | Home -> "#home"
     | Showcase -> "#showcase"
+    | Template -> "#template"
     | BlogIndex -> "#blog"
     | BlogArticle (Some file) -> "#blog-viewer?file=" + file
     | BlogArticle None -> "#blog-viewer?file="
@@ -137,6 +139,7 @@ let private toHash page =
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
             map Showcase (s "showcase")
+            map Template (s "template")
             map BlogIndex (s "blog")
             map BlogArticle ( s "blog-viewer" <?> stringParam "file")
             map (Fulma FulmaPage.Introduction ) (s "fulma")

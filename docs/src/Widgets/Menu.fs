@@ -175,6 +175,7 @@ let view model dispatch =
         [ yield Menu.list [ ]
                    [ menuItem "Introduction" Home model.CurrentPage
                      menuItem "Demo" Showcase model.CurrentPage
+                     menuItem "Template" Template model.CurrentPage
                      menuItem "Blog" BlogIndex model.CurrentPage ]
           yield! menuFulma model.CurrentPage model.Fulma dispatch
           yield! menuFulmaExtensions model.CurrentPage
