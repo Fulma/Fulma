@@ -1,0 +1,40 @@
+{
+  "name": "fulma-demo",
+  "version": "0.0.1",
+  "description": "Demo for Fulma",
+  "main": "index.js",
+  "repository": "git@github.com:MangelMaxime/fulma-demo.git",
+  "author": "Maxime Mangel",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "font-awesome": "^4.7.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.3.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "bulma": "^0.7.1",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "cssnano": "^3.10.0",
+    "fable-loader": "^1.1.6",
+    "fable-utils": "^1.0.6",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.0",
+    "node-sass": "^4.8.3",
+    "remotedev": "^0.2.7",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
+}

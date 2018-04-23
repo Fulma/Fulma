@@ -1,0 +1,19 @@
+{
+    "author": "Maxime Mangel",
+    "classifications": [
+        "Fable",
+        "Elmish",
+        "Fulma",
+        "React"
+    ],
+    "name": "Minimal Elmish application with Fulma support",
+    "tags": {
+        "language": "F#",
+        "type": "project"
+    },
+    "identity": "Fable.Template.Fulma.Minimal",
+    "groupIdentity": "FulmaMinimal",
+    "shortName": "fulma-minimal",
+    "sourceName": "FulmaMinimalTemplate",
+    "preferNameDirectory": true
+}

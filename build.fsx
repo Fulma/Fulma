@@ -180,6 +180,7 @@ Target.create "PublishNugets" (fun _ ->
     !! "src/Fulma/Fulma.fsproj"
     ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
     ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
+    ++ "templates/Fable.Template.Fulma.Minimal.proj"
     |> Seq.iter(fun s ->
         let projFile = s
         let projDir = IO.Path.GetDirectoryName(projFile)
