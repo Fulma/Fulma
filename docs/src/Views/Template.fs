@@ -11,7 +11,7 @@ There is a **Fulma Minimal** template available, this is the quickest way to get
 
 ```shell
 > dotnet new -i Fable.Template.Fulma.Minimal
-> dotnet new fulma-miniaml -n MyApp [-lang F#]
+> dotnet new fulma-minimal -n MyApp [-lang F#]
 # Depending on your dotnet version, you may need the extra: [-lang F#]
 ```
 
