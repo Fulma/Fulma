@@ -16,9 +16,16 @@ It's only serve as a documentation of the wrapper and also test that the wrapper
 
 ---
 
-## How to install ?
+## Getting started
 
-Add `Fulma` dependency into your paket files: `paket add Fulma --project <your project>`
+There are two ways to get started with Fulma:
+
+1. You can use the [Fulma-Minimal template](#template)
+2. You can install it manually
+
+### How to install manually?
+
+Add `Fulma` dependency in your [Paket](https://fsprojects.github.io/Paket/) files: `paket add Fulma --project <your project>`
 
 Then `dotnet restore` on your `*.fsproj` file.
 
@@ -27,6 +34,8 @@ You are ready to start using Fulma. You can confirm it by trying to open `Fulma`
 ```fsharp
 open Fulma
 ```
+
+Fulma has a depedency on [Bulma](https://bulma.io/documentation/overview/start/) and you will need to add it through [yarn](https://yarnpkg.com/en/docs/usage) or [npm](https://docs.npmjs.com/getting-started/using-a-package.json).
 
 ## Architecture
 
