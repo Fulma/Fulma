@@ -93,7 +93,8 @@ let private menuFulma currentPage subModel dispatch =
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ menuItem "Introduction" (Fulma FulmaPage.Introduction) currentPage
-          menuItem "Versions" (Fulma FulmaPage.Versions) currentPage ]
+          menuItem "Versions" (Fulma FulmaPage.Versions) currentPage
+          menuItem "Modifiers" (Fulma FulmaPage.Modifiers) currentPage ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName layoutsClass

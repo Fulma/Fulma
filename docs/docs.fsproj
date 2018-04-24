@@ -46,6 +46,7 @@
     <Compile Include="src/Fulma/Elements/Table.fs" />
     <Compile Include="src/Fulma/Elements/Tag.fs" />
     <Compile Include="src/Fulma/Elements/Title.fs" />
+    <Compile Include="src/Fulma/Modifiers.fs" />
     <Compile Include="src/Fulma/Versions.fs" />
     <Compile Include="src/Fulma/Introduction.fs" />
     <Compile Include="src/Fulma/Router.fs" />

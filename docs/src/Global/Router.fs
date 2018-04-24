@@ -46,6 +46,7 @@ type FulmaPage =
     | Layout of Layouts
     | Introduction
     | Versions
+    | Modifiers
 
 type FulmaExtensionsPage =
     | Calendar
@@ -84,6 +85,7 @@ let private toHash page =
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
         | Versions -> "#fulma/versions"
+        | Modifiers -> "#fulma/modifiers"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
@@ -144,6 +146,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map BlogArticle ( s "blog-viewer" <?> stringParam "file")
             map (Fulma FulmaPage.Introduction ) (s "fulma")
             map (Fulma FulmaPage.Versions ) (s "fulma" </> s "versions")
+            map (Fulma FulmaPage.Modifiers)  (s "fulma" </> s "modifiers")
             // Layouts
             map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")
