@@ -14,6 +14,7 @@ module Control =
             let [<Literal>] Right = "has-icons-right"
         module State =
             let [<Literal>] IsLoading = "is-loading"
+        let [<Literal>] IsExpanded = "is-expanded"
 
     type Option =
         /// Add `has-icon-right` class
@@ -32,13 +33,15 @@ module Control =
           HasIconRight : bool
           CustomClass : string option
           Props : IHTMLProp list
-          IsLoading : bool }
+          IsLoading : bool
+          IsExpanded : bool }
         static member Empty =
             { HasIconLeft = false
               HasIconRight = false
               CustomClass = None
               Props = []
-              IsLoading = false }
+              IsLoading = false
+              IsExpanded = false }
 
     let internal controlView element options children =
         let parseOptions (result : Options) =
@@ -48,6 +51,7 @@ module Control =
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
             | IsLoading state -> { result with IsLoading = state }
+            | IsExpanded  -> { result with IsExpanded = state }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
@@ -56,7 +60,8 @@ module Control =
                         [ opts.CustomClass ]
                         [ Classes.State.IsLoading, opts.IsLoading
                           Classes.HasIcon.Right, opts.HasIconRight
-                          Classes.HasIcon.Left, opts.HasIconLeft ]
+                          Classes.HasIcon.Left, opts.HasIconLeft
+                          Classes.IsExpanded, opts.IsExpanded ]
 
         element (classes::opts.Props)
             children
