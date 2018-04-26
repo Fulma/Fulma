@@ -51,7 +51,7 @@ module Control =
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
             | IsLoading state -> { result with IsLoading = state }
-            | IsExpanded  -> { result with IsExpanded = state }
+            | IsExpanded  -> { result with IsExpanded = true }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
