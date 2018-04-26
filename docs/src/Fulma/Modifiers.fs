@@ -25,6 +25,12 @@ let textSize() =
           Content.content [ Content.Size IsMedium ] [ str "Medium" ]
           Content.content [ Content.Size IsLarge ] [ str "Large" ] ]
 
+let noColor() =
+    div [ ClassName "block" ]
+        [ Tag.tag [ Tag.Color IsPrimary ] [ str "Color" ]
+          Tag.tag [ Tag.Color NoColor ] [ str "NoColor" ]
+          Tag.tag [ Tag.Color isInstallationsPoly ] [ str "Custom color" ]]
+
 let view =
     Render.docPage [
         Render.contentFromMarkdown
@@ -70,16 +76,27 @@ $addColors: (
 $colors: map-merge($colors, $addColors);
 ```
 
+**Note**: If you place your custom colors in a separate file, it needs to be imported before the Bulma import.
+
+```css
+@import "./customcolor";
+@import '../node_modules/bulma/bulma';
+```
+
 Now you are ready to use your custom colors in your code:
 
-        """
+            """
+
         Render.docSection
-            "### Customer Colors"
+            ""
             (Widgets.Showcase.view customColor (Render.getViewSource customColor))
+
+        Render.docSection
+            """### No colors"""
+            (Widgets.Showcase.view noColor (Render.getViewSource noColor))
+
         Render.docSection
             """
-### No colors
-
 
 ## Sizes
 
