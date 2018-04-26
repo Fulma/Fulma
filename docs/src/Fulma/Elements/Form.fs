@@ -37,7 +37,15 @@ let basic () =
                       Icon.faIcon [ Icon.Size IsSmall; Icon.IsRight ] [ Fa.icon Fa.I.Warning ] ]
                   Help.help [ Help.Color IsDanger ]
                     [ str "This email is invalid" ] ]
-           // Subject field
+           // Phone field
+           Field.div [ ]
+                [ Field.div [ Field.HasAddons ]
+                    [ Control.p [ ]
+                        [ Button.button [ Button.IsStatic true ]
+                            [ str "+32" ] ]
+                      Control.p [ Control.IsExpanded ]
+                        [ Input.tel [ Input.Placeholder "expanded phone number field" ] ] ] ]
+            // Subject field
            Field.div [ ]
                 [ Label.label [ ]
                     [ str "Subject" ]
