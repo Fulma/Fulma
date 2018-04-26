@@ -27,6 +27,7 @@ $primary: $dark-blue;
 @import "./callout";
 @import "./prism";
 @import "./../css/prism.min.css";
+@import "customcolor";
 
 .navbar-bg {
     background-color: $dark-blue;

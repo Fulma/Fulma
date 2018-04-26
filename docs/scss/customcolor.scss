@@ -1,0 +1,16 @@
+@import "./../../node_modules/bulma/sass/utilities/initial-variables";
+@import "./../../node_modules/bulma/sass/utilities/functions";
+
+// Setup custom Colors
+$poly-installations: #9930ca;
+$poly-installations-invert: findColorInvert($poly-installations);
+$poly-fronts: #55b6ee;
+$poly-fronts-invert: findColorInvert($poly-fronts);
+
+// Add new color variables to the color map.
+@import "./../../node_modules/bulma/sass/utilities/derived-variables";
+$addColors: (
+  "poly-fronts":($poly-fronts, $poly-fronts-invert),
+  "poly-installations": ($poly-installations, $poly-installations-invert),
+);
+$colors: map-merge($colors, $addColors);
