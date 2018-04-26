@@ -22,6 +22,8 @@ module Control =
         | HasIconLeft
         /// Add `is-loading` class if true
         | IsLoading of bool
+        /// Add `is-expanded` class
+        | IsExpanded
         | CustomClass of string
         | Props of IHTMLProp list
 
