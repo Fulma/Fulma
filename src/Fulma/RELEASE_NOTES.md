@@ -1,3 +1,7 @@
+### 1.0.0-beta-016
+
+* Fix #126: Add `is-expanded` to `Control`
+
 ### 1.0.0-beta-015
 
 * Allow user to define custom color using `IsCustomColor my-color`
