@@ -7,15 +7,25 @@ open Fable.Helpers.React.Props
 module Color =
 
     module Classes =
-        let [<Literal>] IsBlack = "is-black"
-        let [<Literal>] IsDark = "is-dark"
-        let [<Literal>] IsLight = "is-light"
-        let [<Literal>] IsWhite = "is-white"
-        let [<Literal>] IsPrimary = "is-primary"
-        let [<Literal>] IsInfo = "is-info"
-        let [<Literal>] IsSuccess = "is-success"
-        let [<Literal>] IsWarning = "is-warning"
-        let [<Literal>] IsDanger = "is-danger"
+        let [<Literal>] IsBlack = "has-background-black"
+        let [<Literal>] IsDark = "has-background-dark"
+        let [<Literal>] IsLight = "has-background-light"
+        let [<Literal>] IsWhite = "has-background-white"
+        let [<Literal>] IsPrimary = "has-background-primary"
+        let [<Literal>] IsInfo = "has-background-info"
+        let [<Literal>] IsSuccess = "has-background-success"
+        let [<Literal>] IsWarning = "has-background-warning"
+        let [<Literal>] IsDanger = "has-background-danger"
+        let [<Literal>] IsLink = "has-background-link"
+        let [<Literal>] IsBlackBis = "has-background-black-bis"
+        let [<Literal>] IsBlackTer = "has-background-black-ter"
+        let [<Literal>] IsGreyDarker = "has-background-grey-darker"
+        let [<Literal>] IsGreyDark = "has-background-grey-dark"
+        let [<Literal>] IsGrey = "has-background-grey"
+        let [<Literal>] IsGreyLight = "has-background-grey-light"
+        let [<Literal>] IsGreyLighter = "has-background-grey-lighter"
+        let [<Literal>] IsWhiteTer = "has-background-white-ter"
+        let [<Literal>] IsWhiteBis = "has-background-white-bis"
 
     type IColor =
         | IsBlack
@@ -27,6 +37,16 @@ module Color =
         | IsSuccess
         | IsWarning
         | IsDanger
+        | IsLink
+        | IsBlackBis
+        | IsBlackTer
+        | IsGreyDarker
+        | IsGreyDark
+        | IsGrey
+        | IsGreyLight
+        | IsGreyLighter
+        | IsWhiteTer
+        | IsWhiteBis
         /// Allow you to specify a custom color. The color will be prefixed by "is-"
         | IsCustomColor of string
         /// Allow you to specify a NoColor case.
