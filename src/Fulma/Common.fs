@@ -7,25 +7,25 @@ open Fable.Helpers.React.Props
 module Color =
 
     module Classes =
-        let [<Literal>] IsBlack = "has-background-black"
-        let [<Literal>] IsDark = "has-background-dark"
-        let [<Literal>] IsLight = "has-background-light"
-        let [<Literal>] IsWhite = "has-background-white"
-        let [<Literal>] IsPrimary = "has-background-primary"
-        let [<Literal>] IsInfo = "has-background-info"
-        let [<Literal>] IsSuccess = "has-background-success"
-        let [<Literal>] IsWarning = "has-background-warning"
-        let [<Literal>] IsDanger = "has-background-danger"
-        let [<Literal>] IsLink = "has-background-link"
-        let [<Literal>] IsBlackBis = "has-background-black-bis"
-        let [<Literal>] IsBlackTer = "has-background-black-ter"
-        let [<Literal>] IsGreyDarker = "has-background-grey-darker"
-        let [<Literal>] IsGreyDark = "has-background-grey-dark"
-        let [<Literal>] IsGrey = "has-background-grey"
-        let [<Literal>] IsGreyLight = "has-background-grey-light"
-        let [<Literal>] IsGreyLighter = "has-background-grey-lighter"
-        let [<Literal>] IsWhiteTer = "has-background-white-ter"
-        let [<Literal>] IsWhiteBis = "has-background-white-bis"
+        let [<Literal>] IsBlack = "is-black"
+        let [<Literal>] IsDark = "is-dark"
+        let [<Literal>] IsLight = "is-light"
+        let [<Literal>] IsWhite = "is-white"
+        let [<Literal>] IsPrimary = "is-primary"
+        let [<Literal>] IsInfo = "is-info"
+        let [<Literal>] IsSuccess = "is-success"
+        let [<Literal>] IsWarning = "is-warning"
+        let [<Literal>] IsDanger = "is-danger"
+        let [<Literal>] IsLink = "is-link"
+        let [<Literal>] IsBlackBis = "is-black-bis"
+        let [<Literal>] IsBlackTer = "is-black-ter"
+        let [<Literal>] IsGreyDarker = "is-grey-darker"
+        let [<Literal>] IsGreyDark = "is-grey-dark"
+        let [<Literal>] IsGrey = "is-grey"
+        let [<Literal>] IsGreyLight = "is-grey-light"
+        let [<Literal>] IsGreyLighter = "is-grey-lighter"
+        let [<Literal>] IsWhiteTer = "is-white-ter"
+        let [<Literal>] IsWhiteBis = "is-white-bis"
 
     type IColor =
         | IsBlack
@@ -63,6 +63,16 @@ module Color =
         | IsSuccess -> Classes.IsSuccess
         | IsWarning -> Classes.IsWarning
         | IsDanger -> Classes.IsDanger
+        | IsLink -> Classes.IsLink
+        | IsBlackBis -> Classes.IsBlackBis
+        | IsBlackTer -> Classes.IsBlackTer
+        | IsGreyDarker -> Classes.IsGreyDarker
+        | IsGreyDark -> Classes.IsGreyDark
+        | IsGrey -> Classes.IsGrey
+        | IsGreyLight -> Classes.IsGreyLight
+        | IsGreyLighter -> Classes.IsGreyLighter
+        | IsWhiteTer -> Classes.IsWhiteTer
+        | IsWhiteBis -> Classes.IsWhiteBis
         | IsCustomColor color -> "is-" + color
         | NoColor -> ""
 
