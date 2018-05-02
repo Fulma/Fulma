@@ -105,23 +105,17 @@ module Modifier =
         module TextColor =
             let [<Literal>] Black = "has-text-black"
 
-    type IBackgroundColor =
-        | Black
-
-    type ITextColor =
-        | Black
-
     let ofBackground level =
         match level with
-        | IBackgroundColor.Black -> Classes.BackgroundColor.Black
+        | IsBlack -> Classes.BackgroundColor.Black
 
     let ofText level =
         match level with
-        | ITextColor.Black -> Classes.BackgroundColor.Black
+        | IsBlack -> Classes.BackgroundColor.Black
 
     type IModifier =
-        | HasBackgroundColor of IBackgroundColor
-        | HasTextColor of ITextColor
+        | HasBackgroundColor of IColor
+        | HasTextColor of IColor
 
     type internal Options =
         { BackgroundColor : string option
