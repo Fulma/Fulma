@@ -114,8 +114,8 @@ module Modifier =
         | IsBlack -> Classes.BackgroundColor.Black
 
     type IModifier =
-        | HasBackgroundColor of IColor
-        | HasTextColor of IColor
+        | BackgroundColor of IColor
+        | TextColor of IColor
 
     type internal Options =
         { BackgroundColor : string option
@@ -128,8 +128,8 @@ module Modifier =
     let parseOptions options =
         let parseOption result opt =
             match opt with
-            | HasBackgroundColor color -> { result with BackgroundColor = color |> ofBackground |> Some }
-            | HasTextColor color -> { result with TextColor = color |> ofText |> Some }
+            | BackgroundColor color -> { result with BackgroundColor = color |> ofBackground |> Some }
+            | TextColor color -> { result with TextColor = color |> ofText |> Some }
 
         let opts = options |> List.fold parseOption Options.Empty
         [opts.BackgroundColor; opts.TextColor]
