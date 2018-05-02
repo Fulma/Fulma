@@ -96,6 +96,51 @@ module Size =
         | IsLarge -> Classes.IsLarge
 
 [<AutoOpen>]
+module Modifier =
+
+    module Classes =
+        module BackgroundColor =
+            let [<Literal>] Black = "has-background-black"
+
+        module TextColor =
+            let [<Literal>] Black = "has-text-black"
+
+    type IBackgroundColor =
+        | Black
+
+    type ITextColor =
+        | Black
+
+    let ofBackground level =
+        match level with
+        | IBackgroundColor.Black -> Classes.BackgroundColor.Black
+
+    let ofText level =
+        match level with
+        | ITextColor.Black -> Classes.BackgroundColor.Black
+
+    type IModifier =
+        | HasBackgroundColor of IBackgroundColor
+        | HasTextColor of ITextColor
+
+    type internal Options =
+        { BackgroundColor : string option
+          TextColor : string option }
+
+        static member Empty =
+            { BackgroundColor = None
+              TextColor = None }
+
+    let parseOptions options =
+        let parseOption result opt =
+            match opt with
+            | HasBackgroundColor color -> { result with BackgroundColor = color |> ofBackground |> Some }
+            | HasTextColor color -> { result with TextColor = color |> ofText |> Some }
+
+        let opts = options |> List.fold parseOption Options.Empty
+        [opts.BackgroundColor; opts.TextColor]
+
+[<AutoOpen>]
 module Common =
     type GenericOption =
         | CustomClass of string
