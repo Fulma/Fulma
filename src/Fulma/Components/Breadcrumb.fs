@@ -40,20 +40,23 @@ module Breadcrumb =
         | Size of ISize
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
           Alignment : string option
           Separator : string option
           Size : string option
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Props = []
               Alignment = None
               Separator = None
               Size = None
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <nav class="breadcumb"></nav>
     let breadcrumb options children =
@@ -69,11 +72,12 @@ module Breadcrumb =
             | Size size -> { result with Size = ofSize size |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment; opts.Separator; opts.Size; opts.CustomClass ]
+                        (opts.Alignment::opts.Separator::opts.Size::opts.CustomClass::opts.Modifiers)
                         [ ]
 
         nav (classes::opts.Props)
@@ -86,16 +90,19 @@ module Breadcrumb =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               IsActive : bool
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   IsActive = false
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
     /// Generate <li></li>
     let item (options: Item.Option list) children =
@@ -104,10 +111,11 @@ module Breadcrumb =
             | Item.IsActive state -> { result with IsActive = state }
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        li [ yield Helpers.classes "" [ opts.CustomClass ]
+        li [ yield Helpers.classes "" (opts.CustomClass::opts.Modifiers)
                         [ Classes.State.IsActive, opts.IsActive ]
              yield! opts.Props ]
             children
