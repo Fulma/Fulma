@@ -24,25 +24,25 @@ module Card =
     /// Generate <div class="card"></div>
     let card (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Container (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="card-header"></div>
     let header (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Header.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Header.Container (opts.CustomClass::opts.Modifiers) []
         header (classes::opts.Props) children
 
     /// Generate <div class="card-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Content (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="card-footer"></div>
     let footer (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Footer.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Footer.Container (opts.CustomClass::opts.Modifiers) []
         footer (classes::opts.Props) children
 
     module Header =
@@ -54,20 +54,23 @@ module Card =
                 | IsCentered
                 | Props of IHTMLProp list
                 | CustomClass of string
+                | Modifiers of IModifier list
 
             type internal Options =
                 { IsCentered : bool
                   Props : IHTMLProp list
-                  CustomClass : string option }
+                  CustomClass : string option
+                  Modifiers : string option list }
                 static member Empty =
                     { IsCentered = false
                       Props = []
-                      CustomClass = None }
+                      CustomClass = None
+                      Modifiers = [] }
 
         /// Generate <a class="card-header-icon"></a>
         let icon (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Header.Icon [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Header.Icon (opts.CustomClass::opts.Modifiers) []
             a (classes::opts.Props) children
 
         /// Generate <p class="card-header-title"></p>
@@ -77,11 +80,12 @@ module Card =
                 | Title.IsCentered -> { result with IsCentered = true }
                 | Title.Props props -> { result with Props = props }
                 | Title.CustomClass customClass -> { result with CustomClass = customClass |> Some }
+                | Title.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
             let opts = options |> List.fold parseOption Title.Options.Empty
             let classes = Helpers.classes
                             Classes.Header.Title.Container
-                            [ opts.CustomClass ]
+                            (opts.CustomClass::opts.Modifiers)
                             [ Classes.Header.Title.IsCentered, opts.IsCentered ]
 
             p (classes::opts.Props) children
@@ -91,5 +95,5 @@ module Card =
         /// Generate <a class="card-footer-item"></a>
         let item (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Footer.Item [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Footer.Item (opts.CustomClass::opts.Modifiers) []
             a (classes::opts.Props) children
