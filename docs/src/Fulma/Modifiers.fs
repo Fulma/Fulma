@@ -64,6 +64,7 @@ Color is a modifier that can be added to elements.
 ### Supported colors
 
 Current colors are supported: `white`, `black`, `light`, `dark`, `primary`, `info`, `success`, `warning`, `danger`.
+Current shades of gray are supported: `black-bis`, `black-ter`, `grey-darker`, `grey-dark`, `grey`, `grey-light`, `grey-lighter`, `white-ter`, `white-bis`.
 
 Following elements support the color modifier:
 * [Button](#fulma/elements/button),
