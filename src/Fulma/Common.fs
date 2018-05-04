@@ -101,17 +101,92 @@ module Modifier =
     module Classes =
         module BackgroundColor =
             let [<Literal>] Black = "has-background-black"
-
+            let [<Literal>] Dark = "has-background-dark"
+            let [<Literal>] Light = "has-background-light"
+            let [<Literal>] White = "has-background-white"
+            let [<Literal>] Primary = "has-background-primary"
+            let [<Literal>] Info = "has-background-info"
+            let [<Literal>] Success = "has-background-success"
+            let [<Literal>] Warning = "has-background-warning"
+            let [<Literal>] Danger = "has-background-danger"
+            let [<Literal>] Link = "has-background-link"
+            let [<Literal>] BlackBis = "has-background-black-bis"
+            let [<Literal>] BlackTer = "has-background-black-ter"
+            let [<Literal>] GreyDarker = "has-background-grey-darker"
+            let [<Literal>] GreyDark = "has-background-grey-dark"
+            let [<Literal>] Grey = "has-background-grey"
+            let [<Literal>] GreyLight = "has-background-grey-light"
+            let [<Literal>] GreyLighter = "has-background-grey-lighter"
+            let [<Literal>] WhiteTer = "has-background-white-ter"
+            let [<Literal>] WhiteBis = "has-background-white-bis"
         module TextColor =
             let [<Literal>] Black = "has-text-black"
+            let [<Literal>] Dark = "has-text-dark"
+            let [<Literal>] Light = "has-text-light"
+            let [<Literal>] White = "has-text-white"
+            let [<Literal>] Primary = "has-text-primary"
+            let [<Literal>] Info = "has-text-info"
+            let [<Literal>] Success = "has-text-success"
+            let [<Literal>] Warning = "has-text-warning"
+            let [<Literal>] Danger = "has-text-danger"
+            let [<Literal>] Link = "has-text-link"
+            let [<Literal>] BlackBis = "has-text-black-bis"
+            let [<Literal>] BlackTer = "has-text-black-ter"
+            let [<Literal>] GreyDarker = "has-text-grey-darker"
+            let [<Literal>] GreyDark = "has-text-grey-dark"
+            let [<Literal>] Grey = "has-text-grey"
+            let [<Literal>] GreyLight = "has-text-grey-light"
+            let [<Literal>] GreyLighter = "has-text-grey-lighter"
+            let [<Literal>] WhiteTer = "has-text-white-ter"
+            let [<Literal>] WhiteBis = "has-text-white-bis"
 
     let ofBackground level =
         match level with
         | IsBlack -> Classes.BackgroundColor.Black
+        | IsDark -> Classes.BackgroundColor.Dark
+        | IsLight -> Classes.BackgroundColor.Light
+        | IsWhite -> Classes.BackgroundColor.White
+        | IsPrimary -> Classes.BackgroundColor.Primary
+        | IsInfo -> Classes.BackgroundColor.Info
+        | IsSuccess -> Classes.BackgroundColor.Success
+        | IsWarning -> Classes.BackgroundColor.Warning
+        | IsDanger -> Classes.BackgroundColor.Danger
+        | IsLink -> Classes.BackgroundColor.Link
+        | IsBlackBis -> Classes.BackgroundColor.BlackBis
+        | IsBlackTer -> Classes.BackgroundColor.BlackTer
+        | IsGreyDarker -> Classes.BackgroundColor.GreyDarker
+        | IsGreyDark -> Classes.BackgroundColor.GreyDark
+        | IsGrey -> Classes.BackgroundColor.Grey
+        | IsGreyLight -> Classes.BackgroundColor.GreyLight
+        | IsGreyLighter -> Classes.BackgroundColor.GreyLighter
+        | IsWhiteTer -> Classes.BackgroundColor.WhiteTer
+        | IsWhiteBis -> Classes.BackgroundColor.WhiteBis
+        | IsCustomColor color -> "has-background-" + color
+        | NoColor -> ""
 
     let ofText level =
         match level with
-        | IsBlack -> Classes.BackgroundColor.Black
+        | IsBlack -> Classes.TextColor.Black
+        | IsDark -> Classes.TextColor.Dark
+        | IsLight -> Classes.TextColor.Light
+        | IsWhite -> Classes.TextColor.White
+        | IsPrimary -> Classes.TextColor.Primary
+        | IsInfo -> Classes.TextColor.Info
+        | IsSuccess -> Classes.TextColor.Success
+        | IsWarning -> Classes.TextColor.Warning
+        | IsDanger -> Classes.TextColor.Danger
+        | IsLink -> Classes.TextColor.Link
+        | IsBlackBis -> Classes.TextColor.BlackBis
+        | IsBlackTer -> Classes.TextColor.BlackTer
+        | IsGreyDarker -> Classes.TextColor.GreyDarker
+        | IsGreyDark -> Classes.TextColor.GreyDark
+        | IsGrey -> Classes.TextColor.Grey
+        | IsGreyLight -> Classes.TextColor.GreyLight
+        | IsGreyLighter -> Classes.TextColor.GreyLighter
+        | IsWhiteTer -> Classes.TextColor.WhiteTer
+        | IsWhiteBis -> Classes.TextColor.WhiteBis
+        | IsCustomColor color -> "has-text-" + color
+        | NoColor -> ""
 
     type IModifier =
         | BackgroundColor of IColor
