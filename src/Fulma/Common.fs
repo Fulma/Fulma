@@ -200,7 +200,7 @@ module Modifier =
             { BackgroundColor = None
               TextColor = None }
 
-    let parseOptions options =
+    let parseModifiers options =
         let parseOption result opt =
             match opt with
             | BackgroundColor color -> { result with BackgroundColor = color |> ofBackground |> Some }
@@ -214,20 +214,24 @@ module Common =
     type GenericOption =
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of IModifier list
 
     type GenericOptions =
         { CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
 
         static member Empty =
             { CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     let genericParse options =
         let parseOptions (result: GenericOptions ) opt =
             match opt with
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         options |> List.fold parseOptions GenericOptions.Empty
 
