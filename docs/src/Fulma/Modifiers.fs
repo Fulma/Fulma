@@ -31,6 +31,24 @@ let noColor() =
           Tag.tag [ Tag.Color NoColor ] [ str "NoColor" ]
           Tag.tag [ Tag.Color isInstallationsPoly ] [ str "Custom color" ]]
 
+let backgroundAndTextColor() =
+    Card.card [ ]
+        [ Card.header [ ]
+            [ Card.Header.title [ Card.Header.Title.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsLink ] ]
+                [ str "Component" ]
+              Card.Header.icon [ ]
+                [ i [ ClassName "fa fa-angle-down" ] [ ] ] ]
+          Card.content [ ]
+            [ Content.content [ ]
+                [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
+          Card.footer [ ]
+            [ Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsInfo ] ]
+                [ str "Save" ]
+              Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsBlackBis; TextColor IsWhiteBis ] ]
+                [ str "Edit" ]
+              Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsDanger ] ]
+                [ str "Delete" ] ] ]
+
 let view =
     Render.docPage [
         Render.contentFromMarkdown
@@ -53,6 +71,14 @@ Following elements support the color modifier:
 * [Progress](#fulma/elements/progress),
 * [Tag](#fulma/elements/tag).
 
+            """
+
+        Render.docSection
+            """### Background and text color"""
+            (Widgets.Showcase.view backgroundAndTextColor (Render.getViewSource backgroundAndTextColor))
+
+        Render.contentFromMarkdown
+            """
 ### Custom colors
 
 You can add your own colors
