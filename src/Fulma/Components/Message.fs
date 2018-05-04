@@ -17,18 +17,21 @@ module Message =
         | Color of IColor
         | Size of ISize
         | CustomClass of string
+        | Modifiers of IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
           Color : string option
           Size : string option
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Props = []
               Color = None
               Size = None
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <article class="message"></article>
     let message options children =
@@ -38,11 +41,12 @@ module Message =
             | Option.Color color -> { result with Color = ofColor color |> Some}
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Size size -> { result with Size = ofSize size |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Color; opts.CustomClass; opts.Size ]
+                        (opts.Color::opts.CustomClass::opts.Size::opts.Modifiers)
                         [ ]
 
         article (classes::opts.Props)
@@ -51,11 +55,11 @@ module Message =
     /// Generate <div class="message-header"></div>
     let header (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Header [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Header (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="message-body"></div>
     let body (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Body [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Body (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
