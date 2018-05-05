@@ -69,7 +69,7 @@ let view =
                         """
 ### Colors
 
-Please note the display on the next sample isn't perfact because we customize Bulma to work with Fulma colors for the docs site.
+Please note the display on the next sample isn't perfect because we customize Bulma to work with Fulma colors for the docs site.
 
 You can see the default looks [here](https://bulma.io/documentation/components/navbar/#colors).
                         """
