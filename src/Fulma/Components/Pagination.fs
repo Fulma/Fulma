@@ -32,20 +32,23 @@ module Pagination =
         | Size of ISize
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of IModifier list
 
     type internal Options =
         { Alignment : string option
           Size : string option
           IsRounded : bool
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
 
         static member Empty =
             { Alignment = None
               Size = None
               IsRounded = false
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     module Link =
 
@@ -54,16 +57,19 @@ module Pagination =
             | Current of bool
             | CustomClass of string
             | Props of IHTMLProp list
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsCurrent : bool
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
 
             static member Empty =
                 { IsCurrent = false
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
     /// Generate <nav class="pagination"></nav>
     let pagination (options: Option list) children =
@@ -75,11 +81,12 @@ module Pagination =
             | IsRounded -> { result with IsRounded = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment; opts.Size; opts.CustomClass ]
+                        (opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers)
                         [ Classes.Styles.IsRounded, opts.IsRounded ]
 
         nav (classes::opts.Props)
@@ -88,13 +95,13 @@ module Pagination =
     /// Generate <a class="pagination-previous"></a>
     let previous (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Previous [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Previous (opts.CustomClass::opts.Modifiers) []
         a (classes::opts.Props) children
 
     /// Generate <a class="pagination-next"></a>
     let next (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Next [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Next (opts.CustomClass::opts.Modifiers) []
         a (classes::opts.Props) children
 
     /// Generate <li><a class="pagination-link"></a></li>
@@ -117,7 +124,7 @@ module Pagination =
         let opts = genericParse options
 
         li [ ]
-           [ span [ yield Helpers.classes Classes.Ellipsis [opts.CustomClass] []
+           [ span [ yield Helpers.classes Classes.Ellipsis (opts.CustomClass::opts.Modifiers) []
                     yield! opts.Props
                     yield (DangerouslySetInnerHTML { __html = "&hellip;" }) :> IHTMLProp ]
                   [ ] ]
@@ -125,5 +132,5 @@ module Pagination =
     /// Generate <ul class="pagination-list"></ul>
     let list (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.List [opts.CustomClass] []
+        let classes = Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers) []
         ul (classes::opts.Props) children
