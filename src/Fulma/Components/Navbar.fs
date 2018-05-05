@@ -58,6 +58,7 @@ module Navbar =
         | IsFixedBottom
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of IModifier list
 
     type internal Options =
         { HasShadow : bool
@@ -65,7 +66,8 @@ module Navbar =
           IsTransparent : bool
           FixedInfo : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
 
         static member Empty =
             { HasShadow = false
@@ -73,7 +75,8 @@ module Navbar =
               FixedInfo = None
               IsTransparent = false
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     module Menu =
 
@@ -82,16 +85,19 @@ module Navbar =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsActive : bool
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
 
             static member Empty =
                 { IsActive = false
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
     module Item =
 
@@ -108,6 +114,7 @@ module Navbar =
             | IsExpanded
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsTab : bool
@@ -116,7 +123,8 @@ module Navbar =
               HasDropdown : bool
               IsExpanded : bool
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
 
             static member Empty =
                 { IsTab = false
@@ -125,7 +133,8 @@ module Navbar =
                   IsExpanded = false
                   HasDropdown = false
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
         let internal item element options children =
             let parseOptions (result: Options ) opt =
@@ -137,10 +146,11 @@ module Navbar =
                 | HasDropdown -> { result with HasDropdown = true }
                 | Props props -> { result with Props = props }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes =
-                Helpers.classes Classes.Item.Container [opts.CustomClass]
+                Helpers.classes Classes.Item.Container (opts.CustomClass::opts.Modifiers)
                     [ Classes.Item.State.IsActive, opts.IsActive
                       Classes.Item.Style.IsTab, opts.IsTab
                       Classes.Item.IsHoverable, opts.IsHoverable
@@ -161,26 +171,30 @@ module Navbar =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsActive : bool
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
 
             static member Empty =
                 { IsActive = false
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
         let internal link element (options : Option list) children =
             let parseOptions (result : Options) opt =
                 match opt with
                 | IsActive state -> { result with IsActive = state }
-                | CustomClass customClass -> { result with CustomClass = Some customClass}
-                | Props props -> { result with Props = props}
+                | CustomClass customClass -> { result with CustomClass = Some customClass }
+                | Props props -> { result with Props = props }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Link.Container [opts.CustomClass] [Classes.Link.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Link.Container (opts.CustomClass::opts.Modifiers) [Classes.Link.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-link"></div>
@@ -199,20 +213,23 @@ module Navbar =
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsActive : bool
               IsBoxed : bool
               IsRight : bool
               Props : IHTMLProp list
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { IsActive = false
                   IsBoxed = false
                   IsRight = false
                   Props = []
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
         let internal dropdown element (options : Option list) children =
             let parseOptions (result : Options) opt =
@@ -220,11 +237,12 @@ module Navbar =
                 | IsActive state -> { result with IsActive = state }
                 | IsBoxed -> { result with IsBoxed = true }
                 | IsRight -> { result with IsRight = true }
-                | CustomClass customClass -> { result with CustomClass = Some customClass}
-                | Props props -> { result with Props = props}
+                | CustomClass customClass -> { result with CustomClass = Some customClass }
+                | Props props -> { result with Props = props }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Dropdown.Container [opts.CustomClass] [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Dropdown.Container (opts.CustomClass::opts.Modifiers) [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-dropdown"></div>
@@ -235,7 +253,7 @@ module Navbar =
     module Brand =
         let internal brand element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Brand [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Brand (opts.CustomClass::opts.Modifiers) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-brand"></div>
@@ -246,7 +264,7 @@ module Navbar =
     module Start =
         let internal start element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Start [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Start (opts.CustomClass::opts.Modifiers) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-start"></div>
@@ -257,7 +275,7 @@ module Navbar =
     module End =
         let internal ``end`` element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.End [opts.CustomClass] []
+            let classes = Helpers.classes Classes.End (opts.CustomClass::opts.Modifiers) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-end"></div>
@@ -276,10 +294,11 @@ module Navbar =
             | IsTransparent -> { result with IsTransparent = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Color color -> { result with Color = ofColor color |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
-            Helpers.classes Classes.Container [opts.CustomClass; opts.Color; opts.FixedInfo ]
+            Helpers.classes Classes.Container (opts.CustomClass::opts.Color::opts.FixedInfo::opts.Modifiers)
                [ Classes.Style.HasShadow, opts.HasShadow
                  Classes.Style.IsTransparent, opts.IsTransparent]
 
@@ -292,10 +311,11 @@ module Navbar =
             | Menu.IsActive state -> { result with IsActive = state }
             | Menu.Props props -> { result with Props = props }
             | Menu.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Menu.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
         let classes =
-            Helpers.classes Classes.Menu.Container [opts.CustomClass]
+            Helpers.classes Classes.Menu.Container (opts.CustomClass::opts.Modifiers)
                 [Classes.Menu.State.IsActive, opts.IsActive]
 
         div (classes::opts.Props) children
@@ -303,17 +323,17 @@ module Navbar =
     /// Generate <div class="navbar-burger"></div>
     let burger (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Burger [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Burger (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="navbar-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Content (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="navbar-divider"></div>
     let divider (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Divider [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Divider (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
