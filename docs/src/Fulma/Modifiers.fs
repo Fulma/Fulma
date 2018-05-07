@@ -69,18 +69,150 @@ Color is a modifier that can be added to elements.
 
 *[Bulma documentation](https://bulma.io/documentation/modifiers/color-helpers/)*
 
-| | | | |
-|---|---|---|---|
-| <span class="preview-color has-background-black"></span> | `BackgroundColor IsBlack` | <span class="has-text-black">I am a colored text</span> | `TextColor IsBlack` |
-| <span class="preview-color has-background-dark"></span> | `BackgroundColor IsDark` | <span class="has-text-dark">I am a colored text</span> | `TextColor IsDark` |
-| <span class="preview-color has-background-light"></span> | `BackgroundColor IsLight` | <span class="has-text-light">I am a colored text</span> | `TextColor IsLight` |
-| <span class="preview-color has-background-white"></span> | `BackgroundColor IsWhite` | <span class="has-text-white">I am a colored text</span> | `TextColor IsWhite` |
-| <span class="preview-color has-background-primary"></span> | `BackgroundColor IsPrimary` | <span class="has-text-primary">I am a colored text</span> | `TextColor IsPrimary` |
-| <span class="preview-color has-background-info"></span> | `BackgroundColor IsInfo` | <span class="has-text-info">I am a colored text</span> | `TextColor IsInfo` |
-| <span class="preview-color has-background-success"></span> | `BackgroundColor IsSuccess` | <span class="has-text-success">I am a colored text</span> | `TextColor IsSuccess` |
-| <span class="preview-color has-background-warning"></span> | `BackgroundColor IsWarning` | <span class="has-text-warning">I am a colored text</span> | `TextColor IsWarning` |
-| <span class="preview-color has-background-danger"></span> | `BackgroundColor IsDanger` | <span class="has-text-danger">I am a colored text</span> | `TextColor IsDanger` |
-| <span class="preview-color has-background-link"></span> | `BackgroundColor IsLink` | <span class="has-text-link">I am a colored text</span> | `TextColor IsLink` |
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <span class="preview-color has-background-black"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsBlack</code>
+            </td>
+            <td>
+                <span class="has-text-black">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsBlack</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-dark"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsDark</code>
+            </td>
+            <td>
+                <span class="has-text-dark">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsDark</code>
+            </td>
+        </tr>
+        <tr class="has-background-grey">
+            <td>
+                <span class="preview-color has-background-light"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsLight</code>
+            </td>
+            <td>
+                <span class="has-text-light">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsLight</code>
+            </td>
+        </tr>
+        <tr class="has-background-grey">
+            <td>
+                <span class="preview-color has-background-white"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsWhite</code>
+            </td>
+            <td>
+                <span class="has-text-white">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsWhite</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-primary"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsPrimary</code>
+            </td>
+            <td>
+                <span class="has-text-primary">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsPrimary</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-info"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsInfo</code>
+            </td>
+            <td>
+                <span class="has-text-info">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsInfo</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-success"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsSuccess</code>
+            </td>
+            <td>
+                <span class="has-text-success">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsSuccess</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-warning"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsWarning</code>
+            </td>
+            <td>
+                <span class="has-text-warning">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsWarning</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-danger"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsDanger</code>
+            </td>
+            <td>
+                <span class="has-text-danger">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsDanger</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-link"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsLink</code>
+            </td>
+            <td>
+                <span class="has-text-link">I am a colored text</span>
+            </td>
+            <td>
+                <code>TextColor IsLink</code>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 ## Shades
 
@@ -88,17 +220,136 @@ Shade is a modifier that can be added to elements.
 
 *[Bulma documentation](https://bulma.io/documentation/modifiers/color-helpers/)*
 
-| | | | |
-|---|---|---|---|
-| <span class="preview-color has-background-black-bis"></span> | `BackgroundColor IsBlackBis` | <span class="has-text-black-bis">I am a shaded text</span> | `TextColor IsBlackBis` |
-| <span class="preview-color has-background-black-ter"></span> | `BackgroundColor IsBlackTer` | <span class="has-text-black-ter">I am a shaded text</span> | `TextColor IsBlackTer` |
-| <span class="preview-color has-background-grey-darker"></span> | `BackgroundColor IsGreyDarker` | <span class="has-text-grey-darker">I am a shaded text</span> | `TextColor IsGreyDarker` |
-| <span class="preview-color has-background-grey-dark"></span> | `BackgroundColor IsGreyDark` | <span class="has-text-grey-dark">I am a shaded text</span> | `TextColor IsGreyDark` |
-| <span class="preview-color has-background-grey"></span> | `BackgroundColor IsGrey` | <span class="has-text-grey">I am a shaded text</span> | `TextColor IsGrey` |
-| <span class="preview-color has-background-grey-light"></span> | `BackgroundColor IsGreyLight` | <span class="has-text-grey-light">I am a shaded text</span> | `TextColor IsGreyLight` |
-| <span class="preview-color has-background-grey-lighter"></span> | `BackgroundColor IsGreyLighter` | <span class="has-text-grey-lighter">I am a shaded text</span> | `TextColor IsGreyLighter` |
-| <span class="preview-color has-background-white-ter"></span> | `BackgroundColor IsWhiteTer` | <span class="has-text-white-ter">I am a shaded text</span> | `TextColor IsWhiteTer` |
-| <span class="preview-color has-background-white-bis"></span> | `BackgroundColor IsWhiteBis` | <span class="has-text-white-bis">I am a shaded text</span> | `TextColor IsWhiteBis` |
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <span class="preview-color has-background-black-bis"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsBlackBis</code>
+            </td>
+            <td>
+                <span class="has-text-black-bis">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsBlackBis</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-black-ter"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsBlackTer</code>
+            </td>
+            <td>
+                <span class="has-text-black-ter">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsBlackTer</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-grey-darker"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsGreyDarker</code>
+            </td>
+            <td>
+                <span class="has-text-grey-darker">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsGreyDarker</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-grey-dark"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsGreyDark</code>
+            </td>
+            <td>
+                <span class="has-text-grey-dark">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsGreyDark</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-grey"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsGrey</code>
+            </td>
+            <td>
+                <span class="has-text-grey">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsGrey</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="preview-color has-background-grey-light"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsGreyLight</code>
+            </td>
+            <td>
+                <span class="has-text-grey-light">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsGreyLight</code>
+            </td>
+        </tr>
+        <tr class="has-background-grey">
+            <td>
+                <span class="preview-color has-background-grey-lighter"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsGreyLighter</code>
+            </td>
+            <td>
+                <span class="has-text-grey-lighter">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsGreyLighter</code>
+            </td>
+        </tr>
+        <tr class="has-background-grey-dark">
+            <td>
+                <span class="preview-color has-background-white-ter"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsWhiteTer</code>
+            </td>
+            <td>
+                <span class="has-text-white-ter">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsWhiteTer</code>
+            </td>
+        </tr>
+        <tr class="has-background-grey-darker">
+            <td>
+                <span class="preview-color has-background-white-bis"></span>
+            </td>
+            <td>
+                <code>BackgroundColor IsWhiteBis</code>
+            </td>
+            <td>
+                <span class="has-text-white-bis">I am a shaded text</span>
+            </td>
+            <td>
+                <code>TextColor IsWhiteBis</code>
+            </td>
+        </tr>
+    </tbody>
+</table>
             """
 
         Render.docSection
