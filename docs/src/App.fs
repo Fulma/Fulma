@@ -72,8 +72,7 @@ let root model dispatch =
             FulmaElmish.Router.view fulmaElmishPage
 
     div []
-        [ div [ ClassName "navbar-bg" ]
-              [ div [ ClassName "container" ] [ Navbar.view ] ]
+        [ Navbar.view
           div [ ClassName "section" ]
               [ div [ ClassName "container" ]
                     [ div [ ClassName "columns" ]

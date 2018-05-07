@@ -1,13 +1,25 @@
 @import "./../../node_modules/bulma/sass/utilities/initial-variables";
+@import "./../../node_modules/bulma/sass/utilities/functions";
 
 // Bulma customization
 $body-size: 14px;
 
-// Colors
-$dark-blue: #2D3947;
-$primary: $dark-blue;
+// Setup custom Colors
+$custom-purple: #9930ca;
+$custom-purple-invert: findColorInvert($custom-purple);
+$custom-light-blue: #55b6ee;
+$custom-light-blue-invert: findColorInvert($custom-light-blue);
+$fulma: #2d3947;
+$fulma-invert: findColorInvert($fulma);
 
-@import "./customcolor";
+$custom-colors: (
+  "custom-light-blue":($custom-light-blue, $custom-light-blue-invert),
+  "custom-purple": ($custom-purple, $custom-purple-invert),
+  "fulma": ($fulma, $fulma-invert),
+);
+
+@import "./../../node_modules/bulma/sass/utilities/derived-variables";
+
 @import '../node_modules/bulma/bulma';
 
 @import "../node_modules/bulma-badge/badge.sass";
@@ -29,11 +41,7 @@ $primary: $dark-blue;
 @import "./prism";
 @import "./../css/prism.min.css";
 
-.navbar-bg {
-    background-color: $dark-blue;
-    .nav {
-        background-color: $dark-blue;
-    }
+.navbar {
     .title {
         color: white;
     }
@@ -65,7 +73,6 @@ body {
 .hero-body {
     padding: 1rem;
 }
-
 
 // Override bulma .number class for prismjs classes
 .number {
@@ -143,4 +150,13 @@ input[type="radio"] {
 
 .icon-size {
     background-color: $yellow;
+}
+
+.preview-color {
+    border-radius: 2px;
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,.1),inset 0 0 0 1px rgba(0,0,0,.1);
+    float: left;
+    height: 24px;
+    margin-right: 8px;
+    width: 24px;
 }

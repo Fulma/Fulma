@@ -111,6 +111,7 @@ module Pagination =
             | Link.Current state -> { result with IsCurrent = state }
             | Link.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Link.Props props -> { result with Props = props }
+            | Link.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Link.Options.Empty
 
