@@ -50,11 +50,11 @@ let backgroundAndTextColor() =
             [ Content.content [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
           Card.footer [ ]
-            [ Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsInfo ] ]
+            [ Card.Footer.item [ Modifiers [ BackgroundColor IsGreyLighter; TextColor IsInfo ] ]
                 [ str "Save" ]
-              Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsBlackBis; TextColor IsWhiteBis ] ]
+              Card.Footer.item [ Modifiers [ BackgroundColor IsBlackBis; TextColor IsWhiteBis ] ]
                 [ str "Edit" ]
-              Card.Footer.item [ Common.GenericOption.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsDanger ] ]
+              Card.Footer.item [ Modifiers [ BackgroundColor IsGreyLighter; TextColor IsDanger ] ]
                 [ str "Delete" ] ] ]
 
 let view =
