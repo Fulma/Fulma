@@ -23,7 +23,7 @@
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
-    "bulma": "^0.6.2",
+    "bulma": "^0.7.1",
     "bulma-badge": "^0.1.0",
     "bulma-calendar": "^0.1.7",
     "bulma-checkradio": "^0.1.5",

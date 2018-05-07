@@ -28,12 +28,3 @@ group netcorebuild
     nuget Fake.Core.ReleaseNotes
     nuget Fake.IO.FileSystem
     nuget Fake.Tools.Git
-
-group Build
-framework: net46
-
-    source https://nuget.org/api/v2
-    nuget FSharp.Core  redirects:force, content:none
-    nuget FAKE
-
-    github fsharp/FAKE modules/Octokit/Octokit.fsx

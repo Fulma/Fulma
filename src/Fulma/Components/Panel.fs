@@ -30,16 +30,19 @@ module Panel =
             /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               CustomClass : string option
-              IsActive : bool }
+              IsActive : bool
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   CustomClass = None
-                  IsActive = false }
+                  IsActive = false
+                  Modifiers = [] }
 
     module Tab =
 
@@ -48,16 +51,19 @@ module Panel =
             /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
+            | Modifiers of IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               CustomClass : string option
-              IsActive : bool }
+              IsActive : bool
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   CustomClass = None
-                  IsActive = false }
+                  IsActive = false
+                  Modifiers = [] }
 
     /// Generate <div class="panel-block"></div>
     let block (options : Block.Option list) children =
@@ -66,10 +72,11 @@ module Panel =
             | Block.Props props -> { result with Props = props }
             | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-        let classes = Helpers.classes Classes.Block.Container [opts.CustomClass] [Classes.Block.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes Classes.Block.Container (opts.CustomClass::opts.Modifiers) [Classes.Block.State.IsActive, opts.IsActive]
         div (classes::opts.Props) children
 
     /// Generate <label class="panel-block"></label>
@@ -79,27 +86,28 @@ module Panel =
             | Block.Props props -> { result with Props = props }
             | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-        let classes = Helpers.classes Classes.Block.Container [opts.CustomClass] [Classes.Block.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes Classes.Block.Container (opts.CustomClass::opts.Modifiers) [Classes.Block.State.IsActive, opts.IsActive]
         label (classes::opts.Props) children
 
     /// Generate <nav class="panel"></nav>
     let panel (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Container (opts.CustomClass::opts.Modifiers) []
         nav (classes::opts.Props) children
 
     /// Generate <div class="panel-heading"></div>
     let heading (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Heading [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Heading (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <div class="panel-tabs"></div>
     let tabs (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Tabs.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Tabs.Container (opts.CustomClass::opts.Modifiers) []
         div (classes::opts.Props) children
 
     /// Generate <a></a>
@@ -109,13 +117,14 @@ module Panel =
             | Tab.Props props -> { result with Props = props }
             | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
-        let classes = Helpers.classes "" [opts.CustomClass] [Classes.Tabs.Tab.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes "" (opts.CustomClass::opts.Modifiers) [Classes.Tabs.Tab.State.IsActive, opts.IsActive]
         a (classes::opts.Props) children
 
     /// Generate <span class="panel-icon"></span>
     let icon (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Block.Icon [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Block.Icon (opts.CustomClass::opts.Modifiers) []
         span (classes::opts.Props) children

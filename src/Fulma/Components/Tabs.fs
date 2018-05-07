@@ -36,6 +36,7 @@ module Tabs =
         | IsFullWidth
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of IModifier list
 
     type internal Options =
         { Alignment : string option
@@ -45,7 +46,8 @@ module Tabs =
           IsToggleRounded : bool
           IsFullwidth : bool
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
 
         static member Empty =
             { Alignment = None
@@ -55,7 +57,8 @@ module Tabs =
               IsFullwidth = false
               Size = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     module Tab =
 
@@ -64,16 +67,19 @@ module Tabs =
             | IsActive of bool
             | CustomClass of string
             | Props of IHTMLProp list
+            | Modifiers of IModifier list
 
         type internal Options =
             { IsActive : bool
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
 
             static member Empty =
                 { IsActive = false
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
     /// Generate <div class="tabs"><ul></ul></div>
     let tabs (options: Option list) children =
@@ -88,11 +94,12 @@ module Tabs =
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment; opts.Size; opts.CustomClass ]
+                        (opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers)
                         [ Classes.Style.IsBoxed, opts.IsBoxed
                           Classes.Style.IsFullwidth, opts.IsFullwidth
                           Classes.Style.IsToggle, opts.IsToggle
@@ -108,6 +115,7 @@ module Tabs =
             | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Tab.Props props -> { result with Props = props }
+            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
         let classes = classList [ Classes.State.IsActive, opts.IsActive ] :> IHTMLProp

@@ -22,34 +22,37 @@ module Menu =
             | Props of IHTMLProp list
             | CustomClass of string
             | OnClick of (React.MouseEvent -> unit)
+            | Modifiers of IModifier list
 
         type internal Options =
             {   Props : IHTMLProp list
                 IsActive : bool
                 CustomClass : string option
-                OnClick : (React.MouseEvent -> unit) option }
+                OnClick : (React.MouseEvent -> unit) option
+                Modifiers : string option list }
             static member Empty =
                 { Props = []
                   IsActive = false
                   CustomClass = None
-                  OnClick = None }
+                  OnClick = None
+                  Modifiers = [] }
 
     /// Generate <aside class="menu"></aside>
     let menu (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Container (opts.CustomClass::opts.Modifiers) []
         aside (classes::opts.Props) children
 
     /// Generate <p class="menu-label"></p>
     let label (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Label [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Label (opts.CustomClass::opts.Modifiers) []
         p (classes::opts.Props) children
 
     /// Generate <div class="menu-list"></div>
     let list (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.List [opts.CustomClass] []
+        let classes = Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers) []
         ul (classes::opts.Props) children
 
     /// Generate <li><a></a></li>
@@ -60,11 +63,12 @@ module Menu =
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Item.OnClick cb -> { result with OnClick = cb |> Some }
+            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
         let classes =
             [Classes.State.IsActive, opts.IsActive]
-            |> Helpers.classes Classes.List [opts.CustomClass]
+            |> Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers)
         let attrs =
             match opts.OnClick with
             | Some handler -> classes::(upcast DOMAttr.OnClick handler)::opts.Props
