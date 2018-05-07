@@ -13,7 +13,6 @@ open Fake.IO
 open Fake.IO.Globbing.Operators
 open Fake.IO.FileSystemOperators
 open Fake.Tools.Git
-open Fake.Core.Environment
 
 module Util =
 
@@ -58,7 +57,7 @@ Target.create "Clean" (fun _ ->
     ++ "src/**/obj"
     ++ "templates/**/bin"
     ++ "templates/**/obj"
-    |> Seq.iter Shell.CleanDir
+    |> Seq.iter Shell.cleanDir
 )
 
 Target.create "Install" (fun _ ->
@@ -156,7 +155,7 @@ let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
     if needsPublishing versionRegex releaseNotes projFile then
         let projDir = Path.GetDirectoryName(projFile)
         let nugetKey =
-            match environVarOrNone "NUGET_KEY" with
+            match  Environment.environVarOrNone "NUGET_KEY" with
             | Some nugetKey -> nugetKey
             | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
         (versionRegex, projFile)
@@ -202,10 +201,10 @@ let docsOuput = fableRoot </> "docs" </> "public"
 // Release Scripts
 
 Target.create "PublishDocs" (fun _ ->
-  Shell.CleanDir temp
+  Shell.cleanDir temp
   Repository.cloneSingleBranch "" githubLink publishBranch temp
 
-  Shell.CopyRecursive docsOuput temp true |> Trace.tracefn "%A"
+  Shell.copyRecursive docsOuput temp true |> Trace.tracefn "%A"
   Staging.stageAll temp
   Commit.exec temp (sprintf "Update site (%s)" (DateTime.Now.ToShortDateString()))
   Branches.push temp
