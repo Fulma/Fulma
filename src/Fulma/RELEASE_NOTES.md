@@ -1,6 +1,7 @@
-### NEXT
+### 1.0.0-beta-017
 
 * Fix typos in `IsStriped` doc comment
+* Start supporting Bulma 0.7.x by addingg `has-backgground-xxx` and `has-text-xxx`
 
 ### 1.0.0-beta-016
 
