@@ -23,7 +23,7 @@ module Table =
     type TableOption =
         /// Set `is-hovered` class
         | IsBordered
-        /// Set `is-stripped` class
+        /// Set `is-striped` class
         | IsStriped
         /// Add `is-fullwidth` class
         | IsFullWidth

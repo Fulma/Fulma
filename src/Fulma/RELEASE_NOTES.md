@@ -1,3 +1,7 @@
+### NEXT
+
+* Fix typos in `IsStriped` doc comment
+
 ### 1.0.0-beta-016
 
 * Fix #126: Add `is-expanded` to `Control`
