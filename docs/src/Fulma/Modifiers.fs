@@ -143,7 +143,6 @@ In Fulma, you can get intellisense for your own colors by creating your own help
 ```fs
 // By using inline the caller will be replaced directly by the function body
 let inline isCustomLightBlue<'a> = IsCustomColor "custom-light-blue"
-let inline isCustomPurple<'a> = IsCustomColor "custom-purple"
 ```
 
 Now you are ready to use your custom colors in your code:
