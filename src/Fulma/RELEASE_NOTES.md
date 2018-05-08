@@ -1,3 +1,7 @@
+### 1.0.0-beta-018
+
+- Add `RequireQualifiedAccess` to `Modifier` API. Needed to avoid conflict with CSSProps
+
 ### 1.0.0-beta-017
 
 * Fix typos in `IsStriped` doc comment

@@ -30,7 +30,7 @@ module Panel =
             /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
@@ -51,7 +51,7 @@ module Panel =
             /// Add `is-active` class if true
             | IsActive of bool
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
@@ -72,7 +72,7 @@ module Panel =
             | Block.Props props -> { result with Props = props }
             | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
@@ -86,7 +86,7 @@ module Panel =
             | Block.Props props -> { result with Props = props }
             | Block.IsActive state -> { result with IsActive = state }
             | Block.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
         let classes = Helpers.classes Classes.Block.Container (opts.CustomClass::opts.Modifiers) [Classes.Block.State.IsActive, opts.IsActive]
@@ -117,7 +117,7 @@ module Panel =
             | Tab.Props props -> { result with Props = props }
             | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
         let classes = Helpers.classes "" (opts.CustomClass::opts.Modifiers) [Classes.Tabs.Tab.State.IsActive, opts.IsActive]

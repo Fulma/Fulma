@@ -17,7 +17,7 @@ module Message =
         | Color of IColor
         | Size of ISize
         | CustomClass of string
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
@@ -41,7 +41,7 @@ module Message =
             | Option.Color color -> { result with Color = ofColor color |> Some}
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Size size -> { result with Size = ofSize size |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes

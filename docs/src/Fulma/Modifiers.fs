@@ -44,17 +44,21 @@ let noColor() =
 let backgroundAndTextColor() =
     Card.card [ ]
         [ Card.header [ ]
-            [ Card.Header.title [ Card.Header.Title.Modifiers [ BackgroundColor IsGreyLighter; TextColor IsLink ] ]
+            [ Card.Header.title [ Card.Header.Title.Modifiers [ Modifier.BackgroundColor IsGreyLighter
+                                                                Modifier.TextColor IsLink ] ]
                 [ str "Component" ] ]
           Card.content [ ]
             [ Content.content [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
           Card.footer [ ]
-            [ Card.Footer.item [ Modifiers [ BackgroundColor IsGreyLighter; TextColor IsInfo ] ]
+            [ Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
+                                             Modifier.TextColor IsInfo ] ]
                 [ str "Save" ]
-              Card.Footer.item [ Modifiers [ BackgroundColor IsBlackBis; TextColor IsWhiteBis ] ]
+              Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsBlackBis
+                                             Modifier.TextColor IsWhiteBis ] ]
                 [ str "Edit" ]
-              Card.Footer.item [ Modifiers [ BackgroundColor IsGreyLighter; TextColor IsDanger ] ]
+              Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
+                                             Modifier.TextColor IsDanger ] ]
                 [ str "Delete" ] ] ]
 
 let view =

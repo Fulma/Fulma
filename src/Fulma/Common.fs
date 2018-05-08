@@ -95,7 +95,7 @@ module Size =
         | IsMedium -> Classes.IsMedium
         | IsLarge -> Classes.IsLarge
 
-[<AutoOpen>]
+[<RequireQualifiedAccess>]
 module Modifier =
 
     module Classes =
@@ -214,7 +214,7 @@ module Common =
     type GenericOption =
         | CustomClass of string
         | Props of IHTMLProp list
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type GenericOptions =
         { CustomClass : string option
@@ -231,7 +231,7 @@ module Common =
             match opt with
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         options |> List.fold parseOptions GenericOptions.Empty
 

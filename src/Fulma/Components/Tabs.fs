@@ -36,7 +36,7 @@ module Tabs =
         | IsFullWidth
         | CustomClass of string
         | Props of IHTMLProp list
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Alignment : string option
@@ -67,7 +67,7 @@ module Tabs =
             | IsActive of bool
             | CustomClass of string
             | Props of IHTMLProp list
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsActive : bool
@@ -94,7 +94,7 @@ module Tabs =
             | Size size -> { result with Size = ofSize size |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
@@ -115,7 +115,7 @@ module Tabs =
             | Tab.IsActive state -> { result with IsActive = state }
             | Tab.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Tab.Props props -> { result with Props = props }
-            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
         let classes = classList [ Classes.State.IsActive, opts.IsActive ] :> IHTMLProp

@@ -19,7 +19,7 @@ module Media =
         | Size of ISize
         | Props of IHTMLProp list
         | CustomClass of string
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
@@ -43,7 +43,7 @@ module Media =
             | Size size -> { result with Size = ofSize size |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes

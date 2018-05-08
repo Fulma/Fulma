@@ -54,7 +54,7 @@ module Card =
                 | IsCentered
                 | Props of IHTMLProp list
                 | CustomClass of string
-                | Modifiers of IModifier list
+                | Modifiers of Modifier.IModifier list
 
             type internal Options =
                 { IsCentered : bool
@@ -80,7 +80,7 @@ module Card =
                 | Title.IsCentered -> { result with IsCentered = true }
                 | Title.Props props -> { result with Props = props }
                 | Title.CustomClass customClass -> { result with CustomClass = customClass |> Some }
-                | Title.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+                | Title.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOption Title.Options.Empty
             let classes = Helpers.classes

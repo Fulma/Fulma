@@ -22,7 +22,7 @@ module Menu =
             | Props of IHTMLProp list
             | CustomClass of string
             | OnClick of (React.MouseEvent -> unit)
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             {   Props : IHTMLProp list
@@ -63,7 +63,7 @@ module Menu =
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Item.OnClick cb -> { result with OnClick = cb |> Some }
-            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
         let classes =

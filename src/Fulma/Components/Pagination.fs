@@ -32,7 +32,7 @@ module Pagination =
         | Size of ISize
         | CustomClass of string
         | Props of IHTMLProp list
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Alignment : string option
@@ -57,7 +57,7 @@ module Pagination =
             | Current of bool
             | CustomClass of string
             | Props of IHTMLProp list
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsCurrent : bool
@@ -81,7 +81,7 @@ module Pagination =
             | IsRounded -> { result with IsRounded = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
@@ -111,7 +111,7 @@ module Pagination =
             | Link.Current state -> { result with IsCurrent = state }
             | Link.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Link.Props props -> { result with Props = props }
-            | Link.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Link.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Link.Options.Empty
 

@@ -58,7 +58,7 @@ module Navbar =
         | IsFixedBottom
         | Props of IHTMLProp list
         | CustomClass of string
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { HasShadow : bool
@@ -85,7 +85,7 @@ module Navbar =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsActive : bool
@@ -114,7 +114,7 @@ module Navbar =
             | IsExpanded
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsTab : bool
@@ -146,7 +146,7 @@ module Navbar =
                 | HasDropdown -> { result with HasDropdown = true }
                 | Props props -> { result with Props = props }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
-                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes =
@@ -171,7 +171,7 @@ module Navbar =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsActive : bool
@@ -191,7 +191,7 @@ module Navbar =
                 | IsActive state -> { result with IsActive = state }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
                 | Props props -> { result with Props = props }
-                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes = Helpers.classes Classes.Link.Container (opts.CustomClass::opts.Modifiers) [Classes.Link.State.IsActive, opts.IsActive]
@@ -213,7 +213,7 @@ module Navbar =
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsActive : bool
@@ -239,7 +239,7 @@ module Navbar =
                 | IsRight -> { result with IsRight = true }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
                 | Props props -> { result with Props = props }
-                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes = Helpers.classes Classes.Dropdown.Container (opts.CustomClass::opts.Modifiers) [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
@@ -294,7 +294,7 @@ module Navbar =
             | IsTransparent -> { result with IsTransparent = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Color color -> { result with Color = ofColor color |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
@@ -311,7 +311,7 @@ module Navbar =
             | Menu.IsActive state -> { result with IsActive = state }
             | Menu.Props props -> { result with Props = props }
             | Menu.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Menu.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Menu.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
         let classes =

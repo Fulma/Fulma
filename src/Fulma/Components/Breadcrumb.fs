@@ -40,7 +40,7 @@ module Breadcrumb =
         | Size of ISize
         | Props of IHTMLProp list
         | CustomClass of string
-        | Modifiers of IModifier list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
@@ -72,7 +72,7 @@ module Breadcrumb =
             | Size size -> { result with Size = ofSize size |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
@@ -90,7 +90,7 @@ module Breadcrumb =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
@@ -111,7 +111,7 @@ module Breadcrumb =
             | Item.IsActive state -> { result with IsActive = state }
             | Item.Props props -> { result with Props = props }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 

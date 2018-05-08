@@ -96,7 +96,7 @@ module Dropdown =
             | IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
-            | Modifiers of IModifier list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
@@ -116,7 +116,7 @@ module Dropdown =
                 | IsActive state -> { result with IsActive = state }
                 | Props props -> { result with Props = props }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
-                | Modifiers modifiers -> { result with Modifiers = modifiers |> parseModifiers }
+                | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes =
