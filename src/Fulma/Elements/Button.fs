@@ -23,6 +23,7 @@ module Button =
             let [<Literal>] IsInverted = "is-inverted"
             let [<Literal>] IsText = "is-text"
             let [<Literal>] IsRounded = "is-rounded"
+            let [<Literal>] IsExpanded = "is-expanded"
         module List =
             let [<Literal>] Container = "buttons"
             let [<Literal>] HasAddons = "has-addons"
@@ -45,6 +46,8 @@ module Button =
         | IsText
         /// Add `is-rouned` class
         | IsRounded
+        /// Add `is-expanded` class
+        | IsExpanded
         /// Add `is-hovered` class if true
         | IsHovered of bool
         /// Add `is-focused` class if true
@@ -69,6 +72,7 @@ module Button =
           IsDisabled : bool
           IsHovered : bool
           IsFocused : bool
+          IsExpanded : bool
           IsText : bool
           IsRounded : bool
           IsActive : bool
@@ -86,6 +90,7 @@ module Button =
               IsText = false
               IsRounded = false
               IsActive = false
+              IsExpanded = false
               IsLoading = false
               IsStatic = false
               IsHovered = false
@@ -107,6 +112,7 @@ module Button =
             | IsInverted -> { result with IsInverted = true }
             | IsText -> { result with IsText = true }
             | IsRounded -> { result with IsRounded = true }
+            | IsExpanded -> { result with IsExpanded = true }
             // States
             | IsHovered state -> { result with IsHovered = state }
             | IsFocused state -> { result with IsFocused = state }
@@ -128,6 +134,7 @@ module Button =
                           Classes.Styles.IsInverted, opts.IsInverted
                           Classes.Styles.IsText, opts.IsText
                           Classes.Styles.IsRounded, opts.IsRounded
+                          Classes.Styles.IsExpanded, opts.IsExpanded
                           Classes.State.IsHovered, opts.IsHovered
                           Classes.State.IsFocused, opts.IsFocused
                           Classes.State.IsActive, opts.IsActive

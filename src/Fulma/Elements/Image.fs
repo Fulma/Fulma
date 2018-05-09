@@ -10,20 +10,30 @@ module Image =
     module Classes =
         let [<Literal>] Container = "image"
         module Size =
-              let [<Literal>] Is16x16 = "is-16x16"
-              let [<Literal>] Is24x24 = "is-24x24"
-              let [<Literal>] Is32x32 = "is-32x32"
-              let [<Literal>] Is48x48 = "is-48x48"
-              let [<Literal>] Is64x64 = "is-64x64"
-              let [<Literal>] Is96x96 = "is-96x96"
-              let [<Literal>] Is128x128 = "is-128x128"
+            let [<Literal>] Is16x16 = "is-16x16"
+            let [<Literal>] Is24x24 = "is-24x24"
+            let [<Literal>] Is32x32 = "is-32x32"
+            let [<Literal>] Is48x48 = "is-48x48"
+            let [<Literal>] Is64x64 = "is-64x64"
+            let [<Literal>] Is96x96 = "is-96x96"
+            let [<Literal>] Is128x128 = "is-128x128"
         module Ratio =
-              let [<Literal>] IsSquare = "is-square"
-              let [<Literal>] Is1by1 = "is-1by1"
-              let [<Literal>] Is4by3 = "is-4by3"
-              let [<Literal>] Is3by2 = "is-3by2"
-              let [<Literal>] Is16by9 = "is-16by9"
-              let [<Literal>] Is2by1 = "is-2by1"
+            let [<Literal>] IsSquare = "is-square"
+            let [<Literal>] Is1by1 = "is-1by1"
+            let [<Literal>] Is5by4 = "is-5by4"
+            let [<Literal>] Is4by3 = "is-4by3"
+            let [<Literal>] Is3by2 = "is-3by2"
+            let [<Literal>] Is5by3 = "is-5by3"
+            let [<Literal>] Is16by9 = "is-16by9"
+            let [<Literal>] Is2by1 = "is-2by1"
+            let [<Literal>] Is3by1 = "is-3by1"
+            let [<Literal>] Is4by5 = "is-4by5"
+            let [<Literal>] Is3by4 = "is-3by4"
+            let [<Literal>] Is2by3 = "is-2by3"
+            let [<Literal>] Is3by5 = "is-3by5"
+            let [<Literal>] Is9by16 = "is-9by16"
+            let [<Literal>] Is1by2 = "is-1by2"
+            let [<Literal>] Is1by3 = "is-1by3"
 
     type Option =
         // Size
@@ -46,14 +56,34 @@ module Image =
         | IsSquare
         /// Add `is-1by1` class
         | Is1by1
+        /// Add `is-5by4` class
+        | Is5by4
         /// Add `is-4by3` class
         | Is4by3
         /// Add `is-3by2` class
         | Is3by2
+        /// Add `is-5by3` class
+        | Is5by3
         /// Add `is-16by9` class
         | Is16by9
         /// Add `is-2by1` class
         | Is2by1
+        /// Add `is-3by1` class
+        | Is3by1
+        /// Add `is-4by5` class
+        | Is4by5
+        /// Add `is-3by4` class
+        | Is3by4
+        /// Add `is-2by3` class
+        | Is2by3
+        /// Add `is-3by5` class
+        | Is3by5
+        /// Add `is-9by16` class
+        | Is9by16
+        /// Add `is-1by2` class
+        | Is1by2
+        /// Add `is-1by3` class
+        | Is1by3
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
@@ -84,10 +114,20 @@ module Image =
             // Ratio
             | IsSquare -> { result with Ratio = Classes.Ratio.IsSquare |> Some }
             | Is1by1 -> { result with Ratio = Classes.Ratio.Is1by1 |> Some }
+            | Is5by4 -> { result with Ratio = Classes.Ratio.Is5by4 |> Some }
             | Is4by3 -> { result with Ratio = Classes.Ratio.Is4by3 |> Some }
             | Is3by2 -> { result with Ratio = Classes.Ratio.Is3by2 |> Some }
+            | Is5by3 -> { result with Ratio = Classes.Ratio.Is5by3 |> Some }
             | Is16by9 -> { result with Ratio = Classes.Ratio.Is16by9 |> Some }
             | Is2by1 -> { result with Ratio = Classes.Ratio.Is2by1 |> Some }
+            | Is3by1 -> { result with Ratio = Classes.Ratio.Is3by1 |> Some }
+            | Is4by5 -> { result with Ratio = Classes.Ratio.Is4by5 |> Some }
+            | Is3by4 -> { result with Ratio = Classes.Ratio.Is3by4 |> Some }
+            | Is2by3 -> { result with Ratio = Classes.Ratio.Is2by3 |> Some }
+            | Is3by5 -> { result with Ratio = Classes.Ratio.Is3by5 |> Some }
+            | Is9by16 -> { result with Ratio = Classes.Ratio.Is9by16 |> Some }
+            | Is1by2 -> { result with Ratio = Classes.Ratio.Is1by2 |> Some }
+            | Is1by3 -> { result with Ratio = Classes.Ratio.Is1by3 |> Some }
             // Extra
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
