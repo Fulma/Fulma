@@ -66,6 +66,7 @@ module Input =
         | Ref of (Browser.Element->unit)
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
@@ -82,7 +83,8 @@ module Input =
           OnChange : (React.FormEvent -> unit) option
           Ref : (Browser.Element->unit) option
           Props : IHTMLProp list
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Size = None
@@ -99,7 +101,8 @@ module Input =
               OnChange = None
               Ref = None
               Props = []
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     let private ofType =
         function
@@ -136,13 +139,15 @@ module Input =
             | OnChange cb -> { result with OnChange = cb |> Some }
             | Ref cb -> { result with Ref = cb |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size
-                          opts.Color
-                          opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.Color
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ Classes.State.IsStatic, opts.IsStatic
                           Classes.Styles.IsRounded, opts.IsRounded ]
         input

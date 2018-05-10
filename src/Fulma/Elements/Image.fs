@@ -87,17 +87,20 @@ module Image =
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
           Ratio : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Ratio = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     /// Generate <figure class="image"></figure>
     let image options children =
@@ -131,11 +134,15 @@ module Image =
             // Extra
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size; opts.Ratio; opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.Ratio
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
         figure (classes::opts.Props)
             children

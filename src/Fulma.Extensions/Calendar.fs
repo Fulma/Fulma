@@ -1,7 +1,6 @@
 namespace Fulma.Extensions
 
 open Fulma
-open Fulma.BulmaClasses
 
 [<RequireQualifiedAccess>]
 module Calendar =
@@ -140,9 +139,9 @@ module Calendar =
                 match opt with
                 | Props props -> { result with Props = props }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
-                | IsRangeStart -> { result with Range = Classes.Calendar.Date.Range ++ Classes.Calendar.Date.RangeStart |> Some }
+                | IsRangeStart -> { result with Range = Classes.Calendar.Date.Range + " " + Classes.Calendar.Date.RangeStart |> Some }
                 | IsRange -> { result with Range = Classes.Calendar.Date.Range |> Some }
-                | IsRangeEnd -> { result with Range = Classes.Calendar.Date.Range ++ Classes.Calendar.Date.RangeEnd |> Some }
+                | IsRangeEnd -> { result with Range = Classes.Calendar.Date.Range + " " + Classes.Calendar.Date.RangeEnd |> Some }
                 | Disabled state -> { result with IsDisabled = state }
 
             let opts = options |> List.fold parseOptions Options.Empty

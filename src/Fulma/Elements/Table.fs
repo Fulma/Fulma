@@ -33,6 +33,7 @@ module Table =
         | IsHoverable
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type private TableOptions =
         { IsBordered : bool
@@ -41,7 +42,8 @@ module Table =
           IsNarrow : bool
           IsHoverable : bool
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { IsBordered = false
               IsStriped = false
@@ -49,7 +51,8 @@ module Table =
               IsFullwidth = false
               IsHoverable = false
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     /// Generate <table class="table"></table>
     let table options children =
@@ -62,13 +65,16 @@ module Table =
             | IsHoverable -> { result with IsHoverable = true }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions TableOptions.Empty
-        let classes = Helpers.classes Classes.Container [opts.CustomClass]
-                        [ Classes.Style.IsBordered, opts.IsBordered
-                          Classes.Style.IsStriped, opts.IsStriped
-                          Classes.Style.IsFullwidth, opts.IsFullwidth
-                          Classes.Spacing.IsNarrow, opts.IsNarrow
-                          Classes.Style.IsHoverable, opts.IsHoverable ]
+        let classes =
+            Helpers.classes
+                Classes.Container ( opts.CustomClass::opts.Modifiers )
+                [ Classes.Style.IsBordered, opts.IsBordered
+                  Classes.Style.IsStriped, opts.IsStriped
+                  Classes.Style.IsFullwidth, opts.IsFullwidth
+                  Classes.Spacing.IsNarrow, opts.IsNarrow
+                  Classes.Style.IsHoverable, opts.IsHoverable ]
 
         table (classes::opts.Props) children

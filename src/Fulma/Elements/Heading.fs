@@ -41,19 +41,22 @@ module Heading =
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { TitleSize : string option
           TitleType : string
           IsSpaced : bool
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { TitleSize = None
               TitleType = Classes.Title
               IsSpaced = false
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     let internal title (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list)
         (children) =
@@ -72,11 +75,14 @@ module Heading =
             // Extra
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         opts.TitleType
-                        [ opts.TitleSize; opts.CustomClass ]
+                        ( opts.TitleSize
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ Classes.Spacing.IsNormal, opts.IsSpaced ]
 
         element (classes::opts.Props)

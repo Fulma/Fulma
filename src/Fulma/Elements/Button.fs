@@ -63,6 +63,7 @@ module Button =
         | Props of IHTMLProp list
         | OnClick of (MouseEvent -> unit)
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Level : string option
@@ -80,7 +81,8 @@ module Button =
           IsStatic : bool
           Props : IHTMLProp list
           CustomClass : string option
-          OnClick : (MouseEvent -> unit) option }
+          OnClick : (MouseEvent -> unit) option
+          Modifiers : string option list }
         static member Empty =
             { Level = None
               Size = None
@@ -97,7 +99,8 @@ module Button =
               IsFocused = false
               Props = []
               CustomClass = None
-              OnClick = None }
+              OnClick = None
+              Modifiers = [] }
 
     let internal btnView element (options : Option list) children =
         let parseOption (result : Options) opt =
@@ -123,13 +126,15 @@ module Button =
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Level
-                          opts.Size
-                          opts.CustomClass ]
+                        ( opts.Level
+                          ::opts.Size
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ Classes.Styles.IsOutlined, opts.IsOutlined
                           Classes.Styles.IsInverted, opts.IsInverted
                           Classes.Styles.IsText, opts.IsText
@@ -192,20 +197,23 @@ module Button =
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { HasAddons : bool
               IsCentered : bool
               IsRight : bool
               Props : IHTMLProp list
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { HasAddons = false
                   IsCentered = false
                   IsRight = false
                   Props = [ ]
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
@@ -216,11 +224,12 @@ module Button =
             | List.IsRight -> { result with IsRight = true }
             | List.Props props -> { result with Props = props }
             | List.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption List.Options.Empty
         let classes = Helpers.classes
                         Classes.List.Container
-                        [ opts.CustomClass ]
+                        ( opts.CustomClass::opts.Modifiers )
                         [ Classes.List.HasAddons, opts.HasAddons
                           Classes.List.IsCentered, opts.IsCentered
                           Classes.List.IsRight, opts.IsRight ]

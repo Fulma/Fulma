@@ -23,17 +23,20 @@ module Icon =
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
           Position : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Position = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     /// Generate <span class="icon"></span>
     let icon options children =
@@ -47,11 +50,15 @@ module Icon =
             // Extra
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size; opts.Position; opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.Position
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
         span (classes::opts.Props)
             children

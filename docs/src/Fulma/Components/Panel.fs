@@ -6,8 +6,8 @@ open Fulma
 
 let iconInteractive () =
     Columns.columns [ ]
-        [ Column.column [ Column.Offset (Column.All, Column.Is3)
-                          Column.Width (Column.All, Column.Is6) ]
+        [ Column.column [ Column.Offset (Screen.All, Column.Is3)
+                          Column.Width (Screen.All, Column.Is6) ]
             [ Panel.panel [ ]
                 [ Panel.heading [ ] [ str "Repositories"]
                   Panel.block [ ]

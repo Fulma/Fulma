@@ -53,6 +53,7 @@ module File =
         /// Add `is-empty` class if true
         | IsEmpty of bool
         | Color of IColor
+        | Modifiers of Modifier.IModifier list
 
     type internal  Options =
         { CustomClass : string option
@@ -65,7 +66,8 @@ module File =
           IsBoxed : bool
           Color : string option
           HasName : bool
-          IsEmpty : bool }
+          IsEmpty : bool
+          Modifiers : string option list }
 
         static member Empty =
             { CustomClass = None
@@ -78,7 +80,8 @@ module File =
               IsBoxed = false
               Color = None
               HasName = false
-              IsEmpty = false }
+              IsEmpty = false
+              Modifiers = [] }
 
     /// Generate <div class="file"></div>
     let file (options : Option list) children =
@@ -97,15 +100,17 @@ module File =
             | IsBoxed -> { result with IsBoxed = true }
             | HasName -> { result with HasName = true }
             | IsEmpty state -> { result with IsEmpty = state }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
             Helpers.classes
                 Classes.Container
-                [ opts.CustomClass
-                  opts.Size
-                  opts.Alignment
-                  opts.Color ]
+                ( opts.CustomClass
+                  ::opts.Size
+                  ::opts.Alignment
+                  ::opts.Color
+                  ::opts.Modifiers )
                 [ Classes.IsBoxed, opts.IsBoxed
                   Classes.HasName, opts.HasName
                   Classes.State.IsFocused, opts.IsFocused
@@ -117,29 +122,29 @@ module File =
     /// Generate <span class="file-cta"></span>
     let cta (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Cta [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Cta ( opts.CustomClass::opts.Modifiers ) []
         span (classes::opts.Props) children
 
     /// Generate <span class="file-name"></span>
     let name (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Name [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Name ( opts.CustomClass::opts.Modifiers ) []
         span (classes::opts.Props) children
 
     /// Generate <span class="file-icon"></span>
     let icon (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Icon [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Icon ( opts.CustomClass::opts.Modifiers ) []
         span (classes::opts.Props) children
 
     /// Generate <label class="file-label"></label>
     let label (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Label [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Label ( opts.CustomClass::opts.Modifiers ) []
         Fable.Helpers.React.label (classes::opts.Props) children
 
     /// Generate <input type="file" class="file-input" />
     let input (options : GenericOption list) =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Input [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Input ( opts.CustomClass::opts.Modifiers ) []
         input (classes::(Type "file" :> IHTMLProp)::opts.Props)

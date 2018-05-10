@@ -46,7 +46,7 @@ module Message =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        (opts.Color::opts.CustomClass::opts.Size::opts.Modifiers)
+                        ( opts.Color::opts.CustomClass::opts.Size::opts.Modifiers )
                         [ ]
 
         article (classes::opts.Props)
@@ -55,11 +55,11 @@ module Message =
     /// Generate <div class="message-header"></div>
     let header (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Header (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Header ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="message-body"></div>
     let body (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Body (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Body ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children

@@ -37,19 +37,22 @@ module Columns =
         | IsDesktop
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Display : string option
           Spacing : string option
           Alignment : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { Display = None
               Spacing = None
               Alignment = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     /// Generate <div class="columns"></div>
     let columns (options: Option list) children =
@@ -64,14 +67,16 @@ module Columns =
             | IsDesktop -> { result with Display = Classes.Display.IsDesktop |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Alignment
-                          opts.Display
-                          opts.Spacing
-                          opts.CustomClass ]
+                        ( opts.Alignment
+                          ::opts.Display
+                          ::opts.Spacing
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
 
         div (classes::opts.Props)

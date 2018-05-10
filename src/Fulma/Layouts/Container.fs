@@ -1,12 +1,8 @@
 namespace Fulma
 
-open Fulma.BulmaClasses
 open Fulma
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Container =
@@ -19,26 +15,29 @@ module Container =
             let [<Literal>] IsFullHD = "is-fullhd"
 
     type Option =
-        | Props of IHTMLProp list
-        | CustomClass of string
         /// Add `is-fluid` class
         | IsFluid
         /// Add `is-widescreen` class
         | IsWideScreen
         /// Add `is-fullhd` class
         | IsFullHD
+        | Props of IHTMLProp list
+        | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
           CustomClass : string option
           IsFluid : bool
-          Breakpoint : string option }
+          Breakpoint : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Props = []
               CustomClass = None
               IsFluid = false
-              Breakpoint = None }
+              Breakpoint = None
+              Modifiers = [] }
 
     /// Generate <div class="container"></div>
     let container (options: Option list) children =
@@ -49,9 +48,10 @@ module Container =
             | IsWideScreen -> { result with Breakpoint = Classes.Breakpoint.IsWideScreen |> Some }
             | IsFullHD -> { result with Breakpoint = Classes.Breakpoint.IsFullHD |> Some }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes Classes.Container
-                        [opts.Breakpoint; opts.CustomClass]
+                        ( opts.Breakpoint::opts.CustomClass::opts.Modifiers )
                         [Classes.IsFluid, opts.IsFluid]
         div (classes::opts.Props) children

@@ -2,7 +2,6 @@ module Layouts.Hero
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.BulmaClasses
 
 let iconInteractive () =
     Hero.hero [ ]
@@ -29,7 +28,7 @@ let centered () =
                     [ a [ ] [ str "Hink" ] ] ] ]
           Hero.body [ ]
             [ Container.container [ Container.IsFluid
-                                    Container.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
+                                    Container.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
                 [ Heading.h1 [ ]
                     [ str "Header" ]
                   Heading.h2 [ Heading.IsSubtitle ]

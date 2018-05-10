@@ -54,6 +54,7 @@ module Textarea =
         | CustomClass of string
         /// Add `has-fixed-size` class
         | HasFixedSize
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
@@ -71,7 +72,8 @@ module Textarea =
           OnChange : (React.FormEvent -> unit) option
           Ref : (Browser.Element->unit) option
           Props : IHTMLProp list
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Size = None
@@ -89,7 +91,8 @@ module Textarea =
               OnChange = None
               Ref = None
               Props = []
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <textarea class="textarea"></textarea>
     let textarea options children =
@@ -113,14 +116,16 @@ module Textarea =
             | Ref cb -> { result with Ref = cb |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | HasFixedSize -> { result with HasFixedSize = true }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
             Helpers.classes
                 Classes.Container
-                [ opts.Color
-                  opts.CustomClass
-                  opts.Size ]
+                ( opts.Color
+                  ::opts.CustomClass
+                  ::opts.Size
+                  ::opts.Modifiers )
                 [ Classes.HasFixedSize, opts.HasFixedSize
                   Classes.State.IsLoading, opts.IsLoading
                   Classes.State.IsFocused, opts.IsFocused

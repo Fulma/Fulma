@@ -99,7 +99,7 @@ module Tabs =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        (opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers)
+                        ( opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers )
                         [ Classes.Style.IsBoxed, opts.IsBoxed
                           Classes.Style.IsFullwidth, opts.IsFullwidth
                           Classes.Style.IsToggle, opts.IsToggle

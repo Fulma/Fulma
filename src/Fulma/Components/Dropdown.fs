@@ -34,6 +34,7 @@ module Dropdown =
         | IsUp
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
@@ -41,7 +42,8 @@ module Dropdown =
           IsHoverable : bool
           IsRight : bool
           IsUp : bool
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Props = []
@@ -49,7 +51,8 @@ module Dropdown =
               IsHoverable = false
               IsRight = false
               IsUp = false
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <div class="dropdown"></div>
     let dropdown (options: Option list) children =
@@ -61,6 +64,7 @@ module Dropdown =
             | IsUp -> { result with IsUp = true }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
@@ -68,26 +72,26 @@ module Dropdown =
               Classes.State.IsActive, opts.IsActive
               Classes.State.IsHoverable, opts.IsHoverable
               Classes.State.IsUp, opts.IsUp ]
-            |> Helpers.classes Classes.Container [opts.CustomClass]
+            |> Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers )
 
         div (classes::opts.Props) children
 
     /// Generate <div class="dropdown-menu"></div>
     let menu (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Menu [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Menu ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="dropdown-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Content (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Content ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="dropdown-divider"></div>
     let divider (options: GenericOption list) =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Divider (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Divider ( opts.CustomClass::opts.Modifiers ) []
         hr (classes::opts.Props)
 
     module Item =
@@ -121,7 +125,7 @@ module Dropdown =
             let opts = options |> List.fold parseOptions Options.Empty
             let classes =
                 [ Classes.Item.State.IsActive, opts.IsActive ]
-                |> Helpers.classes Classes.Item.Container (opts.CustomClass::opts.Modifiers)
+                |> Helpers.classes Classes.Item.Container ( opts.CustomClass::opts.Modifiers )
 
             element (classes::opts.Props) children
 

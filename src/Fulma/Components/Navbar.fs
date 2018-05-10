@@ -150,7 +150,7 @@ module Navbar =
 
             let opts = options |> List.fold parseOptions Options.Empty
             let classes =
-                Helpers.classes Classes.Item.Container (opts.CustomClass::opts.Modifiers)
+                Helpers.classes Classes.Item.Container ( opts.CustomClass::opts.Modifiers )
                     [ Classes.Item.State.IsActive, opts.IsActive
                       Classes.Item.Style.IsTab, opts.IsTab
                       Classes.Item.IsHoverable, opts.IsHoverable
@@ -194,7 +194,7 @@ module Navbar =
                 | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Link.Container (opts.CustomClass::opts.Modifiers) [Classes.Link.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Link.Container ( opts.CustomClass::opts.Modifiers ) [Classes.Link.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-link"></div>
@@ -242,7 +242,7 @@ module Navbar =
                 | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Dropdown.Container (opts.CustomClass::opts.Modifiers) [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
+            let classes = Helpers.classes Classes.Dropdown.Container ( opts.CustomClass::opts.Modifiers ) [Classes.Dropdown.IsBoxed, opts.IsBoxed; Classes.Dropdown.IsRight, opts.IsRight; Classes.Dropdown.State.IsActive, opts.IsActive]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-dropdown"></div>
@@ -253,7 +253,7 @@ module Navbar =
     module Brand =
         let internal brand element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Brand (opts.CustomClass::opts.Modifiers) []
+            let classes = Helpers.classes Classes.Brand ( opts.CustomClass::opts.Modifiers ) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-brand"></div>
@@ -264,7 +264,7 @@ module Navbar =
     module Start =
         let internal start element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Start (opts.CustomClass::opts.Modifiers) []
+            let classes = Helpers.classes Classes.Start ( opts.CustomClass::opts.Modifiers ) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-start"></div>
@@ -275,7 +275,7 @@ module Navbar =
     module End =
         let internal ``end`` element (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.End (opts.CustomClass::opts.Modifiers) []
+            let classes = Helpers.classes Classes.End ( opts.CustomClass::opts.Modifiers ) []
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-end"></div>
@@ -298,7 +298,7 @@ module Navbar =
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
-            Helpers.classes Classes.Container (opts.CustomClass::opts.Color::opts.FixedInfo::opts.Modifiers)
+            Helpers.classes Classes.Container ( opts.CustomClass::opts.Color::opts.FixedInfo::opts.Modifiers )
                [ Classes.Style.HasShadow, opts.HasShadow
                  Classes.Style.IsTransparent, opts.IsTransparent]
 
@@ -315,7 +315,7 @@ module Navbar =
 
         let opts = options |> List.fold parseOptions Menu.Options.Empty
         let classes =
-            Helpers.classes Classes.Menu.Container (opts.CustomClass::opts.Modifiers)
+            Helpers.classes Classes.Menu.Container ( opts.CustomClass::opts.Modifiers )
                 [Classes.Menu.State.IsActive, opts.IsActive]
 
         div (classes::opts.Props) children
@@ -323,17 +323,17 @@ module Navbar =
     /// Generate <div class="navbar-burger"></div>
     let burger (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Burger (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Burger ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="navbar-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Content (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Content ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="navbar-divider"></div>
     let divider (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Divider (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Divider ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children

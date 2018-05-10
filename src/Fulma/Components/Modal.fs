@@ -30,16 +30,19 @@ module Modal =
         /// Add `is-active` class if true
         | IsActive of bool
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Props : IHTMLProp list
           IsActive : bool
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Props = []
               IsActive = false
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     module Close =
         type Option =
@@ -47,18 +50,21 @@ module Modal =
             | Size of ISize
             | CustomClass of string
             | OnClick of (MouseEvent -> unit)
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               Size : string option
               CustomClass : string option
-              OnClick : (MouseEvent -> unit) option }
+              OnClick : (MouseEvent -> unit) option
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   Size = None
                   CustomClass = None
-                  OnClick = None }
+                  OnClick = None
+                  Modifiers = [] }
 
     /// Generate <div class="modal"></div>
     let modal options children =
@@ -67,11 +73,12 @@ module Modal =
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | IsActive state -> { result with IsActive = state }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.CustomClass ]
+                        ( opts.CustomClass::opts.Modifiers )
                         [ Classes.State.IsActive, opts.IsActive ]
         div (classes::opts.Props)
             children
@@ -88,9 +95,10 @@ module Modal =
                 result
             | Close.Size size -> { result with Size = ofSize size |> Some }
             | Close.OnClick cb -> { result with OnClick = Some cb }
+            | Close.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Close.Options.Empty
-        let classes = Helpers.classes Classes.Close.Container [opts.Size; opts.CustomClass] []
+        let classes = Helpers.classes Classes.Close.Container ( opts.Size::opts.CustomClass::opts.Modifiers ) []
         let opts =
             match opts.OnClick with
             | Some v -> classes::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
@@ -101,13 +109,13 @@ module Modal =
     /// Generate <div class="modal-background"></div>
     let background (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Background [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Background ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="modal-content"></div>
     let content (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Content [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Content ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     module Card =
@@ -115,29 +123,29 @@ module Modal =
         /// Generate <div class="modal-card"></div>
         let card (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Container [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Card.Container ( opts.CustomClass::opts.Modifiers ) []
             div (classes::opts.Props) children
 
         /// Generate <div class="modal-card-head"></div>
         let head (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Head [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Card.Head ( opts.CustomClass::opts.Modifiers ) []
             header (classes::opts.Props) children
 
         /// Generate <div class="modal-card-foot"></div>
         let foot (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Foot [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Card.Foot ( opts.CustomClass::opts.Modifiers ) []
             footer (classes::opts.Props) children
 
         /// Generate <div class="modal-card-title"></div>
         let title (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Title [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Card.Title ( opts.CustomClass::opts.Modifiers ) []
             div (classes::opts.Props) children
 
         /// Generate <div class="modal-card-body"></div>
         let body (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Body [opts.CustomClass] []
+            let classes = Helpers.classes Classes.Card.Body ( opts.CustomClass::opts.Modifiers ) []
             section (classes::opts.Props) children

@@ -23,19 +23,22 @@ module Tag =
         | IsDelete
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
           Color : string option
           IsDelete : bool
           Props : IHTMLProp list
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Color = None
               IsDelete = false
               Props = []
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <span class="tag"></span>
     let tag (options : Option list) children =
@@ -49,11 +52,15 @@ module Tag =
             | Color color -> { result with Color = ofColor color |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size; opts.Color; opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.Color
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ Classes.IsDelete, opts.IsDelete ]
         span (classes::opts.Props)
             children
@@ -72,20 +79,23 @@ module Tag =
             | IsRight
             | Props of IHTMLProp list
             | CustomClass of string
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { HasAddons : bool
               IsCentered : bool
               IsRight : bool
               Props : IHTMLProp list
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { HasAddons = false
                   IsCentered = false
                   IsRight = false
                   Props = [ ]
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
     /// Generate <div class="tags"></div>
     let list (options : List.Option list) children =
@@ -96,11 +106,12 @@ module Tag =
             | List.IsRight -> { result with IsRight = true }
             | List.Props props -> { result with Props = props }
             | List.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption List.Options.Empty
         let classes = Helpers.classes
                         Classes.List.Container
-                        [ opts.CustomClass ]
+                        ( opts.CustomClass::opts.Modifiers )
                         [ Classes.List.HasAddons, opts.HasAddons
                           Classes.List.IsCentered, opts.IsCentered
                           Classes.List.IsRight, opts.IsRight ]

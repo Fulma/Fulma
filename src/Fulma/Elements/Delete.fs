@@ -16,17 +16,20 @@ module Delete =
         | Props of IHTMLProp list
         | CustomClass of string
         | OnClick of (MouseEvent -> unit)
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
           Props : IHTMLProp list
           CustomClass : string option
-          OnClick : (MouseEvent -> unit) option }
+          OnClick : (MouseEvent -> unit) option
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Props = []
               CustomClass = None
-              OnClick = None }
+              OnClick = None
+              Modifiers = [] }
 
     /// Generate <a class="delete"></a>
     let delete (options : Option list) children =
@@ -38,11 +41,14 @@ module Delete =
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnClick cb -> { result with OnClick = cb |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOption Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size; opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
         a [ yield classes
             yield! opts.Props

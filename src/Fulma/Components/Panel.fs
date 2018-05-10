@@ -1,6 +1,5 @@
 namespace Fulma
 
-open Fulma.BulmaClasses
 open Fulma
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -76,7 +75,7 @@ module Panel =
 
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-        let classes = Helpers.classes Classes.Block.Container (opts.CustomClass::opts.Modifiers) [Classes.Block.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes Classes.Block.Container ( opts.CustomClass::opts.Modifiers ) [Classes.Block.State.IsActive, opts.IsActive]
         div (classes::opts.Props) children
 
     /// Generate <label class="panel-block"></label>
@@ -89,25 +88,25 @@ module Panel =
             | Block.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Block.Options.Empty
-        let classes = Helpers.classes Classes.Block.Container (opts.CustomClass::opts.Modifiers) [Classes.Block.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes Classes.Block.Container ( opts.CustomClass::opts.Modifiers ) [Classes.Block.State.IsActive, opts.IsActive]
         label (classes::opts.Props) children
 
     /// Generate <nav class="panel"></nav>
     let panel (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers ) []
         nav (classes::opts.Props) children
 
     /// Generate <div class="panel-heading"></div>
     let heading (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Heading (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Heading ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="panel-tabs"></div>
     let tabs (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Tabs.Container (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Tabs.Container ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <a></a>
@@ -120,11 +119,11 @@ module Panel =
             | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
-        let classes = Helpers.classes "" (opts.CustomClass::opts.Modifiers) [Classes.Tabs.Tab.State.IsActive, opts.IsActive]
+        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) [Classes.Tabs.Tab.State.IsActive, opts.IsActive]
         a (classes::opts.Props) children
 
     /// Generate <span class="panel-icon"></span>
     let icon (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Block.Icon (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Block.Icon ( opts.CustomClass::opts.Modifiers ) []
         span (classes::opts.Props) children

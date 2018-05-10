@@ -27,6 +27,7 @@ module Control =
         | IsExpanded
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { HasIconLeft : bool
@@ -34,14 +35,16 @@ module Control =
           CustomClass : string option
           Props : IHTMLProp list
           IsLoading : bool
-          IsExpanded : bool }
+          IsExpanded : bool
+          Modifiers : string option list }
         static member Empty =
             { HasIconLeft = false
               HasIconRight = false
               CustomClass = None
               Props = []
               IsLoading = false
-              IsExpanded = false }
+              IsExpanded = false
+              Modifiers = [] }
 
     let internal controlView element options children =
         let parseOptions (result : Options) =
@@ -52,12 +55,13 @@ module Control =
             | Props props -> { result with Props = props }
             | IsLoading state -> { result with IsLoading = state }
             | IsExpanded  -> { result with IsExpanded = true }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.CustomClass ]
+                        ( opts.CustomClass::opts.Modifiers )
                         [ Classes.State.IsLoading, opts.IsLoading
                           Classes.HasIcon.Right, opts.HasIconRight
                           Classes.HasIcon.Left, opts.HasIconLeft

@@ -2,11 +2,10 @@ module Layouts.Footer
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.BulmaClasses
 
 let basic () =
     Footer.footer [ ]
-        [ Content.content [ Content.CustomClass Bulma.Properties.Alignment.HasTextCentered ]
+        [ Content.content [ Content.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
             [ h1 [ ]
                  [ str "Fulma" ]
               p [ ]

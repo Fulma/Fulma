@@ -19,6 +19,7 @@ module Progress =
         /// Set `Max` HTMLAttr
         | Max of int
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
@@ -26,14 +27,16 @@ module Progress =
           Props : IHTMLProp list
           Max : int option
           Value : int option
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Color = None
               Props = []
               Max = None
               Value = None
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <progress class="progress"></progress>
     let progress options children =
@@ -45,11 +48,15 @@ module Progress =
             | Value value -> { result with Value = value |> Some }
             | Max max -> { result with Max = max |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Size; opts.Color; opts.CustomClass ]
+                        ( opts.Size
+                          ::opts.Color
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
         progress
             [ yield classes
