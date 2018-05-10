@@ -1,4 +1,4 @@
-### NEXT
+### 1.0.0-beta-016
 
 * Update to Fulma 1.0.0-beta-019
 

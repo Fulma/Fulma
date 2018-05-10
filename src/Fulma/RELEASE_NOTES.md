@@ -1,7 +1,9 @@
-### NEXT
+### 1.0.0-beta-019
 
 - Add new aspect ratio support for `Image` (since Bulma 0.7.0)
 - Add `is-expanded` to `Button` (since Bulma 0.7.0)
+- Add modifier supported to Fulma
+- `Column.[screen size]` is replace by `Screen.[screen size]`.
 
 ### 1.0.0-beta-018
 
