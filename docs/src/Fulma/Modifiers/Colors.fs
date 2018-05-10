@@ -1,4 +1,4 @@
-module Fulma.Modifiers
+module Modifiers.Colors
 
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
@@ -65,7 +65,7 @@ let view =
     Render.docPage [
         Render.contentFromMarkdown
             """
-# Modifiers
+# Modifiers - Colors & Shades
 
 ## Colors
 

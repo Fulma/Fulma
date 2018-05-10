@@ -46,19 +46,22 @@ module Field =
         | IsHorizontal
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { HasAddons : string option
           IsGrouped : string option
           Layout : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { HasAddons = None
               IsGrouped = None
               Layout = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     module Label =
 
@@ -67,15 +70,18 @@ module Field =
             | IsNormal
             | CustomClass of string
             | Props of IHTMLProp list
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Size : string option
               CustomClass : string option
-              Props : IHTMLProp list }
+              Props : IHTMLProp list
+              Modifiers : string option list }
             static member Empty =
                 { Size = None
                   CustomClass = None
-                  Props = [] }
+                  Props = []
+                  Modifiers = [] }
 
     /// Generate <label class="field-label"></label>
     let label options children =
@@ -85,11 +91,12 @@ module Field =
             | Label.IsNormal -> { result with Size = Classes.Label.VerticalAlign.IsNormal |> Some }
             | Label.CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Label.Props props -> { result with Props = props }
+            | Label.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Label.Options.Empty
         let classes = Helpers.classes
                         Classes.Label.Container
-                        [ opts.Size; opts.CustomClass ]
+                        ( opts.Size::opts.CustomClass::opts.Modifiers )
                         [ ]
         div (classes::opts.Props)
             children
@@ -97,7 +104,7 @@ module Field =
     /// Generate <label class="field-body"></label>
     let body (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Body [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Body ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     let internal fieldView element options children =
@@ -113,11 +120,16 @@ module Field =
             | IsHorizontal -> { result with Layout = Classes.Layout.IsHorizontal |> Some }
             | Option.CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Option.Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.HasAddons; opts.IsGrouped; opts.Layout; opts.CustomClass ]
+                        ( opts.HasAddons
+                          ::opts.IsGrouped
+                          ::opts.Layout
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
 
         element (classes::opts.Props)

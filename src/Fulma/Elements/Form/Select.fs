@@ -42,6 +42,7 @@ module Select =
         | IsRounded
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
@@ -52,7 +53,8 @@ module Select =
           IsDisabled : bool
           IsRounded : bool
           Props : IHTMLProp list
-          CustomClass : string option }
+          CustomClass : string option
+          Modifiers : string option list }
         static member Empty =
             { Size = None
               Color = None
@@ -62,7 +64,8 @@ module Select =
               IsDisabled = false
               IsRounded = false
               Props = []
-              CustomClass = None }
+              CustomClass = None
+              Modifiers = [] }
 
     /// Generate <div class="select"></div>
     let select (options : Option list) children =
@@ -79,14 +82,16 @@ module Select =
             | Color color -> { result with Color = ofColor color |> Some }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
         let classes =
             Helpers.classes
                 Classes.Container
-                [ opts.Size
-                  opts.Color
-                  opts.CustomClass ]
+                ( opts.Size
+                  ::opts.Color
+                  ::opts.CustomClass
+                  ::opts.Modifiers )
                 [ Classes.State.IsLoading, opts.IsLoading
                   Classes.State.IsFocused, opts.IsFocused
                   Classes.State.IsActive, opts.IsActive

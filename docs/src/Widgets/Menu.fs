@@ -10,6 +10,7 @@ type FulmaModules =
     | Elements
     | Components
     | Layouts
+    | Modifiers
 
 type Library =
     | Fulma of FulmaModules
@@ -18,7 +19,8 @@ type Fulma =
     { IsElementsExpanded : bool
       IsComponentsExpanded : bool
       IsLayoutExpanded : bool
-      IsChangeLogExpanded : bool }
+      IsChangeLogExpanded : bool
+      IsModifiersExpanded : bool }
 
 type Model =
     { Fulma : Fulma
@@ -32,7 +34,8 @@ let init currentPage : Model =
             { IsElementsExpanded = false
               IsComponentsExpanded = false
               IsLayoutExpanded = false
-              IsChangeLogExpanded = false }
+              IsChangeLogExpanded = false
+              IsModifiersExpanded = false }
       CurrentPage = currentPage }
 
 let update msg model =
@@ -51,6 +54,10 @@ let update msg model =
             | Layouts ->
                 { model with Fulma =
                                 { model.Fulma with IsLayoutExpanded = not model.Fulma.IsLayoutExpanded } }
+
+            | Modifiers ->
+                { model with Fulma =
+                                { model.Fulma with IsModifiersExpanded = not model.Fulma.IsModifiersExpanded } }
 
         , Cmd.none
 
@@ -90,11 +97,31 @@ let private menuFulma currentPage subModel dispatch =
         else
             "menu-group", Fa.I.AngleUp
 
+    let (modifiersClass, modifiersIcon) =
+        if not subModel.IsModifiersExpanded then
+            match currentPage with
+            | Fulma (Modifier _) ->
+                "menu-group is-active", Fa.I.AngleDown
+            | _ -> "menu-group", Fa.I.AngleDown
+        else
+            "menu-group", Fa.I.AngleUp
+
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
         [ menuItem "Introduction" (Fulma FulmaPage.Introduction) currentPage
-          menuItem "Versions" (Fulma FulmaPage.Versions) currentPage
-          menuItem "Modifiers" (Fulma FulmaPage.Modifiers) currentPage ]
+          menuItem "Versions" (Fulma FulmaPage.Versions) currentPage ]
+      Menu.list [ ]
+        [ li [ ]
+             [ yield a [ ClassName modifiersClass
+                         OnClick (fun _ -> ToggleMenu (Library.Fulma Modifiers) |> dispatch ) ]
+                       [ span [ ] [ str "Modifiers" ]
+                         Icon.faIcon [ ] [ Fa.icon modifiersIcon ] ]
+               if subModel.IsModifiersExpanded then
+                    yield ul [ ]
+                             [ menuItem "Basics" (Fulma (Modifier Modifiers.Basics)) currentPage
+                               menuItem "Colors & Shades" (Fulma (Modifier Modifiers.Colors)) currentPage
+                               menuItem "Typography" (Fulma (Modifier Modifiers.Typography)) currentPage
+                               menuItem "Responsive" (Fulma (Modifier Modifiers.Responsive)) currentPage ] ] ]
       Menu.list [ ]
         [ li [ ]
              [ yield a [ ClassName layoutsClass

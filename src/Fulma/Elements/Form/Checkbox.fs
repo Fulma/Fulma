@@ -13,11 +13,11 @@ module Checkbox =
     /// Generate <label class="checkbox"></label>
     let checkbox (options : GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers ) []
         label (classes::opts.Props) children
 
     /// Generate <input type="checkbox" class="checkbox"></input>
     let input (options : GenericOption list) =
         let opts = genericParse options
-        let classes = Helpers.classes "" [opts.CustomClass] []
+        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) []
         input (classes::(Type "checkbox" :> IHTMLProp)::opts.Props)

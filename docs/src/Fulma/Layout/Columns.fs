@@ -1,14 +1,11 @@
 module Layouts.Columns
 
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
-open Fable.Helpers.React.Props
 open Fulma
 
 let basic () =
     Columns.columns [ ]
-        [ Column.column [ Column.Width (Column.All, Column.Is6) ]
+        [ Column.column [ Column.Width (Screen.All, Column.Is6) ]
             [ Columns.columns [ ]
                 [ Column.column [ ]
                     [ Notification.notification [ Notification.Color IsSuccess ]
@@ -29,7 +26,7 @@ let basic () =
                     [ Notification.notification [ Notification.Color IsLight ]
                         [ str "Column n°2" ] ] ]
               Columns.columns [ Columns.IsCentered ]
-                [ Column.column [ Column.Width (Column.All, Column.Is7) ]
+                [ Column.column [ Column.Width (Screen.All, Column.Is7) ]
                     [ Notification.notification [ Notification.Color IsBlack ]
                         [ str "Column n°2.1" ] ] ] ] ]
 

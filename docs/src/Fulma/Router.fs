@@ -4,7 +4,12 @@ let view fulmaPage =
     match fulmaPage with
     | Router.FulmaPage.Introduction -> Fulma.Introduction.view
     | Router.FulmaPage.Versions -> Fulma.Versions.view
-    | Router.FulmaPage.Modifiers -> Fulma.Modifiers.view
+    | Router.FulmaPage.Modifier modifier ->
+        match modifier with
+        | Router.Modifiers.Basics -> Modifiers.Basics.view
+        | Router.Modifiers.Colors -> Modifiers.Colors.view
+        | Router.Modifiers.Responsive -> Modifiers.Responsive.view
+        | Router.Modifiers.Typography -> Modifiers.Typography.view
     | Router.Element element ->
         match element with
         | Router.Elements.Box -> Elements.Box.view

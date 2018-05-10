@@ -1,3 +1,8 @@
+### NEXT
+
+- Add new aspect ratio support for `Image` (since Bulma 0.7.0)
+- Add `is-expanded` to `Button` (since Bulma 0.7.0)
+
 ### 1.0.0-beta-018
 
 - Add `RequireQualifiedAccess` to `Modifier` API. Needed to avoid conflict with CSSProps

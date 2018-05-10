@@ -1,11 +1,8 @@
 namespace Fulma
 
 open Fulma
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Level =
@@ -29,16 +26,19 @@ module Level =
             /// Add `is-mobile` class
             | IsMobile
             | CustomClass of string
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               IsMobile : bool
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   IsMobile = false
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
     module Item =
 
@@ -47,16 +47,19 @@ module Level =
             /// Add `has-text-centered` class
             | HasTextCentered
             | CustomClass of string
+            | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { Props : IHTMLProp list
               HasTextCentered : bool
-              CustomClass : string option }
+              CustomClass : string option
+              Modifiers : string option list }
 
             static member Empty =
                 { Props = []
                   HasTextCentered = false
-                  CustomClass = None }
+                  CustomClass = None
+                  Modifiers = [] }
 
     /// Generate <nav class="level"></nav>
     let level (options : Level.Option list) children =
@@ -65,22 +68,23 @@ module Level =
             | Level.Option.Props props -> { result with Props = props }
             | Level.Option.IsMobile -> { result with IsMobile = true }
             | Level.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Level.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Level.Options.Empty
-        let classes = Helpers.classes Classes.Container [opts.CustomClass]
+        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers )
                         [ Classes.Mobile.IsHorizontal, opts.IsMobile ]
         nav (classes::opts.Props) children
 
     /// Generate <div class="level-left"></div>
     let left (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Left [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Left ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="level-right"></div>
     let right (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Right [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Right ( opts.CustomClass::opts.Modifiers ) []
         div (classes::opts.Props) children
 
     /// Generate <div class="level-item"></div>
@@ -90,20 +94,21 @@ module Level =
             | Item.Props props -> { result with Props = props }
             | Item.HasTextCentered -> { result with HasTextCentered = true }
             | Item.CustomClass customClass -> { result with CustomClass = Some customClass }
+            | Item.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
-        let classes = Helpers.classes Classes.Item.Container [opts.CustomClass]
+        let classes = Helpers.classes Classes.Item.Container ( opts.CustomClass::opts.Modifiers )
                         [ Classes.Item.HasTextCentered, opts.HasTextCentered ]
         div (classes::opts.Props) children
 
     /// Generate <p class="heading"></p>
     let heading (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Item.Heading [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Item.Heading ( opts.CustomClass::opts.Modifiers ) []
         p (classes::opts.Props) children
 
     /// Generate <p class="title"></p>
     let title (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Item.Title [opts.CustomClass] []
+        let classes = Helpers.classes Classes.Item.Title ( opts.CustomClass::opts.Modifiers ) []
         p (classes::opts.Props) children

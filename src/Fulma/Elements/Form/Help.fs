@@ -14,16 +14,19 @@ module Help =
         | CustomClass of string
         | Props of IHTMLProp list
         | Color of IColor
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { CustomClass : string option
           Props : IHTMLProp list
-          Color : string option }
+          Color : string option
+          Modifiers : string option list }
 
         static member Empty =
             { CustomClass = None
               Props = []
-              Color = None }
+              Color = None
+              Modifiers = [] }
 
     /// Generate <p class="help"></p>
     let help (options : Option list) children =
@@ -32,7 +35,15 @@ module Help =
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | Props props -> { result with Props = props }
             | Color color -> { result with Color = ofColor color |> Some }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes Classes.Container [opts.CustomClass; opts.Color] []
+        let classes =
+            Helpers.classes
+                Classes.Container
+                ( opts.CustomClass
+                  ::opts.Color
+                  ::opts.Modifiers )
+                [ ]
+
         p (classes::opts.Props) children

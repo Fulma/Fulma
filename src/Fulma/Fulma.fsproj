@@ -15,7 +15,6 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BulmaClasses.fs" />
     <Compile Include="Common.fs" />
     <!-- Components -->
     <Compile Include="Components/Breadcrumb.fs" />

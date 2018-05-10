@@ -4,7 +4,6 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Extensions
-open Fulma.BulmaClasses
 
 let basic () =
     div [ ClassName "block" ]
@@ -12,13 +11,13 @@ let basic () =
                           Button.CustomClass Tooltip.ClassName ]
             [ str "Top tooltip" ]
           Button.button [ Button.Props [ Tooltip.dataTooltip "Left tooltip" ]
-                          Button.CustomClass (Tooltip.ClassName ++ Tooltip.IsTooltipLeft) ]
+                          Button.CustomClass (Tooltip.ClassName + " " + Tooltip.IsTooltipLeft) ]
             [ str "Left tooltip" ]
           Button.button [ Button.Props [ Tooltip.dataTooltip "Right tooltip" ]
-                          Button.CustomClass (Tooltip.ClassName ++ Tooltip.IsTooltipRight) ]
+                          Button.CustomClass (Tooltip.ClassName + " " + Tooltip.IsTooltipRight) ]
             [ str "Right tooltip" ]
           Button.button [ Button.Props [ Tooltip.dataTooltip "Bottom tooltip" ]
-                          Button.CustomClass (Tooltip.ClassName ++ Tooltip.IsTooltipBottom) ]
+                          Button.CustomClass (Tooltip.ClassName + " " + Tooltip.IsTooltipBottom) ]
             [ str "Bottom tooltip" ] ]
 
 

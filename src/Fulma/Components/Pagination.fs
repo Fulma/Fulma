@@ -86,7 +86,7 @@ module Pagination =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        (opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers)
+                        ( opts.Alignment::opts.Size::opts.CustomClass::opts.Modifiers )
                         [ Classes.Styles.IsRounded, opts.IsRounded ]
 
         nav (classes::opts.Props)
@@ -95,13 +95,13 @@ module Pagination =
     /// Generate <a class="pagination-previous"></a>
     let previous (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Previous (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Previous ( opts.CustomClass::opts.Modifiers ) []
         a (classes::opts.Props) children
 
     /// Generate <a class="pagination-next"></a>
     let next (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Next (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Next ( opts.CustomClass::opts.Modifiers ) []
         a (classes::opts.Props) children
 
     /// Generate <li><a class="pagination-link"></a></li>
@@ -125,7 +125,7 @@ module Pagination =
         let opts = genericParse options
 
         li [ ]
-           [ span [ yield Helpers.classes Classes.Ellipsis (opts.CustomClass::opts.Modifiers) []
+           [ span [ yield Helpers.classes Classes.Ellipsis ( opts.CustomClass::opts.Modifiers ) []
                     yield! opts.Props
                     yield (DangerouslySetInnerHTML { __html = "&hellip;" }) :> IHTMLProp ]
                   [ ] ]
@@ -133,5 +133,5 @@ module Pagination =
     /// Generate <ul class="pagination-list"></ul>
     let list (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.List ( opts.CustomClass::opts.Modifiers ) []
         ul (classes::opts.Props) children

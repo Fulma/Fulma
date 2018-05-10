@@ -40,13 +40,19 @@ type Layouts =
     | Columns
     | Tile
 
+type Modifiers =
+    | Basics
+    | Colors
+    | Typography
+    | Responsive
+
 type FulmaPage =
     | Element of Elements
     | Component of Components
     | Layout of Layouts
+    | Modifier of Modifiers
     | Introduction
     | Versions
-    | Modifiers
 
 type FulmaExtensionsPage =
     | Calendar
@@ -85,7 +91,12 @@ let private toHash page =
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
         | Versions -> "#fulma/versions"
-        | Modifiers -> "#fulma/modifiers"
+        | Modifier modifiers ->
+            match modifiers with
+            | Basics -> "#fulma/modifiers/basics"
+            | Colors -> "#fulma/modifiers/colors"
+            | Typography -> "#fulma/modifiers/typography"
+            | Responsive -> "#fulma/modifiers/responsive"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
@@ -146,7 +157,10 @@ let pageParser : Parser<Page -> Page, Page> =
             map BlogArticle ( s "blog-viewer" <?> stringParam "file")
             map (Fulma FulmaPage.Introduction ) (s "fulma")
             map (Fulma FulmaPage.Versions ) (s "fulma" </> s "versions")
-            map (Fulma FulmaPage.Modifiers)  (s "fulma" </> s "modifiers")
+            map (Fulma (FulmaPage.Modifier Basics))  (s "fulma" </> s "modifiers" </> s "basics")
+            map (Fulma (FulmaPage.Modifier Colors))  (s "fulma" </> s "modifiers" </> s "colors")
+            map (Fulma (FulmaPage.Modifier Responsive))  (s "fulma" </> s "modifiers" </> s "responsive")
+            map (Fulma (FulmaPage.Modifier Typography))  (s "fulma" </> s "modifiers" </> s "typography")
             // Layouts
             map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")

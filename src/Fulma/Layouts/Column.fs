@@ -255,8 +255,103 @@ module Column =
                 let [<Literal>] IsThreeFifths = "is-offset-three-fifths-widescreen"
                 let [<Literal>] IsFourFifths = "is-offset-four-fifths-widescreen"
 
+        module FullHD =
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-fullhd"
+                let [<Literal>] IsOneThird = "is-one-third-fullhd"
+                let [<Literal>] IsHalf = "is-half-fullhd"
+                let [<Literal>] IsTwoThirds = "is-two-third-fullhd"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-fullhd"
+                let [<Literal>] Is1 = "is-1-fullhd"
+                let [<Literal>] Is2 = "is-2-fullhd"
+                let [<Literal>] Is3 = "is-3-fullhd"
+                let [<Literal>] Is4 = "is-4-fullhd"
+                let [<Literal>] Is5 = "is-5-fullhd"
+                let [<Literal>] Is6 = "is-6-fullhd"
+                let [<Literal>] Is7 = "is-7-fullhd"
+                let [<Literal>] Is8 = "is-8-fullhd"
+                let [<Literal>] Is9 = "is-9-fullhd"
+                let [<Literal>] Is10 = "is-10-fullhd"
+                let [<Literal>] Is11 = "is-11-fullhd"
+                let [<Literal>] IsNarrow = "is-narrow-fullhd"
+                let [<Literal>] IsFull = "is-full-fullhd"
+                let [<Literal>] IsOneFifth = "is-one-fifth-fullhd"
+                let [<Literal>] IsTwoFifths = "is-two-fifths-fullhd"
+                let [<Literal>] IsThreeFifths = "is-three-fifths-fullhd"
+                let [<Literal>] IsFourFifths = "is-four-fifths-fullhd"
 
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-fullhd"
+                let [<Literal>] IsOneThird = "is-offset-one-third-fullhd"
+                let [<Literal>] IsHalf = "is-offset-half-fullhd"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-fullhd"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-fullhd"
+                let [<Literal>] Is1 = "is-offset-1-fullhd"
+                let [<Literal>] Is2 = "is-offset-2-fullhd"
+                let [<Literal>] Is3 = "is-offset-3-fullhd"
+                let [<Literal>] Is4 = "is-offset-4-fullhd"
+                let [<Literal>] Is5 = "is-offset-5-fullhd"
+                let [<Literal>] Is6 = "is-offset-6-fullhd"
+                let [<Literal>] Is7 = "is-offset-7-fullhd"
+                let [<Literal>] Is8 = "is-offset-8-fullhd"
+                let [<Literal>] Is9 = "is-offset-9-fullhd"
+                let [<Literal>] Is10 = "is-offset-10-fullhd"
+                let [<Literal>] Is11 = "is-offset-11-fullhd"
+                let [<Literal>] IsNarrow = "is-offset-narrow-fullhd"
+                let [<Literal>] IsFull = "is-offset-full-fullhd"
+                let [<Literal>] IsOneFifth = "is-offset-one-fifth-fullhd"
+                let [<Literal>] IsTwoFifths = "is-offset-two-fifths-fullhd"
+                let [<Literal>] IsThreeFifths = "is-offset-three-fifths-fullhd"
+                let [<Literal>] IsFourFifths = "is-offset-four-fifths-fullhd"
 
+        module Touch =
+            module Width =
+                let [<Literal>] IsOneQuarter = "is-one-quarter-touch"
+                let [<Literal>] IsOneThird = "is-one-third-touch"
+                let [<Literal>] IsHalf = "is-half-touch"
+                let [<Literal>] IsTwoThirds = "is-two-third-touch"
+                let [<Literal>] IsThreeQuarters = "is-three-quarters-touch"
+                let [<Literal>] Is1 = "is-1-touch"
+                let [<Literal>] Is2 = "is-2-touch"
+                let [<Literal>] Is3 = "is-3-touch"
+                let [<Literal>] Is4 = "is-4-touch"
+                let [<Literal>] Is5 = "is-5-touch"
+                let [<Literal>] Is6 = "is-6-touch"
+                let [<Literal>] Is7 = "is-7-touch"
+                let [<Literal>] Is8 = "is-8-touch"
+                let [<Literal>] Is9 = "is-9-touch"
+                let [<Literal>] Is10 = "is-10-touch"
+                let [<Literal>] Is11 = "is-11-touch"
+                let [<Literal>] IsNarrow = "is-narrow-touch"
+                let [<Literal>] IsFull = "is-full-touch"
+                let [<Literal>] IsOneFifth = "is-one-fifth-touch"
+                let [<Literal>] IsTwoFifths = "is-two-fifths-touch"
+                let [<Literal>] IsThreeFifths = "is-three-fifths-touch"
+                let [<Literal>] IsFourFifths = "is-four-fifths-touch"
+
+            module Offset =
+                let [<Literal>] IsOneQuarter = "is-offset-one-quarter-touch"
+                let [<Literal>] IsOneThird = "is-offset-one-third-touch"
+                let [<Literal>] IsHalf = "is-offset-half-touch"
+                let [<Literal>] IsTwoThirds = "is-offset-two-third-touch"
+                let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-touch"
+                let [<Literal>] Is1 = "is-offset-1-touch"
+                let [<Literal>] Is2 = "is-offset-2-touch"
+                let [<Literal>] Is3 = "is-offset-3-touch"
+                let [<Literal>] Is4 = "is-offset-4-touch"
+                let [<Literal>] Is5 = "is-offset-5-touch"
+                let [<Literal>] Is6 = "is-offset-6-touch"
+                let [<Literal>] Is7 = "is-offset-7-touch"
+                let [<Literal>] Is8 = "is-offset-8-touch"
+                let [<Literal>] Is9 = "is-offset-9-touch"
+                let [<Literal>] Is10 = "is-offset-10-touch"
+                let [<Literal>] Is11 = "is-offset-11-touch"
+                let [<Literal>] IsNarrow = "is-offset-narrow-touch"
+                let [<Literal>] IsFull = "is-offset-full-touch"
+                let [<Literal>] IsOneFifth = "is-offset-one-fifth-touch"
+                let [<Literal>] IsTwoFifths = "is-offset-two-fifths-touch"
+                let [<Literal>] IsThreeFifths = "is-offset-three-fifths-touch"
+                let [<Literal>] IsFourFifths = "is-offset-four-fifths-touch"
 
     type ISize =
         | IsOneQuarter
@@ -282,28 +377,22 @@ module Column =
         | IsThreeFifths
         | IsFourFifths
 
-    type IScreen =
-        | All
-        | Desktop
-        | Tablet
-        | Mobile
-        | WideScreen
-
     type Option =
         /// Configure the width of the column. You can configure the display and size
         /// Example: Column.Width (Column.Desktop, Column.Is6)
         /// Becomde: `is-6-desktop`
-        | Width of IScreen * ISize
+        | Width of Screen * ISize
         /// Configure the offset of the column. You can configure the display and offset size
         /// Example: Column.Offset (Column.Desktop, Column.Is6)
-        /// Becomde: `is-offset-6-desktop`
-        | Offset of IScreen * ISize
+        /// Become: `is-offset-6-desktop`
+        | Offset of Screen * ISize
         | CustomClass of string
         | Props of IHTMLProp list
+        | Modifiers of Modifier.IModifier list
 
     let internal ofWidth =
         function
-        | All, size ->
+        | Screen.All, size ->
             match size with
             | IsOneQuarter -> Classes.All.Width.IsOneQuarter
             | IsOneThird -> Classes.All.Width.IsOneThird
@@ -327,7 +416,7 @@ module Column =
             | IsTwoFifths -> Classes.All.Width.IsTwoFifths
             | IsThreeFifths -> Classes.All.Width.IsThreeFifths
             | IsFourFifths -> Classes.All.Width.IsFourFifths
-        | Desktop, size ->
+        | Screen.Desktop, size ->
             match size with
             | IsOneQuarter -> Classes.Desktop.Width.IsOneQuarter
             | IsOneThird -> Classes.Desktop.Width.IsOneThird
@@ -351,7 +440,7 @@ module Column =
             | IsTwoFifths -> Classes.Desktop.Width.IsTwoFifths
             | IsThreeFifths -> Classes.Desktop.Width.IsThreeFifths
             | IsFourFifths -> Classes.Desktop.Width.IsFourFifths
-        | Tablet, size ->
+        | Screen.Tablet, size ->
             match size with
             | IsOneQuarter -> Classes.Tablet.Width.IsOneQuarter
             | IsOneThird -> Classes.Tablet.Width.IsOneThird
@@ -375,7 +464,7 @@ module Column =
             | IsTwoFifths -> Classes.Tablet.Width.IsTwoFifths
             | IsThreeFifths -> Classes.Tablet.Width.IsThreeFifths
             | IsFourFifths -> Classes.Tablet.Width.IsFourFifths
-        | Mobile, size ->
+        | Screen.Mobile, size ->
             match size with
             | IsOneQuarter -> Classes.Mobile.Width.IsOneQuarter
             | IsOneThird -> Classes.Mobile.Width.IsOneThird
@@ -399,7 +488,7 @@ module Column =
             | IsTwoFifths -> Classes.Mobile.Width.IsTwoFifths
             | IsThreeFifths -> Classes.Mobile.Width.IsThreeFifths
             | IsFourFifths -> Classes.Mobile.Width.IsFourFifths
-        | WideScreen, size ->
+        | Screen.WideScreen, size ->
             match size with
             | IsOneQuarter -> Classes.WideScreen.Width.IsOneQuarter
             | IsOneThird -> Classes.WideScreen.Width.IsOneThird
@@ -423,10 +512,58 @@ module Column =
             | IsTwoFifths -> Classes.WideScreen.Width.IsTwoFifths
             | IsThreeFifths -> Classes.WideScreen.Width.IsThreeFifths
             | IsFourFifths -> Classes.WideScreen.Width.IsFourFifths
+        | Screen.FullHD, size ->
+            match size with
+            | IsOneQuarter -> Classes.FullHD.Width.IsOneQuarter
+            | IsOneThird -> Classes.FullHD.Width.IsOneThird
+            | IsHalf -> Classes.FullHD.Width.IsHalf
+            | IsTwoThirds -> Classes.FullHD.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.FullHD.Width.IsThreeQuarters
+            | Is1 -> Classes.FullHD.Width.Is1
+            | Is2 -> Classes.FullHD.Width.Is2
+            | Is3 -> Classes.FullHD.Width.Is3
+            | Is4 -> Classes.FullHD.Width.Is4
+            | Is5 -> Classes.FullHD.Width.Is5
+            | Is6 -> Classes.FullHD.Width.Is6
+            | Is7 -> Classes.FullHD.Width.Is7
+            | Is8 -> Classes.FullHD.Width.Is8
+            | Is9 -> Classes.FullHD.Width.Is9
+            | Is10 -> Classes.FullHD.Width.Is10
+            | Is11 -> Classes.FullHD.Width.Is11
+            | IsNarrow -> Classes.FullHD.Width.IsNarrow
+            | IsFull -> Classes.FullHD.Width.IsFull
+            | IsOneFifth -> Classes.FullHD.Width.IsOneFifth
+            | IsTwoFifths -> Classes.FullHD.Width.IsTwoFifths
+            | IsThreeFifths -> Classes.FullHD.Width.IsThreeFifths
+            | IsFourFifths -> Classes.FullHD.Width.IsFourFifths
+        | Screen.Touch, size ->
+            match size with
+            | IsOneQuarter -> Classes.Touch.Width.IsOneQuarter
+            | IsOneThird -> Classes.Touch.Width.IsOneThird
+            | IsHalf -> Classes.Touch.Width.IsHalf
+            | IsTwoThirds -> Classes.Touch.Width.IsTwoThirds
+            | IsThreeQuarters -> Classes.Touch.Width.IsThreeQuarters
+            | Is1 -> Classes.Touch.Width.Is1
+            | Is2 -> Classes.Touch.Width.Is2
+            | Is3 -> Classes.Touch.Width.Is3
+            | Is4 -> Classes.Touch.Width.Is4
+            | Is5 -> Classes.Touch.Width.Is5
+            | Is6 -> Classes.Touch.Width.Is6
+            | Is7 -> Classes.Touch.Width.Is7
+            | Is8 -> Classes.Touch.Width.Is8
+            | Is9 -> Classes.Touch.Width.Is9
+            | Is10 -> Classes.Touch.Width.Is10
+            | Is11 -> Classes.Touch.Width.Is11
+            | IsNarrow -> Classes.Touch.Width.IsNarrow
+            | IsFull -> Classes.Touch.Width.IsFull
+            | IsOneFifth -> Classes.Touch.Width.IsOneFifth
+            | IsTwoFifths -> Classes.Touch.Width.IsTwoFifths
+            | IsThreeFifths -> Classes.Touch.Width.IsThreeFifths
+            | IsFourFifths -> Classes.Touch.Width.IsFourFifths
 
     let internal ofOffset =
         function
-        | All, offset ->
+        | Screen.All, offset ->
             match offset with
             | IsOneQuarter -> Classes.All.Offset.IsOneQuarter
             | IsOneThird -> Classes.All.Offset.IsOneThird
@@ -450,7 +587,7 @@ module Column =
             | IsTwoFifths -> Classes.All.Offset.IsTwoFifths
             | IsThreeFifths -> Classes.All.Offset.IsThreeFifths
             | IsFourFifths -> Classes.All.Offset.IsFourFifths
-        | Desktop, offset ->
+        | Screen.Desktop, offset ->
             match offset with
             | IsOneQuarter -> Classes.Desktop.Offset.IsOneQuarter
             | IsOneThird -> Classes.Desktop.Offset.IsOneThird
@@ -474,7 +611,7 @@ module Column =
             | IsTwoFifths -> Classes.Desktop.Offset.IsTwoFifths
             | IsThreeFifths -> Classes.Desktop.Offset.IsThreeFifths
             | IsFourFifths -> Classes.Desktop.Offset.IsFourFifths
-        | Tablet, offset ->
+        | Screen.Tablet, offset ->
             match offset with
             | IsOneQuarter -> Classes.Tablet.Offset.IsOneQuarter
             | IsOneThird -> Classes.Tablet.Offset.IsOneThird
@@ -498,7 +635,7 @@ module Column =
             | IsTwoFifths -> Classes.Tablet.Offset.IsTwoFifths
             | IsThreeFifths -> Classes.Tablet.Offset.IsThreeFifths
             | IsFourFifths -> Classes.Tablet.Offset.IsFourFifths
-        | Mobile, offset ->
+        | Screen.Mobile, offset ->
             match offset with
             | IsOneQuarter -> Classes.Mobile.Offset.IsOneQuarter
             | IsOneThird -> Classes.Mobile.Offset.IsOneThird
@@ -522,7 +659,7 @@ module Column =
             | IsTwoFifths -> Classes.Mobile.Offset.IsTwoFifths
             | IsThreeFifths -> Classes.Mobile.Offset.IsThreeFifths
             | IsFourFifths -> Classes.Mobile.Offset.IsFourFifths
-        | WideScreen, offset ->
+        | Screen.WideScreen, offset ->
             match offset with
             | IsOneQuarter -> Classes.WideScreen.Offset.IsOneQuarter
             | IsOneThird -> Classes.WideScreen.Offset.IsOneThird
@@ -546,6 +683,54 @@ module Column =
             | IsTwoFifths -> Classes.WideScreen.Offset.IsTwoFifths
             | IsThreeFifths -> Classes.WideScreen.Offset.IsThreeFifths
             | IsFourFifths -> Classes.WideScreen.Offset.IsFourFifths
+        | Screen.FullHD, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.FullHD.Offset.IsOneQuarter
+            | IsOneThird -> Classes.FullHD.Offset.IsOneThird
+            | IsHalf -> Classes.FullHD.Offset.IsHalf
+            | IsTwoThirds -> Classes.FullHD.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.FullHD.Offset.IsThreeQuarters
+            | Is1 -> Classes.FullHD.Offset.Is1
+            | Is2 -> Classes.FullHD.Offset.Is2
+            | Is3 -> Classes.FullHD.Offset.Is3
+            | Is4 -> Classes.FullHD.Offset.Is4
+            | Is5 -> Classes.FullHD.Offset.Is5
+            | Is6 -> Classes.FullHD.Offset.Is6
+            | Is7 -> Classes.FullHD.Offset.Is7
+            | Is8 -> Classes.FullHD.Offset.Is8
+            | Is9 -> Classes.FullHD.Offset.Is9
+            | Is10 -> Classes.FullHD.Offset.Is10
+            | Is11 -> Classes.FullHD.Offset.Is11
+            | IsNarrow -> Classes.FullHD.Offset.IsNarrow
+            | IsFull -> Classes.FullHD.Offset.IsFull
+            | IsOneFifth -> Classes.FullHD.Offset.IsOneFifth
+            | IsTwoFifths -> Classes.FullHD.Offset.IsTwoFifths
+            | IsThreeFifths -> Classes.FullHD.Offset.IsThreeFifths
+            | IsFourFifths -> Classes.FullHD.Offset.IsFourFifths
+        | Screen.Touch, offset ->
+            match offset with
+            | IsOneQuarter -> Classes.Touch.Offset.IsOneQuarter
+            | IsOneThird -> Classes.Touch.Offset.IsOneThird
+            | IsHalf -> Classes.Touch.Offset.IsHalf
+            | IsTwoThirds -> Classes.Touch.Offset.IsTwoThirds
+            | IsThreeQuarters -> Classes.Touch.Offset.IsThreeQuarters
+            | Is1 -> Classes.Touch.Offset.Is1
+            | Is2 -> Classes.Touch.Offset.Is2
+            | Is3 -> Classes.Touch.Offset.Is3
+            | Is4 -> Classes.Touch.Offset.Is4
+            | Is5 -> Classes.Touch.Offset.Is5
+            | Is6 -> Classes.Touch.Offset.Is6
+            | Is7 -> Classes.Touch.Offset.Is7
+            | Is8 -> Classes.Touch.Offset.Is8
+            | Is9 -> Classes.Touch.Offset.Is9
+            | Is10 -> Classes.Touch.Offset.Is10
+            | Is11 -> Classes.Touch.Offset.Is11
+            | IsNarrow -> Classes.Touch.Offset.IsNarrow
+            | IsFull -> Classes.Touch.Offset.IsFull
+            | IsOneFifth -> Classes.Touch.Offset.IsOneFifth
+            | IsTwoFifths -> Classes.Touch.Offset.IsTwoFifths
+            | IsThreeFifths -> Classes.Touch.Offset.IsThreeFifths
+            | IsFourFifths -> Classes.Touch.Offset.IsFourFifths
 
     type internal Options =
         { Width : string option
@@ -556,10 +741,15 @@ module Column =
           TabletpOffset : string option
           MobileWidth : string option
           MobileOffset : string option
-          WideScreenpWidth : string option
-          WideScreenpOffset : string option
+          WideScreenWidth : string option
+          WideScreenOffset : string option
+          FullHDWidth : string option
+          FullHDOffset : string option
+          TouchWidth : string option
+          TouchOffset : string option
           CustomClass : string option
-          Props : IHTMLProp list }
+          Props : IHTMLProp list
+          Modifiers : string option list }
         static member Empty =
             { Width = None
               Offset = None
@@ -569,37 +759,51 @@ module Column =
               TabletpOffset = None
               MobileWidth = None
               MobileOffset = None
-              WideScreenpWidth = None
-              WideScreenpOffset = None
+              WideScreenWidth = None
+              WideScreenOffset = None
+              FullHDWidth = None
+              FullHDOffset = None
+              TouchWidth = None
+              TouchOffset = None
               CustomClass = None
-              Props = [] }
+              Props = []
+              Modifiers = [] }
 
     /// Generate <div class="column"></div>
     let column (options : Option list) children =
         let parseOptions (result: Options) =
             function
-            | Width (screen, width) when screen = All ->
+            | Width (screen, width) when screen = Screen.All ->
                 { result with Width = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = All ->
+            | Offset (screen, offset) when screen = Screen.All ->
                 { result with Offset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Desktop ->
+            | Width (screen, width) when screen = Screen.Desktop ->
                 { result with DesktopWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Desktop ->
+            | Offset (screen, offset) when screen = Screen.Desktop ->
                 { result with DesktopOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Tablet ->
+            | Width (screen, width) when screen = Screen.Tablet ->
                 { result with TabletpWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Tablet ->
+            | Offset (screen, offset) when screen = Screen.Tablet ->
                 { result with TabletpOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Mobile ->
+            | Width (screen, width) when screen = Screen.Mobile ->
                 { result with MobileWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Mobile ->
+            | Offset (screen, offset) when screen = Screen.Mobile ->
                 { result with MobileOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = WideScreen ->
-                { result with WideScreenpWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = WideScreen ->
-                { result with WideScreenpOffset = ofOffset (screen, offset) |> Some }
+            | Width (screen, width) when screen = Screen.WideScreen ->
+                { result with WideScreenWidth = ofWidth (screen, width) |> Some }
+            | Offset (screen, offset) when screen = Screen.WideScreen ->
+                { result with WideScreenOffset = ofOffset (screen, offset) |> Some }
+            | Width (screen, width) when screen = Screen.FullHD ->
+                { result with FullHDWidth = ofWidth (screen, width) |> Some }
+            | Offset (screen, offset) when screen = Screen.FullHD ->
+                { result with FullHDOffset = ofOffset (screen, offset) |> Some }
+            | Width (screen, width) when screen = Screen.Touch ->
+                { result with TouchWidth = ofWidth (screen, width) |> Some }
+            | Offset (screen, offset) when screen = Screen.Touch ->
+                { result with TouchOffset = ofOffset (screen, offset) |> Some }
             | CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Props props -> { result with Props = props }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
             | x ->
                 Fable.Import.JS.console.warn("Error when parsing column option " + string x)
                 result
@@ -607,16 +811,21 @@ module Column =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        [ opts.Width
-                          opts.Offset
-                          opts.DesktopWidth
-                          opts.DesktopOffset
-                          opts.MobileWidth
-                          opts.MobileOffset
-                          opts.TabletpWidth
-                          opts.TabletpOffset
-                          opts.WideScreenpWidth
-                          opts.WideScreenpOffset
-                          opts.CustomClass ]
+                        ( opts.Width
+                          ::opts.Offset
+                          ::opts.DesktopWidth
+                          ::opts.DesktopOffset
+                          ::opts.MobileWidth
+                          ::opts.MobileOffset
+                          ::opts.TabletpWidth
+                          ::opts.TabletpOffset
+                          ::opts.WideScreenWidth
+                          ::opts.WideScreenOffset
+                          ::opts.FullHDWidth
+                          ::opts.FullHDOffset
+                          ::opts.TouchWidth
+                          ::opts.TouchOffset
+                          ::opts.CustomClass
+                          ::opts.Modifiers )
                         [ ]
         div (classes::opts.Props) children

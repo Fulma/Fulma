@@ -77,7 +77,7 @@ module Breadcrumb =
         let opts = options |> List.fold parseOptions Options.Empty
         let classes = Helpers.classes
                         Classes.Container
-                        (opts.Alignment::opts.Separator::opts.Size::opts.CustomClass::opts.Modifiers)
+                        ( opts.Alignment::opts.Separator::opts.Size::opts.CustomClass::opts.Modifiers )
                         [ ]
 
         nav (classes::opts.Props)
@@ -115,7 +115,7 @@ module Breadcrumb =
 
         let opts = options |> List.fold parseOptions Item.Options.Empty
 
-        li [ yield Helpers.classes "" (opts.CustomClass::opts.Modifiers)
+        li [ yield Helpers.classes "" ( opts.CustomClass::opts.Modifiers )
                         [ Classes.State.IsActive, opts.IsActive ]
              yield! opts.Props ]
             children

@@ -1,11 +1,8 @@
 namespace Fulma
 
 open Fulma
-open Fable.Core
-open Fable.Core.JsInterop
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
-open Fable.Import
 
 [<RequireQualifiedAccess>]
 module Tile =
@@ -72,20 +69,23 @@ module Tile =
         | IsParent
         /// Add `is-vertical` class
         | IsVertical
+        | Modifiers of Modifier.IModifier list
 
     type internal Options =
         { Size : string option
           IsVertical : bool
           CustomClass : string option
           Props : IHTMLProp list
-          Context : string option }
+          Context : string option
+          Modifiers : string option list }
 
         static member Empty =
             { Size = None
               IsVertical = false
               CustomClass = None
               Props = []
-              Context = None }
+              Context = None
+              Modifiers = [] }
 
     /// Generate <div class="tile"></div>
     let tile (options: Option list) children =
@@ -98,12 +98,13 @@ module Tile =
             | IsAncestor -> { result with Context = Classes.IsAncestor |> Some }
             | IsParent -> { result with Context = Classes.IsParent |> Some }
             | IsVertical -> { result with IsVertical = true }
+            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
         div [ yield Helpers.classes
                         Classes.Container
-                        [opts.CustomClass; opts.Context; opts.Size]
+                        ( opts.CustomClass::opts.Context::opts.Size::opts.Modifiers )
                         [Classes.IsVertical, opts.IsVertical]
               yield! opts.Props ]
             children

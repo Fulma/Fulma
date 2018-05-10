@@ -25,11 +25,11 @@ module Menu =
             | Modifiers of Modifier.IModifier list
 
         type internal Options =
-            {   Props : IHTMLProp list
-                IsActive : bool
-                CustomClass : string option
-                OnClick : (React.MouseEvent -> unit) option
-                Modifiers : string option list }
+            { Props : IHTMLProp list
+              IsActive : bool
+              CustomClass : string option
+              OnClick : (React.MouseEvent -> unit) option
+              Modifiers : string option list }
             static member Empty =
                 { Props = []
                   IsActive = false
@@ -40,19 +40,19 @@ module Menu =
     /// Generate <aside class="menu"></aside>
     let menu (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Container (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers ) []
         aside (classes::opts.Props) children
 
     /// Generate <p class="menu-label"></p>
     let label (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.Label (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.Label ( opts.CustomClass::opts.Modifiers ) []
         p (classes::opts.Props) children
 
     /// Generate <div class="menu-list"></div>
     let list (options: GenericOption list) children =
         let opts = genericParse options
-        let classes = Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers) []
+        let classes = Helpers.classes Classes.List ( opts.CustomClass::opts.Modifiers ) []
         ul (classes::opts.Props) children
 
     /// Generate <li><a></a></li>
@@ -68,7 +68,7 @@ module Menu =
         let opts = options |> List.fold parseOptions Item.Options.Empty
         let classes =
             [Classes.State.IsActive, opts.IsActive]
-            |> Helpers.classes Classes.List (opts.CustomClass::opts.Modifiers)
+            |> Helpers.classes Classes.List ( opts.CustomClass::opts.Modifiers )
         let attrs =
             match opts.OnClick with
             | Some handler -> classes::(upcast DOMAttr.OnClick handler)::opts.Props
