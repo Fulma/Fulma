@@ -53,13 +53,19 @@ let weight () =
             [ Text.span [ Modifiers [ Modifier.TextWeight TextWeight.Bold ] ]
                 [ str "Bold" ] ] ]
 
+let size () =
+    Content.content [ ]
+        [ li [ ]
+            [ Text.span [ Modifiers [ Modifier.TextSize (Screen.Desktop, TextSize.Is5)
+                                      Modifier.TextSize (Screen.Tablet, TextSize.Is3)
+                                      Modifier.TextSize (Screen.Mobile, TextSize.Is1) ] ]
+                [ str "Resize your window and see how my size is changing." ] ] ]
+
 let view =
     Render.docPage [
         Render.contentFromMarkdown
             """
 # Modifiers - Typography
-
-Change the **size** and **color** of the text for one or multiple viewport width.
 
 In order to make it easier to use modifier on text, Fulma provide three helpers:
 
@@ -80,4 +86,7 @@ In order to make it easier to use modifier on text, Fulma provide three helpers:
 
         Render.docSection
             """### Text weight"""
-            (Widgets.Showcase.view weight (Render.getViewSource weight)) ]
+            (Widgets.Showcase.view weight (Render.getViewSource weight))
+        Render.docSection
+            """### Text size"""
+            (Widgets.Showcase.view size (Render.getViewSource size)) ]

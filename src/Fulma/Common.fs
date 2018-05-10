@@ -136,14 +136,14 @@ module TextSize =
             | Is7 -> "7"
 
     let inline generic screen size =
-        "is-" + Option.toString size + Screen.toString screen
+        "is-size-" + Option.toString size + Screen.toString screen
 
     let inline only screen size =
         match screen with
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-" + Option.toString size + Screen.toString screen + "-only"
+            "is-size-" + Option.toString size + Screen.toString screen + "-only"
         | x ->
             Fable.Import.JS.console.warn("Screen `%s` does not support `is-size-xxx-only`." + string x)
             ""

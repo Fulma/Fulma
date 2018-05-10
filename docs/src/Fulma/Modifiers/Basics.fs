@@ -26,6 +26,6 @@ let view =
 
 *[Bulma documentation](https://bulma.io/documentation/modifiers/)*
 
-You can add `Modifiers` to any Fulma elements or components.
+You can add `Modifiers` to any Fulma element or component.
             """
             (Widgets.Showcase.view demo (Render.getViewSource demo)) ]
