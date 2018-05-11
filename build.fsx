@@ -146,7 +146,7 @@ let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes.ReleaseNot
                 not sameVersion
 
 let toPackageReleaseNotes (notes: string list) =
-    "* " + String.Join("\n * ", notes)
+    String.Join("\n * ", notes)
     |> (fun txt -> txt.Replace("\"", "\\\""))
 
 let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
