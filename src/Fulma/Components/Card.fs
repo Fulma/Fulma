@@ -45,6 +45,12 @@ module Card =
         let classes = Helpers.classes Classes.Footer.Container ( opts.CustomClass::opts.Modifiers ) []
         footer (classes::opts.Props) children
 
+    /// Generate <div class="card-image"></div>
+    let image (options: GenericOption list) children =
+        let opts = genericParse options
+        let classes = Helpers.classes Classes.Image ( opts.CustomClass::opts.Modifiers ) []
+        div (classes::opts.Props) children
+
     module Header =
 
         module Title =

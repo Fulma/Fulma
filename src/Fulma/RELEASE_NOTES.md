@@ -1,3 +1,7 @@
+### 1.0.0-beta-020
+
+- Add missing `Card.image`
+
 ### 1.0.0-beta-019
 
 - Add new aspect ratio support for `Image` (since Bulma 0.7.0)
