@@ -66,9 +66,9 @@ Spacing:
 You can set the width of `Column` via:
 
 ```
-Column.Width (Column.All, Column.Is3)
-Column.Width (Column.Desktop, Column.Is3)
-Column.Width (Column.Mobile, Column.IsFull)
+Column.Width (Screen.All, Column.Is3)
+Column.Width (Screen.Desktop, Column.Is3)
+Column.Width (Screen.Mobile, Column.IsFull)
 ```
 
 You can set the offset of `Column` via:
@@ -76,9 +76,9 @@ You can set the offset of `Column` via:
 Ex:
 
 ```
-Column.Offset (Column.All, Column.Is3)
-Column.Offset (Column.Desktop, Column.Is3)
-Column.Offset (Column.Mobile, Column.IsFull)
+Column.Offset (Screen.All, Column.Is3)
+Column.Offset (Screen.Desktop, Column.Is3)
+Column.Offset (Screen.Mobile, Column.IsFull)
 ```
                         """
                          ]

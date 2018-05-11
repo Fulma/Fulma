@@ -24,8 +24,8 @@ let private view model dispatch =
         [ Hero.body [ ]
             [ Container.container [ ]
                 [ Columns.columns [ Columns.CustomClass "has-text-centered" ]
-                    [ Column.column [ Column.Width(Column.All, Column.IsOneThird)
-                                      Column.Offset(Column.All, Column.IsOneThird) ]
+                    [ Column.column [ Column.Width(Screen.All, Column.IsOneThird)
+                                      Column.Offset(Screen.All, Column.IsOneThird) ]
                         [ Image.image [ Image.Is128x128
                                         Image.Props [ Style [ Margin "auto"] ] ]
                             [ img [ Src "assets/fulma_logo.svg" ] ]

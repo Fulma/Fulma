@@ -1,3 +1,7 @@
+### 1.0.4
+
+* Update to latest version of Fulma
+
 ### 1.0.3
 
 * Add post action to make *.sh executable
