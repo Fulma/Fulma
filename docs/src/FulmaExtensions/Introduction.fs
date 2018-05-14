@@ -27,11 +27,11 @@ open Fulma.Extensions
 
 You will also need to provide the sass files of the extensions.
 
-The recommanded way to do that is to include them via `yarn`.
+The recommended way to do that is to include them via `yarn`.
 
 `yarn add -D bulma bulma-calendar`
 
-And then add a reference to them into your `main.sass` file.
+And then add a reference to them in your `main.sass` file.
 
 ```sass
 // main.sass
