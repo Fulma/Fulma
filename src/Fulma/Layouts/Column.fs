@@ -380,11 +380,11 @@ module Column =
     type Option =
         /// Configure the width of the column. You can configure the display and size
         /// Example: Column.Width (Column.Desktop, Column.Is6)
-        /// Becomde: `is-6-desktop`
+        /// Becomes: `is-6-desktop`
         | Width of Screen * ISize
         /// Configure the offset of the column. You can configure the display and offset size
         /// Example: Column.Offset (Column.Desktop, Column.Is6)
-        /// Become: `is-offset-6-desktop`
+        /// Becomes: `is-offset-6-desktop`
         | Offset of Screen * ISize
         | CustomClass of string
         | Props of IHTMLProp list
