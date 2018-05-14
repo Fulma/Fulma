@@ -11,8 +11,8 @@ let view =
 
 Fulma is divided into 3 projects:
 
-- [Fulma](#fulma), which provide you wrapper on top of Bulma
-- [Fulma.Extensions](#fulma-extensions), which provde you wrapper on top of Bulma extensions
-- [Fulma.Elmish](#fulma-elmish), which provide you ready to use "elmish component" like a date picker.
+- [Fulma](#fulma), which provides you with a wrapper on top of Bulma
+- [Fulma.Extensions](#fulma-extensions), which provides you with a wrapper on top of Bulma extensions
+- [Fulma.Elmish](#fulma-elmish), which provides you with ready to use "elmish component" like a datepicker.
 
         """
