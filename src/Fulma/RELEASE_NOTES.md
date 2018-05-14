@@ -1,6 +1,8 @@
-### 1.0.0-beta-021
+### 1.0.0-beta-022
 
 - Fix typo column doc comment (by @selketjah)
+
+### 1.0.0-beta-021
 
 ### 1.0.0-beta-020
 
