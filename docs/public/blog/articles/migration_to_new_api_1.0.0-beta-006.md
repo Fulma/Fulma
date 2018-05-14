@@ -1,12 +1,12 @@
 ## Breaking changes in the API (>= 1.0.0-beta-006)
 
-In this version of Fulma, we introduced a large number of breaking change. However, it's important to note that the compiler will help you fix them.
+In this version of Fulma, we introduced a large number of breaking changes. However, it's important to note that the compiler will help you fix them.
 
 [Click here](https://github.com/MangelMaxime/fulma-demo/commit/6245f2b0048e882e7290807aef087ac92d355b63) to see the diff resulting of updating a project [Fulma-demo](https://mangelmaxime.github.io/fulma-demo/).
 
 ### Remove the small helpers
 
-In this version of Fulma, we remove all the small helpers and now have direct access to the DU types.
+In this version of Fulma, we removed all the small helpers and now you have direct access to the DU types.
 
 ```fsharp
 // Before
@@ -18,13 +18,13 @@ Button.button [ Button.IsOutlined ]
     [ str "Outlined" ]
 ```
 
-*Tips: Most of the times, this mean you need to capitalized your properties*
+*Tips: Most of the time, this means you need to capitalize your properties*
 
-The benefit of removeing the small helpers is we now have a clear separation between the *properties* in `PascalCase` and the *render functions* in `camelCase`.
+The benefit of removing the small helpers is we now have a clear separation between the *properties* in `PascalCase` and the *render functions* in `camelCase`.
 
 ### Mutualize common properties
 
-Common properties like colors, size are now mutalized.
+Common properties like colors, size are now mutualized.
 
 ```fsharp
 // Before
@@ -45,7 +45,7 @@ Button.button [ Button.Color IsSuccess
 
 By removing the small helpers, we are now exposing `GenericOption` to the user.
 
-If a Fulma element only need to exposed `CustomClass` and `Props` we have the following change:
+If a Fulma element only needs to expose `CustomClass` and `Props` we have the following change:
 
 ```fsharp
 // Before
@@ -80,7 +80,7 @@ Navbar.Brand.div [ ]
 
 ### Avoid computation list usage in user code
 
-Before, in order to make a button conditionally loading you needed to use computation list. We removed this need by adding a boolean to some properties.
+Before, in order to make a button conditionally loading you needed to use a computation list. We removed this need by adding a boolean to some properties.
 
 ```fsharp
 // Before
