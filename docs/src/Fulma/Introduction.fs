@@ -10,9 +10,9 @@ let view =
 </center>
 Provide a wrapper around [Bulma 0.7.1](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
-This website isn't intended into providing a full documentation of Bulma.
+This website isn't intended to provide a full documentation of Bulma.
 
-It's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
+It only serves as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
 
 ---
 
