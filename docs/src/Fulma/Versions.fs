@@ -7,7 +7,7 @@ let view =
     ![Fulma logo](assets/logo_transparent.svg)
 </center>
 
-Here you can find which libraries versions are supported by Fulma.
+Here you can find which version of each library is supported by Fulma.
 
 <table class="table" style="width: auto;">
     <thead>
