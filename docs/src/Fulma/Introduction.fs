@@ -93,18 +93,18 @@ All the compoments documented on this website, are available in the library.
 
 *Original issue: [Ionide open the wrong Color module](https://github.com/MangelMaxime/Fulma/issues/134)*
 
-When using Fulma with Ionide, we recommand to add this settings to your configuration:
+When using Fulma with Ionide, we recommend to add these settings to your configuration:
 
 ```json
 // Enables resolve unopened namespaces and modules code fix.
 "FSharp.resolveNamespaces": false,
-// Includes external (from unopen modules and namespaces) symbols in autocomplete. Automatically adds open statements.
+// Includes external (from unopened modules and namespaces) symbols in autocomplete. Automatically adds open statements.
 "FSharp.externalAutocomplete": false,
 ```
 
-We recommand this settings, otherwise Ionide can open the module `open System` when you type `Color.xxx`.
+We recommend these settings, otherwise Ionide can open the module `open System` when you type `Color.xxx`.
 
-### Types conflict
+### Type conflict
 
 *Original issue: [Combination Fulma and Fable.Import.Browser conflict](https://github.com/MangelMaxime/Fulma/issues/142)*
 
@@ -117,7 +117,7 @@ open Fable.Import.Browser
 
 Then `Column.Width (Screen.All, Column.Is3)` will result in an error because you are using `Fable.Import.Browser.Screen` type instead of `Fulma.Screen`.
 
-In general, we recommand not opening `Fable.Import.Browser` but only `Fable.Import` and use `Browser.xxx` to use the Browser API.
+In general, we recommend not opening `Fable.Import.Browser` but only `Fable.Import` and use `Browser.xxx` to use the Browser API.
 
 However, if you prefer not prefixing your statement, you can simply inverse the `open` statement like:
 
