@@ -47,7 +47,7 @@ For example, if you want to use the Button element you will need to use `open Fu
 ```fsharp
 open Fulma
 
-Button.button_a [ Button.isSmall ]
+Button.button [ Button.Size IsSmall ]
     [ str "A button" ]
 ```
 
@@ -61,40 +61,69 @@ Every function follow the "React DSL":
 
 ### Special helpers
 
-Every element providing by Fulma will have at least 2 specials helpers:
+Every element provided by Fulma will have at least 3 specials helpers:
 
-- `customClass` allow you to add a custom class to an element
+- `CustomClass` allow you to add a custom class to an element
 
     ```fsharp
-        Button.button_a [ Button.customClass "my-custom-button" ]
+        Button.button [ Button.CustomClass "my-custom-button" ]
             [ str "I am a button" ]
     ```
 
     Note, that only one `customClass` can be provided. If you provide several, then the last got precedence. If you need apply more than one custom class, then provide it as a single string, i.e. `Button.customClass "custom1 custom2"`. See [discussion](https://github.com/MangelMaxime/Fulma/issues/111) for more information.
 
-- `props`:
+- `Props`:
 
     ```fsharp
-        Button.button_a [ Button.props [ OnClick (fun _ -> printfn "The button has been clicked") ] ]
+        Button.button [ Button.Props [ OnClick (fun _ -> printfn "The button has been clicked") ] ]
             [ str "I am a button" ]
     ```
 
-### BulmaClasses
+- `Modifiers`:
 
-*It's **important** to note that `BulmaClasses.fs` will be refactored before 1.0 release. It should not have much impact on your code, as you will rarely use this file in your application.*
-
-Fulma do not only provide wrappers around Bulma but also intellisense for the classes provided.
-
-For example, here is how to access the "is-hidden" class.
-
-```fsharp
-
-open Fulma.BulmaClasses
-
-Bulma.Properties.Visibility.IsHidden
-
-```
+    ```fsharp
+        Message.message [ ]
+            [ Message.body [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
+                  [ str "Text centered" ] ]
+    ```
 
 All the compoments documented on this website, are available in the library.
+
+### Side notes when using Ionide
+
+*Original issue: [Ionide open the wrong Color module](https://github.com/MangelMaxime/Fulma/issues/134)*
+
+When using Fulma with Ionide, we recommand to add this settings to your configuration:
+
+```json
+// Enables resolve unopened namespaces and modules code fix.
+"FSharp.resolveNamespaces": false,
+// Includes external (from unopen modules and namespaces) symbols in autocomplete. Automatically adds open statements.
+"FSharp.externalAutocomplete": false,
+```
+
+We recommand this settings, otherwise Ionide can open the module `open System` when you type `Color.xxx`.
+
+### Types conflict
+
+*Original issue: [Combination Fulma and Fable.Import.Browser conflict](https://github.com/MangelMaxime/Fulma/issues/142)*
+
+If you do:
+
+```fsharp
+open Fulma
+open Fable.Import.Browser
+```
+
+Then `Column.Width (Screen.All, Column.Is3)` will result in an error because you are using `Fable.Import.Browser.Screen` type instead of `Fulma.Screen`.
+
+In general, we recommand not opening `Fable.Import.Browser` but only `Fable.Import` and use `Browser.xxx` to use the Browser API.
+
+However, if you prefer not prefixing your statement, you can simply inverse the `open` statement like:
+
+```fsharp
+open Fable.Import.Browser
+open Fulma
+```
 
         """
