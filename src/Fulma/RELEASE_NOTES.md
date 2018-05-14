@@ -1,3 +1,7 @@
+### 1.0.0-beta-021
+
+- Fix typo column doc comment (by @selketjah)
+
 ### 1.0.0-beta-020
 
 - Add missing `Card.image`
