@@ -10,9 +10,9 @@ let view =
 </center>
 Provide a wrapper around [Bulma 0.7.1](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
-This website isn't intended into providing a full documentation of Bulma.
+This website isn't intended to provide a full documentation of Bulma.
 
-It's only serve as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
+It only serves as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
 
 ---
 
@@ -40,7 +40,7 @@ Fulma has a depedency on [Bulma](https://bulma.io/documentation/overview/start/)
 ## Architecture
 
 Fulma has been designed to provide the best experience over the Bulma CSS framework.
-To achieve this goal, Fulma prevents you to open lower module of the hierarchy.
+To achieve this goal, Fulma prevents you to open lower modules of the hierarchy.
 
 For example, if you want to use the Button element you will need to use `open Fulma` and not `open Fulma.Button`.
 
@@ -53,7 +53,7 @@ Button.button [ Button.Size IsSmall ]
 
 ### React DSL
 
-Every function follow the "React DSL":
+Every function follows the "React DSL":
 
 1. Name of the element
 2. List of properties
@@ -61,16 +61,16 @@ Every function follow the "React DSL":
 
 ### Special helpers
 
-Every element provided by Fulma will have at least 3 specials helpers:
+Every element provided by Fulma will have at least 3 special helpers:
 
-- `CustomClass` allow you to add a custom class to an element
+- `CustomClass` allows you to add a custom class to an element
 
     ```fsharp
         Button.button [ Button.CustomClass "my-custom-button" ]
             [ str "I am a button" ]
     ```
 
-    Note, that only one `customClass` can be provided. If you provide several, then the last got precedence. If you need apply more than one custom class, then provide it as a single string, i.e. `Button.customClass "custom1 custom2"`. See [discussion](https://github.com/MangelMaxime/Fulma/issues/111) for more information.
+    Note that only one `customClass` can be provided. If you provide several, then the last one takes precedence. If you need to apply more than one custom class, then provide it as a single string, i.e. `Button.customClass "custom1 custom2"`. See [discussion](https://github.com/MangelMaxime/Fulma/issues/111) for more information.
 
 - `Props`:
 
