@@ -1,3 +1,7 @@
+### 1.0.5
+
+* Add a mention in the README for Windows
+
 ### 1.0.4
 
 * Update to latest version of Fulma
