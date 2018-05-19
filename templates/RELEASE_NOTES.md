@@ -1,3 +1,7 @@
+### 1.0.6
+
+* Update paket.exe: fix the SSL issue on windows
+
 ### 1.0.5
 
 * Add a mention in the README for Windows
