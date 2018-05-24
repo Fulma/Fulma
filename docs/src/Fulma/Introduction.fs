@@ -3,16 +3,16 @@ module Fulma.Introduction
 let view =
     Render.contentFromMarkdown
         """
-# Fulma
-
 <center style="width: 200px;margin: auto;">
 ![Fulma logo](assets/logo_transparent.svg)
 </center>
-Provide a wrapper around [Bulma 0.7.1](http://bulma.io/) for [fable-react](https://github.com/fable-compiler/fable-react).
 
-This website isn't intended to provide a full documentation of Bulma.
+# Fulma
+Fulma provides a wrapper around [Bulma 0.7.1](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
 
-It only serves as a documentation of the wrapper and also test that the wrappers are working as this website is build with Fulma itself.
+Bulma is However this website isn't intended to provide a full documentation of Bulma.
+
+It only serves as a documentation of the wrapper and as a test that the wrappers are working, seeing how this website was built with Fulma itself.
 
 ---
 
