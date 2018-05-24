@@ -7,11 +7,10 @@ open Fulma
 let simpleInteractive () =
     Table.table [ Table.IsHoverable ]
         [ thead [ ]
-            [ tr
-            [ ]
-            [ th [ ] [ str "Firstname" ]
-              th [ ] [ str "Surname" ]
-              th [ ] [ str "Birthday" ] ] ]
+            [ tr [ ]
+                [ th [ ] [ str "Firstname" ]
+                  th [ ] [ str "Surname" ]
+                  th [ ] [ str "Birthday" ] ] ]
           tbody [ ]
             [ tr [ ]
                  [ td [ ] [ str "Maxime" ]
