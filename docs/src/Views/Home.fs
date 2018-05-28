@@ -3,11 +3,13 @@ module Home
 let view =
     Render.contentFromMarkdown
         """
-# Fulma
-
 <center style="width: 200px;margin: auto;">
 ![Fulma logo](assets/logo_transparent.svg)
 </center>
+
+# Fulma
+
+Fulma provides a wrapper around [Bulma 0.7.1](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
 
 Fulma is divided into 3 projects:
 
