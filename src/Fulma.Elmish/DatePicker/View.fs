@@ -28,6 +28,9 @@ module View =
             (state, currentDate)
             |> dispatch
 
+    let onDeleteClick (config : Config<'Msg>) state (currentDate : DateTime option) dispatch =
+        if currentDate.IsSome then config.OnChange (state, None) |> dispatch
+
     let calendar (config : Config<'Msg>) state (currentDate : DateTime option) dispatch =
         let isCurrentMonth (date : DateTime) =
             state.ReferenceDate.Month  = date.Month
@@ -97,11 +100,23 @@ module View =
                 Date.Format.localFormat config.Local config.Local.Date.DefaultFormat date
             | None -> ""
         div [ ]
-            [ yield Input.text [ Input.Props [ Value dateTxt
-                                               OnFocus (fun _ -> onFocus config state currentDate dispatch)
-                                               OnClick (fun _ -> onFocus config state currentDate dispatch)
-                                               // TODO: Implement something to trigger onChange only if the value actually change
-                                               OnBlur (fun _ -> let newState = { state with InputFocused = false }
-                                                                onChange config newState currentDate dispatch) ] ]
+            [
+              yield Field.body [] [
+                  Field.div (if state.ShowDeleteButton then [Field.HasAddons] else []) [
+                    yield Control.p [] [
+                            Input.text [ Input.Props [ Value dateTxt
+                                                       OnFocus (fun _ -> onFocus config state currentDate dispatch)
+                                                       OnClick (fun _ -> onFocus config state currentDate dispatch)
+                                                       // TODO: Implement something to trigger onChange only if the value actually change
+                                                       OnBlur (fun _ -> let newState = { state with InputFocused = false }
+                                                                        onChange config newState currentDate dispatch) ]; ] ]
+
+                    if state.ShowDeleteButton then
+                        yield Control.p [] [
+                                Button.a [ Button.OnClick(fun _ -> onDeleteClick config state currentDate dispatch) ]
+                                    [ Icon.faIcon [] [ Fa.icon Fa.I.Times ] ] ]
+                  ]
+              ]
+
               if isCalendarDisplayed state then
                 yield calendar config state currentDate dispatch ]

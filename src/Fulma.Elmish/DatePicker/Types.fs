@@ -12,7 +12,8 @@ module Types =
           ReferenceDate : DateTime
           AutoClose : bool
           ForceClose : bool
-          TitleFormat : string }
+          TitleFormat : string
+          ShowDeleteButton : bool  }
 
     let defaultState =
         { Today = None
@@ -20,7 +21,8 @@ module Types =
           ReferenceDate = DateTime.UtcNow
           AutoClose = false
           ForceClose = false
-          TitleFormat = "" }
+          TitleFormat = ""
+          ShowDeleteButton = false  }
 
     type Config<'Msg> =
         { OnChange : State * (DateTime option) -> 'Msg
