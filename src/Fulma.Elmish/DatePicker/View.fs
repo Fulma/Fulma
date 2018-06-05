@@ -103,7 +103,7 @@ module View =
             [
               yield Field.body [] [
                   Field.div (if state.ShowDeleteButton then [Field.HasAddons] else []) [
-                    yield Control.p [] [
+                    yield Control.p [ Control.IsExpanded ] [
                             Input.text [ Input.Props [ Value dateTxt
                                                        OnFocus (fun _ -> onFocus config state currentDate dispatch)
                                                        OnClick (fun _ -> onFocus config state currentDate dispatch)
