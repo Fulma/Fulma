@@ -1,3 +1,7 @@
+### 0.1.0-beta-011
+
+* Allow to delete date from DatePicker (@marcpiechura)
+
 ### 0.1.0-beta-010
 
 * Update to Fulma 1.0.0-beta-014
