@@ -30,7 +30,8 @@ type DatePickerDemo(props) =
                                                  // See #56: https://github.com/MangelMaxime/Fulma/issues/56#issuecomment-332186559
                                                  ZIndex 10. ] }
 
-    do base.setInitState({ DatePickerState = { DatePicker.Types.defaultState with AutoClose = true }
+    do base.setInitState({ DatePickerState = { DatePicker.Types.defaultState with AutoClose = true
+                                                                                  ShowDeleteButton = true }
                            CurrentDate = None })
 
     member this.datePickerChanged (newState, newDate) =
@@ -88,7 +89,8 @@ type Msg =
 *Update.fs*
 ```fs
 let init() =
-    { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true }
+    { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true
+                                                             ShowDeleteButton = true }
       CurrentDate = None }
 
 let update msg model =
