@@ -60,8 +60,6 @@ module Input =
         | Value of string
         /// Set `DefaultValue` HTMLAttr
         | DefaultValue of string
-        /// `Ref` callback that sets the value of an input textbox after DOM element is created.
-        /// Can be used override input box value.
         | ValueOrDefault of string
         /// Set `Placeholder` HTMLAttr
         | Placeholder of string
