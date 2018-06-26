@@ -1,3 +1,7 @@
+### 1.0.0-beta-023
+
+- Add `ValueOrDefault` to `Input` and `Textarea` (by @marcpiechura)
+
 ### 1.0.0-beta-022
 
 - Fix typo column doc comment (by @selketjah)
