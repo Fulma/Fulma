@@ -59,7 +59,9 @@ module Input =
         /// Set `Value` HTMLAttr
         | Value of string
         /// Set `DefaultValue` HTMLAttr
-        | DefaultValue of string
+        | DefaultValue of string        
+        /// `Ref` callback that sets the value of an input textbox after DOM element is created.
+        | ValueOrDefault of string
         /// Set `Placeholder` HTMLAttr
         | Placeholder of string
         | OnChange of (React.FormEvent -> unit)
@@ -79,6 +81,7 @@ module Input =
           IsRounded : bool
           Value : string option
           DefaultValue : string option
+          ValueOrDefault : string option
           Placeholder : string option
           OnChange : (React.FormEvent -> unit) option
           Ref : (Browser.Element->unit) option
@@ -97,6 +100,7 @@ module Input =
               IsRounded = false
               Value = None
               DefaultValue = None
+              ValueOrDefault = None
               Placeholder = None
               OnChange = None
               Ref = None
@@ -120,6 +124,8 @@ module Input =
         | Tel -> "tel"
         | IInputType.ColorType -> "color"
 
+    open Fable.Core.JsInterop
+
     /// Generate <input class="input" />
     let input options =
         let parseOptions (result : Options) option =
@@ -134,6 +140,7 @@ module Input =
             | IsRounded -> { result with IsRounded = true }
             | Value value -> { result with Value = Some value }
             | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
+            | ValueOrDefault valueOrDefault -> { result with ValueOrDefault = Some valueOrDefault }
             | Placeholder placeholder -> { result with Placeholder = Some placeholder }
             | Props props -> { result with Props = props }
             | OnChange cb -> { result with OnChange = cb |> Some }
@@ -159,6 +166,8 @@ module Input =
                if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
                if Option.isSome opts.DefaultValue then
                    yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
+               if Option.isSome opts.ValueOrDefault then
+                    yield Props.Ref <| (fun e -> if e |> isNull |> not && !!e?value <> !!opts.ValueOrDefault.Value then e?value <- !!opts.ValueOrDefault.Value) :> IHTMLProp
                if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp
                if Option.isSome opts.OnChange then
                 yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
