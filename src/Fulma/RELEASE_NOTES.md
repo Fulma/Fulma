@@ -1,3 +1,7 @@
+### 1.0.0-beta-024
+
+- Fix #155: Allow button to have a size and `is-fullwidth` at the same time
+
 ### 1.0.0-beta-023
 
 - Add `ValueOrDefault` to `Input` and `Textarea` (by @marcpiechura)

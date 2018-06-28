@@ -79,6 +79,7 @@ module Button =
           IsActive : bool
           IsLoading : bool
           IsStatic : bool
+          IsFullWidth : bool
           Props : IHTMLProp list
           CustomClass : string option
           OnClick : (MouseEvent -> unit) option
@@ -97,6 +98,7 @@ module Button =
               IsStatic = false
               IsHovered = false
               IsFocused = false
+              IsFullWidth = false
               Props = []
               CustomClass = None
               OnClick = None
@@ -109,7 +111,7 @@ module Button =
             // Sizes
             | Size size -> { result with Size = ofSize size |> Some }
             // Styles
-            | IsFullWidth -> { result with Size = Classes.Styles.IsFullwidth  |> Some }
+            | IsFullWidth -> { result with IsFullWidth = true  }
             | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
             | IsOutlined -> { result with IsOutlined = true }
             | IsInverted -> { result with IsInverted = true }
@@ -144,7 +146,8 @@ module Button =
                           Classes.State.IsFocused, opts.IsFocused
                           Classes.State.IsActive, opts.IsActive
                           Classes.State.IsLoading, opts.IsLoading
-                          Classes.State.IsStatic, opts.IsStatic ]
+                          Classes.State.IsStatic, opts.IsStatic
+                          Classes.Styles.IsFullwidth, opts.IsFullWidth ]
 
         element
             [ yield classes
