@@ -1,3 +1,7 @@
+### 1.0.7
+
+* Update dependencies to latest version
+
 ### 1.0.6
 
 * Update paket.exe: fix the SSL issue on windows
