@@ -1,3 +1,8 @@
+### 1.0.0-beta-025
+
+- BREAKING CHANGE: `Menu.item` has been replaced with `Menu.Item.a` and `Menu.Item.li`
+- Add `Menu.Item.Href` to make it easier to works with hash urls
+
 ### 1.0.0-beta-024
 
 - Fix #155: Allow button to have a size and `is-fullwidth` at the same time
