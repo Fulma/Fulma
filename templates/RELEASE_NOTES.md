@@ -1,3 +1,7 @@
+### 1.0.8
+
+* Fixed favicon path (by @ bzuu)
+
 ### 1.0.7
 
 * Update dependencies to latest version
