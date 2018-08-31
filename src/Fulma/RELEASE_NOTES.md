@@ -1,3 +1,7 @@
+### 1.0.0-beta-026
+
+- Fix Tabs.tab option builder. `CustomClass` and `Modifiers` wasn't added to the generated classes
+
 ### 1.0.0-beta-025
 
 - BREAKING CHANGE: `Menu.item` has been replaced with `Menu.Item.a` and `Menu.Item.li`

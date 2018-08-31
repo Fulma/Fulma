@@ -118,6 +118,9 @@ module Tabs =
             | Tab.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
         let opts = options |> List.fold parseOptions Tab.Options.Empty
-        let classes = classList [ Classes.State.IsActive, opts.IsActive ] :> IHTMLProp
+        let classes = Helpers.classes
+                        ""
+                        ( opts.CustomClass::opts.Modifiers )
+                        [ Classes.State.IsActive, opts.IsActive ]
         li (classes::opts.Props)
             children
