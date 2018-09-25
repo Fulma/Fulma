@@ -1,4 +1,5 @@
 namespace Fulma.Extensions
+#nowarn "66" // this upcast is unnecessary - the types are identical
 
 open Fulma
 open Fable.Helpers.React
