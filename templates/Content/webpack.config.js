@@ -5,29 +5,25 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-
-function resolve(filePath) {
-    return path.join(__dirname, filePath)
-}
-
-var babelOptions = fableUtils.resolveBabelOptions({
+var babelOptions = {
     presets: [
-        ["env", {
+        ["@babel/preset-env", {
             "targets": {
                 "browsers": ["last 2 versions"]
             },
             "modules": false
         }]
     ]
-});
+};
 
-var isProduction = process.argv.indexOf("-p") >= 0;
+// If we're running the webpack-dev-server, assume we're in development mode
+var isProduction = !process.argv.find(v => v.indexOf('webpack-dev-server') !== -1);
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
 
 var commonPlugins = [
     new HtmlWebpackPlugin({
-        filename: resolve('./output/index.html'),
-        template: resolve('./src/index.html')
+        filename: './index.html',
+        template: './src/index.html'
     })
 ];
 
@@ -36,22 +32,22 @@ module.exports = {
     entry: isProduction ? // We don't use the same entry for dev and production, to make HMR over style quicker for dev env
         {
             demo: [
-                "babel-polyfill",
-                resolve('./src/FulmaMinimalTemplate.fsproj'),
-                resolve('./src/scss/main.scss')
+                "@babel/polyfill",
+                './src/FulmaMinimalTemplate.fsproj',
+                './src/scss/main.scss'
             ]
         } : {
             app: [
-                "babel-polyfill",
-                resolve('./src/FulmaMinimalTemplate.fsproj')
+                "@babel/polyfill",
+                './src/FulmaMinimalTemplate.fsproj'
             ],
             style: [
-                resolve('./src/scss/main.scss')
+                './src/scss/main.scss'
             ]
         },
     mode: isProduction ? "production" : "development",
     output: {
-        path: resolve('./output'),
+        path: path.join(__dirname, './output'),
         filename: isProduction ? '[name].[hash].js' : '[name].js'
     },
     plugins: isProduction ?
@@ -67,14 +63,8 @@ module.exports = {
             new webpack.HotModuleReplacementPlugin(),
             new webpack.NamedModulesPlugin()
         ]),
-    resolve: {
-        modules: [
-            "node_modules/",
-            resolve("./node_modules/")
-        ]
-    },
     devServer: {
-        contentBase: resolve('./static/'),
+        contentBase: './static/',
         publicPath: "/",
         port: 8080,
         hot: true,
@@ -87,9 +77,7 @@ module.exports = {
                 use: {
                     loader: "fable-loader",
                     options: {
-                        babel: babelOptions,
-                        define: isProduction ? [] : ["DEBUG"],
-                        extra: { optimizeWatch: true }
+                        define: isProduction ? [] : ["DEBUG"]
                     }
                 }
             },
@@ -102,9 +90,11 @@ module.exports = {
                 },
             },
             {
-                test: /\.s?[ac]ss$/,
+                test: /\.(sass|scss|css)$/,
                 use: [
-                    isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
+                    isProduction
+                        ? MiniCssExtractPlugin.loader
+                        : 'style-loader',
                     'css-loader',
                     'sass-loader',
                 ],
