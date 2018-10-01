@@ -6,12 +6,10 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 
-[<Pojo>]
 type ShowcaseProps =
     { Preview : unit -> React.ReactElement
       SourceCode : string }
 
-[<Pojo>]
 type ShowcaseState =
     { IsExpanded : bool }
 
@@ -30,14 +28,14 @@ type Showcase(props) =
                 | true -> ClassName "fa fa-angle-up"
                 | false -> ClassName "fa fa-angle-down"
 
-            Card.Footer.item [ ]
+            Card.Footer.a [ ]
                     [ Icon.icon [ ]
                         [ i [ footerIconClass ] [ ] ] ]
 
         let footerItemText =
             match this.state.IsExpanded with
-            | true -> Card.Footer.item [ ] [ str "Hide code" ]
-            | false -> Card.Footer.item [ ] [ str "View code" ]
+            | true -> Card.Footer.a [ ] [ str "Hide code" ]
+            | false -> Card.Footer.a [ ] [ str "View code" ]
 
         Card.card [ ]
             [ yield Card.content [ ] [ this.props.Preview () ]

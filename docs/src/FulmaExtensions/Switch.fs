@@ -149,11 +149,9 @@ let stateInteractive () =
           Switch.switch [ ] [ str "Unchecked" ]
           Switch.switch [ Switch.Checked true ] [ str "checked" ] ]
 
-[<Pojo>]
 type SwitchDemoProps =
     interface end
 
-[<Pojo>]
 type SwitchDemoState =
     { IsChecked : bool }
 

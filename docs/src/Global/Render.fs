@@ -7,7 +7,6 @@ open Fable.Helpers.React.Props
 open Fable.Import
 open Fulma
 
-[<Pojo>]
 type DangerousInnerHtml =
     { __html : string }
 
@@ -31,4 +30,4 @@ let docPage children =
             yield child
             yield hr [ ] ]
 
-let getViewSource (view: unit->React.ReactElement) = ""
+let getViewSource (view: unit->React.ReactElement) = "TODO update"

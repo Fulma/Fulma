@@ -51,14 +51,14 @@ let backgroundAndTextColor() =
             [ Content.content [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
           Card.footer [ ]
-            [ Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
-                                             Modifier.TextColor IsInfo ] ]
+            [ Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
+                                          Modifier.TextColor IsInfo ] ]
                 [ str "Save" ]
-              Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsBlackBis
-                                             Modifier.TextColor IsWhiteBis ] ]
+              Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsBlackBis
+                                          Modifier.TextColor IsWhiteBis ] ]
                 [ str "Edit" ]
-              Card.Footer.item [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
-                                             Modifier.TextColor IsDanger ] ]
+              Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
+                                          Modifier.TextColor IsDanger ] ]
                 [ str "Delete" ] ] ]
 
 let view =

@@ -151,11 +151,9 @@ let stateInteractive () =
                     Checkradio.radio [ ] [ str "Unchecked" ]
                     Checkradio.radio [ Checkradio.Checked true;] [ str "Checked" ] ] ] ]
 
-[<Pojo>]
 type CheckradioDemoProps =
     interface end
 
-[<Pojo>]
 type CheckradioDemoState =
     { IsChecked : bool }
 

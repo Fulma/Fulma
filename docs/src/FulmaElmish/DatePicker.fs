@@ -9,11 +9,9 @@ open Fulma.Elmish
 open Fable.PowerPack
 open System
 
-[<Pojo>]
 type DatePickerDemoProps =
     interface end
 
-[<Pojo>]
 type DatePickerDemoState =
     { DatePickerState : DatePicker.Types.State
       CurrentDate : DateTime option }

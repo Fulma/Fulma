@@ -83,11 +83,9 @@ let cardModalCode () =
                   Button.button [ ]
                     [ str "Cancel" ] ] ] ]
 
-[<Pojo>]
 type BasicModalProps =
     interface end
 
-[<Pojo>]
 type BasicModalState =
     { IsShown : bool }
 
@@ -105,11 +103,9 @@ type BasicModal(props) =
               Button.button [ Button.OnClick this.toggleDisplay ]
                 [ str "Show modal" ] ]
 
-[<Pojo>]
 type CardModalProps =
     interface end
 
-[<Pojo>]
 type CardModalState =
     { IsShown : bool }
 

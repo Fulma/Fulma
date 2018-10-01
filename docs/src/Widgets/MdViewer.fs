@@ -8,7 +8,6 @@ open Fulma.FontAwesome
 open Fable.PowerPack
 open Fable.PowerPack.Fetch
 
-[<Pojo>]
 type ChangelogProps =
     { File : string }
 
@@ -17,7 +16,6 @@ type ContentState =
     | Fetched of string
     | Error
 
-[<Pojo>]
 type ChangelogState =
     { Content : ContentState }
 

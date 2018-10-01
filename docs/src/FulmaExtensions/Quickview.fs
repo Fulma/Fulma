@@ -6,11 +6,9 @@ open Fable.Helpers.React
 open Fulma
 open Fulma.Extensions
 
-[<Pojo>]
 type QuickviewDemoProps =
     interface end
 
-[<Pojo>]
 type QuickviewDemoState =
     { IsActive : bool }
 

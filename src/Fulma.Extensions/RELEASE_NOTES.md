@@ -1,3 +1,7 @@
+### 1.0.0
+
+* Release stable version for Fable 2
+
 ### 1.0.0-beta-016
 
 * Update to Fulma 1.0.0-beta-019

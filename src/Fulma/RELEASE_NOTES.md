@@ -1,3 +1,8 @@
+### 1.0.0
+
+* Release stable version for Fable 2
+* Fix #161: Replace `Card.Footer.item` with `Card.Footer.a` - `Card.Footer.p` - `Card.Footer.div`
+
 ### 1.0.0-beta-026
 
 - Fix Tabs.tab option builder. `CustomClass` and `Modifiers` wasn't added to the generated classes

@@ -98,8 +98,14 @@ module Card =
 
     module Footer =
 
-        /// Generate <a class="card-footer-item"></a>
-        let item (options: GenericOption list) children =
+        let internal itemView element (options: GenericOption list) children =
             let opts = genericParse options
             let classes = Helpers.classes Classes.Footer.Item ( opts.CustomClass::opts.Modifiers ) []
-            a (classes::opts.Props) children
+            element (classes::opts.Props) children
+
+        /// Generate <div class="card-footer-item"></a>
+        let div x y = itemView div x y
+        /// Generate <p class="card-footer-item"></a>
+        let p x y = itemView p x y
+        /// Generate <a class="card-footer-item"></a>
+        let a x y = itemView a x y

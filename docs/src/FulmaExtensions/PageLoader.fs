@@ -7,11 +7,9 @@ open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Extensions
 
-[<Pojo>]
 type PageLoaderDemoProps =
     interface end
 
-[<Pojo>]
 type PageLoaderDemoState =
     { CurrentColor : IColor
       IsActive : bool }

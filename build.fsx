@@ -122,13 +122,6 @@ Target.create "BuildDocs" (fun _ ->
     |> ignore
 )
 
-Target.create "BuildPlugin" (fun _ ->
-    DotNet.build
-        (fun p ->
-            { p with Configuration = DotNet.BuildConfiguration.Release } )
-        "docs/Plugins"
-)
-
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
 let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes.ReleaseNotes) projFile =
@@ -224,13 +217,11 @@ Target.create "PublishDocs" (fun _ ->
 "Build"
     ==> "YarnInstall"
     ==> "InstallDocs"
-    ==> "BuildPlugin"
     ==> "WatchDocs"
 
 "Build"
     ==> "YarnInstall"
     ==> "InstallDocs"
-    ==> "BuildPlugin"
     ==> "BuildDocs"
     ==> "PublishDocs"
 

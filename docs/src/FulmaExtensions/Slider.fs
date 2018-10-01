@@ -42,11 +42,9 @@ let stateInteractive () =
     div [ ClassName "block" ]
         [ Slider.slider [  Slider.Disabled true ] ]
 
-[<Pojo>]
 type SliderDemoProps =
     interface end
 
-[<Pojo>]
 type SliderDemoState =
     { Ratio : int }
 

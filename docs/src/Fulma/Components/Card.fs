@@ -17,11 +17,11 @@ let basic () =
             [ Content.content [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
           Card.footer [ ]
-            [ Card.Footer.item [ ]
+            [ Card.Footer.a [ ]
                 [ str "Save" ]
-              Card.Footer.item [ ]
+              Card.Footer.a [ ]
                 [ str "Edit" ]
-              Card.Footer.item [ ]
+              Card.Footer.a [ ]
                 [ str "Delete" ] ] ]
 
 let centered () =
@@ -35,11 +35,11 @@ let centered () =
             [ Content.content [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
           Card.footer [ ]
-            [ Card.Footer.item [ ]
+            [ Card.Footer.a [ ]
                 [ str "Save" ]
-              Card.Footer.item [ ]
+              Card.Footer.a [ ]
                 [ str "Edit" ]
-              Card.Footer.item [ ]
+              Card.Footer.a [ ]
                 [ str "Delete" ] ] ]
 
 let view =
