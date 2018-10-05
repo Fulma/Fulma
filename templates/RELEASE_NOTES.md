@@ -1,3 +1,15 @@
+### 2.0.2
+
+* Remove `.fable` folder from the template files
+
+### 2.0.1
+
+* Release for Fable 2
+
+### 2.0.0
+
+* Release for Fable 2
+
 ### 1.0.8
 
 * Fixed favicon path (by @ bzuu)

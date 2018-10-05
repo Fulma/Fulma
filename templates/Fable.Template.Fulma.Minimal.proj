@@ -9,7 +9,7 @@
     <PackageTags>fable;template;fsharp;elmish;fulma</PackageTags>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageType>Template</PackageType>
-    <Version>1.0.8</Version>
+    <Version>2.0.2</Version>
     <PackProjectInputFile>$(MSBuildProjectFullPath)</PackProjectInputFile>
     <NoBuild>true</NoBuild>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -25,6 +25,7 @@
         Content/src/obj/**/*;
         Content/output/**/*;
         Content/.fake/**/*;
+        Content/.fable/**/*;
     </ExcludeFromPackage>
 </PropertyGroup>
   <ItemGroup>
