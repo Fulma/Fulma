@@ -740,7 +740,7 @@ module FontAwesome5 =
                 | [<CompiledName("fas fa-tablets")>] Tablets
                 | [<CompiledName("fas fa-tachometer-alt")>] TachometerAlt
                 | [<CompiledName("fas fa-tag")>] Tag
-                | [<CompiledName("fas fa-tags")>] Tags
+                //| [<CompiledName("fas fa-tags")>] Tags
                 | [<CompiledName("fas fa-tape")>] Tape
                 | [<CompiledName("fas fa-tasks")>] Tasks
                 | [<CompiledName("fas fa-taxi")>] Taxi
