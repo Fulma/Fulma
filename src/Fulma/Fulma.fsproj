@@ -61,6 +61,7 @@
     <Compile Include="Layouts/Tile.fs" />
     <!-- Extra -->
     <Compile Include="Extra/FontAwesome.fs" />
+    <Compile Include="Extra/FontAwesome5.fs" />
   </ItemGroup>
   <!-- Add source files to "fable" folder in Nuget package -->
   <ItemGroup>
