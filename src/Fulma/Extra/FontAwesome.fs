@@ -1030,7 +1030,7 @@ module FontAwesome =
                     | ChildIcon faIcon -> { result with Icon = unbox<string> faIcon |> Some }
 
             let opts = faOptions |> List.fold parseOptions StackChildOptions.Empty
-            i [ Helpers.classes "fa" [ opts.Icon; opts.Size; opts.Color ] [] ] []
+            i [ Helpers.classes "fa" [ opts.Icon; opts.Size; opts.Color ] [ ] ] [ ]
 
         let stackParent (faOptions: StackParentOption list) children =
             let parseOptions (result: StackParentOptions) (option: StackParentOption) =
@@ -1038,7 +1038,7 @@ module FontAwesome =
                     | ParentSize s        -> { result with Size   = ofSize s  |> Some }
 
             let opts = faOptions |> List.fold parseOptions StackParentOptions.Empty
-            span [ Helpers.classes "fa-stack" [opts.Size] [] ] children
+            span [ Helpers.classes "fa-stack" [ opts.Size ] [ ] ] children
 
         let toIconOptions (faOptions: IconOption list) =
             let parseOptions (result: IconOptions) (option: IconOption) =
