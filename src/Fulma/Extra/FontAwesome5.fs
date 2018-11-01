@@ -1342,6 +1342,11 @@ module FontAwesome5 =
 
             let inline Tags<'T> = unbox<IFontAwesomeIcon> "fa-tags"
 
+            type Style =
+                | Solid
+                | Regular
+                | Light
+
         module B =
 
             [<StringEnum>]
@@ -1739,3 +1744,45 @@ module FontAwesome5 =
                 interface  IFontAwesomeIcon
 
             let inline ``500px``<'T> = unbox<IFontAwesomeIcon> "fa-500px"
+
+            let inline Custom (iconClass: string) = unbox<IFontAwesomeIcon> iconClass
+
+        module Classes =
+            module IconSizes =
+                let [<Literal>] Small = "fa-xs"
+                let [<Literal>] Medium = "fa-md"
+                let [<Literal>] Large = "fa-lg"
+                let [<Literal>] Fa2x = "fa-2x"
+                let [<Literal>] Fa3x = "fa-3x"
+                let [<Literal>] Fa4x = "fa-4x"
+                let [<Literal>] Fa5x = "fa-5x"
+                let [<Literal>] Fa7x = "fa-7x"
+                let [<Literal>] Fa10x = "fa-10x"
+                let [<Literal>] Fw = "fa-fw"
+
+            module Rotations =
+                let [<Literal>] Rotate90 = "fa-rotate-90"
+                let [<Literal>] Rotate180 = "fa-rotate-180"
+                let [<Literal>] Rotate270 = "fa-rotate-270"
+
+            module Flips =
+                let [<Literal>] Horizontal = "fa-flip-horizontal"
+                let [<Literal>] Vertical = "fa-flip-vertical"
+
+            module Animations =
+                let [<Literal>] Spin = "fa-spin"
+                let [<Literal>] Pulse = "fa-pulse"
+
+            module Borders =
+                let [<Literal>] Border = "fa-border"
+
+            module Pulls =
+                let [<Literal>] PullRight = "fa-pull-right"
+                let [<Literal>] PullLeft = "fa-pull-left"
+
+            module StackSizes =
+                let [<Literal>] Fa1x = "fa-stack-1x"
+                let [<Literal>] Fa2x = "fa-stack-2x"
+
+            module Colors =
+                let [<Literal>] Inverse = "fa-inverse"
