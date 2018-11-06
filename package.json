@@ -21,7 +21,7 @@
     "babel-loader": "^8.0.0",
     "bulma": "^0.7.1",
     "bulma-badge": "^2.0.0",
-    "bulma-calendar": "^5.0.1",
+    "bulma-calendar": "4.0.2",
     "bulma-checkradio": "^2.1.0",
     "bulma-divider": "^2.0.1",
     "bulma-pageloader": "^2.1.0",

@@ -1075,11 +1075,11 @@ bulma-badge@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bulma-badge/-/bulma-badge-2.0.0.tgz#7c7f8fee805400fa35117a43c80f5f9784f3d513"
 
-bulma-calendar@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/bulma-calendar/-/bulma-calendar-5.0.1.tgz#758db52b661f3b57aad7006ce6570c32f1487ed2"
+bulma-calendar@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/bulma-calendar/-/bulma-calendar-4.0.2.tgz#a620811f5002bbb76e408788c03050ff6926cb67"
   dependencies:
-    date-fns "^1.29.0"
+    moment "^2.22.2"
 
 bulma-checkradio@^2.1.0:
   version "2.1.0"
@@ -1585,10 +1585,6 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
-
-date-fns@^1.29.0:
-  version "1.29.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -3253,6 +3249,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0:
   resolved "http://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+moment@^2.22.2:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
