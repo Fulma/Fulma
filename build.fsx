@@ -105,7 +105,7 @@ let watchDocs _ =
         DotNet.exec
             (DotNet.Options.withWorkingDirectory "docs")
             "fable"
-            "webpack-dev-server --port free"
+            "webpack-dev-server --port free -- --config docs/webpack.config.js"
 
     if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
 
@@ -118,7 +118,7 @@ Target.create "BuildDocs" (fun _ ->
     DotNet.exec
         (DotNet.Options.withWorkingDirectory "docs")
         "fable"
-        "webpack --port free -- -p"
+        "webpack --port free -- -p --config docs/webpack.config.js"
     |> ignore
 )
 
