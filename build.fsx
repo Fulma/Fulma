@@ -21,7 +21,7 @@ open Fake.Tools.Git
 
 module Util =
 
-    let visitFile (visitor: string->string) (fileName : string) =
+    let visitFile (visitor: string->string) (fileName: string) =
         File.ReadAllLines(fileName)
         |> Array.map (visitor)
         |> fun lines -> File.WriteAllLines(fileName, lines)
@@ -40,7 +40,7 @@ let platformTool tool =
     Process.tryFindFileOnPath tool
     |> function Some t -> t | _ -> failwithf "%s not found" tool
 
-let run (cmd:string) dir args  =
+let run (cmd: string) dir args  =
     if Process.execSimple (fun info ->
         { info with
             FileName = cmd
@@ -179,6 +179,7 @@ Target.create "PublishNugets" (fun _ ->
     !! "src/Fulma/Fulma.fsproj"
     ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
     ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
+    ++ "src/Fulma.Toast/Fulma.Toast.fsproj"
     ++ "templates/Fable.Template.Fulma.Minimal.proj"
     |> Seq.iter(fun s ->
         let projFile = s
