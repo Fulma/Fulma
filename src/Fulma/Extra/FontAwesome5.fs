@@ -1979,7 +1979,7 @@ module FontAwesome5 =
             let faStack1x = StackChildOption.ChildSize FaStack1x
             let colorInverse = StackChildOption.ChildColor Inverse
             let icon (i: IFontAwesomeIcon, style: IStyle) = StackChildOption.ChildIcon (i, style)
-            let brand (b: IFontAwesomeIcon) = StackChildOption.ChildBrand i
+            let brand (b: IFontAwesomeIcon) = StackChildOption.ChildBrand b
 
         //Stack Parent Functions
         module Parent =
