@@ -16,6 +16,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="Toast.fs" />
+        <Content source="scss/style.scss">
+            <IncludeInPackage>true</IncludeInPackage>
+            <CopyToOutput>true</CopyToOutput>
+            <BuildAction>Content</BuildAction>
+            <copyToOutput>true</copyToOutput>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
