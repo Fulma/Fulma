@@ -2,8 +2,11 @@ namespace Fulma.Toast
 
 module View =
 
+    open Fable.Helpers.React
+    open Fable.Helpers.React.Props
     open Fulma
-    open Fulma.Extensions
+    open Fulma.FontAwesome
+    open Thoth.Elmish
 
     let renderToastWithFulma =
         { new Toast.IRenderer<Fa.I.FontAwesomeIcons> with
@@ -29,7 +32,7 @@ module View =
 
             member __.Title txt =
                 Heading.h5 []
-                    [ str txt ]
+                           [ str txt ]
 
             member __.Icon (icon : Fa.I.FontAwesomeIcons) =
                 Icon.faIcon [ Icon.Size IsMedium ]
@@ -42,7 +45,7 @@ module View =
 
             member __.Message txt =
                 span [ ]
-                    [ str txt ]
+                     [ str txt ]
 
             member __.SplittedLayout iconView title message =
                 Columns.columns [ Columns.IsGapless
