@@ -16,20 +16,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Compile Include="Toast.fs" />
-        <Content source="scss/style.scss">
-            <IncludeInPackage>true</IncludeInPackage>
-            <CopyToOutput>true</CopyToOutput>
-            <BuildAction>Content</BuildAction>
-            <copyToOutput>true</copyToOutput>
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
     </ItemGroup>
     <!-- Add source files to "fable" folder in Nuget package -->
     <ItemGroup>
-        <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
+        <Content Include="*.fsproj; **\*.fs; **\*.scss" PackagePath="fable\" />
     </ItemGroup>
     <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>
