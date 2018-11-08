@@ -1790,6 +1790,11 @@ module FontAwesome5 =
                 let [<Literal>] Light = "fal"
                 let [<Literal>] Brands = "fab"
 
+        type IStyle =
+            | Solid
+            | Regular
+            | Light
+
         module Types =
 
             type IIconSize =
@@ -1829,11 +1834,6 @@ module FontAwesome5 =
             type IStackSize =
                 | FaStack1x
                 | FaStack2x
-
-            type IStyle =
-                | Solid
-                | Regular
-                | Light
 
             type IconOption =
                 | Size of IIconSize
@@ -1985,6 +1985,7 @@ module FontAwesome5 =
         module Parent =
             let faXs = StackParentOption.ParentSize FaSmall
             let faMd = StackParentOption.ParentSize FaMedium
+            let faLg = StackParentOption.ParentSize FaLarge
             let fa2x = StackParentOption.ParentSize Fa2x
             let fa3x = StackParentOption.ParentSize Fa3x
             let fa4x = StackParentOption.ParentSize Fa4x

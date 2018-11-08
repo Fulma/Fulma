@@ -3,7 +3,7 @@ module Elements.Icon
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fulma.FontAwesome5
 
 let icon () =
     div [ ClassName "block" ]
@@ -26,22 +26,22 @@ let containerSizes () =
                         // Custom class to set background color to yellow to display container
                         Icon.CustomClass "icon-size" ]
                         //Second group of Options: Font Awesome options
-                        [ //Display one Font Awesome Icon available in the Fa.I namespace
-                          Fa.icon Fa.I.Home ]
+                        [ //Display one Font Awesome Icon available in the Fa5.I namespace
+                          Fa5.icon(Fa5.I.Home, Fa5.Solid) ]
           Icon.faIcon [ //No setting for Icon container size = Normal size
                         //...
                         Icon.CustomClass "icon-size" ]
-                      [ Fa.icon Fa.I.Home ]
+                      [ Fa5.icon(Fa5.I.Home, Fa5.Solid) ]
           Icon.faIcon [ Icon.Size IsMedium
                         Icon.CustomClass "icon-size" ]
-                      [ Fa.icon Fa.I.Home
+                      [ Fa5.icon(Fa5.I.Home, Fa5.Solid)
                         //Makes the Icon 33% larger
-                        Fa.faLg ]
+                        Fa5.faLg ]
           Icon.faIcon [ Icon.Size IsLarge
                         Icon.CustomClass "icon-size" ]
-                      [ Fa.icon Fa.I.Home
+                      [ Fa5.icon(Fa5.I.Home, Fa5.Solid)
                         //Makes the Icon 2x times larger
-                        Fa.fa2x ] ]
+                        Fa5.fa2x ] ]
 
 //Diplay Font Awesome Rotation & Flip
 let iconRotationFlip () =
@@ -49,37 +49,37 @@ let iconRotationFlip () =
         [ ul [ ]
              [ li [ ]
                   [ Icon.faIcon [ Icon.Size IsMedium ]
-                                [ Fa.icon Fa.I.Shield
-                                  Fa.faLg  ]
+                                [ Fa5.icon(Fa5.I.ShieldAlt, Fa5.Solid)
+                                  Fa5.faLg  ]
                     str "No Rotation" ]
                li [ ]
                   [ Icon.faIcon [ Icon.Size IsMedium ]
-                                [ Fa.icon Fa.I.Shield
+                                [ Fa5.icon(Fa5.I.ShieldAlt, Fa5.Solid)
                                   //Rotate 90 degrees
-                                  Fa.rotate90
+                                  Fa5.rotate90
                                   //Large icon
-                                  Fa.faLg  ]
+                                  Fa5.faLg  ]
                     str "90 degrees rotation" ]
                li [ ]
                   [ Icon.faIcon [ Icon.Size IsMedium ]
-                                [ Fa.icon Fa.I.Shield
+                                [ Fa5.icon(Fa5.I.ShieldAlt, Fa5.Solid)
                                   //Rotation 180 degrees
-                                  Fa.rotate180
-                                  Fa.faLg ]
+                                  Fa5.rotate180
+                                  Fa5.faLg ]
                     str "180 degrees rotation" ]
                li [ ]
                   [ Icon.faIcon [ Icon.Size IsMedium ]
-                                [ Fa.icon Fa.I.Shield
+                                [ Fa5.icon(Fa5.I.ShieldAlt, Fa5.Solid)
                                   //Flip Horizontal
-                                  Fa.flipHorizontal
-                                  Fa.faLg ]
+                                  Fa5.flipHorizontal
+                                  Fa5.faLg ]
                     str "Horizontal flip" ]
                li [ ]
                   [ Icon.faIcon [ Icon.Size IsMedium ]
-                                [ Fa.icon Fa.I.Shield
+                                [ Fa5.icon(Fa5.I.ShieldAlt, Fa5.Solid)
                                   //Flip Vertical
-                                  Fa.flipVertical
-                                  Fa.faLg ]
+                                  Fa5.flipVertical
+                                  Fa5.faLg ]
                     str "Vertical flip" ] ] ]
 
 //Display Font Awesome Animations
@@ -89,20 +89,20 @@ let iconAnimations () =
              [ li [ ]
                   [ Icon.faIcon [ Icon.Size IsLarge ]
                                 [ //Animations work well on Spinner
-                                  Fa.icon Fa.I.Spinner
+                                  Fa5.icon(Fa5.I.Spinner, Fa5.Solid)
                                   //Pulse Animation
-                                  Fa.pulse
+                                  Fa5.pulse
                                   //Icon 2x times larger
-                                  Fa.fa2x ]
+                                  Fa5.fa2x ]
                     str "Pulse animation" ]
                li [ ]
                   [ Icon.faIcon [ Icon.Size IsLarge ]
                                 [ //Animations work well wit Cog
-                                  Fa.icon Fa.I.Cog
+                                  Fa5.icon(Fa5.I.Cog, Fa5.Solid)
                                   //Spin animation
-                                  Fa.spin
+                                  Fa5.spin
                                   //Icon 2x times larger
-                                  Fa.fa2x ]
+                                  Fa5.fa2x ]
                     str "Spin animation" ] ] ]
 
 //Stacked Icons
@@ -110,14 +110,14 @@ let stackedIcons () =
     div [ ClassName "block" ]
         [ ul [ ]
              [ li [ ]
-                  [ Icon.stackParent [ Fa.Parent.faLg ]
-                                     [ Icon.stackChild [ Fa.Child.faStack2x; Fa.Child.icon Fa.I.SquareO ]
-                                       Icon.stackChild [ Fa.Child.faStack1x; Fa.Child.icon Fa.I.Twitter ] ]
+                  [ Icon.stackParent [ Fa5.Parent.faLg ]
+                                     [ Icon.stackChild [ Fa5.Child.faStack2x; Fa5.Child.icon(Fa5.I.Square, Fa5.Regular) ]
+                                       Icon.stackChild [ Fa5.Child.faStack1x; Fa5.Child.brand Fa5.B.Twitter ] ]
                     str "Twitter logo over a square with round corners" ]
                li [ ]
-                  [ Icon.stackParent [ Fa.Parent.faLg ]
-                                     [ Icon.stackChild [ Fa.Child.faStack2x; Fa.Child.icon Fa.I.Circle ]
-                                       Icon.stackChild [ Fa.Child.faStack1x; Fa.Child.icon Fa.I.Flag; Fa.Child.colorInverse ] ]
+                  [ Icon.stackParent [ Fa5.Parent.faLg ]
+                                     [ Icon.stackChild [ Fa5.Child.faStack2x; Fa5.Child.icon(Fa5.I.Circle, Fa5.Solid) ]
+                                       Icon.stackChild [ Fa5.Child.faStack1x; Fa5.Child.icon(Fa5.I.Flag, Fa5.Regular); Fa5.Child.colorInverse ] ]
                     str "One flag with inversed color over a circle" ] ] ]
 
 //Display Font Awesome Icon List
@@ -127,23 +127,23 @@ let iconList () =
           Icon.fa_ul [ ]
             [ li [ ]
                 [ Icon.faIcon [ ]
-                              [ Fa.icon Fa.I.CheckSquare
-                                Fa.isLi ]
+                              [ Fa5.icon(Fa5.I.CheckSquare, Fa5.Regular)
+                                Fa5.isLi ]
                   str "Item done" ]
               li [ ]
                 [ Icon.faIcon [ ]
-                              [ Fa.icon Fa.I.Spinner
-                                Fa.spin
-                                Fa.isLi ]
+                              [ Fa5.icon(Fa5.I.Spinner, Fa5.Solid)
+                                Fa5.spin
+                                Fa5.isLi ]
                   str "Item processing" ] ] ]
 
 let borderPulledIcons () =
     div [ ClassName "block" ]
         [ span [ ]
                [ Icon.faIcon [ ]
-                             [ Fa.icon Fa.I.QuoteLeft
-                               Fa.pullLeft
-                               Fa.border ]
+                             [ Fa5.icon(Fa5.I.QuoteLeft, Fa5.Solid)
+                               Fa5.pullLeft
+                               Fa5.border ]
                  str "...Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.\
                      Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.\
                      Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.\
@@ -151,20 +151,20 @@ let borderPulledIcons () =
 
 let fontAwesomeIcons () =
     div [ ClassName "block" ]
-        [ Icon.faIcon [ Icon.Size IsSmall ] [ Fa.icon Fa.I.Home ]
-          Icon.faIcon [ ] [ Fa.icon Fa.I.Tags; Fa.faLg ]
-          Icon.faIcon [ Icon.Size IsMedium ] [ Fa.icon Fa.I.``500px``; Fa.fa2x ]
-          Icon.faIcon [ Icon.Size IsLarge ] [ Fa.icon Fa.I.Android; Fa.fa3x ] ]
+        [ Icon.faIcon [ Icon.Size IsSmall ] [ Fa5.icon(Fa5.I.Home, Fa5.Solid) ]
+          Icon.faIcon [ ] [ Fa5.icon(Fa5.I.Tags, Fa5.Regular); Fa5.faLg ]
+          Icon.faIcon [ Icon.Size IsMedium ] [ Fa5.brand Fa5.B.``500px``; Fa5.fa2x ]
+          Icon.faIcon [ Icon.Size IsLarge ] [ Fa5.brand Fa5.B.Android; Fa5.fa3x ] ]
 
 let composeButtons () =
     div [ ClassName "block" ]
         [ Button.button [ Button.Color IsDanger ]
                         [ Icon.faIcon [ ]
-                                      [ Fa.icon Fa.I.Trash; Fa.faLg ]
+                                      [ Fa5.icon(Fa5.I.Trash, Fa5.Solid); Fa5.faLg ]
                           span [] [ str "  Delete" ] ]
           Button.button [ Button.Color IsInfo ]
                         [ Icon.faIcon [ ]
-                                      [ Fa.icon Fa.I.User; Fa.fw ]
+                                      [ Fa5.icon(Fa5.I.User, Fa5.Solid); Fa5.fw ]
                           span [] [ str "User" ] ] ]
 
 let view =
@@ -199,12 +199,12 @@ All the examples below use Font Awesome.
                         """
 ### Available Font Awesome icons
 
-If the icon you want to use isn't accessible via `Fa.I.*` please *[open an issue here](https://github.com/MangelMaxime/Fulma/issues)*.
-You can also use `Fa.I.Custom "fa-my-icon"` as a fix.
+If the icon you want to use isn't accessible via `Fa5.I.*` please *[open an issue here](https://github.com/MangelMaxime/Fulma/issues)*.
+You can also use `Fa5.I.Custom "fa-my-icon"` as a fix.
 
 ```fsharp
-    // If the "fa-thumbs-up" icon was missing, you could use Fa.I.Custom to get it:
-    Icon.faIcon [ Icon.isLarge ] [ Fa.I.Custom "fa-thumbs-up" ]
+    // If the "fa-thumbs-up" icon was missing, you could use Fa5.I.Custom to get it:
+    Icon.faIcon [ Icon.isLarge ] [ Fa5.I.Custom "fa-thumbs-up" ]
 ```
                         """
                         (Widgets.Showcase.view fontAwesomeIcons (Render.getViewSource fontAwesomeIcons))
