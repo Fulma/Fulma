@@ -8,13 +8,13 @@ open Fulma.FontAwesome5
 let icon () =
     div [ ClassName "block" ]
         [ Icon.icon [ Icon.Size IsSmall ]
-            [ i [ ClassName "fa fa-home" ] [ ] ]
+            [ i [ ClassName "fas fa-home" ] [ ] ]
           Icon.icon [ ]
-            [ i [ ClassName "fa fa-lg fa-home" ] [ ] ]
+            [ i [ ClassName "fas fa-lg fa-home" ] [ ] ]
           Icon.icon [ Icon.Size IsMedium ]
-            [ i [ ClassName "fa fa-2x fa-home" ] [ ] ]
+            [ i [ ClassName "fas fa-2x fa-home" ] [ ] ]
           Icon.icon [ Icon.Size IsLarge ]
-            [ i [ ClassName "fa fa-3x fa-home" ] [ ] ] ]
+            [ i [ ClassName "fas fa-3x fa-home" ] [ ] ] ]
 
 //Display modification of container size with Bulma options
 let containerSizes () =
@@ -42,6 +42,24 @@ let containerSizes () =
                       [ Fa5.icon(Fa5.I.Home, Fa5.Solid)
                         //Makes the Icon 2x times larger
                         Fa5.fa2x ] ]
+
+let iconStyles () =
+    div [ ClassName "block" ]
+        [ Icon.faIcon [ Icon.Size IsLarge ]
+                      [ Fa5.icon(Fa5.I.GrinTongue, Fa5.Solid); Fa5.fa3x ]
+
+          Icon.faIcon [ Icon.Size IsLarge ]
+                      [ Fa5.icon(Fa5.I.GrinTongue, Fa5.Regular); Fa5.fa3x ]
+
+          Icon.faIcon [ Icon.Size IsLarge ]
+                      [ Fa5.icon(Fa5.I.GrinTongue, Fa5.Light); Fa5.fa3x ] ]
+
+let brands () =
+    div [ ClassName "block" ]
+        [ Icon.faIcon [ Icon.Size IsLarge ]
+                      [ Fa5.brand Fa5.B.Bluetooth; Fa5.fa2x ]
+          Icon.faIcon [ Icon.Size IsLarge ]
+                      [ Fa5.brand Fa5.B.Paypal; Fa5.fa3x ] ]
 
 //Diplay Font Awesome Rotation & Flip
 let iconRotationFlip () =
@@ -152,7 +170,7 @@ let borderPulledIcons () =
 let fontAwesomeIcons () =
     div [ ClassName "block" ]
         [ Icon.faIcon [ Icon.Size IsSmall ] [ Fa5.icon(Fa5.I.Home, Fa5.Solid) ]
-          Icon.faIcon [ ] [ Fa5.icon(Fa5.I.Tags, Fa5.Regular); Fa5.faLg ]
+          Icon.faIcon [ ] [ Fa5.icon(Fa5.I.Tags, Fa5.Solid); Fa5.faLg ]
           Icon.faIcon [ Icon.Size IsMedium ] [ Fa5.brand Fa5.B.``500px``; Fa5.fa2x ]
           Icon.faIcon [ Icon.Size IsLarge ] [ Fa5.brand Fa5.B.Android; Fa5.fa3x ] ]
 
@@ -183,13 +201,14 @@ The **icons** can have different sizes and is also compatible with *[Font Awesom
                         """
 ### Convenience functions
 
-We provide convenience functions for **[Font Awesome](http://fontawesome.io/)**.
+We provide convenience functions for **[Font Awesome 5](http://fontawesome.io/)**.
+`(if you are looking for information on Font Awesome 4, please visit **[this page](https://mangelmaxime.github.io/Fulma/#fulma/elements/iconobsolete)**)`
 
 You need the next `open` statement to access the FontAwesome convenience functions.
 
 ```fsharp
     open Fulma
-    open Fulma.FontAwesome
+    open Fulma.FontAwesome5
 ```
 
 All the examples below use Font Awesome.
@@ -197,14 +216,45 @@ All the examples below use Font Awesome.
                         (Widgets.Showcase.view containerSizes (Render.getViewSource containerSizes))
                      Render.docSection
                         """
+### Icons
+
+Supported styles:
+
+* `Solid`
+* `Regular`
+* `Light`
+
+```fsharp
+    Icon.faIcon [ ] [ Fa5.icon(Fa5.I.Trash, Fa5.Solid) ]
+```
+
+We offer icon support for all styles, including those only available in the pro.
+If the style of the icon is not available in the free edition, it will simply not show.
+                        """
+                        (Widgets.Showcase.view iconStyles (Render.getViewSource iconStyles))
+                     Render.docSection
+                        """
+### Brands
+
+```fsharp
+    Icon.faIcon [ ] [ Fa5.brand Fa5.B.Bluetooth ]
+```
+
+If the brand you want to use isn't accessible via `Fa5.B.*` please *[open an issue here](https://github.com/MangelMaxime/Fulma/issues)*.
+You can also use `Fa5.B.Custom "fa-my-icon"` as a fix.
+
+                        """
+                        (Widgets.Showcase.view brands (Render.getViewSource brands))
+                     Render.docSection
+                        """
 ### Available Font Awesome icons
 
 If the icon you want to use isn't accessible via `Fa5.I.*` please *[open an issue here](https://github.com/MangelMaxime/Fulma/issues)*.
-You can also use `Fa5.I.Custom "fa-my-icon"` as a fix.
+You can also use `Fa5.I.Custom "fas fa-my-icon"` as a fix.
 
 ```fsharp
     // If the "fa-thumbs-up" icon was missing, you could use Fa5.I.Custom to get it:
-    Icon.faIcon [ Icon.isLarge ] [ Fa5.I.Custom "fa-thumbs-up" ]
+    Icon.faIcon [ Icon.isLarge ] [ Fa5.I.Custom "fas fa-thumbs-up" ]
 ```
                         """
                         (Widgets.Showcase.view fontAwesomeIcons (Render.getViewSource fontAwesomeIcons))
