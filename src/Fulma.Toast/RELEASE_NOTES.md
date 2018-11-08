@@ -1,3 +1,3 @@
-### 0.1.0-alpha-001
+### 0.0.0
 
 * Init project
