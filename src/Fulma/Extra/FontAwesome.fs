@@ -6,6 +6,7 @@ open Fulma
 
 module FontAwesome =
 
+    [<System.Obsolete("FontAwesome 4.7.0 is obsolete. Please upgrade your code to work with FontAwesome 5.")>]
     [<RequireQualifiedAccess>]
     module Fa =
         module I =
