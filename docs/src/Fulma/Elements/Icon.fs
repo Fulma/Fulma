@@ -202,7 +202,8 @@ The **icons** can have different sizes and is also compatible with *[Font Awesom
 ### Convenience functions
 
 We provide convenience functions for **[Font Awesome 5](http://fontawesome.io/)**.
-`(if you are looking for information on Font Awesome 4, please visit **[this page](https://mangelmaxime.github.io/Fulma/#fulma/elements/iconobsolete)**)`
+
+*if you are looking for information on Font Awesome 4, please visit **[this page](https://mangelmaxime.github.io/Fulma/#fulma/elements/iconobsolete)** *
 
 You need the next `open` statement to access the FontAwesome convenience functions.
 
