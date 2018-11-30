@@ -9,9 +9,9 @@ NUGET
       Newtonsoft.Json (>= 11.0.2) - restriction: >= netcoreapp2.0
     Dotnet.ProjInfo (0.9) - restriction: >= netcoreapp2.0
       FSharp.Core (>= 4.2.3) - restriction: && (< net45) (>= netstandard2.0)
-    Fable.Core (2.0)
+    Fable.Core (2.0.1)
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
-    Fable.Elmish (2.0)
+    Fable.Elmish (2.0.3)
       Fable.Core (>= 2.0) - restriction: >= netstandard2.0
       Fable.PowerPack (>= 2.0.1) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
@@ -44,7 +44,7 @@ NUGET
       Fable.Import.Browser (>= 1.3) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
       Thoth.Json (>= 2.0) - restriction: >= netstandard2.0
-    Fable.React (4.0.1)
+    Fable.React (4.1.3)
       Fable.Core (>= 2.0) - restriction: >= netstandard2.0
       Fable.Import.Browser (>= 1.3) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
@@ -323,6 +323,13 @@ NUGET
     System.Threading.ThreadPool (4.3) - restriction: >= netcoreapp2.0
       System.Runtime (>= 4.3) - restriction: && (< monoandroid) (< monotouch) (< net46) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
       System.Runtime.Handles (>= 4.3) - restriction: && (< monoandroid) (< monotouch) (< net46) (>= netstandard1.3) (< xamarinios) (< xamarinmac) (< xamarintvos) (< xamarinwatchos)
+    Thoth.Elmish.Toast (1.0.0-beta-005)
+      Fable.Core (>= 1.3.17) - restriction: >= netstandard2.0
+      Fable.Elmish (>= 1.0.3) - restriction: >= netstandard2.0
+      Fable.Import.HMR (>= 0.1) - restriction: >= netstandard2.0
+      Fable.PowerPack (>= 1.5.1) - restriction: >= netstandard2.0
+      Fable.React (>= 3.1.3) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.5) - restriction: >= netstandard2.0
     Thoth.Json (2.0) - restriction: >= netstandard2.0
       Fable.Core (>= 2.0) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0

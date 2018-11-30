@@ -1,0 +1,23 @@
+.toast-container.dismiss-on-click {
+    .notification {
+        &:hover {
+            cursor: pointer;
+
+            &.is-success {
+                background-color: darken($success, 2.5%);
+            }
+
+            &.is-info {
+                background-color: darken($info, 2.5%);
+            }
+
+            &.is-warning {
+                background-color: darken($warning, 2.5%);
+            }
+
+            &.is-danger {
+                background-color: darken($danger, 2.5%);
+            }
+        }
+    }
+}
