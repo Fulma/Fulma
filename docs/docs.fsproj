@@ -39,6 +39,7 @@
     <Compile Include="src/Fulma/Elements/Content.fs" />
     <Compile Include="src/Fulma/Elements/Delete.fs" />
     <Compile Include="src/Fulma/Elements/Form.fs" />
+    <Compile Include="src/Fulma/Elements/IconObsolete.fs" />
     <Compile Include="src/Fulma/Elements/Icon.fs" />
     <Compile Include="src/Fulma/Elements/Image.fs" />
     <Compile Include="src/Fulma/Elements/Notification.fs" />

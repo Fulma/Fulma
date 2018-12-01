@@ -11,7 +11,8 @@
 | Framework | Versions |
 |---|---|
 | Bulma.io | 0.7.1 |
-| FontAwesome | 4.7.0 |
+| FontAwesome 4 | 4.7.0 |
+| FontAwesome 5 free and pro | 5.5.0 |
 
 ### Fulma.Extensions
 

@@ -6,6 +6,7 @@ open Fulma
 
 module FontAwesome =
 
+    [<System.Obsolete("FontAwesome 4.7.0 is obsolete. Please upgrade your code to work with FontAwesome 5.")>]
     [<RequireQualifiedAccess>]
     module Fa =
         module I =
@@ -813,11 +814,11 @@ module FontAwesome =
         module Classes =
             module IconSizes =
                 let [<Literal>] FaLarge = "fa-lg"
-                let [<Literal>] Fa2x    = "fa-2x"
-                let [<Literal>] Fa3x    = "fa-3x"
-                let [<Literal>] Fa4x    = "fa-4x"
-                let [<Literal>] Fa5x    = "fa-5x"
-                let [<Literal>] Fw      = "fa-fw"
+                let [<Literal>] Fa2x = "fa-2x"
+                let [<Literal>] Fa3x = "fa-3x"
+                let [<Literal>] Fa4x = "fa-4x"
+                let [<Literal>] Fa5x = "fa-5x"
+                let [<Literal>] Fw = "fa-fw"
 
             module ChildSizes =
                 let [<Literal>] FaStack1x = "fa-stack-1x"
@@ -833,11 +834,11 @@ module FontAwesome =
             module Animations =
                 let [<Literal>] Spin = "fa-spin"
                 let [<Literal>] Pulse = "fa-pulse"
+
             module Rotations =
                 let [<Literal>] Rotate90 = "fa-rotate-90"
                 let [<Literal>] Rotate180 = "fa-rotate-180"
                 let [<Literal>] Rotate270 = "fa-rotate-270"
-
 
             module Flips =
                 let [<Literal>] Horizontal = "fa-flip-horizontal"
@@ -851,7 +852,9 @@ module FontAwesome =
                 let [<Literal>] Fa2x = "fa-stack-2x"
 
         module Types =
+
             open I
+
             type IIconSize =
                 | FaLarge
                 | Fa2x
@@ -887,37 +890,37 @@ module FontAwesome =
                 | FaStack2x
 
             type IconOption =
-                | Size          of IIconSize
-                | Border        of IBorder
-                | Pull          of IPull
-                | Rotation      of IRotation
-                | Flip          of IFLip
-                | Color         of IColor
-                | Icon          of IFontAwesomeIcon
-                | Animation     of IAnimation
+                | Size of IIconSize
+                | Border of IBorder
+                | Pull of IPull
+                | Rotation of IRotation
+                | Flip of IFLip
+                | Color of IColor
+                | Icon of IFontAwesomeIcon
+                | Animation of IAnimation
                 | IsLi
 
             type StackParentOption =
                 | ParentSize of IIconSize
 
             type StackChildOption =
-                | ChildSize       of IStackChildSize
-                | ChildColor      of IColor
-                | ChildIcon       of IFontAwesomeIcon
+                | ChildSize of IStackChildSize
+                | ChildColor of IColor
+                | ChildIcon of IFontAwesomeIcon
 
             let ofSize =
                 function
-                | FaLarge   -> Classes.IconSizes.FaLarge
-                | Fa2x      -> Classes.IconSizes.Fa2x
-                | Fa3x      -> Classes.IconSizes.Fa3x
-                | Fa4x      -> Classes.IconSizes.Fa4x
-                | Fa5x      -> Classes.IconSizes.Fa5x
-                | Fw        -> Classes.IconSizes.Fw
+                | FaLarge -> Classes.IconSizes.FaLarge
+                | Fa2x -> Classes.IconSizes.Fa2x
+                | Fa3x -> Classes.IconSizes.Fa3x
+                | Fa4x -> Classes.IconSizes.Fa4x
+                | Fa5x -> Classes.IconSizes.Fa5x
+                | Fw -> Classes.IconSizes.Fw
 
             let ofChildSize =
                 function
-                | FaStack1x   -> Classes.ChildSizes.FaStack1x
-                | FaStack2x   -> Classes.ChildSizes.FaStack2x
+                | FaStack1x -> Classes.ChildSizes.FaStack1x
+                | FaStack2x -> Classes.ChildSizes.FaStack2x
 
             let ofBorder =
                 function
@@ -925,119 +928,110 @@ module FontAwesome =
 
             let ofPull =
                 function
-                | PullLeft  -> Classes.Pulls.PullLeft
+                | PullLeft -> Classes.Pulls.PullLeft
                 | PullRight -> Classes.Pulls.PullRight
 
             let ofAnimation =
                 function
-                | Spin      -> Classes.Animations.Spin
-                | Pulse     -> Classes.Animations.Pulse
+                | Spin -> Classes.Animations.Spin
+                | Pulse -> Classes.Animations.Pulse
+
             let ofRotation =
                 function
-                | Rotate90  -> Classes.Rotations.Rotate90
+                | Rotate90 -> Classes.Rotations.Rotate90
                 | Rotate180 -> Classes.Rotations.Rotate180
                 | Rotate270 -> Classes.Rotations.Rotate270
 
             let ofFlip =
                 function
-                | Horizontal    -> Classes.Flips.Horizontal
-                | Vertical      -> Classes.Flips.Vertical
+                | Horizontal -> Classes.Flips.Horizontal
+                | Vertical -> Classes.Flips.Vertical
 
             let ofColor =
                 function
-                | Inverse       -> Classes.Colors.Inverse
+                | Inverse -> Classes.Colors.Inverse
 
             type IconOptions =
-                {
-                    Icon        : string option
-                    Size        : string option
-                    Border      : string option
-                    Pull        : string option
-                    Animation   : string option
-                    Rotation    : string option
-                    Flip        : string option
-                    Color       : string option
-                    IsLi        : bool
-                }
+                { Icon : string option
+                  Size : string option
+                  Border : string option
+                  Pull : string option
+                  Animation : string option
+                  Rotation : string option
+                  Flip : string option
+                  Color : string option
+                  IsLi : bool }
                 with
-                    static member Empty =
-                        {
-                            Icon        = None
-                            Size        = None
-                            Border      = None
-                            Pull        = None
-                            Animation   = None
-                            Rotation    = None
-                            Flip        = None
-                            Color       = None
-                            IsLi        = false
-                        }
+                static member Empty =
+                    { Icon = None
+                      Size = None
+                      Border = None
+                      Pull = None
+                      Animation = None
+                      Rotation = None
+                      Flip = None
+                      Color = None
+                      IsLi = false }
 
-            type StackParentOptions =
-                {
-                    Size  : string option
-                }
-                with
-                    static member Empty =
-                        {
-                            Size    = None
-                        }
+            type StackParentOptions = { Size : string option }
+                with static member Empty = { Size = None }
 
             type StackChildOptions =
-                {
-                    Size  : string option
-                    Color : string option
-                    Icon  : string option
-                }
+                { Size : string option
+                  Color : string option
+                  Icon : string option }
                 with
-                    static member Empty =
-                        {
-                            Size    = None
-                            Color   = None
-                            Icon    = None
-                        }
+                static member Empty =
+                    { Size = None
+                      Color = None
+                      Icon = None }
+
         open Types
+
         let icon (i: I.IFontAwesomeIcon) = IconOption.Icon i
-        let faLg                         = IconOption.Size FaLarge
-        let fa2x                         = IconOption.Size Fa2x
-        let fa3x                         = IconOption.Size Fa3x
-        let fa4x                         = IconOption.Size Fa4x
-        let fa5x                         = IconOption.Size Fa5x
-        let fw                           = IconOption.Size Fw
-        let border                       = IconOption.Border FaBorder
-        let pullLeft                     = IconOption.Pull PullLeft
-        let pullRight                    = IconOption.Pull PullRight
-        let rotate90                     = IconOption.Rotation Rotate90
-        let rotate180                    = IconOption.Rotation Rotate180
-        let rotate270                    = IconOption.Rotation Rotate270
-        let spin                         = IconOption.Animation Spin
-        let pulse                        = IconOption.Animation Pulse
-        let flipHorizontal               = IconOption.Flip Horizontal
-        let flipVertical                 = IconOption.Flip Vertical
-        let colorInverse                 = IconOption.Color Inverse
-        let isLi                         = IconOption.IsLi
+        let faLg = IconOption.Size FaLarge
+        let fa2x = IconOption.Size Fa2x
+        let fa3x = IconOption.Size Fa3x
+        let fa4x = IconOption.Size Fa4x
+        let fa5x = IconOption.Size Fa5x
+        let fw = IconOption.Size Fw
+        let border = IconOption.Border FaBorder
+        let pullLeft = IconOption.Pull PullLeft
+        let pullRight = IconOption.Pull PullRight
+        let rotate90 = IconOption.Rotation Rotate90
+        let rotate180 = IconOption.Rotation Rotate180
+        let rotate270 = IconOption.Rotation Rotate270
+        let spin = IconOption.Animation Spin
+        let pulse = IconOption.Animation Pulse
+        let flipHorizontal = IconOption.Flip Horizontal
+        let flipVertical = IconOption.Flip Vertical
+        let colorInverse = IconOption.Color Inverse
+        let isLi = IconOption.IsLi
 
         //Stack Child Functions
         module Child =
-            let faStack2x                       = StackChildOption.ChildSize FaStack2x
-            let faStack1x                       = StackChildOption.ChildSize FaStack1x
-            let colorInverse                    = StackChildOption.ChildColor Inverse
-            let icon (i: I.IFontAwesomeIcon)    = StackChildOption.ChildIcon i
+            let faStack2x = StackChildOption.ChildSize FaStack2x
+            let faStack1x = StackChildOption.ChildSize FaStack1x
+            let colorInverse = StackChildOption.ChildColor Inverse
+            let icon (i: I.IFontAwesomeIcon) = StackChildOption.ChildIcon i
 
         //Stack Parent Functions
         module Parent =
             let faLg      = StackParentOption.ParentSize FaLarge
+
     module Icon =
+
         open Fa.Types
+
         let stackChild (faOptions: StackChildOption list ) =
             let parseOptions (result: StackChildOptions) (option: StackChildOption) =
                     match option with
-                    | ChildSize s               -> { result with Size   = ofChildSize  s       |> Some }
-                    | ChildColor c              -> { result with Color  = ofColor c            |> Some }
-                    | ChildIcon faIcon          -> { result with Icon   = unbox<string> faIcon |> Some }
+                    | ChildSize s -> { result with Size = ofChildSize  s |> Some }
+                    | ChildColor c -> { result with Color = ofColor c |> Some }
+                    | ChildIcon faIcon -> { result with Icon = unbox<string> faIcon |> Some }
 
             let opts = faOptions |> List.fold parseOptions StackChildOptions.Empty
-            i [Helpers.classes "fa" [opts.Icon; opts.Size; opts.Color] []] []
+            i [ Helpers.classes "fa" [ opts.Icon; opts.Size; opts.Color ] [ ] ] [ ]
 
         let stackParent (faOptions: StackParentOption list) children =
             let parseOptions (result: StackParentOptions) (option: StackParentOption) =
@@ -1045,23 +1039,39 @@ module FontAwesome =
                     | ParentSize s        -> { result with Size   = ofSize s  |> Some }
 
             let opts = faOptions |> List.fold parseOptions StackParentOptions.Empty
-            span [Helpers.classes "fa-stack" [opts.Size] []] children
+            span [ Helpers.classes "fa-stack" [ opts.Size ] [ ] ] children
 
         let toIconOptions (faOptions: IconOption list) =
             let parseOptions (result: IconOptions) (option: IconOption) =
                     match option with
-                    | Size s        -> { result with Size       = ofSize s              |> Some }
-                    | Border b      -> { result with Border     = ofBorder b            |> Some }
-                    | Pull p        -> { result with Pull       = ofPull p              |> Some }
-                    | Icon faIcon   -> { result with Icon       = unbox<string> faIcon  |> Some }
-                    | Rotation r    -> { result with Rotation   = ofRotation r          |> Some }
-                    | Flip f        -> { result with Rotation   = ofFlip f              |> Some }
-                    | Color i       -> { result with Color      = ofColor i             |> Some }
-                    | Animation a   -> { result with Animation  = ofAnimation a         |> Some }
-                    | IsLi          -> { result with IsLi       = false }
+                    | Size s ->
+                        { result with Size = ofSize s |> Some }
+
+                    | Border b ->
+                        { result with Border = ofBorder b |> Some }
+
+                    | Pull p ->
+                        { result with Pull = ofPull p |> Some }
+
+                    | Icon faIcon ->
+                        { result with Icon = unbox<string> faIcon |> Some }
+
+                    | Rotation r ->
+                        { result with Rotation = ofRotation r |> Some }
+
+                    | Flip f ->
+                        { result with Rotation = ofFlip f |> Some }
+
+                    | Color i ->
+                        { result with Color = ofColor i |> Some }
+
+                    | Animation a ->
+                        { result with Animation = ofAnimation a |> Some }
+
+                    | IsLi ->
+                        { result with IsLi = false }
 
             faOptions |> List.fold parseOptions IconOptions.Empty
-
 
         //Logic used to display one icon alone or as one item in an unordered list:
         let displayIcon baseClass  (opts: IconOptions) =
@@ -1070,12 +1080,12 @@ module FontAwesome =
                       opts.Pull; opts.Animation; opts.Rotation
                       opts.Flip; opts.Color ] [] ] []
 
-        let faIcon (options : Fulma.Icon.Option list) (faOptions: IconOption list) =
+        let faIcon (options: Fulma.Icon.Option list) (faOptions: IconOption list) =
             let opts = toIconOptions faOptions
             Icon.icon options
                 [ displayIcon "fa " opts ]
 
         let fa_ul (options: GenericOption list) children =
             let opts = genericParse options
-            let classes = Helpers.classes "fa-ul" [opts.CustomClass] []
+            let classes = Helpers.classes "fa-ul" [ opts.CustomClass ] [ ]
             ul (classes::opts.Props) children
