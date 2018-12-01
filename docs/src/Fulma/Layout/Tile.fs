@@ -69,4 +69,4 @@ This is important because you will probably need to add `style="height: 100%"` t
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view iconInteractive (Render.getViewSource iconInteractive)) ]
+                        (Widgets.Showcase.view iconInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

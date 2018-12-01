@@ -51,7 +51,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Title can be centered"
-                        (Widgets.Showcase.view centered (Render.getViewSource centered)) ]
+                        (Widgets.Showcase.view centered (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

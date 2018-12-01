@@ -227,25 +227,25 @@ The **Switch** can have different colors, sizes and states.
                         """
                      Render.docSection
                         "### Inline vs Block"
-                        (Widgets.Showcase.view inlineBlockInteractive (Render.getViewSource inlineBlockInteractive))
+                        (Widgets.Showcase.view inlineBlockInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Text position"
-                        (Widgets.Showcase.view rtl (Render.getViewSource rtl))
+                        (Widgets.Showcase.view rtl (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Styles
 The switch can be **rounded, outlined, thin or any combinaison of those**.
                         """
-                        (Widgets.Showcase.view stylesInteractive (Render.getViewSource stylesInteractive))
+                        (Widgets.Showcase.view stylesInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### States"
-                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                        (Widgets.Showcase.view stateInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Event handler"
-                        (Widgets.Showcase.view (fun _ -> ofType<SwitchDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<SwitchDemo,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

@@ -68,7 +68,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Alignment
@@ -81,10 +81,10 @@ Supported alignment:
 When you do not set the alignment, it's align to the *left*.
 
                         """
-                        (Widgets.Showcase.view alignmentCenter (Render.getViewSource alignmentCenter))
+                        (Widgets.Showcase.view alignmentCenter (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Icons"
-                        (Widgets.Showcase.view icons (Render.getViewSource icons))
+                        (Widgets.Showcase.view icons (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Size
@@ -98,7 +98,7 @@ Supported size:
 By default, size is considered *normal*.
 
                         """
-                        (Widgets.Showcase.view size (Render.getViewSource size))
+                        (Widgets.Showcase.view size (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Separators
@@ -111,4 +111,4 @@ Supported separators:
 * `Breadcrumb.HasSucceedsSeparator`
 
                         """
-                        (Widgets.Showcase.view separator (Render.getViewSource separator)) ]
+                        (Widgets.Showcase.view separator (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

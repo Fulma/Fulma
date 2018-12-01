@@ -18,8 +18,9 @@ type Showcase(props) =
     do base.setInitState({ IsExpanded = false })
 
     member this.toggleArea _ =
-        { this.state with IsExpanded = not this.state.IsExpanded}
-        |> this.setState
+        this.setState(fun prevState _ ->
+            { prevState with IsExpanded = not prevState.IsExpanded}
+        )
 
     override this.render () =
         let footerItemIcon  =

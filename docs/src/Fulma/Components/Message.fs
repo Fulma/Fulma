@@ -55,13 +55,13 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view color (Render.getViewSource color))
+                        (Widgets.Showcase.view color (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view sizes (Render.getViewSource sizes))
+                        (Widgets.Showcase.view sizes (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Body only"
-                        (Widgets.Showcase.view bodyOnly (Render.getViewSource bodyOnly)) ]
+                        (Widgets.Showcase.view bodyOnly (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

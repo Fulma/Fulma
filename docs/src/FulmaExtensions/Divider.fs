@@ -58,7 +58,7 @@ Display a vertical or horizontal divider to segment your design.
                         """
                      Render.docSection
                          "### Default divider"
-                         (Widgets.Showcase.view basicInteractive (Render.getViewSource basicInteractive))
+                         (Widgets.Showcase.view basicInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                          "### Vertical divider"
-                         (Widgets.Showcase.view verticalInteractive (Render.getViewSource verticalInteractive)) ]
+                         (Widgets.Showcase.view verticalInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

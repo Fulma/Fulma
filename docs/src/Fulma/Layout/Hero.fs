@@ -43,10 +43,10 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view iconInteractive (Render.getViewSource iconInteractive))
+                        (Widgets.Showcase.view iconInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view centered (Render.getViewSource centered))
+                        (Widgets.Showcase.view centered (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown
                         """
 ### Properties

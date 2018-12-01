@@ -163,4 +163,4 @@ Display a **calendar** for date selection or for planning management, in differe
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

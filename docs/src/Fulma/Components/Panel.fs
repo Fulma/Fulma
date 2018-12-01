@@ -49,4 +49,4 @@ A composable **panel**, for compact controls
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view iconInteractive (Render.getViewSource iconInteractive)) ]
+                        (Widgets.Showcase.view iconInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

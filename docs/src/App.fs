@@ -87,9 +87,16 @@ open Elmish.HMR
 // App
 Program.mkProgram init update root
 |> Program.toNavigable (parseHash Router.pageParser) urlUpdate
-#if DEBUG
-|> Program.withHMR
-|> Program.withDebugger
-#endif
+// #if DEBUG
+// |> Program.withDebugger
+// #endif
 |> Program.withReact "elmish-app"
 |> Program.run
+
+// let inline includeCode<'a> (line : string) (file : string) : string =
+//     importAll ("!!custom-loader?line=" + line + "!./" + file)
+
+// let colorInteractive () =
+//     Button.button [ ] [ ]
+
+// Browser.console.log("code",  (Render.includeCode __LINE__ __SOURCE_FILE__))

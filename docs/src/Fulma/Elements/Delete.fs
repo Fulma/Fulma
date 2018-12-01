@@ -26,4 +26,4 @@ The **delete** element can have different sizes.
                         """
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view demoInteractive (Render.getViewSource demoInteractive)) ]
+                        (Widgets.Showcase.view demoInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

@@ -30,7 +30,7 @@ The **images** can have different sizes (fixed or ratio).
                         """
                      Render.docSection
                         "### Fixed square images"
-                        (Widgets.Showcase.view fixedInteractive (Render.getViewSource fixedInteractive))
+                        (Widgets.Showcase.view fixedInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Responsive images with ratio"
-                        (Widgets.Showcase.view responsiveInteractive (Render.getViewSource responsiveInteractive)) ]
+                        (Widgets.Showcase.view responsiveInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

@@ -77,7 +77,7 @@ In order to display an example and the code used, you need to use:
 ```fs
 Render.docSection
     "[Your section title goes here]"
-    (Widgets.Showcase.view demoView (Render.getViewSource demoView))
+    (Widgets.Showcase.view demoView (Render.includeCode __LINE__ __SOURCE_FILE__))
 ```
 
 In the previous code `demoView` has the signature `unit -> Fable.Import.React.ReactElement`.

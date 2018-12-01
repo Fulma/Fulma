@@ -18,6 +18,7 @@ open Fake.IO
 open Fake.IO.Globbing.Operators
 open Fake.IO.FileSystemOperators
 open Fake.Tools.Git
+open Fake.JavaScript
 
 module Util =
 
@@ -36,24 +37,8 @@ module Util =
                 | None -> line
                 | Some newLine -> newLine)
 
-let platformTool tool =
-    Process.tryFindFileOnPath tool
-    |> function Some t -> t | _ -> failwithf "%s not found" tool
-
-let run (cmd: string) dir args  =
-    if Process.execSimple (fun info ->
-        { info with
-            FileName = cmd
-            WorkingDirectory =
-                if not (String.IsNullOrWhiteSpace dir) then dir else info.WorkingDirectory
-            Arguments = args
-        }
-    ) TimeSpan.MaxValue <> 0 then
-        failwithf "Error while running '%s' with args: %s " cmd args
-
-let yarnTool = platformTool "yarn"
-
-let yarn = run yarnTool "./"
+let inline yarnWorkDir (ws : string) (yarnParams : Yarn.YarnParams) =
+    { yarnParams with WorkingDirectory = ws }
 
 Target.create "Clean" (fun _ ->
     !! "docs/**/bin"
@@ -87,7 +72,7 @@ Target.create "QuickBuild" (fun _ ->
 )
 
 Target.create "YarnInstall" (fun _ ->
-    yarn "install"
+    Yarn.install id
 )
 
 // --------------------------------------------------------------------------------------
@@ -101,25 +86,14 @@ Target.create "InstallDocs" (fun _ ->
 )
 
 let watchDocs _ =
-    let result =
-        DotNet.exec
-            (DotNet.Options.withWorkingDirectory "docs")
-            "fable"
-            "webpack-dev-server --port free -- --config docs/webpack.config.js"
-
-    if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
-
+    Yarn.exec "webpack-dev-server --config docs/webpack.config.js" (yarnWorkDir "docs")
 
 Target.create "WatchDocs" watchDocs
 
 Target.create "QuickWatchDocs" watchDocs
 
 Target.create "BuildDocs" (fun _ ->
-    DotNet.exec
-        (DotNet.Options.withWorkingDirectory "docs")
-        "fable"
-        "webpack --port free -- -p --config docs/webpack.config.js"
-    |> ignore
+    Yarn.exec "webpack --config docs/webpack.config.js" (yarnWorkDir "docs")
 )
 
 // --------------------------------------------------------------------------------------
@@ -166,7 +140,7 @@ let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
                 "pack"
                 (sprintf "-c Release /p:PackageReleaseNotes=\"%s\"" (toPackageReleaseNotes releaseNotes.Notes))
 
-        if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
+        if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
 
         Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
         |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))

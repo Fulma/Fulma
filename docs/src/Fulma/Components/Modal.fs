@@ -134,7 +134,7 @@ let view =
                         """
                      Render.docSection
                         "### Any content"
-                        (Widgets.Showcase.view (fun _ -> ofType<BasicModal,_,_> (unbox null) []) (Render.getViewSource basicModalCode))
+                        (Widgets.Showcase.view (fun _ -> ofType<BasicModal,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Card modal"
-                        (Widgets.Showcase.view (fun _ -> ofType<CardModal,_,_> (unbox null) []) (Render.getViewSource cardModalCode)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<CardModal,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

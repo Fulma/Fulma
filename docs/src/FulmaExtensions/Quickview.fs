@@ -87,7 +87,7 @@ Display quick view of data without leaving the current page
 """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view (fun _ -> ofType<QuickviewDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
+                        (Widgets.Showcase.view (fun _ -> ofType<QuickviewDemo,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown
                         """
 ### Properties

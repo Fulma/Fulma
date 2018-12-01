@@ -78,15 +78,15 @@ In order to make it easier to use modifier on text, Fulma provide three helpers:
 
         Render.docSection
             """### Text alignment"""
-            (Widgets.Showcase.view alignment (Render.getViewSource alignment))
+            (Widgets.Showcase.view alignment (Render.includeCode __LINE__ __SOURCE_FILE__))
 
         Render.docSection
             """### Text transformation"""
-            (Widgets.Showcase.view transformation (Render.getViewSource transformation))
+            (Widgets.Showcase.view transformation (Render.includeCode __LINE__ __SOURCE_FILE__))
 
         Render.docSection
             """### Text weight"""
-            (Widgets.Showcase.view weight (Render.getViewSource weight))
+            (Widgets.Showcase.view weight (Render.includeCode __LINE__ __SOURCE_FILE__))
         Render.docSection
             """### Text size"""
-            (Widgets.Showcase.view size (Render.getViewSource size)) ]
+            (Widgets.Showcase.view size (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

@@ -28,10 +28,10 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view color (Render.getViewSource color))
+                        (Widgets.Showcase.view color (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Delete button"
-                        (Widgets.Showcase.view withCross (Render.getViewSource withCross)) ]
+                        (Widgets.Showcase.view withCross (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

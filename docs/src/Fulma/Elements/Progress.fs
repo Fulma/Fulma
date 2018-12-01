@@ -59,7 +59,7 @@ The **progress** element can have different colors and sizes.
                         """
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive)) ]
+                        (Widgets.Showcase.view sizeInteractive (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

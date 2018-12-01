@@ -29,7 +29,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown
                         """
 ### Properties

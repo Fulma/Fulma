@@ -72,7 +72,7 @@ let view =
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view basic (Render.getViewSource basic))
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 
@@ -85,7 +85,7 @@ Supported size:
 
 When you do not set the alignment, it's consider *left*.
                         """
-                        (Widgets.Showcase.view aligment (Render.getViewSource aligment))
+                        (Widgets.Showcase.view aligment (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Size
@@ -98,4 +98,4 @@ Supported size:
 
 When you do not set the size, it's consider *normal*.
                         """
-                        (Widgets.Showcase.view size (Render.getViewSource size)) ]
+                        (Widgets.Showcase.view size (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

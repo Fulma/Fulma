@@ -104,19 +104,19 @@ The **Slider** can have different colors, sizes and states.
                         """
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Styles
 The Slider can be **rounded, outlined or both**.
                         """
-                        (Widgets.Showcase.view stylesInteractive (Render.getViewSource stylesInteractive))
+                        (Widgets.Showcase.view stylesInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### States"
-                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                        (Widgets.Showcase.view stateInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Control is behavior
@@ -135,4 +135,4 @@ The following helper help you control the behavior of your slider:
 ### Events
 You can subscribe to **OnChange**.
                         """
-                        (Widgets.Showcase.view (fun _ -> ofType<SliderDemo,_,_> (unbox null) []) (Render.getViewSource demoView)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<SliderDemo,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

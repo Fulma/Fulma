@@ -11,8 +11,6 @@ nuget Fable.PowerPack
 nuget Fable.React
 nuget Thoth.Elmish.Toast
 
-clitool dotnet-fable
-
 group netcorebuild
     storage:none
     source https://www.nuget.org/api/v2
@@ -28,3 +26,4 @@ group netcorebuild
     nuget Fake.Core.ReleaseNotes
     nuget Fake.IO.FileSystem
     nuget Fake.Tools.Git
+    nuget Fake.JavaScript.Yarn

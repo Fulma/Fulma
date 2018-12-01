@@ -55,4 +55,4 @@ Display a **tooltip** attached to any kind of element, in different position.
                         """
 As tooltips, can be attach to **any elements** we can't provide standard wrappers. However, we provide helpers over the classes and one to create the `data-tooltip` attribute.
                         """
-                        (Widgets.Showcase.view basic (Render.getViewSource basic)) ]
+                        (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

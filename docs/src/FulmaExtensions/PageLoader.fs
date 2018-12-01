@@ -97,7 +97,7 @@ Display a **page-loader** to inform user that content is loading, in different c
                         """
                      Render.docSection
                         ""
-                        (Widgets.Showcase.view (fun _ -> ofType<PageLoaderDemo,_,_> (unbox null) []) (Render.getViewSource demoView))
+                        (Widgets.Showcase.view (fun _ -> ofType<PageLoaderDemo,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown
                         """
 ### Properties

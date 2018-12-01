@@ -111,36 +111,36 @@ You can choose between:
 - `Button.Input.reset`
 - `Button.Input.submit`
                         """
-                        (Widgets.Showcase.view demoHelpers (Render.getViewSource demoHelpers))
+                        (Widgets.Showcase.view demoHelpers (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Colors"
-                        (Widgets.Showcase.view colorInteractive (Render.getViewSource colorInteractive))
+                        (Widgets.Showcase.view colorInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view sizeInteractive (Render.getViewSource sizeInteractive))
+                        (Widgets.Showcase.view sizeInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Styles
 The button can be **outlined** and/or **inverted**.
                         """
                         (div [ ]
-                            [ Widgets.Showcase.view outlinedInteractive (Render.getViewSource outlinedInteractive)
+                            [ Widgets.Showcase.view outlinedInteractive ((Render.includeCode __LINE__ __SOURCE_FILE__))
                               br []
-                              Widgets.Showcase.view mixedStyleInteractive (Render.getViewSource mixedStyleInteractive) ])
+                              Widgets.Showcase.view mixedStyleInteractive ((Render.includeCode __LINE__ __SOURCE_FILE__)) ])
 
                      Render.docSection
                         "### States"
-                        (Widgets.Showcase.view stateInteractive (Render.getViewSource stateInteractive))
+                        (Widgets.Showcase.view stateInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Static"
-                        (Widgets.Showcase.view staticView (Render.getViewSource staticView))
+                        (Widgets.Showcase.view staticView (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Disabled"
-                        (Widgets.Showcase.view disabled (Render.getViewSource disabled))
+                        (Widgets.Showcase.view disabled (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Font awesome icons support
 
 For more info, about Font Awesome support see [Convenience functions](#fulma/elements/icon).
                         """
-                        (Widgets.Showcase.view icons (Render.getViewSource icons)) ]
+                        (Widgets.Showcase.view icons (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

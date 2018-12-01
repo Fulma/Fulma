@@ -28,4 +28,4 @@ let view =
 
 You can add `Modifiers` to any Fulma element or component.
             """
-            (Widgets.Showcase.view demo (Render.getViewSource demo)) ]
+            (Widgets.Showcase.view demo (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

@@ -84,6 +84,11 @@ module.exports = {
         hot: true,
         inline: true
     },
+    resolveLoader : {
+        alias: {
+            'custom-loader': path.resolve(__dirname, './custom-loader.js')
+        }
+    },
     module: {
         rules: [
             {
@@ -115,6 +120,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.fs$/,
+                use: [ 'custom-loader' ]
             }
         ]
     }

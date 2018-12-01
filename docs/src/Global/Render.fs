@@ -6,6 +6,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fable.Import
 open Fulma
+open Fable.Core.JsInterop
 
 type DangerousInnerHtml =
     { __html : string }
@@ -30,4 +31,5 @@ let docPage children =
             yield child
             yield hr [ ] ]
 
-let getViewSource (view: unit->React.ReactElement) = "TODO update"
+let inline includeCode<'a> (line : string) (file : string) : string =
+    importAll ("!!custom-loader?line=" + line + "!./" + file)

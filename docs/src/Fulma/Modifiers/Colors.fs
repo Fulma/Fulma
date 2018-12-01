@@ -358,7 +358,7 @@ Shade is a modifier that can be added to elements.
 
         Render.docSection
             """### Demo"""
-            (Widgets.Showcase.view backgroundAndTextColor (Render.getViewSource backgroundAndTextColor))
+            (Widgets.Showcase.view backgroundAndTextColor (Render.includeCode __LINE__ __SOURCE_FILE__))
 
         Render.contentFromMarkdown
             """
@@ -405,7 +405,7 @@ Now you are ready to use your custom colors in your code:
 
         Render.docSection
             ""
-            (Widgets.Showcase.view customColor (Render.getViewSource customColor))
+            (Widgets.Showcase.view customColor (Render.includeCode __LINE__ __SOURCE_FILE__))
 
         Render.docSection
             """
@@ -426,4 +426,4 @@ let inputColor hasError =
 ```
 
 """
-            (Widgets.Showcase.view noColor (Render.getViewSource noColor)) ]
+            (Widgets.Showcase.view noColor (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
