@@ -13,7 +13,8 @@ let basic () =
         li [ ]
            [ Menu.Item.a [ Menu.Item.IsActive isActive ]
                 [ str label ]
-             ul [ ] children ]
+             ul [ ]
+                children ]
     // Menu rendering
     Menu.menu [ ]
         [ Menu.label [ ] [ str "General" ]

@@ -53,23 +53,16 @@ type SliderDemo(props) =
     do base.setInitState({ Ratio = 50 })
 
     member this.onSlide (ev : React.FormEvent) =
-        unbox<int> ev.currentTarget?value
-        |> (fun newRatio -> { this.state with Ratio = newRatio })
-        |> this.setState
+        let value = unbox<int> ev.currentTarget?value
+        this.setState (fun prevState _ ->
+            { prevState with Ratio = value }
+        )
 
     override this.render () =
         div [ ]
             [ Slider.slider [ Slider.OnChange this.onSlide ]
-              div [ ] [ str (string this.state.Ratio) ] ]
-
-let demoView () =
-    // Fake values, and helpers
-    let ratio = 50
-    let onChange _ = ()
-    // View part
-    div [ ]
-        [ Slider.slider [ Slider.OnChange onChange ]
-          div [ ] [ str (string ratio) ] ]
+              div [ ]
+                [ str (string this.state.Ratio) ] ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown

@@ -33,9 +33,10 @@ type DatePickerDemo(props) =
                            CurrentDate = None })
 
     member this.datePickerChanged (newState, newDate) =
-        { this.state with DatePickerState = newState
-                          CurrentDate = newDate }
-        |> this.setState
+        this.setState (fun prevState _ ->
+            { prevState with DatePickerState = newState
+                             CurrentDate = newDate }
+        )
 
     override this.render () =
         let datePickerView =

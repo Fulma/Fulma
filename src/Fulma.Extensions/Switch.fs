@@ -75,22 +75,23 @@ module Switch =
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        [ input
-            [ yield Helpers.classes Classes.Switch [opts.Color; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
-              if Option.isSome opts.OnChange then
-                yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
-                yield HTMLAttr.Checked opts.IsChecked :> IHTMLProp
-              else
-                yield DefaultChecked opts.IsChecked :> IHTMLProp
-              yield! opts.Props
-              yield Type "checkbox" :> IHTMLProp
-              yield Id opts.ComponentId :> IHTMLProp
-              yield HTMLAttr.Disabled opts.IsDisabled :> IHTMLProp ]
+        fragment [ ]
+            [ input
+                [ yield Helpers.classes Classes.Switch [opts.Color; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
+                  if Option.isSome opts.OnChange then
+                    yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
+                    yield HTMLAttr.Checked opts.IsChecked :> IHTMLProp
+                  else
+                    yield DefaultChecked opts.IsChecked :> IHTMLProp
+                  yield! opts.Props
+                  yield Type "checkbox" :> IHTMLProp
+                  yield Id opts.ComponentId :> IHTMLProp
+                  yield HTMLAttr.Disabled opts.IsDisabled :> IHTMLProp ]
 
-          label [ HtmlFor opts.ComponentId ]
-                children ]
+              label [ HtmlFor opts.ComponentId ]
+                    children ]
 
 
     let switch (options : Option list) children =
         Field.div [ ]
-            (switchInline options children)
+            [ switchInline options children ]

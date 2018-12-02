@@ -9,7 +9,7 @@ let basic () =
     div [ ClassName "block" ]
         [ Box.box' [ ]
             [ str "Lorem ipsum dolor sit amet, consectetur adipisicing elit
-                   , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."] ]
+                   , sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." ] ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown

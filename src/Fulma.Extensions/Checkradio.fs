@@ -108,16 +108,17 @@ module Checkradio =
                 children ]
 
     let checkboxInline (options : Option list) children =
-        genericElement "checkbox" Classes.IsCheckradio options children
+        fragment [ ]
+            (genericElement "checkbox" Classes.IsCheckradio options children)
 
     let checkbox (options : Option list) children =
         Field.div [ ]
-            (checkboxInline options children)
+            [ checkboxInline options children ]
 
     let radioInline (options : Option list) children =
-        genericElement "radio" Classes.IsCheckradio options children
-
+        fragment [ ]
+            (genericElement "radio" Classes.IsCheckradio options children)
 
     let radio (options : Option list) children =
         Field.div [ ]
-            (radioInline options children)
+            [ radioInline options children ]

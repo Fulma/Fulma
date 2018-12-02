@@ -16,13 +16,13 @@ let customColor() =
                 [ str "A button with custom color" ] ]
           Column.column [ ]
             [ Field.div [ Field.IsGrouped ]
-                [ yield! Checkradio.checkboxInline [ Checkradio.Color isCustomPurple
-                                                     Checkradio.HasBackgroundColor ]
+                [ Checkradio.checkboxInline [ Checkradio.Color isCustomPurple
+                                              Checkradio.HasBackgroundColor ]
                         [ str "Installations" ]
-                  yield! Checkradio.checkboxInline [ Checkradio.Color isCustomLightBlue
-                                                     Checkradio.HasBackgroundColor ]
+                  Checkradio.checkboxInline [ Checkradio.Color isCustomLightBlue
+                                              Checkradio.HasBackgroundColor ]
                         [ str "Fronts" ]
-                  yield! Checkradio.checkboxInline [ ]
+                  Checkradio.checkboxInline [ ]
                         [ str "Zones fixes" ] ] ] ]
 
 let noColor() =

@@ -9,7 +9,7 @@ open Fulma
 let basic () =
     Container.container [ Container.IsFluid ]
         [ Content.content [ ]
-            [ h1 [ ] [str "Hello World"]
+            [ h1 [ ] [ str "Hello World"]
               p [ ]
                 [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                       Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus

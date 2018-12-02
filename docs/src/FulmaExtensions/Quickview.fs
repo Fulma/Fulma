@@ -17,14 +17,14 @@ type QuickviewDemo(props) =
     do base.setInitState({ IsActive = false })
 
     member this.show _ =
-        { this.state with
-                        IsActive = true }
-        |> this.setState
+        this.setState (fun prevState _ ->
+            { prevState with IsActive = true }
+        )
 
     member this.hide _ =
-        { this.state with
-                        IsActive = false }
-        |> this.setState
+        this.setState (fun prevState _ ->
+            { prevState with IsActive = false }
+        )
 
     override this.render () =
         div [ ]
@@ -40,19 +40,6 @@ type QuickviewDemo(props) =
               Button.button [ Button.Color IsPrimary
                               Button.OnClick this.show ]
                             [ str "Show the Quickview!" ] ]
-
-let hide = ignore
-let demoView () =
-    Quickview.quickview [ Quickview.IsActive true ]
-                        [ Quickview.header [ ]
-                            [ Quickview.title [ ] [ str "Testing..." ]
-                              Delete.delete [ Delete.OnClick hide ] [ ] ]
-                          Quickview.body [ ]
-                            [ p [ ] [ str "The body" ] ]
-                          Quickview.footer [ ]
-                            [ Button.button [ Button.OnClick hide ]
-                                            [ str "Hide the quickview!" ] ] ]
-
 
 let view =
     Render.docPage [ Render.contentFromMarkdown

@@ -19,22 +19,30 @@ type PageLoaderDemo(props) =
     do base.setInitState({ CurrentColor = IsSuccess; IsActive = false })
 
     member this.onClick newColor =
-        { this.state with
+        this.setState (fun prevState _ ->
+            { prevState with
                         CurrentColor = newColor
                         IsActive = true }
-        |> this.setState
+        )
 
         this.delayedHide ()
 
     member this.delayedHide _ =
         async {
             do! Async.Sleep 2000
-            { this.state with IsActive = false }
-            |> this.setState
+            this.setState (fun prevState _ ->
+                { prevState with IsActive = false }
+            )
         }
         |> Async.StartImmediate
 
     override this.render () =
+        let demoView () =
+            PageLoader.pageLoader [ PageLoader.Color IsSuccess
+                                    PageLoader.IsActive true ]
+                [ ]
+
+        // Previous code is so we display a correct documentation
         let renderButton color =
             Button.button [ Button.Color color
                             Button.OnClick (fun _ -> this.onClick color) ]
@@ -48,7 +56,7 @@ type PageLoaderDemo(props) =
                 [ ]
               Content.content [ ]
                 [ p [ ]
-                    [ str "Click on a button to display a loader for 3 sec" ] ]
+                    [ str "Click on a button to display a loader for 2 sec" ] ]
               div [ ClassName "block" ]
                 [ renderButton IsBlack
                   renderButton IsDanger
@@ -59,11 +67,6 @@ type PageLoaderDemo(props) =
                   renderButton IsSuccess
                   renderButton IsWarning
                   renderButton IsWhite ] ]
-
-let demoView () =
-    PageLoader.pageLoader [ PageLoader.Color IsSuccess
-                            PageLoader.IsActive true ]
-        [ ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown
