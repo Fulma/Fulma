@@ -6,6 +6,16 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 
+module CopyButton =
+
+    open Fable.Core.JsInterop
+
+    type Props =
+        | Value of string
+
+    let inline copyButtton (props: Props list) : React.ReactElement =
+        ofImport "default" "./../../js/CopyButton.js" (keyValueList CaseRules.LowerFirst props) []
+
 type ShowcaseProps =
     { Preview : unit -> React.ReactElement
       SourceCode : string }
@@ -46,10 +56,15 @@ type Showcase(props) =
                   footerItemText
                   footerItemIcon ]
               if this.state.IsExpanded then
-                yield Box.box' [ ] [ Render.renderFSharpCode this.props.SourceCode ]
+                yield Box.box' [ Props [ Style [ Position "relative"
+                                                 BorderRadius "0"
+                                                 MaxHeight "400px"
+                                                 Overflow "auto" ] ] ]
+                    [ CopyButton.copyButtton [ CopyButton.Value this.props.SourceCode ]
+                      Render.renderFSharpCode this.props.SourceCode ]
             ]
 
-let view preview sourceCode =
+let inline view preview sourceCode =
     ofType<Showcase,_,_>
         { Preview = preview
           SourceCode = sourceCode }

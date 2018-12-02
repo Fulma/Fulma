@@ -11,7 +11,11 @@ var babelOptions = {
                 "browsers": ["last 2 versions"]
             },
             "modules": false
-        }]
+        }],
+        "@babel/react"
+    ],
+    plugins: [
+        "@babel/plugin-proposal-class-properties"
     ]
 };
 
