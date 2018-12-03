@@ -336,6 +336,7 @@ module Modifier =
             let [<Literal>] IsRadiusless = "is-radiusless"
             let [<Literal>] IsShadowless = "is-shadowless"
             let [<Literal>] IsUnselectable = "is-unselectable"
+            let [<Literal>] IsSrOnly = "is-sr-only"
 
     let internal ofBackground level =
         match level with
@@ -436,6 +437,8 @@ module Modifier =
         | IsHidden of Screen * bool
         | IsInvisibleOnly of Screen * bool
         | IsHiddenOnly of Screen * bool
+        | IsSrOnly
+        | IsScreenReaderOnly
 
     type internal Options =
         { BackgroundColor : string option
@@ -461,7 +464,8 @@ module Modifier =
           IsInvisibleOnly : string
           IsHiddenOnly : string
           Display : string
-          DisplayOnly : string }
+          DisplayOnly : string
+          IsSrOnly : string }
 
         static member Empty =
             { BackgroundColor = None
@@ -487,7 +491,8 @@ module Modifier =
               IsInvisibleOnly = ""
               IsHiddenOnly = ""
               Display = ""
-              DisplayOnly = "" }
+              DisplayOnly = ""
+              IsSrOnly = "" }
 
     let parseModifiers options =
         let parseOption result opt =
@@ -524,6 +529,8 @@ module Modifier =
             | IsInvisibleOnly (_, false) -> result
             | IsHiddenOnly (screen, true) -> { result with IsHiddenOnly = result.IsHiddenOnly + " " + ofHidden screen }
             | IsHiddenOnly (_, false) -> result
+            | IsSrOnly -> { result with IsSrOnly = Classes.Helpers.IsSrOnly }
+            | IsScreenReaderOnly -> { result with IsSrOnly = Classes.Helpers.IsSrOnly }
 
         let opts = options |> List.fold parseOption Options.Empty
         [ opts.BackgroundColor
@@ -549,7 +556,8 @@ module Modifier =
           Some opts.IsInvisibleOnly
           Some opts.IsHiddenOnly
           Some opts.Display
-          Some opts.DisplayOnly ]
+          Some opts.DisplayOnly
+          Some opts.IsSrOnly ]
 
 [<AutoOpen>]
 module Common =
