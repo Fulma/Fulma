@@ -25,9 +25,11 @@ module Switch =
         | Checked of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
-        | Props of IHTMLProp list
+        | LabelProps of IHTMLProp list
+        | InputProps of IHTMLProp list
         | OnChange of (React.FormEvent -> unit)
         | CustomClass of string
+        | Id of string
 
     type internal Options =
         { Color : string option
@@ -38,7 +40,8 @@ module Switch =
           IsDisabled : bool
           IsRtl : bool
           IsThin : bool
-          Props : IHTMLProp list
+          LabelProps : IHTMLProp list
+          InputProps : IHTMLProp list
           CustomClass : string option
           OnChange : (React.FormEvent -> unit) option
           Id : string option }
@@ -51,7 +54,8 @@ module Switch =
               IsDisabled = false
               IsRtl = false
               IsThin = false
-              Props = []
+              LabelProps = [ ]
+              InputProps = [ ]
               CustomClass = None
               OnChange = None
               Id = None }
@@ -68,29 +72,36 @@ module Switch =
             | Disabled state -> { result with IsDisabled = state }
             | IsRtl -> { result with IsRtl = true }
             | IsThin -> { result with IsThin = true }
-            | Props props -> { result with Props = props }
+            | LabelProps props -> { result with LabelProps = props }
+            | InputProps props -> { result with InputProps = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
             | OnChange cb -> { result with OnChange = cb |> Some }
+            | Id customId -> { result with Id = Some customId }
 
         let opts = options |> List.fold parseOptions Options.Empty
 
-        fragment [ ]
-            [ input
-                [ yield Helpers.classes Classes.Switch [opts.Color; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
-                  if Option.isSome opts.OnChange then
-                    yield DOMAttr.OnChange opts.OnChange.Value
-                    yield HTMLAttr.Checked opts.IsChecked
-                  else
-                    yield DefaultChecked opts.IsChecked
-                  yield! opts.Props
-                  yield Type "checkbox"
-                  if Option.isSome opts.Id then
-                    yield HTMLAttr.Id opts.Id.Value
-                  yield HTMLAttr.Disabled opts.IsDisabled ]
+        if Option.isSome opts.Id then
+            fragment [ ]
+                [ input
+                    [ yield Helpers.classes Classes.Switch [opts.Color; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
+                      if Option.isSome opts.OnChange then
+                        yield DOMAttr.OnChange opts.OnChange.Value
+                        yield HTMLAttr.Checked opts.IsChecked
+                      else
+                        yield DefaultChecked opts.IsChecked
+                      yield! opts.InputProps
+                      yield Type "checkbox"
+                      yield HTMLAttr.Id opts.Id.Value
+                      yield HTMLAttr.Disabled opts.IsDisabled ]
 
-              label [ if Option.isSome opts.Id then
-                        yield HtmlFor opts.Id.Value ]
-                    children ]
+                  label [ if Option.isSome opts.Id then
+                            yield HtmlFor opts.Id.Value
+                          yield! opts.LabelProps ]
+                        children ]
+        else
+            Text.span [ Modifiers [ Modifier.TextColor IsDanger
+                                    Modifier.TextWeight TextWeight.Bold ] ]
+                [ str "You need to set an Id value for your Switch "]
 
     let switch (options : Option list) children =
         Field.div [ ]

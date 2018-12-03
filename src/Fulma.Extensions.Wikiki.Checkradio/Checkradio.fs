@@ -28,7 +28,8 @@ module Checkradio =
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | IsBlock
-        | Props of IHTMLProp list
+        | LabelProps of IHTMLProp list
+        | InputProps of IHTMLProp list
         | OnChange of (React.FormEvent -> unit)
         | CustomClass of string
         | Id of string
@@ -45,7 +46,8 @@ module Checkradio =
           HasNoBorder : bool
           HasBackgroundColor : bool
           Name : string option
-          Props : IHTMLProp list
+          LabelProps : IHTMLProp list
+          InputProps : IHTMLProp list
           CustomClass : string option
           OnChange : (React.FormEvent -> unit) option
           Id : string option }
@@ -61,7 +63,8 @@ module Checkradio =
               HasNoBorder = false
               HasBackgroundColor = false
               Name = None
-              Props = []
+              LabelProps = []
+              InputProps = []
               CustomClass = None
               OnChange = None
               Id = None }
@@ -74,7 +77,8 @@ module Checkradio =
         | Checked state -> { result with IsChecked = state }
         | Disabled state -> { result with IsDisabled = state }
         | Name customName -> { result with Name = Some customName }
-        | Props props -> { result with Props = props }
+        | LabelProps props -> { result with LabelProps = props }
+        | InputProps props -> { result with InputProps = props }
         | CustomClass customClass -> { result with CustomClass = Some customClass }
         | OnChange cb -> { result with OnChange = cb |> Some }
         | Id customId -> { result with Id = Some customId }
@@ -86,36 +90,40 @@ module Checkradio =
     let private genericElement inputType baseClass (options : Option list) children =
         let opts = options |> List.fold parseOptions Options.Empty
 
-        [ input
-            [ yield Helpers.classes baseClass [opts.Color; opts.Size; opts.CustomClass] [Classes.IsCircle, opts.IsCircle; Classes.IsRtl, opts.IsRtl; Classes.HasNoBorder, opts.HasNoBorder; Classes.IsBlock , opts.IsBlock; Classes.HasBackgroundColor, opts.HasBackgroundColor]
-              if Option.isSome opts.OnChange then
-                yield HTMLAttr.Checked opts.IsChecked
-                yield DOMAttr.OnChange opts.OnChange.Value
-              else
-                yield DefaultChecked opts.IsChecked
-              yield! opts.Props
-              if Option.isSome opts.Name then
-                yield HTMLAttr.Name opts.Name.Value
-              yield Type inputType
-              if Option.isSome opts.Id then
-                yield HTMLAttr.Id opts.Id.Value
-              yield HTMLAttr.Disabled opts.IsDisabled ]
+        if Option.isSome opts.Id then
+            fragment [ ]
+                [ input
+                    [ yield Helpers.classes baseClass [opts.Color; opts.Size; opts.CustomClass] [Classes.IsCircle, opts.IsCircle; Classes.IsRtl, opts.IsRtl; Classes.HasNoBorder, opts.HasNoBorder; Classes.IsBlock , opts.IsBlock; Classes.HasBackgroundColor, opts.HasBackgroundColor]
+                      if Option.isSome opts.OnChange then
+                        yield HTMLAttr.Checked opts.IsChecked
+                        yield DOMAttr.OnChange opts.OnChange.Value
+                      else
+                        yield DefaultChecked opts.IsChecked
+                      yield! opts.InputProps
+                      if Option.isSome opts.Name then
+                        yield HTMLAttr.Name opts.Name.Value
+                      yield Type inputType
+                      yield HTMLAttr.Id opts.Id.Value
+                      yield HTMLAttr.Disabled opts.IsDisabled ]
 
-          label [ if Option.isSome opts.Id then
-                    yield HtmlFor opts.Id.Value ]
-                children ]
+                  label [ if Option.isSome opts.Id then
+                            yield HtmlFor opts.Id.Value
+                          yield! opts.LabelProps ]
+                        children ]
+        else
+            Text.span [ Modifiers [ Modifier.TextColor IsDanger
+                                    Modifier.TextWeight TextWeight.Bold ] ]
+                [ str "You need to set an Id value for your Checkradio "]
 
     let checkboxInline (options : Option list) children =
-        fragment [ ]
-            (genericElement "checkbox" Classes.IsCheckradio options children)
+        genericElement "checkbox" Classes.IsCheckradio options children
 
     let checkbox (options : Option list) children =
         Field.div [ ]
             [ checkboxInline options children ]
 
     let radioInline (options : Option list) children =
-        fragment [ ]
-            (genericElement "radio" Classes.IsCheckradio options children)
+        genericElement "radio" Classes.IsCheckradio options children
 
     let radio (options : Option list) children =
         Field.div [ ]
