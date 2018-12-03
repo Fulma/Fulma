@@ -131,5 +131,9 @@ module Dropdown =
 
         /// Generate <div class="dropdown-item"></div>
         let div x y = item div x y
+
         /// Generate <a class="dropdown-item"></a>
         let a x y = item a x y
+
+        /// Generate <button class="dropdown-item"></button>
+        let button x y = item button x y
