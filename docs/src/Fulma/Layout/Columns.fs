@@ -1,6 +1,8 @@
 module Layouts.Columns
 
+open Fable.Import
 open Fable.Helpers.React
+open Fable.Helpers.React.Props
 open Fulma
 
 let basic () =
@@ -30,6 +32,72 @@ let basic () =
                     [ Notification.notification [ Notification.Color IsBlack ]
                         [ str "Column n°2.1" ] ] ] ] ]
 
+type GapSizeProps =
+    class end
+
+type GapSizeState =
+    { Size : Columns.ISize }
+
+let private sizes =
+    [ Columns.Is1
+      Columns.Is2
+      Columns.Is3
+      Columns.Is4
+      Columns.Is5
+      Columns.Is6
+      Columns.Is7
+      Columns.Is8 ]
+
+let private centerText txt =
+    Notification.notification [ Notification.Color IsPrimary
+                                Notification.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered)] ]
+        [ str txt ]
+
+type GapSize(props) =
+    inherit React.Component<GapSizeProps, GapSizeState>(props)
+    do base.setInitState({ Size = Columns.Is3 })
+
+    member this.SetSize (newSize : Columns.ISize) =
+        this.setState (fun prevState _ ->
+            { prevState with Size = newSize }
+        )
+
+    override this.render () =
+        let demoView =
+            Columns.columns [ Columns.IsGap (Screen.All, this.state.Size) ]
+                [ Column.column [ ]
+                    [ centerText "Column" ]
+                  Column.column [ ]
+                    [ centerText "Column" ]
+                  Column.column [ ]
+                    [ centerText "Column" ]
+                  Column.column [ ]
+                    [ centerText "Column" ]
+                  Column.column [ ]
+                    [ centerText "Column" ] ]
+
+        let controls =
+            sizes
+            |> List.map (fun size ->
+                let color =
+                    if size = this.state.Size then
+                        IsInfo
+                    else
+                        IsLight
+                Tag.tag [ Tag.Color color
+                          Tag.Size IsMedium
+                          Tag.Props [ OnMouseOver (fun _ ->
+                                        this.SetSize size
+                                      )
+                                      Style [ Cursor "pointer" ] ] ]
+                    [ str ("is-" + Columns.ISize.toString size) ]
+            )
+            |> Tag.list [ ]
+
+        div [ ]
+            [ controls
+              demoView ]
+
 let view =
     Render.docPage [ Render.contentFromMarkdown
                         """
@@ -42,6 +110,11 @@ A simple way to build **responsive** columns
                      Render.docSection
                         ""
                         (Widgets.Showcase.view basic (Render.includeCode __LINE__ __SOURCE_FILE__))
+                     Render.docSection
+                        """
+### Variable gap
+                        """
+                        (Widgets.Showcase.view (fun _ -> ofType<GapSize,_,_> (unbox null) [ ]) (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown
                         """
 ### Properties

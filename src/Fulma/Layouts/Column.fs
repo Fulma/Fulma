@@ -13,9 +13,9 @@ module Column =
         module All =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter"
-                let [<Literal>] IsOneThird = "is-one-third"
+                let [<Literal>] IsOneThird = "is-one-thirds"
                 let [<Literal>] IsHalf = "is-half"
-                let [<Literal>] IsTwoThirds = "is-two-third"
+                let [<Literal>] IsTwoThirds = "is-two-thirds"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters"
                 let [<Literal>] Is1 = "is-1"
                 let [<Literal>] Is2 = "is-2"
@@ -28,6 +28,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9"
                 let [<Literal>] Is10 = "is-10"
                 let [<Literal>] Is11 = "is-11"
+                let [<Literal>] Is12 = "is-12"
                 let [<Literal>] IsNarrow = "is-narrow"
                 let [<Literal>] IsFull = "is-full"
                 let [<Literal>] IsOneFifth = "is-one-fifth"
@@ -37,9 +38,9 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter"
-                let [<Literal>] IsOneThird = "is-offset-one-third"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds"
                 let [<Literal>] IsHalf = "is-offset-half"
-                let [<Literal>] IsTwoThirds = "is-offset-two-third"
+                let [<Literal>] IsTwoThirds = "is-offset-two-thirds"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters"
                 let [<Literal>] Is1 = "is-offset-1"
                 let [<Literal>] Is2 = "is-offset-2"
@@ -52,6 +53,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9"
                 let [<Literal>] Is10 = "is-offset-10"
                 let [<Literal>] Is11 = "is-offset-11"
+                let [<Literal>] Is12 = "is-offset-12"
                 let [<Literal>] IsNarrow = "is-offset-narrow"
                 let [<Literal>] IsFull = "is-offset-full"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth"
@@ -62,9 +64,9 @@ module Column =
         module Desktop =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-desktop"
-                let [<Literal>] IsOneThird = "is-one-third-desktop"
+                let [<Literal>] IsOneThird = "is-one-thirds-desktop"
                 let [<Literal>] IsHalf = "is-half-desktop"
-                let [<Literal>] IsTwoThirds = "is-two-third-desktop"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-desktop"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-desktop"
                 let [<Literal>] Is1 = "is-1-desktop"
                 let [<Literal>] Is2 = "is-2-desktop"
@@ -77,6 +79,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-desktop"
                 let [<Literal>] Is10 = "is-10-desktop"
                 let [<Literal>] Is11 = "is-11-desktop"
+                let [<Literal>] Is12 = "is-12-desktop"
                 let [<Literal>] IsNarrow = "is-narrow-desktop"
                 let [<Literal>] IsFull = "is-full-desktop"
                 let [<Literal>] IsOneFifth = "is-one-fifth-desktop"
@@ -86,7 +89,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-desktop"
-                let [<Literal>] IsOneThird = "is-offset-one-third-desktop"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-desktop"
                 let [<Literal>] IsHalf = "is-offset-half-desktop"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-desktop"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-desktop"
@@ -101,6 +104,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9-desktop"
                 let [<Literal>] Is10 = "is-offset-10-desktop"
                 let [<Literal>] Is11 = "is-offset-11-desktop"
+                let [<Literal>] Is12 = "is-offset-12-desktop"
                 let [<Literal>] IsNarrow = "is-offset-narrow-desktop"
                 let [<Literal>] IsFull = "is-offset-full-desktop"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth-desktop"
@@ -111,9 +115,9 @@ module Column =
         module Mobile =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-mobile"
-                let [<Literal>] IsOneThird = "is-one-third-mobile"
+                let [<Literal>] IsOneThird = "is-one-thirds-mobile"
                 let [<Literal>] IsHalf = "is-half-mobile"
-                let [<Literal>] IsTwoThirds = "is-two-third-mobile"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-mobile"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-mobile"
                 let [<Literal>] Is1 = "is-1-mobile"
                 let [<Literal>] Is2 = "is-2-mobile"
@@ -126,6 +130,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-mobile"
                 let [<Literal>] Is10 = "is-10-mobile"
                 let [<Literal>] Is11 = "is-11-mobile"
+                let [<Literal>] Is12 = "is-12-mobile"
                 let [<Literal>] IsNarrow = "is-narrow-mobile"
                 let [<Literal>] IsFull = "is-full-mobile"
                 let [<Literal>] IsOneFifth = "is-one-fifth-mobile"
@@ -135,7 +140,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-mobile"
-                let [<Literal>] IsOneThird = "is-offset-one-third-mobile"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-mobile"
                 let [<Literal>] IsHalf = "is-offset-half-mobile"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-mobile"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-mobile"
@@ -150,6 +155,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9-mobile"
                 let [<Literal>] Is10 = "is-offset-10-mobile"
                 let [<Literal>] Is11 = "is-offset-11-mobile"
+                let [<Literal>] Is12 = "is-offset-12-mobile"
                 let [<Literal>] IsNarrow = "is-offset-narrow-mobile"
                 let [<Literal>] IsFull = "is-offset-full-mobile"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth-mobile"
@@ -160,9 +166,9 @@ module Column =
         module Tablet =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-tablet"
-                let [<Literal>] IsOneThird = "is-one-third-tablet"
+                let [<Literal>] IsOneThird = "is-one-thirds-tablet"
                 let [<Literal>] IsHalf = "is-half-tablet"
-                let [<Literal>] IsTwoThirds = "is-two-third-tablet"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-tablet"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-tablet"
                 let [<Literal>] Is1 = "is-1-tablet"
                 let [<Literal>] Is2 = "is-2-tablet"
@@ -175,6 +181,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-tablet"
                 let [<Literal>] Is10 = "is-10-tablet"
                 let [<Literal>] Is11 = "is-11-tablet"
+                let [<Literal>] Is12 = "is-12-tablet"
                 let [<Literal>] IsNarrow = "is-narrow-tablet"
                 let [<Literal>] IsFull = "is-full-tablet"
                 let [<Literal>] IsOneFifth = "is-one-fifth-tablet"
@@ -184,7 +191,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-tablet"
-                let [<Literal>] IsOneThird = "is-offset-one-third-tablet"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-tablet"
                 let [<Literal>] IsHalf = "is-offset-half-tablet"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-tablet"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-tablet"
@@ -199,6 +206,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9-tablet"
                 let [<Literal>] Is10 = "is-offset-10-tablet"
                 let [<Literal>] Is11 = "is-offset-11-tablet"
+                let [<Literal>] Is12 = "is-offset-12-tablet"
                 let [<Literal>] IsNarrow = "is-offset-narrow-tablet"
                 let [<Literal>] IsFull = "is-offset-full-tablet"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth-tablet"
@@ -209,9 +217,9 @@ module Column =
         module WideScreen =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-widescreen"
-                let [<Literal>] IsOneThird = "is-one-third-widescreen"
+                let [<Literal>] IsOneThird = "is-one-thirds-widescreen"
                 let [<Literal>] IsHalf = "is-half-widescreen"
-                let [<Literal>] IsTwoThirds = "is-two-third-widescreen"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-widescreen"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-widescreen"
                 let [<Literal>] Is1 = "is-1-widescreen"
                 let [<Literal>] Is2 = "is-2-widescreen"
@@ -224,6 +232,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-widescreen"
                 let [<Literal>] Is10 = "is-10-widescreen"
                 let [<Literal>] Is11 = "is-11-widescreen"
+                let [<Literal>] Is12 = "is-12-widescreen"
                 let [<Literal>] IsNarrow = "is-narrow-widescreen"
                 let [<Literal>] IsFull = "is-full-widescreen"
                 let [<Literal>] IsOneFifth = "is-one-fifth-widescreen"
@@ -233,7 +242,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-widescreen"
-                let [<Literal>] IsOneThird = "is-offset-one-third-widescreen"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-widescreen"
                 let [<Literal>] IsHalf = "is-offset-half-widescreen"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-widescreen"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-widescreen"
@@ -258,9 +267,9 @@ module Column =
         module FullHD =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-fullhd"
-                let [<Literal>] IsOneThird = "is-one-third-fullhd"
+                let [<Literal>] IsOneThird = "is-one-thirds-fullhd"
                 let [<Literal>] IsHalf = "is-half-fullhd"
-                let [<Literal>] IsTwoThirds = "is-two-third-fullhd"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-fullhd"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-fullhd"
                 let [<Literal>] Is1 = "is-1-fullhd"
                 let [<Literal>] Is2 = "is-2-fullhd"
@@ -273,6 +282,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-fullhd"
                 let [<Literal>] Is10 = "is-10-fullhd"
                 let [<Literal>] Is11 = "is-11-fullhd"
+                let [<Literal>] Is12 = "is-12-fullhd"
                 let [<Literal>] IsNarrow = "is-narrow-fullhd"
                 let [<Literal>] IsFull = "is-full-fullhd"
                 let [<Literal>] IsOneFifth = "is-one-fifth-fullhd"
@@ -282,7 +292,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-fullhd"
-                let [<Literal>] IsOneThird = "is-offset-one-third-fullhd"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-fullhd"
                 let [<Literal>] IsHalf = "is-offset-half-fullhd"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-fullhd"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-fullhd"
@@ -297,6 +307,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9-fullhd"
                 let [<Literal>] Is10 = "is-offset-10-fullhd"
                 let [<Literal>] Is11 = "is-offset-11-fullhd"
+                let [<Literal>] Is12 = "is-offset-12-fullhd"
                 let [<Literal>] IsNarrow = "is-offset-narrow-fullhd"
                 let [<Literal>] IsFull = "is-offset-full-fullhd"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth-fullhd"
@@ -307,9 +318,9 @@ module Column =
         module Touch =
             module Width =
                 let [<Literal>] IsOneQuarter = "is-one-quarter-touch"
-                let [<Literal>] IsOneThird = "is-one-third-touch"
+                let [<Literal>] IsOneThird = "is-one-thirds-touch"
                 let [<Literal>] IsHalf = "is-half-touch"
-                let [<Literal>] IsTwoThirds = "is-two-third-touch"
+                let [<Literal>] IsTwoThirds = "is-two-thirds-touch"
                 let [<Literal>] IsThreeQuarters = "is-three-quarters-touch"
                 let [<Literal>] Is1 = "is-1-touch"
                 let [<Literal>] Is2 = "is-2-touch"
@@ -322,6 +333,7 @@ module Column =
                 let [<Literal>] Is9 = "is-9-touch"
                 let [<Literal>] Is10 = "is-10-touch"
                 let [<Literal>] Is11 = "is-11-touch"
+                let [<Literal>] Is12 = "is-12-touch"
                 let [<Literal>] IsNarrow = "is-narrow-touch"
                 let [<Literal>] IsFull = "is-full-touch"
                 let [<Literal>] IsOneFifth = "is-one-fifth-touch"
@@ -331,7 +343,7 @@ module Column =
 
             module Offset =
                 let [<Literal>] IsOneQuarter = "is-offset-one-quarter-touch"
-                let [<Literal>] IsOneThird = "is-offset-one-third-touch"
+                let [<Literal>] IsOneThird = "is-offset-one-thirds-touch"
                 let [<Literal>] IsHalf = "is-offset-half-touch"
                 let [<Literal>] IsTwoThirds = "is-offset-two-third-touch"
                 let [<Literal>] IsThreeQuarters = "is-offset-three-quarters-touch"
@@ -346,6 +358,7 @@ module Column =
                 let [<Literal>] Is9 = "is-offset-9-touch"
                 let [<Literal>] Is10 = "is-offset-10-touch"
                 let [<Literal>] Is11 = "is-offset-11-touch"
+                let [<Literal>] Is12 = "is-offset-12-touch"
                 let [<Literal>] IsNarrow = "is-offset-narrow-touch"
                 let [<Literal>] IsFull = "is-offset-full-touch"
                 let [<Literal>] IsOneFifth = "is-offset-one-fifth-touch"
@@ -370,6 +383,7 @@ module Column =
         | Is9
         | Is10
         | Is11
+        | Is12
         | IsNarrow
         | IsFull
         | IsOneFifth
@@ -410,6 +424,7 @@ module Column =
             | Is9 -> Classes.All.Width.Is9
             | Is10 -> Classes.All.Width.Is10
             | Is11 -> Classes.All.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.All.Width.IsNarrow
             | IsFull -> Classes.All.Width.IsFull
             | IsOneFifth -> Classes.All.Width.IsOneFifth
@@ -434,6 +449,7 @@ module Column =
             | Is9 -> Classes.Desktop.Width.Is9
             | Is10 -> Classes.Desktop.Width.Is10
             | Is11 -> Classes.Desktop.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Desktop.Width.IsNarrow
             | IsFull -> Classes.Desktop.Width.IsFull
             | IsOneFifth -> Classes.Desktop.Width.IsOneFifth
@@ -458,6 +474,7 @@ module Column =
             | Is9 -> Classes.Tablet.Width.Is9
             | Is10 -> Classes.Tablet.Width.Is10
             | Is11 -> Classes.Tablet.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Tablet.Width.IsNarrow
             | IsFull -> Classes.Tablet.Width.IsFull
             | IsOneFifth -> Classes.Tablet.Width.IsOneFifth
@@ -482,6 +499,7 @@ module Column =
             | Is9 -> Classes.Mobile.Width.Is9
             | Is10 -> Classes.Mobile.Width.Is10
             | Is11 -> Classes.Mobile.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Mobile.Width.IsNarrow
             | IsFull -> Classes.Mobile.Width.IsFull
             | IsOneFifth -> Classes.Mobile.Width.IsOneFifth
@@ -506,6 +524,7 @@ module Column =
             | Is9 -> Classes.WideScreen.Width.Is9
             | Is10 -> Classes.WideScreen.Width.Is10
             | Is11 -> Classes.WideScreen.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.WideScreen.Width.IsNarrow
             | IsFull -> Classes.WideScreen.Width.IsFull
             | IsOneFifth -> Classes.WideScreen.Width.IsOneFifth
@@ -530,6 +549,7 @@ module Column =
             | Is9 -> Classes.FullHD.Width.Is9
             | Is10 -> Classes.FullHD.Width.Is10
             | Is11 -> Classes.FullHD.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.FullHD.Width.IsNarrow
             | IsFull -> Classes.FullHD.Width.IsFull
             | IsOneFifth -> Classes.FullHD.Width.IsOneFifth
@@ -554,6 +574,7 @@ module Column =
             | Is9 -> Classes.Touch.Width.Is9
             | Is10 -> Classes.Touch.Width.Is10
             | Is11 -> Classes.Touch.Width.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Touch.Width.IsNarrow
             | IsFull -> Classes.Touch.Width.IsFull
             | IsOneFifth -> Classes.Touch.Width.IsOneFifth
@@ -581,6 +602,7 @@ module Column =
             | Is9 -> Classes.All.Offset.Is9
             | Is10 -> Classes.All.Offset.Is10
             | Is11 -> Classes.All.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.All.Offset.IsNarrow
             | IsFull -> Classes.All.Offset.IsFull
             | IsOneFifth -> Classes.All.Offset.IsOneFifth
@@ -605,6 +627,7 @@ module Column =
             | Is9 -> Classes.Desktop.Offset.Is9
             | Is10 -> Classes.Desktop.Offset.Is10
             | Is11 -> Classes.Desktop.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Desktop.Offset.IsNarrow
             | IsFull -> Classes.Desktop.Offset.IsFull
             | IsOneFifth -> Classes.Desktop.Offset.IsOneFifth
@@ -629,6 +652,7 @@ module Column =
             | Is9 -> Classes.Tablet.Offset.Is9
             | Is10 -> Classes.Tablet.Offset.Is10
             | Is11 -> Classes.Tablet.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Tablet.Offset.IsNarrow
             | IsFull -> Classes.Tablet.Offset.IsFull
             | IsOneFifth -> Classes.Tablet.Offset.IsOneFifth
@@ -653,6 +677,7 @@ module Column =
             | Is9 -> Classes.Mobile.Offset.Is9
             | Is10 -> Classes.Mobile.Offset.Is10
             | Is11 -> Classes.Mobile.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Mobile.Offset.IsNarrow
             | IsFull -> Classes.Mobile.Offset.IsFull
             | IsOneFifth -> Classes.Mobile.Offset.IsOneFifth
@@ -677,6 +702,7 @@ module Column =
             | Is9 -> Classes.WideScreen.Offset.Is9
             | Is10 -> Classes.WideScreen.Offset.Is10
             | Is11 -> Classes.WideScreen.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.WideScreen.Offset.IsNarrow
             | IsFull -> Classes.WideScreen.Offset.IsFull
             | IsOneFifth -> Classes.WideScreen.Offset.IsOneFifth
@@ -701,6 +727,7 @@ module Column =
             | Is9 -> Classes.FullHD.Offset.Is9
             | Is10 -> Classes.FullHD.Offset.Is10
             | Is11 -> Classes.FullHD.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.FullHD.Offset.IsNarrow
             | IsFull -> Classes.FullHD.Offset.IsFull
             | IsOneFifth -> Classes.FullHD.Offset.IsOneFifth
@@ -725,6 +752,7 @@ module Column =
             | Is9 -> Classes.Touch.Offset.Is9
             | Is10 -> Classes.Touch.Offset.Is10
             | Is11 -> Classes.Touch.Offset.Is11
+            | Is12 -> Classes.All.Width.Is12
             | IsNarrow -> Classes.Touch.Offset.IsNarrow
             | IsFull -> Classes.Touch.Offset.IsFull
             | IsOneFifth -> Classes.Touch.Offset.IsOneFifth
