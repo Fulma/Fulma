@@ -17,9 +17,9 @@ module Control =
         let [<Literal>] IsExpanded = "is-expanded"
 
     type Option =
-        /// Add `has-icon-right` class
+        /// Add `has-icons-right` class
         | HasIconRight
-        /// Add `has-icon-left` class
+        /// Add `has-icons-left` class
         | HasIconLeft
         /// Add `is-loading` class if true
         | IsLoading of bool
