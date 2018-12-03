@@ -32,6 +32,8 @@ module Navbar =
             let [<Literal>] Container = "navbar-link"
             module State =
                 let [<Literal>] IsActive = "is-active"
+            module Style =
+                let [<Literal>] IsArrowless = "is-arrowless"
         module Dropdown =
             let [<Literal>] Container = "navbar-dropdown"
             let [<Literal>] IsBoxed = "is-boxed"
@@ -169,18 +171,21 @@ module Navbar =
         type Option =
             /// Add `is-active` class if true
             | IsActive of bool
+            | IsArrowless
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
         type internal Options =
             { IsActive : bool
+              IsArrowless : bool
               CustomClass : string option
               Props : IHTMLProp list
               Modifiers : string option list }
 
             static member Empty =
                 { IsActive = false
+                  IsArrowless = false
                   CustomClass = None
                   Props = []
                   Modifiers = [] }
@@ -189,12 +194,18 @@ module Navbar =
             let parseOptions (result : Options) opt =
                 match opt with
                 | IsActive state -> { result with IsActive = state }
+                | IsArrowless -> { result with IsArrowless = true }
                 | CustomClass customClass -> { result with CustomClass = Some customClass }
                 | Props props -> { result with Props = props }
                 | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
 
             let opts = options |> List.fold parseOptions Options.Empty
-            let classes = Helpers.classes Classes.Link.Container ( opts.CustomClass::opts.Modifiers ) [Classes.Link.State.IsActive, opts.IsActive]
+            let classes =
+                Helpers.classes
+                    Classes.Link.Container
+                    (opts.CustomClass::opts.Modifiers)
+                    [ Classes.Link.State.IsActive, opts.IsActive
+                      Classes.Link.Style.IsArrowless, opts.IsArrowless ]
             element (classes::opts.Props) children
 
         /// Generate <div class="navbar-link"></div>

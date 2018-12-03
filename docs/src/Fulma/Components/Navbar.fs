@@ -10,8 +10,8 @@ let basic () =
             [ Navbar.Item.a [ Navbar.Item.Props [ Href "#" ] ]
                 [ img [ Style [ Width "2.5em" ] // Force svg display
                         Src "assets/logo_transparent.svg" ] ] ]
-          Navbar.Item.a  [ Navbar.Item.HasDropdown
-                           Navbar.Item.IsHoverable ]
+          Navbar.Item.a [ Navbar.Item.HasDropdown
+                          Navbar.Item.IsHoverable ]
             [ Navbar.Link.a [ ]
                 [ str "Docs" ]
               Navbar.Dropdown.div [ ]
@@ -22,6 +22,13 @@ let basic () =
                   Navbar.divider [ ] [ ]
                   Navbar.Item.a [ ]
                     [ str "Components" ] ] ]
+          Navbar.Item.a [ Navbar.Item.HasDropdown
+                          Navbar.Item.IsHoverable ]
+            [ Navbar.Link.a [ Navbar.Link.IsArrowless ]
+                [ str "Link without arrow" ]
+              Navbar.Dropdown.div [ ]
+                [ Navbar.Item.a [ ]
+                    [ str "Overwiew" ] ] ]
           Navbar.End.div [ ]
             [ Navbar.Item.div [ ]
                 [ Button.button [ Button.Color IsSuccess ]
