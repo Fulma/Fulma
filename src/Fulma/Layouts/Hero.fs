@@ -24,6 +24,7 @@ module Hero =
             let [<Literal>] IsLarge = "is-large"
             let [<Literal>] IsHalfHeight = "is-halfheight"
             let [<Literal>] IsFullHeight = "is-fullheight"
+            let [<Literal>] IsFullheightWithNavbar = "is-fullheight-with-navbar"
 
     type Option =
         /// Add `is-bold` class
@@ -35,6 +36,8 @@ module Hero =
         /// Add `is-halfheight` class
         | IsHalfHeight
         /// Add `is-fullheight` class
+        /// Add `is-fullheight-with-navbar` class
+        | IsFullheightWithNavbar
         | IsFullHeight
         | Color of IColor
         | CustomClass of string
@@ -66,6 +69,7 @@ module Hero =
             | IsLarge -> { result with Size = Classes.Size.IsLarge |> Some }
             | IsHalfHeight -> { result with Size = Classes.Size.IsHalfHeight |> Some }
             | IsFullHeight -> { result with Size = Classes.Size.IsFullHeight |> Some }
+            | IsFullheightWithNavbar -> { result with Size = Classes.Size.IsFullheightWithNavbar |> Some }
             | Color color -> { result with Color = ofColor color |> Some }
             | IsBold -> { result with IsBold = true }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
