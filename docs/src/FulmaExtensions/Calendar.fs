@@ -2,7 +2,7 @@ module FulmaExtensions.Calendar
 
 open Fable.Helpers.React
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 open Fulma.FontAwesome
 
 let basic () =

@@ -3,7 +3,7 @@ module FulmaExtensions.Tooltip
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 
 let basic () =
     div [ ClassName "block" ]

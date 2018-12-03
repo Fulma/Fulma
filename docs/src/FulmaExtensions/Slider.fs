@@ -6,7 +6,7 @@ open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 
 let colorInteractive () =
     div [ ClassName "block" ]
@@ -31,12 +31,18 @@ let sizeInteractive () =
 
 let stylesInteractive () =
     div [ ClassName "block" ]
-        [ Slider.slider [ Slider.IsCircle; Slider.Disabled true ]
-          Slider.slider [ Slider.IsCircle; Slider.Color IsPrimary ]
-          Slider.slider [ Slider.IsCircle; Slider.Color IsSuccess ]
-          Slider.slider [ Slider.IsCircle; Slider.Color IsWarning ]
-          Slider.slider [ Slider.IsCircle; Slider.Color IsDanger ]
-          Slider.slider [ Slider.IsCircle; Slider.Color IsInfo ] ]
+        [ Slider.slider [ Slider.IsCircle
+                          Slider.Disabled true ]
+          Slider.slider [ Slider.IsCircle
+                          Slider.Color IsPrimary ]
+          Slider.slider [ Slider.IsCircle
+                          Slider.Color IsSuccess ]
+          Slider.slider [ Slider.IsCircle
+                          Slider.Color IsWarning ]
+          Slider.slider [ Slider.IsCircle
+                          Slider.Color IsDanger ]
+          Slider.slider [ Slider.IsCircle
+                          Slider.Color IsInfo ] ]
 
 let stateInteractive () =
     div [ ClassName "block" ]

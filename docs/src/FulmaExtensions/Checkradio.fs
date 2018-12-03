@@ -5,7 +5,7 @@ open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 open Fulma.FontAwesome
 
 let inlineBlockInteractive () =
@@ -13,13 +13,13 @@ let inlineBlockInteractive () =
         [ Column.column [ ]
             [ div [ ClassName "block" ]
                   [ // Block sample
-                    b [] [str "Block"]
+                    b [ ] [str "Block"]
                     Checkradio.checkbox [ ]
                         [ str "One" ]
                     Checkradio.checkbox [ ]
                         [ str "Two" ]
                     // Inline sample
-                    b [] [str "Inline"]
+                    b [ ] [str "Inline"]
                     Field.div [ ]
                         [ Checkradio.checkboxInline [ ]
                             [ str "One " ]
@@ -29,13 +29,13 @@ let inlineBlockInteractive () =
           Column.column [ ]
             [ div [ ClassName "block" ]
                   [ // Block sample
-                    b [] [str "Block"]
+                    b [ ] [str "Block"]
                     Checkradio.radio [ Checkradio.Name "block" ]
                         [ str "One" ]
                     Checkradio.radio [ Checkradio.Name "block"  ]
                         [ str "Two" ]
                     // Inline sample
-                    b [] [str "Inline"]
+                    b [ ] [str "Inline"]
                     Field.div [ ]
                         [ Checkradio.radioInline [ Checkradio.Name "inline" ]
                             [ str "One" ]
@@ -378,4 +378,4 @@ The checkbox can be **circle**.
                         (Widgets.Showcase.view stateInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Event handler"
-                        (Widgets.Showcase.view (fun _ -> ofType<CheckradioDemo,_,_> (unbox null) []) (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
+                        (Widgets.Showcase.view (fun _ -> ofType<CheckradioDemo,_,_> (unbox null) [ ]) (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

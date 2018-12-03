@@ -178,7 +178,7 @@ let private menuFulma currentPage subModel dispatch =
                                menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage ] ] ] ]
 
 let private menuFulmaExtensions currentPage =
-    [ Menu.label [ ] [ str "Fulma.Extensions" ]
+    [ Menu.label [ ] [ str "Fulma.Extensions.Wikiki" ]
       Menu.list [ ]
         [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
       Menu.list [ ]

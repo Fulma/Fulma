@@ -5,7 +5,7 @@ open Fable.Import
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 
 type PageLoaderDemoProps =
     interface end

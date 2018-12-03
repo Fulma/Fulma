@@ -4,7 +4,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.FontAwesome
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 open Fable.PowerPack
 open Types
 open System

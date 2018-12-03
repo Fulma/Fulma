@@ -4,7 +4,7 @@ open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
 open Fulma
-open Fulma.Extensions
+open Fulma.Extensions.Wikiki
 
 type QuickviewDemoProps =
     interface end

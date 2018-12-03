@@ -71,14 +71,15 @@ let root model dispatch =
         | Router.FulmaElmish fulmaElmishPage ->
             FulmaElmish.Router.view fulmaElmishPage
 
-    div []
+    div [ ]
         [ Navbar.view
-          div [ ClassName "section" ]
-              [ div [ ClassName "container" ]
-                    [ div [ ClassName "columns" ]
-                          [ div [ ClassName "column is-2" ]
+          Section.section [ ]
+              [ Container.container [ ]
+                    [ Columns.columns [ ]
+                          [ Column.column [ Column.Width (Screen.All, Column.IsOneFifth) ]
                                 [ Widgets.Menu.view model.Menu (MenuMsg >> dispatch) ]
-                            div [ ClassName "column" ] [ pageHtml model.CurrentPage ] ] ] ] ]
+                            Column.column [ ]
+                                [ pageHtml model.CurrentPage ] ] ] ] ]
 
 open Elmish.React
 open Elmish.Debug
@@ -92,11 +93,3 @@ Program.mkProgram init update root
 // #endif
 |> Program.withReact "elmish-app"
 |> Program.run
-
-// let inline includeCode<'a> (line : string) (file : string) : string =
-//     importAll ("!!custom-loader?line=" + line + "!./" + file)
-
-// let colorInteractive () =
-//     Button.button [ ] [ ]
-
-// Browser.console.log("code",  (Render.includeCode __LINE__ __SOURCE_FILE__))

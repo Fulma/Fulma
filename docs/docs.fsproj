@@ -3,6 +3,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../src/Fulma/Fulma.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Checkradio/Fulma.Extensions.Wikiki.Checkradio.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Divider/Fulma.Extensions.Wikiki.Divider.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.PageLoader/Fulma.Extensions.Wikiki.PageLoader.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Quickview/Fulma.Extensions.Wikiki.Quickview.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj" />
     <ProjectReference Include="../src/Fulma.Elmish/Fulma.Elmish.fsproj" />
   </ItemGroup>
   <ItemGroup>
