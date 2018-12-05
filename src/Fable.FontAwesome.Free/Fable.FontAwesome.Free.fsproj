@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Description>Helpers around Bulma for Elmish apps</Description>
+        <Description>Bindings for the Free icons of Font Awesome, should be used with Fable.FontAwesome</Description>
         <PackageProjectUrl>https://github.com/MangelMaxime/Fulma</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/MangelMaxime/Fulma/blob/master/LICENSE.md</PackageLicenseUrl>
         <PackageIconUrl>https://raw.githubusercontent.com/MangelMaxime/Fulma/master/docs/public/assets/logo-128x128.png</PackageIconUrl>
