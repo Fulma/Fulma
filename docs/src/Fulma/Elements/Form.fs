@@ -3,7 +3,7 @@ module Elements.Form
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 let basic () =
     form [ ]
@@ -21,10 +21,12 @@ let basic () =
                                 Control.HasIconRight ]
                     [ Input.text [ Input.Color IsSuccess
                                    Input.DefaultValue "Maxime" ]
-                      Icon.faIcon [ Icon.Size IsSmall; Icon.IsLeft ]
-                        [ Fa.icon Fa.I.User ]
-                      Icon.faIcon [ Icon.Size IsSmall; Icon.IsRight ]
-                        [ Fa.icon Fa.I.Check ] ]
+                      Icon.icon [ Icon.Size IsSmall; Icon.IsLeft ]
+                        [ Fa.i [ Fa.Solid.User ]
+                            [ ] ]
+                      Icon.icon [ Icon.Size IsSmall; Icon.IsRight ]
+                        [ Fa.i [ Fa.Solid.Check ]
+                            [ ] ] ]
                   Help.help [ Help.Color IsSuccess ]
                     [ str "This username is available" ] ]
            // Email field
@@ -35,10 +37,12 @@ let basic () =
                                 Control.HasIconRight ]
                     [ Input.email [ Input.Color IsDanger
                                     Input.DefaultValue "hello@" ]
-                      Icon.faIcon [ Icon.Size IsSmall; Icon.IsLeft ]
-                        [ Fa.icon Fa.I.Envelope ]
-                      Icon.faIcon [ Icon.Size IsSmall; Icon.IsRight ]
-                        [ Fa.icon Fa.I.Warning ] ]
+                      Icon.icon [ Icon.Size IsSmall; Icon.IsLeft ]
+                        [ Fa.i [ Fa.Solid.Envelope ]
+                            [ ] ]
+                      Icon.icon [ Icon.Size IsSmall; Icon.IsRight ]
+                        [ Fa.i [ Fa.Solid.ExclamationTriangle ]
+                            [ ] ] ]
                   Help.help [ Help.Color IsDanger ]
                     [ str "This email is invalid" ] ]
            // Phone field
@@ -88,8 +92,9 @@ let basic () =
                         [ File.input [ ]
                           File.cta [ ]
                             [ File.icon [ ]
-                                [ Icon.faIcon [ ]
-                                    [ Fa.icon Fa.I.Upload ] ]
+                                [ Icon.icon [ ]
+                                    [ Fa.i [ Fa.Solid.Upload ]
+                                        [ ] ] ]
                               File.label [ ]
                                 [ str "Choose a file..." ] ]
                           File.name [ ]

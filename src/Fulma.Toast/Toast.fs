@@ -5,11 +5,11 @@ module View =
     open Fable.Helpers.React
     open Fable.Helpers.React.Props
     open Fulma
-    open Fulma.FontAwesome
+    open Fable.FontAwesome
     open Thoth.Elmish
 
     let renderToastWithFulma =
-        { new Toast.IRenderer<Fa.I.FontAwesomeIcons> with
+        { new Toast.IRenderer<Fa.IconOption> with
             member __.Toast children color =
                 Notification.notification [ Notification.CustomClass color ]
                     children
@@ -34,10 +34,11 @@ module View =
                 Heading.h5 []
                            [ str txt ]
 
-            member __.Icon (icon : Fa.I.FontAwesomeIcons) =
-                Icon.faIcon [ Icon.Size IsMedium ]
-                    [ Fa.icon icon
-                      Fa.fa2x ]
+            member __.Icon (icon : Fa.IconOption) =
+                Icon.icon [ Icon.Size IsMedium ]
+                    [ Fa.i [ icon
+                             Fa.Size Fa.Fa2x ]
+                        [ ] ]
 
             member __.SingleLayout title message =
                 div [ ]

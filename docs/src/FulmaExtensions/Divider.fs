@@ -40,23 +40,24 @@ Display a vertical or horizontal divider to segment your design.
 
 *[Documentation](https://wikiki.github.io/layout/divider/)*
 
-## Npm packages
+### Installation
+
+- `paket add Fulma.Extensions.Wikiki.Divider --project <your project>`
+- `yarn add bulma-divider@2.0.1`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Divider</th>
+            <th>bulma-divider</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-divider`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-divider@0.1.0`</td>
+            <td>2.0.1</td>
         </tr>
     </tbody>
 <table>

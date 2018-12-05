@@ -70,6 +70,8 @@ let root model dispatch =
             FulmaExtensions.Router.view fulmaExtensionsPage
         | Router.FulmaElmish fulmaElmishPage ->
             FulmaElmish.Router.view fulmaElmishPage
+        | Router.FableFontAwesome fableFontAwesome ->
+            FableFontAwesome.Router.view fableFontAwesome
 
     div [ ]
         [ Navbar.view

@@ -19,6 +19,8 @@
         <Compile Include="DatePicker/View.fs" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="../Fable.FontAwesome/Fable.FontAwesome.fsproj" />
+        <ProjectReference Include="../Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj" />
         <ProjectReference Include="../Fulma.Extensions.Wikiki.Calendar/Fulma.Extensions.Wikiki.Calendar.fsproj" />
     </ItemGroup>
     <!-- Add source files to "fable" folder in Nuget package -->

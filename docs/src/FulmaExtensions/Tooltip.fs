@@ -30,23 +30,24 @@ Display a **tooltip** attached to any kind of element, in different position.
 
 *[Documentation](https://wikiki.github.io/elements/tooltip/)*
 
-## Npm packages
+### Installation
+
+- `paket add Fulma.Extensions.Wikiki.Tooltip --project <your project>`
+- `yarn add bulma-tooltip@2.0.2`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Tooltip</th>
+            <th>bulma-tooltip</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-tooltip`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-tooltip@0.1.1`</td>
+            <td>2.0.2</td>
         </tr>
     </tbody>
 <table>

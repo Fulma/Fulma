@@ -150,8 +150,19 @@ let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
 
 
 Target.create "PublishNugets" (fun _ ->
-    !! "src/Fulma/Fulma.fsproj"
+    !! "src/Fable.FontAwesome/Fable.FontAwesome.fsproj"
+    ++ "src/Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj"
+    ++ "src/Fable.FontAwesome.Pro/Fable.FontAwesome.Pro.fsproj"
+    ++ "src/Fulma/Fulma.fsproj"
     ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Calendar/Fulma.Extensions.Wikiki.Calendar.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Checkradio/Fulma.Extensions.Wikiki.Checkradio.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Divider/Fulma.Extensions.Wikiki.Divider.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.PageLoader/Fulma.Extensions.Wikiki.PageLoader.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Quickview/Fulma.Extensions.Wikiki.Quickview.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj"
     ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
     ++ "src/Fulma.Toast/Fulma.Toast.fsproj"
     ++ "templates/Fable.Template.Fulma.Minimal.proj"

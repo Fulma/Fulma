@@ -29,6 +29,10 @@ module Button =
             let [<Literal>] HasAddons = "has-addons"
             let [<Literal>] IsCentered = "is-centered"
             let [<Literal>] IsRight = "is-right"
+            module Size =
+                let [<Literal>] AreSmall = "are-small"
+                let [<Literal>] AreMedium = "are-medium"
+                let [<Literal>] AreLarge = "are-large"
 
     type Option =
         // Colors
@@ -198,6 +202,7 @@ module Button =
             | HasAddons
             | IsCentered
             | IsRight
+            // | Size of ISize
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
@@ -206,6 +211,7 @@ module Button =
             { HasAddons : bool
               IsCentered : bool
               IsRight : bool
+            //   Size : string option
               Props : IHTMLProp list
               CustomClass : string option
               Modifiers : string option list }
@@ -214,9 +220,16 @@ module Button =
                 { HasAddons = false
                   IsCentered = false
                   IsRight = false
+                //   Size = None
                   Props = [ ]
                   CustomClass = None
                   Modifiers = [] }
+
+        let internal ofSize size =
+            match size with
+            | IsSmall -> Classes.List.Size.AreSmall
+            | IsMedium -> Classes.List.Size.AreMedium
+            | IsLarge -> Classes.List.Size.AreLarge
 
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
@@ -228,11 +241,14 @@ module Button =
             | List.Props props -> { result with Props = props }
             | List.CustomClass customClass -> { result with CustomClass = Some customClass }
             | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            // | List.Size size -> { result with Size = List.ofSize size |> Some }
 
         let opts = options |> List.fold parseOption List.Options.Empty
         let classes = Helpers.classes
                         Classes.List.Container
-                        ( opts.CustomClass::opts.Modifiers )
+                        ( opts.CustomClass
+                            // ::opts.Size
+                            ::opts.Modifiers )
                         [ Classes.List.HasAddons, opts.HasAddons
                           Classes.List.IsCentered, opts.IsCentered
                           Classes.List.IsRight, opts.IsRight ]

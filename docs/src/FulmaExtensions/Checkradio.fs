@@ -6,7 +6,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 let inlineBlockInteractive () =
     Columns.columns [ ]
@@ -379,9 +379,13 @@ type CheckradioDemo(props) =
                       Checkradio.OnChange this.toggleState
                       Checkradio.Id "checkradio-67" ]
                     [ if this.state.IsChecked then
-                        yield Icon.faIcon [ ] [ Fa.icon Fa.I.Plane ]
+                        yield Icon.icon [ ]
+                                [ Fa.i [ Fa.Solid.Plane ]
+                                    [ ] ]
                       else
-                        yield Icon.faIcon [ ] [ Fa.icon Fa.I.Rocket] ] ]
+                        yield Icon.icon [ ]
+                                [ Fa.i [ Fa.Solid.Rocket ]
+                                    [ ] ] ] ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown
@@ -392,23 +396,24 @@ Make classic **checkbox** and **radio** more sexy in different colors, sizes, an
 
 *[Documentation](https://wikiki.github.io/form/checkradio/)*
 
-## Npm packages
+### Installation
+
+- `paket add Fulma.Extensions.Wikiki.Checkradio --project <your project>`
+- `yarn add bulma-checkradio@2.1.0`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Checkradio</th>
+            <th>bulma-checkradio</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-checkradio`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-checkradio@0.1.5`</td>
+            <td>2.1.0</td>
         </tr>
     </tbody>
 <table>

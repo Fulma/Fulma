@@ -50,24 +50,24 @@ Display quick view of data without leaving the current page
 
 *[Documentation](https://wikiki.github.io/components/quickview/)*
 
+### Installation
 
-## Npm packages
+- `paket add Fulma.Extensions.Wikiki.Quickview --project <your project>`
+- `yarn add bulma-quickview@2.0.0`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Quickview</th>
+            <th>bulma-quickview</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-quickview`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-quickview@1.0.1`</td>
+            <td>2.0.0</td>
         </tr>
     </tbody>
 <table>

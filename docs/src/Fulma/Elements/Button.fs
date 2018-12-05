@@ -3,7 +3,7 @@ module Elements.Button
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 let colorInteractive () =
     Columns.columns [ ]
@@ -110,14 +110,17 @@ let disabled () =
 let icons () =
     div [ ClassName "block" ]
         [ Button.button [ ]
-            [ Icon.faIcon [ ]
-                [ Fa.icon Fa.I.Bold ] ]
+            [ Icon.icon [ ]
+                [ Fa.i [ Fa.Solid.Bold ]
+                    [ ] ] ]
           Button.button [ ]
-            [ Icon.faIcon [ ]
-                [ Fa.icon Fa.I.Italic ] ]
+            [ Icon.icon [ ]
+                [ Fa.i [ Fa.Solid.Italic ]
+                    [ ] ] ]
           Button.button [ ]
-            [ Icon.faIcon [ ]
-                [ Fa.icon Fa.I.Underline ] ]
+            [ Icon.icon [ ]
+                [ Fa.i [ Fa.Solid.Underline ]
+                    [ ] ] ]
           Button.button [ Button.Color IsDanger
                           Button.IsOutlined ]
             [ str "Danger" ] ]
@@ -134,6 +137,52 @@ let demoHelpers () =
             [ Value "Input `reset`" ] ]
           Button.Input.submit [ Button.Props
             [ Value "Input `submit`" ] ] ]
+
+
+
+let demoList () =
+    div [ ClassName "block" ]
+        [ Button.list [ ]
+            [ Button.span [ ]
+                [ str "One" ]
+              Button.span [ ]
+                [ str "Two" ]
+              Button.span [ ]
+                [ str "Three" ]
+              Button.span [ ]
+                [ str "Four" ]
+              Button.span [ ]
+                [ str "Five" ]
+              Button.span [ ]
+                [ str "Six" ]
+              Button.span [ ]
+                [ str "Seven" ]
+              Button.span [ ]
+                [ str "Eight" ]
+              Button.span [ ]
+                [ str "Nine" ]
+              Button.span [ ]
+                [ str "Ten" ]
+              Button.span [ ]
+                [ str "Eleven" ]
+              Button.span [ ]
+                [ str "Twelve" ]
+              Button.span [ ]
+                [ str "Thirteen" ]
+              Button.span [ ]
+                [ str "Fourteen" ]
+              Button.span [ ]
+                [ str "Fifteen" ]
+              Button.span [ ]
+                [ str "Sixteen" ]
+              Button.span [ ]
+                [ str "Seventeen" ]
+              Button.span [ ]
+                [ str "Eighteen" ]
+              Button.span [ ]
+                [ str "Nineteen" ]
+              Button.span [ ]
+                [ str "Twenty" ] ] ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown
@@ -184,6 +233,11 @@ The button can be **outlined** and/or **inverted**.
                      Render.docSection
                         "### Disabled"
                         (Widgets.Showcase.view disabled (Render.includeCode __LINE__ __SOURCE_FILE__))
+                     Render.docSection
+                        """
+### List of buttons
+                        """
+                        (Widgets.Showcase.view demoList (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Font awesome icons support

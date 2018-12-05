@@ -1,3 +1,9 @@
+$fa-font-path: "./../../node_modules/@fortawesome/fontawesome-free/webfonts";
+@import './../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import './../../node_modules/@fortawesome/fontawesome-free/scss/solid';
+@import './../../node_modules/@fortawesome/fontawesome-free/scss/regular';
+@import './../../node_modules/@fortawesome/fontawesome-free/scss/brands';
+
 @import "./../../node_modules/bulma/sass/utilities/initial-variables";
 @import "./../../node_modules/bulma/sass/utilities/functions";
 
@@ -23,7 +29,7 @@ $custom-colors: (
 @import '../../node_modules/bulma/bulma';
 
 @import "../../node_modules/bulma-badge/dist/css/bulma-badge.sass";
-@import "../../node_modules/bulma-calendar/dist/css/bulma-calendar.sass";
+@import "../../node_modules/bulma-calendar/calendar.sass";
 @import "../../node_modules/bulma-checkradio/dist/css/bulma-checkradio.sass";
 @import "../../node_modules/bulma-divider/dist/css/bulma-divider.sass";
 @import "../../node_modules/bulma-pageloader/dist/css/bulma-pageloader.sass";

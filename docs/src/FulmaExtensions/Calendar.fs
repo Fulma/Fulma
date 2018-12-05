@@ -3,20 +3,22 @@ module FulmaExtensions.Calendar
 open Fable.Helpers.React
 open Fulma
 open Fulma.Extensions.Wikiki
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 let basic () =
     Calendar.calendar [ ]
         [ Calendar.Nav.nav [ ]
             [ Calendar.Nav.left [ ]
                 [ Button.button [ Button.IsLink ]
-                    [ Icon.faIcon [ ]
-                        [ Fa.icon Fa.I.ChevronLeft ] ] ]
+                    [ Icon.icon [ ]
+                        [ Fa.i [ Fa.Solid.ChevronLeft ]
+                            [ ] ] ] ]
               span [ ] [ str "August 2017" ]
               Calendar.Nav.right [ ]
                 [ Button.button [ Button.IsLink ]
-                    [ Icon.faIcon [ ]
-                        [ Fa.icon Fa.I.ChevronRight ] ] ] ]
+                    [ Icon.icon [ ]
+                        [ Fa.i [ Fa.Solid.ChevronRight ]
+                            [ ] ] ] ] ]
           div [ ]
             [ Calendar.header [ ]
                 [ Calendar.Date.date [ ]
@@ -149,23 +151,26 @@ Display a **calendar** for date selection or for planning management, in differe
 
 *[Documentation](https://wikiki.github.io/components/calendar/)*
 
-## Npm packages
+### Installation
+
+- `paket add Fulma.Extensions.Wikiki.Calendar --project <your project>`
+- `yarn add bulma-calendar@0.1.7 bulma-tooltip`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Calendar</th>
+            <th>bulma-calendar</th>
+            <th>bulma-tooltip</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-calendar bulma-tooltip`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-calendar@0.0.1 bulma-tooltip@0.1.7`</td>
+            <td>0.1.7</td>
+            <td>2.0.2</td>
         </tr>
     </tbody>
 <table>

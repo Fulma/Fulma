@@ -5,6 +5,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
+[<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Quickview package instead")>]
 module Quickview =
 
     module Classes =

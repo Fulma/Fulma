@@ -4,7 +4,7 @@ open Fable.Core
 open Fable.Import
 open Fable.Helpers.React
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 open Fable.PowerPack
 open Fable.PowerPack.Fetch
 
@@ -31,8 +31,9 @@ type Changelog(props) =
     do base.setInitState({ Content = Loading })
 
     member this.setMarkdown content =
-        { this.state with Content = Fetched content }
-        |> this.setState
+        this.setState (fun prevState _ ->
+            { prevState with Content = Fetched content }
+        )
 
     override this.componentDidMount () =
         promise {
@@ -41,8 +42,9 @@ type Changelog(props) =
             this.setMarkdown txt
         }
         |> Promise.catch (fun _ ->
-            { this.state with Content = Error }
-            |> this.setState
+            this.setState (fun prevState _ ->
+                { prevState with Content = Error }
+            )
         )
         |> Promise.start
 
@@ -52,13 +54,14 @@ type Changelog(props) =
             Hero.hero [ Hero.IsLarge ]
                 [ Hero.body [ CustomClass "has-text-centered" ]
                     [ Content.content [ ]
-                        [ Icon.faIcon [ Icon.Size IsLarge ]
-                            [ //Animations work well on Spinner
-                              Fa.icon Fa.I.Spinner
-                              //Pulse Animation
-                              Fa.pulse
-                              //Icon 2x times larger
-                              Fa.fa3x ]
+                        [ Icon.icon [ Icon.Size IsLarge ]
+                            [ Fa.i [ //Animations work well on Spinner
+                                     Fa.Solid.Spinner
+                                     //Pulse Animation
+                                     Fa.Pulse
+                                     //Icon 3x times larger
+                                     Fa.Size Fa.Fa3x ]
+                                [ ] ]
                           br [ ]
                           br [ ]
                           p [ ] [ str "We are fetching the changelog info" ] ] ] ]

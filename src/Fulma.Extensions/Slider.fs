@@ -7,6 +7,7 @@ open Fable.Helpers.React.Props
 open Fable.Core.JsInterop
 
 [<RequireQualifiedAccess>]
+[<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Slider package instead")>]
 module Slider =
 
     module Classes =

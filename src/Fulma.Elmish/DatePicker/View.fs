@@ -3,7 +3,7 @@ namespace Fulma.Elmish.DatePicker
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 open Fulma.Extensions.Wikiki
 open Fable.PowerPack
 open Types
@@ -72,14 +72,18 @@ module View =
                                                                Button.OnClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(-1)
                                                                                                                     ForceClose = false }
                                                                                         onChange config newState currentDate dispatch) ]
-                                                             [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronLeft ] ] ]
+                                                             [ Icon.icon [ ]
+                                                                [ Fa.i [ Fa.Solid.ChevronLeft ]
+                                                                    [ ] ] ] ]
                                            str (Date.Format.localFormat config.Local "MMMM yyyy" state.ReferenceDate)
                                            Calendar.Nav.right [ ]
                                              [ Button.button [ Button.IsLink
                                                                Button.OnClick (fun _ -> let newState = { state with ReferenceDate = state.ReferenceDate.AddMonths(1)
                                                                                                                     ForceClose = false }
                                                                                         onChange config newState currentDate dispatch) ]
-                                                             [ Icon.faIcon [ ] [ Fa.icon Fa.I.ChevronRight ] ] ] ]
+                                                             [ Icon.icon [ ]
+                                                                [ Fa.i [ Fa.Solid.ChevronRight ]
+                                                                    [ ] ] ] ] ]
                                        div [ ]
                                            [ Calendar.header [ ]
                                                  [ Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Sunday ]
@@ -114,7 +118,9 @@ module View =
                     if state.ShowDeleteButton then
                         yield Control.p [] [
                                 Button.a [ Button.OnClick(fun _ -> onDeleteClick config state currentDate dispatch) ]
-                                    [ Icon.faIcon [] [ Fa.icon Fa.I.Times ] ] ]
+                                    [ Icon.icon [ ]
+                                        [ Fa.i [ Fa.Solid.Times ]
+                                            [ ] ] ] ]
                   ]
               ]
 

@@ -6,7 +6,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 let inlineBlockInteractive () =
     Columns.columns [ ]
@@ -30,7 +30,6 @@ let rtl () =
     Switch.switch [ Switch.IsRtl
                     Switch.Id "switch-5" ]
         [ str "Label is on the left" ]
-
 
 let colorInteractive () =
     Columns.columns [ ]
@@ -281,9 +280,13 @@ type SwitchDemo(props) =
                   Switch.Id "switch-48"
                   Switch.OnChange this.toggleState ]
                 [ if this.state.IsChecked then
-                    yield Icon.faIcon [ ] [ Fa.icon Fa.I.Check ]
+                    yield Icon.icon [ ]
+                            [ Fa.i [ Fa.Solid.Check ]
+                                [ ] ]
                   else
-                    yield Icon.faIcon [ ] [ Fa.icon Fa.I.Times ] ] ]
+                    yield Icon.icon [ ]
+                            [ Fa.i [ Fa.Solid.Times ]
+                                [ ] ] ] ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown
@@ -294,23 +297,24 @@ The **Switch** can have different colors, sizes and states.
 
 *[Documentation](https://wikiki.github.io/form/switch/)*
 
-## Npm packages
+### Installation
+
+- `paket add Fulma.Extensions.Wikiki.Switch --project <your project>`
+- `yarn add bulma-switch@2.0.0`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Switch</th>
+            <th>bulma-switch</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-switch`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-switch@0.0.4`</td>
+            <td>2.0.0</td>
         </tr>
     </tbody>
 <table>

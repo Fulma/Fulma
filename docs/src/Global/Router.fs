@@ -58,7 +58,6 @@ type FulmaExtensionsPage =
     | Calendar
     | Tooltip
     | Divider
-    | Introduction
     | PageLoader
     | Slider
     | Switch
@@ -69,6 +68,10 @@ type FulmaElmishPage =
     | Introduction
     | DatePicker
 
+type FableFontAwesomePage =
+    | Introduction
+    | Usage
+
 type Page =
     | Home
     | Showcase
@@ -78,6 +81,7 @@ type Page =
     | Fulma of FulmaPage
     | FulmaExtensions of FulmaExtensionsPage
     | FulmaElmish of FulmaElmishPage
+    | FableFontAwesome of FableFontAwesomePage
 
 let private toHash page =
     match page with
@@ -135,7 +139,6 @@ let private toHash page =
             | Dropdown ->"#fulma/components/dropdown"
     | FulmaExtensions pageType ->
         match pageType with
-        | FulmaExtensionsPage.Introduction -> "#fulma-extensions"
         | Checkradio -> "#fulma-extensions/checkradio"
         | Calendar -> "#fulma-extensions/calendar"
         | Tooltip -> "#fulma-extensions/tooltip"
@@ -148,6 +151,10 @@ let private toHash page =
         match pageType with
         | FulmaElmishPage.Introduction -> "#fulma-elmish"
         | FulmaElmishPage.DatePicker -> "#fulma-elmish/date-picker"
+    | FableFontAwesome pageType ->
+        match pageType with
+        | FableFontAwesomePage.Introduction -> "#fable-fontawesome"
+        | FableFontAwesomePage.Usage -> "#fable-fontawesome/usage"
 
 let pageParser : Parser<Page -> Page, Page> =
     oneOf [ map Home (s "home")
@@ -194,8 +201,10 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (Component Tabs)) (s "fulma" </> s "components" </> s "tabs")
             map (Fulma (Component Modal)) (s "fulma" </> s "components" </> s "modal")
             map (Fulma (Component Dropdown)) (s "fulma" </> s "components" </> s "dropdown")
+            // Fable FontAwesome
+            map (FableFontAwesome (FableFontAwesomePage.Introduction)) (s "fable-fontawesome")
+            map (FableFontAwesome (FableFontAwesomePage.Usage)) (s "fable-fontawesome" </> s "usage")
             // Fulma Extension
-            map (FulmaExtensions FulmaExtensionsPage.Introduction ) (s "fulma-extensions")
             map (FulmaExtensions Checkradio) (s "fulma-extensions" </> s "checkradio")
             map (FulmaExtensions Calendar) (s "fulma-extensions" </> s "calendar")
             map (FulmaExtensions Tooltip) (s "fulma-extensions" </> s "tooltip")

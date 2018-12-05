@@ -3,6 +3,7 @@ namespace Fulma.Extensions
 open Fulma
 
 [<RequireQualifiedAccess>]
+[<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Calendar package instead")>]
 module Calendar =
 
     module Classes =

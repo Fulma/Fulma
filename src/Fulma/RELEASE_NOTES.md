@@ -1,3 +1,14 @@
+### 1.1.0
+
+* Fix column `third` size naming
+* Bulma 0.7.2: Add `is-arrowless` to `navbar`
+* Bulma 0.7.2: Add ol type support to content
+* Bulma 0.7.2: Add `ScreenReaderOnly` to helpers
+* Bulma 0.7.2: Add `IsFullheightWithNavbar` to `Hero`
+* Bulma 0.7.2: Add button element for `Dropdown` item
+* Fix typos comments of `Form.Control.HasIconRight` and `Form.Control.HasIconLeft`
+* Remove Font Awesome support from this package
+
 ### 1.0.0
 
 * Release stable version for Fable 2

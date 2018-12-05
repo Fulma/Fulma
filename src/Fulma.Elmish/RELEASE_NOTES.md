@@ -1,3 +1,7 @@
+### 0.1.0-beta-012
+
+* Update dependencies
+
 ### 0.1.0-beta-011
 
 * Allow to delete date from DatePicker (@marcpiechura)

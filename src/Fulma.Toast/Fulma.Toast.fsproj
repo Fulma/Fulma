@@ -18,6 +18,8 @@
         <Compile Include="Toast.fs" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="../Fable.FontAwesome/Fable.FontAwesome.fsproj" />
+        <ProjectReference Include="../Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj" />
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
     </ItemGroup>
     <!-- Add source files to "fable" folder in Nuget package -->

@@ -4,7 +4,7 @@ open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Elmish
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 type FulmaModules =
     | Elements
@@ -74,37 +74,37 @@ let private menuFulma currentPage subModel dispatch =
         if not subModel.IsElementsExpanded then
             match currentPage with
             | Fulma (Element _) ->
-                "menu-group is-active", Fa.I.AngleDown
-            | _ -> "menu-group", Fa.I.AngleDown
+                "menu-group is-active", Fa.Solid.AngleDown
+            | _ -> "menu-group", Fa.Solid.AngleDown
         else
-            "menu-group", Fa.I.AngleUp
+            "menu-group", Fa.Solid.AngleUp
 
     let (componentsClass, componentsIcon) =
         if not subModel.IsComponentsExpanded then
             match currentPage with
             | Fulma (Component _) ->
-                "menu-group is-active", Fa.I.AngleDown
-            | _ -> "menu-group", Fa.I.AngleDown
+                "menu-group is-active", Fa.Solid.AngleDown
+            | _ -> "menu-group", Fa.Solid.AngleDown
         else
-            "menu-group", Fa.I.AngleUp
+            "menu-group", Fa.Solid.AngleUp
 
     let (layoutsClass, layoutsIcon) =
         if not subModel.IsLayoutExpanded then
             match currentPage with
             | Fulma (Layout _) ->
-                "menu-group is-active", Fa.I.AngleDown
-            | _ -> "menu-group", Fa.I.AngleDown
+                "menu-group is-active", Fa.Solid.AngleDown
+            | _ -> "menu-group", Fa.Solid.AngleDown
         else
-            "menu-group", Fa.I.AngleUp
+            "menu-group", Fa.Solid.AngleUp
 
     let (modifiersClass, modifiersIcon) =
         if not subModel.IsModifiersExpanded then
             match currentPage with
             | Fulma (Modifier _) ->
-                "menu-group is-active", Fa.I.AngleDown
-            | _ -> "menu-group", Fa.I.AngleDown
+                "menu-group is-active", Fa.Solid.AngleDown
+            | _ -> "menu-group", Fa.Solid.AngleDown
         else
-            "menu-group", Fa.I.AngleUp
+            "menu-group", Fa.Solid.AngleUp
 
     [ Menu.label [ ] [ str "Fulma" ]
       Menu.list [ ]
@@ -114,8 +114,11 @@ let private menuFulma currentPage subModel dispatch =
         [ li [ ]
              [ yield a [ ClassName modifiersClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Modifiers) |> dispatch ) ]
-                       [ span [ ] [ str "Modifiers" ]
-                         Icon.faIcon [ ] [ Fa.icon modifiersIcon ] ]
+                       [ span [ ]
+                            [ str "Modifiers" ]
+                         Icon.icon [ ]
+                            [ Fa.i [ modifiersIcon ]
+                                [ ] ] ]
                if subModel.IsModifiersExpanded then
                     yield ul [ ]
                              [ menuItem "Basics" (Fulma (Modifier Modifiers.Basics)) currentPage
@@ -127,7 +130,9 @@ let private menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName layoutsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Layouts) |> dispatch ) ]
                        [ span [ ] [ str "Layouts" ]
-                         Icon.faIcon [ ] [ Fa.icon layoutsIcon ] ]
+                         Icon.icon [ ]
+                            [ Fa.i [ layoutsIcon ]
+                                [ ] ] ]
                if subModel.IsLayoutExpanded then
                     yield ul [ ]
                              [ menuItem "Columns" (Fulma (Layout Layouts.Columns)) currentPage
@@ -142,7 +147,9 @@ let private menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName elementsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Elements) |> dispatch ) ]
                        [ span [ ] [ str "Elements" ]
-                         Icon.faIcon [ ] [ Fa.icon elementsIcon ] ]
+                         Icon.icon [ ]
+                            [ Fa.i [ elementsIcon ]
+                                [ ] ] ]
                if subModel.IsElementsExpanded then
                     yield ul [ ]
                              [ menuItem "Box" (Fulma (Element Elements.Box)) currentPage
@@ -162,7 +169,9 @@ let private menuFulma currentPage subModel dispatch =
              [ yield a [ ClassName componentsClass
                          OnClick (fun _ -> ToggleMenu (Library.Fulma Components) |> dispatch ) ]
                        [ span [ ] [ str "Components" ]
-                         Icon.faIcon [ ] [ Fa.icon componentsIcon ] ]
+                         Icon.icon [ ]
+                            [ Fa.i [ componentsIcon ]
+                                [ ] ] ]
                if subModel.IsComponentsExpanded then
                     yield ul [ ]
                              [ menuItem "Breadcrumb" (Fulma (Component Components.Breadcrumb)) currentPage
@@ -177,10 +186,15 @@ let private menuFulma currentPage subModel dispatch =
                                menuItem "Panel" (Fulma (Component Components.Panel)) currentPage
                                menuItem "Tabs" (Fulma (Component Components.Tabs)) currentPage ] ] ] ]
 
+let private menuFableFontAwesome currentPage =
+    [ Menu.label [ ] [ str "Fable.FontAwesome" ]
+      Menu.list [ ]
+        [ menuItem "Introduction" (FableFontAwesome FableFontAwesomePage.Introduction) currentPage ]
+      Menu.list [ ]
+        [ menuItem "Usage" (FableFontAwesome FableFontAwesomePage.Usage) currentPage ] ]
+
 let private menuFulmaExtensions currentPage =
     [ Menu.label [ ] [ str "Fulma.Extensions.Wikiki" ]
-      Menu.list [ ]
-        [ menuItem "Introduction" (FulmaExtensions FulmaExtensionsPage.Introduction) currentPage ]
       Menu.list [ ]
         [ menuItem "Calendar" (FulmaExtensions Calendar) currentPage
           menuItem "Checkradio" (FulmaExtensions Checkradio) currentPage
@@ -206,5 +220,6 @@ let view model dispatch =
                      menuItem "Template" Template model.CurrentPage
                      menuItem "Blog" BlogIndex model.CurrentPage ]
           yield! menuFulma model.CurrentPage model.Fulma dispatch
+          yield! menuFableFontAwesome model.CurrentPage
           yield! menuFulmaExtensions model.CurrentPage
           yield! menuFulmaElmish model.CurrentPage ]

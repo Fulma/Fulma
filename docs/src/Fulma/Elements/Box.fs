@@ -3,7 +3,7 @@ module Elements.Box
 open Fable.Helpers.React
 open Fable.Helpers.React.Props
 open Fulma
-
+open Fable.FontAwesome
 
 let basic () =
     div [ ClassName "block" ]

@@ -6,8 +6,6 @@
     <title>Fulma</title>
     <link rel="icon" type="image/png" href="assets/favicon-32x32.ico" sizes="32x32">
     <link rel="icon" type="image/png" href="assets/favicon-16x16.ico" sizes="16x16">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" />
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=default,fetch"></script>
     <script src="./libs/babel-external-helpers.js"></script>
     <script src="./libs/marked.min.js"></script>
@@ -17,7 +15,10 @@
 </head>
 
 <body>
-  <div id="elmish-app"></div>
+    <div id="elmish-app"></div>
+    <script type="text/javascript">
+        new ClipboardJS('.copy-code');
+    </script>
 </body>
 
 </html>

@@ -79,24 +79,24 @@ The **Slider** can have different colors, sizes and states.
 
 *[Documentation](https://wikiki.github.io/form/slider/)*
 
+### Installation
 
-## Npm packages
+- `paket add Fulma.Extensions.Wikiki.Slider --project <your project>`
+- `yarn add bulma-slider@2.0.0`
+
+### Versions compatibility
 
 <table class="table" style="width: auto;">
     <thead>
         <tr>
-            <th>Version</th>
-            <th>CLI</th>
+            <th>Fulma.Extensions.Wikiki.Slider</th>
+            <th>bulma-slider</th>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>Latest</td>
-            <td>`yarn add bulma bulma-slider`</td>
-        </tr>
-        <tr>
-            <td>Supported</td>
-            <td>`yarn add bulma bulma-slider@0.0.2`</td>
+            <td>2.0.0</td>
         </tr>
     </tbody>
 <table>

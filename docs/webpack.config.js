@@ -10,7 +10,8 @@ var babelOptions = {
             "targets": {
                 "browsers": ["last 2 versions"]
             },
-            "modules": false
+            "modules": false,
+            "useBuiltIns": "usage"
         }],
         "@babel/react"
     ],
@@ -36,13 +37,11 @@ module.exports = {
     entry: isProduction ? // We don't use the same entry for dev and production, to make HMR over style quicker for dev env
         {
             demo: [
-                "@babel/polyfill",
                 './docs/docs.fsproj',
                 './docs/scss/main.scss'
             ]
         } : {
             app: [
-                "@babel/polyfill",
                 './docs/docs.fsproj',
             ],
             style: [
@@ -52,7 +51,7 @@ module.exports = {
     mode: isProduction ? "production" : "development",
     output: {
         path: path.join(__dirname, './public'),
-        filename: isProduction ? '[name].[hash].js' : '[name].js'
+        filename: isProduction ? '[name].js' : '[name].js'
     },
     optimization: {
         // Split the code coming from npm packages into a different file.
@@ -128,6 +127,10 @@ module.exports = {
             {
                 test: /\.fs$/,
                 use: [ 'custom-loader' ]
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?.*)?$/,
+                use: ["file-loader"]
             }
         ]
     }

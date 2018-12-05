@@ -1,3 +1,7 @@
+### 1.1.0
+
+* Mark this package as obselete
+
 ### 1.0.0
 
 * Release stable version for Fable 2

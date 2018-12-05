@@ -125,7 +125,7 @@ A single class to handle WYSIWYG generated content, where only **HTML tags** are
                         """
 ### Size
 
-Supported sizez:
+Supported size:
 
 * `Content.Size IsSmall`
 * `Content.Size IsMedium`

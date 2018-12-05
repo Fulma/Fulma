@@ -3,6 +3,7 @@ namespace Fulma.Extensions
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
+[<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Tooltip package instead")>]
 module Tooltip =
 
     let [<Literal>] ClassName = "tooltip"

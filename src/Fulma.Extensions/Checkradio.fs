@@ -6,6 +6,7 @@ open Fable.Helpers.React.Props
 open Fable.Import
 
 [<RequireQualifiedAccess>]
+[<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Checkradio package instead")>]
 module Checkradio =
 
     module Classes =
