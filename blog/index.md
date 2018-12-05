@@ -1,6 +1,6 @@
 # Blog
 
-## [Fulma 2.0.0 & split of Fulma.Extension ](#blog-viewer?file=blog/articles/fulma_2.0.0.md)
+## [Fulma 2.0.0 & split of Fulma.Extensions](#blog-viewer?file=blog/articles/fulma_2.0.0.md)
 
 Explanation about Fulma 2.0.0 breaking changes and package splitting.
 

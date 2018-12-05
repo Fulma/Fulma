@@ -1,4 +1,4 @@
-# Migration guide for Fulma 2.0.0 and split of Fulma.Extension package
+# Migration guide for Fulma 2.0.0 and split of Fulma.Extensions package
 
 ## Breaking changes
 
