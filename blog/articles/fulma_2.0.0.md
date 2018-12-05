@@ -1,3 +1,5 @@
+# Migration guide for Fulma 2.0.0 and split of Fulma.Extension package
+
 ## Breaking changes
 
 ### Fable.FontAwesome
