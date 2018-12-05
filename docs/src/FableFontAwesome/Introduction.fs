@@ -63,4 +63,8 @@ You are ready to start using `Fable.FontAwesome`. You can test this by trying to
 ```fsharp
 open Fable.FontAwesome
 ```
+
+----
+
+You also need to install Font Awesome, you can find more information about that on [their website](https://fontawesome.com/start).
         """
