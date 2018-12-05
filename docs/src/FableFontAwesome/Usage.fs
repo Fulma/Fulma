@@ -241,14 +241,14 @@ let view =
                         """
 ### <a href="https://fontawesome.com/how-to-use/on-the-web/referencing-icons/basic-use" target="_blank" class="fas fa-book"></a> - Basic use
 
-Font Awesome 5, comes will different category of icons. They are located under:
+Font Awesome 5 comes with different categories of icons. They are located under:
 
 - `Fa.Solid.XXX` - `fas fa-xxxx`
 - `Fa.Regular.XXX` - `far fa-xxxx`
 - `Fa.Brand.XXX` - `fab fa-xxxx`
 - `Fa.Light.XXX` - `fal fa-xxxx` - Only if you use `Fable.FontAwesome.Pro` and Font Awesome Pro
 
-You can choose which element host your icon:
+You can choose which element hosts your icon:
 
 - `Fa.i`
 - `Fa.span`
