@@ -19,8 +19,10 @@ In this version of Fulma, we removed all the small helpers and now you have dire
 
 #### Migrate your code:
 
-1. Rename all `open Fulma.FontAwesome` to `open Fable.FontAwesome`
-2. Adapt your code:
+1. Add `Fable.FontAwesome` to your project.
+2. Install `Fable.FontAwesome.Free` or `Fable.FontAwesome.Pro` depending on your case. Read more about it on [Fable.FontAwesome - Introduction](#fable-fontawesome) page to learn how to install the new packages.
+3. Rename all `open Fulma.FontAwesome` to `open Fable.FontAwesome`
+4. Adapt your code:
 
 ```fsharp
 // Old code
