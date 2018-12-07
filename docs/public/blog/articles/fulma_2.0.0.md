@@ -86,3 +86,10 @@ div [ FragmentProp.Key key ]
                                  Checkradio.Checked isChecked ]
         [ str text ] ]
 ```
+
+We also removed `Switch.Props` and `Checkradio.Props`.
+
+Both components `switch` and `checkradio` are composed of a `label` and `input` element. So now you have access to:
+
+- `LabelProps`
+- `InputProps` - this is the equivalent of previous `Props`
