@@ -20,7 +20,7 @@ let sizeInteractive () =
           Heading.h3 [ ]
             [ str "Title 3" ]
           Heading.h4 [ ]
-            [ str "Title 3" ]
+            [ str "Title 4" ]
           Heading.h5 [ ]
             [ str "Title 5" ]
           Heading.h6 [ ]
@@ -51,14 +51,14 @@ let view =
 
 **Title** can be of two types *Title* and *Subtitle*.
 
-By default, `Header.h1 [ ] [ ]` generate a title. You can specify `Heading.isSubtitle` if needed.
+By default, `Header.h1 [ ] [ ]` generates a title. You can specify `Heading.IsSubtitle` if needed.
                         """
                         (Widgets.Showcase.view simpleInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         """
 ### Sizes
 
-Elmish.Bulma already associate each header size with the equivalent class.
+Fulma already associates each header size with the equivalent class.
 
 For example, `Heading.h1 [ Heading.IsTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
                         """
