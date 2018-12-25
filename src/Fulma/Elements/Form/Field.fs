@@ -42,6 +42,8 @@ module Field =
         | IsGroupedCentered
         /// Add `is-grouped-right` class
         | IsGroupedRight
+        /// Add `is-grouped-multiline` class
+        | IsGroupedMultiline
         /// Add `is-horizontal` class
         | IsHorizontal
         | CustomClass of string
@@ -117,6 +119,7 @@ module Field =
             | IsGrouped -> { result with IsGrouped = Classes.IsGrouped.Left |> Some }
             | IsGroupedCentered -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Centered |> Some }
             | IsGroupedRight -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Right |> Some }
+            | IsGroupedMultiline -> { result with IsGrouped = Classes.IsGrouped.Left + " " + Classes.IsGrouped.Multiline |> Some }
             | IsHorizontal -> { result with Layout = Classes.Layout.IsHorizontal |> Some }
             | Option.CustomClass customClass -> { result with CustomClass = customClass |> Some }
             | Option.Props props -> { result with Props = props }
