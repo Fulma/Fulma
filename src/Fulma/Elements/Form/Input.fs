@@ -58,6 +58,7 @@ module Input =
         | IsRounded
         /// Set `Value` HTMLAttr
         | Value of string
+        | Key of string
         /// Set `DefaultValue` HTMLAttr
         | DefaultValue of string        
         /// `Ref` callback that sets the value of an input textbox after DOM element is created.
@@ -75,6 +76,7 @@ module Input =
           Type : string
           Color : string option
           Id : string option
+          Key : string option
           Disabled : bool
           IsReadOnly : bool
           IsStatic : bool
@@ -94,6 +96,7 @@ module Input =
               Type = ""
               Color = None
               Id = None
+              Key = None
               Disabled = false
               IsReadOnly = false
               IsStatic = false
@@ -134,6 +137,7 @@ module Input =
             | Type type' -> { result with Type = ofType type' }
             | Color color -> { result with Color = ofColor color |> Some }
             | Id id -> { result with Id = Some id }
+            | Key k -> { result with Key = Some k }
             | Disabled disabled -> { result with Disabled = disabled }
             | IsReadOnly state -> { result with IsReadOnly = state }
             | IsStatic state -> { result with IsStatic = state }
@@ -163,6 +167,7 @@ module Input =
                yield ReadOnly opts.IsReadOnly :> IHTMLProp
                yield Props.Type opts.Type :> IHTMLProp
                if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
+               if Option.isSome opts.Key then yield Props.Key opts.Key.Value :> IHTMLProp
                if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
                if Option.isSome opts.DefaultValue then
                    yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
