@@ -10,25 +10,8 @@ module Button =
 
     module Classes =
         let [<Literal>] Container = "button"
-        module State =
-              let [<Literal>] IsHovered = "is-hovered"
-              let [<Literal>] IsFocused = "is-focus"
-              let [<Literal>] IsActive = "is-active"
-              let [<Literal>] IsLoading = "is-loading"
-              let [<Literal>] IsStatic = "is-static"
-        module Styles =
-            let [<Literal>] IsFullwidth = "is-fullwidth"
-            let [<Literal>] IsLink = "is-link"
-            let [<Literal>] IsOutlined = "is-outlined"
-            let [<Literal>] IsInverted = "is-inverted"
-            let [<Literal>] IsText = "is-text"
-            let [<Literal>] IsRounded = "is-rounded"
-            let [<Literal>] IsExpanded = "is-expanded"
         module List =
             let [<Literal>] Container = "buttons"
-            let [<Literal>] HasAddons = "has-addons"
-            let [<Literal>] IsCentered = "is-centered"
-            let [<Literal>] IsRight = "is-right"
             module Size =
                 let [<Literal>] AreSmall = "are-small"
                 let [<Literal>] AreMedium = "are-medium"
@@ -39,29 +22,29 @@ module Button =
         | Color of IColor
         | Size of ISize
         /// Add `is-fullwidth` class
-        | IsFullWidth
+        | [<CompiledName("is-fullwidth")>] IsFullWidth
         /// Add `is-link` class
-        | IsLink
+        | [<CompiledName("is-link")>] IsLink
         /// Add `is-outlined` class
-        | IsOutlined
+        | [<CompiledName("is-outlined")>] IsOutlined
         /// Add `is-inverted` class
-        | IsInverted
+        | [<CompiledName("is-inverted")>] IsInverted
         /// Add `is-text` class
-        | IsText
-        /// Add `is-rouned` class
-        | IsRounded
+        | [<CompiledName("is-text")>] IsText
+        /// Add `is-rounded` class
+        | [<CompiledName("is-rounded")>] IsRounded
         /// Add `is-expanded` class
-        | IsExpanded
+        | [<CompiledName("is-expanded")>] IsExpanded
         /// Add `is-hovered` class if true
-        | IsHovered of bool
+        | [<CompiledName("is-hovered")>] IsHovered of bool
         /// Add `is-focused` class if true
-        | IsFocused of bool
+        | [<CompiledName("is-focused")>] IsFocused of bool
         /// Add `is-active` class if true
-        | IsActive of bool
+        | [<CompiledName("is-active")>] IsActive of bool
         /// Add `is-loading` class if true
-        | IsLoading of bool
+        | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-static` class if true
-        | IsStatic of bool
+        | [<CompiledName("is-static")>] IsStatic of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
@@ -72,18 +55,7 @@ module Button =
     type internal Options =
         { Level : string option
           Size : string option
-          IsOutlined : bool
-          IsInverted : bool
           IsDisabled : bool
-          IsHovered : bool
-          IsFocused : bool
-          IsExpanded : bool
-          IsText : bool
-          IsRounded : bool
-          IsActive : bool
-          IsLoading : bool
-          IsStatic : bool
-          IsFullWidth : bool
           Props : IHTMLProp list
           CustomClass : string option
           OnClick : (MouseEvent -> unit) option
@@ -91,22 +63,14 @@ module Button =
         static member Empty =
             { Level = None
               Size = None
-              IsOutlined = false
-              IsInverted = false
               IsDisabled = false
-              IsText = false
-              IsRounded = false
-              IsActive = false
-              IsExpanded = false
-              IsLoading = false
-              IsStatic = false
-              IsHovered = false
-              IsFocused = false
-              IsFullWidth = false
               Props = []
               CustomClass = None
               OnClick = None
               Modifiers = [] }
+
+    let private addClass (option: Option) (result: Options) =
+        { result with Modifiers = (Fable.Core.Reflection.getCaseName option |> Some)::result.Modifiers }
 
     let internal btnView element (options : Option list) children =
         let parseOption (result : Options) opt =
@@ -115,19 +79,19 @@ module Button =
             // Sizes
             | Size size -> { result with Size = ofSize size |> Some }
             // Styles
-            | IsFullWidth -> { result with IsFullWidth = true  }
-            | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
-            | IsOutlined -> { result with IsOutlined = true }
-            | IsInverted -> { result with IsInverted = true }
-            | IsText -> { result with IsText = true }
-            | IsRounded -> { result with IsRounded = true }
-            | IsExpanded -> { result with IsExpanded = true }
+            | IsLink -> { result with Level = Fable.Core.Reflection.getCaseName opt |> Some }
+            | IsFullWidth
+            | IsOutlined
+            | IsInverted
+            | IsText
+            | IsRounded
+            | IsExpanded -> addClass opt result
             // States
-            | IsHovered state -> { result with IsHovered = state }
-            | IsFocused state -> { result with IsFocused = state }
-            | IsActive state -> { result with IsActive = state }
-            | IsLoading state -> { result with IsLoading = state }
-            | IsStatic state -> { result with IsStatic = state }
+            | IsHovered state
+            | IsFocused state
+            | IsActive state
+            | IsLoading state
+            | IsStatic state -> if state then addClass opt result else result
             | Disabled isDisabled -> { result with IsDisabled = isDisabled }
             | Props props -> { result with Props = props }
             | CustomClass customClass -> { result with CustomClass = Some customClass }
@@ -141,17 +105,7 @@ module Button =
                           ::opts.Size
                           ::opts.CustomClass
                           ::opts.Modifiers )
-                        [ Classes.Styles.IsOutlined, opts.IsOutlined
-                          Classes.Styles.IsInverted, opts.IsInverted
-                          Classes.Styles.IsText, opts.IsText
-                          Classes.Styles.IsRounded, opts.IsRounded
-                          Classes.Styles.IsExpanded, opts.IsExpanded
-                          Classes.State.IsHovered, opts.IsHovered
-                          Classes.State.IsFocused, opts.IsFocused
-                          Classes.State.IsActive, opts.IsActive
-                          Classes.State.IsLoading, opts.IsLoading
-                          Classes.State.IsStatic, opts.IsStatic
-                          Classes.Styles.IsFullwidth, opts.IsFullWidth ]
+                        [ ]
 
         element
             [ yield classes
@@ -199,29 +153,23 @@ module Button =
     module List =
 
         type Option =
-            | HasAddons
-            | IsCentered
-            | IsRight
+            | [<CompiledName("has-addons")>] HasAddons
+            | [<CompiledName("is-centered")>] IsCentered
+            | [<CompiledName("is-right")>] IsRight
             // | Size of ISize
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
         type internal Options =
-            { HasAddons : bool
-              IsCentered : bool
-              IsRight : bool
             //   Size : string option
-              Props : IHTMLProp list
+            { Props : IHTMLProp list
               CustomClass : string option
               Modifiers : string option list }
 
             static member Empty =
-                { HasAddons = false
-                  IsCentered = false
-                  IsRight = false
                 //   Size = None
-                  Props = [ ]
+                { Props = [ ]
                   CustomClass = None
                   Modifiers = [] }
 
@@ -231,13 +179,16 @@ module Button =
             | IsMedium -> Classes.List.Size.AreMedium
             | IsLarge -> Classes.List.Size.AreLarge
 
+    let private addListClass (option: List.Option) (result: List.Options) =
+        { result with Modifiers = (Fable.Core.Reflection.getCaseName option |> Some)::result.Modifiers }
+
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
         let parseOption (result : List.Options) opt =
             match opt with
-            | List.HasAddons -> { result with HasAddons = true }
-            | List.IsCentered -> { result with IsCentered = true }
-            | List.IsRight -> { result with IsRight = true }
+            | List.HasAddons
+            | List.IsCentered
+            | List.IsRight -> addListClass opt result
             | List.Props props -> { result with Props = props }
             | List.CustomClass customClass -> { result with CustomClass = Some customClass }
             | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
@@ -249,8 +200,6 @@ module Button =
                         ( opts.CustomClass
                             // ::opts.Size
                             ::opts.Modifiers )
-                        [ Classes.List.HasAddons, opts.HasAddons
-                          Classes.List.IsCentered, opts.IsCentered
-                          Classes.List.IsRight, opts.IsRight ]
+                        [ ]
 
         div (classes::opts.Props) children
