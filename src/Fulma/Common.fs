@@ -5,48 +5,55 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 type Screen =
     | All
-    | Desktop
-    | Tablet
-    | Mobile
-    | WideScreen
-    | Touch
-    | FullHD
+    | [<CompiledName("desktop")>] Desktop
+    | [<CompiledName("tablet")>] Tablet
+    | [<CompiledName("mobile")>] Mobile
+    | [<CompiledName("widescreen")>] WideScreen
+    | [<CompiledName("touch")>] Touch
+    | [<CompiledName("fullhd")>] FullHD
 
-    static member toString =
-        function
+    static member toString opt =
+        match opt with
         | All -> ""
-        | Desktop -> "-desktop"
-        | Tablet -> "-tablet"
-        | Mobile -> "-mobile"
-        | WideScreen -> "-widescreen"
-        | Touch -> "-touch"
-        | FullHD -> "-fullhd"
+        | Desktop
+        | Tablet
+        | Mobile
+        | WideScreen
+        | Touch
+        | FullHD -> "-" + Fable.Core.Reflection.getCaseName opt
 
 [<AutoOpen>]
 module Color =
 
-    module Classes =
-        let [<Literal>] IsBlack = "is-black"
-        let [<Literal>] IsDark = "is-dark"
-        let [<Literal>] IsLight = "is-light"
-        let [<Literal>] IsWhite = "is-white"
-        let [<Literal>] IsPrimary = "is-primary"
-        let [<Literal>] IsInfo = "is-info"
-        let [<Literal>] IsSuccess = "is-success"
-        let [<Literal>] IsWarning = "is-warning"
-        let [<Literal>] IsDanger = "is-danger"
-        let [<Literal>] IsLink = "is-link"
-        let [<Literal>] IsBlackBis = "is-black-bis"
-        let [<Literal>] IsBlackTer = "is-black-ter"
-        let [<Literal>] IsGreyDarker = "is-grey-darker"
-        let [<Literal>] IsGreyDark = "is-grey-dark"
-        let [<Literal>] IsGrey = "is-grey"
-        let [<Literal>] IsGreyLight = "is-grey-light"
-        let [<Literal>] IsGreyLighter = "is-grey-lighter"
-        let [<Literal>] IsWhiteTer = "is-white-ter"
-        let [<Literal>] IsWhiteBis = "is-white-bis"
-
     type IColor =
+        | [<CompiledName("is-black")>] IsBlack
+        | [<CompiledName("is-dark")>] IsDark
+        | [<CompiledName("is-light")>] IsLight
+        | [<CompiledName("is-white")>] IsWhite
+        | [<CompiledName("is-primary")>] IsPrimary
+        | [<CompiledName("is-info")>] IsInfo
+        | [<CompiledName("is-success")>] IsSuccess
+        | [<CompiledName("is-warning")>] IsWarning
+        | [<CompiledName("is-danger")>] IsDanger
+        | [<CompiledName("is-link")>] IsLink
+        | [<CompiledName("is-black-bis")>] IsBlackBis
+        | [<CompiledName("is-black-ter")>] IsBlackTer
+        | [<CompiledName("is-grey-darker")>] IsGreyDarker
+        | [<CompiledName("is-grey-dark")>] IsGreyDark
+        | [<CompiledName("is-grey")>] IsGrey
+        | [<CompiledName("is-grey-light")>] IsGreyLight
+        | [<CompiledName("is-grey-lighter")>] IsGreyLighter
+        | [<CompiledName("is-white-ter")>] IsWhiteTer
+        | [<CompiledName("is-white-bis")>] IsWhiteBis
+        /// Allow you to specify a custom color. The color will be prefixed by "is-"
+        | IsCustomColor of string
+        /// Allow you to specify a NoColor case.
+        | NoColor
+
+    let ofColor level =
+        match level with
+        | NoColor -> ""
+        | IsCustomColor color -> "is-" + color
         | IsBlack
         | IsDark
         | IsLight
@@ -65,54 +72,18 @@ module Color =
         | IsGreyLight
         | IsGreyLighter
         | IsWhiteTer
-        | IsWhiteBis
-        /// Allow you to specify a custom color. The color will be prefixed by "is-"
-        | IsCustomColor of string
-        /// Allow you to specify a NoColor case.
-        | NoColor
-
-    let ofColor level =
-        match level with
-        | IsBlack -> Classes.IsBlack
-        | IsDark -> Classes.IsDark
-        | IsLight -> Classes.IsLight
-        | IsWhite -> Classes.IsWhite
-        | IsPrimary -> Classes.IsPrimary
-        | IsInfo -> Classes.IsInfo
-        | IsSuccess -> Classes.IsSuccess
-        | IsWarning -> Classes.IsWarning
-        | IsDanger -> Classes.IsDanger
-        | IsLink -> Classes.IsLink
-        | IsBlackBis -> Classes.IsBlackBis
-        | IsBlackTer -> Classes.IsBlackTer
-        | IsGreyDarker -> Classes.IsGreyDarker
-        | IsGreyDark -> Classes.IsGreyDark
-        | IsGrey -> Classes.IsGrey
-        | IsGreyLight -> Classes.IsGreyLight
-        | IsGreyLighter -> Classes.IsGreyLighter
-        | IsWhiteTer -> Classes.IsWhiteTer
-        | IsWhiteBis -> Classes.IsWhiteBis
-        | IsCustomColor color -> "is-" + color
-        | NoColor -> ""
+        | IsWhiteBis -> Fable.Core.Reflection.getCaseName level
 
 [<AutoOpen>]
 module Size =
 
-    module Classes =
-        let [<Literal>] IsSmall = "is-small"
-        let [<Literal>] IsMedium = "is-medium"
-        let [<Literal>] IsLarge = "is-large"
-
     type ISize =
-        | IsSmall
-        | IsMedium
-        | IsLarge
+        | [<CompiledName("is-small")>] IsSmall
+        | [<CompiledName("is-medium")>] IsMedium
+        | [<CompiledName("is-large")>] IsLarge
 
-    let ofSize size =
-        match size with
-        | IsSmall -> Classes.IsSmall
-        | IsMedium -> Classes.IsMedium
-        | IsLarge -> Classes.IsLarge
+    let inline ofSize size =
+        Fable.Core.Reflection.getCaseName size
 
 [<RequireQualifiedAccess>]
 module TextSize =
@@ -125,15 +96,8 @@ module TextSize =
         | Is6
         | Is7
 
-        static member toString =
-            function
-            | Is1 -> "1"
-            | Is2 -> "2"
-            | Is3 -> "3"
-            | Is4 -> "4"
-            | Is5 -> "5"
-            | Is6 -> "6"
-            | Is7 -> "7"
+        static member toString (x: Option) =
+            Fable.Core.Reflection.getCaseTag x + 1 |> string
 
     let inline generic screen size =
         "is-size-" + Option.toString size + Screen.toString screen
@@ -151,32 +115,18 @@ module TextSize =
 [<RequireQualifiedAccess>]
 module TextAlignment =
 
-    module Classes =
-        /// Makes the text centered
-        let [<Literal>] HasTextCentered = "has-text-centered"
-        /// Makes the text justified
-        let [<Literal>] HasTextJustified = "has-text-justified"
-        /// Makes the text aligned to the left
-        let [<Literal>] HasTextLeft = "has-text-left"
-        /// Makes the text aligned to the right
-        let [<Literal>] HasTextRight = "has-text-right"
-
     type Option =
         /// Add `has-text-centered`
-        | Centered
+        | [<CompiledName("has-text-centered")>] Centered
         /// Add `has-text-justified`
-        | Justified
+        | [<CompiledName("has-text-justified")>] Justified
         /// Add `has-text-left`
-        | Left
+        | [<CompiledName("has-text-left")>] Left
         /// Add `has-text-right`
-        | Right
+        | [<CompiledName("has-text-left")>] Right
 
-        static member toString =
-            function
-            | Centered -> Classes.HasTextCentered
-            | Justified -> Classes.HasTextJustified
-            | Left -> Classes.HasTextLeft
-            | Right -> Classes.HasTextRight
+        static member inline toString opt =
+            Fable.Core.Reflection.getCaseName opt
 
     let inline generic screen alignment =
         Option.toString alignment + Screen.toString screen
@@ -194,72 +144,47 @@ module TextAlignment =
 [<RequireQualifiedAccess>]
 module TextWeight =
 
-    module Classes =
-        let [<Literal>] HasTextWeightLight = "has-text-weight-light"
-        let [<Literal>] HasTextWeightNormal = "has-text-weight-normal"
-        let [<Literal>] HasTextWeightSemibold = "has-text-weight-semibold"
-        let [<Literal>] HasTextWeightBold = "has-text-weight-bold"
-
     type Option =
         /// Add `has-text-weight-light`
-        | Light
+        | [<CompiledName("has-text-weight-light")>] Light
         /// Add `has-text-weight-normal`
-        | Normal
+        | [<CompiledName("has-text-weight-normal")>] Normal
         /// Add `has-text-weight-semi-bold`
-        | SemiBold
+        | [<CompiledName("has-text-weight-semi-bold")>] SemiBold
         /// Add `has-text-weight-bold`
-        | Bold
+        | [<CompiledName("has-text-weight-bold")>] Bold
 
-    let internal ofOption =
-        function
-        | Light -> Classes.HasTextWeightLight
-        | Normal -> Classes.HasTextWeightNormal
-        | SemiBold -> Classes.HasTextWeightSemibold
-        | Bold -> Classes.HasTextWeightBold
+    let inline internal ofOption opt =
+        Fable.Core.Reflection.getCaseName opt
 
 [<RequireQualifiedAccess>]
 module TextTransform =
 
-    module Classes =
-        let [<Literal>] IsCapitalized = "is-capitalized"
-        let [<Literal>] IsLowercase = "is-lowercase"
-        let [<Literal>] IsUppercase = "is-uppercase"
-        let [<Literal>] IsItalic = "is-italic"
-
     type Option =
         /// Add `is-capitalized`
-        | Capitalized
+        | [<CompiledName("is-capitalized")>] Capitalized
         /// Add `is-lowercase`
-        | LowerCase
+        | [<CompiledName("is-lowercase")>] LowerCase
         /// Add `is-uppercase`
-        | UpperCase
+        | [<CompiledName("is-uppercase")>] UpperCase
         /// Add `is-italic`
-        | Italic
+        | [<CompiledName("is-italic")>] Italic
 
-        static member inline toClass =
-            function
-            | Capitalized -> Classes.IsCapitalized
-            | LowerCase -> Classes.IsLowercase
-            | UpperCase -> Classes.IsUppercase
-            | Italic -> Classes.IsItalic
+        static member inline toClass opt =
+            Fable.Core.Reflection.getCaseName opt
 
 [<RequireQualifiedAccess>]
 module Display =
 
     type Option =
-        | Block
-        | Flex
-        | Inline
-        | InlineBlock
-        | InlineFlex
+        | [<CompiledName("block")>] Block
+        | [<CompiledName("flex")>] Flex
+        | [<CompiledName("inline")>] Inline
+        | [<CompiledName("inline-block")>] InlineBlock
+        | [<CompiledName("inline-flex")>] InlineFlex
 
-        static member inline toClass =
-            function
-            | Block -> "block"
-            | Flex -> "flex"
-            | Inline -> "inline"
-            | InlineBlock -> "inline-block"
-            | InlineFlex -> "inline-flex"
+        static member inline toClass opt =
+            Fable.Core.Reflection.getCaseName opt
 
     let internal toDisplayClass screen display =
         let display = Option.toClass display
@@ -282,109 +207,53 @@ module Display =
 
 [<RequireQualifiedAccess>]
 module Modifier =
-
-    module Classes =
-        module BackgroundColor =
-            let [<Literal>] Black = "has-background-black"
-            let [<Literal>] Dark = "has-background-dark"
-            let [<Literal>] Light = "has-background-light"
-            let [<Literal>] White = "has-background-white"
-            let [<Literal>] Primary = "has-background-primary"
-            let [<Literal>] Info = "has-background-info"
-            let [<Literal>] Success = "has-background-success"
-            let [<Literal>] Warning = "has-background-warning"
-            let [<Literal>] Danger = "has-background-danger"
-            let [<Literal>] Link = "has-background-link"
-            let [<Literal>] BlackBis = "has-background-black-bis"
-            let [<Literal>] BlackTer = "has-background-black-ter"
-            let [<Literal>] GreyDarker = "has-background-grey-darker"
-            let [<Literal>] GreyDark = "has-background-grey-dark"
-            let [<Literal>] Grey = "has-background-grey"
-            let [<Literal>] GreyLight = "has-background-grey-light"
-            let [<Literal>] GreyLighter = "has-background-grey-lighter"
-            let [<Literal>] WhiteTer = "has-background-white-ter"
-            let [<Literal>] WhiteBis = "has-background-white-bis"
-        module TextColor =
-            let [<Literal>] Black = "has-text-black"
-            let [<Literal>] Dark = "has-text-dark"
-            let [<Literal>] Light = "has-text-light"
-            let [<Literal>] White = "has-text-white"
-            let [<Literal>] Primary = "has-text-primary"
-            let [<Literal>] Info = "has-text-info"
-            let [<Literal>] Success = "has-text-success"
-            let [<Literal>] Warning = "has-text-warning"
-            let [<Literal>] Danger = "has-text-danger"
-            let [<Literal>] Link = "has-text-link"
-            let [<Literal>] BlackBis = "has-text-black-bis"
-            let [<Literal>] BlackTer = "has-text-black-ter"
-            let [<Literal>] GreyDarker = "has-text-grey-darker"
-            let [<Literal>] GreyDark = "has-text-grey-dark"
-            let [<Literal>] Grey = "has-text-grey"
-            let [<Literal>] GreyLight = "has-text-grey-light"
-            let [<Literal>] GreyLighter = "has-text-grey-lighter"
-            let [<Literal>] WhiteTer = "has-text-white-ter"
-            let [<Literal>] WhiteBis = "has-text-white-bis"
-
-        module Helpers =
-            let [<Literal>] IsClearfix = "is-clearfix"
-            let [<Literal>] IsPulledLeft = "is-pulled-left"
-            let [<Literal>] IsPulledRight = "is-pulled-right"
-            let [<Literal>] IsMarginless = "is-marginless"
-            let [<Literal>] IsPaddingless = "is-paddingless"
-            let [<Literal>] IsOverlay = "is-overlay"
-            let [<Literal>] IsClipped = "is-clipped"
-            let [<Literal>] IsRadiusless = "is-radiusless"
-            let [<Literal>] IsShadowless = "is-shadowless"
-            let [<Literal>] IsUnselectable = "is-unselectable"
-            let [<Literal>] IsSrOnly = "is-sr-only"
-
     let internal ofBackground level =
         match level with
-        | IsBlack -> Classes.BackgroundColor.Black
-        | IsDark -> Classes.BackgroundColor.Dark
-        | IsLight -> Classes.BackgroundColor.Light
-        | IsWhite -> Classes.BackgroundColor.White
-        | IsPrimary -> Classes.BackgroundColor.Primary
-        | IsInfo -> Classes.BackgroundColor.Info
-        | IsSuccess -> Classes.BackgroundColor.Success
-        | IsWarning -> Classes.BackgroundColor.Warning
-        | IsDanger -> Classes.BackgroundColor.Danger
-        | IsLink -> Classes.BackgroundColor.Link
-        | IsBlackBis -> Classes.BackgroundColor.BlackBis
-        | IsBlackTer -> Classes.BackgroundColor.BlackTer
-        | IsGreyDarker -> Classes.BackgroundColor.GreyDarker
-        | IsGreyDark -> Classes.BackgroundColor.GreyDark
-        | IsGrey -> Classes.BackgroundColor.Grey
-        | IsGreyLight -> Classes.BackgroundColor.GreyLight
-        | IsGreyLighter -> Classes.BackgroundColor.GreyLighter
-        | IsWhiteTer -> Classes.BackgroundColor.WhiteTer
-        | IsWhiteBis -> Classes.BackgroundColor.WhiteBis
-        | IsCustomColor color -> "has-background-" + color
         | NoColor -> ""
+        | IsCustomColor color -> "has-background-" + color
+        | IsBlack
+        | IsDark
+        | IsLight
+        | IsWhite
+        | IsPrimary
+        | IsInfo
+        | IsSuccess
+        | IsWarning
+        | IsDanger
+        | IsLink
+        | IsBlackBis
+        | IsBlackTer
+        | IsGreyDarker
+        | IsGreyDark
+        | IsGrey
+        | IsGreyLight
+        | IsGreyLighter
+        | IsWhiteTer
+        | IsWhiteBis -> "has-background-" + (Fable.Core.Reflection.getCaseName level).[3..]
 
     let internal ofText level =
         match level with
-        | IsBlack -> Classes.TextColor.Black
-        | IsDark -> Classes.TextColor.Dark
-        | IsLight -> Classes.TextColor.Light
-        | IsWhite -> Classes.TextColor.White
-        | IsPrimary -> Classes.TextColor.Primary
-        | IsInfo -> Classes.TextColor.Info
-        | IsSuccess -> Classes.TextColor.Success
-        | IsWarning -> Classes.TextColor.Warning
-        | IsDanger -> Classes.TextColor.Danger
-        | IsLink -> Classes.TextColor.Link
-        | IsBlackBis -> Classes.TextColor.BlackBis
-        | IsBlackTer -> Classes.TextColor.BlackTer
-        | IsGreyDarker -> Classes.TextColor.GreyDarker
-        | IsGreyDark -> Classes.TextColor.GreyDark
-        | IsGrey -> Classes.TextColor.Grey
-        | IsGreyLight -> Classes.TextColor.GreyLight
-        | IsGreyLighter -> Classes.TextColor.GreyLighter
-        | IsWhiteTer -> Classes.TextColor.WhiteTer
-        | IsWhiteBis -> Classes.TextColor.WhiteBis
-        | IsCustomColor color -> "has-text-" + color
         | NoColor -> ""
+        | IsCustomColor color -> "has-text-" + color
+        | IsBlack
+        | IsDark
+        | IsLight
+        | IsWhite
+        | IsPrimary
+        | IsInfo
+        | IsSuccess
+        | IsWarning
+        | IsDanger
+        | IsLink
+        | IsBlackBis
+        | IsBlackTer
+        | IsGreyDarker
+        | IsGreyDark
+        | IsGrey
+        | IsGreyLight
+        | IsGreyLighter
+        | IsWhiteTer
+        | IsWhiteBis -> "has-text-" + (Fable.Core.Reflection.getCaseName level).[3..]
 
     let internal ofInvisible screen =
         "is-invisible" + Screen.toString screen
@@ -423,16 +292,16 @@ module Modifier =
         | TextTransform of TextTransform.Option
         | Display of Screen * Display.Option
         | DisplayOnly of Screen * Display.Option
-        | IsClearfix
-        | IsPulledLeft
-        | IsPulledRight
-        | IsMarginless
-        | IsPaddingless
-        | IsOverlay
-        | IsClipped
-        | IsRadiusless
-        | IsShadowless
-        | IsUnselectable
+        | [<CompiledName("is-clearfix")>] IsClearfix
+        | [<CompiledName("is-pulled-left")>] IsPulledLeft
+        | [<CompiledName("is-pulled-right")>] IsPulledRight
+        | [<CompiledName("is-marginless")>] IsMarginless
+        | [<CompiledName("is-paddingless")>] IsPaddingless
+        | [<CompiledName("is-overlay")>] IsOverlay
+        | [<CompiledName("is-clipped")>] IsClipped
+        | [<CompiledName("is-radiusless")>] IsRadiusless
+        | [<CompiledName("is-shadowless")>] IsShadowless
+        | [<CompiledName("is-unselectable")>] IsUnselectable
         | IsInvisible of Screen * bool
         | IsHidden of Screen * bool
         | IsInvisibleOnly of Screen * bool
@@ -440,124 +309,37 @@ module Modifier =
         | IsSrOnly
         | IsScreenReaderOnly
 
-    type internal Options =
-        { BackgroundColor : string option
-          TextColor : string option
-          TextWeight : string option
-          TextSize : string
-          TextSizeOnly : string
-          TextAlignment : string
-          TextAlignmentOnly : string
-          TextTransform : string
-          IsClearfix : string option
-          IsPulledLeft : string option
-          IsPulledRight : string option
-          IsMarginless : string option
-          IsPaddingless : string option
-          IsOverlay : string option
-          IsClipped : string option
-          IsRadiusless : string option
-          IsShadowless : string option
-          IsUnselectable : string option
-          IsInvisible : string
-          IsHidden : string
-          IsInvisibleOnly : string
-          IsHiddenOnly : string
-          Display : string
-          DisplayOnly : string
-          IsSrOnly : string }
-
-        static member Empty =
-            { BackgroundColor = None
-              TextColor = None
-              TextWeight = None
-              TextSize = ""
-              TextSizeOnly = ""
-              TextAlignment = ""
-              TextAlignmentOnly = ""
-              IsClearfix = None
-              IsPulledLeft = None
-              IsPulledRight = None
-              IsMarginless = None
-              IsPaddingless = None
-              IsOverlay = None
-              IsClipped = None
-              IsRadiusless = None
-              IsShadowless = None
-              IsUnselectable = None
-              TextTransform = ""
-              IsInvisible = ""
-              IsHidden = ""
-              IsInvisibleOnly = ""
-              IsHiddenOnly = ""
-              Display = ""
-              DisplayOnly = ""
-              IsSrOnly = "" }
-
     let parseModifiers options =
         let parseOption result opt =
             match opt with
-            | BackgroundColor color -> { result with BackgroundColor = color |> ofBackground |> Some }
-            | TextColor color -> { result with TextColor = color |> ofText |> Some }
-            | TextWeight textWeight -> { result with TextWeight = textWeight |> TextWeight.ofOption |> Some }
-            | TextSize (screen, size) -> { result with TextSize = result.TextSize + " " + TextSize.generic screen size }
-            | TextSizeOnly (screen, size) -> { result with TextSize = result.TextSize + " " + TextSize.only screen size }
-            | TextAlignment (screen, size) -> { result with TextAlignment = result.TextAlignment + " " + TextAlignment.generic screen size }
-            | TextAlignmentOnly (screen, size) -> { result with TextAlignment = result.TextAlignment + " " + TextAlignment.only screen size }
-            | TextTransform transform -> { result with TextTransform = result.TextTransform + " " + TextTransform.Option.toClass transform }
-            | Display (screen, display) ->
-                let cls = Display.toDisplayClass screen display
-                { result with Display = result.Display + " " + cls }
-            | DisplayOnly (screen, display) ->
-                let cls = Display.toDisplayOnlyClass screen display
-                { result with DisplayOnly = result.DisplayOnly + " " + cls }
-            | IsClearfix -> { result with IsClearfix = Classes.Helpers.IsClearfix |> Some }
-            | IsPulledLeft -> { result with IsPulledLeft = Classes.Helpers.IsPulledLeft |> Some }
-            | IsPulledRight -> { result with IsPulledRight = Classes.Helpers.IsPulledRight |> Some }
-            | IsMarginless -> { result with IsMarginless = Classes.Helpers.IsMarginless |> Some }
-            | IsPaddingless -> { result with IsPaddingless = Classes.Helpers.IsPaddingless |> Some }
-            | IsOverlay -> { result with IsOverlay = Classes.Helpers.IsOverlay |> Some }
-            | IsClipped -> { result with IsClipped = Classes.Helpers.IsClipped |> Some }
-            | IsRadiusless -> { result with IsRadiusless = Classes.Helpers.IsRadiusless |> Some }
-            | IsShadowless -> { result with IsShadowless = Classes.Helpers.IsShadowless |> Some }
-            | IsUnselectable -> { result with IsUnselectable = Classes.Helpers.IsUnselectable |> Some }
-            | IsInvisible (screen, true) -> { result with IsInvisible = result.IsInvisible + " " + ofInvisible screen }
-            | IsInvisible (_, false) -> result
-            | IsHidden (screen, true) -> { result with IsHidden = result.IsHidden + " " + ofHidden screen }
-            | IsHidden (_, false) -> result
-            | IsInvisibleOnly (screen, true) -> { result with IsInvisibleOnly = result.IsInvisibleOnly + " " + ofInvisible screen }
-            | IsInvisibleOnly (_, false) -> result
-            | IsHiddenOnly (screen, true) -> { result with IsHiddenOnly = result.IsHiddenOnly + " " + ofHidden screen }
-            | IsHiddenOnly (_, false) -> result
-            | IsSrOnly -> { result with IsSrOnly = Classes.Helpers.IsSrOnly }
-            | IsScreenReaderOnly -> { result with IsSrOnly = Classes.Helpers.IsSrOnly }
+            | BackgroundColor color             -> (ofBackground color)::result
+            | TextColor color                   -> (ofText color)::result
+            | TextWeight textWeight             -> (TextWeight.ofOption textWeight)::result
+            | TextSize (screen, size)           -> (TextSize.generic screen size)::result
+            | TextSizeOnly (screen, size)       -> (TextSize.only screen size)::result
+            | TextAlignment (screen, size)      -> (TextAlignment.generic screen size)::result
+            | TextAlignmentOnly (screen, size)  -> (TextAlignment.only screen size)::result
+            | TextTransform transform           -> (TextTransform.Option.toClass transform)::result
+            | Display (screen, display)         -> (Display.toDisplayClass screen display)::result
+            | DisplayOnly (screen, display)     -> (Display.toDisplayOnlyClass screen display)::result
+            | IsInvisible (screen, b)           -> if b then (ofInvisible screen)::result else result
+            | IsInvisibleOnly (screen, b)       -> if b then (ofInvisibleOnly screen)::result else result
+            | IsHidden (screen, b)              -> if b then (ofHidden screen)::result else result
+            | IsHiddenOnly (screen, b)          -> if b then (ofHiddenOnly screen)::result else result
+            | IsSrOnly
+            | IsScreenReaderOnly -> "is-sr-only"::result
+            | IsClearfix
+            | IsPulledLeft
+            | IsPulledRight
+            | IsMarginless
+            | IsPaddingless
+            | IsOverlay
+            | IsClipped
+            | IsRadiusless
+            | IsShadowless
+            | IsUnselectable -> (Fable.Core.Reflection.getCaseName opt)::result
 
-        let opts = options |> List.fold parseOption Options.Empty
-        [ opts.BackgroundColor
-          opts.TextColor
-          opts.TextWeight
-          Some opts.TextSize
-          Some opts.TextSizeOnly
-          Some opts.TextAlignment
-          Some opts.TextAlignmentOnly
-          Some opts.TextTransform
-          opts.IsClearfix
-          opts.IsPulledLeft
-          opts.IsPulledRight
-          opts.IsMarginless
-          opts.IsPaddingless
-          opts.IsOverlay
-          opts.IsClipped
-          opts.IsRadiusless
-          opts.IsShadowless
-          opts.IsUnselectable
-          Some opts.IsInvisible
-          Some opts.IsHidden
-          Some opts.IsInvisibleOnly
-          Some opts.IsHiddenOnly
-          Some opts.Display
-          Some opts.DisplayOnly
-          Some opts.IsSrOnly ]
+        options |> List.fold parseOption [] |> List.map Some
 
 [<AutoOpen>]
 module Common =
