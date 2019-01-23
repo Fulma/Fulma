@@ -12,10 +12,6 @@ module Button =
         let [<Literal>] Container = "button"
         module List =
             let [<Literal>] Container = "buttons"
-            module Size =
-                let [<Literal>] AreSmall = "are-small"
-                let [<Literal>] AreMedium = "are-medium"
-                let [<Literal>] AreLarge = "are-large"
 
     type Option =
         // Colors
@@ -52,68 +48,32 @@ module Button =
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Level : string option
-          Size : string option
-          IsDisabled : bool
-          Props : IHTMLProp list
-          CustomClass : string option
-          OnClick : (MouseEvent -> unit) option
-          Modifiers : string option list }
-        static member Empty =
-            { Level = None
-              Size = None
-              IsDisabled = false
-              Props = []
-              CustomClass = None
-              OnClick = None
-              Modifiers = [] }
-
-    let private addClass (option: Option) (result: Options) =
-        { result with Modifiers = (Fable.Core.Reflection.getCaseName option |> Some)::result.Modifiers }
-
     let internal btnView element (options : Option list) children =
-        let parseOption (result : Options) opt =
+        let parseOption (result : GenericOptions) opt =
             match opt with
-            | Color color -> { result with Level = ofColor color |> Some }
-            // Sizes
-            | Size size -> { result with Size = ofSize size |> Some }
+            | Color color -> ofColor color |> result.AddClass
+            | Size size -> ofSize size |> result.AddClass
             // Styles
-            | IsLink -> { result with Level = Fable.Core.Reflection.getCaseName opt |> Some }
+            | IsLink
             | IsFullWidth
             | IsOutlined
             | IsInverted
             | IsText
             | IsRounded
-            | IsExpanded -> addClass opt result
+            | IsExpanded -> result.AddCaseName opt
             // States
             | IsHovered state
             | IsFocused state
             | IsActive state
             | IsLoading state
-            | IsStatic state -> if state then addClass opt result else result
-            | Disabled isDisabled -> { result with IsDisabled = isDisabled }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | OnClick cb -> { result with OnClick = cb |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | IsStatic state -> if state then result.AddCaseName opt else result
+            | Disabled isDisabled -> Fable.Helpers.React.Props.Disabled isDisabled |> result.AddProp
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
+            | Modifiers modifiers -> { result with Classes = (modifiers |> Modifier.parseModifiers)@result.Classes }
 
-        let opts = options |> List.fold parseOption Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Level
-                          ::opts.Size
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ ]
-
-        element
-            [ yield classes
-              yield Fable.Helpers.React.Props.Disabled opts.IsDisabled :> IHTMLProp
-              if Option.isSome opts.OnClick then
-                yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-              yield! opts.Props ]
-            children
+        GenericOptions.Parse(options, parseOption, Classes.Container).ToReactElement(element, children)
 
     /// Generate <button class="button"></button>
     let button options children = btnView button options children
@@ -161,45 +121,15 @@ module Button =
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
-        type internal Options =
-            //   Size : string option
-            { Props : IHTMLProp list
-              CustomClass : string option
-              Modifiers : string option list }
-
-            static member Empty =
-                //   Size = None
-                { Props = [ ]
-                  CustomClass = None
-                  Modifiers = [] }
-
-        let internal ofSize size =
-            match size with
-            | IsSmall -> Classes.List.Size.AreSmall
-            | IsMedium -> Classes.List.Size.AreMedium
-            | IsLarge -> Classes.List.Size.AreLarge
-
-    let private addListClass (option: List.Option) (result: List.Options) =
-        { result with Modifiers = (Fable.Core.Reflection.getCaseName option |> Some)::result.Modifiers }
-
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
-        let parseOption (result : List.Options) opt =
+        let parseOption (result : GenericOptions) opt =
             match opt with
             | List.HasAddons
             | List.IsCentered
-            | List.IsRight -> addListClass opt result
-            | List.Props props -> { result with Props = props }
-            | List.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
-            // | List.Size size -> { result with Size = List.ofSize size |> Some }
+            | List.IsRight -> Fable.Core.Reflection.getCaseName opt |> result.AddClass
+            | List.Props props -> result.AddProps props
+            | List.CustomClass customClass -> result.AddClass customClass
+            | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption List.Options.Empty
-        let classes = Helpers.classes
-                        Classes.List.Container
-                        ( opts.CustomClass
-                            // ::opts.Size
-                            ::opts.Modifiers )
-                        [ ]
-
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, Classes.List.Container).ToReactElement(div, children)

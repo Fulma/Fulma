@@ -64,100 +64,20 @@ module Column =
         let className = Fable.Core.Reflection.getCaseName offset
         "is-offset-" + className.[3..] + suffix screen
 
-    type internal Options =
-        { Width : string option
-          Offset : string option
-          DesktopWidth : string option
-          DesktopOffset : string option
-          TabletpWidth : string option
-          TabletpOffset : string option
-          MobileWidth : string option
-          MobileOffset : string option
-          WideScreenWidth : string option
-          WideScreenOffset : string option
-          FullHDWidth : string option
-          FullHDOffset : string option
-          TouchWidth : string option
-          TouchOffset : string option
-          CustomClass : string option
-          Props : IHTMLProp list
-          Modifiers : string option list }
-        static member Empty =
-            { Width = None
-              Offset = None
-              DesktopWidth = None
-              DesktopOffset = None
-              TabletpWidth = None
-              TabletpOffset = None
-              MobileWidth = None
-              MobileOffset = None
-              WideScreenWidth = None
-              WideScreenOffset = None
-              FullHDWidth = None
-              FullHDOffset = None
-              TouchWidth = None
-              TouchOffset = None
-              CustomClass = None
-              Props = []
-              Modifiers = [] }
-
     /// Generate <div class="column"></div>
     let column (options : Option list) children =
-        let parseOptions (result: Options) =
-            function
-            | Width (screen, width) when screen = Screen.All ->
-                { result with Width = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.All ->
-                { result with Offset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.Desktop ->
-                { result with DesktopWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.Desktop ->
-                { result with DesktopOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.Tablet ->
-                { result with TabletpWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.Tablet ->
-                { result with TabletpOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.Mobile ->
-                { result with MobileWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.Mobile ->
-                { result with MobileOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.WideScreen ->
-                { result with WideScreenWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.WideScreen ->
-                { result with WideScreenOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.FullHD ->
-                { result with FullHDWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.FullHD ->
-                { result with FullHDOffset = ofOffset (screen, offset) |> Some }
-            | Width (screen, width) when screen = Screen.Touch ->
-                { result with TouchWidth = ofWidth (screen, width) |> Some }
-            | Offset (screen, offset) when screen = Screen.Touch ->
-                { result with TouchOffset = ofOffset (screen, offset) |> Some }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
-            | x ->
-                Fable.Import.JS.console.warn("Error when parsing column option " + string x)
-                result
+        let parseOption (result: GenericOptions) opt =
+            match opt with
+            | Width (screen, width) ->
+                ofWidth (screen, width) |> result.AddClass
+            | Offset (screen, offset) ->
+                ofOffset (screen, offset) |> result.AddClass
+            | CustomClass customClass ->
+                result.AddClass customClass
+            | Props props ->
+                result.AddProps props
+            | Modifiers modifiers ->
+                result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Width
-                          ::opts.Offset
-                          ::opts.DesktopWidth
-                          ::opts.DesktopOffset
-                          ::opts.MobileWidth
-                          ::opts.MobileOffset
-                          ::opts.TabletpWidth
-                          ::opts.TabletpOffset
-                          ::opts.WideScreenWidth
-                          ::opts.WideScreenOffset
-                          ::opts.FullHDWidth
-                          ::opts.FullHDOffset
-                          ::opts.TouchWidth
-                          ::opts.TouchOffset
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ ]
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, Classes.Container)
+            .ToReactElement(div, children)

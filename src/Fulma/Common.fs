@@ -1,5 +1,6 @@
 namespace Fulma
 
+open Fable.Import.React
 open Fable.Helpers.React.Props
 
 [<RequireQualifiedAccess>]
@@ -339,7 +340,7 @@ module Modifier =
             | IsShadowless
             | IsUnselectable -> (Fable.Core.Reflection.getCaseName opt)::result
 
-        options |> List.fold parseOption [] |> List.map Some
+        options |> List.fold parseOption []
 
 [<AutoOpen>]
 module Common =
@@ -349,23 +350,43 @@ module Common =
         | Modifiers of Modifier.IModifier list
 
     type GenericOptions =
-        { CustomClass : string option
-          Props : IHTMLProp list
-          Modifiers : string option list }
+        { Props : IHTMLProp list
+          Classes : string list }
 
         static member Empty =
-            { CustomClass = None
-              Props = []
-              Modifiers = [] }
+            { Props = []; Classes = [] }
 
-    let genericParse options =
-        let parseOptions (result: GenericOptions ) opt =
-            match opt with
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+        static member Parse(options, parser, ?baseClass) =
+            let result = options |> List.fold parser GenericOptions.Empty
+            match baseClass with
+            | Some baseClass -> result.AddClass(baseClass)
+            | None -> result
 
-        options |> List.fold parseOptions GenericOptions.Empty
+        member this.AddProp(prop) =
+            { this with Props = prop::this.Props }
+
+        member this.AddProps(props) =
+            { this with Props = props@this.Props }
+
+        member this.AddClass(cl: string) =
+            { this with Classes = cl::this.Classes }
+
+        member this.AddCaseName(case: obj) =
+            Fable.Core.Reflection.getCaseName case |> this.AddClass
+
+        member this.AddModifiers(modifiers) =
+            { this with Classes = (modifiers |> Modifier.parseModifiers) @ this.Classes }
+
+        member this.ToReactElement(el, ?children): ReactElement =
+            let children = defaultArg children []
+            // TODO: Remove empty classes?
+            let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
+            el (classes::this.Props) children
+
+    let parseOption (result: GenericOptions ) = function
+        | Props props -> result.AddProps props
+        | CustomClass customClass -> result.AddClass customClass
+        | Modifiers modifiers -> result.AddModifiers modifiers
 
     module Helpers =
 
@@ -381,16 +402,10 @@ module Text =
     open Fable.Helpers.React
 
     let p (options: GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) []
-        p (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption).ToReactElement(p, children)
 
     let div (options: GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) []
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption).ToReactElement(div, children)
 
     let span (options: GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) []
-        span (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption).ToReactElement(span, children)
