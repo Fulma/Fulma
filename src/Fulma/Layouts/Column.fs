@@ -12,7 +12,7 @@ module Column =
 
     type ISize =
         | [<CompiledName("is-one-quarter")>] IsOneQuarter
-        | [<CompiledName("is-one-thirds")>] IsOneThird
+        | [<CompiledName("is-one-third")>] IsOneThird
         | [<CompiledName("is-half")>] IsHalf
         | [<CompiledName("is-two-thirds")>] IsTwoThirds
         | [<CompiledName("is-three-quarters")>] IsThreeQuarters
