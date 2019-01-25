@@ -8,144 +8,74 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Modal =
 
-    module Classes =
-        let [<Literal>] Container = "modal"
-        let [<Literal>] Background = "modal-background"
-        let [<Literal>] Content = "modal-content"
-        module State =
-            let [<Literal>] IsActive = "is-active"
-
-        module Close =
-            let [<Literal>] Container = "modal-close"
-
-        module Card =
-            let [<Literal>] Container = "modal-card"
-            let [<Literal>] Head = "modal-card-head"
-            let [<Literal>] Foot = "modal-card-foot"
-            let [<Literal>] Title = "modal-card-title"
-            let [<Literal>] Body = "modal-card-body"
-
     type Option =
         | Props of IHTMLProp list
         /// Add `is-active` class if true
-        | IsActive of bool
+        | [<CompiledName("is-active")>] IsActive of bool
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Props : IHTMLProp list
-          IsActive : bool
-          CustomClass : string option
-          Modifiers : string option list }
-
-        static member Empty =
-            { Props = []
-              IsActive = false
-              CustomClass = None
-              Modifiers = [] }
-
     module Close =
         type Option =
-            | Props of IHTMLProp list
             | Size of ISize
-            | CustomClass of string
             | OnClick of (MouseEvent -> unit)
+            | Props of IHTMLProp list
+            | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
-        type internal Options =
-            { Props : IHTMLProp list
-              Size : string option
-              CustomClass : string option
-              OnClick : (MouseEvent -> unit) option
-              Modifiers : string option list }
-
-            static member Empty =
-                { Props = []
-                  Size = None
-                  CustomClass = None
-                  OnClick = None
-                  Modifiers = [] }
-
     /// Generate <div class="modal"></div>
-    let modal options children =
-        let parseOptions (result: Options ) opt =
+    let modal (options : Option list) children =
+        let parseOption (result: GenericOptions ) opt =
             match opt with
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | IsActive state -> { result with IsActive = state }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | IsActive state -> if state then result.AddCaseName opt else result
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.CustomClass::opts.Modifiers )
-                        [ Classes.State.IsActive, opts.IsActive ]
-        div (classes::opts.Props)
-            children
+        GenericOptions.Parse(options, parseOption, "modal").ToReactElement(div, children)
 
     /// Generate <button class="modal-close"></button>
     let close (options : Close.Option list) children =
-        let parseOptions (result: Close.Options ) opt =
+        let parseOption (result: GenericOptions ) opt =
             match opt with
-            | Close.Props props -> { result with Props = props }
-            | Close.CustomClass customClass -> { result with CustomClass = Some customClass }
             | Close.Size IsSmall
             | Close.Size IsMedium ->
                 Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for 'modal close'")
                 result
-            | Close.Size size -> { result with Size = ofSize size |> Some }
-            | Close.OnClick cb -> { result with OnClick = Some cb }
-            | Close.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | Close.Size size -> ofSize size |> result.AddClass
+            | Close.OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
+            | Close.Props props -> result.AddProps props
+            | Close.CustomClass customClass -> result.AddClass customClass
+            | Close.Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Close.Options.Empty
-        let classes = Helpers.classes Classes.Close.Container ( opts.Size::opts.CustomClass::opts.Modifiers ) []
-        let opts =
-            match opts.OnClick with
-            | Some v -> classes::(DOMAttr.OnClick v :> IHTMLProp)::opts.Props
-            | None -> classes::opts.Props
-
-        button opts children
+        GenericOptions.Parse(options, parseOption, "modal-close").ToReactElement(button, children)
 
     /// Generate <div class="modal-background"></div>
     let background (options: GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes Classes.Background ( opts.CustomClass::opts.Modifiers ) []
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, "modal-background").ToReactElement(div, children)
 
     /// Generate <div class="modal-content"></div>
     let content (options: GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes Classes.Content ( opts.CustomClass::opts.Modifiers ) []
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, "modal-content").ToReactElement(div, children)
 
     module Card =
 
         /// Generate <div class="modal-card"></div>
         let card (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Container ( opts.CustomClass::opts.Modifiers ) []
-            div (classes::opts.Props) children
+            GenericOptions.Parse(options, parseOption, "modal-card").ToReactElement(div, children)
 
-        /// Generate <div class="modal-card-head"></div>
+        /// Generate <header class="modal-card-head"></header>
         let head (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Head ( opts.CustomClass::opts.Modifiers ) []
-            header (classes::opts.Props) children
+            GenericOptions.Parse(options, parseOption, "modal-card-head").ToReactElement(header, children)
 
-        /// Generate <div class="modal-card-foot"></div>
+        /// Generate <footer class="modal-card-foot"></footer>
         let foot (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Foot ( opts.CustomClass::opts.Modifiers ) []
-            footer (classes::opts.Props) children
+            GenericOptions.Parse(options, parseOption, "modal-card-foot").ToReactElement(footer, children)
 
         /// Generate <div class="modal-card-title"></div>
         let title (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Title ( opts.CustomClass::opts.Modifiers ) []
-            div (classes::opts.Props) children
+            GenericOptions.Parse(options, parseOption, "modal-card-title").ToReactElement(div, children)
 
         /// Generate <div class="modal-card-body"></div>
         let body (options: GenericOption list) children =
-            let opts = genericParse options
-            let classes = Helpers.classes Classes.Card.Body ( opts.CustomClass::opts.Modifiers ) []
-            section (classes::opts.Props) children
+            GenericOptions.Parse(options, parseOption, "modal-card-body").ToReactElement(section, children)

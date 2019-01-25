@@ -377,11 +377,18 @@ module Common =
         member this.AddModifiers(modifiers) =
             { this with Classes = (modifiers |> Modifier.parseModifiers) @ this.Classes }
 
-        member this.ToReactElement(el, ?children): ReactElement =
+        /// Conver to standard element
+        member this.ToReactElement(el : IHTMLProp list -> ReactElement list -> ReactElement, ?children): ReactElement =
             let children = defaultArg children []
             // TODO: Remove empty classes?
             let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
             el (classes::this.Props) children
+
+        /// Convert to self closing element
+        member this.ToReactElement(el : IHTMLProp list -> ReactElement): ReactElement =
+            // TODO: Remove empty classes?
+            let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
+            el (classes::this.Props)
 
     let parseOption (result: GenericOptions ) = function
         | Props props -> result.AddProps props

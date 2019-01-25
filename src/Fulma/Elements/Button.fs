@@ -8,11 +8,6 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Button =
 
-    module Classes =
-        let [<Literal>] Container = "button"
-        module List =
-            let [<Literal>] Container = "buttons"
-
     type Option =
         // Colors
         | Color of IColor
@@ -71,9 +66,9 @@ module Button =
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
-            | Modifiers modifiers -> { result with Classes = (modifiers |> Modifier.parseModifiers)@result.Classes }
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, Classes.Container).ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOption, "button").ToReactElement(element, children)
 
     /// Generate <button class="button"></button>
     let button options children = btnView button options children
@@ -132,4 +127,4 @@ module Button =
             | List.CustomClass customClass -> result.AddClass customClass
             | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, Classes.List.Container).ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOption, "buttons").ToReactElement(div, children)

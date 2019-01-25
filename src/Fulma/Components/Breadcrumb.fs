@@ -7,9 +7,6 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Breadcrumb =
 
-    module Classes =
-        let [<Literal>] Container = "breadcrumb"
-
     type Option =
         /// Add `is-centered` class
         | [<CompiledName("is-centered")>] IsCentered
@@ -30,7 +27,8 @@ module Breadcrumb =
 
     /// Generate <nav class="breadcumb"></nav>
     let breadcrumb options children =
-        let parseOption (result: GenericOptions) = function
+        let parseOption (result: GenericOptions) opt =
+            match opt with
             | Props props -> result.AddProps props
             | Size size -> ofSize size |> result.AddClass
             | CustomClass customClass -> result.AddClass customClass
@@ -41,9 +39,9 @@ module Breadcrumb =
             | HasArrowSeparator
             | HasBulletSeparator
             | HasDotSeparator
-            | HasSucceedsSeparator as opt -> result.AddCaseName opt
+            | HasSucceedsSeparator -> result.AddCaseName opt
 
-        GenericOptions.Parse(options, parseOption, Classes.Container)
+        GenericOptions.Parse(options, parseOption, "breadcrumb")
                     .ToReactElement(nav, [ul [] children])
 
     module Item =
