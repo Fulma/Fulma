@@ -29,10 +29,7 @@ module Breadcrumb =
     let breadcrumb options children =
         let parseOption (result: GenericOptions) opt =
             match opt with
-            | Props props -> result.AddProps props
             | Size size -> ofSize size |> result.AddClass
-            | CustomClass customClass -> result.AddClass customClass
-            | Modifiers modifiers -> result.AddModifiers modifiers
             | IsCentered
             | IsRight
             // Separators
@@ -40,6 +37,9 @@ module Breadcrumb =
             | HasBulletSeparator
             | HasDotSeparator
             | HasSucceedsSeparator -> result.AddCaseName opt
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
         GenericOptions.Parse(options, parseOption, "breadcrumb")
                     .ToReactElement(nav, [ul [] children])

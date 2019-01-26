@@ -13,7 +13,7 @@ type Screen =
     | [<CompiledName("touch")>] Touch
     | [<CompiledName("fullhd")>] FullHD
 
-    static member toString opt =
+    static member ToString opt =
         match opt with
         | All -> ""
         | Desktop
@@ -97,18 +97,18 @@ module TextSize =
         | Is6
         | Is7
 
-        static member toString (x: Option) =
+        static member ToString (x: Option) =
             Fable.Core.Reflection.getCaseTag x + 1 |> string
 
     let inline generic screen size =
-        "is-size-" + Option.toString size + Screen.toString screen
+        "is-size-" + Option.ToString size + Screen.ToString screen
 
     let inline only screen size =
         match screen with
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-size-" + Option.toString size + Screen.toString screen + "-only"
+            "is-size-" + Option.ToString size + Screen.ToString screen + "-only"
         | x ->
             Fable.Import.JS.console.warn("Screen `%s` does not support `is-size-xxx-only`." + string x)
             ""
@@ -126,18 +126,18 @@ module TextAlignment =
         /// Add `has-text-right`
         | [<CompiledName("has-text-left")>] Right
 
-        static member inline toString opt =
+        static member inline ToString opt =
             Fable.Core.Reflection.getCaseName opt
 
     let inline generic screen alignment =
-        Option.toString alignment + Screen.toString screen
+        Option.ToString alignment + Screen.ToString screen
 
     let inline only screen alignment =
         match screen with
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            Option.toString alignment + Screen.toString screen + "-only"
+            Option.ToString alignment + Screen.ToString screen + "-only"
         | x ->
             Fable.Import.JS.console.warn("Screen `%s` does not support `is-size-xxx-only`." + string x)
             ""
@@ -189,7 +189,7 @@ module Display =
 
     let internal toDisplayClass screen display =
         let display = Option.toClass display
-        let screen = Screen.toString screen
+        let screen = Screen.ToString screen
 
         "is-" + display + screen
 
@@ -199,7 +199,7 @@ module Display =
         | Screen.Desktop
         | Screen.WideScreen ->
             let display = Option.toClass display
-            let screen = Screen.toString screen
+            let screen = Screen.ToString screen
             "is-" + display + screen + "-only"
 
         | x ->
@@ -257,17 +257,17 @@ module Modifier =
         | IsWhiteBis -> "has-text-" + (Fable.Core.Reflection.getCaseName level).[3..]
 
     let internal ofInvisible screen =
-        "is-invisible" + Screen.toString screen
+        "is-invisible" + Screen.ToString screen
 
     let internal ofHidden screen =
-        "is-hidden" + Screen.toString screen
+        "is-hidden" + Screen.ToString screen
 
     let internal ofInvisibleOnly screen =
         match screen with
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-invisible" + Screen.toString screen + "-only"
+            "is-invisible" + Screen.ToString screen + "-only"
         | x ->
             Fable.Import.JS.console.warn("Screen `%s` does not support `is-invisible-xxx-only`." + string x)
             ""
@@ -277,7 +277,7 @@ module Modifier =
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-hidden" + Screen.toString screen + "-only"
+            "is-hidden" + Screen.ToString screen + "-only"
         | x ->
             Fable.Import.JS.console.warn("Screen `%s` does not support `is-hidden-xxx-only`." + string x)
             ""

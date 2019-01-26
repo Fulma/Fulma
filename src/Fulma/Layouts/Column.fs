@@ -7,9 +7,6 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Column =
 
-    module Classes =
-        let [<Literal>] Container = "column"
-
     type ISize =
         | [<CompiledName("is-one-quarter")>] IsOneQuarter
         | [<CompiledName("is-one-third")>] IsOneThird
@@ -79,5 +76,5 @@ module Column =
             | Modifiers modifiers ->
                 result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, Classes.Container)
+        GenericOptions.Parse(options, parseOption, "column")
             .ToReactElement(div, children)

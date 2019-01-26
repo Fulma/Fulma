@@ -63,9 +63,9 @@ module Button =
             | IsLoading state
             | IsStatic state -> if state then result.AddCaseName opt else result
             | Disabled isDisabled -> Fable.Helpers.React.Props.Disabled isDisabled |> result.AddProp
+            | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
-            | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
             | Modifiers modifiers -> result.AddModifiers modifiers
 
         GenericOptions.Parse(options, parseOption, "button").ToReactElement(element, children)

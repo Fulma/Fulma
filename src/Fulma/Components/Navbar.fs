@@ -169,7 +169,7 @@ module Navbar =
 
     /// Generate <div class="navbar-menu"></div>
     let menu options children =
-        let parseOption (result: GenericOptions ) opt =
+        let parseOption (result: GenericOptions) opt =
             match opt with
             | Menu.IsActive state -> if state then result.AddCaseName opt else result
             | Menu.Props props -> result.AddProps props

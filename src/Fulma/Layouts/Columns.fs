@@ -7,70 +7,48 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Columns =
 
-    module Classes =
-        let [<Literal>] Container = "columns"
-        module Alignment =
-            let [<Literal>] IsCentered = "is-centered"
-            let [<Literal>] IsVCentered = "is-vcentered"
-        module Spacing =
-            let [<Literal>] IsMultiline = "is-multiline"
-            let [<Literal>] IsGapless = "is-gapless"
-            let [<Literal>] IsGrid = "is-grid"
-            let [<Literal>] IsVariable = "is-variable"
-        module Display =
-            let [<Literal>] IsMobile = "is-mobile"
-            let [<Literal>] IsDesktop = "is-desktop"
-
     type ISize =
-        | Is1
-        | Is2
-        | Is3
-        | Is4
-        | Is5
-        | Is6
-        | Is7
-        | Is8
+        | [<CompiledName("is-1")>] Is1
+        | [<CompiledName("is-2")>] Is2
+        | [<CompiledName("is-3")>] Is3
+        | [<CompiledName("is-4")>] Is4
+        | [<CompiledName("is-5")>] Is5
+        | [<CompiledName("is-6")>] Is6
+        | [<CompiledName("is-7")>] Is7
+        | [<CompiledName("is-8")>] Is8
 
-        static member toString =
-            function
-            | Is1 -> "1"
-            | Is2 -> "2"
-            | Is3 -> "3"
-            | Is4 -> "4"
-            | Is5 -> "5"
-            | Is6 -> "6"
-            | Is7 -> "7"
-            | Is8 -> "8"
+        static member ToString (x : ISize)=
+            Fable.Core.Reflection.getCaseName x
 
     let inline private gapSizeGeneric (screen : Screen) (size : ISize) =
-        "is-" + ISize.toString size + Screen.toString screen
+        "is-" + ISize.ToString size + Screen.ToString screen
 
     let inline private gapSizeOnly (screen : Screen) (size : ISize) =
         match screen with
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-" + ISize.toString size + Screen.toString screen + "-only"
+            "is-" + ISize.ToString size + Screen.ToString screen + "-only"
         | x ->
-            let msg = sprintf "Screen `%s` does not support `is-%s-%s-only`." (Screen.toString x) (ISize.toString size) (Screen.toString x)
+            let msg = sprintf "Screen `%s` does not support `is-%s-%s-only`." (Screen.ToString x) (ISize.ToString size) (Screen.ToString x)
             Fable.Import.JS.console.warn(msg)
             ""
 
     type Option =
         /// Add `is-centered` class
-        | IsCentered
+        | [<CompiledName("is-centered")>] IsCentered
         /// Add `is-vcentered` class
-        | IsVCentered
+        | [<CompiledName("is-vcentered")>] IsVCentered
         /// Add `is-multiline` class
-        | IsMultiline
+        | [<CompiledName("is-multiline")>] IsMultiline
         /// Add `is-gapless` class
-        | IsGapless
+        | [<CompiledName("is-gapless")>] IsGapless
         /// Add `is-grid` class
-        | IsGrid
+        | [<CompiledName("is-grid")>] IsGrid
         /// Add `is-mobile` class
-        | IsMobile
+        | [<CompiledName("is-mobile")>] IsMobile
         /// Add `is-desktop` class
-        | IsDesktop
+        | [<CompiledName("is-desktop")>] IsDesktop
         /// Configure the gap size. You can configure the display and gap size
         /// Example: Columns.IsGap (Columns.Desktop, Columns.Is6)
         /// Becomes: `is-6-desktop`
@@ -83,59 +61,29 @@ module Columns =
         | Props of IHTMLProp list
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Display : string option
-          Spacing : string option
-          Alignment : string option
-          CustomClass : string option
-          IsGap : string option
-          Props : IHTMLProp list
-          Modifiers : string option list }
-
-        static member Empty =
-            { Display = None
-              Spacing = None
-              Alignment = None
-              CustomClass = None
-              IsGap = None
-              Props = []
-              Modifiers = [] }
-
     /// Generate <div class="columns"></div>
     let columns (options: Option list) children =
-        let parseOptions (result: Options) =
-            function
-            | IsCentered -> { result with Alignment = Classes.Alignment.IsCentered |> Some }
-            | IsVCentered -> { result with Alignment = Classes.Alignment.IsVCentered |> Some }
-            | IsMultiline -> { result with Spacing = Classes.Spacing.IsMultiline |> Some }
-            | IsGapless -> { result with Spacing = Classes.Spacing.IsGapless |> Some }
-            | IsGrid -> { result with Spacing = Classes.Spacing.IsGrid |> Some }
-            | IsMobile -> { result with Display = Classes.Display.IsMobile |> Some }
-            | IsDesktop -> { result with Display = Classes.Display.IsDesktop |> Some }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+        let parseOption (result: GenericOptions) opt =
+            match opt with
+            | IsCentered
+            | IsVCentered
+            | IsMultiline
+            | IsGapless
+            | IsGrid
+            | IsMobile
+            | IsDesktop -> result.AddCaseName opt
             | IsGap (screen, size) ->
-                let oldGap =
-                    result.IsGap
-                    |> Option.defaultValue Classes.Spacing.IsVariable
-                { result with IsGap = oldGap + " " + gapSizeGeneric screen size |> Some }
+                if not (List.contains "is-variable" result.Classes) then
+                    result.AddClass("is-variable").AddClass(gapSizeGeneric screen size)
+                else
+                    result.AddClass(gapSizeGeneric screen size)
             | IsGapOnly (screen, size) ->
-                let oldGap =
-                    result.IsGap
-                    |> Option.defaultValue Classes.Spacing.IsVariable
-                { result with IsGap = oldGap + " " + gapSizeOnly screen size |> Some }
+                if not (List.contains "is-variable" result.Classes) then
+                    result.AddClass("is-variable").AddClass(gapSizeOnly screen size)
+                else
+                    result.AddClass(gapSizeOnly screen size)
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Alignment
-                          ::opts.Display
-                          ::opts.Spacing
-                          ::opts.IsGap
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ ]
-
-        div (classes::opts.Props)
-            children
+        GenericOptions.Parse(options, parseOption, "columns").ToReactElement(div, children)
