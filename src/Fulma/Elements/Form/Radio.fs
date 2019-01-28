@@ -18,7 +18,7 @@ module Radio =
 
     /// Generate <label class="radio"></label>
     let radio (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "radio").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "radio").ToReactElement(label, children)
 
     /// Generate <input class="radio" />
     let input (options : Input.Option list) =

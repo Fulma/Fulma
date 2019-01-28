@@ -20,13 +20,13 @@ module Container =
 
     /// Generate <div class="container"></div>
     let container (options: Option list) children =
-        let parseOption (result: GenericOptions ) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsFluid
             | IsWideScreen
-            | IsFullHD -> result.AddCaseName opt
+            | IsFullHD -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "container").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "container").ToReactElement(div, children)

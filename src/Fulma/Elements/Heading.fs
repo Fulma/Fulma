@@ -32,8 +32,8 @@ module Heading =
 
     let internal title (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list)
         (children) =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             // Sizes
             | Is1
             | Is2
@@ -41,7 +41,7 @@ module Heading =
             | Is4
             | Is5
             | Is6
-            | IsSpaced -> result.AddCaseName opt
+            | IsSpaced -> result.AddCaseName option
             // Styles
             | IsSubtitle ->
                 result.RemoveClass("title").AddClass("subtitle")
@@ -50,7 +50,7 @@ module Heading =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption).ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(element, children)
 
     // Alias
     /// Generate <h1 class="title is-1"></h1>

@@ -9,23 +9,23 @@ module Card =
 
     /// Generate <div class="card"></div>
     let card (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "card").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "card").ToReactElement(div, children)
 
     /// Generate <div class="card-header"></div>
     let header (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "card-header").ToReactElement(header, children)
+        GenericOptions.Parse(options, parseOptions, "card-header").ToReactElement(header, children)
 
     /// Generate <div class="card-content"></div>
     let content (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "card-content").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "card-content").ToReactElement(div, children)
 
     /// Generate <div class="card-footer"></div>
     let footer (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "card-footer").ToReactElement(footer, children)
+        GenericOptions.Parse(options, parseOptions, "card-footer").ToReactElement(footer, children)
 
     /// Generate <div class="card-image"></div>
     let image (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "card-image").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "card-image").ToReactElement(div, children)
     module Header =
 
         module Title =
@@ -39,23 +39,23 @@ module Card =
 
         /// Generate <a class="card-header-icon"></a>
         let icon (options: GenericOption list) children =
-            GenericOptions.Parse(options, parseOption, "card-header-icon").ToReactElement(a, children)
+            GenericOptions.Parse(options, parseOptions, "card-header-icon").ToReactElement(a, children)
 
         /// Generate <p class="card-header-title"></p>
         let title (options: Title.Option list) children =
-            let parseOption (result : GenericOptions) opt =
-                match opt with
-                | Title.IsCentered as opt -> result.AddCaseName opt
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | Title.IsCentered as opt -> result.AddCaseName option
                 | Title.Props props -> result.AddProps props
                 | Title.CustomClass customClass -> result.AddClass customClass
                 | Title.Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption, "card-header-title").ToReactElement(p, children)
+            GenericOptions.Parse(options, parseOptions, "card-header-title").ToReactElement(p, children)
 
     module Footer =
 
         let internal itemView element (options: GenericOption list) children =
-            GenericOptions.Parse(options, parseOption, "card-footer-item").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "card-footer-item").ToReactElement(element, children)
 
         /// Generate <div class="card-footer-item"></a>
         let div x y = itemView div x y

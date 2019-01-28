@@ -18,12 +18,12 @@ module Section =
 
     /// Generate <section class="section"></section>
     let section (options: Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsMedium
-            | IsLarge -> result.AddCaseName opt
+            | IsLarge -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "section").ToReactElement(section, children)
+        GenericOptions.Parse(options, parseOptions, "section").ToReactElement(section, children)

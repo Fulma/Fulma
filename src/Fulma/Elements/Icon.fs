@@ -33,4 +33,4 @@ module Icon =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "icon").ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions, "icon").ToReactElement(span, children)

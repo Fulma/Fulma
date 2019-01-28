@@ -40,18 +40,18 @@ module Tile =
 
     /// Generate <div class="tile"></div>
     let tile (options: Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size size -> ISize.ToString size |> result.AddClass
             | IsChild
             | IsAncestor
             | IsParent
-            | IsVertical -> result.AddCaseName opt
+            | IsVertical -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "tile").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "tile").ToReactElement(div, children)
 
     /// Generate <div class="tile is-parent"></div>
     let parent (options: Option list) children =

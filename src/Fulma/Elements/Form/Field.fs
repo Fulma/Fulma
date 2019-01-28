@@ -33,43 +33,43 @@ module Field =
         type Option =
             | Size of ISize
             /// Add `is-normal` class
-            | IsNormal
+            | [<CompiledName("is-normal")>] IsNormal
             | CustomClass of string
             | Props of IHTMLProp list
             | Modifiers of Modifier.IModifier list
 
     /// Generate <label class="field-body"></label>
     let body (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "field-body").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "field-body").ToReactElement(label, children)
 
     /// Generate <label class="field-label"></label>
     let label options children =
-        let parseOptions (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Label.Size size -> ofSize size |> result.AddClass
-            | Label.IsNormal -> result.AddCaseName opt
+            | Label.IsNormal -> result.AddCaseName option
             | Label.Props props -> result.AddProps props
             | Label.CustomClass customClass -> result.AddClass customClass
             | Label.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "field-label").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "field-label").ToReactElement(label, children)
 
     let internal fieldView element options children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
-            | HasAddonsCentered -> result.AddClass("has-addons").AddCaseName opt
-            | HasAddonsRight -> result.AddClass("has-addons").AddCaseName opt
-            | HasAddonsFullWidth -> result.AddClass("has-addons").AddCaseName opt
-            | IsGroupedCentered -> result.AddClass("is-grouped").AddCaseName opt
-            | IsGroupedRight -> result.AddClass("is-grouped").AddCaseName opt
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | HasAddonsCentered -> result.AddClass("has-addons").AddCaseName option
+            | HasAddonsRight -> result.AddClass("has-addons").AddCaseName option
+            | HasAddonsFullWidth -> result.AddClass("has-addons").AddCaseName option
+            | IsGroupedCentered -> result.AddClass("is-grouped").AddCaseName option
+            | IsGroupedRight -> result.AddClass("is-grouped").AddCaseName option
             | HasAddons
             | IsGrouped
-            | IsHorizontal -> result.AddCaseName opt
+            | IsHorizontal -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "field").ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOptions, "field").ToReactElement(element, children)
 
     /// Generate <div class="field"></div>
     let div x y = fieldView div x y

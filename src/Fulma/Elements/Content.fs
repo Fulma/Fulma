@@ -15,14 +15,14 @@ module Content =
 
     /// Generate <div class="content"></div>
     let content (options : Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size size -> ofSize size |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "content").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "content").ToReactElement(div, children)
 
     module Ol =
 
@@ -37,14 +37,14 @@ module Content =
 
         /// Generate <ol></ol>
         let ol (options : Option list) children =
-            let parseOption (result : GenericOptions) opt =
-                match opt with
+            let parseOptions (result : GenericOptions) option =
+                match option with
                 | IsLowerRoman
                 | IsUpperRoman
                 | IsLowerAlpha
-                | IsUpperAlpha -> result.AddCaseName opt
+                | IsUpperAlpha -> result.AddCaseName option
                 | Props props -> result.AddProps props
                 | CustomClass customClass -> result.AddClass customClass
                 | Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption).ToReactElement(ol, children)
+            GenericOptions.Parse(options, parseOptions).ToReactElement(ol, children)

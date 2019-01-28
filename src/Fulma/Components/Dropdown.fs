@@ -22,29 +22,29 @@ module Dropdown =
 
     /// Generate <div class="dropdown"></div>
     let dropdown (options: Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
-            | IsActive state -> if state then result.AddCaseName opt else result
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | IsActive state -> if state then result.AddCaseName option else result
             | IsRight
             | IsHoverable
-            | IsUp as opt -> result.AddCaseName opt
+            | IsUp as opt -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "dropdown").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "dropdown").ToReactElement(div, children)
 
     /// Generate <div class="dropdown-menu"></div>
     let menu (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "dropdown-menu").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "dropdown-menu").ToReactElement(div, children)
 
     /// Generate <div class="dropdown-content"></div>
     let content (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "dropdown-content").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "dropdown-content").ToReactElement(div, children)
 
     /// Generate <div class="dropdown-divider"></div>
     let divider (options: GenericOption list) =
-        GenericOptions.Parse(options, parseOption, "dropdown-divider").ToReactElement(hr)
+        GenericOptions.Parse(options, parseOptions, "dropdown-divider").ToReactElement(hr)
 
     module Item =
         type Option =
@@ -55,14 +55,14 @@ module Dropdown =
             | Modifiers of Modifier.IModifier list
 
         let internal item element (options: Option list) children =
-            let parseOption (result : GenericOptions) opt =
-                match opt with
-                | IsActive state -> if state then result.AddCaseName opt else result
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | IsActive state -> if state then result.AddCaseName option else result
                 | Props props -> result.AddProps props
                 | CustomClass customClass -> result.AddClass customClass
                 | Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption, "dropdown-item").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "dropdown-item").ToReactElement(element, children)
 
         /// Generate <div class="dropdown-item"></div>
         let div x y = item div x y

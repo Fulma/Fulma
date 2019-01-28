@@ -63,8 +63,8 @@ module Column =
 
     /// Generate <div class="column"></div>
     let column (options : Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Width (screen, width) ->
                 ofWidth (screen, width) |> result.AddClass
             | Offset (screen, offset) ->
@@ -76,5 +76,5 @@ module Column =
             | Modifiers modifiers ->
                 result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "column")
+        GenericOptions.Parse(options, parseOptions, "column")
             .ToReactElement(div, children)

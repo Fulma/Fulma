@@ -63,8 +63,8 @@ module Image =
 
     /// Generate <figure class="image"></figure>
     let image options children =
-        let parseOptions (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             // Size
             | Is16x16
             | Is24x24
@@ -89,10 +89,10 @@ module Image =
             | Is3by5
             | Is9by16
             | Is1by2
-            | Is1by3 -> result.AddCaseName opt
+            | Is1by3 -> result.AddCaseName option
             // Extra
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "image").ToReactElement(figure, children)
+        GenericOptions.Parse(options, parseOptions, "image").ToReactElement(figure, children)

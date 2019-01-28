@@ -15,8 +15,8 @@ module Media =
 
     /// Generate <article class="media"></article>
     let media (options: Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size IsSmall
             | Size IsMedium ->
                 Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for the media component")
@@ -26,16 +26,16 @@ module Media =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "media").ToReactElement(article, children)
+        GenericOptions.Parse(options, parseOptions, "media").ToReactElement(article, children)
 
     /// Generate <div class="media-left"></div>
     let left (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "media-left").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "media-left").ToReactElement(div, children)
 
     /// Generate <div class="media-right"></div>
     let right (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "media-right").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "media-right").ToReactElement(div, children)
 
     /// Generate <div class="media-content"></div>
     let content (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "media-content").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "media-content").ToReactElement(div, children)

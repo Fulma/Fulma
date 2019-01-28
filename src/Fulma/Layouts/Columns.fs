@@ -63,15 +63,15 @@ module Columns =
 
     /// Generate <div class="columns"></div>
     let columns (options: Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsCentered
             | IsVCentered
             | IsMultiline
             | IsGapless
             | IsGrid
             | IsMobile
-            | IsDesktop -> result.AddCaseName opt
+            | IsDesktop -> result.AddCaseName option
             | IsGap (screen, size) ->
                 if not (List.contains "is-variable" result.Classes) then
                     result.AddClass("is-variable").AddClass(gapSizeGeneric screen size)
@@ -86,4 +86,4 @@ module Columns =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "columns").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "columns").ToReactElement(div, children)

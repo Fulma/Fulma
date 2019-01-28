@@ -21,17 +21,17 @@ module Control =
         | Modifiers of Modifier.IModifier list
 
     let internal controlView element options children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | HasIconRight
             | HasIconLeft
-            | IsExpanded -> result.AddCaseName opt
-            | IsLoading state -> if state then result.AddCaseName opt else result
+            | IsExpanded -> result.AddCaseName option
+            | IsLoading state -> if state then result.AddCaseName option else result
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "control").ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOptions, "control").ToReactElement(element, children)
 
     /// Generate <div class="control"></div>
     let div x y = controlView div x y

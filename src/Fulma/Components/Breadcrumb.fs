@@ -27,8 +27,8 @@ module Breadcrumb =
 
     /// Generate <nav class="breadcumb"></nav>
     let breadcrumb options children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size size -> ofSize size |> result.AddClass
             | IsCentered
             | IsRight
@@ -36,12 +36,12 @@ module Breadcrumb =
             | HasArrowSeparator
             | HasBulletSeparator
             | HasDotSeparator
-            | HasSucceedsSeparator -> result.AddCaseName opt
+            | HasSucceedsSeparator -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "breadcrumb")
+        GenericOptions.Parse(options, parseOptions, "breadcrumb")
                     .ToReactElement(nav, [ul [] children])
 
     module Item =
@@ -55,11 +55,11 @@ module Breadcrumb =
 
     /// Generate <li></li>
     let item (options: Item.Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
-            | Item.IsActive state -> if state then result.AddCaseName opt else result
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Item.IsActive state -> if state then result.AddCaseName option else result
             | Item.Props props -> result.AddProps props
             | Item.CustomClass customClass -> result.AddClass customClass
             | Item.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption).ToReactElement(li, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(li, children)

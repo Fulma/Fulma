@@ -18,19 +18,19 @@ module Tag =
 
     /// Generate <span class="tag"></span>
     let tag (options : Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size IsSmall ->
                 Fable.Import.Browser.console.warn("`is-small` is not a valid size for the tag element")
                 result
             | Size size -> ofSize size |> result.AddClass
-            | IsDelete -> result.AddCaseName opt
+            | IsDelete -> result.AddCaseName option
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "tag").ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions, "tag").ToReactElement(span, children)
 
     /// Generate <span class="tag is-delete"></span>
     let delete options children = tag (IsDelete::options) children
@@ -50,13 +50,13 @@ module Tag =
 
     /// Generate <div class="tags"></div>
     let list (options : List.Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | List.HasAddons
             | List.IsCentered
-            | List.IsRight -> result.AddCaseName opt
+            | List.IsRight -> result.AddCaseName option
             | List.Props props -> result.AddProps props
             | List.CustomClass customClass -> result.AddClass customClass
             | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "tags").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "tags").ToReactElement(div, children)

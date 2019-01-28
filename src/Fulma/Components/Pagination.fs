@@ -30,48 +30,48 @@ module Pagination =
 
     /// Generate <nav class="pagination"></nav>
     let pagination (options: Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsCentered
             | IsRight
-            | IsRounded -> result.AddCaseName opt
+            | IsRounded -> result.AddCaseName option
             | Size size -> ofSize size |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "pagination").ToReactElement(nav, children)
+        GenericOptions.Parse(options, parseOptions, "pagination").ToReactElement(nav, children)
 
     /// Generate <a class="pagination-previous"></a>
     let previous (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "pagination-previous").ToReactElement(a, children)
+        GenericOptions.Parse(options, parseOptions, "pagination-previous").ToReactElement(a, children)
 
     /// Generate <a class="pagination-next"></a>
     let next (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "pagination-next").ToReactElement(a, children)
+        GenericOptions.Parse(options, parseOptions, "pagination-next").ToReactElement(a, children)
 
     /// Generate <li><a class="pagination-link"></a></li>
     /// You control the `a` element
     let link (options: Link.Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
-            | Link.Current state -> if state then result.AddCaseName opt else result
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Link.Current state -> if state then result.AddCaseName option else result
             | Link.Props props -> result.AddProps props
             | Link.CustomClass customClass -> result.AddClass customClass
             | Link.Modifiers modifiers -> result.AddModifiers modifiers
 
         li [ ]
-           [ GenericOptions.Parse(options, parseOption, "pagination-link").ToReactElement(a, children) ]
+           [ GenericOptions.Parse(options, parseOptions, "pagination-link").ToReactElement(a, children) ]
 
     /// Generate <li><a class="pagination-ellipsis">&hellip;</a></li>
     /// You control the `a` element
     let ellipsis (options: GenericOption list) =
         li [ ]
            [ GenericOptions
-                .Parse(options, parseOption, "pagination-ellipsis")
+                .Parse(options, parseOptions, "pagination-ellipsis")
                 .AddProp(DangerouslySetInnerHTML { __html = "&hellip;" })
                 .ToReactElement(a) ]
 
     /// Generate <ul class="pagination-list"></ul>
     let list (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "pagination-list").ToReactElement(ul, children)
+        GenericOptions.Parse(options, parseOptions, "pagination-list").ToReactElement(ul, children)

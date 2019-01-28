@@ -15,15 +15,15 @@ module Notification =
 
     /// Generate <div class="notification"></div>
     let notification (options : Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "notification").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "notification").ToReactElement(div, children)
 
     /// Generate <button class="delete"></button>
     let delete (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "delete").ToReactElement(button, children)
+        GenericOptions.Parse(options, parseOptions, "delete").ToReactElement(button, children)

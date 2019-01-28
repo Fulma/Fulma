@@ -17,8 +17,8 @@ module Label =
 
     /// Generate <label class="label"></label>
     let label options children =
-        let parseOptions (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Size size -> ofSize size |> result.AddClass
             | For htmlFor -> HtmlFor htmlFor |> result.AddProp
             | Props props -> result.AddProps props

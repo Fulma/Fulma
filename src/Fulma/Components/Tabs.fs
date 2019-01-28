@@ -36,28 +36,28 @@ module Tabs =
 
     /// Generate <div class="tabs"><ul></ul></div>
     let tabs (options: Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsCentered
             | IsRight
             | IsBoxed
             | IsToggle
             | IsToggleRounded
-            | IsFullWidth -> result.AddCaseName opt
+            | IsFullWidth -> result.AddCaseName option
             | Size size -> ofSize size |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "tabs").ToReactElement(div, [ ul [ ] children ])
+        GenericOptions.Parse(options, parseOptions, "tabs").ToReactElement(div, [ ul [ ] children ])
 
     /// Generate <li></li>
     let tab (options: Tab.Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
-            | Tab.IsActive state -> if state then result.AddCaseName opt else result
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Tab.IsActive state -> if state then result.AddCaseName option else result
             | Tab.Props props -> result.AddProps props
             | Tab.CustomClass customClass -> result.AddClass customClass
             | Tab.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption).ToReactElement(li, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(li, children)

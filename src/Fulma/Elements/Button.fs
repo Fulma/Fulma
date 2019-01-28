@@ -44,8 +44,8 @@ module Button =
         | Modifiers of Modifier.IModifier list
 
     let internal btnView element (options : Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Color color -> ofColor color |> result.AddClass
             | Size size -> ofSize size |> result.AddClass
             // Styles
@@ -55,20 +55,20 @@ module Button =
             | IsInverted
             | IsText
             | IsRounded
-            | IsExpanded -> result.AddCaseName opt
+            | IsExpanded -> result.AddCaseName option
             // States
             | IsHovered state
             | IsFocused state
             | IsActive state
             | IsLoading state
-            | IsStatic state -> if state then result.AddCaseName opt else result
+            | IsStatic state -> if state then result.AddCaseName option else result
             | Disabled isDisabled -> Fable.Helpers.React.Props.Disabled isDisabled |> result.AddProp
             | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "button").ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOptions, "button").ToReactElement(element, children)
 
     /// Generate <button class="button"></button>
     let button options children = btnView button options children
@@ -118,13 +118,13 @@ module Button =
 
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | List.HasAddons
             | List.IsCentered
-            | List.IsRight -> Fable.Core.Reflection.getCaseName opt |> result.AddClass
+            | List.IsRight -> result.AddCaseName option
             | List.Props props -> result.AddProps props
             | List.CustomClass customClass -> result.AddClass customClass
             | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "buttons").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "buttons").ToReactElement(div, children)

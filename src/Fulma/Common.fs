@@ -13,15 +13,15 @@ type Screen =
     | [<CompiledName("touch")>] Touch
     | [<CompiledName("fullhd")>] FullHD
 
-    static member ToString opt =
-        match opt with
+    static member ToString (screen : Screen) =
+        match screen with
         | All -> ""
         | Desktop
         | Tablet
         | Mobile
         | WideScreen
         | Touch
-        | FullHD -> "-" + Fable.Core.Reflection.getCaseName opt
+        | FullHD -> "-" + Fable.Core.Reflection.getCaseName screen
 
 [<AutoOpen>]
 module Color =
@@ -311,8 +311,8 @@ module Modifier =
         | IsScreenReaderOnly
 
     let parseModifiers options =
-        let parseOption result opt =
-            match opt with
+        let parseOption result option =
+            match option with
             | BackgroundColor color             -> (ofBackground color)::result
             | TextColor color                   -> (ofText color)::result
             | TextWeight textWeight             -> (TextWeight.ofOption textWeight)::result
@@ -338,7 +338,7 @@ module Modifier =
             | IsClipped
             | IsRadiusless
             | IsShadowless
-            | IsUnselectable -> (Fable.Core.Reflection.getCaseName opt)::result
+            | IsUnselectable -> (Fable.Core.Reflection.getCaseName option)::result
 
         options |> List.fold parseOption []
 
@@ -404,7 +404,8 @@ module Common =
             let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
             el (classes::this.Props)
 
-    let parseOption (result: GenericOptions ) = function
+    let parseOptions (result : GenericOptions) option =
+        match option with
         | Props props -> result.AddProps props
         | CustomClass customClass -> result.AddClass customClass
         | Modifiers modifiers -> result.AddModifiers modifiers
@@ -412,8 +413,8 @@ module Common =
     module Helpers =
 
         let classes std (options : string option list) (booleans: (string * bool) list) =
-            let std = (std, options) ||> List.fold (fun complete opt ->
-                match opt with Some name -> complete + " " + name | None -> complete)
+            let std = (std, options) ||> List.fold (fun complete option ->
+                match option with Some name -> complete + " " + name | None -> complete)
             (std, booleans) ||> List.fold (fun complete (name, flag) ->
                 if flag then complete + " " + name else complete)
             |> ClassName :> IHTMLProp
@@ -423,10 +424,10 @@ module Text =
     open Fable.Helpers.React
 
     let p (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption).ToReactElement(p, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(p, children)
 
     let div (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption).ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(div, children)
 
     let span (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption).ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions).ToReactElement(span, children)

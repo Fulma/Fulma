@@ -24,15 +24,15 @@ module Table =
 
     /// Generate <table class="table"></table>
     let table options children =
-        let parseOptions (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsBordered
             | IsStriped
             | IsFullWidth
             | IsNarrow
-            | IsHoverable -> result.AddCaseName opt
+            | IsHoverable -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "table").ToReactElement(table, children)
+        GenericOptions.Parse(options, parseOptions, "table").ToReactElement(table, children)

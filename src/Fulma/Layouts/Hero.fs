@@ -27,37 +27,37 @@ module Hero =
 
     /// Generate <div class="hero"></div>
     let hero (options : Option list) children =
-        let parseOption (result: GenericOptions ) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | IsMedium
             | IsLarge
             | IsHalfHeight
             | IsFullHeight
             | IsFullheightWithNavbar
-            | IsBold -> result.AddCaseName opt
+            | IsBold -> result.AddCaseName option
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "hero").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero").ToReactElement(div, children)
 
     /// Generate <div class="hero-head"></div>
     let head (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "hero-head").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero-head").ToReactElement(div, children)
 
     /// Generate <div class="hero-body"></div>
     let body (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "hero-body").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero-body").ToReactElement(div, children)
 
     /// Generate <div class="hero-foot"></div>
     let foot (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "hero-foot").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero-foot").ToReactElement(div, children)
 
     /// Generate <div class="hero-video"></div>
     let video (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "hero-video").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero-video").ToReactElement(div, children)
 
     /// Generate <div class="hero-buttons"></div>
     let buttons (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "hero-buttons").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "hero-buttons").ToReactElement(div, children)

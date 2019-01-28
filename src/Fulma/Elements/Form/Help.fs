@@ -15,7 +15,7 @@ module Help =
 
     /// Generate <p class="help"></p>
     let help (options : Option list) children =
-        let parseOptions (result: GenericOptions) option =
+        let parseOptions (result : GenericOptions) option =
             match option with
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props

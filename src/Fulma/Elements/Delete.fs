@@ -17,8 +17,8 @@ module Delete =
 
     /// Generate <a class="delete"></a>
     let delete (options : Option list) children =
-        let parseOption (result : GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             // Sizes
             | Size size -> ofSize size |> result.AddClass
             // Extra
@@ -27,4 +27,4 @@ module Delete =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "delete").ToReactElement(a, children)
+        GenericOptions.Parse(options, parseOptions, "delete").ToReactElement(a, children)

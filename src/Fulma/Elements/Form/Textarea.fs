@@ -74,4 +74,4 @@ module Textarea =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "textarea").ToReactElement(textarea, children)
+        GenericOptions.Parse(options, parseOptions, "textarea").ToReactElement(textarea, children)

@@ -50,18 +50,18 @@ module Navbar =
             | Modifiers of Modifier.IModifier list
 
         let internal item element options children =
-            let parseOption (result: GenericOptions) opt =
-                match opt with
-                | IsActive state -> if state then result.AddCaseName opt else result
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | IsActive state -> if state then result.AddCaseName option else result
                 | IsExpanded
                 | IsTab
                 | IsHoverable
-                | HasDropdown -> result.AddCaseName opt
+                | HasDropdown -> result.AddCaseName option
                 | Props props -> result.AddProps props
                 | CustomClass customClass -> result.AddClass customClass
                 | Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption, "navbar-item").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-item").ToReactElement(element, children)
 
         /// Generate <div class="navbar-item"></div>
         let div x y = item div x y
@@ -80,15 +80,15 @@ module Navbar =
             | Modifiers of Modifier.IModifier list
 
         let internal link element (options : Option list) children =
-            let parseOption (result : GenericOptions) opt =
-                match opt with
-                | IsActive state -> if state then result.AddCaseName opt else result
-                | IsArrowless -> result.AddCaseName opt
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | IsActive state -> if state then result.AddCaseName option else result
+                | IsArrowless -> result.AddCaseName option
                 | Props props -> result.AddProps props
                 | CustomClass customClass -> result.AddClass customClass
                 | Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption, "navbar-link").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-link").ToReactElement(element, children)
 
         /// Generate <div class="navbar-link"></div>
         let div x y = link div x y
@@ -109,16 +109,16 @@ module Navbar =
             | Modifiers of Modifier.IModifier list
 
         let internal dropdown element (options : Option list) children =
-            let parseOption (result : GenericOptions) opt =
-                match opt with
-                | IsActive state -> if state then result.AddCaseName opt else result
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | IsActive state -> if state then result.AddCaseName option else result
                 | IsBoxed
-                | IsRight -> result.AddCaseName opt
+                | IsRight -> result.AddCaseName option
                 | Props props -> result.AddProps props
                 | CustomClass customClass -> result.AddClass customClass
                 | Modifiers modifiers -> result.AddModifiers modifiers
 
-            GenericOptions.Parse(options, parseOption, "navbar-dropdown").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-dropdown").ToReactElement(element, children)
 
         /// Generate <div class="navbar-dropdown"></div>
         let div x y = dropdown div x y
@@ -127,7 +127,7 @@ module Navbar =
 
     module Brand =
         let internal brand element (options: GenericOption list) children =
-            GenericOptions.Parse(options, parseOption, "navbar-brand").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-brand").ToReactElement(element, children)
 
         /// Generate <div class="navbar-brand"></div>
         let div x y = brand div x y
@@ -136,7 +136,7 @@ module Navbar =
 
     module Start =
         let internal start element (options: GenericOption list) children =
-            GenericOptions.Parse(options, parseOption, "navbar-start").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-start").ToReactElement(element, children)
 
         /// Generate <div class="navbar-start"></div>
         let div x y = start div x y
@@ -145,7 +145,7 @@ module Navbar =
 
     module End =
         let internal ``end`` element (options: GenericOption list) children =
-            GenericOptions.Parse(options, parseOption, "navbar-end").ToReactElement(element, children)
+            GenericOptions.Parse(options, parseOptions, "navbar-end").ToReactElement(element, children)
 
         /// Generate <div class="navbar-end"></div>
         let div x y = ``end`` div x y
@@ -154,38 +154,38 @@ module Navbar =
 
     /// Generate <nav class="navbar"></nav>
     let navbar (options : Option list) children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | HasShadow
             | IsFixedTop
             | IsFixedBottom
-            | IsTransparent -> result.AddCaseName opt
+            | IsTransparent -> result.AddCaseName option
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "navbar").ToReactElement(nav, children)
+        GenericOptions.Parse(options, parseOptions, "navbar").ToReactElement(nav, children)
 
     /// Generate <div class="navbar-menu"></div>
     let menu options children =
-        let parseOption (result: GenericOptions) opt =
-            match opt with
-            | Menu.IsActive state -> if state then result.AddCaseName opt else result
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Menu.IsActive state -> if state then result.AddCaseName option else result
             | Menu.Props props -> result.AddProps props
             | Menu.CustomClass customClass -> result.AddClass customClass
             | Menu.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "navbar-menu").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "navbar-menu").ToReactElement(div, children)
 
     /// Generate <div class="navbar-burger"></div>
     let burger (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "navbar-burger").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "navbar-burger").ToReactElement(div, children)
 
     /// Generate <div class="navbar-content"></div>
     let content (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "navbar-content").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "navbar-content").ToReactElement(div, children)
 
     /// Generate <div class="navbar-divider"></div>
     let divider (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "navbar-divider").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "navbar-divider").ToReactElement(div, children)

@@ -30,4 +30,4 @@ module Progress =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "progress").ToReactElement(progress, children)
+        GenericOptions.Parse(options, parseOptions, "progress").ToReactElement(progress, children)

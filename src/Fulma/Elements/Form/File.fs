@@ -34,7 +34,7 @@ module File =
 
     /// Generate <div class="file"></div>
     let file (options : Option list) children =
-        let parseOption (result : GenericOptions) option =
+        let parseOptions (result : GenericOptions) option =
             match option with
             | Size size -> ofSize size |> result.AddClass
             | IsFullWidth
@@ -51,24 +51,24 @@ module File =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOption, "file").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "file").ToReactElement(div, children)
 
     /// Generate <span class="file-cta"></span>
     let cta (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "file-cta").ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions, "file-cta").ToReactElement(span, children)
 
     /// Generate <span class="file-name"></span>
     let name (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "file-name").ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions, "file-name").ToReactElement(span, children)
 
     /// Generate <span class="file-icon"></span>
     let icon (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "file-icon").ToReactElement(span, children)
+        GenericOptions.Parse(options, parseOptions, "file-icon").ToReactElement(span, children)
 
     /// Generate <label class="file-label"></label>
     let label (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOption, "file-label").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "file-label").ToReactElement(label, children)
 
     /// Generate <input type="file" class="file-input"/>
     let input (options : GenericOption list) =
-        GenericOptions.Parse(options, parseOption, "file-input", [Type "file" :> IHTMLProp]).ToReactElement(input)
+        GenericOptions.Parse(options, parseOptions, "file-input", [Type "file" :> IHTMLProp]).ToReactElement(input)
