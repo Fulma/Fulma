@@ -311,7 +311,7 @@ module Modifier =
         | IsScreenReaderOnly
 
     let parseModifiers options =
-        let parseOption result option =
+        let parseOptions result option =
             match option with
             | BackgroundColor color             -> (ofBackground color)::result
             | TextColor color                   -> (ofText color)::result
@@ -340,7 +340,7 @@ module Modifier =
             | IsShadowless
             | IsUnselectable -> (Fable.Core.Reflection.getCaseName option)::result
 
-        options |> List.fold parseOption []
+        options |> List.fold parseOptions []
 
 [<AutoOpen>]
 module Common =
@@ -414,7 +414,9 @@ module Common =
 
         let classes std (options : string option list) (booleans: (string * bool) list) =
             let std = (std, options) ||> List.fold (fun complete option ->
-                match option with Some name -> complete + " " + name | None -> complete)
+                match option with
+                | Some name -> complete + " " + name
+                | None -> complete )
             (std, booleans) ||> List.fold (fun complete (name, flag) ->
                 if flag then complete + " " + name else complete)
             |> ClassName :> IHTMLProp

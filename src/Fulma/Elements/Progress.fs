@@ -19,9 +19,9 @@ module Progress =
         | Modifiers of Modifier.IModifier list
 
     /// Generate <progress class="progress"></progress>
-    let progress options children =
-        let parseOption (result : GenericOptions) =
-            function
+    let progress (options : Option list) children =
+        let parseOptions (result : GenericOptions) option =
+            match option with
             | Value value -> HTMLAttr.Value (float value) |> result.AddProp
             | Max max -> HTMLAttr.Max (float max) |> result.AddProp
             | Size size -> ofSize size |> result.AddClass

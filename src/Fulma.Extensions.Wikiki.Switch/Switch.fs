@@ -18,12 +18,17 @@ module Switch =
     type Option =
         | Color of IColor
         | Size of ISize
-        | IsOutlined
-        | IsRounded
-        | IsThin
-        | IsRtl
+        /// Add `is-rounded` class
+        | [<CompiledName("is-rounded")>] IsOutlined
+        /// Add `is-outlined` class
+        | [<CompiledName("is-outlined")>] IsRounded
+        /// Add `is-thin` class
+        | [<CompiledName("is-thin")>] IsThin
+        /// Add `is-rtl` class
+        | [<CompiledName("is-rtl")>] IsRtl
+        /// Set `Checked` HTMLAttr
         | Checked of bool
-        /// Add `disabled` HTMLAttr if true
+        /// Set `disabled` HTMLAttr
         | Disabled of bool
         | LabelProps of IHTMLProp list
         | InputProps of IHTMLProp list
@@ -31,78 +36,68 @@ module Switch =
         | CustomClass of string
         | Id of string
 
-    type internal Options =
-        { Color : string option
-          Size : string option
-          IsOutlined : bool
-          IsRounded : bool
-          IsChecked : bool
-          IsDisabled : bool
-          IsRtl : bool
-          IsThin : bool
-          LabelProps : IHTMLProp list
-          InputProps : IHTMLProp list
-          CustomClass : string option
-          OnChange : (React.FormEvent -> unit) option
-          Id : string option }
-        static member Empty =
-            { Color = None
-              Size = None
-              IsOutlined = false
-              IsRounded = false
-              IsChecked = false
-              IsDisabled = false
-              IsRtl = false
-              IsThin = false
-              LabelProps = [ ]
-              InputProps = [ ]
-              CustomClass = None
-              OnChange = None
-              Id = None }
+    let private parseOptionsForInput (result : GenericOptions) option =
+        match option with
+        | Option.Color color -> ofColor color |> result.AddClass
+        | Size size -> ofSize size |> result.AddClass
+        | IsOutlined
+        | IsRounded
+        | IsRtl
+        | IsThin -> result.AddCaseName option
+        | Checked state -> Props.Checked state |> result.AddProp
+        | Disabled state -> Props.Disabled state |> result.AddProp
+        | InputProps props -> result.AddProps props
+        | CustomClass customClass -> result.AddClass customClass
+        | OnChange cb -> Props.OnChange cb |> result.AddProp
+        | Id customId -> Props.Id customId |> result.AddProp
+        // If option abose don't match, then others don't impact the input generation
+        | LabelProps _ -> result
 
+    let private parseOptionsForLabel (result : GenericOptions) option =
+        match option with
+        | Id customId -> Props.HtmlFor customId |> result.AddProp
+        | LabelProps props -> result.AddProps props
+        // If option abose don't match, then others don't impact the label generation
+        | _ -> result
+
+    let private hasId (options : Option list) =
+        options
+        |> List.tryPick (fun option ->
+            match option with
+            | Id _ -> Some true
+            | _ -> None
+        )
+        |> Option.isSome
+
+    /// Generate
+    /// <fragment>
+    ///   <input class="switch" type="checkbox">
+    ///   <label>One</label>
+    /// </fragment>
     let switchInline (options : Option list) children =
 
-        let parseOptions (result: Options) opt =
-            match opt with
-            | Option.Color color -> { result with Color = ofColor color |> Some }
-            | Size size -> { result with Size = ofSize size |> Some }
-            | IsOutlined -> { result with IsOutlined  = true }
-            | IsRounded -> { result with IsRounded  = true }
-            | Checked state -> { result with IsChecked = state }
-            | Disabled state -> { result with IsDisabled = state }
-            | IsRtl -> { result with IsRtl = true }
-            | IsThin -> { result with IsThin = true }
-            | LabelProps props -> { result with LabelProps = props }
-            | InputProps props -> { result with InputProps = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | OnChange cb -> { result with OnChange = cb |> Some }
-            | Id customId -> { result with Id = Some customId }
+        if hasId options then
+            let inputElement =
+                GenericOptions.Parse(options, parseOptionsForInput, "switch", [Props.Type "checkbox" ]).ToReactElement(input)
 
-        let opts = options |> List.fold parseOptions Options.Empty
+            let labelElement =
+                GenericOptions.Parse(options, parseOptionsForLabel).ToReactElement(label, children)
 
-        if Option.isSome opts.Id then
             fragment [ ]
-                [ input
-                    [ yield Helpers.classes Classes.Switch [opts.Color; opts.Size; opts.CustomClass] [Classes.IsOutlined, opts.IsOutlined; Classes.IsRounded, opts.IsRounded; Classes.IsThin, opts.IsThin; Classes.IsRtl, opts.IsRtl]
-                      if Option.isSome opts.OnChange then
-                        yield DOMAttr.OnChange opts.OnChange.Value
-                        yield HTMLAttr.Checked opts.IsChecked
-                      else
-                        yield DefaultChecked opts.IsChecked
-                      yield! opts.InputProps
-                      yield Type "checkbox"
-                      yield HTMLAttr.Id opts.Id.Value
-                      yield HTMLAttr.Disabled opts.IsDisabled ]
-
-                  label [ if Option.isSome opts.Id then
-                            yield HtmlFor opts.Id.Value
-                          yield! opts.LabelProps ]
-                        children ]
+                [ inputElement
+                  labelElement ]
         else
             Text.span [ Modifiers [ Modifier.TextColor IsDanger
                                     Modifier.TextWeight TextWeight.Bold ] ]
                 [ str "You need to set an Id value for your Switch "]
 
+    /// Generate
+    /// <div class="field">
+    ///   <fragment>
+    ///     <input class="switch" type="checkbox">
+    ///     <label>One</label>
+    ///   </fragment>
+    /// </div>
     let switch (options : Option list) children =
         Field.div [ ]
             [ switchInline options children ]

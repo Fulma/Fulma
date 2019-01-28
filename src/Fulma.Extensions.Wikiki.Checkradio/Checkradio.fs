@@ -8,26 +8,23 @@ open Fable.Import
 [<RequireQualifiedAccess>]
 module Checkradio =
 
-    module Classes =
-        let [<Literal>] IsCheckradio = "is-checkradio"
-        let [<Literal>] IsCircle = "is-circle"
-        let [<Literal>] IsRtl = "is-rtl"
-        let [<Literal>] IsBlock = "is-block"
-        let [<Literal>] HasNoBorder = "has-no-border"
-        let [<Literal>] HasBackgroundColor = "has-background-color"
-
     type Option =
         | Color of IColor
         | Size of ISize
-        | IsRtl
-        | HasNoBorder
-        | HasBackgroundColor
-        | IsCircle
+        /// Add `is-rtl` class
+        | [<CompiledName("is-rtl")>] IsRtl
+        /// Add `has-no-border` class
+        | [<CompiledName("has-no-border")>] HasNoBorder
+        /// Add `has-background-color` class
+        | [<CompiledName("has-background-color")>] HasBackgroundColor
+        /// Add `is-circle` class
+        | [<CompiledName("is-circle")>] IsCircle
         /// Add `checked` HTMLAttr if true
         | Checked of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
-        | IsBlock
+        /// Add `is-block` class
+        | [<CompiledName("is-block")>] IsBlock
         | LabelProps of IHTMLProp list
         | InputProps of IHTMLProp list
         | OnChange of (React.FormEvent -> unit)
@@ -35,96 +32,91 @@ module Checkradio =
         | Id of string
         | Name of string
 
-    type internal Options =
-        { Color : string option
-          Size : string option
-          IsCircle : bool
-          IsChecked : bool
-          IsDisabled : bool
-          IsRtl : bool
-          IsBlock : bool
-          HasNoBorder : bool
-          HasBackgroundColor : bool
-          Name : string option
-          LabelProps : IHTMLProp list
-          InputProps : IHTMLProp list
-          CustomClass : string option
-          OnChange : (React.FormEvent -> unit) option
-          Id : string option }
+    let private parseOptionsForInput (result : GenericOptions) option =
+        match option with
+        | Option.Color color -> ofColor color |> result.AddClass
+        | Size size -> ofSize size |> result.AddClass
+        | IsCircle
+        | IsRtl
+        | HasNoBorder
+        | HasBackgroundColor
+        | IsBlock -> result.AddCaseName option
+        | Checked state -> Props.Checked state |> result.AddProp
+        | Disabled state -> Props.Disabled state |> result.AddProp
+        | Name customName -> Props.Name customName |> result.AddProp
+        | InputProps props -> result.AddProps props
+        | OnChange cb -> Props.OnChange cb |> result.AddProp
+        | Id customId -> Props.Id customId |> result.AddProp
+        | CustomClass customClass -> result.AddClass customClass
+        // If option abose don't match, then others don't impact the input generation
+        | LabelProps _ -> result
 
-        static member Empty =
-            { Color = None
-              Size = None
-              IsCircle = false
-              IsChecked = false
-              IsDisabled = false
-              IsRtl = false
-              IsBlock = false
-              HasNoBorder = false
-              HasBackgroundColor = false
-              Name = None
-              LabelProps = []
-              InputProps = []
-              CustomClass = None
-              OnChange = None
-              Id = None }
+    let private parseOptionsForLabel (result : GenericOptions) option =
+        match option with
+        | Id customId -> Props.HtmlFor customId |> result.AddProp
+        | LabelProps props -> result.AddProps props
+        // If option abose don't match, then others don't impact the label generation
+        | _ -> result
 
-    let private parseOptions (result: Options) opt =
-        match opt with
-        | Option.Color color -> { result with Color = ofColor color |> Some }
-        | Size size -> { result with Size = ofSize size |> Some }
-        | IsCircle -> { result with IsCircle = true }
-        | Checked state -> { result with IsChecked = state }
-        | Disabled state -> { result with IsDisabled = state }
-        | Name customName -> { result with Name = Some customName }
-        | LabelProps props -> { result with LabelProps = props }
-        | InputProps props -> { result with InputProps = props }
-        | CustomClass customClass -> { result with CustomClass = Some customClass }
-        | OnChange cb -> { result with OnChange = cb |> Some }
-        | Id customId -> { result with Id = Some customId }
-        | IsRtl -> { result with IsRtl = true }
-        | HasNoBorder -> { result with HasNoBorder = true }
-        | HasBackgroundColor -> { result with HasBackgroundColor = true }
-        | IsBlock -> { result with IsBlock = true }
+    let private hasId (options : Option list) =
+        options
+        |> List.tryPick (fun option ->
+            match option with
+            | Id _ -> Some true
+            | _ -> None
+        )
+        |> Option.isSome
 
     let private genericElement inputType baseClass (options : Option list) children =
-        let opts = options |> List.fold parseOptions Options.Empty
+        if hasId options then
+            let inputElement =
+                GenericOptions.Parse(options, parseOptionsForInput, baseClass, [Props.Type inputType]).ToReactElement(input)
 
-        if Option.isSome opts.Id then
+            let labelElement =
+                GenericOptions.Parse(options, parseOptionsForLabel).ToReactElement(label, children)
+
             fragment [ ]
-                [ input
-                    [ yield Helpers.classes baseClass [opts.Color; opts.Size; opts.CustomClass] [Classes.IsCircle, opts.IsCircle; Classes.IsRtl, opts.IsRtl; Classes.HasNoBorder, opts.HasNoBorder; Classes.IsBlock , opts.IsBlock; Classes.HasBackgroundColor, opts.HasBackgroundColor]
-                      if Option.isSome opts.OnChange then
-                        yield HTMLAttr.Checked opts.IsChecked
-                        yield DOMAttr.OnChange opts.OnChange.Value
-                      else
-                        yield DefaultChecked opts.IsChecked
-                      yield! opts.InputProps
-                      if Option.isSome opts.Name then
-                        yield HTMLAttr.Name opts.Name.Value
-                      yield Type inputType
-                      yield HTMLAttr.Id opts.Id.Value
-                      yield HTMLAttr.Disabled opts.IsDisabled ]
-
-                  label [ if Option.isSome opts.Id then
-                            yield HtmlFor opts.Id.Value
-                          yield! opts.LabelProps ]
-                        children ]
+                [ inputElement
+                  labelElement ]
         else
             Text.span [ Modifiers [ Modifier.TextColor IsDanger
                                     Modifier.TextWeight TextWeight.Bold ] ]
                 [ str "You need to set an Id value for your Checkradio "]
 
+    /// Generate
+    /// <fragment>
+    ///   <input class="is-checkradio" type="checkbox">
+    ///   <label>One</label>
+    /// </fragment>
     let checkboxInline (options : Option list) children =
-        genericElement "checkbox" Classes.IsCheckradio options children
+        genericElement "checkbox" "is-checkradio" options children
 
+    /// Generate
+    /// <div class="field">
+    ///   <fragment>
+    ///     <input class="is-checkradio" type="checkbox">
+    ///     <label>One</label>
+    ///   </fragment>
+    /// </div>
     let checkbox (options : Option list) children =
         Field.div [ ]
             [ checkboxInline options children ]
 
+    /// Generate
+    /// <fragment>
+    ///   <input class="is-checkradio" type="radio">
+    ///   <label>One</label>
+    /// </fragment>
     let radioInline (options : Option list) children =
-        genericElement "radio" Classes.IsCheckradio options children
+        genericElement "radio" "is-checkradio" options children
 
+    /// Generate
+    /// <div class="field">
+    ///   <fragment>
+    ///     <input class="is-checkradio" type="radio">
+    ///     <label>One</label>
+    ///   </fragment>
+    /// </div>
     let radio (options : Option list) children =
         Field.div [ ]
             [ radioInline options children ]
