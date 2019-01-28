@@ -7,63 +7,30 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Tag =
 
-    module Classes =
-        let [<Literal>] Container = "tag"
-        let [<Literal>] IsDelete = "is-delete"
-        module List =
-            let [<Literal>] Container = "tags"
-            let [<Literal>] HasAddons = "has-addons"
-            let [<Literal>] IsCentered = "is-centered"
-            let [<Literal>] IsRight = "is-right"
-
     type Option =
         | Size of ISize
         | Color of IColor
         /// Add `is-delete` class
-        | IsDelete
+        | [<CompiledName("is-delete")>] IsDelete
         | Props of IHTMLProp list
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Size : string option
-          Color : string option
-          IsDelete : bool
-          Props : IHTMLProp list
-          CustomClass : string option
-          Modifiers : string option list }
-        static member Empty =
-            { Size = None
-              Color = None
-              IsDelete = false
-              Props = []
-              CustomClass = None
-              Modifiers = [] }
-
     /// Generate <span class="tag"></span>
     let tag (options : Option list) children =
-        let parseOption (result : Options) opt =
+        let parseOption (result : GenericOptions) opt =
             match opt with
             | Size IsSmall ->
                 Fable.Import.Browser.console.warn("`is-small` is not a valid size for the tag element")
                 result
-            | Size size -> { result with Size = ofSize size |> Some }
-            | IsDelete -> { result with IsDelete = true }
-            | Color color -> { result with Color = ofColor color |> Some }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | Size size -> ofSize size |> result.AddClass
+            | IsDelete -> result.AddCaseName opt
+            | Color color -> ofColor color |> result.AddClass
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Size
-                          ::opts.Color
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ Classes.IsDelete, opts.IsDelete ]
-        span (classes::opts.Props)
-            children
+        GenericOptions.Parse(options, parseOption, "tag").ToReactElement(span, children)
 
     /// Generate <span class="tag is-delete"></span>
     let delete options children = tag (IsDelete::options) children
@@ -72,48 +39,24 @@ module Tag =
 
         type Option =
             /// Add `has-addons` class
-            | HasAddons
+            | [<CompiledName("has-addons")>]HasAddons
             /// Add `is-centered` class
-            | IsCentered
+            | [<CompiledName("is-centered")>]IsCentered
             /// Add `is-right` class
-            | IsRight
+            | [<CompiledName("is-right")>]IsRight
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
-        type internal Options =
-            { HasAddons : bool
-              IsCentered : bool
-              IsRight : bool
-              Props : IHTMLProp list
-              CustomClass : string option
-              Modifiers : string option list }
-
-            static member Empty =
-                { HasAddons = false
-                  IsCentered = false
-                  IsRight = false
-                  Props = [ ]
-                  CustomClass = None
-                  Modifiers = [] }
-
     /// Generate <div class="tags"></div>
     let list (options : List.Option list) children =
-        let parseOption (result : List.Options) opt =
+        let parseOption (result : GenericOptions) opt =
             match opt with
-            | List.HasAddons -> { result with HasAddons = true }
-            | List.IsCentered -> { result with IsCentered = true }
-            | List.IsRight -> { result with IsRight = true }
-            | List.Props props -> { result with Props = props }
-            | List.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | List.HasAddons
+            | List.IsCentered
+            | List.IsRight -> result.AddCaseName opt
+            | List.Props props -> result.AddProps props
+            | List.CustomClass customClass -> result.AddClass customClass
+            | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption List.Options.Empty
-        let classes = Helpers.classes
-                        Classes.List.Container
-                        ( opts.CustomClass::opts.Modifiers )
-                        [ Classes.List.HasAddons, opts.HasAddons
-                          Classes.List.IsCentered, opts.IsCentered
-                          Classes.List.IsRight, opts.IsRight ]
-
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, "tags").ToReactElement(div, children)

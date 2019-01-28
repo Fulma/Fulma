@@ -8,85 +8,49 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Heading =
 
-    module Classes =
-        let [<Literal>] Title = "title"
-        let [<Literal>] Subtitle = "subtitle"
-        module Size =
-          let [<Literal>] Is1 = "is-1"
-          let [<Literal>] Is2 = "is-2"
-          let [<Literal>] Is3 = "is-3"
-          let [<Literal>] Is4 = "is-4"
-          let [<Literal>] Is5 = "is-5"
-          let [<Literal>] Is6 = "is-6"
-        module Spacing =
-            let [<Literal>] IsNormal = "is-spaced"
-
     type Option =
         /// Add `is-1` class
-        | Is1
+        | [<CompiledName("is-1")>]Is1
         /// Add `is-2` class
-        | Is2
+        | [<CompiledName("is-2")>]Is2
         /// Add `is-3` class
-        | Is3
+        | [<CompiledName("is-3")>]Is3
         /// Add `is-4` class
-        | Is4
+        | [<CompiledName("is-4")>]Is4
         /// Add `is-5` class
-        | Is5
+        | [<CompiledName("is-5")>]Is5
         /// Add `is-6` class
-        | Is6
+        | [<CompiledName("is-6")>]Is6
         /// Add `subtitle` class
-        | IsSubtitle
-        /// Add `title` class
-        | IsSpaced
+        | [<CompiledName("subtitle`")>]IsSubtitle
+        /// Add `is-spaced` class
+        | [<CompiledName("is-spaced")>]IsSpaced
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { TitleSize : string option
-          TitleType : string
-          IsSpaced : bool
-          CustomClass : string option
-          Props : IHTMLProp list
-          Modifiers : string option list }
-        static member Empty =
-            { TitleSize = None
-              TitleType = Classes.Title
-              IsSpaced = false
-              CustomClass = None
-              Props = []
-              Modifiers = [] }
-
     let internal title (element : IHTMLProp list -> ReactElement list -> ReactElement) (options : Option list)
         (children) =
-        let parseOption result opt =
+        let parseOption (result : GenericOptions) opt =
             match opt with
             // Sizes
-            | Is1 -> { result with TitleSize = Classes.Size.Is1 |> Some }
-            | Is2 -> { result with TitleSize = Classes.Size.Is2 |> Some }
-            | Is3 -> { result with TitleSize = Classes.Size.Is3 |> Some }
-            | Is4 -> { result with TitleSize = Classes.Size.Is4 |> Some }
-            | Is5 -> { result with TitleSize = Classes.Size.Is5 |> Some }
-            | Is6 -> { result with TitleSize = Classes.Size.Is6 |> Some }
+            | Is1
+            | Is2
+            | Is3
+            | Is4
+            | Is5
+            | Is6
+            | IsSpaced -> result.AddCaseName opt
             // Styles
-            | IsSubtitle -> { result with TitleType = Classes.Subtitle }
-            | IsSpaced -> { result with IsSpaced = true }
+            | IsSubtitle ->
+                result.RemoveClass("title").AddClass("subtitle")
             // Extra
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption Options.Empty
-        let classes = Helpers.classes
-                        opts.TitleType
-                        ( opts.TitleSize
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ Classes.Spacing.IsNormal, opts.IsSpaced ]
-
-        element (classes::opts.Props)
-            children
+        GenericOptions.Parse(options, parseOption).ToReactElement(element, children)
 
     // Alias
     /// Generate <h1 class="title is-1"></h1>

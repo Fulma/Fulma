@@ -7,94 +7,42 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Select =
 
-    module Classes =
-        let [<Literal>] Container = "select"
-        module State =
-            let [<Literal>] IsDisabled = "is-disabled"
-            let [<Literal>] IsLoading = "is-loading"
-            let [<Literal>] IsFocused = "is-focused"
-            let [<Literal>] IsActive = "is-active"
-        module Size =
-            let [<Literal>] IsSmall = "is-small"
-            let [<Literal>] IsMedium = "is-medium"
-            let [<Literal>] IsLarge = "is-large"
-            let [<Literal>] IsFullwidth = "is-fullwidth"
-            let [<Literal>] IsInline = "is-inline"
-        module Styles =
-            let [<Literal>] IsRounded = "is-rounded"
-
     type Option =
         | Size of ISize
         /// Add `is-fullwidth` class
-        | IsFullWidth
+        | [<CompiledName("is-fullwidth")>] IsFullWidth
         /// Add `is-inline` class
-        | IsInline
+        | [<CompiledName("is-inline")>] IsInline
         /// Add `is-loading` class if true
-        | IsLoading of bool
+        | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-focused` class if true
-        | IsFocused of bool
+        | [<CompiledName("is-focused")>] IsFocused of bool
         /// Add `is-active` class if true
-        | IsActive of bool
+        | [<CompiledName("is-active")>] IsActive of bool
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Color of IColor
         /// Add `is-rounded` class
-        | IsRounded
+        | [<CompiledName("is-rounded")>] IsRounded
         | Props of IHTMLProp list
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Size : string option
-          Color : string option
-          IsLoading : bool
-          IsFocused : bool
-          IsActive : bool
-          IsDisabled : bool
-          IsRounded : bool
-          Props : IHTMLProp list
-          CustomClass : string option
-          Modifiers : string option list }
-        static member Empty =
-            { Size = None
-              Color = None
-              IsLoading = false
-              IsFocused = false
-              IsActive = false
-              IsDisabled = false
-              IsRounded = false
-              Props = []
-              CustomClass = None
-              Modifiers = [] }
-
     /// Generate <div class="select"></div>
     let select (options : Option list) children =
-        let parseOptions (result : Options) =
-            function
-            | Size size -> { result with Size = ofSize size |> Some }
-            | IsFullWidth -> { result with Size = Classes.Size.IsFullwidth |> Some }
-            | IsInline -> { result with Size = Classes.Size.IsInline |> Some }
-            | IsLoading state -> { result with IsLoading = state }
-            | IsFocused state -> { result with IsFocused = state }
-            | IsActive state -> { result with IsActive = state }
-            | Disabled state -> { result with IsDisabled = state }
-            | IsRounded -> { result with IsRounded = true }
-            | Color color -> { result with Color = ofColor color |> Some }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Size size -> ofSize size |> result.AddClass
+            | Color color -> ofColor color |> result.AddClass
+            | IsFullWidth
+            | IsInline
+            | IsRounded -> result.AddCaseName option
+            | IsLoading state
+            | IsFocused state
+            | IsActive state
+            | Disabled state -> if state then result.AddCaseName option else result
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes =
-            Helpers.classes
-                Classes.Container
-                ( opts.Size
-                  ::opts.Color
-                  ::opts.CustomClass
-                  ::opts.Modifiers )
-                [ Classes.State.IsLoading, opts.IsLoading
-                  Classes.State.IsFocused, opts.IsFocused
-                  Classes.State.IsActive, opts.IsActive
-                  Classes.State.IsDisabled, opts.IsDisabled
-                  Classes.Styles.IsRounded, opts.IsRounded ]
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOptions, "select").ToReactElement(div, children)

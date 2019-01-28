@@ -356,20 +356,34 @@ module Common =
         static member Empty =
             { Props = []; Classes = [] }
 
-        static member Parse(options, parser, ?baseClass) =
+        static member Parse(options, parser, ?baseClass, ?baseProps) =
             let result = options |> List.fold parser GenericOptions.Empty
-            match baseClass with
-            | Some baseClass -> result.AddClass(baseClass)
+
+            let result =
+                match baseClass with
+                | Some baseClass -> result.AddClass(baseClass)
+                | None -> result
+
+            match baseProps with
+            | Some baseProps -> result.AddProps(baseProps)
             | None -> result
 
-        member this.AddProp(prop) =
+        member this.AddProp(prop : IHTMLProp) =
             { this with Props = prop::this.Props }
 
-        member this.AddProps(props) =
+        member this.AddProps(props : IHTMLProp list) =
             { this with Props = props@this.Props }
 
         member this.AddClass(cl: string) =
             { this with Classes = cl::this.Classes }
+
+        member this.RemoveClass(cl: string) =
+            let classes =
+                this.Classes
+                |> List.filter (fun cls ->
+                    cls <> cl
+                )
+            { this with Classes = classes }
 
         member this.AddCaseName(case: obj) =
             Fable.Core.Reflection.getCaseName case |> this.AddClass

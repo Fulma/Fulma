@@ -40,7 +40,6 @@
     <Compile Include="Elements/Progress.fs" />
     <Compile Include="Elements/Table.fs" />
     <Compile Include="Elements/Tag.fs" />
-    <!-- <Compile Include="Elements/Form/Fieldset.fs" /> -->
     <Compile Include="Elements/Form/Checkbox.fs" />
     <Compile Include="Elements/Form/Control.fs" />
     <Compile Include="Elements/Form/Field.fs" />

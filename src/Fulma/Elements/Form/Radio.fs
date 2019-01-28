@@ -7,9 +7,6 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Radio =
 
-    module Classes =
-        let [<Literal>] Container = "radio"
-
     module Input =
 
         type Option =
@@ -19,39 +16,17 @@ module Radio =
             | Name of string
             | Modifiers of Modifier.IModifier list
 
-        type internal Options =
-            { CustomClass : string option
-              Props : IHTMLProp list
-              Name : string option
-              Modifiers : string option list }
-
-            static member Empty =
-                { CustomClass = None
-                  Props = []
-                  Name = None
-                  Modifiers = [] }
-
     /// Generate <label class="radio"></label>
     let radio (options : GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes Classes.Container [opts.CustomClass] []
-        label (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOption, "radio").ToReactElement(label, children)
 
     /// Generate <input class="radio" />
     let input (options : Input.Option list) =
-        let parseOptions (result : Input.Options) option =
+        let parseOptions (result : GenericOptions) option =
             match option with
-            | Input.Name name -> { result with Name = Some name }
-            | Input.CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Input.Props props -> { result with Props = props }
-            | Input.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | Input.Name name -> Props.Name name |> result.AddProp
+            | Input.Props props -> result.AddProps props
+            | Input.CustomClass customClass -> result.AddClass customClass
+            | Input.Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Input.Options.Empty
-        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers ) []
-        let t = Type "radio" :> IHTMLProp
-        let attrs =
-            match opts.Name with
-            | Some name -> classes::t::(Name name :> IHTMLProp)::opts.Props
-            | None -> classes::t::opts.Props
-
-        input attrs
+        GenericOptions.Parse(options, parseOptions, "radio", [ Type "radio" ]).ToReactElement(input)

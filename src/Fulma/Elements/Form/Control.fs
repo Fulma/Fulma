@@ -7,68 +7,31 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Control =
 
-    module Classes =
-        let [<Literal>] Container = "control"
-        module HasIcon =
-            let [<Literal>] Left = "has-icons-left"
-            let [<Literal>] Right = "has-icons-right"
-        module State =
-            let [<Literal>] IsLoading = "is-loading"
-        let [<Literal>] IsExpanded = "is-expanded"
-
     type Option =
         /// Add `has-icons-right` class
-        | HasIconRight
+        | [<CompiledName("has-icons-right")>] HasIconRight
         /// Add `has-icons-left` class
-        | HasIconLeft
+        | [<CompiledName("has-icons-left")>] HasIconLeft
         /// Add `is-loading` class if true
-        | IsLoading of bool
+        | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-expanded` class
-        | IsExpanded
+        | [<CompiledName("is-expanded")>] IsExpanded
         | CustomClass of string
         | Props of IHTMLProp list
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { HasIconLeft : bool
-          HasIconRight : bool
-          CustomClass : string option
-          Props : IHTMLProp list
-          IsLoading : bool
-          IsExpanded : bool
-          Modifiers : string option list }
-        static member Empty =
-            { HasIconLeft = false
-              HasIconRight = false
-              CustomClass = None
-              Props = []
-              IsLoading = false
-              IsExpanded = false
-              Modifiers = [] }
-
     let internal controlView element options children =
-        let parseOptions (result : Options) =
-            function
-            | HasIconRight -> { result with HasIconRight = true }
-            | HasIconLeft -> { result with HasIconLeft = true }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
-            | IsLoading state -> { result with IsLoading = state }
-            | IsExpanded  -> { result with IsExpanded = true }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+        let parseOption (result : GenericOptions) opt =
+            match opt with
+            | HasIconRight
+            | HasIconLeft
+            | IsExpanded -> result.AddCaseName opt
+            | IsLoading state -> if state then result.AddCaseName opt else result
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.CustomClass::opts.Modifiers )
-                        [ Classes.State.IsLoading, opts.IsLoading
-                          Classes.HasIcon.Right, opts.HasIconRight
-                          Classes.HasIcon.Left, opts.HasIconLeft
-                          Classes.IsExpanded, opts.IsExpanded ]
-
-        element (classes::opts.Props)
-            children
+        GenericOptions.Parse(options, parseOption, "control").ToReactElement(element, children)
 
     /// Generate <div class="control"></div>
     let div x y = controlView div x y

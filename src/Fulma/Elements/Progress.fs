@@ -7,9 +7,6 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Progress =
 
-    module Classes =
-        let [<Literal>] Container = "progress"
-
     type Option =
         | Size of ISize
         | Color of IColor
@@ -21,46 +18,16 @@ module Progress =
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Size : string option
-          Color : string option
-          Props : IHTMLProp list
-          Max : int option
-          Value : int option
-          CustomClass : string option
-          Modifiers : string option list }
-        static member Empty =
-            { Size = None
-              Color = None
-              Props = []
-              Max = None
-              Value = None
-              CustomClass = None
-              Modifiers = [] }
-
     /// Generate <progress class="progress"></progress>
     let progress options children =
-        let parseOptions (result : Options) =
+        let parseOption (result : GenericOptions) =
             function
-            | Size size -> { result with Size = ofSize size |> Some }
-            | Color color -> { result with Color = ofColor color |> Some }
-            | Props props -> { result with Props = props }
-            | Value value -> { result with Value = value |> Some }
-            | Max max -> { result with Max = max |> Some }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | Value value -> HTMLAttr.Value (float value) |> result.AddProp
+            | Max max -> HTMLAttr.Max (float max) |> result.AddProp
+            | Size size -> ofSize size |> result.AddClass
+            | Color color -> ofColor color |> result.AddClass
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Size
-                          ::opts.Color
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ ]
-        progress
-            [ yield classes
-              yield! opts.Props
-              if Option.isSome opts.Value then yield HTMLAttr.Value (string opts.Value.Value) :> IHTMLProp
-              if Option.isSome opts.Max then yield HTMLAttr.Max (float opts.Max.Value) :> IHTMLProp ]
-            children
+        GenericOptions.Parse(options, parseOption, "progress").ToReactElement(progress, children)

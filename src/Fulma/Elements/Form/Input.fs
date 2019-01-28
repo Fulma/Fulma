@@ -43,7 +43,7 @@ module Input =
     type Option =
         | Size of ISize
         /// Set `Type` HTMLAttr
-        /// Don't use if the you used one of the helpers like: `Input.password`
+        /// Don't use if you used one of the helpers like: `Input.password`
         | Type of IInputType
         | Color of IColor
         /// Set `Id` HTMLAttr
@@ -53,13 +53,13 @@ module Input =
         /// Set `IsReadOnly` HTMLAttr
         | IsReadOnly of bool
         /// Add `is-static` class if true
-        | IsStatic of bool
+        | [<CompiledName("is-static")>] IsStatic of bool
         /// Add `is-rounded` class
-        | IsRounded
+        | [<CompiledName("is-rounded")>] IsRounded
         /// Set `Value` HTMLAttr
         | Value of string
         /// Set `DefaultValue` HTMLAttr
-        | DefaultValue of string        
+        | DefaultValue of string
         /// `Ref` callback that sets the value of an input textbox after DOM element is created.
         | ValueOrDefault of string
         /// Set `Placeholder` HTMLAttr
@@ -70,46 +70,8 @@ module Input =
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Size : string option
-          Type : string
-          Color : string option
-          Id : string option
-          Disabled : bool
-          IsReadOnly : bool
-          IsStatic : bool
-          IsRounded : bool
-          Value : string option
-          DefaultValue : string option
-          ValueOrDefault : string option
-          Placeholder : string option
-          OnChange : (React.FormEvent -> unit) option
-          Ref : (Browser.Element->unit) option
-          Props : IHTMLProp list
-          CustomClass : string option
-          Modifiers : string option list }
-
-        static member Empty =
-            { Size = None
-              Type = ""
-              Color = None
-              Id = None
-              Disabled = false
-              IsReadOnly = false
-              IsStatic = false
-              IsRounded = false
-              Value = None
-              DefaultValue = None
-              ValueOrDefault = None
-              Placeholder = None
-              OnChange = None
-              Ref = None
-              Props = []
-              CustomClass = None
-              Modifiers = [] }
-
-    let private ofType =
-        function
+    let private ofType (typ : IInputType) =
+        match typ with
         | Text -> "text"
         | Password -> "password"
         | DatetimeLocal -> "datetime-local"
@@ -127,53 +89,33 @@ module Input =
     open Fable.Core.JsInterop
 
     /// Generate <input class="input" />
-    let input options =
-        let parseOptions (result : Options) option =
+    let input (options : Option list) =
+        let parseOptions (result : GenericOptions) option =
             match option with
-            | Size size -> { result with Size = ofSize size |> Some }
-            | Type type' -> { result with Type = ofType type' }
-            | Color color -> { result with Color = ofColor color |> Some }
-            | Id id -> { result with Id = Some id }
-            | Disabled disabled -> { result with Disabled = disabled }
-            | IsReadOnly state -> { result with IsReadOnly = state }
-            | IsStatic state -> { result with IsStatic = state }
-            | IsRounded -> { result with IsRounded = true }
-            | Value value -> { result with Value = Some value }
-            | DefaultValue defaultValue -> { result with DefaultValue = Some defaultValue }
-            | ValueOrDefault valueOrDefault -> { result with ValueOrDefault = Some valueOrDefault }
-            | Placeholder placeholder -> { result with Placeholder = Some placeholder }
-            | Props props -> { result with Props = props }
-            | OnChange cb -> { result with OnChange = cb |> Some }
-            | Ref cb -> { result with Ref = cb |> Some }
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | IsStatic state -> if state then result.AddCaseName option else result
+            | IsRounded -> result.AddCaseName option
+            | Size size -> ofSize size |> result.AddClass
+            | Color color -> ofColor color |> result.AddClass
+            | Type type' -> Props.Type (ofType type') |> result.AddProp
+            | Id id -> Props.Id id |> result.AddProp
+            | Disabled disabled -> Props.Disabled disabled |> result.AddProp
+            | IsReadOnly state -> Props.ReadOnly state |> result.AddProp
+            | Value value -> Props.Value value |> result.AddProp
+            | DefaultValue defaultValue -> Props.DefaultValue defaultValue |> result.AddProp
+            | ValueOrDefault valueOrDefault ->
+                Props.Ref <| (fun e ->
+                    if e |> isNull |> not
+                        && !!e?value <> valueOrDefault then
+                        e?value <- valueOrDefault
+                ) |> result.AddProp
+            | Placeholder placeholder -> Props.Placeholder placeholder |> result.AddProp
+            | OnChange cb -> Props.OnChange cb |> result.AddProp
+            | Ref ref -> Props.Ref ref |> result.AddProp
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Size
-                          ::opts.Color
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ Classes.State.IsStatic, opts.IsStatic
-                          Classes.Styles.IsRounded, opts.IsRounded ]
-        input
-            ([ yield classes
-               yield Props.Disabled opts.Disabled :> IHTMLProp
-               yield ReadOnly opts.IsReadOnly :> IHTMLProp
-               yield Props.Type opts.Type :> IHTMLProp
-               if Option.isSome opts.Id then yield Props.Id opts.Id.Value :> IHTMLProp
-               if Option.isSome opts.Value then yield Props.Value opts.Value.Value :> IHTMLProp
-               if Option.isSome opts.DefaultValue then
-                   yield Props.DefaultValue opts.DefaultValue.Value :> IHTMLProp
-               if Option.isSome opts.ValueOrDefault then
-                    yield Props.Ref <| (fun e -> if e |> isNull |> not && !!e?value <> !!opts.ValueOrDefault.Value then e?value <- !!opts.ValueOrDefault.Value) :> IHTMLProp
-               if Option.isSome opts.Placeholder then yield Props.Placeholder opts.Placeholder.Value :> IHTMLProp
-               if Option.isSome opts.OnChange then
-                yield DOMAttr.OnChange opts.OnChange.Value :> IHTMLProp
-               if Option.isSome opts.Ref then
-                yield Prop.Ref opts.Ref.Value :> IHTMLProp ]
-             @ opts.Props)
+        GenericOptions.Parse(options, parseOptions, "input").ToReactElement(input)
 
     /// Generate <input type="text" class="input" />
     let inline text options = input (Type Text :: options)
