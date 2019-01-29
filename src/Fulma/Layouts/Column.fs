@@ -55,10 +55,10 @@ module Column =
         | Screen.Touch -> "-touch"
 
     let internal ofWidth (screen, size) =
-        Fable.Core.Reflection.getCaseName size + suffix screen
+        Reflection.getCaseName size + suffix screen
 
     let internal ofOffset (screen, offset) =
-        let className = Fable.Core.Reflection.getCaseName offset
+        let className = Reflection.getCaseName offset
         "is-offset-" + className.[3..] + suffix screen
 
     /// Generate <div class="column"></div>

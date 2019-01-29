@@ -73,6 +73,9 @@
                 <TupleParentheses>
                     <Enabled>false</Enabled>
                 </TupleParentheses>
+                <UnionDefinitionIndentation>
+                    <Enabled>false</Enabled>
+                </UnionDefinitionIndentation>
             </Rules>
         </Formatting>
     </Analysers>

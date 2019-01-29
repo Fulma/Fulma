@@ -22,7 +22,7 @@ module Tile =
         | [<CompiledName("is-12")>] Is12
 
         static member ToString (x : ISize)=
-            Fable.Core.Reflection.getCaseName x
+            Reflection.getCaseName x
 
     type Option =
         | Size of ISize

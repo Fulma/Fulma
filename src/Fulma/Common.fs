@@ -3,6 +3,45 @@ namespace Fulma
 open Fable.Import.React
 open Fable.Helpers.React.Props
 
+module Reflection =
+
+    open Microsoft.FSharp.Reflection
+    open System
+
+    #if FABLE_COMPILER
+    let inline getCaseName (case : 'T) =
+        Fable.Core.Reflection.getCaseName case
+    #else
+    let getCaseName (case : 'T) =
+        // Get UnionCaseInfo value from the F# reflection tools
+        let (caseInfo, _args) = FSharpValue.GetUnionFields(case, typeof<'T>)
+        // Pull all attributes
+        let attributes = caseInfo.GetCustomAttributes()
+
+        let haveError =
+            attributes
+            |> Seq.ofArray
+            // Filter for the FatalError values
+            |> Seq.filter (fun x -> x :? CompiledNameAttribute)
+            // Cast each value
+            |> Seq.map (fun x -> x :?> CompiledNameAttribute)
+            // Seq.take breaks if there aren't enough, so use Seq.truncate instead
+            |> Seq.truncate 1
+            |> List.ofSeq
+
+        if haveError.IsEmpty then String.Empty
+        else haveError.Head.CompiledName
+    #endif
+
+    #if FABLE_COMPILER
+    let inline getCaseTag (case : 'T) =
+        Fable.Core.Reflection.getCaseTag case
+    #else
+    let getCaseTag (case : 'T) =
+        let (caseInfo, _args) = FSharpValue.GetUnionFields(case, typeof<'T>)
+        caseInfo.Tag
+    #endif
+
 [<RequireQualifiedAccess>]
 type Screen =
     | All
@@ -21,7 +60,7 @@ type Screen =
         | Mobile
         | WideScreen
         | Touch
-        | FullHD -> "-" + Fable.Core.Reflection.getCaseName screen
+        | FullHD -> "-" + Reflection.getCaseName screen
 
 [<AutoOpen>]
 module Color =
@@ -73,7 +112,7 @@ module Color =
         | IsGreyLight
         | IsGreyLighter
         | IsWhiteTer
-        | IsWhiteBis -> Fable.Core.Reflection.getCaseName level
+        | IsWhiteBis -> Reflection.getCaseName level
 
 [<AutoOpen>]
 module Size =
@@ -84,7 +123,7 @@ module Size =
         | [<CompiledName("is-large")>] IsLarge
 
     let inline ofSize size =
-        Fable.Core.Reflection.getCaseName size
+        Reflection.getCaseName size
 
 [<RequireQualifiedAccess>]
 module TextSize =
@@ -98,7 +137,7 @@ module TextSize =
         | Is7
 
         static member ToString (x: Option) =
-            Fable.Core.Reflection.getCaseTag x + 1 |> string
+            Reflection.getCaseTag x + 1 |> string
 
     let inline generic screen size =
         "is-size-" + Option.ToString size + Screen.ToString screen
@@ -127,7 +166,7 @@ module TextAlignment =
         | [<CompiledName("has-text-left")>] Right
 
         static member inline ToString opt =
-            Fable.Core.Reflection.getCaseName opt
+            Reflection.getCaseName opt
 
     let inline generic screen alignment =
         Option.ToString alignment + Screen.ToString screen
@@ -156,7 +195,7 @@ module TextWeight =
         | [<CompiledName("has-text-weight-bold")>] Bold
 
     let inline internal ofOption opt =
-        Fable.Core.Reflection.getCaseName opt
+        Reflection.getCaseName opt
 
 [<RequireQualifiedAccess>]
 module TextTransform =
@@ -172,7 +211,7 @@ module TextTransform =
         | [<CompiledName("is-italic")>] Italic
 
         static member inline toClass opt =
-            Fable.Core.Reflection.getCaseName opt
+            Reflection.getCaseName opt
 
 [<RequireQualifiedAccess>]
 module Display =
@@ -185,7 +224,7 @@ module Display =
         | [<CompiledName("inline-flex")>] InlineFlex
 
         static member inline toClass opt =
-            Fable.Core.Reflection.getCaseName opt
+            Reflection.getCaseName opt
 
     let internal toDisplayClass screen display =
         let display = Option.toClass display
@@ -230,7 +269,7 @@ module Modifier =
         | IsGreyLight
         | IsGreyLighter
         | IsWhiteTer
-        | IsWhiteBis -> "has-background-" + (Fable.Core.Reflection.getCaseName level).[3..]
+        | IsWhiteBis -> "has-background-" + (Reflection.getCaseName level).[3..]
 
     let internal ofText level =
         match level with
@@ -254,7 +293,7 @@ module Modifier =
         | IsGreyLight
         | IsGreyLighter
         | IsWhiteTer
-        | IsWhiteBis -> "has-text-" + (Fable.Core.Reflection.getCaseName level).[3..]
+        | IsWhiteBis -> "has-text-" + (Reflection.getCaseName level).[3..]
 
     let internal ofInvisible screen =
         "is-invisible" + Screen.ToString screen
@@ -338,7 +377,7 @@ module Modifier =
             | IsClipped
             | IsRadiusless
             | IsShadowless
-            | IsUnselectable -> (Fable.Core.Reflection.getCaseName option)::result
+            | IsUnselectable -> (Reflection.getCaseName option)::result
 
         options |> List.fold parseOptions []
 
@@ -386,7 +425,7 @@ module Common =
             { this with Classes = classes }
 
         member this.AddCaseName(case: obj) =
-            Fable.Core.Reflection.getCaseName case |> this.AddClass
+            Reflection.getCaseName case |> this.AddClass
 
         member this.AddModifiers(modifiers) =
             { this with Classes = (modifiers |> Modifier.parseModifiers) @ this.Classes }

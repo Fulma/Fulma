@@ -7,27 +7,27 @@ open Fulma.Extensions.Wikiki
 
 let basicInteractive () =
     div [ ]
-        [ div [ ClassName TextAlignment.Classes.HasTextCentered ]
+        [ Text.div [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
               [ Heading.h1 [ ]
                     [ str "Top" ] ]
           Divider.divider [ ]
-          div [ ClassName TextAlignment.Classes.HasTextCentered ]
+          Text.div [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
               [ Heading.h1 [ ]
                     [ str "Middle" ] ]
           Divider.divider [ Divider.Label "OR" ]
-          div [ ClassName TextAlignment.Classes.HasTextCentered ]
+          Text.div [ Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
               [ Heading.h1 [ ]
                     [ str "Bottom" ] ] ]
 
 let verticalInteractive () =
      Columns.columns [ ]
-        [ Column.column [ Column.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ]  ]
+        [ Column.column [ Column.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
               [ Heading.h1 [ ]
                     [ str "Left"] ]
           Column.column [ ]
               [ Divider.divider [ Divider.Label "OR"
                                   Divider.IsVertical ] ]
-          Column.column [ Column.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ]  ]
+          Column.column [ Column.Modifiers [ Modifier.TextAlignment (Screen.All, TextAlignment.Centered) ] ]
               [ Heading.h1 [ ]
                     [ str "Right" ] ] ]
 

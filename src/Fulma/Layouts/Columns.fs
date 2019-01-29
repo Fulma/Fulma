@@ -18,7 +18,7 @@ module Columns =
         | [<CompiledName("is-8")>] Is8
 
         static member ToString (x : ISize)=
-            Fable.Core.Reflection.getCaseName x
+            Reflection.getCaseName x
 
     let inline private gapSizeGeneric (screen : Screen) (size : ISize) =
         "is-" + ISize.ToString size + Screen.ToString screen

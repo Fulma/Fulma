@@ -40,7 +40,8 @@ type DatePickerDemo(props) =
 
     override this.render () =
         let datePickerView =
-                DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
+            str "todo"
+            // DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
 
         let dateText =
             match this.state.CurrentDate with

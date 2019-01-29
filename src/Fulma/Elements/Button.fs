@@ -36,7 +36,7 @@ module Button =
         | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-static` class if true
         | [<CompiledName("is-static")>] IsStatic of bool
-        /// Add `disabled` HTMLAttr if true
+        /// Set `disabled` HTMLAttr
         | Disabled of bool
         | Props of IHTMLProp list
         | OnClick of (MouseEvent -> unit)

@@ -51,7 +51,7 @@ module.exports = {
     mode: isProduction ? "production" : "development",
     output: {
         path: path.join(__dirname, './public'),
-        filename: isProduction ? '[name].js' : '[name].js'
+        filename: isProduction ? '[name].js' : '[name].[hash].js'
     },
     optimization: {
         // Split the code coming from npm packages into a different file.
@@ -63,7 +63,7 @@ module.exports = {
                     name: "vendors",
                     chunks: "all"
                 }
-            }
+            },
         },
     },
     plugins: isProduction ?
