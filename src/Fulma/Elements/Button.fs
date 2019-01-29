@@ -8,158 +8,67 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Button =
 
-    module Classes =
-        let [<Literal>] Container = "button"
-        module State =
-              let [<Literal>] IsHovered = "is-hovered"
-              let [<Literal>] IsFocused = "is-focus"
-              let [<Literal>] IsActive = "is-active"
-              let [<Literal>] IsLoading = "is-loading"
-              let [<Literal>] IsStatic = "is-static"
-        module Styles =
-            let [<Literal>] IsFullwidth = "is-fullwidth"
-            let [<Literal>] IsLink = "is-link"
-            let [<Literal>] IsOutlined = "is-outlined"
-            let [<Literal>] IsInverted = "is-inverted"
-            let [<Literal>] IsText = "is-text"
-            let [<Literal>] IsRounded = "is-rounded"
-            let [<Literal>] IsExpanded = "is-expanded"
-        module List =
-            let [<Literal>] Container = "buttons"
-            let [<Literal>] HasAddons = "has-addons"
-            let [<Literal>] IsCentered = "is-centered"
-            let [<Literal>] IsRight = "is-right"
-            module Size =
-                let [<Literal>] AreSmall = "are-small"
-                let [<Literal>] AreMedium = "are-medium"
-                let [<Literal>] AreLarge = "are-large"
-
     type Option =
         // Colors
         | Color of IColor
         | Size of ISize
         /// Add `is-fullwidth` class
-        | IsFullWidth
+        | [<CompiledName("is-fullwidth")>] IsFullWidth
         /// Add `is-link` class
-        | IsLink
+        | [<CompiledName("is-link")>] IsLink
         /// Add `is-outlined` class
-        | IsOutlined
+        | [<CompiledName("is-outlined")>] IsOutlined
         /// Add `is-inverted` class
-        | IsInverted
+        | [<CompiledName("is-inverted")>] IsInverted
         /// Add `is-text` class
-        | IsText
-        /// Add `is-rouned` class
-        | IsRounded
+        | [<CompiledName("is-text")>] IsText
+        /// Add `is-rounded` class
+        | [<CompiledName("is-rounded")>] IsRounded
         /// Add `is-expanded` class
-        | IsExpanded
+        | [<CompiledName("is-expanded")>] IsExpanded
         /// Add `is-hovered` class if true
-        | IsHovered of bool
+        | [<CompiledName("is-hovered")>] IsHovered of bool
         /// Add `is-focused` class if true
-        | IsFocused of bool
+        | [<CompiledName("is-focused")>] IsFocused of bool
         /// Add `is-active` class if true
-        | IsActive of bool
+        | [<CompiledName("is-active")>] IsActive of bool
         /// Add `is-loading` class if true
-        | IsLoading of bool
+        | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-static` class if true
-        | IsStatic of bool
-        /// Add `disabled` HTMLAttr if true
+        | [<CompiledName("is-static")>] IsStatic of bool
+        /// Set `disabled` HTMLAttr
         | Disabled of bool
         | Props of IHTMLProp list
         | OnClick of (MouseEvent -> unit)
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { Level : string option
-          Size : string option
-          IsOutlined : bool
-          IsInverted : bool
-          IsDisabled : bool
-          IsHovered : bool
-          IsFocused : bool
-          IsExpanded : bool
-          IsText : bool
-          IsRounded : bool
-          IsActive : bool
-          IsLoading : bool
-          IsStatic : bool
-          IsFullWidth : bool
-          Props : IHTMLProp list
-          CustomClass : string option
-          OnClick : (MouseEvent -> unit) option
-          Modifiers : string option list }
-        static member Empty =
-            { Level = None
-              Size = None
-              IsOutlined = false
-              IsInverted = false
-              IsDisabled = false
-              IsText = false
-              IsRounded = false
-              IsActive = false
-              IsExpanded = false
-              IsLoading = false
-              IsStatic = false
-              IsHovered = false
-              IsFocused = false
-              IsFullWidth = false
-              Props = []
-              CustomClass = None
-              OnClick = None
-              Modifiers = [] }
-
     let internal btnView element (options : Option list) children =
-        let parseOption (result : Options) opt =
-            match opt with
-            | Color color -> { result with Level = ofColor color |> Some }
-            // Sizes
-            | Size size -> { result with Size = ofSize size |> Some }
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Color color -> ofColor color |> result.AddClass
+            | Size size -> ofSize size |> result.AddClass
             // Styles
-            | IsFullWidth -> { result with IsFullWidth = true  }
-            | IsLink -> { result with Level = Classes.Styles.IsLink |> Some }
-            | IsOutlined -> { result with IsOutlined = true }
-            | IsInverted -> { result with IsInverted = true }
-            | IsText -> { result with IsText = true }
-            | IsRounded -> { result with IsRounded = true }
-            | IsExpanded -> { result with IsExpanded = true }
+            | IsLink
+            | IsFullWidth
+            | IsOutlined
+            | IsInverted
+            | IsText
+            | IsRounded
+            | IsExpanded -> result.AddCaseName option
             // States
-            | IsHovered state -> { result with IsHovered = state }
-            | IsFocused state -> { result with IsFocused = state }
-            | IsActive state -> { result with IsActive = state }
-            | IsLoading state -> { result with IsLoading = state }
-            | IsStatic state -> { result with IsStatic = state }
-            | Disabled isDisabled -> { result with IsDisabled = isDisabled }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-            | OnClick cb -> { result with OnClick = cb |> Some }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+            | IsHovered state
+            | IsFocused state
+            | IsActive state
+            | IsLoading state
+            | IsStatic state -> if state then result.AddCaseName option else result
+            | Disabled isDisabled -> Fable.Helpers.React.Props.Disabled isDisabled |> result.AddProp
+            | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption Options.Empty
-        let classes = Helpers.classes
-                        Classes.Container
-                        ( opts.Level
-                          ::opts.Size
-                          ::opts.CustomClass
-                          ::opts.Modifiers )
-                        [ Classes.Styles.IsOutlined, opts.IsOutlined
-                          Classes.Styles.IsInverted, opts.IsInverted
-                          Classes.Styles.IsText, opts.IsText
-                          Classes.Styles.IsRounded, opts.IsRounded
-                          Classes.Styles.IsExpanded, opts.IsExpanded
-                          Classes.State.IsHovered, opts.IsHovered
-                          Classes.State.IsFocused, opts.IsFocused
-                          Classes.State.IsActive, opts.IsActive
-                          Classes.State.IsLoading, opts.IsLoading
-                          Classes.State.IsStatic, opts.IsStatic
-                          Classes.Styles.IsFullwidth, opts.IsFullWidth ]
-
-        element
-            [ yield classes
-              yield Fable.Helpers.React.Props.Disabled opts.IsDisabled :> IHTMLProp
-              if Option.isSome opts.OnClick then
-                yield DOMAttr.OnClick opts.OnClick.Value :> IHTMLProp
-              yield! opts.Props ]
-            children
+        GenericOptions.Parse(options, parseOptions, "button").ToReactElement(element, children)
 
     /// Generate <button class="button"></button>
     let button options children = btnView button options children
@@ -199,58 +108,23 @@ module Button =
     module List =
 
         type Option =
-            | HasAddons
-            | IsCentered
-            | IsRight
+            | [<CompiledName("has-addons")>] HasAddons
+            | [<CompiledName("is-centered")>] IsCentered
+            | [<CompiledName("is-right")>] IsRight
             // | Size of ISize
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
-        type internal Options =
-            { HasAddons : bool
-              IsCentered : bool
-              IsRight : bool
-            //   Size : string option
-              Props : IHTMLProp list
-              CustomClass : string option
-              Modifiers : string option list }
-
-            static member Empty =
-                { HasAddons = false
-                  IsCentered = false
-                  IsRight = false
-                //   Size = None
-                  Props = [ ]
-                  CustomClass = None
-                  Modifiers = [] }
-
-        let internal ofSize size =
-            match size with
-            | IsSmall -> Classes.List.Size.AreSmall
-            | IsMedium -> Classes.List.Size.AreMedium
-            | IsLarge -> Classes.List.Size.AreLarge
-
     /// Generate <div class="buttons"></div>
     let list (options : List.Option list) children =
-        let parseOption (result : List.Options) opt =
-            match opt with
-            | List.HasAddons -> { result with HasAddons = true }
-            | List.IsCentered -> { result with IsCentered = true }
-            | List.IsRight -> { result with IsRight = true }
-            | List.Props props -> { result with Props = props }
-            | List.CustomClass customClass -> { result with CustomClass = Some customClass }
-            | List.Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
-            // | List.Size size -> { result with Size = List.ofSize size |> Some }
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | List.HasAddons
+            | List.IsCentered
+            | List.IsRight -> result.AddCaseName option
+            | List.Props props -> result.AddProps props
+            | List.CustomClass customClass -> result.AddClass customClass
+            | List.Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOption List.Options.Empty
-        let classes = Helpers.classes
-                        Classes.List.Container
-                        ( opts.CustomClass
-                            // ::opts.Size
-                            ::opts.Modifiers )
-                        [ Classes.List.HasAddons, opts.HasAddons
-                          Classes.List.IsCentered, opts.IsCentered
-                          Classes.List.IsRight, opts.IsRight ]
-
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOptions, "buttons").ToReactElement(div, children)

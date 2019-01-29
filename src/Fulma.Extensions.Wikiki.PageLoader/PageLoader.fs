@@ -7,38 +7,22 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module PageLoader =
 
-    module Classes =
-        let [<Literal>] PageLoader = "pageloader"
-        let [<Literal>] IsActive = "is-active"
-
     type Option =
         /// Add `is-active` class if true
-        | IsActive of bool
+        | [<CompiledName("is-active")>] IsActive of bool
         | Color of IColor
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { IsActive : bool
-          Color : string option
-          Props : IHTMLProp list
-          CustomClass : string option }
-
-        static member Empty =
-            { IsActive = false
-              Color = None
-              Props = []
-              CustomClass = None }
-
+    /// Generate <div class="pageloader"></div>
     let pageLoader (options : Option list) children =
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Option.Color color -> ofColor color |> result.AddClass
+            | IsActive state -> if state then result.AddCaseName option else result
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let parseOptions (result: Options) opt =
-            match opt with
-            | Option.Color color -> { result with Color = ofColor color |> Some }
-            | IsActive state -> { result with IsActive = state }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes = Helpers.classes Classes.PageLoader [opts.CustomClass; opts.Color] [Classes.IsActive, opts.IsActive]
-        div (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOptions, "pageloader").ToReactElement(div, children)

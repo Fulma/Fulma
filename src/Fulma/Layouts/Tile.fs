@@ -7,107 +7,51 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Tile =
 
-    module Classes =
-        let [<Literal>] Container = "tile"
-        let [<Literal>] IsAncestor = "is-ancestor"
-        let [<Literal>] IsChild = "is-child"
-        let [<Literal>] IsParent = "is-parent"
-        let [<Literal>] IsVertical = "is-vertical"
-
-        module Size =
-            let [<Literal>] Is1 = "is-1"
-            let [<Literal>] Is2 = "is-2"
-            let [<Literal>] Is3 = "is-3"
-            let [<Literal>] Is4 = "is-4"
-            let [<Literal>] Is5 = "is-5"
-            let [<Literal>] Is6 = "is-6"
-            let [<Literal>] Is7 = "is-7"
-            let [<Literal>] Is8 = "is-8"
-            let [<Literal>] Is9 = "is-9"
-            let [<Literal>] Is10 = "is-10"
-            let [<Literal>] Is11 = "is-11"
-            let [<Literal>] Is12 = "is-12"
-
     type ISize =
-        | Is1
-        | Is2
-        | Is3
-        | Is4
-        | Is5
-        | Is6
-        | Is7
-        | Is8
-        | Is9
-        | Is10
-        | Is11
-        | Is12
+        | [<CompiledName("is-1")>] Is1
+        | [<CompiledName("is-2")>] Is2
+        | [<CompiledName("is-3")>] Is3
+        | [<CompiledName("is-4")>] Is4
+        | [<CompiledName("is-5")>] Is5
+        | [<CompiledName("is-6")>] Is6
+        | [<CompiledName("is-7")>] Is7
+        | [<CompiledName("is-8")>] Is8
+        | [<CompiledName("is-9")>] Is9
+        | [<CompiledName("is-10")>] Is10
+        | [<CompiledName("is-11")>] Is11
+        | [<CompiledName("is-12")>] Is12
 
-    let ofSize =
-        function
-        | Is1 -> Classes.Size.Is1
-        | Is2 -> Classes.Size.Is2
-        | Is3 -> Classes.Size.Is3
-        | Is4 -> Classes.Size.Is4
-        | Is5 -> Classes.Size.Is5
-        | Is6 -> Classes.Size.Is6
-        | Is7 -> Classes.Size.Is7
-        | Is8 -> Classes.Size.Is8
-        | Is9 -> Classes.Size.Is9
-        | Is10 -> Classes.Size.Is10
-        | Is11 -> Classes.Size.Is11
-        | Is12 -> Classes.Size.Is12
+        static member ToString (x : ISize)=
+            Reflection.getCaseName x
 
     type Option =
         | Size of ISize
         | CustomClass of string
         | Props of IHTMLProp list
         /// Add `is-child` class
-        | IsChild
+        | [<CompiledName("is-child")>]IsChild
         /// Add `is-ancestor` class
-        | IsAncestor
+        | [<CompiledName("is-ancestor")>]IsAncestor
         /// Add `is-parent` class
-        | IsParent
+        | [<CompiledName("is-parent")>]IsParent
         /// Add `is-vertical` class
-        | IsVertical
+        | [<CompiledName("is-vertical")>]IsVertical
         | Modifiers of Modifier.IModifier list
-
-    type internal Options =
-        { Size : string option
-          IsVertical : bool
-          CustomClass : string option
-          Props : IHTMLProp list
-          Context : string option
-          Modifiers : string option list }
-
-        static member Empty =
-            { Size = None
-              IsVertical = false
-              CustomClass = None
-              Props = []
-              Context = None
-              Modifiers = [] }
 
     /// Generate <div class="tile"></div>
     let tile (options: Option list) children =
-        let parseOptions (result: Options) =
-            function
-            | CustomClass customClass -> { result with CustomClass = customClass |> Some }
-            | Props props -> { result with Props = props }
-            | Size size -> { result with Size = ofSize size |> Some }
-            | IsChild -> { result with Context = Classes.IsChild |> Some }
-            | IsAncestor -> { result with Context = Classes.IsAncestor |> Some }
-            | IsParent -> { result with Context = Classes.IsParent |> Some }
-            | IsVertical -> { result with IsVertical = true }
-            | Modifiers modifiers -> { result with Modifiers = modifiers |> Modifier.parseModifiers }
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Size size -> ISize.ToString size |> result.AddClass
+            | IsChild
+            | IsAncestor
+            | IsParent
+            | IsVertical -> result.AddCaseName option
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let opts = options |> List.fold parseOptions Options.Empty
-
-        div [ yield Helpers.classes
-                        Classes.Container
-                        ( opts.CustomClass::opts.Context::opts.Size::opts.Modifiers )
-                        [Classes.IsVertical, opts.IsVertical]
-              yield! opts.Props ]
-            children
+        GenericOptions.Parse(options, parseOptions, "tile").ToReactElement(div, children)
 
     /// Generate <div class="tile is-parent"></div>
     let parent (options: Option list) children =

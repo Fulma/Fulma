@@ -59,6 +59,7 @@ Target.create "Install" (fun _ ->
 
 Target.create "Build" (fun _ ->
     !! "src/**/*.fsproj"
+    -- "src/Fulma.Extensions/*"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         DotNet.build id dir)
@@ -154,7 +155,7 @@ Target.create "PublishNugets" (fun _ ->
     ++ "src/Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj"
     ++ "src/Fable.FontAwesome.Pro/Fable.FontAwesome.Pro.fsproj"
     ++ "src/Fulma/Fulma.fsproj"
-    ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
+    // ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
     ++ "src/Fulma.Extensions.Wikiki.Calendar/Fulma.Extensions.Wikiki.Calendar.fsproj"
     ++ "src/Fulma.Extensions.Wikiki.Checkradio/Fulma.Extensions.Wikiki.Checkradio.fsproj"
     ++ "src/Fulma.Extensions.Wikiki.Divider/Fulma.Extensions.Wikiki.Divider.fsproj"

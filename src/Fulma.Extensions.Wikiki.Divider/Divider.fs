@@ -7,47 +7,23 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Divider =
 
-    module Classes =
-        let [<Literal>] Divider = "is-divider"
-        let [<Literal>] IsVertical = "is-divider-vertical"
-
     type Option =
-        | IsVertical
+        /// Add `is-divider-vertical` class if true
+        | [<CompiledName("is-divider-vertical")>] IsVertical
         | Label of string
         | Props of IHTMLProp list
         | CustomClass of string
+        | Modifiers of Modifier.IModifier list
 
-    type internal Options =
-        { IsVertical : bool
-          Label : string option
-          Props : IHTMLProp list
-          CustomClass : string option }
-
-        static member Empty =
-            { IsVertical = false
-              Label = None
-              Props = []
-              CustomClass = None }
-
+    /// Generate <div class="is-divider"></div>
     let divider (options : Option list) =
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | IsVertical ->
+                result.RemoveClass("is-divider").AddCaseName(option)
+            | Label label -> Data("content", label) |> result.AddProp
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
 
-        let parseOptions (result: Options) opt =
-            match opt with
-            | IsVertical -> { result with IsVertical = true }
-            | Label label -> { result with Label = Some label }
-            | Props props -> { result with Props = props }
-            | CustomClass customClass -> { result with CustomClass = Some customClass }
-
-        let opts = options |> List.fold parseOptions Options.Empty
-        let classes =
-            Helpers.classes
-                ""
-                [ opts.CustomClass ]
-                [ Classes.Divider, not opts.IsVertical
-                  Classes.IsVertical, opts.IsVertical ]
-
-        let attrs =
-            match opts.Label with
-            | Some label -> classes::(Data("content", label) :> IHTMLProp)::opts.Props
-            | None -> classes::opts.Props
-        div attrs [ ]
+        GenericOptions.Parse(options, parseOptions, "is-divider").ToReactElement(div, [])

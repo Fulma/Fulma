@@ -7,17 +7,10 @@ open Fable.Helpers.React.Props
 [<RequireQualifiedAccess>]
 module Checkbox =
 
-    module Classes =
-        let [<Literal>] Container = "checkbox"
-
     /// Generate <label class="checkbox"></label>
     let checkbox (options : GenericOption list) children =
-        let opts = genericParse options
-        let classes = Helpers.classes Classes.Container ( opts.CustomClass::opts.Modifiers ) []
-        label (classes::opts.Props) children
+        GenericOptions.Parse(options, parseOptions, "checkbox").ToReactElement(label, children)
 
-    /// Generate <input type="checkbox" class="checkbox"></input>
+    /// Generate <input type="checkbox" class="checkbox"/>
     let input (options : GenericOption list) =
-        let opts = genericParse options
-        let classes = Helpers.classes "" ( opts.CustomClass::opts.Modifiers ) []
-        input (classes::(Type "checkbox" :> IHTMLProp)::opts.Props)
+        GenericOptions.Parse(options, parseOptions, "checkbox", [ Type "checkbox" :> IHTMLProp ]).ToReactElement(input)
