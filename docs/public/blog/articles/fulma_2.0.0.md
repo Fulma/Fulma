@@ -1,10 +1,10 @@
-# Migration guide for Fulma 2.0.0 and split of Fulma.Extensions package
+# Migration guide for Fulma 2.0.0 and splitting out of Fulma.Extensions packages
 
 ## Breaking changes
 
 ### Fable.FontAwesome
 
-We are removing Font Awesome from Fulma package. So now, you will need to use [Fable.FontAwesome](#fable-fontawesome).
+We are removing Font Awesome from the Fulma package. So now you will need to use [Fable.FontAwesome](#fable-fontawesome).
 
 <span class="is-size-5 has-text-info">
 <i class="fas fa-exclamation-circle"></i>
@@ -20,7 +20,7 @@ In this version of Fulma, we removed all the small helpers and now you have dire
 #### Migrate your code:
 
 1. Add `Fable.FontAwesome` to your project.
-2. Install `Fable.FontAwesome.Free` or `Fable.FontAwesome.Pro` depending on your case. Read more about it on [Fable.FontAwesome - Introduction](#fable-fontawesome) page to learn how to install the new packages.
+2. Install `Fable.FontAwesome.Free` or `Fable.FontAwesome.Pro` depending on your use-case. Read more about it on [Fable.FontAwesome - Introduction](#fable-fontawesome) page to learn how to install the new packages.
 3. Rename all `open Fulma.FontAwesome` to `open Fable.FontAwesome`
 4. Adapt your code:
 
@@ -51,7 +51,7 @@ Icon.icon [ Icon.Size IsMedium ]
 
 ### Fulma.Extensions is now obselete
 
-Fulma.Extensions has been splitted in different package. **One** package **per** extension.
+Fulma.Extensions has been split into different packages. **One** package **per** extension.
 
 For example,
 
@@ -61,7 +61,7 @@ For example,
 
 *[Wikiki](https://www.npmjs.com/~wikiki) is the author of the npm packages*
 
-We are doing this split so we can update more easily the package and specify which version of the npm package goes with which nuget version.
+We are doing this split so we can more easily update the packages and specify which version of the npm package goes with which nuget version.
 
 ------------
 
