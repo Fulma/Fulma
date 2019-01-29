@@ -6,6 +6,6 @@ open Fable.Helpers.React
 [<RequireQualifiedAccess>]
 module Footer =
 
-    /// Generate <div class="footer"></div>
+    /// Generate <footer class="footer"></footer>
     let footer (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOptions, "footer").ToReactElement(div, children)
+        GenericOptions.Parse(options, parseOptions, "footer").ToReactElement(footer, children)
