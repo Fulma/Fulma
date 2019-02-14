@@ -92,7 +92,7 @@ The **tags** can have different colors and sizes. You can also nest a *[Delete e
                         (Widgets.Showcase.view nestedDeleteStyleInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Tag List"
-                        (Widgets.Showcase.view list (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
+                        (Widgets.Showcase.view list (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
                         "### Tag Group"
                         (Widgets.Showcase.view grouped (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
