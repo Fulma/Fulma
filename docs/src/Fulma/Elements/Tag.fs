@@ -54,6 +54,24 @@ let list () =
             [ str "Maxime Mangel" ]
           Tag.delete [ ] [ ] ]
 
+let grouped () =
+    Field.div [ Field.IsGroupedMultiline ]
+        [ Control.div [ ]
+            [ Tag.list [ Tag.List.HasAddons ]
+                [ Tag.tag [ Tag.Color IsDanger ] [ str "Maxime Mangel" ]
+                  Tag.delete [ ] [ ] ] ]
+          Control.div [ ]
+            [ Tag.list [ Tag.List.HasAddons ]
+                [ Tag.tag [ Tag.Color IsLight ] [ str "28 Februari 1982" ]
+                  Tag.tag [ Tag.Color IsInfo ]
+                    [ Icon.icon [ ] [ i [ ClassName "fas fa-birthday-cake" ] [ ] ] ] ] ]
+          Control.div [ ]
+            [ Tag.list [ Tag.List.HasAddons ]
+                [ Tag.tag [ Tag.Color IsLight ] [ str "37 years"  ]
+                  Tag.tag [ Tag.Color IsInfo ] [ str "age" ] ] ] ]
+
+
+
 let view =
     Render.docPage [ Render.contentFromMarkdown
                         """
@@ -75,3 +93,6 @@ The **tags** can have different colors and sizes. You can also nest a *[Delete e
                      Render.docSection
                         "### Tag List"
                         (Widgets.Showcase.view list (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
+                     Render.docSection
+                        "### Tag Group"
+                        (Widgets.Showcase.view grouped (Render.includeCode __LINE__ __SOURCE_FILE__)) ]

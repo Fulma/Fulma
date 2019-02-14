@@ -22,6 +22,8 @@ module Field =
         | [<CompiledName("is-grouped-centered")>] IsGroupedCentered
         /// Add `is-grouped-right` class
         | [<CompiledName("is-grouped-right")>] IsGroupedRight
+        /// Add `is-grouped-multiline` class
+        | [<CompiledName("is-grouped-multiline")>] IsGroupedMultiline
         /// Add `is-horizontal` class
         | [<CompiledName("is-horizontal")>] IsHorizontal
         | CustomClass of string
@@ -62,6 +64,7 @@ module Field =
             | HasAddonsFullWidth -> result.AddClass("has-addons").AddCaseName option
             | IsGroupedCentered -> result.AddClass("is-grouped").AddCaseName option
             | IsGroupedRight -> result.AddClass("is-grouped").AddCaseName option
+            | IsGroupedMultiline -> result.AddClass("is-grouped").AddCaseName option
             | HasAddons
             | IsGrouped
             | IsHorizontal -> result.AddCaseName option
