@@ -1,4 +1,4 @@
-# Blog
+# Migration guide
 
 ## [Fulma 2.0.0 & split of Fulma.Extensions](#blog-viewer?file=blog/articles/fulma_2.0.0.md)
 
