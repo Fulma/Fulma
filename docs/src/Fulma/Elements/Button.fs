@@ -123,7 +123,9 @@ let icons () =
                     [ ] ] ]
           Button.button [ Button.Color IsDanger
                           Button.IsOutlined ]
-            [ str "Danger" ] ]
+            [ Icon.icon [ ]
+                [ Fa.i [ Fa.Solid.ExclamationTriangle ] [ ] ]
+              span [] [ str "Danger" ] ] ]
 
 let demoHelpers () =
     div [ ClassName "block" ]
