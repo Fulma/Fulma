@@ -1,9 +1,9 @@
 namespace Fulma
 
 open Fulma
-open Fable.Import.React
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Button =
@@ -62,7 +62,7 @@ module Button =
             | IsActive state
             | IsLoading state
             | IsStatic state -> if state then result.AddCaseName option else result
-            | Disabled isDisabled -> Fable.Helpers.React.Props.Disabled isDisabled |> result.AddProp
+            | Disabled isDisabled -> Fable.React.Props.Disabled isDisabled |> result.AddProp
             | OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass

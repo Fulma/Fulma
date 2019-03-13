@@ -1,9 +1,8 @@
 namespace Fulma.Extensions.Wikiki
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.Import
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Checkradio =
@@ -27,7 +26,7 @@ module Checkradio =
         | [<CompiledName("is-block")>] IsBlock
         | LabelProps of IHTMLProp list
         | InputProps of IHTMLProp list
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         | CustomClass of string
         | Id of string
         | Name of string

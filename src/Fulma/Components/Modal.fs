@@ -1,9 +1,9 @@
 namespace Fulma
 
 open Fulma
-open Fable.Import.React
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Modal =
@@ -40,7 +40,7 @@ module Modal =
             match option with
             | Close.Size IsSmall
             | Close.Size IsMedium ->
-                Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for 'modal close'")
+                Fable.Core.JS.console.warn("`is-small` and `is-medium` are not valid sizes for 'modal close'")
                 result
             | Close.Size size -> ofSize size |> result.AddClass
             | Close.OnClick cb -> DOMAttr.OnClick cb |> result.AddProp

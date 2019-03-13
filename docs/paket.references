@@ -1,6 +1,6 @@
 Fable.Core
 Fable.Elmish.React
 Fable.Elmish.Browser
-Fable.Elmish.Debugger
-Fable.Elmish.HMR
-Fable.PowerPack
+#Fable.Elmish.Debugger
+#Fable.Elmish.HMR
+#Fable.PowerPack

@@ -1,9 +1,9 @@
 namespace Fulma
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.Import
+open Fable.React
+open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Menu =
@@ -27,7 +27,7 @@ module Menu =
             | [<CompiledName("is-active")>] IsActive of bool
             | Props of IHTMLProp list
             | CustomClass of string
-            | OnClick of (React.MouseEvent -> unit)
+            | OnClick of (MouseEvent -> unit)
             | Href of string
             | Modifiers of Modifier.IModifier list
 

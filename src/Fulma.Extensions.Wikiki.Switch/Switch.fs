@@ -1,9 +1,8 @@
 namespace Fulma.Extensions.Wikiki
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.Import
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Switch =
@@ -32,7 +31,7 @@ module Switch =
         | Disabled of bool
         | LabelProps of IHTMLProp list
         | InputProps of IHTMLProp list
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         | CustomClass of string
         | Id of string
 

@@ -1,8 +1,8 @@
 namespace Fable.FontAwesome
 
 open Fable.Core
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 module internal Helpers =
 
@@ -260,5 +260,5 @@ module Fa =
                             :: [] )
                         [ ]
 
-        Fable.Helpers.React.span (classes::opts.Props)
+        Fable.React.Standard.span (classes::opts.Props)
             children

@@ -1,8 +1,8 @@
 namespace Fulma
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Media =
@@ -19,7 +19,7 @@ module Media =
             match option with
             | Size IsSmall
             | Size IsMedium ->
-                Fable.Import.Browser.console.warn("`is-small` and `is-medium` are not valid sizes for the media component")
+                Fable.Core.JS.console.warn("`is-small` and `is-medium` are not valid sizes for the media component")
                 result
             | Size size -> ofSize size |> result.AddClass
             | Props props -> result.AddProps props

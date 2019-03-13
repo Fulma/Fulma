@@ -1,9 +1,8 @@
 namespace Fulma.Extensions.Wikiki
 
 open Fulma
-open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fable.Core.JsInterop
 
 [<RequireQualifiedAccess>]
@@ -19,7 +18,7 @@ module Slider =
         /// Set `Disabled` HTMLAttr
         | Disabled of bool
         /// Register the callback to `OnChange` HTMLAttr
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         /// Set `Id` HTMLAttr
         | Id of string
         /// Set `Min` HTMLAttr

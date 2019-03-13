@@ -1,8 +1,8 @@
 namespace Fulma
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Columns =
@@ -31,7 +31,7 @@ module Columns =
             "is-" + ISize.ToString size + Screen.ToString screen + "-only"
         | x ->
             let msg = sprintf "Screen `%s` does not support `is-%s-%s-only`." (Screen.ToString x) (ISize.ToString size) (Screen.ToString x)
-            Fable.Import.JS.console.warn(msg)
+            Fable.Core.JS.console.warn(msg)
             ""
 
     type Option =
