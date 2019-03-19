@@ -422,7 +422,7 @@ Make classic **checkbox** and **radio** more sexy in different colors, sizes, an
                         """
 <div class="message is-info">
     <div class="message-body">
-        You need to provide <code>Checkradio.Id "unique-id"</code> in order to make <code>Checkradio</code> works
+        You need to provide <code>Checkradio.Id "unique-id"</code> in order to make <code>Checkradio</code> work.
     </div>
 </div>
 
