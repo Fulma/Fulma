@@ -103,7 +103,7 @@ let colorInteractive () =
               Checkradio.radio [ Checkradio.Checked true
                                  Checkradio.Id "checkradio-20"
                                  Checkradio.Color IsInfo
-                                 Checkradio.Name "rad1" ]
+                                 Checkradio.Name "rad" ]
                 [ str "Info" ]
               Checkradio.radio [ Checkradio.Checked true
                                  Checkradio.Id "checkradio-21"
