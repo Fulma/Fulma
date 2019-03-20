@@ -451,6 +451,7 @@ module Common =
 
     module Helpers =
 
+        [<System.Obsolete("Use GenericOptions.Parse. This build an abstraction layer usable by all the components and helps reduce the bundle size")>]
         let classes std (options : string option list) (booleans: (string * bool) list) =
             let std = (std, options) ||> List.fold (fun complete option ->
                 match option with

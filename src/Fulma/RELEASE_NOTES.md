@@ -1,3 +1,8 @@
+### 2.0.0-beta-001
+
+* Reduce bundle size
+* Fix #190: Footer should generate a footer element and not a div
+
 ### 1.1.0
 
 * Fix column `third` size naming

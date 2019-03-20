@@ -90,7 +90,7 @@ type GapSize(props) =
                                         this.SetSize size
                                       )
                                       Style [ Cursor "pointer" ] ] ]
-                    [ str (Fable.Core.Reflection.getCaseName size) ]
+                    [ str (Reflection.getCaseName size) ]
             )
             |> Tag.list [ ]
 
