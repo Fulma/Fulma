@@ -1,9 +1,9 @@
 namespace Fulma
 
 open Fulma
-open Fable.Import.React
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Delete =

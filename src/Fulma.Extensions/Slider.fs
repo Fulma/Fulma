@@ -1,9 +1,8 @@
 namespace Fulma.Extensions
 
 open Fulma
-open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fable.Core.JsInterop
 
 [<RequireQualifiedAccess>]
@@ -24,7 +23,7 @@ module Slider =
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         | CustomClass of string
         | ComponentId of string
         | Min of float
@@ -48,7 +47,7 @@ module Slider =
           IsVertical : bool
           Props : IHTMLProp list
           CustomClass : string option
-          OnChange : (React.FormEvent -> unit) option
+          OnChange : (Browser.Types.Event -> unit) option
           ComponentId: string }
         static member Empty =
             { Color = None

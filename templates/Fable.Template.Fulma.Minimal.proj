@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Minimal Elmish application with Fulma support</Description>
@@ -27,10 +28,11 @@
         Content/.fake/**/*;
         Content/.fable/**/*;
     </ExcludeFromPackage>
-</PropertyGroup>
+  </PropertyGroup>
   <ItemGroup>
-    <Content Include="Content/**/*" Exclude="$(ExcludeFromPackage)" >
-        <PackagePath>Content\</PackagePath>
+    <Content Include="Content/**/*" Exclude="$(ExcludeFromPackage)">
+      <PackagePath>Content\</PackagePath>
     </Content>
   </ItemGroup>
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

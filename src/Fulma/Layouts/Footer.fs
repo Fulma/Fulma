@@ -1,7 +1,7 @@
 namespace Fulma
 
 open Fulma
-open Fable.Helpers.React
+open Fable.React
 
 [<RequireQualifiedAccess>]
 module Footer =

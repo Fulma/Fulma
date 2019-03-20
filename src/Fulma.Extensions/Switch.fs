@@ -1,9 +1,8 @@
 namespace Fulma.Extensions
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.Import
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 [<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Switch package instead")>]
@@ -27,7 +26,7 @@ module Switch =
         /// Add `disabled` HTMLAttr if true
         | Disabled of bool
         | Props of IHTMLProp list
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         | CustomClass of string
 
     type internal ComponentId = string
@@ -42,7 +41,7 @@ module Switch =
           IsThin : bool
           Props : IHTMLProp list
           CustomClass : string option
-          OnChange : (React.FormEvent -> unit) option
+          OnChange : (Browser.Types.Event -> unit) option
           ComponentId: string }
         static member Empty =
             { Color = None

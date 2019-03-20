@@ -1,8 +1,8 @@
 namespace Fulma.Extensions
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 [<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Divider package instead")>]

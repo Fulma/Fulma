@@ -2,7 +2,7 @@ namespace Fulma.Elmish.DatePicker
 
 open System
 open Fable.PowerPack
-open Fable.Helpers.React.Props
+open Fable.React.Props
 
 module Types =
 

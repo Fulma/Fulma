@@ -1,8 +1,8 @@
 namespace Fulma
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Tag =
@@ -21,7 +21,7 @@ module Tag =
         let parseOptions (result : GenericOptions) option =
             match option with
             | Size IsSmall ->
-                Fable.Import.Browser.console.warn("`is-small` is not a valid size for the tag element")
+                Fable.Core.JS.console.warn("`is-small` is not a valid size for the tag element")
                 result
             | Size size -> ofSize size |> result.AddClass
             | IsDelete -> result.AddCaseName option

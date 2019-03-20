@@ -1,6 +1,6 @@
 namespace Fulma
 
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 
 [<RequireQualifiedAccess>]
