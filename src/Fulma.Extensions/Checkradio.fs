@@ -1,9 +1,8 @@
 namespace Fulma.Extensions
 
 open Fulma
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.Import
+open Fable.React
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 [<System.ObsoleteAttribute("Fulma.Extensions is obselete please use Fulma.Extensions.Wikiki.Checkradio package instead")>]
@@ -30,7 +29,7 @@ module Checkradio =
         | Disabled of bool
         | IsBlock
         | Props of IHTMLProp list
-        | OnChange of (React.FormEvent -> unit)
+        | OnChange of (Browser.Types.Event -> unit)
         | CustomClass of string
         | ComponentId of string
         | Name of string
@@ -53,7 +52,7 @@ module Checkradio =
           Name : string option
           Props : IHTMLProp list
           CustomClass : string option
-          OnChange : (React.FormEvent -> unit) option
+          OnChange : (Browser.Types.Event -> unit) option
           ComponentId: string }
         static member Empty =
             { Color = None

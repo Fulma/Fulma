@@ -40,8 +40,8 @@ module Calendar =
             module Event =
                 let [<Literal>] Container = "calendar-event"
 
-    open Fable.Helpers.React
-    open Fable.Helpers.React.Props
+    open Fable.React
+    open Fable.React.Props
 
     type Option =
         | CustomClass of string

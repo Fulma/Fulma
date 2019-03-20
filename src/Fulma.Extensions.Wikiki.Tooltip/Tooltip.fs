@@ -1,6 +1,6 @@
 namespace Fulma.Extensions.Wikiki
 
-open Fable.Helpers.React.Props
+open Fable.React.Props
 
 [<RequireQualifiedAccess>]
 module Tooltip =

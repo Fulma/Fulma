@@ -1,9 +1,9 @@
 namespace Fulma
 
 open Fulma
-open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Input =
@@ -64,8 +64,8 @@ module Input =
         | ValueOrDefault of string
         /// Set `Placeholder` HTMLAttr
         | Placeholder of string
-        | OnChange of (React.FormEvent -> unit)
-        | Ref of (Browser.Element->unit)
+        | OnChange of (Event -> unit)
+        | Ref of (Element->unit)
         | Props of IHTMLProp list
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
