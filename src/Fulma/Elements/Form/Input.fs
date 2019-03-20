@@ -58,6 +58,7 @@ module Input =
         | [<CompiledName("is-rounded")>] IsRounded
         /// Set `Value` HTMLAttr
         | Value of string
+        | Key of string
         /// Set `DefaultValue` HTMLAttr
         | DefaultValue of string
         /// `Ref` callback that sets the value of an input textbox after DOM element is created.
@@ -114,6 +115,7 @@ module Input =
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
+            | Key k -> Props.Prop.Key k |> result.AddProp
 
         GenericOptions.Parse(options, parseOptions, "input").ToReactElement(input)
 
