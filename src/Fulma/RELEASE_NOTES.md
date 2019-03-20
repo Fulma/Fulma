@@ -1,3 +1,10 @@
+### 2.0.0-beta-002
+
+* Add Key property to Input (by @forki)
+* Fix #183: Field.IsGroupedMultiline missing (by @selketjah)
+* Fix #186: Field.IsExpanded is missing from Fulma (by @selketjah)
+* Update to Fable.Core 3 (by @alfonsogarciacaro)
+
 ### 2.0.0-beta-001
 
 * Reduce bundle size

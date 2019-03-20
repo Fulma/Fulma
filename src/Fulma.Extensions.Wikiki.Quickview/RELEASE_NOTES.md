@@ -1,5 +1,6 @@
-### NEXT
+### 2.0.0-beta-001
 
+* Update to Fable.Core 3 (by @alfonsogarciacaro)
 * Reduce bundle size
 * Add `Modifiers` support
 
