@@ -60,6 +60,8 @@ Target.create "Install" (fun _ ->
 Target.create "Build" (fun _ ->
     !! "src/**/*.fsproj"
     -- "src/Fulma.Extensions/*"
+    -- "src/Fulma.Elmish/*"
+    -- "src/Fulma.Toast/*"
     |> Seq.iter (fun s ->
         let dir = IO.Path.GetDirectoryName s
         DotNet.build id dir)
