@@ -46,6 +46,10 @@ module Dropdown =
     let divider (options: GenericOption list) =
         GenericOptions.Parse(options, parseOptions, "dropdown-divider").ToReactElement(hr)
 
+    /// Generate <div class="dropdown-trigger"></div>
+    let trigger (options: GenericOption list) =
+        GenericOptions.Parse(options, parseOptions, "dropdown-trigger").ToReactElement(hr)
+
     module Item =
         type Option =
             /// Add `is-active` class if true
