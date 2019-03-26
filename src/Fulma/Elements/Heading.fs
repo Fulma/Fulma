@@ -49,7 +49,7 @@ module Heading =
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOptions).ToReactElement(element, children)
+        GenericOptions.Parse(options, parseOptions, baseClass="title").ToReactElement(element, children)
 
     // Alias
     /// Generate <h1 class="title is-1"></h1>
