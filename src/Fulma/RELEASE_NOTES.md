@@ -1,3 +1,7 @@
+### 2.0.0-beta-003
+
+* Re-add base classe `title` to headings (by @alfonsogarciacaro)
+
 ### 2.0.0-beta-002
 
 * Add Key property to Input (by @forki)
