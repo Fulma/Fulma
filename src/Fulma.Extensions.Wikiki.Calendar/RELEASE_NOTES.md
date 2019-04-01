@@ -1,3 +1,7 @@
+### 2.0.0-beta-002
+
+* Port the code from Fulma.Extensions (it was containing only the classes definition before)
+
 ### 2.0.0-beta-001
 
 * Update to Fable.Core 3 (by @alfonsogarciacaro)
