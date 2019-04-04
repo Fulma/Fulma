@@ -9,7 +9,7 @@ module Table =
 
     type TableOption =
         /// Set `is-hovered` class
-        | [<CompiledName("is-hovered")>]IsBordered
+        | [<CompiledName("is-bordered")>]IsBordered
         /// Set `is-striped` class
         | [<CompiledName("is-striped")>]IsStriped
         /// Add `is-fullwidth` class
