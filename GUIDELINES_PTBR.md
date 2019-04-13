@@ -8,7 +8,7 @@ Embora não seja dificil contribuir para este projeto, nós iremos ajudá-lo a i
 
 * [dotnet SDK](https://www.microsoft.com/net/download/core) 2.0 ou maior
 * [node.js](https://nodejs.org) 6.11 ou maior
-* Yarn JS package manager: [yarn](https://yarnpkg.com)
+* Gerenciador de pacotes Yarn JS: [yarn](https://yarnpkg.com)
 
 ## Instalar dependências e primeira build
 
