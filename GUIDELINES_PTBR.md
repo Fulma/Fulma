@@ -10,7 +10,7 @@ Embora não seja dificil contribuir para este projeto, nós iremos ajudá-lo a i
 * [node.js](https://nodejs.org) 6.11 ou maior
 * Gerenciador de pacotes Yarn JS: [yarn](https://yarnpkg.com)
 
-## Instalar dependências e primeira build
+## Instalando as dependências e primeira build
 
 Para instalar as dependências, gerar os documentos e construir a build do projeto, utilize os seguintes commandos:
 
