@@ -20,7 +20,7 @@ module Navbar =
         /// You also need to add `has-navbar-fixed-bottom` to your html tag
         | [<CompiledName("is-fixed-bottom")>] IsFixedBottom
         /// Add `is-spaced` class
-        /// Sets Top and Bottom paddings with 1 rem, Left and Right paddings with 2 rem
+        /// Increases horizontal and vertical padding of the navbar
         | [<CompiledName("is-spaced")>] IsSpaced
         | Props of IHTMLProp list
         | CustomClass of string
