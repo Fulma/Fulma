@@ -1,3 +1,11 @@
+### 2.0.0
+
+* Add `IsSpaced` option to navbar (by @selketjah)
+* Fix `Table.IsBordered` generated class (by @tenigma)
+* Fix `TextAlignment.Right`
+* Fix the generated element for `field-body` and `field-label`
+* Release stable version
+
 ### 2.0.0-beta-003
 
 * Re-add base classe `title` to headings (by @alfonsogarciacaro)

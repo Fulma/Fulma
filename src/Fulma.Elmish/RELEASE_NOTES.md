@@ -1,3 +1,7 @@
+### 0.1.0
+
+* Release non-beta version
+
 ### 0.1.0-beta-012
 
 * Update dependencies

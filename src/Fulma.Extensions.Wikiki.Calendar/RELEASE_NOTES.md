@@ -1,3 +1,7 @@
+### 2.0.0
+
+* Release stable version
+
 ### 2.0.0-beta-002
 
 * Port the code from Fulma.Extensions (it was containing only the classes definition before)

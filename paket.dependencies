@@ -1,8 +1,8 @@
 source https://www.nuget.org/api/v2
 storage:none
 
-nuget Fable.Elmish.React prerelease
-nuget Fable.Elmish.Browser prerelease
+nuget Fable.Elmish.React
+nuget Fable.Elmish.Browser
 #nuget Thoth.Elmish.Toast
 
 group netcorebuild
