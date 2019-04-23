@@ -44,7 +44,7 @@ module Field =
 
     /// Generate <label class="field-body"></label>
     let body (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOptions, "field-body").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "field-body").ToReactElement(div, children)
 
     /// Generate <label class="field-label"></label>
     let label options children =
@@ -56,7 +56,7 @@ module Field =
             | Label.CustomClass customClass -> result.AddClass customClass
             | Label.Modifiers modifiers -> result.AddModifiers modifiers
 
-        GenericOptions.Parse(options, parseOptions, "field-label").ToReactElement(label, children)
+        GenericOptions.Parse(options, parseOptions, "field-label").ToReactElement(div, children)
 
     let internal fieldView element options children =
         let parseOptions (result : GenericOptions) option =
