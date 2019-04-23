@@ -1,8 +1,8 @@
-# Blog
+# Migration guide
 
-## [Fulma 2.0.0 & split of Fulma.Extensions](#blog-viewer?file=blog/articles/fulma_2.0.0.md)
+## [Fulma 1.1.0 & split of Fulma.Extensions](#blog-viewer?file=blog/articles/fulma_1.1.0.md)
 
-Explanation about Fulma 2.0.0 breaking changes and package splitting.
+Explanation about Fulma 1.1.0 breaking changes and package splitting.
 
 ---
 
