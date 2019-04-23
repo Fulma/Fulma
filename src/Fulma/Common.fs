@@ -163,7 +163,7 @@ module TextAlignment =
         /// Add `has-text-left`
         | [<CompiledName("has-text-left")>] Left
         /// Add `has-text-right`
-        | [<CompiledName("has-text-left")>] Right
+        | [<CompiledName("has-text-right")>] Right
 
         static member inline ToString opt =
             Reflection.getCaseName opt
