@@ -1,7 +1,6 @@
 namespace Fable.Import
 
 open Fable.Core
-open Fable.Import.JS
 open System
 
 module Marked =
@@ -10,13 +9,13 @@ module Marked =
         abstract Renderer : obj with get, set
         abstract Parser : obj with get, set
 
-        [<Emit("$0($1...)")>] abstract Invoke : string * Function -> string
+        [<Emit("$0($1...)")>] abstract Invoke : string * (System.Exception -> string -> unit) -> string
 
-        [<Emit("$0($1...)")>] abstract Invoke : string * MarkedOptions * Function -> string
+        [<Emit("$0($1...)")>] abstract Invoke : string * MarkedOptions * (System.Exception -> string -> unit) -> string
 
         abstract lexer : string * MarkedOptions -> ResizeArray<obj>
-        abstract parse : string * Function -> string
-        abstract parse : string * ?options: MarkedOptions * ?callback: Function -> string
+        abstract parse : string * (System.Exception -> string -> unit) -> string
+        abstract parse : string * ?options: MarkedOptions * ?callback: (System.Exception -> string -> unit) -> string
         abstract parser : ResizeArray<obj> * MarkedOptions -> string
         abstract setOptions : MarkedOptions -> MarkedStatic
 
@@ -55,7 +54,7 @@ module Marked =
         abstract silent : bool option with get, set
         abstract langPrefix : string option with get, set
         abstract smartypants : bool option with get, set
-        abstract highlight : string * string * Function -> string
+        abstract highlight : string * string * (System.Exception -> string -> unit) -> string
 
     [<Erase>]
     type Globals =

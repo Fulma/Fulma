@@ -3,8 +3,8 @@ module FulmaExtensions.Slider
 open Fable.Core
 open Fable.Core.JsInterop
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
 
@@ -55,7 +55,7 @@ type SliderDemoState =
     { Ratio : int }
 
 type SliderDemo(props) =
-    inherit React.Component<SliderDemoProps, SliderDemoState>(props)
+    inherit Component<SliderDemoProps, SliderDemoState>(props)
     do base.setInitState({ Ratio = 50 })
 
     member this.onSlide (ev : Browser.Types.Event) =

@@ -2,8 +2,8 @@
 module Render
 
 open Fable.Core
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fable.Import
 open Fulma
 open Fable.Core.JsInterop

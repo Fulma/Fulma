@@ -2,8 +2,8 @@ module Widgets.Showcase
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 
 module CopyButton =
@@ -13,18 +13,18 @@ module CopyButton =
     type Props =
         | Value of string
 
-    let inline copyButtton (props: Props list) : React.ReactElement =
+    let inline copyButtton (props: Props list) : ReactElement =
         ofImport "default" "./../../js/CopyButton.js" (keyValueList CaseRules.LowerFirst props) []
 
 type ShowcaseProps =
-    { Preview : unit -> React.ReactElement
+    { Preview : unit -> ReactElement
       SourceCode : string }
 
 type ShowcaseState =
     { IsExpanded : bool }
 
 type Showcase(props) =
-    inherit React.Component<ShowcaseProps, ShowcaseState>(props)
+    inherit Component<ShowcaseProps, ShowcaseState>(props)
     do base.setInitState({ IsExpanded = false })
 
     member this.toggleArea _ =
@@ -56,7 +56,7 @@ type Showcase(props) =
                   footerItemText
                   footerItemIcon ]
               if this.state.IsExpanded then
-                yield Box.box' [ Props [ Style [ Position "relative"
+                yield Box.box' [ Props [ Style [ Position PositionOptions.Relative
                                                  BorderRadius "0"
                                                  MaxHeight "400px"
                                                  Overflow "auto" ] ] ]

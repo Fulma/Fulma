@@ -1,6 +1,7 @@
 ### 0.1.0
 
 * Release non-beta version
+* Upgrade to Fable.Core 3
 
 ### 0.1.0-beta-012
 

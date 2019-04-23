@@ -3,6 +3,9 @@ storage:none
 
 nuget Fable.Elmish.React
 nuget Fable.Elmish.Browser
+nuget Fable.Date
+nuget Fable.Promise
+nuget Fable.Fetch
 #nuget Thoth.Elmish.Toast
 
 group netcorebuild

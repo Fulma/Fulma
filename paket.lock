@@ -19,6 +19,9 @@ NUGET
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
     Fable.Core (3.0) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
+    Fable.Date (1.0)
+      Fable.Core (>= 2.0.2) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
     Fable.Elmish (3.0) - restriction: >= netstandard2.0
       Fable.Core (>= 3.0) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.6.2) - restriction: >= netstandard2.0
@@ -32,6 +35,14 @@ NUGET
       Fable.Elmish (>= 3.0) - restriction: >= netstandard2.0
       Fable.React (>= 5.1) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.6.2) - restriction: >= netstandard2.0
+    Fable.Fetch (2.0)
+      Fable.Browser.Blob (>= 1.0) - restriction: >= netstandard2.0
+      Fable.Core (>= 3.0) - restriction: >= netstandard2.0
+      Fable.Promise (>= 2.0) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
+    Fable.Promise (2.0)
+      Fable.Core (>= 3.0) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.5.2) - restriction: >= netstandard2.0
     Fable.React (5.1) - restriction: >= netstandard2.0
       Fable.Browser.Dom (>= 1.0) - restriction: >= netstandard2.0
       Fable.Core (>= 3.0) - restriction: >= netstandard2.0

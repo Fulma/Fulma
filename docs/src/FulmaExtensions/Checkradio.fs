@@ -2,8 +2,8 @@ module FulmaExtensions.Checkradio
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
 open Fable.FontAwesome
@@ -358,7 +358,7 @@ type CheckradioDemoState =
     { IsChecked : bool }
 
 type CheckradioDemo(props) =
-    inherit React.Component<CheckradioDemoProps, CheckradioDemoState>(props)
+    inherit Component<CheckradioDemoProps, CheckradioDemoState>(props)
     do base.setInitState({ IsChecked = false })
 
     member this.toggleState _ =

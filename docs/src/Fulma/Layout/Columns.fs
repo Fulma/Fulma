@@ -1,8 +1,8 @@
 module Layouts.Columns
 
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 
 let basic () =
@@ -54,7 +54,7 @@ let private centerText txt =
         [ str txt ]
 
 type GapSize(props) =
-    inherit React.Component<GapSizeProps, GapSizeState>(props)
+    inherit Component<GapSizeProps, GapSizeState>(props)
     do base.setInitState({ Size = Columns.Is3 })
 
     member this.SetSize (newSize : Columns.ISize) =

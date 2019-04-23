@@ -1,6 +1,6 @@
 module Layouts.Section
 
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 
 let basic () =

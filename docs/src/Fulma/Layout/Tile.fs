@@ -1,7 +1,7 @@
 module Layouts.Tile
 
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 
 let iconInteractive () =

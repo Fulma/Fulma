@@ -2,9 +2,8 @@ module FableFontAwesome.Usage
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
-open Fable.PowerPack
+open Fable.React
+open Fable.React.Props
 open System
 open Fable.FontAwesome
 

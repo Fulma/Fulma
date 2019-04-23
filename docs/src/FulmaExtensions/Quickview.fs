@@ -2,7 +2,7 @@ module FulmaExtensions.Quickview
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 open Fulma.Extensions.Wikiki
 
@@ -13,7 +13,7 @@ type QuickviewDemoState =
     { IsActive : bool }
 
 type QuickviewDemo(props) =
-    inherit React.Component<QuickviewDemoProps, QuickviewDemoState>(props)
+    inherit Component<QuickviewDemoProps, QuickviewDemoState>(props)
     do base.setInitState({ IsActive = false })
 
     member this.show _ =

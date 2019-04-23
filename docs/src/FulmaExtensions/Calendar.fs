@@ -1,6 +1,6 @@
 module FulmaExtensions.Calendar
 
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 open Fulma.Extensions.Wikiki
 open Fable.FontAwesome
@@ -36,7 +36,7 @@ let basic () =
                   Calendar.Date.date [ ]
                     [ str "Sat" ] ]
               Calendar.body [ ]
-                [ Calendar.Date.date [ Calendar.Date.Disabled true ]
+                [ Calendar.Date.date [ Calendar.Date.IsDisabled true ]
                       [ Calendar.Date.item [ ]
                           [ str "31" ] ]
                   Calendar.Date.date [ ]
@@ -58,7 +58,7 @@ let basic () =
                       [ Calendar.Date.item [ ]
                           [ str "6" ] ]
                   Calendar.Date.date [ ]
-                      [ Calendar.Date.item [ Calendar.Date.Item.IsToday ]
+                      [ Calendar.Date.item [ Calendar.Date.Item.IsToday true ]
                           [ str "7" ] ]
                   Calendar.Date.date [ ]
                       [ Calendar.Date.item [ ]
@@ -132,13 +132,13 @@ let basic () =
                   Calendar.Date.date [ ]
                       [ Calendar.Date.item [ ]
                           [ str "31" ] ]
-                  Calendar.Date.date [ Calendar.Date.Disabled true ]
+                  Calendar.Date.date [ Calendar.Date.IsDisabled true ]
                       [ Calendar.Date.item [ ]
                           [ str "1" ] ]
-                  Calendar.Date.date [ Calendar.Date.Disabled true ]
+                  Calendar.Date.date [ Calendar.Date.IsDisabled true ]
                       [ Calendar.Date.item [ ]
                           [ str "2" ] ]
-                  Calendar.Date.date [ Calendar.Date.Disabled true ]
+                  Calendar.Date.date [ Calendar.Date.IsDisabled true ]
                       [ Calendar.Date.item [ ]
                           [ str "3" ] ] ] ] ]
 

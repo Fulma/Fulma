@@ -1,7 +1,6 @@
 namespace Fable.Import
 
 open Fable.Core
-open Fable.Import.Browser
 open System
 open System.Text.RegularExpressions
 
@@ -12,14 +11,14 @@ module PrismJS =
         abstract languages : Languages with get, set
         abstract plugins : obj with get, set
         abstract hooks : Hooks with get, set
-        abstract highlightAll : bool * Func<Element, unit> -> unit
-        abstract highlightElement : Element * bool * Func<Element, unit> -> unit
+        abstract highlightAll : bool * Func<Browser.Types.Element, unit> -> unit
+        abstract highlightElement : Browser.Types.Element * bool * Func<Browser.Types.Element, unit> -> unit
         abstract highlight : text: string * grammer: LanguageDefinition * ?language: LanguageDefinition -> string
         abstract tokenize : string * LanguageDefinition * LanguageDefinition -> ResizeArray<string>
         abstract fileHighlight : unit -> unit
 
     and [<AllowNullLiteral>] Environment =
-        abstract element : Element option with get, set
+        abstract element : Browser.Types.Element option with get, set
         abstract language : LanguageDefinition option with get, set
         abstract grammer : obj option with get, set
         abstract code : obj option with get, set
@@ -29,7 +28,7 @@ module PrismJS =
         abstract tag : string option with get, set
         abstract classes : ResizeArray<string> option with get, set
         abstract attributes : U2<ResizeArray<string>, obj> option with get, set
-        abstract parent : Element option with get, set
+        abstract parent : Browser.Types.Element option with get, set
 
     and [<AllowNullLiteral>] Identifier =
         abstract value : float with get, set
@@ -74,7 +73,7 @@ module PrismJS =
         abstract ``type`` : string with get, set
         abstract content : U3<Token, ResizeArray<Token>, string> with get, set
         abstract alias : string with get, set
-        abstract stringify : U2<string, ResizeArray<obj>> * LanguageDefinition * HTMLPreElement -> string
+        abstract stringify : U2<string, ResizeArray<obj>> * LanguageDefinition * Browser.Types.HTMLPreElement -> string
 
     [<Erase>]
     type Globals =

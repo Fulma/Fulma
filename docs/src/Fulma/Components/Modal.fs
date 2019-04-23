@@ -1,7 +1,7 @@
 module Components.Modal
 
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fable.Core
 open Fable.Import
@@ -46,7 +46,7 @@ type BasicModalState =
     { IsShown : bool }
 
 type BasicModal(props) =
-    inherit React.Component<BasicModalProps, BasicModalState>(props)
+    inherit Component<BasicModalProps, BasicModalState>(props)
     do base.setInitState({ IsShown = false })
 
     member this.toggleDisplay _ =
@@ -77,7 +77,7 @@ type CardModalState =
     { IsShown : bool }
 
 type CardModal(props) =
-    inherit React.Component<CardModalProps, CardModalState>(props)
+    inherit Component<CardModalProps, CardModalState>(props)
     do base.setInitState({ IsShown = false })
 
     member this.toggleDisplay _ =

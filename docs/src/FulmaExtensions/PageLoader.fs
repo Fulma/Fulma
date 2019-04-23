@@ -2,8 +2,8 @@ module FulmaExtensions.PageLoader
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
 
@@ -15,7 +15,7 @@ type PageLoaderDemoState =
       IsActive : bool }
 
 type PageLoaderDemo(props) =
-    inherit React.Component<PageLoaderDemoProps, PageLoaderDemoState>(props)
+    inherit Component<PageLoaderDemoProps, PageLoaderDemoState>(props)
     do base.setInitState({ CurrentColor = IsSuccess; IsActive = false })
 
     member this.onClick newColor =

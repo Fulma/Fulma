@@ -2,11 +2,9 @@ module Widgets.MdViewer
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 open Fable.FontAwesome
-open Fable.PowerPack
-open Fable.PowerPack.Fetch
 
 type ChangelogProps =
     { File : string }
@@ -20,7 +18,7 @@ type ChangelogState =
     { Content : ContentState }
 
 type Changelog(props) =
-    inherit React.Component<ChangelogProps, ChangelogState>(props)
+    inherit Component<ChangelogProps, ChangelogState>(props)
 
     #if DEBUG
     let rootUrl = "http://localhost:8080/"
@@ -37,7 +35,7 @@ type Changelog(props) =
 
     override this.componentDidMount () =
         promise {
-            let! res = fetch (rootUrl + this.props.File) [ ]
+            let! res = Fetch.fetch (rootUrl + this.props.File) [ ]
             let! txt = res.text()
             this.setMarkdown txt
         }

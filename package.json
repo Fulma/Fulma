@@ -11,7 +11,6 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "clipboard": "^2.0.4",
-    "fable-compiler": "^2.1.2",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
@@ -40,6 +39,7 @@
     "bulma-timeline": "^3.0.0",
     "bulma-tooltip": "^2.0.2",
     "css-loader": "^1.0.1",
+    "fable-compiler": "^2.1.2",
     "fable-loader": "^2.1.0",
     "file-loader": "^2.0.0",
     "html-webpack-plugin": "^3.2.0",

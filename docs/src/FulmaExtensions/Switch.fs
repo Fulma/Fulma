@@ -2,8 +2,8 @@ module FulmaExtensions.Switch
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fulma.Extensions.Wikiki
 open Fable.FontAwesome
@@ -260,7 +260,7 @@ type SwitchDemoState =
     { IsChecked : bool }
 
 type SwitchDemo(props) =
-    inherit React.Component<SwitchDemoProps, SwitchDemoState>(props)
+    inherit Component<SwitchDemoProps, SwitchDemoState>(props)
     do base.setInitState({ IsChecked = false })
 
     member this.toggleState _ =

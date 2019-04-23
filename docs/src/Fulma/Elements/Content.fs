@@ -1,6 +1,6 @@
 module Elements.Content
 
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 
 let contentInteractive () =

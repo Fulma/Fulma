@@ -1,6 +1,6 @@
 module Components.Dropdown
 
-open Fable.Helpers.React
+open Fable.React
 open Fulma
 open Fable.FontAwesome
 

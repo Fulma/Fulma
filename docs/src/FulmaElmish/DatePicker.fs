@@ -2,11 +2,10 @@ module FulmaElmish.DatePicker
 
 open Fable.Core
 open Fable.Import
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
 open Fulma.Elmish
-open Fable.PowerPack
 open System
 
 type DatePickerDemoProps =
@@ -17,12 +16,12 @@ type DatePickerDemoState =
       CurrentDate : DateTime option }
 
 type DatePickerDemo(props) =
-    inherit React.Component<DatePickerDemoProps, DatePickerDemoState>(props)
+    inherit Component<DatePickerDemoProps, DatePickerDemoState>(props)
 
     let pickerConfig : DatePicker.Types.Config<DatePicker.Types.State * DateTime option > =
         let defaultConfig = DatePicker.Types.defaultConfig id
 
-        { defaultConfig with DatePickerStyle = [ Position "absolute"
+        { defaultConfig with DatePickerStyle = [ Position PositionOptions.Absolute
                                                  MaxWidth "450px"
                                                  // Fix calendar display for Ipad browsers (Safari, Chrome)
                                                  // See #56: https://github.com/MangelMaxime/Fulma/issues/56#issuecomment-332186559
@@ -40,8 +39,7 @@ type DatePickerDemo(props) =
 
     override this.render () =
         let datePickerView =
-            str "todo"
-            // DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
+            DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
 
         let dateText =
             match this.state.CurrentDate with
@@ -76,7 +74,7 @@ This component is based on [Fulma.Extensions.Calendar](#fulma-extensions/calenda
 Here is the minimal code needed to include the datepicker components into your application.
 
 *Types.fs*
-```fs
+```fsharp
 type Model =
     { DatePickerState : DatePicker.Types.State // Store the state of the date picker into your model
       CurrentDate : DateTime option } // Current date selected
@@ -87,7 +85,7 @@ type Msg =
 ```
 
 *Update.fs*
-```fs
+```fsharp
 let init() =
     { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true
                                                              ShowDeleteButton = true }
@@ -103,7 +101,7 @@ let update msg model =
 ```
 
 *View.fs*
-```fs
+```fsharp
 // Configuration passed to the components
 let pickerConfig : DatePicker.Types.Config<Msg> =
     DatePicker.Types.defaultConfig DatePickerChanged
