@@ -1,3 +1,9 @@
+### 3.0.0
+
+* Upgrade to Fable.Core v3
+* Upgrade to `fable.compiler` v2.3.*
+* Rework a bit the `webpack.config.js` in order to detect `mode` using webpack env
+
 ### 2.0.2
 
 * Remove `.fable` folder from the template files

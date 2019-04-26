@@ -28,23 +28,19 @@ Target.create "YarnInstall" (fun _ ->
 )
 
 Target.create "Build" (fun _ ->
-    let result =
-        DotNet.exec
-            (DotNet.Options.withWorkingDirectory __SOURCE_DIRECTORY__)
-            "fable"
-            "webpack --port free -- -p"
-
-    if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
+    Yarn.exec
+        "webpack --mode production"
+        (fun o ->
+            { o with WorkingDirectory = __SOURCE_DIRECTORY__ }
+        )
 )
 
 Target.create "Watch" (fun _ ->
-    let result =
-        DotNet.exec
-            (DotNet.Options.withWorkingDirectory __SOURCE_DIRECTORY__)
-            "fable"
-            "webpack-dev-server --port free"
-
-    if not result.OK then failwithf "dotnet fable failed with code %i" result.ExitCode
+    Yarn.exec
+        "webpack-dev-server --mode development"
+        (fun o ->
+            { o with WorkingDirectory = __SOURCE_DIRECTORY__ }
+        )
 )
 
 // Build order

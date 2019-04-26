@@ -1,4 +1,7 @@
-$fa-font-path: "./../../node_modules/font-awesome/fonts/";
-@import './../../node_modules/font-awesome/scss/font-awesome.scss';
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts/";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import "~@fortawesome/fontawesome-free/scss/solid.scss";
+@import "~@fortawesome/fontawesome-free/scss/regular.scss";
+@import "~@fortawesome/fontawesome-free/scss/brands.scss";
 
-@import './../../node_modules/bulma/bulma.sass';
+@import '~bulma/bulma.sass';

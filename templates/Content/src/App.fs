@@ -1,10 +1,10 @@
 module App.View
 
 open Elmish
-open Fable.Helpers.React
-open Fable.Helpers.React.Props
+open Fable.React
+open Fable.React.Props
 open Fulma
-open Fulma.FontAwesome
+open Fable.FontAwesome
 
 type Model =
     { Value : string }
@@ -40,20 +40,15 @@ let private view model dispatch =
                             [ str "Hello, "
                               str model.Value
                               str " "
-                              Icon.faIcon [ ]
-                                [ Fa.icon Fa.I.SmileO ] ] ] ] ] ] ]
+                              Icon.icon [ ]
+                                [ Fa.i [ Fa.Regular.Smile ]
+                                    [ ] ] ] ] ] ] ] ]
 
-open Elmish.React
 open Elmish.Debug
 open Elmish.HMR
 
 Program.mkProgram init update view
-//-:cnd:noEmit
-#if DEBUG
-|> Program.withHMR
-#endif
-//+:cnd:noEmit
-|> Program.withReactUnoptimized "elmish-app"
+|> Program.withReactSynchronous "elmish-app"
 //-:cnd:noEmit
 #if DEBUG
 |> Program.withDebugger
