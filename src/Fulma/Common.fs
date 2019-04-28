@@ -424,7 +424,7 @@ module Common =
                 )
             { this with Classes = classes }
 
-        member this.AddCaseName(case: obj) =
+        member this.AddCaseName(case: 'T) =
             Reflection.getCaseName case |> this.AddClass
 
         member this.AddModifiers(modifiers) =
