@@ -1,3 +1,7 @@
+### 2.0.1
+
+* Fix #207: Fix SSR by making sure we don't loose the type information (by @dbrattli)
+
 ### 2.0.0
 
 * Add `IsSpaced` option to navbar (by @selketjah)
