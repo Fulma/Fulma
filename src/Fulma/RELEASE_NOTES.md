@@ -1,3 +1,7 @@
+### 2.1.0
+
+* Make `getCaseName` more robust in .NET (by @alfonsogarciacaro)
+
 ### 2.0.1
 
 * Fix #207: Fix SSR by making sure we don't loose the type information (by @dbrattli)
