@@ -12,8 +12,8 @@
     "@babel/polyfill": "^7.0.0",
     "clipboard": "^2.0.4",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "remotedev": "^0.2.8"
   },
   "devDependencies": {

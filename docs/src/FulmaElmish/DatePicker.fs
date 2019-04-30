@@ -12,13 +12,12 @@ type DatePickerDemoProps =
     interface end
 
 type DatePickerDemoState =
-    { DatePickerState : DatePicker.Types.State
-      CurrentDate : DateTime option }
+    { CurrentDate : DateTime option }
 
 type DatePickerDemo(props) =
     inherit Component<DatePickerDemoProps, DatePickerDemoState>(props)
 
-    let pickerConfig : DatePicker.Types.Config<DatePicker.Types.State * DateTime option > =
+    let pickerConfig : DatePicker.Types.Config<DateTime option > =
         let defaultConfig = DatePicker.Types.defaultConfig id
 
         { defaultConfig with DatePickerStyle = [ Position PositionOptions.Absolute
@@ -26,26 +25,26 @@ type DatePickerDemo(props) =
                                                  // Fix calendar display for Ipad browsers (Safari, Chrome)
                                                  // See #56: https://github.com/MangelMaxime/Fulma/issues/56#issuecomment-332186559
                                                  ZIndex 10. ] }
+    let initialPickerState =
+        { DatePicker.Types.defaultState with
+            AutoClose = true
+            ShowDeleteButton = true }
 
-    do base.setInitState({ DatePickerState = { DatePicker.Types.defaultState with AutoClose = true
-                                                                                  ShowDeleteButton = true }
-                           CurrentDate = None })
+    do base.setInitState { CurrentDate = None }
 
-    member this.datePickerChanged (newState, newDate) =
-        this.setState (fun prevState _ ->
-            { prevState with DatePickerState = newState
-                             CurrentDate = newDate }
-        )
+    member this.datePickerChanged newDate =
+        this.setState (fun prevState _ -> { prevState with CurrentDate = newDate })
 
     override this.render () =
+
         let datePickerView =
-            DatePicker.View.root pickerConfig this.state.DatePickerState this.state.CurrentDate this.datePickerChanged
+            DatePicker.View.root pickerConfig initialPickerState this.state.CurrentDate this.datePickerChanged
 
         let dateText =
             match this.state.CurrentDate with
             | Some date ->
                 Date.Format.localFormat pickerConfig.Local "dddd, MMMM dd, yyyy" date
-                |> (fun dateStr -> "The selected date is: " + dateStr)
+                |> sprintf "The selected date is: %s"
                 |> str
 
             | None ->
@@ -76,27 +75,23 @@ Here is the minimal code needed to include the datepicker components into your a
 *Types.fs*
 ```fsharp
 type Model =
-    { DatePickerState : DatePicker.Types.State // Store the state of the date picker into your model
-      CurrentDate : DateTime option } // Current date selected
+    { CurrentDate : DateTime option } // Current date selected
 
 type Msg =
     // Message dispatch when a new date is selected
-    | DatePickerChanged of DatePicker.Types.State * (DateTime option)
+    | DateChanged of DateTime option
 ```
 
 *Update.fs*
 ```fsharp
 let init() =
-    { DatePickerState = { DatePicker.Types.defaultState with AutoClose = true
-                                                             ShowDeleteButton = true }
-      CurrentDate = None }
+    { CurrentDate = None }
 
 let update msg model =
     match msg with
-    | DatePickerChanged (newState, date) ->
-        // Store the new state and the selected date
-        { model with DatePickerState = newState
-                     CurrentDate = date }, Cmd.none
+    | DateChanged dateOption ->
+        // Store the selected date
+        { model with CurrentDate = dateOption }, Cmd.none
 
 ```
 
@@ -104,17 +99,20 @@ let update msg model =
 ```fsharp
 // Configuration passed to the components
 let pickerConfig : DatePicker.Types.Config<Msg> =
-    DatePicker.Types.defaultConfig DatePickerChanged
+    DatePicker.Types.defaultConfig DateChanged
+
+let initialPickerState : DatePicker.Types.State =
+    DatePicker.Types.defaultState
 
 let root model dispatch =
-    DatePicker.View.root pickerConfig model.DatePickerState model.CurrentDate dispatch
+    DatePicker.View.root pickerConfig initialPickerState model.CurrentDate dispatch
 ```
 
 ## Config option
 
 Here is the different options you can set in the Config element:
 
-- `OnChange : State * (DateTime option) -> 'Msg`: Message to dispatch when a new date is selected
+- `OnChange : DateTime option -> 'Msg`: Message to dispatch when a new date is selected
 - `Local : Date.Local.Localization`: Local used to generated the calendar
 - `DatePickerStyle : ICSSProp list`: Inline style used to display the calendar box
                         """ ]
