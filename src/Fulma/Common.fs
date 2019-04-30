@@ -8,39 +8,26 @@ module Reflection =
     open Microsoft.FSharp.Reflection
     open System
 
-    #if FABLE_COMPILER
-    let inline getCaseName (case : 'T) =
-        Fable.Core.Reflection.getCaseName case
-    #else
     let getCaseName (case : 'T) =
+#if FABLE_COMPILER
+        Fable.Core.Reflection.getCaseName case
+#else
         // Get UnionCaseInfo value from the F# reflection tools
         let (caseInfo, _args) = FSharpValue.GetUnionFields(case, typeof<'T>)
-        // Pull all attributes
-        let attributes = caseInfo.GetCustomAttributes()
+        caseInfo.GetCustomAttributes()
+        |> Seq.tryPick (function
+                        | :? CompiledNameAttribute as att -> Some att.CompiledName
+                        | _ -> None)
+        |> Option.defaultWith (fun () -> caseInfo.Name)
+#endif
 
-        let haveError =
-            attributes
-            |> Seq.ofArray
-            // Filter for the FatalError values
-            |> Seq.filter (fun x -> x :? CompiledNameAttribute)
-            // Cast each value
-            |> Seq.map (fun x -> x :?> CompiledNameAttribute)
-            // Seq.take breaks if there aren't enough, so use Seq.truncate instead
-            |> Seq.truncate 1
-            |> List.ofSeq
-
-        if haveError.IsEmpty then String.Empty
-        else haveError.Head.CompiledName
-    #endif
-
-    #if FABLE_COMPILER
-    let inline getCaseTag (case : 'T) =
-        Fable.Core.Reflection.getCaseTag case
-    #else
     let getCaseTag (case : 'T) =
+#if FABLE_COMPILER
+        Fable.Core.Reflection.getCaseTag case
+#else
         let (caseInfo, _args) = FSharpValue.GetUnionFields(case, typeof<'T>)
         caseInfo.Tag
-    #endif
+#endif
 
 [<RequireQualifiedAccess>]
 type Screen =
