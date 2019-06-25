@@ -40,3 +40,5 @@ docs/public/*
 Fulma\.sln\.DotSettings\.user
 
 yarn-error\.log
+
+\.ionide/

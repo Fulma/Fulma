@@ -18,9 +18,9 @@ module Switch =
         | Color of IColor
         | Size of ISize
         /// Add `is-rounded` class
-        | [<CompiledName("is-rounded")>] IsOutlined
+        | [<CompiledName("is-rounded")>] IsRounded
         /// Add `is-outlined` class
-        | [<CompiledName("is-outlined")>] IsRounded
+        | [<CompiledName("is-outlined")>] IsOutlined
         /// Add `is-thin` class
         | [<CompiledName("is-thin")>] IsThin
         /// Add `is-rtl` class

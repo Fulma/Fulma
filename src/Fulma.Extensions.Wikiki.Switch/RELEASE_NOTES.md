@@ -1,3 +1,8 @@
+### 2.0.1
+
+* Fix `IsRounded`
+* Fix `IsOutlined`
+
 ### 2.0.0
 
 * Release stable version
