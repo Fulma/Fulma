@@ -20,6 +20,11 @@
     <ItemGroup>
         <ProjectReference Include="../Fulma/Fulma.fsproj" />
     </ItemGroup>
+    <PropertyGroup>
+        <NpmDependencies>
+            <NpmPackage Name="bulma-pageloader" Version=">= 2.1.0" />
+        </NpmDependencies>
+    </PropertyGroup>
     <!-- Add source files to "fable" folder in Nuget package -->
     <ItemGroup>
         <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />

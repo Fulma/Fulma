@@ -1,3 +1,7 @@
+### 2.0.1
+
+* Add Femto metadata
+
 ### 2.0.0
 
 * Release stable version

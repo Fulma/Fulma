@@ -1,3 +1,7 @@
+### 2.1.1
+
+* Add Femto metadata
+
 ### 2.1.0
 
 * Make `getCaseName` more robust in .NET (by @alfonsogarciacaro)

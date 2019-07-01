@@ -1,68 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Description>Helpers around Bulma for Elmish apps</Description>
-    <PackageProjectUrl>https://github.com/MangelMaxime/Fulma</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/MangelMaxime/Fulma/blob/master/LICENSE.md</PackageLicenseUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/MangelMaxime/Fulma/master/docs/public/assets/logo-128x128.png</PackageIconUrl>
-    <RepositoryUrl>https://github.com/MangelMaxime/Fulma</RepositoryUrl>
-    <PackageTags>fable;elm;fsharp;bulma</PackageTags>
-    <Authors>Maxime Mangel</Authors>
-    <Version>2.1.0</Version>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="Common.fs" />
-    <!-- Components -->
-    <Compile Include="Components/Breadcrumb.fs" />
-    <Compile Include="Components/Card.fs" />
-    <Compile Include="Components/Dropdown.fs" />
-    <Compile Include="Components/Media.fs" />
-    <Compile Include="Components/Menu.fs" />
-    <Compile Include="Components/Message.fs" />
-    <Compile Include="Components/Modal.fs" />
-    <Compile Include="Components/Navbar.fs" />
-    <Compile Include="Components/Pagination.fs" />
-    <Compile Include="Components/Panel.fs" />
-    <Compile Include="Components/Tabs.fs" />
-    <!-- Elements -->
-    <Compile Include="Elements/Box.fs" />
-    <Compile Include="Elements/Button.fs" />
-    <Compile Include="Elements/Content.fs" />
-    <Compile Include="Elements/Delete.fs" />
-    <Compile Include="Elements/Heading.fs" />
-    <Compile Include="Elements/Icon.fs" />
-    <Compile Include="Elements/Image.fs" />
-    <Compile Include="Elements/Notification.fs" />
-    <Compile Include="Elements/Progress.fs" />
-    <Compile Include="Elements/Table.fs" />
-    <Compile Include="Elements/Tag.fs" />
-    <Compile Include="Elements/Form/Checkbox.fs" />
-    <Compile Include="Elements/Form/Control.fs" />
-    <Compile Include="Elements/Form/Field.fs" />
-    <Compile Include="Elements/Form/File.fs" />
-    <Compile Include="Elements/Form/Help.fs" />
-    <Compile Include="Elements/Form/Input.fs" />
-    <Compile Include="Elements/Form/Label.fs" />
-    <Compile Include="Elements/Form/Radio.fs" />
-    <Compile Include="Elements/Form/Select.fs" />
-    <Compile Include="Elements/Form/Textarea.fs" />
-    <!-- Layout -->
-    <Compile Include="Layouts/Column.fs" />
-    <Compile Include="Layouts/Columns.fs" />
-    <Compile Include="Layouts/Container.fs" />
-    <Compile Include="Layouts/Footer.fs" />
-    <Compile Include="Layouts/Hero.fs" />
-    <Compile Include="Layouts/Level.fs" />
-    <Compile Include="Layouts/Section.fs" />
-    <Compile Include="Layouts/Tile.fs" />
-  </ItemGroup>
-  <!-- Add source files to "fable" folder in Nuget package -->
-  <ItemGroup>
-    <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
-  </ItemGroup>
-  <Import Project="..\..\.paket\Paket.Restore.targets" />
+    <PropertyGroup>
+        <Description>Helpers around Bulma for Elmish apps</Description>
+        <PackageProjectUrl>https://github.com/MangelMaxime/Fulma</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/MangelMaxime/Fulma/blob/master/LICENSE.md</PackageLicenseUrl>
+        <PackageIconUrl>https://raw.githubusercontent.com/MangelMaxime/Fulma/master/docs/public/assets/logo-128x128.png</PackageIconUrl>
+        <RepositoryUrl>https://github.com/MangelMaxime/Fulma</RepositoryUrl>
+        <PackageTags>fable;elm;fsharp;bulma</PackageTags>
+        <Authors>Maxime Mangel</Authors>
+        <Version>2.1.0</Version>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="Common.fs" />
+        <!-- Components -->
+        <Compile Include="Components/Breadcrumb.fs" />
+        <Compile Include="Components/Card.fs" />
+        <Compile Include="Components/Dropdown.fs" />
+        <Compile Include="Components/Media.fs" />
+        <Compile Include="Components/Menu.fs" />
+        <Compile Include="Components/Message.fs" />
+        <Compile Include="Components/Modal.fs" />
+        <Compile Include="Components/Navbar.fs" />
+        <Compile Include="Components/Pagination.fs" />
+        <Compile Include="Components/Panel.fs" />
+        <Compile Include="Components/Tabs.fs" />
+        <!-- Elements -->
+        <Compile Include="Elements/Box.fs" />
+        <Compile Include="Elements/Button.fs" />
+        <Compile Include="Elements/Content.fs" />
+        <Compile Include="Elements/Delete.fs" />
+        <Compile Include="Elements/Heading.fs" />
+        <Compile Include="Elements/Icon.fs" />
+        <Compile Include="Elements/Image.fs" />
+        <Compile Include="Elements/Notification.fs" />
+        <Compile Include="Elements/Progress.fs" />
+        <Compile Include="Elements/Table.fs" />
+        <Compile Include="Elements/Tag.fs" />
+        <Compile Include="Elements/Form/Checkbox.fs" />
+        <Compile Include="Elements/Form/Control.fs" />
+        <Compile Include="Elements/Form/Field.fs" />
+        <Compile Include="Elements/Form/File.fs" />
+        <Compile Include="Elements/Form/Help.fs" />
+        <Compile Include="Elements/Form/Input.fs" />
+        <Compile Include="Elements/Form/Label.fs" />
+        <Compile Include="Elements/Form/Radio.fs" />
+        <Compile Include="Elements/Form/Select.fs" />
+        <Compile Include="Elements/Form/Textarea.fs" />
+        <!-- Layout -->
+        <Compile Include="Layouts/Column.fs" />
+        <Compile Include="Layouts/Columns.fs" />
+        <Compile Include="Layouts/Container.fs" />
+        <Compile Include="Layouts/Footer.fs" />
+        <Compile Include="Layouts/Hero.fs" />
+        <Compile Include="Layouts/Level.fs" />
+        <Compile Include="Layouts/Section.fs" />
+        <Compile Include="Layouts/Tile.fs" />
+    </ItemGroup>
+    <PropertyGroup>
+        <NpmDependencies>
+            <NpmPackage Name="bulma" Version=">= 0.7.2" />
+        </NpmDependencies>
+    </PropertyGroup>
+    <!-- Add source files to "fable" folder in Nuget package -->
+    <ItemGroup>
+        <Content Include="*.fsproj; **\*.fs" PackagePath="fable\" />
+    </ItemGroup>
+    <Import Project="..\..\.paket\Paket.Restore.targets" />
 </Project>

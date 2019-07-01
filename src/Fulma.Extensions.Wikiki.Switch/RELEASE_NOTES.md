@@ -1,3 +1,7 @@
+### 2.0.2
+
+* Add Femto metadata
+
 ### 2.0.1
 
 * Fix `IsRounded`
