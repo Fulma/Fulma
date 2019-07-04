@@ -21,7 +21,7 @@ module Columns =
             Reflection.getCaseName x
 
     let inline private gapSizeGeneric (screen : Screen) (size : ISize) =
-        "is-" + ISize.ToString size + Screen.ToString screen
+        ISize.ToString size + Screen.ToString screen
 
     let inline private gapSizeOnly (screen : Screen) (size : ISize) =
         match screen with
