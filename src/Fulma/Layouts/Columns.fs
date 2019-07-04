@@ -28,7 +28,7 @@ module Columns =
         | Screen.Tablet
         | Screen.Desktop
         | Screen.WideScreen ->
-            "is-" + ISize.ToString size + Screen.ToString screen + "-only"
+            ISize.ToString size + Screen.ToString screen + "-only"
         | x ->
             let msg = sprintf "Screen `%s` does not support `is-%s-%s-only`." (Screen.ToString x) (ISize.ToString size) (Screen.ToString x)
             Fable.Core.JS.console.warn(msg)
