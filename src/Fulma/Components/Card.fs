@@ -57,9 +57,9 @@ module Card =
         let internal itemView element (options: GenericOption list) children =
             GenericOptions.Parse(options, parseOptions, "card-footer-item").ToReactElement(element, children)
 
-        /// Generate <div class="card-footer-item"></a>
+        /// Generate <div class="card-footer-item"></div>
         let div x y = itemView div x y
-        /// Generate <p class="card-footer-item"></a>
+        /// Generate <p class="card-footer-item"></p>
         let p x y = itemView p x y
         /// Generate <a class="card-footer-item"></a>
         let a x y = itemView a x y
