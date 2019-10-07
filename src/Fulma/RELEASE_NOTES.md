@@ -1,3 +1,9 @@
+### 2.2.0
+
+* Fix #228: Use `button` element for pagination buttons (by @geniuskidkanyi)
+* Fix #218: Fix `Columns.IsGap` class generation (by @selketjah)
+* Correct doc comments in Card.Footer (by @rmunn)
+
 ### 2.1.1
 
 * Add Femto metadata
