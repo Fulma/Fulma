@@ -42,16 +42,16 @@ module Pagination =
 
         GenericOptions.Parse(options, parseOptions, "pagination").ToReactElement(nav, children)
 
-    /// Generate <a class="pagination-previous"></a>
+    /// Generate <button class="pagination-previous"></button>
     let previous (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOptions, "pagination-previous").ToReactElement(a, children)
+        GenericOptions.Parse(options, parseOptions, "pagination-previous").ToReactElement(button, children)
 
-    /// Generate <a class="pagination-next"></a>
+    /// Generate <button class="pagination-next"></button>
     let next (options: GenericOption list) children =
-        GenericOptions.Parse(options, parseOptions, "pagination-next").ToReactElement(a, children)
+        GenericOptions.Parse(options, parseOptions, "pagination-next").ToReactElement(button, children)
 
-    /// Generate <li><a class="pagination-link"></a></li>
-    /// You control the `a` element
+    /// Generate <li><button class="pagination-link"></button></li>
+    /// You control the `button` element
     let link (options: Link.Option list) children =
         let parseOptions (result : GenericOptions) option =
             match option with
@@ -63,14 +63,14 @@ module Pagination =
         li [ ]
            [ GenericOptions.Parse(options, parseOptions, "pagination-link").ToReactElement(a, children) ]
 
-    /// Generate <li><a class="pagination-ellipsis">&hellip;</a></li>
-    /// You control the `a` element
+    /// Generate <li><button class="pagination-ellipsis">&hellip;</button></li>
+    /// You control the `button` element
     let ellipsis (options: GenericOption list) =
         li [ ]
            [ GenericOptions
                 .Parse(options, parseOptions, "pagination-ellipsis")
                 .AddProp(DangerouslySetInnerHTML { __html = "&hellip;" })
-                .ToReactElement(a) ]
+                .ToReactElement(button) ]
 
     /// Generate <ul class="pagination-list"></ul>
     let list (options: GenericOption list) children =
