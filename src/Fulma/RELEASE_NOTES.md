@@ -1,3 +1,7 @@
+### 2.2.1
+
+* Add `is-multiple` to select (by @Krzysztof-Cieslak)
+
 ### 2.2.0
 
 * Fix #228: Use `button` element for pagination buttons (by @geniuskidkanyi)
