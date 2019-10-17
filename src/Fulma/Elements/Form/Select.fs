@@ -24,6 +24,8 @@ module Select =
         | Color of IColor
         /// Add `is-rounded` class
         | [<CompiledName("is-rounded")>] IsRounded
+        ///Add `is-multiple` class
+        | [<CompiledName("is-multiple")>] IsMultiple
         | Props of IHTMLProp list
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
@@ -36,6 +38,7 @@ module Select =
             | Color color -> ofColor color |> result.AddClass
             | IsFullWidth
             | IsInline
+            | IsMultiple
             | IsRounded -> result.AddCaseName option
             | IsLoading state
             | IsFocused state
