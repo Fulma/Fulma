@@ -6,16 +6,16 @@ open Fable.React.Props
 module Tooltip =
 
     let [<Literal>] ClassName = "tooltip"
-    let [<Literal>] IsTooltipTop = "is-tooltip-top"
-    let [<Literal>] IsTooltipRight = "is-tooltip-right"
-    let [<Literal>] IsTooltipBottom = "is-tooltip-bottom"
-    let [<Literal>] IsTooltipLeft = "is-tooltip-left"
-    let [<Literal>] IsMultiline = "is-tooltip-multiline"
-    let [<Literal>] IsPrimary = "is-tooltip-primary"
-    let [<Literal>] IsInfo = "is-tooltip-info"
-    let [<Literal>] IsSuccess = "is-tooltip-success"
-    let [<Literal>] IsWarning = "is-tooltip-warning"
-    let [<Literal>] IsDanger = "is-tooltip-danger"
-    let [<Literal>] IsActive =  "is-tooltip-active"
+    let [<Literal>] IsTooltipTop = "has-tooltip-top"
+    let [<Literal>] IsTooltipRight = "has-tooltip-right"
+    let [<Literal>] IsTooltipBottom = "has-tooltip-bottom"
+    let [<Literal>] IsTooltipLeft = "has-tooltip-left"
+    let [<Literal>] IsMultiline = "has-tooltip-multiline"
+    let [<Literal>] IsPrimary = "has-tooltip-primary"
+    let [<Literal>] IsInfo = "has-tooltip-info"
+    let [<Literal>] IsSuccess = "has-tooltip-success"
+    let [<Literal>] IsWarning = "has-tooltip-warning"
+    let [<Literal>] IsDanger = "has-tooltip-danger"
+    let [<Literal>] IsActive =  "has-tooltip-active"
 
     let dataTooltip d = Data ("tooltip", d)

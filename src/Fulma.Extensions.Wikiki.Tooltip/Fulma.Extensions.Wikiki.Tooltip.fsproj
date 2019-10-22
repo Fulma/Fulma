@@ -22,7 +22,7 @@
     </ItemGroup>
     <PropertyGroup>
         <NpmDependencies>
-            <NpmPackage Name="bulma-tooltip" Version=">= 2.0.2" />
+            <NpmPackage Name="bulma-tooltip" Version=">= 3.0.0" />
         </NpmDependencies>
     </PropertyGroup>
     <!-- Add source files to "fable" folder in Nuget package -->
