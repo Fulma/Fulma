@@ -26,10 +26,10 @@
 | Slider | bulma-slider | 0.0.2 |
 
 
-Contributing
+## Contributing
 ------
 Please have a look at the general [guidelines](https://github.com/fable-elmish/elmish/blob/master/.github/CONTRIBUTING.md).
 
-Instructions and Guidelines
+## Instructions and Guidelines
 ------
 Instructions and guidelines can be found just [here](https://github.com/MangelMaxime/Fulma/blob/master/GUIDELINES.md)
