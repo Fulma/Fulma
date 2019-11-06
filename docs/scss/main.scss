@@ -1,11 +1,11 @@
-$fa-font-path: "./../../node_modules/@fortawesome/fontawesome-free/webfonts";
-@import './../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
-@import './../../node_modules/@fortawesome/fontawesome-free/scss/solid';
-@import './../../node_modules/@fortawesome/fontawesome-free/scss/regular';
-@import './../../node_modules/@fortawesome/fontawesome-free/scss/brands';
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/brands';
 
-@import "./../../node_modules/bulma/sass/utilities/initial-variables";
-@import "./../../node_modules/bulma/sass/utilities/functions";
+@import "~bulma/sass/utilities/initial-variables";
+@import "~bulma/sass/utilities/functions";
 
 // Bulma customization
 $body-size: 14px;
@@ -24,23 +24,23 @@ $custom-colors: (
   "fulma": ($fulma, $fulma-invert),
 );
 
-@import "./../../node_modules/bulma/sass/utilities/derived-variables";
+@import "~bulma/sass/utilities/derived-variables";
 
-@import '../../node_modules/bulma/bulma';
+@import '~bulma/bulma';
 
-@import "../../node_modules/bulma-badge/dist/css/bulma-badge.sass";
-@import "../../node_modules/bulma-calendar/calendar.sass";
-@import "../../node_modules/bulma-checkradio/dist/css/bulma-checkradio.sass";
-@import "../../node_modules/bulma-divider/dist/css/bulma-divider.sass";
-@import "../../node_modules/bulma-pageloader/dist/css/bulma-pageloader.sass";
-@import "../../node_modules/bulma-pricingtable/dist/css/bulma-pricingtable.sass";
-@import "../../node_modules/bulma-ribbon/dist/css/bulma-ribbon.sass";
-@import "../../node_modules/bulma-slider/dist/css/bulma-slider.sass";
-@import "../../node_modules/bulma-steps/dist/css/bulma-steps.sass";
-@import "../../node_modules/bulma-switch/dist/css/bulma-switch.sass";
-@import "../../node_modules/bulma-timeline/dist/css/bulma-timeline.sass";
-@import "../../node_modules/bulma-tooltip/dist/css/bulma-tooltip.sass";
-@import "../../node_modules/bulma-quickview/dist/css/bulma-quickview.sass";
+@import "~bulma-badge/dist/css/bulma-badge.sass";
+@import "~bulma-calendar/calendar.sass";
+@import "~bulma-checkradio/dist/css/bulma-checkradio.sass";
+@import "~bulma-divider/dist/css/bulma-divider.sass";
+@import "~bulma-pageloader/dist/css/bulma-pageloader.sass";
+@import "~bulma-pricingtable/dist/css/bulma-pricingtable.sass";
+@import "~bulma-ribbon/dist/css/bulma-ribbon.sass";
+@import "~bulma-slider/dist/css/bulma-slider.sass";
+@import "~bulma-steps/dist/css/bulma-steps.sass";
+@import "~bulma-switch/dist/css/bulma-switch.sass";
+@import "~bulma-timeline/dist/css/bulma-timeline.sass";
+@import "~bulma-tooltip/src/sass/index.sass";
+@import "~bulma-quickview/dist/css/bulma-quickview.sass";
 
 
 @import "./callout";
