@@ -1,3 +1,7 @@
+### 3.0.0
+
+* Upgrade to `bulma-tooltip@3.0.2` (no API changes from Fulma perspective only re-mapping the classes) (by @kerams)
+
 ### 2.0.1
 
 * Add Femto metadata
