@@ -18,7 +18,10 @@ let basic () =
             [ str "Right tooltip" ]
           Button.button [ Button.Props [ Tooltip.dataTooltip "Bottom tooltip" ]
                           Button.CustomClass (Tooltip.ClassName + " " + Tooltip.IsTooltipBottom) ]
-            [ str "Bottom tooltip" ] ]
+            [ str "Bottom tooltip" ]
+          Button.button [ Button.Props [ Tooltip.dataTooltip "to be active" ]
+                          Button.CustomClass (Tooltip.ClassName + " " + Tooltip.IsTooltipRight + " " + Tooltip.IsActive) ]
+            [ str "Force tooltip" ] ]
 
 
 let view =
@@ -47,6 +50,10 @@ Display a **tooltip** attached to any kind of element, in different position.
     <tbody>
         <tr>
             <td>Latest</td>
+            <td>3.0.2</td>
+        </tr>
+        <tr>
+            <td>2.0.1</td>
             <td>2.0.2</td>
         </tr>
     </tbody>
