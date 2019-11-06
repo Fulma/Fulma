@@ -1,3 +1,7 @@
+### 2.3.0
+
+* Fix #234: Use `button` element for pagination links
+
 ### 2.2.1
 
 * Add `is-multiple` to select (by @Krzysztof-Cieslak)

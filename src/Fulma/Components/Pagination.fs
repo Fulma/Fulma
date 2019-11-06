@@ -61,7 +61,7 @@ module Pagination =
             | Link.Modifiers modifiers -> result.AddModifiers modifiers
 
         li [ ]
-           [ GenericOptions.Parse(options, parseOptions, "pagination-link").ToReactElement(a, children) ]
+           [ GenericOptions.Parse(options, parseOptions, "pagination-link").ToReactElement(button, children) ]
 
     /// Generate <li><button class="pagination-ellipsis">&hellip;</button></li>
     /// You control the `button` element
