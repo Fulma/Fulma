@@ -56,6 +56,8 @@ module Image =
         | [<CompiledName("is-1by2")>] Is1by2
         /// Add `is-1by3` class
         | [<CompiledName("is-1by3")>] Is1by3
+        /// Add `is-fullwidth` class
+        | [<CompiledName("is-fullwidth")>] IsFullwidth
         // Extra
         | CustomClass of string
         | Props of IHTMLProp list
@@ -89,7 +91,8 @@ module Image =
             | Is3by5
             | Is9by16
             | Is1by2
-            | Is1by3 -> result.AddCaseName option
+            | Is1by3
+            | IsFullwidth -> result.AddCaseName option
             // Extra
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass

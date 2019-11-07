@@ -24,7 +24,7 @@
     "@babel/preset-react": "^7.0.0",
     "@fortawesome/fontawesome-free": "^5.5.0",
     "babel-loader": "^8.0.0",
-    "bulma": "^0.7.2",
+    "bulma": "^0.8.0",
     "bulma-badge": "^2.0.0",
     "bulma-calendar": "0.1.7",
     "bulma-checkradio": "^2.1.0",

@@ -7,6 +7,12 @@ open Fable.React.Props
 [<RequireQualifiedAccess>]
 module Panel =
 
+    type Option =
+        | Color of IColor
+        | Props of IHTMLProp list
+        | CustomClass of string
+        | Modifiers of Modifier.IModifier list
+
     module Block =
 
         type Option =
@@ -48,7 +54,14 @@ module Panel =
         GenericOptions.Parse(options, parseOptions, "panel-block").ToReactElement(label, children)
 
     /// Generate <nav class="panel"></nav>
-    let panel (options: GenericOption list) children =
+    let panel (options: Option list) children =
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Color color -> ofColor color |> result.AddClass
+            | Props props -> result.AddProps props
+            | CustomClass customClass -> result.AddClass customClass
+            | Modifiers modifiers -> result.AddModifiers modifiers
+
         GenericOptions.Parse(options, parseOptions, "panel").ToReactElement(nav, children)
 
     /// Generate <div class="panel-heading"></div>

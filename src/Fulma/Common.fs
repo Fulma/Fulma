@@ -180,6 +180,8 @@ module TextWeight =
         | [<CompiledName("has-text-weight-semi-bold")>] SemiBold
         /// Add `has-text-weight-bold`
         | [<CompiledName("has-text-weight-bold")>] Bold
+        /// Add `has-text-weight-medium`
+        | [<CompiledName("has-text-weight-medium")>] Medium
 
     let inline internal ofOption opt =
         Reflection.getCaseName opt
@@ -329,6 +331,7 @@ module Modifier =
         | [<CompiledName("is-radiusless")>] IsRadiusless
         | [<CompiledName("is-shadowless")>] IsShadowless
         | [<CompiledName("is-unselectable")>] IsUnselectable
+        | [<CompiledName("is-relative")>] IsRelative
         | IsInvisible of Screen * bool
         | IsHidden of Screen * bool
         | IsInvisibleOnly of Screen * bool
@@ -364,7 +367,8 @@ module Modifier =
             | IsClipped
             | IsRadiusless
             | IsShadowless
-            | IsUnselectable -> (Reflection.getCaseName option)::result
+            | IsUnselectable
+            | IsRelative -> (Reflection.getCaseName option)::result
 
         options |> List.fold parseOptions []
 

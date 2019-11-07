@@ -1,3 +1,15 @@
+### 2.4.0
+
+* Upgrade API to support Bulma@0.8.0
+* Add `List.AreSmall` - `List.AreMedium` - `List.AreLarge` to `Button` and `Tag` elements
+* Add `Modifier.IsRelative`
+* Add `TextWeight.Medium`
+* Add some missing docs comments
+* Add `Image.IsFullwidth`
+* Add color support for the panel compoennts
+* Add `Button.IsLight` this allows you to use light version of the main colors. [More info](https://bulma.io/2019/10/15/light-dark-colors/#light-dark-colors)
+* Documentation: Update the versions compatibility list for Fulma -> Bulma
+
 ### 2.3.0
 
 * Fix #234: Use `button` element for pagination links

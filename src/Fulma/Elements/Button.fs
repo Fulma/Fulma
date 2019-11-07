@@ -36,6 +36,8 @@ module Button =
         | [<CompiledName("is-loading")>] IsLoading of bool
         /// Add `is-static` class if true
         | [<CompiledName("is-static")>] IsStatic of bool
+        /// Add `is-light` class
+        | [<CompiledName("is-light")>] IsLight
         /// Set `disabled` HTMLAttr
         | Disabled of bool
         | Props of IHTMLProp list
@@ -55,7 +57,8 @@ module Button =
             | IsInverted
             | IsText
             | IsRounded
-            | IsExpanded -> result.AddCaseName option
+            | IsExpanded
+            | IsLight -> result.AddCaseName option
             // States
             | IsHovered state
             | IsFocused state
@@ -108,9 +111,17 @@ module Button =
     module List =
 
         type Option =
+            /// Add `has-addons` class
             | [<CompiledName("has-addons")>] HasAddons
+            /// Add `is-centered` class
             | [<CompiledName("is-centered")>] IsCentered
             | [<CompiledName("is-right")>] IsRight
+            /// Add `are-small` class
+            | [<CompiledName("are-small")>] AreSmall
+            /// Add `are-medium` class
+            | [<CompiledName("are-medium")>] AreMedium
+            /// Add `are-large` class
+            | [<CompiledName("are-large")>] AreLarge
             // | Size of ISize
             | Props of IHTMLProp list
             | CustomClass of string
@@ -122,7 +133,10 @@ module Button =
             match option with
             | List.HasAddons
             | List.IsCentered
-            | List.IsRight -> result.AddCaseName option
+            | List.IsRight
+            | List.AreSmall
+            | List.AreMedium
+            | List.AreLarge -> result.AddCaseName option
             | List.Props props -> result.AddProps props
             | List.CustomClass customClass -> result.AddClass customClass
             | List.Modifiers modifiers -> result.AddModifiers modifiers

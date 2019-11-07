@@ -39,11 +39,17 @@ module Tag =
 
         type Option =
             /// Add `has-addons` class
-            | [<CompiledName("has-addons")>]HasAddons
+            | [<CompiledName("has-addons")>] HasAddons
             /// Add `is-centered` class
-            | [<CompiledName("is-centered")>]IsCentered
+            | [<CompiledName("is-centered")>] IsCentered
             /// Add `is-right` class
-            | [<CompiledName("is-right")>]IsRight
+            | [<CompiledName("is-right")>] IsRight
+            /// Add `are-small` class
+            | [<CompiledName("are-small")>] AreSmall
+            /// Add `are-medium` class
+            | [<CompiledName("are-medium")>] AreMedium
+            /// Add `are-large` class
+            | [<CompiledName("are-large")>] AreLarge
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
@@ -54,7 +60,10 @@ module Tag =
             match option with
             | List.HasAddons
             | List.IsCentered
-            | List.IsRight -> result.AddCaseName option
+            | List.IsRight
+            | List.AreSmall
+            | List.AreMedium
+            | List.AreLarge -> result.AddCaseName option
             | List.Props props -> result.AddProps props
             | List.CustomClass customClass -> result.AddClass customClass
             | List.Modifiers modifiers -> result.AddModifiers modifiers
