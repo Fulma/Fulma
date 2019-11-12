@@ -9,7 +9,7 @@ let view =
 
 # Fulma
 
-Fulma provides a wrapper around [Bulma 0.7.1](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
+Fulma provides a wrapper around [Bulma 0.8.0](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
 
 Fulma is divided into 3 projects:
 
