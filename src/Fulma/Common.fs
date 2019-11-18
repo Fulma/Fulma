@@ -176,8 +176,8 @@ module TextWeight =
         | [<CompiledName("has-text-weight-light")>] Light
         /// Add `has-text-weight-normal`
         | [<CompiledName("has-text-weight-normal")>] Normal
-        /// Add `has-text-weight-semi-bold`
-        | [<CompiledName("has-text-weight-semi-bold")>] SemiBold
+        /// Add `has-text-weight-semibold`
+        | [<CompiledName("has-text-weight-semibold")>] SemiBold
         /// Add `has-text-weight-bold`
         | [<CompiledName("has-text-weight-bold")>] Bold
         /// Add `has-text-weight-medium`
