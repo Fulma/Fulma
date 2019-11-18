@@ -1,3 +1,7 @@
+### 2.4.1
+
+* #236: Fix typo "has-text-weight-semi-bold" -> "has-text-weight-semibold" (by @stroborobo)
+
 ### 2.4.0
 
 * Upgrade API to support Bulma@0.8.0
