@@ -51,7 +51,7 @@ let view =
 
 **Title** can be of two types *Title* and *Subtitle*.
 
-By default, `Header.h1 [ ] [ ]` generates a title. You can specify `Heading.IsSubtitle` if needed.
+By default, `Heading.h1 [ ] [ ]` generates a title. You can specify `Heading.IsSubtitle` if needed.
                         """
                         (Widgets.Showcase.view simpleInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.docSection
