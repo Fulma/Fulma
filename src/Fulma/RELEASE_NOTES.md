@@ -1,3 +1,7 @@
+### 2.5.0
+
+* #238: Support light colors on Tag (by @kerams)
+
 ### 2.4.1
 
 * #236: Fix typo "has-text-weight-semi-bold" -> "has-text-weight-semibold" (by @stroborobo)
