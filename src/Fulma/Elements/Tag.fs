@@ -12,6 +12,8 @@ module Tag =
         | Color of IColor
         /// Add `is-delete` class
         | [<CompiledName("is-delete")>] IsDelete
+        /// Add `is-light` class
+        | [<CompiledName("is-light")>] IsLight
         | Props of IHTMLProp list
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
@@ -24,7 +26,8 @@ module Tag =
                 Fable.Core.JS.console.warn("`is-small` is not a valid size for the tag element")
                 result
             | Size size -> ofSize size |> result.AddClass
-            | IsDelete -> result.AddCaseName option
+            | IsDelete
+            | IsLight -> result.AddCaseName option
             | Color color -> ofColor color |> result.AddClass
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
