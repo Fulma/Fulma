@@ -26,5 +26,6 @@
     "workbench.colorTheme": "One Dark Pro",
     "editor.fontLigatures": true,
     "editor.fontFamily": "JetBrains Mono, Fira Code, Consolas, 'Courier New', monospace",
-    "gitlens.codeLens.enabled": false
+    "gitlens.codeLens.enabled": false,
+    "FSharp.linter": false
 }
