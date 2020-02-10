@@ -42,13 +42,13 @@ module Dropdown =
     let content (options: GenericOption list) children =
         GenericOptions.Parse(options, parseOptions, "dropdown-content").ToReactElement(div, children)
 
-    /// Generate <div class="dropdown-divider"></div>
+    /// Generate <hr class="dropdown-divider" />
     let divider (options: GenericOption list) =
         GenericOptions.Parse(options, parseOptions, "dropdown-divider").ToReactElement(hr)
 
     /// Generate <div class="dropdown-trigger"></div>
-    let trigger (options: GenericOption list) =
-        GenericOptions.Parse(options, parseOptions, "dropdown-trigger").ToReactElement(hr)
+    let trigger (options: GenericOption list) children =
+        GenericOptions.Parse(options, parseOptions, "dropdown-trigger").ToReactElement(div, children)
 
     module Item =
         type Option =
