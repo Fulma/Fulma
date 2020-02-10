@@ -5,9 +5,11 @@ ports:
   - port: 8080
 
 tasks:
-  - init: >
+  - before: >
       rm -rf paket-files &&
-      ./fake.sh build -t InstallDocs
+      dotnet tool restore &&
+      dotnet paket restore
+  - init: ./fake.sh build -t InstallDocs
 
 vscode:
   extensions:
