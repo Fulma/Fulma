@@ -1,5 +1,7 @@
 # Fulma : Wrapper around Bulma.io
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Fulma/Fulma)
+
 [![Gitter](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/fable-compiler/Fable)
 [![NuGet version](https://badge.fury.io/nu/Fulma.svg)](https://badge.fury.io/nu/Fulma)
 [![Build status](https://ci.appveyor.com/api/projects/status/s5syrdkbmbouoa0p/branch/master?svg=true)](https://ci.appveyor.com/project/MangelMaxime/fulma/branch/master)

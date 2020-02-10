@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const execSync = require("child_process").execSync;
 
 var babelOptions = {
     presets: [
@@ -29,9 +30,19 @@ var commonPlugins = [
     })
 ];
 
-
 var isProduction = !process.argv.find(v => v.indexOf('webpack-dev-server') !== -1);
 console.log("Bundling for " + (isProduction ? "production" : "development") + "...");
+
+var isGitPod = process.env.GITPOD_INSTANCE_ID !== undefined;
+
+function getDevServerUrl() {
+    if (isGitPod) {
+        const url = execSync(`gp url 8080`);
+        return url.toString().trim();
+    } else {
+        return `http://localhost:8080`;
+    }
+}
 
 module.exports = {
     entry: isProduction ? // We don't use the same entry for dev and production, to make HMR over style quicker for dev env
@@ -82,10 +93,13 @@ module.exports = {
             new webpack.NamedModulesPlugin()
         ]),
     devServer: {
+        public: getDevServerUrl(),
         contentBase: './docs/public/',
         port: 8080,
         hot: true,
-        inline: true
+        inline: true,
+        host: '0.0.0.0',
+        allowedHosts: ['localhost', '.gitpod.io'],
     },
     resolveLoader : {
         alias: {
