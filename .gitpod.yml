@@ -5,8 +5,9 @@ ports:
   - port: 8080
 
 tasks:
-  - init: npm install
-    command: ./fake.sh build -t InstallDocs
+  - init: >
+      rm -rf paket-files &&
+      ./fake.sh build -t InstallDocs
 
 vscode:
   extensions:
