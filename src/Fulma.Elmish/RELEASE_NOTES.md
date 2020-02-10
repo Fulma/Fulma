@@ -1,3 +1,7 @@
+### 0.2.0
+
+* Add support for FirstDayOfWeek (by @stroborobo)
+
 ### 0.1.0
 
 * Release non-beta version
