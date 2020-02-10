@@ -1,4 +1,4 @@
-### NEXT
+### 2.6.0
 
 * #242: Add more element option for `panel-block`
 * #240: Fix `dropdown-trigger` to create a `div` with children (by @stroborobo)
