@@ -6,7 +6,7 @@ open Fable.FontAwesome
 
 let basic () =
     Dropdown.dropdown [ Dropdown.IsHoverable ]
-        [ div [ ]
+        [ Dropdown.trigger [ ]
             [ Button.button [ ]
                 [ span [ ]
                     [ str "Dropdown" ]
