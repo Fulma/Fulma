@@ -1472,7 +1472,7 @@ bulma-badge@^3.0.1:
   dependencies:
     bulma latest
 
-bulma-calendar@0.1.17:
+bulma-calendar@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/bulma-calendar/-/bulma-calendar-0.1.7.tgz#52780bbe34f143276753ca30151b227c457503b9"
   integrity sha1-UngLvjTxQydnU8owFRsifEV1A7k=

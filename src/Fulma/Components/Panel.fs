@@ -13,15 +13,6 @@ module Panel =
         | CustomClass of string
         | Modifiers of Modifier.IModifier list
 
-    module Block =
-
-        type Option =
-            /// Add `is-active` class if true
-            | [<CompiledName("is-active")>] IsActive of bool
-            | Props of IHTMLProp list
-            | CustomClass of string
-            | Modifiers of Modifier.IModifier list
-
     module Tab =
 
         type Option =
@@ -31,16 +22,36 @@ module Panel =
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
 
-    /// Generate <div class="panel-block"></div>
-    let block (options : Block.Option list) children =
-        let parseOptions (result : GenericOptions) option =
-            match option with
-            | Block.IsActive state -> if state then result.AddCaseName option else result
-            | Block.Props props -> result.AddProps props
-            | Block.CustomClass customClass -> result.AddClass customClass
-            | Block.Modifiers modifiers -> result.AddModifiers modifiers
+    module Block =
 
-        GenericOptions.Parse(options, parseOptions, "panel-block").ToReactElement(div, children)
+        type Option =
+            /// Add `is-active` class if true
+            | [<CompiledName("is-active")>] IsActive of bool
+            | Props of IHTMLProp list
+            | CustomClass of string
+            | Modifiers of Modifier.IModifier list
+
+        let internal panel element (options : Option list) children =
+            let parseOptions (result : GenericOptions) option =
+                match option with
+                | IsActive state -> if state then result.AddCaseName option else result
+                | Props props -> result.AddProps props
+                | CustomClass customClass -> result.AddClass customClass
+                | Modifiers modifiers -> result.AddModifiers modifiers
+
+            GenericOptions.Parse(options, parseOptions, "panel-block").ToReactElement(element, children)
+
+        /// Generate <div class="panel-block"></div>
+        let div options children = panel div options children
+
+        /// Generate <a class="panel-block"></a>
+        let a options children = panel a options children
+
+        /// Generate <label class="panel-block"></label>
+        let label options children = panel label options children
+
+        /// Generate <p class="panel-block"></p>
+        let p options children = panel p options children
 
     /// Generate <label class="panel-block"></label>
     let checkbox (options : Block.Option list) children =
