@@ -42,11 +42,32 @@ module View =
             | Some date -> date.Day = dateToCompare.Day && date.Month = dateToCompare.Month && date.Year = dateToCompare.Year
             | None -> false
 
-        let body =
-            let first = DateTime(state.ReferenceDate.Year, state.ReferenceDate.Month, 1)
-            let weekOffset = int first.DayOfWeek
-            let firstDateCalendar = first.AddDays(float -weekOffset)
+        let firstDateCalendar =
+            let firstOfMonth = DateTime(state.ReferenceDate.Year, state.ReferenceDate.Month, 1)
+            let weekOffset =
+                (7 + (int firstOfMonth.DayOfWeek) - (int config.Local.Date.FirstDayOfTheWeek))
+                    % 7
+            firstOfMonth.AddDays(float -weekOffset)
 
+        let header =
+            [0..6]
+            |> List.splitAt (int firstDateCalendar.DayOfWeek)
+            |> (fun (first, second) -> second @ first)
+            |> List.map (fun intDayOfWeek ->
+                let dayOfWeek = enum<System.DayOfWeek> intDayOfWeek
+                let name =
+                    match dayOfWeek with
+                    | DayOfWeek.Monday    -> config.Local.Date.AbbreviatedDays.Monday
+                    | DayOfWeek.Tuesday   -> config.Local.Date.AbbreviatedDays.Tuesday
+                    | DayOfWeek.Wednesday -> config.Local.Date.AbbreviatedDays.Wednesday
+                    | DayOfWeek.Thursday  -> config.Local.Date.AbbreviatedDays.Thursday
+                    | DayOfWeek.Friday    -> config.Local.Date.AbbreviatedDays.Friday
+                    | DayOfWeek.Saturday  -> config.Local.Date.AbbreviatedDays.Saturday
+                    | DayOfWeek.Sunday    -> config.Local.Date.AbbreviatedDays.Sunday
+                    | x -> failwith "not a valid day of week: %i" x
+                Calendar.Date.date [ ] [ str name ])
+
+        let body =
             seq {
                 for dayRank = 0 to 41 do // We have 42 dates to show
                     let date = firstDateCalendar.AddDays(float dayRank)
@@ -81,16 +102,8 @@ module View =
                                                                 [ Fa.i [ Fa.Solid.ChevronRight ]
                                                                     [ ] ] ] ] ]
                                        div [ ]
-                                           [ Calendar.header [ ]
-                                                 [ Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Sunday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Monday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Tuesday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Wednesday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Thursday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Friday ]
-                                                   Calendar.Date.date [ ] [ str config.Local.Date.AbbreviatedDays.Saturday ] ]
-                                             Calendar.body [ ]
-                                                 body ] ] ]
+                                           [ Calendar.header [ ] header
+                                             Calendar.body [ ] body ] ] ]
 
 
     let root<'Msg> (config: Config<'Msg>) (state: State) (currentDate: DateTime option) dispatch =
