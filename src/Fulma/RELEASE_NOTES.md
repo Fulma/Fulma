@@ -3,6 +3,8 @@
 * #242: Add more element option for `panel-block`
 * #240: Fix `dropdown-trigger` to create a `div` with children (by @stroborobo)
 * #241: Pagination support `a` and `button` elements (by @stroborobo)
+* Fix #239: Update headings documentation
+* Fix #239: RemoveClass also works for baseClass
 
 ### 2.5.0
 

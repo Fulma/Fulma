@@ -60,7 +60,7 @@ By default, `Heading.h1 [ ] [ ]` generates a title. You can specify `Heading.IsS
 
 Fulma already associates each header size with the equivalent class.
 
-For example, `Heading.h1 [ Heading.IsTitle ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
+For example, `Heading.h1 [ ] [ str "Title 1" ]` will output `<h1 class="title is-1">Title 1</h1>`
                         """
                         (Widgets.Showcase.view sizeInteractive (Render.includeCode __LINE__ __SOURCE_FILE__))
                      Render.contentFromMarkdown

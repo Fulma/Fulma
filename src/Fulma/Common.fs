@@ -381,10 +381,11 @@ module Common =
 
     type GenericOptions =
         { Props : IHTMLProp list
-          Classes : string list }
+          Classes : string list
+          RemovedClasses : string list }
 
         static member Empty =
-            { Props = []; Classes = [] }
+            { Props = []; Classes = []; RemovedClasses = [] }
 
         static member Parse(options, parser, ?baseClass, ?baseProps) =
             let result = options |> List.fold parser GenericOptions.Empty
@@ -408,12 +409,7 @@ module Common =
             { this with Classes = cl::this.Classes }
 
         member this.RemoveClass(cl: string) =
-            let classes =
-                this.Classes
-                |> List.filter (fun cls ->
-                    cls <> cl
-                )
-            { this with Classes = classes }
+            { this with RemovedClasses = cl::this.RemovedClasses }
 
         member this.AddCaseName(case: 'T) =
             Reflection.getCaseName case |> this.AddClass
@@ -425,13 +421,25 @@ module Common =
         member this.ToReactElement(el : IHTMLProp list -> ReactElement list -> ReactElement, ?children): ReactElement =
             let children = defaultArg children []
             // TODO: Remove empty classes?
-            let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
+            let classes =
+                this.Classes
+                |> List.filter (fun cls ->
+                    not (List.contains cls this.RemovedClasses)
+                )
+                |> String.concat " "
+                |> ClassName :> IHTMLProp
             el (classes::this.Props) children
 
         /// Convert to self closing element
         member this.ToReactElement(el : IHTMLProp list -> ReactElement): ReactElement =
             // TODO: Remove empty classes?
-            let classes = String.concat " " this.Classes |> ClassName :> IHTMLProp
+            let classes =
+                this.Classes
+                |> List.filter (fun cls ->
+                    not (List.contains cls this.RemovedClasses)
+                )
+                |> String.concat " "
+                |> ClassName :> IHTMLProp
             el (classes::this.Props)
 
     let parseOptions (result : GenericOptions) option =

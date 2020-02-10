@@ -21,5 +21,10 @@
         "**/temp": true
     },
     "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "One Dark Pro",
+    "editor.fontLigatures": true,
+    "editor.fontFamily": "JetBrains Mono, Fira Code, Consolas, 'Courier New', monospace",
+    "gitlens.codeLens.enabled": false
 }
