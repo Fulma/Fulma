@@ -98,4 +98,19 @@ Supported size:
 
 When you do not set the size, it's consider *normal*.
                         """
-                        (Widgets.Showcase.view size (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
+                        (Widgets.Showcase.view size (Render.includeCode __LINE__ __SOURCE_FILE__))
+                     Render.contentFromMarkdown
+                        """
+### Using `a` vs. `button`
+
+While Bulma suggests using `a` elements for the interactive pagination
+elements, Fulma uses `button` by default, since the Disabled attribute on `a`
+doesn't block OnClick as you might expect.
+
+If you want to use `a` elements instead you can use these functions:
+
+* `Pagination.Link.a`
+* `Pagination.Previous.a`
+* `Pagination.Next.a`
+                        """
+    ]
