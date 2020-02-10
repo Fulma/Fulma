@@ -1,3 +1,9 @@
+### NEXT
+
+* #242: Add more element option for `panel-block`
+* #240: Fix `dropdown-trigger` to create a `div` with children (by @stroborobo)
+* #241: Pagination support `a` and `button` elements (by @stroborobo)
+
 ### 2.5.0
 
 * #238: Support light colors on Tag (by @kerams)
