@@ -64,7 +64,7 @@ module View =
                     | DayOfWeek.Friday    -> config.Local.Date.AbbreviatedDays.Friday
                     | DayOfWeek.Saturday  -> config.Local.Date.AbbreviatedDays.Saturday
                     | DayOfWeek.Sunday    -> config.Local.Date.AbbreviatedDays.Sunday
-                    | x -> failwith "not a valid day of week: %i" x
+                    | x -> failwithf "not a valid day of week: %A" x
                 Calendar.Date.date [ ] [ str name ])
 
         let body =
