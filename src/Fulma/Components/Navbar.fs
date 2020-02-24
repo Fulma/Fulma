@@ -3,6 +3,7 @@ namespace Fulma
 open Fulma
 open Fable.React
 open Fable.React.Props
+open Browser.Types
 
 [<RequireQualifiedAccess>]
 module Navbar =
@@ -31,6 +32,16 @@ module Navbar =
         type Option =
             /// Add `is-active` class if true
             | [<CompiledName("is-active")>] IsActive of bool
+            | Props of IHTMLProp list
+            | CustomClass of string
+            | Modifiers of Modifier.IModifier list
+
+    module Burger =
+
+        type Option =
+            /// Add `is-active` class if true
+            | [<CompiledName("is-active")>] IsActive of bool
+            | OnClick of (MouseEvent -> unit)
             | Props of IHTMLProp list
             | CustomClass of string
             | Modifiers of Modifier.IModifier list
@@ -183,7 +194,15 @@ module Navbar =
         GenericOptions.Parse(options, parseOptions, "navbar-menu").ToReactElement(div, children)
 
     /// Generate <div class="navbar-burger"></div>
-    let burger (options: GenericOption list) children =
+    let burger options children =
+        let parseOptions (result : GenericOptions) option =
+            match option with
+            | Burger.IsActive state -> if state then result.AddCaseName option else result
+            | Burger.OnClick cb -> DOMAttr.OnClick cb |> result.AddProp
+            | Burger.Props props -> result.AddProps props
+            | Burger.CustomClass customClass -> result.AddClass customClass
+            | Burger.Modifiers modifiers -> result.AddModifiers modifiers
+
         GenericOptions.Parse(options, parseOptions, "navbar-burger").ToReactElement(div, children)
 
     /// Generate <div class="navbar-content"></div>
