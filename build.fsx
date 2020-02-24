@@ -148,8 +148,16 @@ let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
         Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
         |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
         |> (fun nupkg ->
-            Paket.push (fun p -> { p with ApiKey = nugetKey
-                                          WorkingDir = Path.getDirectory nupkg }))
+            DotNet.nugetPush (fun p ->
+                { p with
+                    PushParams =
+                        { p.PushParams with
+                            ApiKey = Some nugetKey
+                            Source = Some "nuget.org"
+                        }
+                 }
+            ) nupkg
+        )
 
 
 Target.create "PublishNugets" (fun _ ->
@@ -200,7 +208,7 @@ Target.create "PublishDocs" (fun _ ->
 // Build order
 "Clean"
     ==> "Install"
-    ==> "Build"
+    // ==> "Build"
     ==> "PublishNugets"
 
 "Build"
