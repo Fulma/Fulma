@@ -1,3 +1,7 @@
+### 2.1.0
+
+* Regenerate the icons for Font Awesome version `5.12.1`
+
 ### 2.0.0
 
 * Regenerate the icons for Font Awesome version `5.8.1`

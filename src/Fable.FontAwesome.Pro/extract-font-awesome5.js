@@ -7,12 +7,17 @@ var tabSize_1 = `    `;
 var tabSize_2 = tabSize_1.repeat(2);
 var tabSize_3 = tabSize_1.repeat(3);
 
-function generateModule(sectionId, faPrefix, moduleName) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function generateModule(sectionId, faPrefix, moduleName) {
+    const tab = document.querySelector(`a[href*='/cheatsheet/pro/${sectionId}']`);
+    tab.click();
+    await sleep(2000); // Delay to be sure the view has been loaded
     var iconList = [];
 
-    var section = document.getElementById(sectionId);
-    section
-        .querySelectorAll('article')
+    document.querySelectorAll("main section article")
         .forEach(icon => {
             iconList.push(icon.getAttribute('id'));
         });
@@ -39,28 +44,32 @@ function generateModule(sectionId, faPrefix, moduleName) {
     return res + "\n\n";
 }
 
-var generatedModules =
-    `// This files has been generated using a script do not edit it
+(async () => {
+    var generatedModules =
+        `// This files has been generated using a script do not edit it
 
 namespace Fable.FontAwesome
 
 open Fable.Core
 
 [<AutoOpen>]
-module Pro =
+module Free =
 
     [<RequireQualifiedAccess>]
     module Fa =
 
 `
-    + generateModule("solid", "fas", "Solid")
-    + generateModule("regular", "far", "Regular")
-    + generateModule("light", "fal", "Light")
-    + generateModule("brands", "fab", "Brand");
+    + await generateModule("solid", "fas", "Solid")
+    + await generateModule("regular", "far", "Regular")
+    + await generateModule("light", "fal", "Light")
+    + await generateModule("duotone", "fad", "Duotone")
+    + await generateModule("brands", "fab", "Brand");
 
-var textarea = document.createElement("textarea");
-textarea.style.width = "100%";
-textarea.rows = 30;
-textarea.textContent = generatedModules;
-document.body.innerHTML = "";
-document.body.appendChild(textarea);
+    var textarea = document.createElement("textarea");
+    textarea.style.width = "100%";
+    textarea.rows = 30;
+    textarea.textContent = generatedModules;
+    document.body.innerHTML = "";
+    document.body.appendChild(textarea);
+
+})()
