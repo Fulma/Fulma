@@ -1,3 +1,7 @@
+### 2.7.0
+
+* Fix #212: Add `Navbar.Burger.Option` so people can do `Navbar.Burger.IsActive`
+
 ### 2.6.0
 
 * #242: Add more element option for `panel-block`
