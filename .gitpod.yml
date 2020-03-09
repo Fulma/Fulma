@@ -10,7 +10,6 @@ tasks:
       dotnet tool restore &&
       dotnet paket restore
   - init: ./fake.sh build -t InstallDocs
-  - command: echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
 
 vscode:
   extensions:

@@ -13,16 +13,20 @@ let customColor() =
     Columns.columns [ ]
         [ Column.column [ ]
             [ Button.button [ Button.Color isCustomLightBlue ]
-                [ str "A button with custom color" ] ]
+                [ str "A button with a custom color" ]
+              Text.div [ Modifiers [ Modifier.TextColor isCustomPurple ] ]
+                [ str "This a text with a custom color" ] ]
           Column.column [ ]
             [ Field.div [ Field.IsGrouped ]
                 [ Checkradio.checkboxInline [ Checkradio.Color isCustomPurple
+                                              Checkradio.Id "custom-color-purple"
                                               Checkradio.HasBackgroundColor ]
                         [ str "Installations" ]
                   Checkradio.checkboxInline [ Checkradio.Color isCustomLightBlue
+                                              Checkradio.Id "custom-color-light-blue"
                                               Checkradio.HasBackgroundColor ]
                         [ str "Fronts" ]
-                  Checkradio.checkboxInline [ ]
+                  Checkradio.checkboxInline [ Checkradio.Id "custom-color-default" ]
                         [ str "Zones fixes" ] ] ] ]
 
 let noColor() =
