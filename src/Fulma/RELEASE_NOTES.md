@@ -1,3 +1,7 @@
+### 2.8.0
+
+* Fix #250: Transform `File.label` into `File.Label.label` - `File.Label.span` in order to make it easier for people to click the select file button
+
 ### 2.7.0
 
 * Fix #212: Add `Navbar.Burger.Option` so people can do `Navbar.Burger.IsActive`

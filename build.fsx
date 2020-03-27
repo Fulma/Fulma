@@ -208,7 +208,7 @@ Target.create "PublishDocs" (fun _ ->
 // Build order
 "Clean"
     ==> "Install"
-    // ==> "Build"
+    ==> "Build"
     ==> "PublishNugets"
 
 "Build"
