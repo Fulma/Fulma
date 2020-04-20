@@ -1,3 +1,7 @@
+### 3.1.0
+
+* Upgrade dependencies to their latest version
+
 ### 3.0.0
 
 * Upgrade to Fable.Core v3
