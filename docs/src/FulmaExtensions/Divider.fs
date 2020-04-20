@@ -43,24 +43,7 @@ Display a vertical or horizontal divider to segment your design.
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Divider --project <your project>`
-- `yarn add bulma-divider@2.0.1`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Divider</th>
-            <th>bulma-divider</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>2.0.1</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
                         """
                      Render.docSection
                          "### Default divider"

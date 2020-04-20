@@ -1,3 +1,7 @@
+### 2.8.1
+
+* Update femto information
+
 ### 2.8.0
 
 * Fix #250: Transform `File.label` into `File.Label.label` - `File.Label.span` in order to make it easier for people to click the select file button

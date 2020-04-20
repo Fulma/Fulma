@@ -53,24 +53,7 @@ Display quick view of data without leaving the current page
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Quickview --project <your project>`
-- `yarn add bulma-quickview@2.0.0`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Quickview</th>
-            <th>bulma-quickview</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>2.0.0</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
 """
                      Render.docSection
                         ""

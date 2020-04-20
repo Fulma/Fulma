@@ -154,26 +154,7 @@ Display a **calendar** for date selection or for planning management, in differe
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Calendar --project <your project>`
-- `yarn add bulma-calendar@0.1.7 bulma-tooltip`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Calendar</th>
-            <th>bulma-calendar</th>
-            <th>bulma-tooltip</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>0.1.7</td>
-            <td>2.0.2</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
                         """
                      Render.docSection
                         ""

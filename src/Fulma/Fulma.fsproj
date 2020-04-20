@@ -62,7 +62,7 @@
     </ItemGroup>
     <PropertyGroup>
         <NpmDependencies>
-            <NpmPackage Name="bulma" Version=">= 0.7.2" />
+            <NpmPackage Name="bulma" Version=">= 0.8.0" />
         </NpmDependencies>
     </PropertyGroup>
     <!-- Add source files to "fable" folder in Nuget package -->

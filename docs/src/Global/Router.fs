@@ -52,7 +52,6 @@ type FulmaPage =
     | Layout of Layouts
     | Modifier of Modifiers
     | Introduction
-    | Versions
 
 type FulmaExtensionsPage =
     | Calendar
@@ -94,7 +93,6 @@ let private toHash page =
     | Fulma pageType ->
         match pageType with
         | FulmaPage.Introduction -> "#fulma"
-        | Versions -> "#fulma/versions"
         | Modifier modifiers ->
             match modifiers with
             | Basics -> "#fulma/modifiers/basics"
@@ -163,7 +161,6 @@ let pageParser : Parser<Page -> Page, Page> =
             map BlogIndex (s "blog")
             map BlogArticle ( s "blog-viewer" <?> stringParam "file")
             map (Fulma FulmaPage.Introduction ) (s "fulma")
-            map (Fulma FulmaPage.Versions ) (s "fulma" </> s "versions")
             map (Fulma (FulmaPage.Modifier Basics))  (s "fulma" </> s "modifiers" </> s "basics")
             map (Fulma (FulmaPage.Modifier Colors))  (s "fulma" </> s "modifiers" </> s "colors")
             map (Fulma (FulmaPage.Modifier Responsive))  (s "fulma" </> s "modifiers" </> s "responsive")

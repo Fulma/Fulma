@@ -13,6 +13,12 @@
       "commands": [
         "paket"
       ]
+    },
+    "femto": {
+      "version": "0.8.4",
+      "commands": [
+        "femto"
+      ]
     }
   }
 }

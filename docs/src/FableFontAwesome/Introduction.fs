@@ -20,23 +20,7 @@ Provide a wrapper around [Font Awesome](https://fontawesome.com/).
 
 ---
 
-## Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fable.FontAwesome</th>
-            <th>Font Awesome</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>5.5.0</td>
-        </tr>
-    </tbody>
-<table>
-
+Lastest version of this library support Font Awesome version 5.12.1.
 ---
 
 ## How to install ?

@@ -36,28 +36,7 @@ Display a **tooltip** attached to any kind of element, in different position.
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Tooltip --project <your project>`
-- `yarn add bulma-tooltip@2.0.2`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Tooltip</th>
-            <th>bulma-tooltip</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>3.0.2</td>
-        </tr>
-        <tr>
-            <td>2.0.1</td>
-            <td>2.0.2</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
                         """
                      Render.docSection
                         """

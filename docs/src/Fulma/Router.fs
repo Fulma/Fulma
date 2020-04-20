@@ -3,7 +3,6 @@ module Fulma.Router
 let view fulmaPage =
     match fulmaPage with
     | Router.FulmaPage.Introduction -> Fulma.Introduction.view
-    | Router.FulmaPage.Versions -> Fulma.Versions.view
     | Router.FulmaPage.Modifier modifier ->
         match modifier with
         | Router.Modifiers.Basics -> Modifiers.Basics.view

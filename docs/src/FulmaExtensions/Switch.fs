@@ -412,24 +412,7 @@ The **Switch** can have different colors, sizes and states.
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Switch --project <your project>`
-- `yarn add bulma-switch@2.0.0`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Switch</th>
-            <th>bulma-switch</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>2.0.0</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
                         """
                      Render.docSection
                         """

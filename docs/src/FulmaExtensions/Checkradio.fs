@@ -399,24 +399,7 @@ Make classic **checkbox** and **radio** more sexy in different colors, sizes, an
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Checkradio --project <your project>`
-- `yarn add bulma-checkradio@2.1.0`
-
-### Versions compatibility
-
-<table class="table" style="width: auto;">
-    <thead>
-        <tr>
-            <th>Fulma.Extensions.Wikiki.Checkradio</th>
-            <th>bulma-checkradio</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Latest</td>
-            <td>2.1.0</td>
-        </tr>
-    </tbody>
-<table>
+- Follow instructions from `dotnet femto yourProject.fsproj`
                         """
                      Render.docSection
                         """
