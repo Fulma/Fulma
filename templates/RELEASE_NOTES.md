@@ -1,3 +1,7 @@
+### 3.1.1
+
+* Fix `build.cmd` parameter (by @bengobeil)
+
 ### 3.1.0
 
 * Upgrade dependencies to their latest version
