@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
@@ -13,6 +13,7 @@
     <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj" />
     <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj" />
     <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj" />
+    <ProjectReference Include="../src/Fulma.Extensions.Wikiki.Timeline/Fulma.Extensions.Wikiki.Timeline.fsproj" />
     <ProjectReference Include="../src/Fulma.Elmish/Fulma.Elmish.fsproj" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,7 @@
     <Compile Include="src/FulmaExtensions/PageLoader.fs" />
     <Compile Include="src/FulmaExtensions/Slider.fs" />
     <Compile Include="src/FulmaExtensions/Switch.fs" />
+    <Compile Include="src/FulmaExtensions/Timeline.fs" />
     <Compile Include="src/FulmaExtensions/Tooltip.fs" />
     <Compile Include="src/FulmaExtensions/Quickview.fs" />
     <Compile Include="src/FulmaExtensions/Router.fs" />

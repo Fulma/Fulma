@@ -62,6 +62,7 @@ type FulmaExtensionsPage =
     | Switch
     | Checkradio
     | Quickview
+    | Timeline
 
 type FulmaElmishPage =
     | Introduction
@@ -145,6 +146,7 @@ let private toHash page =
         | Switch -> "#fulma-extensions/switch"
         | Slider -> "#fulma-extensions/slider"
         | Quickview -> "#fulma-extensions/quickview"
+        | Timeline -> "#fulma-extensions/timeline"
     | FulmaElmish pageType ->
         match pageType with
         | FulmaElmishPage.Introduction -> "#fulma-elmish"
@@ -210,6 +212,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (FulmaExtensions Divider) (s "fulma-extensions" </> s "divider")
             map (FulmaExtensions Switch) (s "fulma-extensions" </> s "switch")
             map (FulmaExtensions Quickview) (s "fulma-extensions" </> s "quickview")
+            map (FulmaExtensions Timeline) (s "fulma-extensions" </> s "timeline")
             // Fulma Elmish
             map (FulmaElmish FulmaElmishPage.Introduction) (s "fulma-elmish")
             map (FulmaElmish FulmaElmishPage.DatePicker) (s "fulma-elmish" </> s "date-picker")

@@ -10,3 +10,4 @@ let view fulmaExtensionsPage =
     | Router.PageLoader -> PageLoader.view
     | Router.Slider -> Slider.view
     | Router.Quickview -> Quickview.view
+    | Router.Timeline -> Timeline.view

@@ -202,6 +202,7 @@ let private menuFulmaExtensions currentPage =
           menuItem "Quickview" (FulmaExtensions Quickview) currentPage
           menuItem "Slider" (FulmaExtensions Slider) currentPage
           menuItem "Switch" (FulmaExtensions Switch) currentPage
+          menuItem "Timeline" (FulmaExtensions Timeline) currentPage
           menuItem "Tooltip" (FulmaExtensions Tooltip) currentPage ] ]
 
 let private menuFulmaElmish currentPage =
