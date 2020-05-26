@@ -1492,37 +1492,22 @@ bulma-pageloader@2.1.0:
   resolved "https://registry.yarnpkg.com/bulma-pageloader/-/bulma-pageloader-2.1.0.tgz#2c48c32bac98109bb59e46489b4e90292ec25e31"
   integrity sha512-yI1SBxeGfj57BYtN8tIcvaGlfQgxylPwHHaDNSYLhF+1EVwUjWz97Ufga+8VOv9PZuhhnD05rb8nZ+p0isWw9A==
 
-bulma-pricingtable@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/bulma-pricingtable/-/bulma-pricingtable-0.2.0.tgz#d4bb5827c6859a4303be1474644d10b1e5a579ed"
-  integrity sha512-4feDoGG5kxfzYNo+eplIbofEerO2FjwJgWoTdM1K8frU1eMHzd2Beh0Jo+18Q0N/83l+YxZydxw/xPijbCOsdQ==
-
 bulma-quickview@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bulma-quickview/-/bulma-quickview-2.0.0.tgz#ac85d6cc23f98bd4b4be5cef11e9524554d2bbf3"
   integrity sha512-EJq9XYcJ+pG94FIYgw9AI2NoRDRjQX/Iua0H3iIJq4C3D+4sVOCg/Y+I7gd/G0v7fez/qvKX/S+91UZqaTmXSQ==
-
-bulma-ribbon@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/bulma-ribbon/-/bulma-ribbon-0.1.1.tgz#f8a88ec7ca7a40522105d9866002b588c542e587"
-  integrity sha512-yHokifKitsA0inChEMSC5BQMtiRBzwqATzZDjFk+eIxXYxhGFQ1otfQH024YkLlzDlzyg2VK0q+/cn9Uvr+MIw==
 
 bulma-slider@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bulma-slider/-/bulma-slider-2.0.0.tgz#0be9b016228b62b8189891e67eafbf5aba846699"
   integrity sha512-lXKMA/U43Fi1UnMkVYdNuEu0cGLo4JSWFUcnEyzNXkdpmDFic+d8H9oiaRoLbPiuGTC5SNoHMCP24T5544gnlQ==
 
-bulma-steps@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/bulma-steps/-/bulma-steps-2.2.1.tgz#39cc353ae049701c60aa7c74a27bf56b8463cb1a"
-  integrity sha512-fD50xz49zPVAfsRNcwBR7rd1lgNdKrcsIXAfVMwMH9A6iDhauOTkiEJOxXj4xZuW/CI6JpV+fCgj5uIuN1lP3Q==
-
 bulma-switch@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bulma-switch/-/bulma-switch-2.0.0.tgz#7a187cd1bb8073e9a542478d936b89315f1ffcd8"
   integrity sha512-myD38zeUfjmdduq+pXabhJEe3x2hQP48l/OI+Y0fO3HdDynZUY/VJygucvEAJKRjr4HxD5DnEm4yx+oDOBXpAA==
 
-bulma-timeline@^3.0.4:
+bulma-timeline@3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/bulma-timeline/-/bulma-timeline-3.0.4.tgz#494f458098a06dcf8dcc7fe8f2f158b63d1d1ef2"
   integrity sha512-gCUOcSUuzHoeVMkCpLF49j5Z5yl78XQ+KgJcT+1ju5WIGgBgVytRUob/dw5NHAxPLO2rmcvwYNbCJFp7w4WT4Q==
