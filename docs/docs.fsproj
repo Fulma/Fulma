@@ -60,7 +60,6 @@
     <Compile Include="src/Fulma/Modifiers/Colors.fs" />
     <Compile Include="src/Fulma/Modifiers/Responsive.fs" />
     <Compile Include="src/Fulma/Modifiers/Typography.fs" />
-    <Compile Include="src/Fulma/Versions.fs" />
     <Compile Include="src/Fulma/Introduction.fs" />
     <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->

@@ -26,7 +26,7 @@ let docSection title viewer =
           yield viewer ]
 
 let docPage children =
-    // We sue `Key` to force react to make a delete action when switching from one page to another
+    // We use `Key` to force react to make a delete action when switching from one page to another
     // I cehcked and react do not delete the whole page when we modify a stateful component so that fine for
     // If needed, we can convert this function to a stateful component
     div [ Key (System.Guid.NewGuid().ToString())

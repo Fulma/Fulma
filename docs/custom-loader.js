@@ -78,7 +78,7 @@ var loader = function(source) {
         return;
     }
 
-    var lines = source.split("\n");
+    var lines = source.replace(/(\r\n|\n|\r)/gm,"\n").split("\n");
     var refLine = lines[options.line - 1];
     var matches = refLine.match(/(\(Widgets\.Showcase\.view \(fun _ -> ofType<([^\s,]+))|(Widgets\.Showcase\.view ([^\s]+))/);
     var codeLines = [];
