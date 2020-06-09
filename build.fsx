@@ -174,6 +174,7 @@ Target.create "PublishNugets" (fun _ ->
     ++ "src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj"
     ++ "src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj"
     ++ "src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj"
+    ++ "src/Fulma.Extensions.Wikiki.Timeline/Fulma.Extensions.Wikiki.Timeline.fsproj"
     ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
     // ++ "src/Fulma.Toast/Fulma.Toast.fsproj"
     ++ "templates/Fable.Template.Fulma.Minimal.proj"
