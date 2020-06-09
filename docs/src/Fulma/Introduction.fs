@@ -37,6 +37,8 @@ open Fulma
 
 Fulma has a depedency on [Bulma](https://bulma.io/documentation/overview/start/) and you will need to add it through [yarn](https://yarnpkg.com/en/docs/usage) or [npm](https://docs.npmjs.com/getting-started/using-a-package.json).
 
+Fulma support [Femto](https://github.com/Zaid-Ajaj/Femto/) so you can follow the instructions from `dotnet femto yourProject.fsproj`
+
 ## Architecture
 
 Fulma has been designed to provide the best experience over the Bulma CSS framework.

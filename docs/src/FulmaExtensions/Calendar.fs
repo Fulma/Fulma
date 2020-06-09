@@ -154,7 +154,7 @@ Display a **calendar** for date selection or for planning management, in differe
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Calendar --project <your project>`
-- Follow instructions from `dotnet femto yourProject.fsproj`
+- Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
                         """
                      Render.docSection
                         ""

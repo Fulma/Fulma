@@ -132,7 +132,7 @@ Display a vertical **timeline**, in different colors, sizes, and states.
 ### Installation
 
 - `paket add Fulma.Extensions.Wikiki.Timeline --project <your project>`
-- Follow instructions from `dotnet femto yourProject.fsproj`
+- Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
                         """
                      Render.docSection
                          "### Default colors and layout"
