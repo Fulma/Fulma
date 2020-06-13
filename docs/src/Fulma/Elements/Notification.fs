@@ -11,13 +11,18 @@ let basic () =
         [ str "I am a notification" ]
 
 let color () =
-    Notification.notification [ Notification.Color IsSuccess ]
-        [ str "I am a notification with some colors" ]
+    div [ ] [
+        Notification.notification [ Notification.Color IsSuccess ]
+            [ str "I am a notification with some color" ]
+
+        Notification.notification [ Notification.Color IsSuccess; Notification.IsLight ]
+            [ str "I am a notification with some light color" ]
+    ]
 
 let withCross () =
     Notification.notification [ Notification.Color IsDanger ]
         [ Notification.delete [ ] [ ]
-          str "I am a notification with some colors and a delete button" ]
+          str "I am a notification with some color and a delete button" ]
 
 let view =
     Render.docPage [ Render.contentFromMarkdown
