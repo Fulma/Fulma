@@ -9,6 +9,8 @@ module Notification =
 
     type Option =
         | Color of IColor
+        /// Add `is-light` class
+        | [<CompiledName("is-light")>] IsLight
         | CustomClass of string
         | Props of IHTMLProp list
         | Modifiers of Modifier.IModifier list
@@ -18,6 +20,7 @@ module Notification =
         let parseOptions (result : GenericOptions) option =
             match option with
             | Color color -> ofColor color |> result.AddClass
+            | IsLight -> result.AddCaseName option
             | Props props -> result.AddProps props
             | CustomClass customClass -> result.AddClass customClass
             | Modifiers modifiers -> result.AddModifiers modifiers
