@@ -14,7 +14,6 @@ let color () =
     div [ ] [
         Notification.notification [ Notification.Color IsSuccess ]
             [ str "I am a notification with some color" ]
-
         Notification.notification [ Notification.Color IsSuccess; Notification.IsLight ]
             [ str "I am a notification with some light color" ]
     ]
