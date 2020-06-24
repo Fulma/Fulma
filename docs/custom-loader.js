@@ -8,7 +8,7 @@ function getFunctionCode(lines, functionName) {
     for (let index = 0; index < lines.length; index++) {
         const line = lines[index];
 
-        if (line.includes(functionName)) {
+        if (!isInsideBlockCode && line.includes(functionName)) {
             isInsideBlockCode = true;
             // Skip function definition line
             continue;
