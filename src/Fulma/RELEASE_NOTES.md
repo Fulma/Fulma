@@ -1,3 +1,8 @@
+### 2.9.0
+
+* Upgrade Bulma support to 0.8.2
+* Add `Notification.IsLight` (by @kerams)
+
 ### 2.8.1
 
 * Update femto information
