@@ -122,6 +122,7 @@ let private menuFulma currentPage subModel dispatch =
                     yield ul [ ]
                              [ menuItem "Basics" (Fulma (Modifier Modifiers.Basics)) currentPage
                                menuItem "Colors & Shades" (Fulma (Modifier Modifiers.Colors)) currentPage
+                               menuItem "Spacing" (Fulma (Modifier Modifiers.Spacing)) currentPage
                                menuItem "Typography" (Fulma (Modifier Modifiers.Typography)) currentPage
                                menuItem "Responsive" (Fulma (Modifier Modifiers.Responsive)) currentPage ] ] ]
       Menu.list [ ]
