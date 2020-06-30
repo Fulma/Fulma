@@ -29,7 +29,7 @@ let view =
 
 Change the size and color of the text for one or multiple viewport width.  It allows you to combine a margin/padding with a direction and an amount.
 
-__NOTE:__ This does not appear to affect `Text.Span` elements, but does work with `Text.p` and `Text.div` elements.
+__NOTE:__ Spacing helpers do not appear to affect `Text.span` elements correctly.  However, they do work with `Text.p` and `Text.div` elements.
 
 *[Bulma documentation](https://bulma.io/documentation/helpers/spacing-helpers/)*
 
