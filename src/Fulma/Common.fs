@@ -235,6 +235,43 @@ module Display =
             ""
 
 [<RequireQualifiedAccess>]
+module Spacing =
+    type TypeAndDirection =
+        | [<CompiledName("mt")>] MarginTop
+        | [<CompiledName("mr")>] MarginRight
+        | [<CompiledName("mb")>] MarginBottom
+        | [<CompiledName("ml")>] MarginLeft
+        | [<CompiledName("my")>] MarginTopAndBottom
+        | [<CompiledName("mx")>] MarginLeftAndRight
+        | [<CompiledName("pt")>] PaddingTop
+        | [<CompiledName("pr")>] PaddingRight
+        | [<CompiledName("pb")>] PaddingBottom
+        | [<CompiledName("pl")>] PaddingLeft
+        | [<CompiledName("py")>] PaddingTopAndBottom
+        | [<CompiledName("px")>] PaddingLeftAndRight
+
+        static member inline toClass opt =
+            Reflection.getCaseName opt
+
+    type Amount =
+        | [<CompiledName("0")>] Is0
+        | [<CompiledName("1")>] Is1
+        | [<CompiledName("2")>] Is2
+        | [<CompiledName("3")>] Is3
+        | [<CompiledName("4")>] Is4
+        | [<CompiledName("5")>] Is5
+        | [<CompiledName("6")>] Is6
+
+        static member inline toClass opt =
+            Reflection.getCaseName opt
+
+    let internal toSpacingClass typ amount =
+        let typ = TypeAndDirection.toClass typ
+        let amount = Amount.toClass amount
+
+        typ + "-" + amount
+
+[<RequireQualifiedAccess>]
 module Modifier =
     let internal ofBackground level =
         match level with
@@ -338,6 +375,7 @@ module Modifier =
         | IsHiddenOnly of Screen * bool
         | IsSrOnly
         | IsScreenReaderOnly
+        | Spacing of Spacing.TypeAndDirection * Spacing.Amount
 
     let parseModifiers options =
         let parseOptions result option =
@@ -369,6 +407,7 @@ module Modifier =
             | IsShadowless
             | IsUnselectable
             | IsRelative -> (Reflection.getCaseName option)::result
+            | Spacing (typ, amount) -> (Spacing.toSpacingClass typ amount)::result
 
         options |> List.fold parseOptions []
 
