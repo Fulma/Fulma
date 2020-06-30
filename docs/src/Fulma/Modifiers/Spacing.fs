@@ -19,42 +19,6 @@ let paragraphSpacing() =
                  [ str "Top and bottom padding of 3"]
         ]
 
-let noColor() =
-    let inputColor hasError =
-        if hasError then
-            IsDanger
-        else
-            NoColor
-        |> Input.Color
-    // Render view
-    div [ ClassName "block" ]
-        [ Input.text [ inputColor true
-                       Input.Value "An error has been found" ]
-          br [ ]
-          br [ ]
-          Input.text [ inputColor false
-                       Input.Value "No error found" ] ]
-
-let backgroundAndTextColor() =
-    Card.card [ ]
-        [ Card.header [ ]
-            [ Card.Header.title [ Card.Header.Title.Modifiers [ Modifier.BackgroundColor IsGreyLighter
-                                                                Modifier.TextColor IsLink ] ]
-                [ str "Component" ] ]
-          Card.content [ ]
-            [ Content.content [ ]
-                [ str "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris." ] ]
-          Card.footer [ ]
-            [ Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
-                                          Modifier.TextColor IsInfo ] ]
-                [ str "Save" ]
-              Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsBlackBis
-                                          Modifier.TextColor IsWhiteBis ] ]
-                [ str "Edit" ]
-              Card.Footer.a [ Modifiers [ Modifier.BackgroundColor IsGreyLighter
-                                          Modifier.TextColor IsDanger ] ]
-                [ str "Delete" ] ] ]
-
 let view =
     Render.docPage [
         Render.contentFromMarkdown
