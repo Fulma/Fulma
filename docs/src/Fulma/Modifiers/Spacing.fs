@@ -37,55 +37,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
     <tbody>
         <tr>
             <td>
-                <div class="mt-2">text</div>
+                <div class="has-background-black has-text-white mt-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is2)</code>
             </td>
-        </tr>
-        <tr>
             <td>
-                <div class="mr-2">text</div>
-            </td>
-            <td>
-                <code>Modifier.Spacing (Spacing.MarginRight, Spacing.Is2)</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="mb-2">text</div>
-            </td>
-            <td>
-                <code>Modifier.Spacing (Spacing.MarginBottom, Spacing.Is2)</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="ml-2">text</div>
-            </td>
-            <td>
-                <code>Modifier.Spacing (Spacing.MarginLeft, Spacing.Is2)</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="mx-2">text</div>
-            </td>
-            <td>
-                <code>Modifier.Spacing (Spacing.MarginLeftAndRight, Spacing.Is2)</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="my-2">text</div>
-            </td>
-            <td>
-                <code>Modifier.Spacing (Spacing.MarginTopAndBottom, Spacing.Is2)</code>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class="pt-2">text</div>
+                <div class="has-background-black has-text-white pt-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is2)</code>
@@ -93,7 +51,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
         </tr>
         <tr>
             <td>
-                <div class="pr-2">text</div>
+                <div class="has-background-black has-text-white mr-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginRight, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white pr-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingRight, Spacing.Is2)</code>
@@ -101,7 +65,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
         </tr>
         <tr>
             <td>
-                <div class="pb-2">text</div>
+                <div class="has-background-black has-text-white mb-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginBottom, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white pb-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingBottom, Spacing.Is2)</code>
@@ -109,7 +79,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
         </tr>
         <tr>
             <td>
-                <div class="pl-2">text</div>
+                <div class="has-background-black has-text-white ml-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginLeft, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white pl-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingLeft, Spacing.Is2)</code>
@@ -117,7 +93,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
         </tr>
         <tr>
             <td>
-                <div class="px-2">text</div>
+                <div class="has-background-black has-text-white mx-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginLeftAndRight, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white px-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingLeftAndRight, Spacing.Is2)</code>
@@ -125,7 +107,13 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
         </tr>
         <tr>
             <td>
-                <div class="py-2">text</div>
+                <div class="has-background-black has-text-white my-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginTopAndBottom, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white py-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.PaddingTopAndBottom, Spacing.Is2)</code>
@@ -140,58 +128,100 @@ __NOTE:__ This does not appear to affect `Text.Span` elements, but does work wit
     <tbody>
         <tr>
             <td>
-                <div class="mt-0">text</div>
+                <div class="has-background-black has-text-white mt-0">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is0)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-0">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is0)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-1">text</div>
+                <div class="has-background-black has-text-white mt-1">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is1)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-1">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is1)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-2">text</div>
+                <div class="has-background-black has-text-white mt-2">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is2)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is2)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-3">text</div>
+                <div class="has-background-black has-text-white mt-3">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is3)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-3">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is3)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-4">text</div>
+                <div class="has-background-black has-text-white mt-4">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is4)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-4">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is4)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-5">text</div>
+                <div class="has-background-black has-text-white mt-5">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is5)</code>
             </td>
+            <td>
+                <div class="has-background-black has-text-white pt-5">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is5)</code>
+            </td>
         </tr>
         <tr>
             <td>
-                <div class="mt-6">text</div>
+                <div class="has-background-black has-text-white mt-6">text</div>
             </td>
             <td>
                 <code>Modifier.Spacing (Spacing.MarginTop, Spacing.Is6)</code>
+            </td>
+            <td>
+                <div class="has-background-black has-text-white pt-6">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.Is6)</code>
             </td>
         </tr>
     </tbody>
