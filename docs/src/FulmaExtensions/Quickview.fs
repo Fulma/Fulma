@@ -52,8 +52,11 @@ Display quick view of data without leaving the current page
 
 ### Installation
 
-- `paket add Fulma.Extensions.Wikiki.Quickview --project <your project>`
+- Choose depending on your package manager:
+    - `paket add Fulma.Extensions.Wikiki.Quickview --project <your project>`
+    - `dotnet add <your project> package Fulma.Extensions.Wikiki.Quickview`
 - Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
+- Don't forget to configure the npm package in your project
 """
                      Render.docSection
                         ""

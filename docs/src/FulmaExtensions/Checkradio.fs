@@ -398,8 +398,11 @@ Make classic **checkbox** and **radio** more sexy in different colors, sizes, an
 
 ### Installation
 
-- `paket add Fulma.Extensions.Wikiki.Checkradio --project <your project>`
+- Choose depending on your package manager:
+    - `paket add Fulma.Extensions.Wikiki.Checkradio --project <your project>`
+    - `dotnet add <your project> package Fulma.Extensions.Wikiki.Checkradio`
 - Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
+- Don't forget to configure the npm package in your project
                         """
                      Render.docSection
                         """

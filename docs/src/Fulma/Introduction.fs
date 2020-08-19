@@ -8,7 +8,7 @@ let view =
 </center>
 
 # Fulma
-Fulma provides a wrapper around [Bulma 0.7.1](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
+Fulma provides a wrapper around [Bulma 0.9.0](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
 
 However this website isn't intended to provide a full documentation of Bulma.
 
@@ -25,9 +25,12 @@ There are two ways to get started with Fulma:
 
 ### How to install manually?
 
-Add `Fulma` dependency in your [Paket](https://fsprojects.github.io/Paket/) files: `paket add Fulma --project <your project>`
-
-Then `dotnet restore` on your `*.fsproj` file.
+- Choose depending on your package manager:
+    - `paket add Fulma.Extensions.Wikiki.Tooltip --project <your project>`
+    - `dotnet add <your project> package Fulma.Extensions.Wikiki.Tooltip`
+- Restore your package `dotnet restore <your project>`
+- Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
+- Don't forget to configure the npm package in your project
 
 You are ready to start using Fulma. You can confirm it by trying to open `Fulma` namespace.
 
