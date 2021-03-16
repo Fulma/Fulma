@@ -1,3 +1,10 @@
+### 4.0.0
+
+* Upgrade to Fable 3
+* Upgrade dependancies to their latest version
+* Remove FAKE in favor of npm scripts
+* Remove yarn in favor of npm
+
 ### 3.1.1
 
 * Fix `build.cmd` parameter (by @bengobeil)
