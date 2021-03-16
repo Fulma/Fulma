@@ -37,38 +37,31 @@ module.exports = (env, options) => {
 
     return {
         devtool: undefined,
-        entry: isProduction ? // We don't use the same entry for dev and production, to make HMR over style quicker for dev env
-            {
+        mode: options.mode,
+        entry: {
                 demo: [
                     "@babel/polyfill",
-                    './src/FulmaMinimalTemplate.fsproj',
-                    './src/scss/main.scss'
-                ]
-            } : {
-                app: [
-                    "@babel/polyfill",
-                    './src/FulmaMinimalTemplate.fsproj'
-                ],
-                style: [
+                    './src/App.fs.js',
                     './src/scss/main.scss'
                 ]
             },
         output: {
             path: path.join(__dirname, './output'),
-            filename: isProduction ? '[name].[hash].js' : '[name].js'
+            filename: isProduction ? '[name].[chunkhash].js' : '[name].js'
         },
         plugins: isProduction ?
             commonPlugins.concat([
                 new MiniCssExtractPlugin({
                     filename: 'style.css'
                 }),
-                new CopyWebpackPlugin([
-                    { from: './static' }
-                ])
+                new CopyWebpackPlugin({
+                    patterns: [
+                        { from: './static' }
+                    ]
+                })
             ])
             : commonPlugins.concat([
                 new webpack.HotModuleReplacementPlugin(),
-                new webpack.NamedModulesPlugin()
             ]),
         devServer: {
             contentBase: './static/',
@@ -79,15 +72,6 @@ module.exports = (env, options) => {
         },
         module: {
             rules: [
-                {
-                    test: /\.fs(x|proj)?$/,
-                    use: {
-                        loader: "fable-loader",
-                        options: {
-                            babel: babelOptions
-                        }
-                    }
-                },
                 {
                     test: /\.js$/,
                     exclude: /node_modules/,

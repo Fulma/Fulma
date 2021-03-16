@@ -15,12 +15,9 @@ This template setup a minimal application using [Fable](http://fable.io/), [Elmi
 
 ### In development mode
 
-*If you are using Windows replace `./fake.sh` by `fake.cmd`*
-
-1. Run: `./fake.sh build -t Watch`
-2. Go to [http://localhost:8080/](http://localhost:8080/)
-
-*On Unix you may need to run `chmod a+x fake.sh`*
+1. Run: `dotnet tool restore`
+1. Run: `npm run watch`
+1. Go to [http://localhost:8080/](http://localhost:8080/)
 
 In development mode, we activate:
 
@@ -29,7 +26,6 @@ In development mode, we activate:
 
 ### Build for production
 
-*If you are using Windows replace `./fake.sh` by `fake.cmd`*
-
-1. Run: `./fake.sh build`
+1. Run: `dotnet tool restore`
+1. Run: `npm run build`
 2. All the files needed for deployment are under the `output` folder.
