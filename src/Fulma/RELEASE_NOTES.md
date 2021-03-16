@@ -1,3 +1,7 @@
+### 2.10.0
+
+* Upgrade Bulma support to 0.9.0 (by @zakaluka)
+
 ### 2.9.0
 
 * Upgrade Bulma support to 0.8.2

@@ -79,8 +79,11 @@ Display a **page-loader** to inform user that content is loading, in different c
 
 ### Installation
 
-- `paket add Fulma.Extensions.Wikiki.PageLoader --project <your project>`
+- Choose depending on your package manager:
+    - `paket add Fulma.Extensions.Wikiki.PageLoader --project <your project>`
+    - `dotnet add <your project> package Fulma.Extensions.Wikiki.PageLoader`
 - Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
+- Don't forget to configure the npm package in your project
                         """
                      Render.docSection
                         ""

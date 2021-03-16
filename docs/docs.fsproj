@@ -59,6 +59,7 @@
     <Compile Include="src/Fulma/Elements/Title.fs" />
     <Compile Include="src/Fulma/Modifiers/Basics.fs" />
     <Compile Include="src/Fulma/Modifiers/Colors.fs" />
+    <Compile Include="src/Fulma/Modifiers/Spacing.fs" />
     <Compile Include="src/Fulma/Modifiers/Responsive.fs" />
     <Compile Include="src/Fulma/Modifiers/Typography.fs" />
     <Compile Include="src/Fulma/Introduction.fs" />

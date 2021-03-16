@@ -35,8 +35,11 @@ Display a **tooltip** attached to any kind of element, in different position.
 
 ### Installation
 
-- `paket add Fulma.Extensions.Wikiki.Tooltip --project <your project>`
+- Choose depending on your package manager:
+    - `paket add Fulma.Extensions.Wikiki.Tooltip --project <your project>`
+    - `dotnet add <your project> package Fulma.Extensions.Wikiki.Tooltip`
 - Follow instructions from `dotnet femto yourProject.fsproj` - [Femto documentation](https://github.com/Zaid-Ajaj/Femto/)
+- Don't forget to configure the npm package in your project
                         """
                      Render.docSection
                         """

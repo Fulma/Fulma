@@ -7,6 +7,7 @@ let view fulmaPage =
         match modifier with
         | Router.Modifiers.Basics -> Modifiers.Basics.view
         | Router.Modifiers.Colors -> Modifiers.Colors.view
+        | Router.Modifiers.Spacing -> Modifiers.Spacing.view
         | Router.Modifiers.Responsive -> Modifiers.Responsive.view
         | Router.Modifiers.Typography -> Modifiers.Typography.view
     | Router.Element element ->

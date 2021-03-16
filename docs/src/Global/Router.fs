@@ -43,6 +43,7 @@ type Layouts =
 type Modifiers =
     | Basics
     | Colors
+    | Spacing
     | Typography
     | Responsive
 
@@ -98,6 +99,7 @@ let private toHash page =
             match modifiers with
             | Basics -> "#fulma/modifiers/basics"
             | Colors -> "#fulma/modifiers/colors"
+            | Spacing -> "#fulma/modifiers/spacing"
             | Typography -> "#fulma/modifiers/typography"
             | Responsive -> "#fulma/modifiers/responsive"
         | Layout layout ->
@@ -165,6 +167,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma FulmaPage.Introduction ) (s "fulma")
             map (Fulma (FulmaPage.Modifier Basics))  (s "fulma" </> s "modifiers" </> s "basics")
             map (Fulma (FulmaPage.Modifier Colors))  (s "fulma" </> s "modifiers" </> s "colors")
+            map (Fulma (FulmaPage.Modifier Spacing))  (s "fulma" </> s "modifiers" </> s "spacing")
             map (Fulma (FulmaPage.Modifier Responsive))  (s "fulma" </> s "modifiers" </> s "responsive")
             map (Fulma (FulmaPage.Modifier Typography))  (s "fulma" </> s "modifiers" </> s "typography")
             // Layouts
