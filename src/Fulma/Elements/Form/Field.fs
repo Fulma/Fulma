@@ -42,11 +42,11 @@ module Field =
             | Props of IHTMLProp list
             | Modifiers of Modifier.IModifier list
 
-    /// Generate <label class="field-body"></label>
+    /// Generate <div class="field-body"></div>
     let body (options : GenericOption list) children =
         GenericOptions.Parse(options, parseOptions, "field-body").ToReactElement(div, children)
 
-    /// Generate <label class="field-label"></label>
+    /// Generate <div class="field-label"></div>
     let label options children =
         let parseOptions (result : GenericOptions) option =
             match option with
