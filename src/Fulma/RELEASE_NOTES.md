@@ -1,3 +1,7 @@
+### 2.10.1
+
+* PR #280: Fix xmldoc to reflect code fix (by @kerams)
+
 ### 2.10.0
 
 * Upgrade Bulma support to 0.9.0 (by @zakaluka)
