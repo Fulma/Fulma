@@ -13,20 +13,3 @@ nuget Fable.React
 nuget Fable.FontAwesome
 nuget Fable.FontAwesome.Free
 nuget Fulma
-
-group netcorebuild
-    storage:none
-    source https://www.nuget.org/api/v2
-    framework: netstandard2.0
-
-    clitool dotnet-fake
-    nuget NETStandard.Library.NETFramework
-    nuget Fake.DotNet.Cli
-    nuget Fake.DotNet.Paket
-    nuget Fake.Core.Target
-    nuget Fake.Core.Process
-    nuget Fake.Core.String
-    nuget Fake.Core.ReleaseNotes
-    nuget Fake.IO.FileSystem
-    nuget Fake.Tools.Git
-    nuget Fake.JavaScript.Yarn

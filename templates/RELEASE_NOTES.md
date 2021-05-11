@@ -1,3 +1,9 @@
+### 4.1.0
+
+* Remove `netcorebuild` group from `paket.dependencies`
+* Upgrade NuGet dependencies to latest version
+* Upgrade NPM dependencies to latest version
+
 ### 4.0.0
 
 * Upgrade to Fable 3
