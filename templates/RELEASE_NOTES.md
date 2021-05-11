@@ -1,3 +1,7 @@
+### 4.1.1
+
+* Include `.gitignore`
+
 ### 4.1.0
 
 * Remove `netcorebuild` group from `paket.dependencies`
