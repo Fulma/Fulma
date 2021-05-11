@@ -1,3 +1,7 @@
+### 4.1.2
+
+* Update the README instructions
+
 ### 4.1.1
 
 * Include `.gitignore`

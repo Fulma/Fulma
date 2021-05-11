@@ -15,7 +15,7 @@ This template setup a minimal application using [Fable](http://fable.io/), [Elmi
 
 ### In development mode
 
-1. Run: `dotnet tool restore`
+1. Run: `npm install`
 1. Run: `npm run watch`
 1. Go to [http://localhost:8080/](http://localhost:8080/)
 
