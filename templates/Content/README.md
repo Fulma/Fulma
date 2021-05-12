@@ -26,6 +26,6 @@ In development mode, we activate:
 
 ### Build for production
 
-1. Run: `dotnet tool restore`
+1. Run: `npm install`
 1. Run: `npm run build`
 2. All the files needed for deployment are under the `output` folder.

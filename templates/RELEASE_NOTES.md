@@ -1,3 +1,7 @@
+### 4.1.3
+
+* Update the README instructions "Build for production"
+
 ### 4.1.2
 
 * Update the README instructions
