@@ -1,3 +1,7 @@
+### 2.11.0
+
+* PR #284: Fix subtitle class there was a typo in the `CompiledName` value (by @kerams)
+
 ### 2.10.1
 
 * PR #280: Fix xmldoc to reflect code fix (by @kerams)
