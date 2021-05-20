@@ -21,7 +21,7 @@ module Heading =
         /// Add `is-6` class
         | [<CompiledName("is-6")>]Is6
         /// Add `subtitle` class
-        | [<CompiledName("subtitle`")>]IsSubtitle
+        | [<CompiledName("subtitle")>]IsSubtitle
         /// Add `is-spaced` class
         | [<CompiledName("is-spaced")>]IsSpaced
         // Extra
