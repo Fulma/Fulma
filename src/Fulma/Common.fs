@@ -457,7 +457,7 @@ module Common =
             { this with Classes = (modifiers |> Modifier.parseModifiers) @ this.Classes }
 
         member this.ToAttributes() =
-            match this.Classes |> List.filter (fun cls -> not (List.contains cls this.RemovedClasses)) with
+            match this.Classes |> List.filter (fun cls -> not (System.String.IsNullOrEmpty cls) && not (List.contains cls this.RemovedClasses)) with
             | [] -> this.Props
             | classes -> (classes |> String.concat " " |> ClassName :> _) :: this.Props
 
