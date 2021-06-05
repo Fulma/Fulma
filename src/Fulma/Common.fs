@@ -456,30 +456,19 @@ module Common =
         member this.AddModifiers(modifiers) =
             { this with Classes = (modifiers |> Modifier.parseModifiers) @ this.Classes }
 
-        /// Conver to standard element
+        member this.ToAttributes() =
+            match this.Classes |> List.filter (fun cls -> not (List.contains cls this.RemovedClasses)) with
+            | [] -> this.Props
+            | classes -> (classes |> String.concat " " |> ClassName :> _) :: this.Props
+
+        /// Convert to standard element
         member this.ToReactElement(el : IHTMLProp list -> ReactElement list -> ReactElement, ?children): ReactElement =
             let children = defaultArg children []
-            // TODO: Remove empty classes?
-            let classes =
-                this.Classes
-                |> List.filter (fun cls ->
-                    not (List.contains cls this.RemovedClasses)
-                )
-                |> String.concat " "
-                |> ClassName :> IHTMLProp
-            el (classes::this.Props) children
+            el (this.ToAttributes ()) children
 
         /// Convert to self closing element
         member this.ToReactElement(el : IHTMLProp list -> ReactElement): ReactElement =
-            // TODO: Remove empty classes?
-            let classes =
-                this.Classes
-                |> List.filter (fun cls ->
-                    not (List.contains cls this.RemovedClasses)
-                )
-                |> String.concat " "
-                |> ClassName :> IHTMLProp
-            el (classes::this.Props)
+            el (this.ToAttributes ())
 
     let parseOptions (result : GenericOptions) option =
         match option with
