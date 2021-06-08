@@ -59,7 +59,8 @@ type Showcase(props) =
                 yield Box.box' [ Props [ Style [ Position PositionOptions.Relative
                                                  BorderRadius "0"
                                                  MaxHeight "400px"
-                                                 Overflow "auto" ] ] ]
+                                                 OverflowX OverflowOptions.Auto
+                                                 OverflowY OverflowOptions.Auto ] ] ]
                     [ CopyButton.copyButtton [ CopyButton.Value this.props.SourceCode ]
                       Render.renderFSharpCode this.props.SourceCode ]
             ]
