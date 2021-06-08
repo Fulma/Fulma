@@ -1,3 +1,8 @@
+### 2.12.0
+
+* PR #287: Remove empty class attributes (by @kerams)
+* Make sure to lower FSharp.Core requirement to 4.7.2
+
 ### 2.11.0
 
 * PR #284: Fix subtitle class there was a typo in the `CompiledName` value (by @kerams)
