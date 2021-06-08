@@ -8,16 +8,16 @@
         "fake"
       ]
     },
-    "paket": {
-      "version": "5.257.0",
-      "commands": [
-        "paket"
-      ]
-    },
     "femto": {
       "version": "0.8.4",
       "commands": [
         "femto"
+      ]
+    },
+    "paket": {
+      "version": "5.257.0",
+      "commands": [
+        "paket"
       ]
     }
   }

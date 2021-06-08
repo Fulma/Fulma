@@ -7,6 +7,7 @@ nuget Fable.Date
 nuget Fable.Promise
 nuget Fable.Fetch
 #nuget Thoth.Elmish.Toast
+nuget FSharp.Core ~> 4.7.2
 
 group netcorebuild
     storage:none
