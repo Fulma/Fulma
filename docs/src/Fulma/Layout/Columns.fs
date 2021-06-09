@@ -132,7 +132,6 @@ Display:
 Spacing:
 - `Columns.IsMultiline`
 - `Columns.IsGapless`
-- `Columns.IsGrid`
 
 #### Column
 

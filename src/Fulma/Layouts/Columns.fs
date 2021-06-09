@@ -43,8 +43,6 @@ module Columns =
         | [<CompiledName("is-multiline")>] IsMultiline
         /// Add `is-gapless` class
         | [<CompiledName("is-gapless")>] IsGapless
-        /// Add `is-grid` class
-        | [<CompiledName("is-grid")>] IsGrid
         /// Add `is-mobile` class
         | [<CompiledName("is-mobile")>] IsMobile
         /// Add `is-desktop` class
@@ -69,7 +67,6 @@ module Columns =
             | IsVCentered
             | IsMultiline
             | IsGapless
-            | IsGrid
             | IsMobile
             | IsDesktop -> result.AddCaseName option
             | IsGap (screen, size) ->
