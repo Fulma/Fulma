@@ -368,6 +368,7 @@ module Modifier =
         | [<CompiledName("is-radiusless")>] IsRadiusless
         | [<CompiledName("is-shadowless")>] IsShadowless
         | [<CompiledName("is-unselectable")>] IsUnselectable
+        | [<CompiledName("is-clickable")>] IsClickable
         | [<CompiledName("is-relative")>] IsRelative
         | IsInvisible of Screen * bool
         | IsHidden of Screen * bool
@@ -405,6 +406,7 @@ module Modifier =
             | IsClipped
             | IsRadiusless
             | IsShadowless
+            | IsClickable
             | IsUnselectable
             | IsRelative -> (Reflection.getCaseName option)::result
             | Spacing (typ, amount) -> (Spacing.toSpacingClass typ amount)::result
