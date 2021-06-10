@@ -3,7 +3,9 @@
 * PR #288: Remove Columns.Option.IsGrid (by @kerams)
 * Add `Modifier.IsClickable`
 * Add flexbox helpers
-
+* Add `Button.IsGhost`
+* Add Icon.Text.div and Icon.Text.span
+* Upgrade Fulma to Bulma 0.9.2
 
 ### 2.12.0
 
