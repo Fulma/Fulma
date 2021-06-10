@@ -34,3 +34,11 @@ module Icon =
             | Modifiers modifiers -> result.AddModifiers modifiers
 
         GenericOptions.Parse(options, parseOptions, "icon").ToReactElement(span, children)
+
+    module Text =
+
+        let span (options: GenericOption list) children =
+            GenericOptions.Parse(options, parseOptions, "icon-text").ToReactElement(span, children)
+
+        let div (options: GenericOption list) children =
+            GenericOptions.Parse(options, parseOptions, "icon-text").ToReactElement(div, children)

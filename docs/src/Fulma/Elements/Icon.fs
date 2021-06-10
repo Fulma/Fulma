@@ -16,6 +16,12 @@ let iconDemo () =
           Icon.icon [ Icon.Size IsLarge ]
             [ i [ ClassName "fas fa-3x fa-home" ] [ ] ] ]
 
+let iconTextDemo () =
+    Icon.Text.span [ ]
+        [ Icon.icon [ ]
+            [ i [ ClassName "fas fa-home" ] [ ] ]
+          span [ ] [ str "Home" ] ]
+
 let view =
     Render.docPage [ Render.contentFromMarkdown
                         """
@@ -27,4 +33,7 @@ The **icons** can have different sizes and is also compatible with *[Font Awesom
                         """
                      Render.docSection
                         "### Sizes"
-                        (Widgets.Showcase.view iconDemo (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
+                        (Widgets.Showcase.view iconDemo (Render.includeCode __LINE__ __SOURCE_FILE__))
+                     Render.docSection
+                        "### Icon text"
+                        (Widgets.Showcase.view iconTextDemo (Render.includeCode __LINE__ __SOURCE_FILE__)) ]
