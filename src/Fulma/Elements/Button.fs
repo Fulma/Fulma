@@ -22,6 +22,8 @@ module Button =
         | [<CompiledName("is-inverted")>] IsInverted
         /// Add `is-text` class
         | [<CompiledName("is-text")>] IsText
+        /// Add `is-ghost` class
+        | [<CompiledName("is-ghost")>] IsGhost
         /// Add `is-rounded` class
         | [<CompiledName("is-rounded")>] IsRounded
         /// Add `is-expanded` class
@@ -58,6 +60,7 @@ module Button =
             | IsText
             | IsRounded
             | IsExpanded
+            | IsGhost
             | IsLight -> result.AddCaseName option
             // States
             | IsHovered state
