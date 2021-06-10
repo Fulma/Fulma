@@ -46,6 +46,7 @@ type Modifiers =
     | Spacing
     | Typography
     | Responsive
+    | Flexbox
 
 type FulmaPage =
     | Element of Elements
@@ -102,6 +103,7 @@ let private toHash page =
             | Spacing -> "#fulma/modifiers/spacing"
             | Typography -> "#fulma/modifiers/typography"
             | Responsive -> "#fulma/modifiers/responsive"
+            | Flexbox -> "#fulma/modifiers/flexbox"
         | Layout layout ->
             match layout with
             | Container -> "#fulma/layouts/container"
@@ -170,6 +172,7 @@ let pageParser : Parser<Page -> Page, Page> =
             map (Fulma (FulmaPage.Modifier Spacing))  (s "fulma" </> s "modifiers" </> s "spacing")
             map (Fulma (FulmaPage.Modifier Responsive))  (s "fulma" </> s "modifiers" </> s "responsive")
             map (Fulma (FulmaPage.Modifier Typography))  (s "fulma" </> s "modifiers" </> s "typography")
+            map (Fulma (FulmaPage.Modifier Flexbox))  (s "fulma" </> s "modifiers" </> s "flexbox")
             // Layouts
             map (Fulma (Layout Tile)) (s "fulma" </> s "layouts" </> s "tile")
             map (Fulma (Layout Container)) (s "fulma" </> s "layouts" </> s "container")

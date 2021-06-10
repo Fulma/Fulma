@@ -169,6 +169,180 @@ module TextAlignment =
             ""
 
 [<RequireQualifiedAccess>]
+module FlexDirection =
+
+    type Option =
+        /// <summary>Add <c>is-flex-direction-row</c></summary>
+        | [<CompiledName("is-flex-direction-row")>] Row
+        /// <summary>Add <c>is-flex-direction-row-reverse</c></summary>
+        | [<CompiledName("is-flex-direction-row-reverse")>] RowReverse
+        /// <summary>Add <c>is-flex-direction-column</c></summary>
+        | [<CompiledName("is-flex-direction-column")>] Column
+        /// <summary>Add <c>is-flex-direction-column-reverse</c></summary>
+        | [<CompiledName("is-flex-direction-column-reverse")>] ColumnReverse
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexWrap =
+
+    type Option =
+        /// <summary>Add <c>is-flex-wrap-nowrap</c></summary>
+        | [<CompiledName("is-flex-wrap-nowrap")>] NoWrap
+        /// <summary>Add <c>is-flex-wrap-wrap</c></summary>
+        | [<CompiledName("is-flex-wrap-wrap")>] Wrap
+        /// <summary>Add <c>is-flex-wrap-wrap-reverse</c></summary>
+        | [<CompiledName("is-flex-wrap-wrap-reverse")>] WrapReverse
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexJustifyContent =
+
+    type Option =
+        /// <summary>Add <c>is-justify-content-flex-start</c></summary>
+        | [<CompiledName("is-justify-content-flex-start")>] FlexStart
+        /// <summary>Add <c>is-justify-content-flex-end</c></summary>
+        | [<CompiledName("is-justify-content-flex-end")>] FlexEnd
+        /// <summary>Add <c>is-justify-content-center</c></summary>
+        | [<CompiledName("is-justify-content-center")>] Center
+        /// <summary>Add <c>is-justify-content-space-between</c></summary>
+        | [<CompiledName("is-justify-content-space-between")>] SpaceBetween
+        /// <summary>Add <c>is-justify-content-space-around</c></summary>
+        | [<CompiledName("is-justify-content-space-around")>] SpaceAround
+        /// <summary>Add <c>is-justify-content-space-evenly</c></summary>
+        | [<CompiledName("is-justify-content-space-evenly")>] SpaceEvenly
+        /// <summary>Add <c>is-justify-content-start</c></summary>
+        | [<CompiledName("is-justify-content-start")>] Start
+        /// <summary>Add <c>is-justify-content-end</c></summary>
+        | [<CompiledName("is-justify-content-end")>] End
+        /// <summary>Add <c>is-justify-content-left</c></summary>
+        | [<CompiledName("is-justify-content-left")>] Left
+        /// <summary>Add <c>is-justify-content-right</c></summary>
+        | [<CompiledName("is-justify-content-right")>] Right
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexAlignContent =
+
+    type Option =
+        /// <summary>Add <c>is-align-content-flex-start</c></summary>
+        | [<CompiledName("is-align-content-flex-start")>] FlexStart
+        /// <summary>Add <c>is-align-content-flex-end</c></summary>
+        | [<CompiledName("is-align-content-flex-end")>] FlexEnd
+        /// <summary>Add <c>is-align-content-center</c></summary>
+        | [<CompiledName("is-align-content-center")>] Center
+        /// <summary>Add <c>is-align-content-space-between</c></summary>
+        | [<CompiledName("is-align-content-space-between")>] SpaceBetween
+        /// <summary>Add <c>is-align-content-space-around</c></summary>
+        | [<CompiledName("is-align-content-space-around")>] SpaceAround
+        /// <summary>Add <c>is-align-content-space-evenly</c></summary>
+        | [<CompiledName("is-align-content-space-evenly")>] SpaceEvenly
+        /// <summary>Add <c>is-align-content-stretch</c></summary>
+        | [<CompiledName("is-align-content-stretch")>] Stretch
+        /// <summary>Add <c>is-align-content-start</c></summary>
+        | [<CompiledName("is-align-content-start")>] Start
+        /// <summary>Add <c>is-align-content-end</c></summary>
+        | [<CompiledName("is-align-content-end")>] End
+        /// <summary>Add <c>is-align-content-baseline</c></summary>
+        | [<CompiledName("is-align-content-baseline")>] Baseline
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+
+[<RequireQualifiedAccess>]
+module FlexAlignItems =
+
+    type Option =
+        /// <summary>Add <c>is-align-items-stretch</c></summary>
+        | [<CompiledName("is-align-items-stretch")>] Stretch
+        /// <summary>Add <c>is-align-items-flex-start</c></summary>
+        | [<CompiledName("is-align-items-flex-start")>] FlexStart
+        /// <summary>Add <c>is-align-items-flex-end</c></summary>
+        | [<CompiledName("is-align-items-flex-end")>] FlexEnd
+        /// <summary>Add <c>is-align-items-center</c></summary>
+        | [<CompiledName("is-align-items-center")>] Center
+        /// <summary>Add <c>is-align-items-baseline</c></summary>
+        | [<CompiledName("is-align-items-baseline")>] Baseline
+        /// <summary>Add <c>is-align-items-start</c></summary>
+        | [<CompiledName("is-align-items-start")>] Start
+        /// <summary>Add <c>is-align-items-end</c></summary>
+        | [<CompiledName("is-align-items-end")>] End
+        /// <summary>Add <c>is-align-items-self-start</c></summary>
+        | [<CompiledName("is-align-items-self-start")>] SelfStart
+        /// <summary>Add <c>is-align-items-self-end</c></summary>
+        | [<CompiledName("is-align-items-self-end")>] SelfEnd
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexAlignSelf =
+
+    type Option =
+        /// <summary>Add <c>is-align-self-auto</c></summary>
+        | [<CompiledName("is-align-self-auto")>] Auto
+        /// <summary>Add <c>is-align-self-flex-start</c></summary>
+        | [<CompiledName("is-align-self-flex-start")>] FlexStart
+        /// <summary>Add <c>is-align-self-flex-end</c></summary>
+        | [<CompiledName("is-align-self-flex-end")>] FlexEnd
+        /// <summary>Add <c>is-align-self-center</c></summary>
+        | [<CompiledName("is-align-self-center")>] Center
+        /// <summary>Add <c>is-align-self-baseline</c></summary>
+        | [<CompiledName("is-align-self-baseline")>] Baseline
+        /// <summary>Add <c>is-align-self-stretch</c></summary>
+        | [<CompiledName("is-align-self-stretch")>] Stretch
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexGrow =
+
+    type Option =
+        /// <summary>Add <c>is-flex-grow-0</c></summary>
+        | [<CompiledName("is-flex-grow-0")>] Is0
+        /// <summary>Add <c>is-flex-grow-1</c></summary>
+        | [<CompiledName("is-flex-grow-1")>] Is1
+        /// <summary>Add <c>is-flex-grow-2</c></summary>
+        | [<CompiledName("is-flex-grow-2")>] Is2
+        /// <summary>Add <c>is-flex-grow-3</c></summary>
+        | [<CompiledName("is-flex-grow-3")>] Is3
+        /// <summary>Add <c>is-flex-grow-4</c></summary>
+        | [<CompiledName("is-flex-grow-4")>] Is4
+        /// <summary>Add <c>is-flex-grow-5</c></summary>
+        | [<CompiledName("is-flex-grow-5")>] Is5
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+[<RequireQualifiedAccess>]
+module FlexShrink =
+
+    type Option =
+        /// <summary>Add <c>is-flex-shrink-0</c></summary>
+        | [<CompiledName("is-flex-shrink-0")>] Is0
+        /// <summary>Add <c>is-flex-shrink-1</c></summary>
+        | [<CompiledName("is-flex-shrink-1")>] Is1
+        /// <summary>Add <c>is-flex-shrink-2</c></summary>
+        | [<CompiledName("is-flex-shrink-2")>] Is2
+        /// <summary>Add <c>is-flex-shrink-3</c></summary>
+        | [<CompiledName("is-flex-shrink-3")>] Is3
+        /// <summary>Add <c>is-flex-shrink-4</c></summary>
+        | [<CompiledName("is-flex-shrink-4")>] Is4
+        /// <summary>Add <c>is-flex-shrink-5</c></summary>
+        | [<CompiledName("is-flex-shrink-5")>] Is5
+
+        static member inline toClass (opt : Option) =
+            Reflection.getCaseName opt
+
+
+[<RequireQualifiedAccess>]
 module TextWeight =
 
     type Option =
@@ -377,6 +551,25 @@ module Modifier =
         | IsSrOnly
         | IsScreenReaderOnly
         | Spacing of Spacing.TypeAndDirection * Spacing.Amount
+        // Flexbox helpers
+        | FlexDirection of FlexDirection.Option
+        | FlexWrap of FlexWrap.Option
+        | FlexJustifyContent of FlexJustifyContent.Option
+        | FlexAlignContent of FlexAlignContent.Option
+        | FlexAlignItems of FlexAlignItems.Option
+        | FlexAlignSelf of FlexAlignSelf.Option
+        | FlexGrow of FlexGrow.Option
+        | FlexShrink of FlexShrink.Option
+
+
+
+                //     | IsGap (screen, size) ->
+                // if not (List.contains "is-variable" result.Classes) then
+                //     result.AddClass("is-variable").AddClass(gapSizeGeneric screen size)
+                // else
+                //     result.AddClass(gapSizeGeneric screen size)
+
+
 
     let parseModifiers options =
         let parseOptions result option =
@@ -410,6 +603,46 @@ module Modifier =
             | IsUnselectable
             | IsRelative -> (Reflection.getCaseName option)::result
             | Spacing (typ, amount) -> (Spacing.toSpacingClass typ amount)::result
+            | FlexDirection direction ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexDirection.Option.toClass direction)::result
+                else
+                    (FlexDirection.Option.toClass direction)::result
+            | FlexWrap option ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexWrap.Option.toClass option)::result
+                else
+                    (FlexWrap.Option.toClass option)::result
+            | FlexJustifyContent option ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexJustifyContent.Option.toClass option)::result
+                else
+                    (FlexJustifyContent.Option.toClass option)::result
+            | FlexAlignContent option ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexAlignContent.Option.toClass option)::result
+                else
+                    (FlexAlignContent.Option.toClass option)::result
+            | FlexAlignItems option ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexAlignItems.Option.toClass option)::result
+                else
+                    (FlexAlignItems.Option.toClass option)::result
+            | FlexAlignSelf option ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexAlignSelf.Option.toClass option)::result
+                else
+                    (FlexAlignSelf.Option.toClass option)::result
+            | FlexGrow size ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexGrow.Option.toClass size)::result
+                else
+                    (FlexGrow.Option.toClass size)::result
+            | FlexShrink size ->
+                if not (List.contains "is-flex" result) then
+                    "is-flex"::(FlexShrink.Option.toClass size)::result
+                else
+                    (FlexShrink.Option.toClass size)::result
 
         options |> List.fold parseOptions []
 

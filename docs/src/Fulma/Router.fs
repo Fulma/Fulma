@@ -10,6 +10,7 @@ let view fulmaPage =
         | Router.Modifiers.Spacing -> Modifiers.Spacing.view
         | Router.Modifiers.Responsive -> Modifiers.Responsive.view
         | Router.Modifiers.Typography -> Modifiers.Typography.view
+        | Router.Modifiers.Flexbox -> Modifiers.Flexbox.view
     | Router.Element element ->
         match element with
         | Router.Elements.Box -> Elements.Box.view

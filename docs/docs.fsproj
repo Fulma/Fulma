@@ -62,6 +62,7 @@
     <Compile Include="src/Fulma/Modifiers/Spacing.fs" />
     <Compile Include="src/Fulma/Modifiers/Responsive.fs" />
     <Compile Include="src/Fulma/Modifiers/Typography.fs" />
+    <Compile Include="src/Fulma/Modifiers/Flexbox.fs" />
     <Compile Include="src/Fulma/Introduction.fs" />
     <Compile Include="src/Fulma/Router.fs" />
     <!-- FulmaExtensions -->

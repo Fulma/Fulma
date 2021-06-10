@@ -1,3 +1,10 @@
+### 2.13.0
+
+* PR #288: Remove Columns.Option.IsGrid (by @kerams)
+* Add `Modifier.IsClickable`
+* Add flexbox helpers
+
+
 ### 2.12.0
 
 * PR #287: Remove empty class attributes (by @kerams)
