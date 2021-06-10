@@ -544,6 +544,7 @@ module Modifier =
         | [<CompiledName("is-unselectable")>] IsUnselectable
         | [<CompiledName("is-clickable")>] IsClickable
         | [<CompiledName("is-relative")>] IsRelative
+        | [<CompiledName("is-flex")>] IsFlex
         | IsInvisible of Screen * bool
         | IsHidden of Screen * bool
         | IsInvisibleOnly of Screen * bool
@@ -601,6 +602,7 @@ module Modifier =
             | IsShadowless
             | IsClickable
             | IsUnselectable
+            | IsFlex
             | IsRelative -> (Reflection.getCaseName option)::result
             | Spacing (typ, amount) -> (Spacing.toSpacingClass typ amount)::result
             | FlexDirection direction ->
