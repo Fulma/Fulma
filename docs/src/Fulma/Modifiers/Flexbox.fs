@@ -34,6 +34,8 @@ let view =
 Helpers for all Flexbox properties
 
 *[Bulma documentation](https://bulma.io/documentation/helpers/flexbox-helpers/)*
+
+When using one of the flexbox helpers, Fulma will add the `is-flex` class if not already present
             """
 
         Render.docSection
