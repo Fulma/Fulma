@@ -1,3 +1,7 @@
+### 2.14.0
+
+* PR #290: Support Bulma 0.9.3 (by @kerams)
+
 ### 2.13.0
 
 * PR #288: Remove Columns.Option.IsGrid (by @kerams)
