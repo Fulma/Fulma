@@ -8,7 +8,7 @@ let view =
 </center>
 
 # Fulma
-Fulma provides a wrapper around [Bulma 0.9.2](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
+Fulma provides a wrapper around [Bulma 0.9.3](http://bulma.io/), an open source CSS framework, for [fable-react](https://github.com/fable-compiler/fable-react).
 
 However this website isn't intended to provide a full documentation of Bulma.
 

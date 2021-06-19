@@ -34,6 +34,9 @@ let transformation () =
             [ Text.span [ Modifiers [ Modifier.TextTransform TextTransform.LowerCase ] ]
                 [ str "LowerCase" ] ]
           li [ ]
+            [ Text.span [ Modifiers [ Modifier.TextTransform TextTransform.Underlined ] ]
+                [ str "Underlined" ] ]
+          li [ ]
             [ Text.span [ Modifiers [ Modifier.TextTransform TextTransform.UpperCase
                                       Modifier.TextTransform TextTransform.Italic ] ]
                 [ str "Italic & UpperCase" ] ] ]

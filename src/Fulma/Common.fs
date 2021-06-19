@@ -372,6 +372,8 @@ module TextTransform =
         | [<CompiledName("is-uppercase")>] UpperCase
         /// Add `is-italic`
         | [<CompiledName("is-italic")>] Italic
+        /// Add `is-underlined`
+        | [<CompiledName("is-underlined")>] Underlined
 
         static member inline toClass opt =
             Reflection.getCaseName opt
@@ -411,12 +413,14 @@ module Display =
 [<RequireQualifiedAccess>]
 module Spacing =
     type TypeAndDirection =
+        | [<CompiledName("m")>] Margin
         | [<CompiledName("mt")>] MarginTop
         | [<CompiledName("mr")>] MarginRight
         | [<CompiledName("mb")>] MarginBottom
         | [<CompiledName("ml")>] MarginLeft
         | [<CompiledName("my")>] MarginTopAndBottom
         | [<CompiledName("mx")>] MarginLeftAndRight
+        | [<CompiledName("p")>] Padding
         | [<CompiledName("pt")>] PaddingTop
         | [<CompiledName("pr")>] PaddingRight
         | [<CompiledName("pb")>] PaddingBottom
@@ -428,6 +432,7 @@ module Spacing =
             Reflection.getCaseName opt
 
     type Amount =
+        | [<CompiledName("auto")>] IsAuto
         | [<CompiledName("0")>] Is0
         | [<CompiledName("1")>] Is1
         | [<CompiledName("2")>] Is2

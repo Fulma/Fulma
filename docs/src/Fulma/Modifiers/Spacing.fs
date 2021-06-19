@@ -35,6 +35,20 @@ __NOTE:__ Spacing helpers do not appear to affect `Text.span` elements correctly
     <tbody>
         <tr>
             <td>
+                <div class="has-background-grey has-text-white m-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.Margin, Spacing.Is2)</code>
+            </td>
+            <td>
+                <div class="has-background-grey has-text-white p-2">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.Padding, Spacing.Is2)</code>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <div class="has-background-grey has-text-white mt-2">text</div>
             </td>
             <td>
@@ -124,6 +138,20 @@ __NOTE:__ Spacing helpers do not appear to affect `Text.span` elements correctly
 
 <table>
     <tbody>
+        <tr>
+            <td>
+                <div class="has-background-grey has-text-white mt-auto">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.MarginTop, Spacing.IsAuto)</code>
+            </td>
+            <td>
+                <div class="has-background-grey has-text-white pt-auto">text</div>
+            </td>
+            <td>
+                <code>Modifier.Spacing (Spacing.PaddingTop, Spacing.IsAuto)</code>
+            </td>
+        </tr>
         <tr>
             <td>
                 <div class="has-background-grey has-text-white mt-0">text</div>
