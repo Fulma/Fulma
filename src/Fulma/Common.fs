@@ -635,21 +635,15 @@ module Modifier =
                     "is-flex"::(FlexAlignItems.Option.toClass option)::result
                 else
                     (FlexAlignItems.Option.toClass option)::result
+
             | FlexAlignSelf option ->
-                if not (List.contains "is-flex" result) then
-                    "is-flex"::(FlexAlignSelf.Option.toClass option)::result
-                else
-                    (FlexAlignSelf.Option.toClass option)::result
+                (FlexAlignSelf.Option.toClass option)::result
+
             | FlexGrow size ->
-                if not (List.contains "is-flex" result) then
-                    "is-flex"::(FlexGrow.Option.toClass size)::result
-                else
-                    (FlexGrow.Option.toClass size)::result
+                (FlexGrow.Option.toClass size)::result
+
             | FlexShrink size ->
-                if not (List.contains "is-flex" result) then
-                    "is-flex"::(FlexShrink.Option.toClass size)::result
-                else
-                    (FlexShrink.Option.toClass size)::result
+                (FlexShrink.Option.toClass size)::result
 
         options |> List.fold parseOptions []
 
