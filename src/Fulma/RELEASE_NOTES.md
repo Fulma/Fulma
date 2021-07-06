@@ -1,3 +1,7 @@
+### 2.14.1
+
+* Fix #291: Don't add `IsFlex` by default when using `FlexAlignSelf` - `FlexGrow` - `FlexShrink` modifiers
+
 ### 2.14.0
 
 * PR #290: Support Bulma 0.9.3 (by @kerams)
