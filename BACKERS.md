@@ -40,4 +40,6 @@ The development of this project is made possible thanks to the support of these 
 
 <!--10 start-->
 - Vagif Abilov
+- Paweł Stadnicki
+- David Dawkins
 <!--10 end-->
