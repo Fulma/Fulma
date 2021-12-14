@@ -5,7 +5,7 @@ namespace Fable.FontAwesome
 open Fable.Core
 
 [<AutoOpen>]
-module Free =
+module Pro =
 
     [<RequireQualifiedAccess>]
     module Fa =
@@ -7741,4 +7741,3 @@ module Free =
             let inline Youtube<'a> = Fable.FontAwesome.Fa.Icon "fab fa-youtube"
             let inline YoutubeSquare<'a> = Fable.FontAwesome.Fa.Icon "fab fa-youtube-square"
             let inline Zhihu<'a> = Fable.FontAwesome.Fa.Icon "fab fa-zhihu"
-

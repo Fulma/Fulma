@@ -53,7 +53,7 @@ namespace Fable.FontAwesome
 open Fable.Core
 
 [<AutoOpen>]
-module Free =
+module Pro =
 
     [<RequireQualifiedAccess>]
     module Fa =
