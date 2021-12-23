@@ -1,3 +1,7 @@
+### 2.2.0
+
+* Fix module name it was using `Free` instead of `Pro`
+
 ### 2.1.0
 
 * Regenerate the icons for Font Awesome version `5.12.1`
