@@ -1,3 +1,12 @@
+### 2.15.0
+
+* Fix warning message of:
+    - `TextSize.only`
+    - `TextAlignment.only`
+    - `Display.toDisplayOnlyClass`
+    - `Modifier.ofInvisibleOnly`
+    - `Modifier.ofHiddenOnly`
+
 ### 2.14.1
 
 * Fix #291: Don't add `IsFlex` by default when using `FlexAlignSelf` - `FlexGrow` - `FlexShrink` modifiers
