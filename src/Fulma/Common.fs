@@ -136,7 +136,7 @@ module TextSize =
         | Screen.WideScreen ->
             "is-size-" + Option.ToString size + Screen.ToString screen + "-only"
         | x ->
-            Fable.Core.JS.console.warn("Screen `%s` does not support `is-size-xxx-only`." + string x)
+            Fable.Core.JS.console.warn(sprintf "Screen `%s` does not support `is-size-xxx-only`." (string x))
             ""
 
 [<RequireQualifiedAccess>]
@@ -165,7 +165,7 @@ module TextAlignment =
         | Screen.WideScreen ->
             Option.ToString alignment + Screen.ToString screen + "-only"
         | x ->
-            Fable.Core.JS.console.warn("Screen `%s` does not support `is-size-xxx-only`." + string x)
+            Fable.Core.JS.console.warn(sprintf "Screen `%s` does not support `is-size-xxx-only`." (string x))
             ""
 
 [<RequireQualifiedAccess>]
@@ -407,7 +407,7 @@ module Display =
             "is-" + display + screen + "-only"
 
         | x ->
-            Fable.Core.JS.console.warn("Screen `%s` does not support display only." + string x)
+            Fable.Core.JS.console.warn(sprintf "Screen `%s` does not support display only." (string x))
             ""
 
 [<RequireQualifiedAccess>]
@@ -513,7 +513,7 @@ module Modifier =
         | Screen.WideScreen ->
             "is-invisible" + Screen.ToString screen + "-only"
         | x ->
-            Fable.Core.JS.console.warn("Screen `%s` does not support `is-invisible-xxx-only`." + string x)
+            Fable.Core.JS.console.warn(sprintf "Screen `%s` does not support `is-invisible-xxx-only`." (string x))
             ""
 
     let internal ofHiddenOnly screen =
@@ -523,7 +523,7 @@ module Modifier =
         | Screen.WideScreen ->
             "is-hidden" + Screen.ToString screen + "-only"
         | x ->
-            Fable.Core.JS.console.warn("Screen `%s` does not support `is-hidden-xxx-only`." + string x)
+            Fable.Core.JS.console.warn(sprintf "Screen `%s` does not support `is-hidden-xxx-only`." (string x))
             ""
 
     type IModifier =
