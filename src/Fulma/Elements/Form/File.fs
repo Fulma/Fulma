@@ -53,6 +53,10 @@ module File =
 
         GenericOptions.Parse(options, parseOptions, "file").ToReactElement(div, children)
 
+    /// Generate <input type="file" class="file-input"/>
+    let input (options : GenericOption list) =
+        GenericOptions.Parse(options, parseOptions, "file-input", [Type "file" :> IHTMLProp]).ToReactElement(input)
+
     /// Generate <span class="file-cta"></span>
     let cta (options : GenericOption list) children =
         GenericOptions.Parse(options, parseOptions, "file-cta").ToReactElement(span, children)
@@ -65,10 +69,12 @@ module File =
     let icon (options : GenericOption list) children =
         GenericOptions.Parse(options, parseOptions, "file-icon").ToReactElement(span, children)
 
-    /// Generate <label class="file-label"></label>
-    let label (options : GenericOption list) children =
-        GenericOptions.Parse(options, parseOptions, "file-label").ToReactElement(label, children)
+    module Label =
 
-    /// Generate <input type="file" class="file-input"/>
-    let input (options : GenericOption list) =
-        GenericOptions.Parse(options, parseOptions, "file-input", [Type "file" :> IHTMLProp]).ToReactElement(input)
+        /// Generate <span class="file-label"></span>
+        let span (options : GenericOption list) children =
+            GenericOptions.Parse(options, parseOptions, "file-label").ToReactElement(span, children)
+
+        /// Generate <label class="file-label"></label>
+        let label (options : GenericOption list) children =
+            GenericOptions.Parse(options, parseOptions, "file-label").ToReactElement(label, children)
