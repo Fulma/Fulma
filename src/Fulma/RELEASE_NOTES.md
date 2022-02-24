@@ -1,3 +1,7 @@
+### 2.16.0
+
+* PR #304: Fix clicking on the label does not show the file selector (by @selketjah)
+
 ### 2.15.0
 
 * Fix warning message of:
