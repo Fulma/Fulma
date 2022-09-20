@@ -15,7 +15,7 @@
       ]
     },
     "paket": {
-      "version": "5.257.0",
+      "version": "7.1.5",
       "commands": [
         "paket"
       ]
