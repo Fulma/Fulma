@@ -1,11 +1,12 @@
 source https://www.nuget.org/api/v2
 storage:none
 
-nuget Fable.Elmish.React
+nuget Fable.Elmish.React ~> 4 prerelease
 nuget Fable.Elmish.Browser
 nuget Fable.Date
 nuget Fable.Promise
 nuget Fable.Fetch
+nuget Fable.React ~> 9
 #nuget Thoth.Elmish.Toast
 nuget FSharp.Core ~> 4.7.2
 
