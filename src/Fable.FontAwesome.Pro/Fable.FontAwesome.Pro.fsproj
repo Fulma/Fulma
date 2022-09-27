@@ -8,7 +8,7 @@
         <RepositoryUrl>https://github.com/MangelMaxime/Fulma</RepositoryUrl>
         <PackageTags>fable;elm;fsharp;bulma</PackageTags>
         <Authors>Maxime Mangel</Authors>
-        <Version>2.2.0</Version>
+        <Version>3.0.0-beta-001</Version>
     </PropertyGroup>
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>

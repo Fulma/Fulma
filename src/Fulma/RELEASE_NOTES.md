@@ -1,3 +1,7 @@
+### 3.0.0-beta-001
+
+* PR #315: Update Fable.React
+
 ### 2.16.0
 
 * PR #304: Fix clicking on the label does not show the file selector (by @selketjah)

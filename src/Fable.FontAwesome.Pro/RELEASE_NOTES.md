@@ -1,3 +1,7 @@
+### 3.0.0-beta-001
+
+* PR #315: Update Fable.React
+
 ### 2.2.0
 
 * Fix module name it was using `Free` instead of `Pro`

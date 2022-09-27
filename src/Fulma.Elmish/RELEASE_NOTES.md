@@ -1,3 +1,7 @@
+### 1.0.0-beta-001
+
+* PR #315: Update Fable.React and Fable.Elmish
+
 ### 0.2.0
 
 * Add support for FirstDayOfWeek (by @stroborobo)

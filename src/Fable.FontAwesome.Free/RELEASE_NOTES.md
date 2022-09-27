@@ -1,3 +1,7 @@
+### 3.0.0-beta-001
+
+* PR #315: Update Fable.React
+
 ### 2.1.0
 
 * Regenerate the icons for Font Awesome version `5.12.1`

@@ -1,3 +1,7 @@
+### 4.0.0-beta-001
+
+* PR #315: Update Fable.React
+
 ### 3.0.0
 
 * Upgrade to `bulma-tooltip@3.0.2` (no API changes from Fulma perspective only re-mapping the classes) (by @kerams)
