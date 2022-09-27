@@ -28,14 +28,16 @@ NUGET
     Fable.Elmish (4.0.0-beta-5) - restriction: >= netstandard2.0
       Fable.Core (>= 3.7.1) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
-    Fable.Elmish.Browser (3.0.5)
-      Fable.Browser.Dom (>= 1.0) - restriction: >= netstandard2.0
-      Fable.Core (>= 3.0) - restriction: >= netstandard2.0
-      Fable.Elmish (>= 3.0) - restriction: >= netstandard2.0
-      FSharp.Core (>= 4.6.2) - restriction: >= netstandard2.0
-    Fable.Elmish.React (4.0.0-beta-3)
+    Fable.Elmish.Browser (4.0.0-beta-8)
+      Fable.Browser.Dom (>= 2.10) - restriction: >= netstandard2.0
       Fable.Elmish (>= 4.0.0-beta-5) - restriction: >= netstandard2.0
-      Fable.React.Types (>= 18.0) - restriction: >= netstandard2.0
+      Fable.Elmish.UrlParser (>= 1.0.0-beta-2) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
+    Fable.Elmish.React (4.0.0-beta-4)
+      Fable.Elmish (>= 4.0.0-beta-5) - restriction: >= netstandard2.0
+      Fable.ReactDom.Types (>= 18.0) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
+    Fable.Elmish.UrlParser (1.0.0-beta-2) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
     Fable.Fetch (2.6)
       Fable.Browser.Blob (>= 1.2) - restriction: >= netstandard2.0
@@ -50,9 +52,12 @@ NUGET
       Fable.Core (>= 3.2.7) - restriction: >= netstandard2.0
       Fable.React.Types (>= 18.0) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
-    Fable.React.Types (18.0) - restriction: >= netstandard2.0
+    Fable.React.Types (18.1) - restriction: >= netstandard2.0
       Fable.Browser.Dom (>= 2.4.4) - restriction: >= netstandard2.0
       Fable.Core (>= 3.2.7) - restriction: >= netstandard2.0
+      FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
+    Fable.ReactDom.Types (18.0) - restriction: >= netstandard2.0
+      Fable.React.Types (>= 18.1) - restriction: >= netstandard2.0
       FSharp.Core (>= 4.7.2) - restriction: >= netstandard2.0
     FSharp.Core (4.7.2)
 

@@ -2,7 +2,7 @@ source https://www.nuget.org/api/v2
 storage:none
 
 nuget Fable.Elmish.React ~> 4 prerelease
-nuget Fable.Elmish.Browser
+nuget Fable.Elmish.Browser ~> 4 prerelease
 nuget Fable.Date
 nuget Fable.Promise
 nuget Fable.Fetch
