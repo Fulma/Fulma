@@ -41,7 +41,7 @@
         "remotedev": "^0.2.9",
         "sass-loader": "^11.1.0",
         "style-loader": "^2.0.0",
-        "webpack": "^5.37.0",
+        "webpack": "^5.76.0",
         "webpack-cli": "^4.7.0",
         "webpack-dev-server": "^4.11.1"
     }
