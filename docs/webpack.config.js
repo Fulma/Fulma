@@ -24,7 +24,7 @@ var babelOptions = {
 var commonPlugins = [
     new HtmlWebpackPlugin({
         filename: './index.html',
-        template: './docs/index.html',
+        template: './index.html',
         hash: true,
         minify: isProduction ? {} : false
     })
@@ -48,15 +48,15 @@ module.exports = {
     entry: isProduction ? // We don't use the same entry for dev and production, to make HMR over style quicker for dev env
         {
             demo: [
-                './docs/docs.fsproj',
-                './docs/scss/main.scss'
+                './docs.fsproj',
+                './scss/main.scss'
             ]
         } : {
             app: [
-                './docs/docs.fsproj',
+                './docs.fsproj',
             ],
             style: [
-                './docs/scss/main.scss'
+                './scss/main.scss'
             ]
         },
     mode: isProduction ? "production" : "development",
@@ -94,7 +94,7 @@ module.exports = {
         ]),
     devServer: {
         public: getDevServerUrl(),
-        contentBase: './docs/public/',
+        contentBase: './public/',
         port: 8080,
         hot: true,
         inline: true,

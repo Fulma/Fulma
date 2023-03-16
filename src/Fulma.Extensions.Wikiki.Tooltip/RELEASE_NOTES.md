@@ -1,3 +1,7 @@
+### 4.0.0
+
+* Update Fable.React
+
 ### 4.0.0-beta-001
 
 * PR #315: Update Fable.React

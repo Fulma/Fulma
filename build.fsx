@@ -1,24 +1,20 @@
-#r "paket: groupref netcorebuild //"
-#load ".fake/build.fsx/intellisense.fsx"
+#r "nuget: Fun.Build, 0.3.7"
+#r "nuget: Fake.IO.FileSystem, 6.0.0"
+#r "nuget: BlackFox.CommandLine, 1.0.0"
+#r "nuget: Fake.Core.ReleaseNotes, 6.0.0"
+#r "nuget: FsToolkit.ErrorHandling, 4.3.0"
 
-#if !FAKE
-#r "Facades/netstandard"
-#r "netstandard"
-#endif
-
-#nowarn "52"
-
+open Fun.Build
 open System
 open System.IO
 open System.Text.RegularExpressions
 open Fake.Core
-open Fake.Core.TargetOperators
-open Fake.DotNet
 open Fake.IO
 open Fake.IO.Globbing.Operators
 open Fake.IO.FileSystemOperators
-open Fake.Tools.Git
-open Fake.JavaScript
+open BlackFox.CommandLine
+open FsToolkit.ErrorHandling
+
 
 module Util =
 
@@ -37,69 +33,6 @@ module Util =
                 | None -> line
                 | Some newLine -> newLine)
 
-let inline yarnWorkDir (ws : string) (yarnParams : Yarn.YarnParams) =
-    { yarnParams with WorkingDirectory = ws }
-
-Target.create "Clean" (fun _ ->
-    !! "docs/**/bin"
-    ++ "docs/**/obj"
-    ++ "src/**/bin"
-    ++ "src/**/obj"
-    ++ "templates/**/bin"
-    ++ "templates/**/obj"
-    |> Seq.iter Shell.cleanDir
-)
-
-Target.create "Install" (fun _ ->
-    !! "src/**/*.fsproj"
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        DotNet.restore id dir)
-)
-
-Target.create "Build" (fun _ ->
-    !! "src/**/*.fsproj"
-    -- "src/Fulma.Extensions/*"
-    -- "src/Fulma.Elmish/*"
-    -- "src/Fulma.Toast/*"
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        DotNet.build id dir)
-)
-
-Target.create "QuickBuild" (fun _ ->
-    !! "src/**/*.fsproj"
-    |> Seq.iter (fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        DotNet.build id dir)
-)
-
-Target.create "YarnInstall" (fun _ ->
-    Yarn.install id
-)
-
-// --------------------------------------------------------------------------------------
-// Docs targets
-
-Target.create "InstallDocs" (fun _ ->
-    !! "docs/**.fsproj"
-    |> Seq.iter(fun s ->
-        let dir = IO.Path.GetDirectoryName s
-        DotNet.restore id dir)
-)
-
-let watchDocs _ =
-    Yarn.exec "webpack-dev-server --config docs/webpack.config.js" (yarnWorkDir "docs")
-
-Target.create "WatchDocs" watchDocs
-
-Target.create "QuickWatchDocs" watchDocs
-
-Target.create "BuildDocs" (fun _ ->
-    Yarn.exec "webpack --config docs/webpack.config.js" (yarnWorkDir "docs")
-)
-
-// --------------------------------------------------------------------------------------
 // Build a NuGet package
 let needsPublishing (versionRegex: Regex) (releaseNotes: ReleaseNotes.ReleaseNotes) projFile =
     printfn "Project: %s" projFile
@@ -124,104 +57,164 @@ let toPackageReleaseNotes (notes: string list) =
     String.Join("\n * ", notes)
     |> (fun txt -> txt.Replace("\"", "\\\""))
 
-let pushNuget (releaseNotes: ReleaseNotes.ReleaseNotes) (projFile: string) =
-    let versionRegex = Regex("<Version>(.*?)</Version>", RegexOptions.IgnoreCase)
+let createPublishNugetStageForProject (projectFile : string) =
+    let projectDir = IO.Path.GetDirectoryName(projectFile)
 
-    if needsPublishing versionRegex releaseNotes projFile then
-        let projDir = Path.GetDirectoryName(projFile)
-        let nugetKey =
-            match  Environment.environVarOrNone "NUGET_KEY" with
-            | Some nugetKey -> nugetKey
-            | None -> failwith "The Nuget API key must be set in a NUGET_KEY environmental variable"
-        (versionRegex, projFile)
-        ||> Util.replaceLines (fun line _ ->
-                                    versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>") |> Some)
+    stage $"Publish NuGet for {projectFile}" {
+        workingDir projectDir
 
-        let result =
-            DotNet.exec
-                (DotNet.Options.withWorkingDirectory projDir)
-                "pack"
-                (sprintf "-c Release /p:PackageReleaseNotes=\"%s\"" (toPackageReleaseNotes releaseNotes.Notes))
+        run (fun ctx -> asyncResult {
+            let nugetKey = ctx.GetEnvVar "NUGET_KEY"
+            let releaseNotes = projectDir </> "RELEASE_NOTES.md" |> ReleaseNotes.load
+            let versionRegex = Regex("<Version>(.*?)</Version>", RegexOptions.IgnoreCase)
 
-        if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+            do! ctx.RunCommand "pwd"
 
-        Directory.GetFiles(projDir </> "bin" </> "Release", "*.nupkg")
-        |> Array.find (fun nupkg -> nupkg.Contains(releaseNotes.NugetVersion))
-        |> (fun nupkg ->
-            DotNet.nugetPush (fun p ->
-                { p with
-                    PushParams =
-                        { p.PushParams with
-                            ApiKey = Some nugetKey
-                            Source = Some "nuget.org"
-                        }
-                 }
-            ) nupkg
+            if needsPublishing versionRegex releaseNotes projectFile then
+                (versionRegex, projectFile)
+                ||> Util.replaceLines (fun line _ ->
+                    versionRegex.Replace(line, "<Version>"+releaseNotes.NugetVersion+"</Version>")
+                    |> Some
+                )
+
+                let! dotnetPackOutput =
+                    CmdLine.empty
+                    |> CmdLine.appendRaw "dotnet"
+                    |> CmdLine.appendRaw "pack"
+                    |> CmdLine.appendPrefix "-c" "Release"
+                    |> CmdLine.appendRaw $"/p:PackageReleaseNotes={toPackageReleaseNotes releaseNotes.Notes}"
+                    |> CmdLine.toString
+                    |> ctx.RunCommandCaptureOutput
+
+                let m = Regex.Match(dotnetPackOutput, ".*'(?<nupkg_path>.*\.(?<version>.*\..*\..*)\.nupkg)'")
+
+                if not m.Success then
+                    failwithf "Couldn't find NuGet package in output: %s" dotnetPackOutput
+
+                let nupkgPath = m.Groups.["nupkg_path"].Value
+
+                do! CmdLine.empty
+                    |> CmdLine.appendRaw "dotnet"
+                    |> CmdLine.appendRaw "nuget"
+                    |> CmdLine.appendRaw "push"
+                    |> CmdLine.appendRaw nupkgPath
+                    |> CmdLine.appendPrefix "--api-key" nugetKey
+                    |> CmdLine.appendPrefix "--source" "nuget.org"
+                    |> CmdLine.toString
+                    |> ctx.RunCommand
+        }
         )
+    }
+
+pipeline "Docs" {
+
+    stage "Install dependencies" {
+        run "npx yarn install"
+    }
+
+    stage "Watch" {
+        whenCmd {
+            name "--watch"
+            alias "-w"
+            description "Watch for changes and rebuild"
+        }
+
+        workingDir "docs"
+
+        run (
+            CmdLine.empty
+            |> CmdLine.appendRaw "npx"
+            |> CmdLine.appendRaw "webpack-dev-server"
+            |> CmdLine.toString
+        )
+    }
+
+    stage "Build" {
+        whenNot {
+            whenCmd {
+                name "--watch"
+                alias "-w"
+                description "Watch for changes and rebuild"
+            }
+        }
+
+        workingDir "docs"
+
+        run (
+            CmdLine.empty
+            |> CmdLine.appendRaw "npx"
+            |> CmdLine.appendRaw "webpack"
+            |> CmdLine.toString
+        )
+    }
+
+    runIfOnlySpecified
+
+}
+
+pipeline "Publish" {
+
+    whenEnvVar "NUGET_KEY"
+
+    stage "Clean" {
+        run (fun _ ->
+            !! "docs/**/bin"
+            ++ "docs/**/obj"
+            ++ "src/**/bin"
+            ++ "src/**/obj"
+            |> Seq.iter Shell.cleanDir
+        )
+    }
+
+    stage "Install dependencies" {
+        run "npx yarn install"
+    }
+
+    // stage "Build documentation" {
+    //     workingDir "docs"
+
+    //     run (
+    //         CmdLine.empty
+    //         |> CmdLine.appendRaw "npx"
+    //         |> CmdLine.appendRaw "webpack"
+    //         |> CmdLine.toString
+    //     )
+    // }
+
+    // stage "Publis documentation" {
+    //     workingDir "docs"
+
+    //     run (
+    //         CmdLine.empty
+    //         |> CmdLine.appendRaw "npx"
+    //         |> CmdLine.appendRaw "gh-pages"
+    //         |> CmdLine.appendPrefix "-d" "docs/public/"
+    //         |> CmdLine.toString
+    //     )
+    // }
+
+    stage "Publish packages" {
+
+        createPublishNugetStageForProject "src/Fable.FontAwesome/Fable.FontAwesome.fsproj"
+        createPublishNugetStageForProject "src/Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj"
+        createPublishNugetStageForProject "src/Fable.FontAwesome.Pro/Fable.FontAwesome.Pro.fsproj"
+        createPublishNugetStageForProject "src/Fulma/Fulma.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Calendar/Fulma.Extensions.Wikiki.Calendar.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Checkradio/Fulma.Extensions.Wikiki.Checkradio.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Divider/Fulma.Extensions.Wikiki.Divider.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.PageLoader/Fulma.Extensions.Wikiki.PageLoader.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Quickview/Fulma.Extensions.Wikiki.Quickview.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Extensions.Wikiki.Timeline/Fulma.Extensions.Wikiki.Timeline.fsproj"
+        createPublishNugetStageForProject "src/Fulma.Elmish/Fulma.Elmish.fsproj"
+
+    }
 
 
-Target.create "PublishNugets" (fun _ ->
-    !! "src/Fable.FontAwesome/Fable.FontAwesome.fsproj"
-    ++ "src/Fable.FontAwesome.Free/Fable.FontAwesome.Free.fsproj"
-    ++ "src/Fable.FontAwesome.Pro/Fable.FontAwesome.Pro.fsproj"
-    ++ "src/Fulma/Fulma.fsproj"
-    // ++ "src/Fulma.Extensions/Fulma.Extensions.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Calendar/Fulma.Extensions.Wikiki.Calendar.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Checkradio/Fulma.Extensions.Wikiki.Checkradio.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Divider/Fulma.Extensions.Wikiki.Divider.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.PageLoader/Fulma.Extensions.Wikiki.PageLoader.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Quickview/Fulma.Extensions.Wikiki.Quickview.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Slider/Fulma.Extensions.Wikiki.Slider.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Switch/Fulma.Extensions.Wikiki.Switch.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Tooltip/Fulma.Extensions.Wikiki.Tooltip.fsproj"
-    ++ "src/Fulma.Extensions.Wikiki.Timeline/Fulma.Extensions.Wikiki.Timeline.fsproj"
-    ++ "src/Fulma.Elmish/Fulma.Elmish.fsproj"
-    // ++ "src/Fulma.Toast/Fulma.Toast.fsproj"
-    ++ "templates/Fable.Template.Fulma.Minimal.proj"
-    |> Seq.iter(fun s ->
-        let projFile = s
-        let projDir = IO.Path.GetDirectoryName(projFile)
-        let release = projDir </> "RELEASE_NOTES.md" |> ReleaseNotes.load
-        pushNuget release projFile
-    )
-)
+    runIfOnlySpecified
 
-// Where to push generated documentation
-let githubLink = "git@github.com:MangelMaxime/Fulma.git"
-let publishBranch = "gh-pages"
-let fableRoot   = __SOURCE_DIRECTORY__
-let temp        = fableRoot </> "temp"
-let docsOuput = fableRoot </> "docs" </> "public"
+}
 
-// --------------------------------------------------------------------------------------
-// Release Scripts
-
-Target.create "PublishDocs" (fun _ ->
-  Shell.cleanDir temp
-  Repository.cloneSingleBranch "" githubLink publishBranch temp
-
-  Shell.copyRecursive docsOuput temp true |> Trace.tracefn "%A"
-  Staging.stageAll temp
-  Commit.exec temp (sprintf "Update site (%s)" (DateTime.Now.ToShortDateString()))
-  Branches.push temp
-)
-
-// Build order
-"Clean"
-    ==> "Install"
-    ==> "Build"
-    ==> "PublishNugets"
-
-"Build"
-    ==> "YarnInstall"
-    ==> "InstallDocs"
-    ==> "WatchDocs"
-
-"Build"
-    ==> "YarnInstall"
-    ==> "InstallDocs"
-    ==> "BuildDocs"
-    ==> "PublishDocs"
-
-// start build
-Target.runOrDefault "Build"
+tryPrintPipelineCommandHelp ()

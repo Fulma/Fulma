@@ -1,3 +1,8 @@
+### 1.0.0
+
+* Update Fable.React
+* Support for Fable.Elmish 4
+
 ### 1.0.0-beta-001
 
 * PR #315: Update Fable.React and Fable.Elmish
