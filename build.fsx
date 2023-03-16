@@ -82,7 +82,7 @@ let createPublishNugetStageForProject (projectFile : string) =
                     |> CmdLine.appendRaw "dotnet"
                     |> CmdLine.appendRaw "pack"
                     |> CmdLine.appendPrefix "-c" "Release"
-                    |> CmdLine.appendRaw $"/p:PackageReleaseNotes={toPackageReleaseNotes releaseNotes.Notes}"
+                    |> CmdLine.appendRaw $"""/p:PackageReleaseNotes="{toPackageReleaseNotes releaseNotes.Notes}" """
                     |> CmdLine.toString
                     |> ctx.RunCommandCaptureOutput
 
