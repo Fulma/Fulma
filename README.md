@@ -1,5 +1,17 @@
 # Fulma : Wrapper around Bulma.io
 
+# ⚠️ Fulma is not actively maintained anymore
+
+You should be able to use it with Bulma 0.9.3 and 0.9.4. However, Bulma v1 introduced breaking change so some things are supported and others are not.
+
+Nowdays, I encourage people use the Feliz style syntax. You can see [a comparaison here](https://github.com/Zaid-Ajaj/Feliz/issues/155).
+
+If you want to use Feliz syntax with Bulma, you can use [Feliz.Bulma](https://github.com/Dzoukr/Feliz.Bulma).
+
+If someone want to maintain Fulma, I can invite them to the repository as maintainer.
+
+--------
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Fulma/Fulma)
 
 [![Gitter](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/fable-compiler/Fable)
