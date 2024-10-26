@@ -10,6 +10,8 @@ If you want to use Feliz syntax with Bulma, you can use [Feliz.Bulma](https://gi
 
 If someone want to maintain Fulma, I can invite them to the repository as maintainer.
 
+If you are a company and need Fulma to be upgraded to a newer version, I am available as a freelancer.
+
 --------
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/Fulma/Fulma)
